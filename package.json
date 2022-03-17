@@ -282,7 +282,8 @@
           "storybook/use-storybook-testing-library": "error"
         }
       }
-    ]
+    ],
+    "ignorePatterns": "public/mockServiceWorker.js"
   },
   "lint-staged": {
     "*.@(cjs|js|mjs|ts|tsx)": [
@@ -294,6 +295,9 @@
       "prettier --write"
     ],
     "*.@(json|md)": "prettier --write"
+  },
+  "msw": {
+    "workerDirectory": "public"
   },
   "postcss": {
     "plugins": {
