@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 
 import { clearEntities } from '@/features/common/entities.slice';
@@ -35,10 +36,21 @@ describe('HomePage', () => {
   it('should render welcome message', () => {
     render(<HomePage />, { wrapper: Wrapper });
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to intavia!/i,
-    });
+    const heading = screen.getByRole('heading', { name: /welcome to intavia!/i });
 
     expect(heading).toBeInTheDocument();
+  });
+
+  it('should fetch persons', async () => {
+    render(<HomePage />, { wrapper: Wrapper });
+
+    const itemBeforeQuery = screen.queryByText(/person 10/i);
+    expect(itemBeforeQuery).not.toBeInTheDocument();
+
+    const button = screen.getByRole('button', { name: /next/i });
+    userEvent.click(button);
+
+    const itemAfterQuery = await screen.findByText(/person 10/i);
+    expect(itemAfterQuery).toBeInTheDocument();
   });
 });
