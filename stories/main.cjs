@@ -10,7 +10,7 @@ const config = {
     '@storybook/addon-interactions',
     '@storybook/addon-a11y',
   ],
-  /* @ts-expect-error Waiting on {@link https://github.com/storybookjs/storybook/pull/15220}. */
+  // @ts-expect-error Waiting on {@link https://github.com/storybookjs/storybook/pull/15220}.
   async babel() {
     return { presets: ['next/babel'] };
   },

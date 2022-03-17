@@ -13,7 +13,7 @@ const service = createApi({
   }),
   endpoints(builder) {
     return {
-      getPersons: builder.query<Array<Entity>, { page?: number }>({
+      getPersons: builder.query<{ page: number; entities: Array<Entity> }, { page?: number }>({
         query(params) {
           const { page = 1 } = params;
 
@@ -23,7 +23,7 @@ const service = createApi({
           return [`/api/persons`, String(searchParams)].join('?');
         },
       }),
-      getPlaces: builder.query<Array<Entity>, { page?: number }>({
+      getPlaces: builder.query<{ page: number; entities: Array<Entity> }, { page?: number }>({
         query(params) {
           const { page = 1 } = params;
 
