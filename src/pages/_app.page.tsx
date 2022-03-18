@@ -20,14 +20,22 @@ if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
-    import('@/mocks/mocks.browser').then(({ worker }) => {
-      worker.start();
-    });
+    // Top level await is currently stil experimental in webpack.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { worker } = require('@/mocks/mocks.server');
+    worker.start();
+    // await import('@/mocks/mocks.browser').then(({ worker }) => {
+    //   worker.start();
+    // });
   } else {
     log.warn('API mocking enabled (server).');
 
-    import('@/mocks/mocks.server').then(({ server }) => {
-      server.listen();
-    });
+    // Top level await is currently stil experimental in webpack.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { server } = require('@/mocks/mocks.server');
+    server.listen();
+    // await import('@/mocks/mocks.server').then(({ server }) => {
+    //   server.listen();
+    // });
   }
 }
