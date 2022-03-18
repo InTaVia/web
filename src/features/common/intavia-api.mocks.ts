@@ -1,9 +1,12 @@
+import { faker } from '@faker-js/faker';
 import { rest } from 'msw';
 
 import type { Person, Place } from '@/features/common/entity.model';
 import { createUrl } from '@/lib/create-url';
-import { range } from '@/lib/range';
+import { times } from '@/lib/times';
 import { baseUrl } from '~/config/intavia.config';
+
+faker.seed(123);
 
 export const handlers = [
   rest.get<never, never, { page: number; entities: Array<Person> }>(
@@ -12,11 +15,11 @@ export const handlers = [
       const page = Math.max(Number(request.url.searchParams.get('page') ?? 1), 1);
       const limit = 10;
 
-      const entities: Array<Person> = range((page - 1) * limit, page * limit).map((index) => {
+      const entities: Array<Person> = times(limit).map(() => {
         return {
-          id: `Person ${index}`,
+          id: faker.datatype.uuid(),
           kind: 'person',
-          name: `Person ${index}`,
+          name: faker.name.findName(),
         };
       });
 
@@ -29,13 +32,13 @@ export const handlers = [
       const page = Math.max(Number(request.url.searchParams.get('page') ?? 1), 1);
       const limit = 10;
 
-      const entities: Array<Place> = range((page - 1) * limit, page * limit).map((index) => {
+      const entities: Array<Place> = times(limit).map(() => {
         return {
-          id: `Place ${index}`,
+          id: faker.datatype.uuid(),
           kind: 'place',
-          name: `Place ${index}`,
-          lat: 123,
-          lng: 456,
+          name: faker.address.cityName(),
+          lat: Number(faker.address.longitude()),
+          lng: Number(faker.address.latitude()),
         };
       });
 

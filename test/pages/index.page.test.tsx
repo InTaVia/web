@@ -44,13 +44,13 @@ describe('HomePage', () => {
   it('should fetch persons', async () => {
     render(<HomePage />, { wrapper: Wrapper });
 
-    const itemBeforeQuery = screen.queryByText(/person 10/i);
+    const itemBeforeQuery = screen.queryByText(/kerry orn/i);
     expect(itemBeforeQuery).not.toBeInTheDocument();
 
-    const button = screen.getByRole('button', { name: /next/i });
+    const button = await screen.findByRole('button', { name: /next/i });
     userEvent.click(button);
 
-    const itemAfterQuery = await screen.findByText(/person 10/i);
-    expect(itemAfterQuery).toBeInTheDocument();
+    const itemAfterQuery = await screen.findAllByText(/kerry orn/i);
+    expect(itemAfterQuery).toHaveLength(2);
   });
 });

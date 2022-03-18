@@ -30,9 +30,13 @@ function PersonsList(): JSX.Element {
     getPersonsQuery.refetch();
   }
 
+  if (getPersonsQuery.isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <section>
-      {getPersonsQuery.isLoading ? <p>Loading...</p> : null}
+      {getPersonsQuery.isFetching ? <p>Loading...</p> : null}
       {getPersonsQuery.isError ? <p>Failed to fetch.</p> : null}
       {length(persons) === 0 ? (
         <p>Nothing to see.</p>
