@@ -1,12 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import type { Entity } from '@/features/common/entity.model';
+import { createUrlSearchParams } from '@/lib/create-url-search-params';
 import { baseUrl } from '~/config/intavia.config';
 
 const service = createApi({
   reducerPath: 'intavia-api',
   baseQuery: fetchBaseQuery({
     baseUrl: String(baseUrl),
+    paramsSerializer(searchParams) {
+      return String(createUrlSearchParams({ searchParams }));
+    },
     prepareHeaders(headers) {
       return headers;
     },
@@ -17,20 +21,14 @@ const service = createApi({
         query(params) {
           const { page = 1 } = params;
 
-          const searchParams = new URLSearchParams();
-          searchParams.set('page', String(page));
-
-          return [`/api/persons`, String(searchParams)].join('?');
+          return { url: '/api/persons', params: { page } };
         },
       }),
       getPlaces: builder.query<{ page: number; entities: Array<Entity> }, { page?: number }>({
         query(params) {
           const { page = 1 } = params;
 
-          const searchParams = new URLSearchParams();
-          searchParams.set('page', String(page));
-
-          return [`/api/places`, String(searchParams)].join('?');
+          return { url: '/api/places', params: { page } };
         },
       }),
     };
