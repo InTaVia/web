@@ -22,7 +22,7 @@ beforeAll(() => {
 
 afterEach(() => {
   server.resetHandlers();
-  intaviaApiService.util.resetApiState();
+  store.dispatch(intaviaApiService.util.resetApiState());
   store.dispatch(clearEntities());
 });
 
@@ -152,5 +152,30 @@ describe('SearchPage', () => {
 
     const nextLink = screen.getByRole('link', { name: /next/i });
     expect(nextLink).toHaveAttribute('href', '/search?page=2');
+  });
+
+  it('should display search results count', async () => {
+    server.use(
+      rest.get<never, never, { page: number; entities: Array<Person> }>(
+        String(createUrl({ pathname: '/api/persons', baseUrl })),
+        (request, response, context) => {
+          return response(
+            context.status(200),
+            context.json({
+              page: 1,
+              entities: [
+                { id: '123', kind: 'person', name: 'Person 123' },
+                { id: '456', kind: 'person', name: 'Person 456' },
+              ],
+            }),
+          );
+        },
+      ),
+    );
+
+    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+
+    const header = await screen.findByRole('banner');
+    expect(header).toHaveTextContent(/results: 2/i);
   });
 });
