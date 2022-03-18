@@ -15,7 +15,7 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [],
-  // watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
+  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
 };
 
 const createConfig = createConfigFactory({ dir: process.cwd() });
