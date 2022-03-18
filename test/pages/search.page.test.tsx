@@ -143,18 +143,14 @@ describe('SearchPage', () => {
     const submitButton = screen.getByRole('button', { name: /search/i });
     userEvent.click(submitButton);
 
-    expect(jest.fn()).toHaveBeenCalledTimes(1);
-    expect(jest.fn()).toHaveBeenCalledWith({ query: '?q=123' });
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledWith({ query: 'q=123' });
   });
 
-  it('should update search params when navigated to next search results page', () => {
-    const push = jest.fn();
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search', push } }) });
+  it('should add search results pagination links', () => {
+    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const nextLink = screen.getByRole('link', { name: /next/i });
-    userEvent.click(nextLink);
-
-    expect(jest.fn()).toHaveBeenCalledTimes(1);
-    expect(jest.fn()).toHaveBeenCalledWith({ query: '?page=2' });
+    expect(nextLink).toHaveAttribute('href', '/search?page=2');
   });
 });

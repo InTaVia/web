@@ -172,7 +172,15 @@
         }
       ],
       "no-implicit-coercion": "error",
-      "no-param-reassign": "error",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": [
+            "state"
+          ]
+        }
+      ],
       "no-multiple-empty-lines": "error",
       "no-restricted-globals": [
         "error",
