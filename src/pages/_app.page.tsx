@@ -20,13 +20,13 @@ if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
-    import('@/features/common/mocks.browser').then(({ worker }) => {
+    import('@/mocks/mocks.browser').then(({ worker }) => {
       worker.start();
     });
   } else {
     log.warn('API mocking enabled (server).');
 
-    import('@/features/common/mocks.server').then(({ server }) => {
+    import('@/mocks/mocks.server').then(({ server }) => {
       server.listen();
     });
   }

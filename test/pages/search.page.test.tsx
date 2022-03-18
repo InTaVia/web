@@ -1,20 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
-import { RouterContext } from 'next/dist/shared/lib/router-context';
-import type { NextRouter } from 'next/router';
-import type { FC } from 'react';
-import { Provider } from 'react-redux';
 
 import { clearEntities } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import intaviaApiService from '@/features/common/intavia-api.service';
-import { server } from '@/features/common/mocks.server';
 import { store } from '@/features/common/store';
 import { createUrl } from '@/lib/create-url';
-import { noop } from '@/lib/noop';
+import { server } from '@/mocks/mocks.server';
 import SearchPage from '@/pages/search.page';
 import { baseUrl } from '~/config/intavia.config';
+import { createWrapper } from '~/test/test-utils';
 
 beforeAll(() => {
   server.listen();
@@ -29,67 +25,6 @@ afterEach(() => {
 afterAll(() => {
   server.close();
 });
-
-function createMockRouter(partial?: Partial<NextRouter>): NextRouter {
-  const router: NextRouter = {
-    asPath: '/',
-    back: noop,
-    basePath: '/',
-    beforePopState: noop,
-    defaultLocale: undefined,
-    events: { on: noop, off: noop, emit: noop },
-    isFallback: false,
-    isLocaleDomain: false,
-    isReady: true,
-    isPreview: false,
-    locale: undefined,
-    locales: undefined,
-    pathname: '/',
-    prefetch() {
-      return Promise.resolve();
-    },
-    push() {
-      return Promise.resolve(true);
-    },
-    query: {},
-    reload: noop,
-    replace() {
-      return Promise.resolve(true);
-    },
-    route: '/',
-  };
-
-  return {
-    ...router,
-    ...partial,
-  };
-}
-
-interface WrapperProps {
-  children: JSX.Element;
-}
-
-interface CreateWrapperArgs {
-  router?: Partial<NextRouter>;
-}
-
-function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
-  const { router } = args;
-
-  const mockRouter = createMockRouter(router);
-
-  function Wrapper(props: WrapperProps): JSX.Element {
-    const { children } = props;
-
-    return (
-      <RouterContext.Provider value={mockRouter}>
-        <Provider store={store}>{children}</Provider>
-      </RouterContext.Provider>
-    );
-  }
-
-  return Wrapper;
-}
 
 describe('SearchPage', () => {
   it('should display persons search results on page load', async () => {
