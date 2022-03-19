@@ -17,18 +17,24 @@ const service = createApi({
   }),
   endpoints(builder) {
     return {
-      getPersons: builder.query<{ page: number; entities: Array<Entity> }, { page?: number }>({
+      getPersons: builder.query<
+        { page: number; entities: Array<Entity> },
+        { page?: number; q?: string }
+      >({
         query(params) {
-          const { page = 1 } = params;
+          const { page = 1, q } = params;
 
-          return { url: '/api/persons', params: { page } };
+          return { url: '/api/persons', params: { page, q } };
         },
       }),
-      getPlaces: builder.query<{ page: number; entities: Array<Entity> }, { page?: number }>({
+      getPlaces: builder.query<
+        { page: number; entities: Array<Entity> },
+        { page?: number; q?: string }
+      >({
         query(params) {
-          const { page = 1 } = params;
+          const { page = 1, q } = params;
 
-          return { url: '/api/places', params: { page } };
+          return { url: '/api/places', params: { page, q } };
         },
       }),
     };

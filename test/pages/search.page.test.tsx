@@ -48,8 +48,10 @@ describe('SearchPage', () => {
 
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
-    const searchResult = await screen.findByText(/person 123/i);
-    expect(searchResult).toBeInTheDocument();
+    const searchResults = await screen.findAllByRole('listitem');
+    expect(searchResults).toHaveLength(2);
+    expect(searchResults[0]).toHaveTextContent(/person 123/i);
+    expect(searchResults[1]).toHaveTextContent(/person 456/i);
   });
 
   it('should display error message when request failed', async () => {
@@ -69,7 +71,7 @@ describe('SearchPage', () => {
     expect(errorMessage).toHaveTextContent(/error/i);
   });
 
-  it('should update search params when search term input value changed', () => {
+  it('should update search params when search textfield value changed', () => {
     const push = jest.fn();
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search', push } }) });
 
@@ -80,6 +82,52 @@ describe('SearchPage', () => {
 
     expect(push).toHaveBeenCalledTimes(1);
     expect(push).toHaveBeenCalledWith({ query: 'q=123' });
+  });
+
+  it('should use search params in search query', async () => {
+    server.use(
+      rest.get<never, never, { page: number; entities: Array<Person> }>(
+        String(createUrl({ pathname: '/api/persons', baseUrl })),
+        (request, response, context) => {
+          const searchTerm = request.url.searchParams.get('q');
+          if (searchTerm !== '123') {
+            return response(
+              context.status(200),
+              context.json({
+                page: 1,
+                entities: [{ id: '123', kind: 'person', name: 'Failed' }],
+              }),
+            );
+          }
+          return response(
+            context.status(200),
+            context.json({
+              page: 1,
+              entities: [
+                { id: '123', kind: 'person', name: 'Person 123' },
+                { id: '456', kind: 'person', name: 'Person 456' },
+              ],
+            }),
+          );
+        },
+      ),
+    );
+
+    render(<SearchPage />, {
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: '123' } } }),
+    });
+
+    const searchResult = await screen.findByText(/person 123/i);
+    expect(searchResult).toBeInTheDocument();
+  });
+
+  it('should use search params to prepopulate search textfield', () => {
+    render(<SearchPage />, {
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: '123' } } }),
+    });
+
+    const searchField = screen.getByRole('searchbox');
+    expect(searchField).toHaveValue('123');
   });
 
   it('should add search results pagination links', () => {

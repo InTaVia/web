@@ -45,7 +45,7 @@ function SearchForm(): JSX.Element {
     <form name="search" noValidate role="search" onSubmit={onSubmit}>
       <label>
         <span>Search</span>
-        <input name="q" placeholder="Search term" type="search" />
+        <input defaultValue={searchFilters.q} name="q" placeholder="Search term" type="search" />
       </label>
       <button type="submit">Search</button>
     </form>
