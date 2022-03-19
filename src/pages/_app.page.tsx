@@ -1,17 +1,26 @@
 import '@/styles/index.css';
 
+import type { EmotionCache } from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import type { AppProps } from 'next/app';
+import type { AppProps as NextAppProps } from 'next/app';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 
+import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
 import { theme } from '@/styles/theme';
 
+const clientSideEmotionCache = createEmotionCache();
+
+export interface AppProps extends NextAppProps {
+  emotionCache?: EmotionCache;
+}
+
 export default function App(props: AppProps): JSX.Element {
-  const { Component, pageProps } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
     <Fragment>
@@ -21,10 +30,12 @@ export default function App(props: AppProps): JSX.Element {
         <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <CacheProvider value={emotionCache}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CacheProvider>
       </Provider>
     </Fragment>
   );
