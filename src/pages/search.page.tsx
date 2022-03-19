@@ -128,7 +128,7 @@ function useSearch<T extends UrlSearchParamsInit>(
   }
 
   function search(searchParams: T): void {
-    router.push({ query: getSearchParams(searchParams) });
+    void router.push({ query: getSearchParams(searchParams) });
   }
 
   return { getSearchParams, search };
