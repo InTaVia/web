@@ -2,7 +2,7 @@ import type { AlertColor } from '@mui/material/Alert';
 import Alert from '@mui/material/Alert';
 import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Snackbar from '@mui/material/Snackbar';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import {
@@ -13,8 +13,6 @@ import {
 
 // TODO: material design only allows one visible notification. do we need multiple?
 
-// TODO: pick exit transition duration from theme
-const exitTransitionDuration = 225;
 const autoHideDuration = 7500;
 
 export function Notifications(): JSX.Element {
@@ -52,22 +50,19 @@ function Notification(props: NotificationProps): JSX.Element {
     setIsVisible(false);
   }
 
-  useEffect(() => {
-    if (isVisible) return;
-
-    const timeout = setTimeout(() => {
-      onDismiss(notification.id);
-    }, exitTransitionDuration);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isVisible, notification, onDismiss]);
+  function onExited() {
+    onDismiss(notification.id);
+  }
 
   const severity = getSeverity(notification.type);
 
   return (
-    <Snackbar autoHideDuration={autoHideDuration} onClose={onClose} open={isVisible}>
+    <Snackbar
+      autoHideDuration={autoHideDuration}
+      onClose={onClose}
+      open={isVisible}
+      TransitionProps={{ onExited }}
+    >
       <Alert onClose={onClose} severity={severity} variant="filled">
         {notification.message}
       </Alert>
