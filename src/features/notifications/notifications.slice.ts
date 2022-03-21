@@ -10,6 +10,7 @@ export interface Notification {
   /** @default 'alert' */
   role?: 'alert' | 'status';
   message: ReactNode;
+  /** Actions should provide keyboard shortcuts, because focus does not move to the notification. */
   action?: ReactNode;
 }
 
