@@ -1,48 +1,50 @@
-import { faker } from '@faker-js/faker';
 import { rest } from 'msw';
 
 import type { Person, Place } from '@/features/common/entity.model';
+import { clamp } from '@/lib/clamp';
 import { createUrl } from '@/lib/create-url';
-import { times } from '@/lib/times';
+import { db } from '@/mocks/db';
 import { baseUrl } from '~/config/intavia.config';
 
-faker.seed(123);
-
 export const handlers = [
-  rest.get<never, never, { page: number; entities: Array<Person> }>(
+  rest.get<never, never, { page: number; pages: number; entities: Array<Person> }>(
     String(createUrl({ pathname: '/api/persons', baseUrl })),
     (request, response, context) => {
-      const page = Math.max(Number(request.url.searchParams.get('page') ?? 1), 1);
+      const q = request.url.searchParams.get('q')?.trim() ?? undefined;
+      const persons = db.person.findMany(q);
+
       const limit = 10;
+      const pages = Math.ceil(persons.length / limit);
+      const page = clamp(Number(request.url.searchParams.get('page') ?? 1), 1, pages);
+      const offset = (page - 1) * limit;
 
-      const entities: Array<Person> = times(limit).map(() => {
-        return {
-          id: faker.datatype.uuid(),
-          kind: 'person',
-          name: faker.name.findName(),
-        };
-      });
+      const entities = persons.slice(offset, offset + limit);
 
-      return response(context.status(200), context.delay(), context.json({ page, entities }));
+      return response(
+        context.status(200),
+        context.delay(),
+        context.json({ page, pages, q, entities }),
+      );
     },
   ),
-  rest.get<never, never, { page: number; entities: Array<Place> }>(
+  rest.get<never, never, { page: number; pages: number; entities: Array<Place> }>(
     String(createUrl({ pathname: '/api/places', baseUrl })),
     (request, response, context) => {
-      const page = Math.max(Number(request.url.searchParams.get('page') ?? 1), 1);
+      const q = request.url.searchParams.get('q')?.trim() ?? undefined;
+      const places = db.place.findMany(q);
+
       const limit = 10;
+      const pages = Math.ceil(places.length / limit);
+      const page = clamp(Number(request.url.searchParams.get('page') ?? 1), 1, pages);
+      const offset = (page - 1) * limit;
 
-      const entities: Array<Place> = times(limit).map(() => {
-        return {
-          id: faker.datatype.uuid(),
-          kind: 'place',
-          name: faker.address.cityName(),
-          lat: Number(faker.address.longitude()),
-          lng: Number(faker.address.latitude()),
-        };
-      });
+      const entities = places.slice(offset, offset + limit);
 
-      return response(context.status(200), context.delay(), context.json({ page, entities }));
+      return response(
+        context.status(200),
+        context.delay(),
+        context.json({ page, pages, q, entities }),
+      );
     },
   ),
 ];

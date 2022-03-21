@@ -17,16 +17,18 @@ export default function App(props: AppProps): JSX.Element {
 }
 
 if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
+  // Top level await is currently stil experimental in webpack.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { seed } = require('@/mocks/db');
+  seed();
+
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
     // Top level await is currently stil experimental in webpack.
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require('@/mocks/mocks.server');
+    const { worker } = require('@/mocks/mocks.browser');
     worker.start();
-    // await import('@/mocks/mocks.browser').then(({ worker }) => {
-    //   worker.start();
-    // });
   } else {
     log.warn('API mocking enabled (server).');
 
@@ -34,8 +36,5 @@ if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { server } = require('@/mocks/mocks.server');
     server.listen();
-    // await import('@/mocks/mocks.server').then(({ server }) => {
-    //   server.listen();
-    // });
   }
 }
