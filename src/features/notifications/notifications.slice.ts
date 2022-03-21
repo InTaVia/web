@@ -7,7 +7,10 @@ import type { RootState } from '@/features/common/store';
 export interface Notification {
   id: string;
   type: 'informative' | 'negative' | 'notice' | 'positive';
+  /** @default 'alert' */
+  role?: 'alert' | 'status';
   message: ReactNode;
+  action?: ReactNode;
 }
 
 interface NotificationsState {

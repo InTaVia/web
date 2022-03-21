@@ -63,7 +63,13 @@ function Notification(props: NotificationProps): JSX.Element {
       open={isVisible}
       TransitionProps={{ onExited }}
     >
-      <Alert onClose={onClose} severity={severity} variant="filled">
+      <Alert
+        action={notification.action}
+        onClose={onClose}
+        role={notification.role}
+        severity={severity}
+        variant="filled"
+      >
         {notification.message}
       </Alert>
     </Snackbar>
