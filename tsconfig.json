@@ -15,12 +15,20 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.config.mjs", "stories/main.cjs"],
+  "include": [
+    "next-env.d.ts",
+    "app.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.config.mjs",
+    "stories/main.cjs"
+  ],
   "exclude": ["node_modules", "out", "storybook-static"]
 }
