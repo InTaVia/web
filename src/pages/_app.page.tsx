@@ -9,9 +9,9 @@ import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 
-
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
+import { Notifications } from '@/features/notifications/Notifications';
 import { log } from '@/lib/log';
 import { theme } from '@/styles/theme';
 
@@ -36,6 +36,7 @@ export default function App(props: AppProps): JSX.Element {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Component {...pageProps} />
+            <Notifications />
           </ThemeProvider>
         </CacheProvider>
       </Provider>
