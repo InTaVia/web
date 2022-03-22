@@ -9,8 +9,10 @@ import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 
+
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
+import { log } from '@/lib/log';
 import { theme } from '@/styles/theme';
 
 const clientSideEmotionCache = createEmotionCache();
@@ -39,4 +41,27 @@ export default function App(props: AppProps): JSX.Element {
       </Provider>
     </Fragment>
   );
+}
+
+if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
+  // Top level await is currently stil experimental in webpack.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { seed } = require('@/mocks/db');
+  seed();
+
+  if (typeof window !== 'undefined') {
+    log.warn('API mocking enabled (client).');
+
+    // Top level await is currently stil experimental in webpack.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { worker } = require('@/mocks/mocks.browser');
+    worker.start();
+  } else {
+    log.warn('API mocking enabled (server).');
+
+    // Top level await is currently stil experimental in webpack.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { server } = require('@/mocks/mocks.server');
+    server.listen();
+  }
 }

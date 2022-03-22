@@ -37,7 +37,7 @@ const config = {
       ],
     });
 
-    console.warn('Indexing by search engines is disallowed.');
+    console.warn('⚠️ Indexing by search engines is disallowed.');
 
     return headers;
   },

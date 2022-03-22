@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
+    "@faker-js/faker": "^6.0.0",
     "@jest/types": "^27.5.1",
     "@next/eslint-plugin-next": "^12.1.0",
     "@storybook/addon-a11y": "^6.4.19",
@@ -82,7 +83,9 @@
     "eslint-plugin-storybook": "^0.5.7",
     "eslint-plugin-testing-library": "^5.1.0",
     "jest": "^27.5.1",
+    "jest-watch-typeahead": "^1.0.0",
     "lint-staged": "^12.3.5",
+    "match-sorter": "^6.3.1",
     "msw": "^0.39.2",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.8",
@@ -171,7 +174,15 @@
         }
       ],
       "no-implicit-coercion": "error",
-      "no-param-reassign": "error",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": [
+            "state"
+          ]
+        }
+      ],
       "no-multiple-empty-lines": "error",
       "no-restricted-globals": [
         "error",
@@ -191,6 +202,7 @@
       ],
       "@typescript-eslint/consistent-type-exports": "error",
       "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/no-unnecessary-condition": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -282,7 +294,8 @@
           "storybook/use-storybook-testing-library": "error"
         }
       }
-    ]
+    ],
+    "ignorePatterns": "public/mockServiceWorker.js"
   },
   "lint-staged": {
     "*.@(cjs|js|mjs|ts|tsx)": [
@@ -294,6 +307,9 @@
       "prettier --write"
     ],
     "*.@(json|md)": "prettier --write"
+  },
+  "msw": {
+    "workerDirectory": "public"
   },
   "postcss": {
     "plugins": {

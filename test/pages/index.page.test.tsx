@@ -27,9 +27,7 @@ describe('HomePage', () => {
   it('should render welcome message', () => {
     render(<HomePage />, { wrapper: createWrapper() });
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to intavia!/i,
-    });
+    const heading = screen.getByRole('heading', { name: /welcome to intavia!/i });
 
     expect(heading).toBeInTheDocument();
   });
