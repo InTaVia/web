@@ -3,8 +3,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
+import notificationsReducer from '@/features/notifications/notifications.slice';
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    notifications: notificationsReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;
