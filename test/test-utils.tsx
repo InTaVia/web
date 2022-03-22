@@ -14,7 +14,6 @@ export interface CreateWrapperArgs {
   router?: Partial<NextRouter>;
 }
 
-// TODO: should store be passed in as arg?
 export function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
   const { router } = args;
 
