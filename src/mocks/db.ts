@@ -20,7 +20,7 @@ function createTable<T extends { id: number | string }>() {
       }
       return matchSorter(entities, q, { keys: ['name'] });
     },
-    findOne(id: T['id']) {
+    findById(id: T['id']) {
       return table.get(id);
     },
     create(entity: T) {
