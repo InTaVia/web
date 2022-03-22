@@ -11,8 +11,6 @@ import {
   selectNotifications,
 } from '@/features/notifications/notifications.slice';
 
-// TODO: material design only allows one visible notification. do we need multiple?
-
 const autoHideDuration = 7500;
 
 export function Notifications(): JSX.Element {
