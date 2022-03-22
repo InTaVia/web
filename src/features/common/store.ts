@@ -5,6 +5,7 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
 import entitiesReducer from '@/features/common/entities.slice';
+import errorMiddleware from '@/features/common/error.middleware';
 import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer from '@/features/notifications/notifications.slice';
 
@@ -15,7 +16,7 @@ export const store = configureStore({
     [intaviaApiService.reducerPath]: intaviaApiService.reducer,
   },
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(intaviaApiService.middleware);
+    return getDefaultMiddleware().concat(intaviaApiService.middleware, errorMiddleware);
   },
 });
 
