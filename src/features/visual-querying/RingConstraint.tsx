@@ -45,7 +45,7 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
       fillColor = 'green';
       break;
     default:
-      fillColor = 'red';
+      fillColor = 'pink';
       break;
   }
 

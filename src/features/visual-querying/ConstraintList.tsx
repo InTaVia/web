@@ -16,7 +16,7 @@ export function ConstraintList(props: ConstraintListProps) {
   const dispatch = useAppDispatch();
 
   function handleClick(e: MouseEvent<HTMLElement>) {
-    const type = (e.currentTarget.innerText + 'Constraint') as ConstraintType;
+    const type = e.currentTarget.innerText as ConstraintType;
     props.setIsConstListShown(false);
 
     dispatch(
