@@ -27,6 +27,20 @@ export const handlers = [
       );
     },
   ),
+  rest.get<never, { id: Person['id'] }, Person>(
+    String(createUrl({ pathname: '/api/persons/:id', baseUrl })),
+    (request, response, context) => {
+      const id = request.params.id;
+
+      const person = db.person.findById(id);
+
+      if (person == null) {
+        return response(context.status(404), context.delay());
+      }
+
+      return response(context.status(200), context.delay(), context.json(person));
+    },
+  ),
   rest.get<never, never, { page: number; pages: number; entities: Array<Place> }>(
     String(createUrl({ pathname: '/api/places', baseUrl })),
     (request, response, context) => {
@@ -45,6 +59,20 @@ export const handlers = [
         context.delay(),
         context.json({ page, pages, q, entities }),
       );
+    },
+  ),
+  rest.get<never, { id: Place['id'] }, Place>(
+    String(createUrl({ pathname: '/api/places/:id', baseUrl })),
+    (request, response, context) => {
+      const id = request.params.id;
+
+      const place = db.place.findById(id);
+
+      if (place == null) {
+        return response(context.status(404), context.delay());
+      }
+
+      return response(context.status(200), context.delay(), context.json(place));
     },
   ),
 ];

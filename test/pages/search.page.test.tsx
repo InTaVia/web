@@ -31,7 +31,6 @@ describe('SearchPage', () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const searchResults = await screen.findAllByRole('listitem');
-    expect(searchResults).toHaveLength(10);
     expect(searchResults[0]).toHaveTextContent(/ron dare/i);
     expect(searchResults[1]).toHaveTextContent(/kristopher schmeler v/i);
   });
@@ -49,8 +48,7 @@ describe('SearchPage', () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const errorMessage = await screen.findByRole('alert');
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(/error/i);
+    expect(errorMessage).toHaveTextContent(/rejected/i);
   });
 
   it('should update search params when search textfield value changed', () => {
@@ -86,19 +84,28 @@ describe('SearchPage', () => {
     expect(searchField).toHaveValue('abcdef');
   });
 
-  it('should add search results pagination links', () => {
+  it('should add search results pagination buttons', async () => {
+    const push = jest.fn();
+
     render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'abcdef' } } }),
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'so' }, push } }),
     });
 
-    const nextLink = screen.getByRole('link', { name: /next/i });
-    expect(nextLink).toHaveAttribute('href', '/search?page=2&q=abcdef');
+    const link = await screen.findByRole('link', { name: /go to page 2/i });
+    expect(link).toHaveAttribute('href', '/search?page=2&q=so');
+  });
+
+  it('should display loading indicator', () => {
+    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+
+    const loading = screen.getByRole('status');
+    expect(loading).toHaveTextContent(/loading/i);
   });
 
   it('should display search results count', async () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
-    const loading = await screen.findByText(/results: 10/i);
-    expect(loading).toBeInTheDocument();
+    const count = await screen.findByText(/results: 10/i);
+    expect(count).toBeInTheDocument();
   });
 });

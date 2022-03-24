@@ -20,6 +20,7 @@ const config = {
   features: {
     babelModeV7: true,
     breakingChangesV7: true,
+    emotionAlias: false,
     storyStoreV7: true,
   },
   framework: '@storybook/react',
@@ -31,7 +32,9 @@ const config = {
   staticDirs: ['../public'],
   stories: ['../**/*.stories.tsx'],
   webpackFinal(config) {
+    // eslint-disable-next-line no-param-reassign
     config.resolve = config.resolve ?? {};
+    // eslint-disable-next-line no-param-reassign
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.join(process.cwd(), 'src'),
