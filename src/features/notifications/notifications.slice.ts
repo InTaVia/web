@@ -6,6 +6,7 @@ import type { RootState } from '@/features/common/store';
 
 export interface Notification {
   id: string;
+  timestamp: number;
   type: 'informative' | 'negative' | 'notice' | 'positive';
   /** @default 'alert' */
   role?: 'alert' | 'status';
@@ -15,24 +16,25 @@ export interface Notification {
 }
 
 interface NotificationsState {
-  notifications: Array<Notification>;
+  notifications: Record<Notification['id'], Notification>;
 }
 
 const initialState: NotificationsState = {
-  notifications: [],
+  notifications: {},
 };
 
 const slice = createSlice({
   name: 'notifications',
   initialState,
   reducers: {
-    addNotification(state, action: PayloadAction<Optional<Notification, 'id'>>) {
-      state.notifications.push({ id: String(Date.now()), ...action.payload });
+    addNotification(state, action: PayloadAction<Optional<Notification, 'id' | 'timestamp'>>) {
+      const id = action.payload.id ?? String(Date.now());
+      const timestamp = Date.now();
+      state.notifications[id] = { id, timestamp, ...action.payload };
     },
     removeNotification(state, action: PayloadAction<Notification['id']>) {
-      state.notifications = state.notifications.filter((notification) => {
-        return notification.id !== action.payload;
-      });
+      const id = action.payload;
+      delete state.notifications[id];
     },
     clearNotifications() {
       return initialState;
@@ -44,5 +46,5 @@ export const { addNotification, removeNotification, clearNotifications } = slice
 export default slice.reducer;
 
 export function selectNotifications(state: RootState) {
-  return state.notifications.notifications;
+  return Object.values(state.notifications.notifications);
 }
