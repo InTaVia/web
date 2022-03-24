@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/features/common/store';
 
 export enum ConstraintType {
-  Date = 'DateConstraint',
-  Place = 'PlaceConstraint',
+  Date = 'Date',
+  Place = 'Place',
 }
 
 export type Constraint = {
