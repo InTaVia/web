@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import entitiesReducer from '@/features/common/entities.slice';
 import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer from '@/features/notifications/notifications.slice';
+import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 
 export const store = configureStore({
   reducer: {
     entities: entitiesReducer,
     notifications: notificationsReducer,
+    visualQuerying: visualQueryingReducer,
     [intaviaApiService.reducerPath]: intaviaApiService.reducer,
   },
   middleware(getDefaultMiddleware) {
