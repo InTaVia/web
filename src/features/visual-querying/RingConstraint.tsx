@@ -31,6 +31,11 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
   p.arc(0, 0, outerRadius, endAngle, startAngle, true);
   p.closePath();
 
+  // Define textPath for label
+  const textPath = path();
+  textPath.moveTo(Math.cos(startAngle) * innerRadius, Math.sin(startAngle) * innerRadius);
+  textPath.arc(0, 0, innerRadius, startAngle, endAngle, false);
+
   let fillColor = 'red';
   switch (type) {
     case ConstraintType.Date:
@@ -46,12 +51,22 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
 
   return (
     <g>
+      <defs>
+        <path d={textPath.toString()} id={`textPath-${props.idx}`} />
+      </defs>
+
       <path
         d={p.toString()}
         fill={fillColor}
         style={{ cursor: 'pointer' }}
         onClick={toggleOpenConstraint}
       />
+
+      <text dy={-9} pointerEvents="none">
+        <textPath xlinkHref={`#textPath-${props.idx}`} textAnchor="middle" startOffset="50%">
+          {props.type}
+        </textPath>
+      </text>
     </g>
   );
 }
