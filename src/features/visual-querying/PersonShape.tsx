@@ -22,7 +22,7 @@ export function PersonShape(): JSX.Element {
 
   const ringDims = constraints.map((constraint, idx, arr) => {
     const delta = 360 / arr.length;
-    const padding = 10;
+    const padding = 0;
     const startAngle = idx * delta;
     const endAngle = (idx + 1) * delta - padding;
 
