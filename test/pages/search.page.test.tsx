@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 
 import { createUrl } from '@/lib/create-url';
-import { seed as seedDatabase } from '@/mocks/db';
+import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
 import { server } from '@/mocks/mocks.server';
 import SearchPage from '@/pages/search.page';
 import { baseUrl } from '~/config/intavia.config';
@@ -19,6 +19,7 @@ beforeEach(() => {
 
 afterEach(() => {
   server.resetHandlers();
+  clearDatabase();
 });
 
 afterAll(() => {
