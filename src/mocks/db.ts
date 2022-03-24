@@ -26,6 +26,12 @@ function createTable<T extends { id: number | string }>() {
     create(entity: T) {
       table.set(entity.id, entity);
     },
+    count() {
+      return table.size;
+    },
+    clear() {
+      table.clear();
+    },
   };
 
   return methods;
@@ -49,4 +55,9 @@ export function seed() {
       lng: Number(faker.address.latitude()),
     });
   });
+}
+
+export function clear() {
+  db.person.clear();
+  db.place.clear();
 }
