@@ -2,11 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 
-import { clearEntities } from '@/features/common/entities.slice';
-import intaviaApiService from '@/features/common/intavia-api.service';
-import { store } from '@/features/common/store';
 import { createUrl } from '@/lib/create-url';
-import { seed as seedDatabase } from '@/mocks/db';
+import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
 import { server } from '@/mocks/mocks.server';
 import SearchPage from '@/pages/search.page';
 import { baseUrl } from '~/config/intavia.config';
@@ -22,8 +19,7 @@ beforeEach(() => {
 
 afterEach(() => {
   server.resetHandlers();
-  store.dispatch(intaviaApiService.util.resetApiState());
-  store.dispatch(clearEntities());
+  clearDatabase();
 });
 
 afterAll(() => {
@@ -102,7 +98,7 @@ describe('SearchPage', () => {
   it('should display search results count', async () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
-    const header = await screen.findByRole('banner');
-    expect(header).toHaveTextContent(/results: 10/i);
+    const loading = await screen.findByText(/results: 10/i);
+    expect(loading).toBeInTheDocument();
   });
 });
