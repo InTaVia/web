@@ -349,8 +349,7 @@
           "storybook/use-storybook-testing-library": "error"
         }
       }
-    ],
-    "ignorePatterns": "public/mockServiceWorker.js"
+    ]
   },
   "lint-staged": {
     "*.@(cjs|js|mjs|ts|tsx)": [

@@ -45,6 +45,9 @@ cypress/downloads/
 cypress/screenshots/
 cypress/videos/
 
+# auto-generated
+public/mockServiceWorker.js
+
 ## .dockerignore ##
 
 # git
