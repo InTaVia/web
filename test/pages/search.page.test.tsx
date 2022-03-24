@@ -98,7 +98,7 @@ describe('SearchPage', () => {
   it('should display search results count', async () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
-    const header = await screen.findByRole('banner');
-    expect(header).toHaveTextContent(/results: 10/i);
+    const loading = await screen.findByText(/results: 10/i);
+    expect(loading).toBeInTheDocument();
   });
 });
