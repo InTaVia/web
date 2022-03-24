@@ -2,9 +2,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 
-import { clearEntities } from '@/features/common/entities.slice';
-import intaviaApiService from '@/features/common/intavia-api.service';
-import { store } from '@/features/common/store';
 import { createUrl } from '@/lib/create-url';
 import { seed as seedDatabase } from '@/mocks/db';
 import { server } from '@/mocks/mocks.server';
@@ -22,8 +19,6 @@ beforeEach(() => {
 
 afterEach(() => {
   server.resetHandlers();
-  store.dispatch(intaviaApiService.util.resetApiState());
-  store.dispatch(clearEntities());
 });
 
 afterAll(() => {

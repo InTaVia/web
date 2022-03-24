@@ -9,19 +9,26 @@ import errorMiddleware from '@/features/common/error.middleware';
 import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer from '@/features/notifications/notifications.slice';
 
-export const store = configureStore({
-  reducer: {
-    entities: entitiesReducer,
-    notifications: notificationsReducer,
-    [intaviaApiService.reducerPath]: intaviaApiService.reducer,
-  },
-  middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(intaviaApiService.middleware, errorMiddleware);
-  },
-});
+export function configureAppStore() {
+  const store = configureStore({
+    reducer: {
+      entities: entitiesReducer,
+      notifications: notificationsReducer,
+      [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+    },
+    middleware(getDefaultMiddleware) {
+      return getDefaultMiddleware().concat(intaviaApiService.middleware, errorMiddleware);
+    },
+  });
+
+  return store;
+}
+
+export const store = configureAppStore();
 
 setupListeners(store.dispatch);
 
+export type AppStore = typeof store;
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
