@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 
 import type { AppStore } from '@/features/common/store';
 import { configureAppStore } from '@/features/common/store';
+import { Notifications } from '@/features/notifications/Notifications';
 import { createMockRouter } from '@/mocks/create-mock-router';
 
 interface WrapperProps {
@@ -27,7 +28,10 @@ export function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
 
     return (
       <RouterContext.Provider value={mockRouter}>
-        <Provider store={mockStore}>{children}</Provider>
+        <Provider store={mockStore}>
+          {children}
+          <Notifications />
+        </Provider>
       </RouterContext.Provider>
     );
   }
