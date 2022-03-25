@@ -25,6 +25,7 @@ export function SearchResultsPagination(): JSX.Element | null {
           <Link
             href={{ query: getSearchParams({ ...searchFilters, page: item.page ?? undefined }) }}
             passHref
+            shallow
           >
             <PaginationItem {...item} />
           </Link>

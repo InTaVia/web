@@ -8,7 +8,7 @@ import { SearchResultsList } from '@/features/search/SearchResultsList';
 
 export default function SearchPage(): JSX.Element {
   return (
-    <Container component="main" maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
+    <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
       <SearchPageHeader />
       <Paper>
         <SearchForm />
