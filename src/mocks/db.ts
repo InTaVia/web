@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { matchSorter } from 'match-sorter';
 
-import type { Person, Place } from '@/features/common/entity.model';
+import type { Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
 
 export const db = {
@@ -23,24 +23,66 @@ function createTable<T extends { id: number | string }>() {
     findById(id: T['id']) {
       return table.get(id);
     },
+    getKeyByIdx(idx: number) {
+      return Array.from(table.keys())[idx];
+    },
+    getKeySet() {
+      return Array.from(table.keys());
+    },
     create(entity: T) {
       table.set(entity.id, entity);
+    },
+    addRelationToHistory(id: string, newRelation: Relation) {
+      if ('history' in table.get(id)) {
+        table.set(id, { ...table.get(id), history: [...table.get(id).history, newRelation] });
+      }
     },
   };
 
   return methods;
 }
 
+function createLifeSpanRelations(): Array<Relation> {
+  const dateOfBirth = faker.date.between('1800-01-01T00:00:00.000Z', '1930-12-31T00:00:00.000Z');
+  const dateOfDeath = faker.date.future(90, dateOfBirth.toISOString());
+  return [
+    {
+      type: 'beginning',
+      date: dateOfBirth,
+      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+    },
+    {
+      type: 'end',
+      date: dateOfDeath,
+      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+    },
+  ];
+}
+
+function createPersonRelation(type: string, targetId: string, date?: Date): Relation {
+  if (date === undefined) {
+    return {
+      type: type,
+      targetId: targetId,
+      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+    };
+  } else {
+    return {
+      type: type,
+      date: date,
+      targetId: targetId,
+      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+    };
+  }
+}
+
 export function seed() {
   faker.seed(123);
+  faker.locale = 'de_AT';
+  const occupations = faker.helpers.uniqueArray(faker.name.jobType, 10);
+  const categories = faker.helpers.uniqueArray(faker.music.genre, 10);
 
   times(100).forEach(() => {
-    db.person.create({
-      id: faker.datatype.uuid(),
-      kind: 'person',
-      name: faker.name.findName(),
-    });
-
     db.place.create({
       id: faker.datatype.uuid(),
       kind: 'place',
@@ -48,5 +90,60 @@ export function seed() {
       lat: Number(faker.address.longitude()),
       lng: Number(faker.address.latitude()),
     });
+  });
+
+  times(100).forEach(() => {
+    db.person.create({
+      id: faker.datatype.uuid(),
+      kind: 'person',
+      name: faker.name.findName(),
+      gender: faker.name.gender(true),
+      categories: faker.helpers.uniqueArray(categories, faker.datatype.number({ min: 1, max: 4 })),
+      occupation: faker.helpers.uniqueArray(occupations, faker.datatype.number({ min: 1, max: 3 })),
+      description: faker.lorem.paragraph(6),
+      history: createLifeSpanRelations(),
+    });
+  });
+
+  const personIds = db.person.getKeySet();
+  const selectedPersonIds = faker.helpers.uniqueArray(personIds, 60);
+
+  selectedPersonIds.forEach((personId) => {
+    const sourcePerson = db.person.findById(personId);
+    const targetPersonId = faker.random.arrayElement(personIds);
+    const targetPerson = db.person.findById(personId);
+    const sourcePersonDateOfBirth = sourcePerson.history.find((item) => {
+      return item.type === 'beginning';
+    }).date;
+    const sourcePersonDateOfDeath = sourcePerson.history.find((item) => {
+      return item.type === 'end';
+    }).date;
+    const targetPersonDateOfBirth = targetPerson.history.find((item) => {
+      return item.type === 'beginning';
+    }).date;
+    const targetPersonDateOfDeath = targetPerson.history.find((item) => {
+      return item.type === 'end';
+    }).date;
+
+    let relationType = undefined;
+    let relationDate = undefined;
+
+    if (
+      sourcePersonDateOfBirth <= targetPersonDateOfDeath &&
+      targetPersonDateOfBirth <= sourcePersonDateOfDeath
+    ) {
+      //overlapping dates
+      relationType = 'was in contact with';
+      const start = new Date(Math.max(...[sourcePersonDateOfBirth, targetPersonDateOfBirth]));
+      const end = new Date(Math.min(...[sourcePersonDateOfDeath, targetPersonDateOfDeath]));
+      relationDate = faker.date.between(start.toISOString(), end.toISOString());
+    } else {
+      relationType = 'was related to';
+    }
+
+    db.person.addRelationToHistory(
+      personId,
+      createPersonRelation(relationType, targetPersonId, relationDate),
+    );
   });
 }
