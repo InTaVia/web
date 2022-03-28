@@ -1,12 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 
-import { createUrl } from '@/lib/create-url';
+import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
 import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
-import { server } from '@/mocks/mocks.server';
+import { rest, server } from '@/mocks/mocks.server';
 import SearchPage from '@/pages/search.page';
-import { baseUrl } from '~/config/intavia.config';
 import { createWrapper } from '~/test/test-utils';
 
 beforeAll(() => {
@@ -38,7 +36,7 @@ describe('SearchPage', () => {
   it('should display error message when request failed', async () => {
     server.use(
       rest.get(
-        String(createUrl({ pathname: '/api/persons', baseUrl })),
+        String(createIntaviaApiUrl({ pathname: '/api/persons' })),
         (request, response, context) => {
           return response(context.status(500));
         },
