@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
-    "@faker-js/faker": "^6.0.0",
+    "@faker-js/faker": "^6.1.1",
     "@jest/types": "^27.5.1",
     "@next/eslint-plugin-next": "^12.1.0",
     "@storybook/addon-a11y": "^6.4.19",
