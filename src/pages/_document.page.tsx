@@ -23,14 +23,14 @@ export default class Document extends NextDocument<{ emotionStyleTags: Array<JSX
   }
 }
 
-Document.getInitialProps = async function getInitialProps(ctx) {
-  const originalRenderPage = ctx.renderPage;
+Document.getInitialProps = async function getInitialProps(context) {
+  const originalRenderPage = context.renderPage;
 
   const cache = createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
   // eslint-disable-next-line no-param-reassign
-  ctx.renderPage = () => {
+  context.renderPage = () => {
     return originalRenderPage({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       enhanceApp(App: any) {
@@ -41,7 +41,7 @@ Document.getInitialProps = async function getInitialProps(ctx) {
     });
   };
 
-  const initialProps = await NextDocument.getInitialProps(ctx);
+  const initialProps = await NextDocument.getInitialProps(context);
 
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => {

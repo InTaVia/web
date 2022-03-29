@@ -37,6 +37,12 @@ function createTable<T extends Entity>() {
       }
       entity.history.push(relation);
     },
+    count() {
+      return table.size;
+    },
+    clear() {
+      table.clear();
+    },
   };
 
   return methods;
@@ -164,4 +170,9 @@ export function seed() {
       createPersonRelation(relationType, targetPersonId, relationDate),
     );
   });
+}
+
+export function clear() {
+  db.person.clear();
+  db.place.clear();
 }

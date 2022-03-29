@@ -1,15 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 
-import { clearEntities } from '@/features/common/entities.slice';
-import intaviaApiService from '@/features/common/intavia-api.service';
-import { store } from '@/features/common/store';
-import { createUrl } from '@/lib/create-url';
-import { seed as seedDatabase } from '@/mocks/db';
-import { server } from '@/mocks/mocks.server';
+import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
+import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
+import { rest, server } from '@/mocks/mocks.server';
 import SearchPage from '@/pages/search.page';
-import { baseUrl } from '~/config/intavia.config';
 import { createWrapper } from '~/test/test-utils';
 
 beforeAll(() => {
@@ -22,8 +17,7 @@ beforeEach(() => {
 
 afterEach(() => {
   server.resetHandlers();
-  store.dispatch(intaviaApiService.util.resetApiState());
-  store.dispatch(clearEntities());
+  clearDatabase();
 });
 
 afterAll(() => {
@@ -35,7 +29,6 @@ describe('SearchPage', () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const searchResults = await screen.findAllByRole('listitem');
-    expect(searchResults).toHaveLength(10);
     expect(searchResults[0]).toHaveTextContent(/ron dare/i);
     expect(searchResults[1]).toHaveTextContent(/kristopher schmeler v/i);
   });
@@ -43,7 +36,7 @@ describe('SearchPage', () => {
   it('should display error message when request failed', async () => {
     server.use(
       rest.get(
-        String(createUrl({ pathname: '/api/persons', baseUrl })),
+        String(createIntaviaApiUrl({ pathname: '/api/persons' })),
         (request, response, context) => {
           return response(context.status(500));
         },
@@ -53,8 +46,7 @@ describe('SearchPage', () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const errorMessage = await screen.findByRole('alert');
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent(/error/i);
+    expect(errorMessage).toHaveTextContent(/rejected/i);
   });
 
   it('should update search params when search textfield value changed', () => {
@@ -90,19 +82,28 @@ describe('SearchPage', () => {
     expect(searchField).toHaveValue('abcdef');
   });
 
-  it('should add search results pagination links', () => {
+  it('should add search results pagination buttons', async () => {
+    const push = jest.fn();
+
     render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'abcdef' } } }),
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'so' }, push } }),
     });
 
-    const nextLink = screen.getByRole('link', { name: /next/i });
-    expect(nextLink).toHaveAttribute('href', '/search?page=2&q=abcdef');
+    const link = await screen.findByRole('link', { name: /go to page 2/i });
+    expect(link).toHaveAttribute('href', '/search?page=2&q=so');
+  });
+
+  it('should display loading indicator', () => {
+    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+
+    const loading = screen.getByRole('status');
+    expect(loading).toHaveTextContent(/loading/i);
   });
 
   it('should display search results count', async () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
-    const header = await screen.findByRole('banner');
-    expect(header).toHaveTextContent(/results: 10/i);
+    const count = await screen.findByText(/results: 10/i);
+    expect(count).toBeInTheDocument();
   });
 });

@@ -56,6 +56,7 @@ function Notification(props: NotificationProps): JSX.Element {
 
   return (
     <Snackbar
+      key={notification.timestamp}
       autoHideDuration={autoHideDuration}
       onClose={onClose}
       open={isVisible}

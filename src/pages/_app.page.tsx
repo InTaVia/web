@@ -11,6 +11,8 @@ import { Provider } from 'react-redux';
 
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
+import { PageLayout } from '@/features/layouts/PageLayout';
+import { Notifications } from '@/features/notifications/Notifications';
 import { log } from '@/lib/log';
 import { theme } from '@/styles/theme';
 
@@ -34,7 +36,10 @@ export default function App(props: AppProps): JSX.Element {
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Component {...pageProps} />
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
+            <Notifications />
           </ThemeProvider>
         </CacheProvider>
       </Provider>
@@ -44,23 +49,23 @@ export default function App(props: AppProps): JSX.Element {
 
 if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
   // Top level await is currently stil experimental in webpack.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { seed } = require('@/mocks/db');
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
+  const { seed } = require('@/mocks/db') as typeof import('@/mocks/db');
   seed();
 
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
     // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require('@/mocks/mocks.browser');
-    worker.start();
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
+    const { worker } = require('@/mocks/mocks.browser') as typeof import('@/mocks/mocks.browser');
+    void worker.start({ onUnhandledRequest: 'bypass' });
   } else {
     log.warn('API mocking enabled (server).');
 
     // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { server } = require('@/mocks/mocks.server');
-    server.listen();
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
+    const { server } = require('@/mocks/mocks.server') as typeof import('@/mocks/mocks.server');
+    server.listen({ onUnhandledRequest: 'bypass' });
   }
 }
