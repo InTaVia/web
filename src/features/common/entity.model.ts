@@ -4,9 +4,9 @@ export interface EntityBase {
 
 export interface Relation {
   type: string;
-  targetId?: string;
+  targetId?: Entity['id'];
   date?: Date;
-  placeId?: string;
+  placeId?: Place['id'];
 }
 
 export interface Person extends EntityBase {

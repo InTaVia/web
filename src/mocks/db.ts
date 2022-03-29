@@ -112,18 +112,27 @@ export function seed() {
     const sourcePerson = db.person.findById(personId);
     const targetPersonId = faker.random.arrayElement(personIds);
     const targetPerson = db.person.findById(personId);
-    const sourcePersonDateOfBirth = sourcePerson.history.find((item) => {
+    const sourcePersonDateOfBirth = sourcePerson?.history?.find((item) => {
       return item.type === 'beginning';
-    }).date;
-    const sourcePersonDateOfDeath = sourcePerson.history.find((item) => {
+    })?.date;
+    const sourcePersonDateOfDeath = sourcePerson?.history?.find((item) => {
       return item.type === 'end';
-    }).date;
-    const targetPersonDateOfBirth = targetPerson.history.find((item) => {
+    })?.date;
+    const targetPersonDateOfBirth = targetPerson?.history?.find((item) => {
       return item.type === 'beginning';
-    }).date;
-    const targetPersonDateOfDeath = targetPerson.history.find((item) => {
+    })?.date;
+    const targetPersonDateOfDeath = targetPerson?.history?.find((item) => {
       return item.type === 'end';
-    }).date;
+    })?.date;
+
+    if (
+      sourcePersonDateOfBirth == null ||
+      sourcePersonDateOfDeath == null ||
+      targetPersonDateOfBirth == null ||
+      targetPersonDateOfDeath == null
+    ) {
+      return;
+    }
 
     let relationType = undefined;
     let relationDate = undefined;
@@ -134,8 +143,8 @@ export function seed() {
     ) {
       //overlapping dates
       relationType = 'was in contact with';
-      const start = new Date(Math.max(...[sourcePersonDateOfBirth, targetPersonDateOfBirth]));
-      const end = new Date(Math.min(...[sourcePersonDateOfDeath, targetPersonDateOfDeath]));
+      const start = new Date(Math.max(sourcePersonDateOfBirth.getTime(), targetPersonDateOfBirth.getTime()));
+      const end = new Date(Math.min(sourcePersonDateOfDeath.getTime(), targetPersonDateOfDeath.getTime()));
       relationDate = faker.date.between(start.toISOString(), end.toISOString());
     } else {
       relationType = 'was related to';
