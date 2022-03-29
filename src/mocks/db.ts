@@ -87,7 +87,7 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
 }
 
 export function seed() {
-  faker.seed(123);
+  faker.seed(123456);
   faker.locale = 'de_AT';
   const occupations = faker.helpers.uniqueArray(faker.name.jobType, 10);
   const categories = faker.helpers.uniqueArray(faker.music.genre, 10);

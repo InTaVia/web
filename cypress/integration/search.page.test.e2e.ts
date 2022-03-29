@@ -36,7 +36,7 @@ describe('SearchPage', () => {
   });
 
   it('should update search results when search form submitted via button', () => {
-    const searchTerm = 'sonya';
+    const searchTerm = 'emily';
 
     cy.findByRole('searchbox').type(searchTerm);
     cy.findByRole('button', { name: 'Search' }).click();
@@ -46,7 +46,7 @@ describe('SearchPage', () => {
   });
 
   it('should update search results when search form submitted via keyboard', () => {
-    const searchTerm = 'sonya';
+    const searchTerm = 'emily';
 
     cy.findByRole('searchbox').type(searchTerm + '{enter}');
     cy.location('search').should('include', `q=${searchTerm}`);
@@ -55,7 +55,7 @@ describe('SearchPage', () => {
   });
 
   it('should populate search field with search term from search params', () => {
-    const searchTerm = 'sonya';
+    const searchTerm = 'emily';
 
     cy.visit(`/search?q=${searchTerm}`);
     cy.findByRole('searchbox').should('have.value', searchTerm);

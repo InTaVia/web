@@ -29,8 +29,8 @@ describe('SearchPage', () => {
     render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
 
     const searchResults = await screen.findAllByRole('listitem');
-    expect(searchResults[0]).toHaveTextContent(/ron dare/i);
-    expect(searchResults[1]).toHaveTextContent(/kristopher schmeler v/i);
+    expect(searchResults[0]).toHaveTextContent(/deborah knoll v/i);
+    expect(searchResults[1]).toHaveTextContent(/susan scheurer/i);
   });
 
   it('should display error message when request failed', async () => {
@@ -64,13 +64,13 @@ describe('SearchPage', () => {
 
   it('should use search params in search query', async () => {
     render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'sonya' } } }),
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'emily' } } }),
     });
 
     const searchResults = await screen.findAllByRole('listitem');
     // eslint-disable-next-line jest-dom/prefer-in-document
     expect(searchResults).toHaveLength(1);
-    expect(searchResults[0]).toHaveTextContent(/sonya lubowitz i/i);
+    expect(searchResults[0]).toHaveTextContent(/emily abicht/i);
   });
 
   it('should use search params to prepopulate search textfield', () => {
@@ -86,11 +86,11 @@ describe('SearchPage', () => {
     const push = jest.fn();
 
     render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'so' }, push } }),
+      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'em' }, push } }),
     });
 
     const link = await screen.findByRole('link', { name: /go to page 2/i });
-    expect(link).toHaveAttribute('href', '/search?page=2&q=so');
+    expect(link).toHaveAttribute('href', '/search?page=2&q=em');
   });
 
   it('should display loading indicator', () => {
