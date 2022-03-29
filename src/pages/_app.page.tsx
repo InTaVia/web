@@ -48,24 +48,18 @@ export default function App(props: AppProps): JSX.Element {
 }
 
 if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
-  // Top level await is currently stil experimental in webpack.
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
-  const { seed } = require('@/mocks/db') as typeof import('@/mocks/db');
+  const { seed } = await import('@/mocks/db');
   seed();
 
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
-    // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
-    const { worker } = require('@/mocks/mocks.browser') as typeof import('@/mocks/mocks.browser');
+    const { worker } = await import('@/mocks/mocks.browser');
     void worker.start({ onUnhandledRequest: 'bypass' });
   } else {
     log.warn('API mocking enabled (server).');
 
-    // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports, @typescript-eslint/no-var-requires
-    const { server } = require('@/mocks/mocks.server') as typeof import('@/mocks/mocks.server');
+    const { server } = await import('@/mocks/mocks.server');
     server.listen({ onUnhandledRequest: 'bypass' });
   }
 }
