@@ -32,6 +32,7 @@ export function SearchForm(): JSX.Element {
       <InputBase
         aria-label="Search"
         defaultValue={searchFilters.q}
+        key={searchFilters.q}
         name="q"
         placeholder="Search term"
         type="search"

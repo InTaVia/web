@@ -2,13 +2,12 @@ import { rest } from 'msw';
 
 import type { Person, Place } from '@/features/common/entity.model';
 import { clamp } from '@/lib/clamp';
-import { createUrl } from '@/lib/create-url';
+import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
 import { db } from '@/mocks/db';
-import { baseUrl } from '~/config/intavia.config';
 
 export const handlers = [
   rest.get<never, never, { page: number; pages: number; entities: Array<Person> }>(
-    String(createUrl({ pathname: '/api/persons', baseUrl })),
+    String(createIntaviaApiUrl({ pathname: '/api/persons' })),
     (request, response, context) => {
       const q = request.url.searchParams.get('q')?.trim() ?? undefined;
       const persons = db.person.findMany(q);
@@ -28,7 +27,7 @@ export const handlers = [
     },
   ),
   rest.get<never, { id: Person['id'] }, Person>(
-    String(createUrl({ pathname: '/api/persons/:id', baseUrl })),
+    String(createIntaviaApiUrl({ pathname: '/api/persons/:id' })),
     (request, response, context) => {
       const id = request.params.id;
 
@@ -42,7 +41,7 @@ export const handlers = [
     },
   ),
   rest.get<never, never, { page: number; pages: number; entities: Array<Place> }>(
-    String(createUrl({ pathname: '/api/places', baseUrl })),
+    String(createIntaviaApiUrl({ pathname: '/api/places' })),
     (request, response, context) => {
       const q = request.url.searchParams.get('q')?.trim() ?? undefined;
       const places = db.place.findMany(q);
@@ -62,7 +61,7 @@ export const handlers = [
     },
   ),
   rest.get<never, { id: Place['id'] }, Place>(
-    String(createUrl({ pathname: '/api/places/:id', baseUrl })),
+    String(createIntaviaApiUrl({ pathname: '/api/places/:id' })),
     (request, response, context) => {
       const id = request.params.id;
 
