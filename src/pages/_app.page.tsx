@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
+import { PageLayout } from '@/features/layouts/PageLayout';
 import { Notifications } from '@/features/notifications/Notifications';
 import { log } from '@/lib/log';
 import { theme } from '@/styles/theme';
@@ -35,7 +36,9 @@ export default function App(props: AppProps): JSX.Element {
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Component {...pageProps} />
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
             <Notifications />
           </ThemeProvider>
         </CacheProvider>
