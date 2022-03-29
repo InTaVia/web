@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { matchSorter } from 'match-sorter';
 
-import type { Person, Place, Relation } from '@/features/common/entity.model';
+import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
 
 export const db = {
@@ -9,7 +9,7 @@ export const db = {
   place: createTable<Place>(),
 };
 
-function createTable<T extends { id: number | string }>() {
+function createTable<T extends Entity>() {
   const table = new Map<T['id'], T>();
 
   const methods = {
@@ -23,19 +23,19 @@ function createTable<T extends { id: number | string }>() {
     findById(id: T['id']) {
       return table.get(id);
     },
-    getKeyByIdx(idx: number) {
-      return Array.from(table.keys())[idx];
-    },
-    getKeySet() {
+    getIds() {
       return Array.from(table.keys());
     },
     create(entity: T) {
       table.set(entity.id, entity);
     },
-    addRelationToHistory(id: string, newRelation: Relation) {
-      if ('history' in table.get(id)) {
-        table.set(id, { ...table.get(id), history: [...table.get(id).history, newRelation] });
+    addRelationToHistory(id: Entity['id'], relation: Relation) {
+      const entity = table.get(id);
+      if (entity == null) return;
+      if (entity.history == null) {
+        entity.history = [];
       }
+      entity.history.push(relation);
     },
   };
 
@@ -49,12 +49,12 @@ function createLifeSpanRelations(): Array<Relation> {
     {
       type: 'beginning',
       date: dateOfBirth,
-      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+      placeId: faker.random.arrayElement(db.place.getIds()),
     },
     {
       type: 'end',
       date: dateOfDeath,
-      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+      placeId: faker.random.arrayElement(db.place.getIds()),
     },
   ];
 }
@@ -64,14 +64,14 @@ function createPersonRelation(type: string, targetId: string, date?: Date): Rela
     return {
       type: type,
       targetId: targetId,
-      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+      placeId: faker.random.arrayElement(db.place.getIds()),
     };
   } else {
     return {
       type: type,
       date: date,
       targetId: targetId,
-      placeId: db.place.getKeyByIdx(faker.datatype.number({ min: 0, max: 99 })),
+      placeId: faker.random.arrayElement(db.place.getIds()),
     };
   }
 }
@@ -87,6 +87,7 @@ export function seed() {
       id: faker.datatype.uuid(),
       kind: 'place',
       name: faker.address.cityName(),
+      description: faker.lorem.paragraph(6),
       lat: Number(faker.address.longitude()),
       lng: Number(faker.address.latitude()),
     });
@@ -97,15 +98,15 @@ export function seed() {
       id: faker.datatype.uuid(),
       kind: 'person',
       name: faker.name.findName(),
+      description: faker.lorem.paragraph(6),
+      history: createLifeSpanRelations(),
       gender: faker.name.gender(true),
       categories: faker.helpers.uniqueArray(categories, faker.datatype.number({ min: 1, max: 4 })),
       occupation: faker.helpers.uniqueArray(occupations, faker.datatype.number({ min: 1, max: 3 })),
-      description: faker.lorem.paragraph(6),
-      history: createLifeSpanRelations(),
     });
   });
 
-  const personIds = db.person.getKeySet();
+  const personIds = db.person.getIds();
   const selectedPersonIds = faker.helpers.uniqueArray(personIds, 60);
 
   selectedPersonIds.forEach((personId) => {
@@ -143,8 +144,12 @@ export function seed() {
     ) {
       //overlapping dates
       relationType = 'was in contact with';
-      const start = new Date(Math.max(sourcePersonDateOfBirth.getTime(), targetPersonDateOfBirth.getTime()));
-      const end = new Date(Math.min(sourcePersonDateOfDeath.getTime(), targetPersonDateOfDeath.getTime()));
+      const start = new Date(
+        Math.max(sourcePersonDateOfBirth.getTime(), targetPersonDateOfBirth.getTime()),
+      );
+      const end = new Date(
+        Math.min(sourcePersonDateOfDeath.getTime(), targetPersonDateOfDeath.getTime()),
+      );
       relationDate = faker.date.between(start.toISOString(), end.toISOString());
     } else {
       relationType = 'was related to';

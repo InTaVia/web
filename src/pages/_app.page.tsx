@@ -9,7 +9,6 @@ import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 
-
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
 import { log } from '@/lib/log';
