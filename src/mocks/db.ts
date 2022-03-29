@@ -43,8 +43,12 @@ function createTable<T extends Entity>() {
 }
 
 function createLifeSpanRelations(): Array<Relation> {
-  const dateOfBirth = faker.date.between('1800-01-01T00:00:00.000Z', '1930-12-31T00:00:00.000Z');
-  const dateOfDeath = faker.date.future(90, dateOfBirth.toISOString());
+  const dateOfBirth = faker.date.between(
+    new Date(Date.UTC(1800, 0, 1)),
+    new Date(Date.UTC(1930, 11, 31)),
+  );
+  const dateOfDeath = faker.date.future(90, dateOfBirth);
+
   return [
     {
       type: 'beginning',
@@ -59,19 +63,19 @@ function createLifeSpanRelations(): Array<Relation> {
   ];
 }
 
-function createPersonRelation(type: string, targetId: string, date?: Date): Relation {
+function createPersonRelation(type: string, targetId: Entity['id'], date?: Date): Relation {
   if (date === undefined) {
     return {
-      type: type,
-      targetId: targetId,
+      type,
+      targetId,
       placeId: faker.random.arrayElement(db.place.getIds()),
     };
   } else {
     return {
-      type: type,
-      date: date,
-      targetId: targetId,
+      type,
+      targetId,
       placeId: faker.random.arrayElement(db.place.getIds()),
+      date,
     };
   }
 }
@@ -150,7 +154,7 @@ export function seed() {
       const end = new Date(
         Math.min(sourcePersonDateOfDeath.getTime(), targetPersonDateOfDeath.getTime()),
       );
-      relationDate = faker.date.between(start.toISOString(), end.toISOString());
+      relationDate = faker.date.between(start, end);
     } else {
       relationType = 'was related to';
     }
