@@ -1,5 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
+import TimelineIcon from '@mui/icons-material/LinearScale';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/SearchOutlined';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -34,6 +35,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
   const links = [
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
+    { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
   ];
 
   return (
