@@ -3,12 +3,16 @@ import Typography from '@mui/material/Typography';
 import type { MutableRefObject } from 'react';
 import { useRef } from 'react';
 
+import { useAppSelector } from '@/features/common/store';
+import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 import { usePersonsSearchResults } from '@/features/timeline/usePersonsSearchResults';
 
 export function Timeline(): JSX.Element {
   const searchResults = usePersonsSearchResults();
   const persons = searchResults.data?.entities ?? [];
+
+  const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
 
   const parent = useRef() as MutableRefObject<HTMLDivElement | null>;
 
@@ -48,7 +52,7 @@ export function Timeline(): JSX.Element {
 
   return (
     <div className="timeline-wrapper" ref={parent}>
-      <TimelineSvg parentRef={parent} persons={persons} />
+      <TimelineSvg parentRef={parent} persons={persons} zoomToData={zoomToTimeRange} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
 import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
@@ -9,10 +10,11 @@ import { TimelineYearAxis } from '@/features/timeline/TimelineYearAxis';
 interface TimelineSvgProps {
   persons: Array<Person>;
   parentRef: MutableRefObject<HTMLDivElement | null>;
+  zoomToData: boolean;
 }
 
 export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
-  const { parentRef, persons } = props;
+  const { parentRef, persons, zoomToData } = props;
   const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
@@ -28,8 +30,10 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     setSvgViewBox(`0 0 ${w} ${h}`);
   }, [parentRef]);
 
+  const timeDomain = zoomToData ? getTemporalExtent(persons) : getTemporalExtent([]);
+
   const scaleX = scaleTime()
-    .domain([new Date(Date.UTC(1800, 0, 1)), new Date(Date.UTC(2020, 11, 31))])
+    .domain(timeDomain)
     .range([50, svgWidth - 50]);
   const scaleY = scaleBand()
     .domain(
@@ -48,4 +52,22 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
       })}
     </svg>
   );
+}
+
+function getTemporalExtent(persons: Array<Person>): [Date, Date] {
+  const dates: Array<Date> = [];
+
+  persons.forEach((person) => {
+    if (person.history) {
+      person.history.forEach((event) => {
+        if (event.date) dates.push(new Date(event.date));
+      });
+    }
+  });
+
+  // default: full (mock) time range
+  if (dates.length === 0) return [new Date(Date.UTC(1800, 0, 1)), new Date(Date.UTC(2020, 11, 31))];
+
+  // dates must contain only `Date`s here, and at least one
+  return extent(dates) as [Date, Date];
 }
