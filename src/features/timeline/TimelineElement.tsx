@@ -1,3 +1,4 @@
+import { max } from 'd3-array';
 import { color as d3color } from 'd3-color';
 import type { ScaleBand, ScaleTime } from 'd3-scale';
 import { scaleOrdinal } from 'd3-scale';
@@ -38,12 +39,31 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
   const additionalEvents = getAdditionalPersonEvents(person, dob, dod);
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
+  const first = dob; // for now
+  const last = max([
+    dod,
+    ...additionalEvents.map((d): Date => {
+      return d.date as Date;
+    }),
+  ]) as Date;
+  const x00 = scaleX(first);
+  const x01 = scaleX(last);
+
   const x0 = scaleX(dob);
   const x1 = scaleX(dod);
   const y = scaleY(person.id) ?? 0;
 
   return (
     <g id={`person-${person.id}`}>
+      <line
+        strokeWidth="2"
+        x1={x00}
+        x2={x01}
+        y1={y + scaleY.bandwidth() / 2}
+        y2={y + scaleY.bandwidth() / 2}
+        stroke="#0731a6"
+        strokeOpacity={0.4}
+      />
       <rect
         width={x1 - x0}
         height={scaleY.bandwidth()}
@@ -64,7 +84,7 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
       </text>
       {additionalEvents.map((evt, idx) => {
         const x = scaleX(evt.date as Date);
-        const yBase = y + 4;
+        const yBase = (evt.date as Date) > dod ? y + scaleY.bandwidth() / 2 + 5 : y + 4;
         const color: string = additionalEventColors(evt.type) as string;
         const colorFill = d3color(color)?.brighter(2)?.formatHex() as string;
 

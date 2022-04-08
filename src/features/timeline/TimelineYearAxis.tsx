@@ -61,6 +61,17 @@ export function TimelineYearAxis<_T>(props: TimelineYearAxisProps<_T>): JSX.Elem
           </text>
         );
       })}
+      {labels.map((label) => {
+        return (
+          <path
+            key={`${label.text}.path`}
+            strokeWidth="1"
+            stroke="black"
+            strokeOpacity="0.2"
+            d={`M ${label.x} ${yVal} V ${yScale.range()[0] - 10}`}
+          />
+        );
+      })}
     </g>
   );
 }
