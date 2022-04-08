@@ -1,31 +1,39 @@
 import type { ScaleBand, ScaleTime } from 'd3-scale';
 
-interface Person {
-  id: string;
-  history: { type: string; date: string };
-}
+import type { Person } from '@/features/common/entity.model';
+
 interface TimelineItemProps {
-  scaleX: ScaleTime;
-  scaleY: ScaleBand<Person>;
+  scaleX: ScaleTime<number, number>;
+  scaleY: ScaleBand<string>;
   person: Person;
 }
 
 export function TimelineElement(props: TimelineItemProps): JSX.Element {
   const { person, scaleX, scaleY } = props;
 
-  const dob = new Date(
-    person.history.find((d) => {
-      return d.type === 'beginning';
-    }).date,
-  );
-  const dod = new Date(
-    person.history.find((d) => {
-      return d.type === 'end';
-    }).date,
-  );
+  const hist = person.history || [];
+  const dobEvent = hist.find((d) => {
+    return d.type === 'beginning';
+  });
+  const dodEvent = hist.find((d) => {
+    return d.type === 'end';
+  });
+
+  if (
+    person.history === undefined ||
+    dobEvent === undefined ||
+    dobEvent.date === undefined ||
+    dodEvent === undefined ||
+    dodEvent.date === undefined
+  )
+    return <g id={`person-${person.id}`}></g>;
+
+  const dob = new Date(dobEvent.date);
+  const dod = new Date(dodEvent.date);
+
   const x0 = scaleX(dob);
   const x1 = scaleX(dod);
-  const y = scaleY(person);
+  const y = scaleY(person.id) ?? 0;
 
   return (
     <g id={`person-${person.id}`}>

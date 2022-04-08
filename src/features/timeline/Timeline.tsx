@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { scaleBand, scaleTime } from 'd3-scale';
+import type { MutableRefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { TimelineElement } from '@/features/timeline/TimelineElement';
@@ -10,7 +11,7 @@ export function Timeline(): JSX.Element {
   const searchResults = usePersonsSearchResults();
   const persons = searchResults.data?.entities ?? [];
 
-  const parent = useRef();
+  const parent = useRef() as MutableRefObject<HTMLDivElement | null>;
   const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
@@ -18,8 +19,10 @@ export function Timeline(): JSX.Element {
   // XXX
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const w: number = parent.current?.clientWidth ?? 0;
-    const h: number = parent.current?.clientHeight ?? 0;
+    if (!parent.current) return;
+
+    const w = parent.current.clientWidth;
+    const h = parent.current.clientHeight;
 
     setSvgWidth(w);
     setSvgHeight(h);
@@ -64,7 +67,11 @@ export function Timeline(): JSX.Element {
     .domain([new Date(Date.UTC(1800, 0, 1)), new Date(Date.UTC(2020, 11, 31))])
     .range([50, svgWidth - 50]);
   const scaleY = scaleBand()
-    .domain(persons)
+    .domain(
+      persons.map((d) => {
+        return d.id;
+      }),
+    )
     .range([50, svgHeight - 50])
     .paddingInner(0.2);
 
