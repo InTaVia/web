@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import InputBase from '@mui/material/InputBase';
 import Switch from '@mui/material/Switch';
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { usePersonsSearch } from '@/features/search/usePersonsSearch';
@@ -27,7 +27,7 @@ export function SearchForm(): JSX.Element {
     event.preventDefault();
   }
 
-  function onZoomToDataChange(_evt: any, checked: boolean) {
+  function onZoomToDataChange(_: ChangeEvent<HTMLInputElement>, checked: boolean) {
     dispatch(setZoomToTimeRange(checked));
   }
 

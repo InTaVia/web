@@ -1,6 +1,10 @@
+import { color as d3color } from 'd3-color';
 import type { ScaleBand, ScaleTime } from 'd3-scale';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeTableau10 } from 'd3-scale-chromatic';
 
 import type { Person } from '@/features/common/entity.model';
+import { eventTypes, getAdditionalPersonEvents } from '@/features/timeline/personEvent.mock';
 
 interface TimelineItemProps {
   scaleX: ScaleTime<number, number>;
@@ -31,6 +35,9 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
   const dob = new Date(dobEvent.date);
   const dod = new Date(dodEvent.date);
 
+  const additionalEvents = getAdditionalPersonEvents(person, dob, dod);
+  const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
+
   const x0 = scaleX(dob);
   const x1 = scaleX(dod);
   const y = scaleY(person.id) ?? 0;
@@ -55,6 +62,22 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
       >
         {person.name}
       </text>
+      {additionalEvents.map((evt, idx) => {
+        const x = scaleX(evt.date as Date);
+        const yBase = y + 4;
+        const color: string = additionalEventColors(evt.type) as string;
+        const colorFill = d3color(color)?.brighter(2)?.formatHex() as string;
+
+        return (
+          <path
+            key={`person-${person.id}-event-${idx}`}
+            d={`M ${x} ${yBase} l 5 -5 -5 -5 -5 5 z`}
+            fill={colorFill}
+            stroke={color}
+            strokeWidth={1}
+          ></path>
+        );
+      })}
     </g>
   );
 }
