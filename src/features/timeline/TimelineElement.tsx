@@ -3,18 +3,23 @@ import { color as d3color } from 'd3-color';
 import type { ScaleBand, ScaleTime } from 'd3-scale';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
+import type { ForwardedRef } from 'react';
+import { forwardRef } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
 import { eventTypes, getAdditionalPersonEvents } from '@/features/timeline/personEvent.mock';
 
-interface TimelineItemProps {
+export interface TimelineElementProps {
   scaleX: ScaleTime<number, number>;
   scaleY: ScaleBand<string>;
   person: Person;
 }
 
-export function TimelineElement(props: TimelineItemProps): JSX.Element {
-  const { person, scaleX, scaleY } = props;
+function _TimelineElement(
+  props: TimelineElementProps,
+  ref: ForwardedRef<SVGGElement>,
+): JSX.Element {
+  const { person, scaleX, scaleY, ...extraProps } = props;
 
   const hist = person.history || [];
   const dobEvent = hist.find((d) => {
@@ -31,7 +36,7 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
     dodEvent === undefined ||
     dodEvent.date === undefined
   )
-    return <g id={`person-${person.id}`}></g>;
+    return <g id={`person-${person.id}`} ref={ref} {...extraProps}></g>;
 
   const dob = new Date(dobEvent.date);
   const dod = new Date(dodEvent.date);
@@ -54,7 +59,15 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
   const y = scaleY(person.id) ?? 0;
 
   return (
-    <g id={`person-${person.id}`}>
+    <g id={`person-${person.id}`} ref={ref} {...extraProps}>
+      <rect
+        stroke="none"
+        fillOpacity={0}
+        x={x00}
+        width={x01 - x00}
+        y={y}
+        height={scaleY.bandwidth()}
+      />
       <line
         strokeWidth="2"
         x1={x00}
@@ -101,3 +114,5 @@ export function TimelineElement(props: TimelineItemProps): JSX.Element {
     </g>
   );
 }
+
+export const TimelineElement = forwardRef(_TimelineElement);

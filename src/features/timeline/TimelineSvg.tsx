@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
 import { TimelineElement } from '@/features/timeline/TimelineElement';
+import { TimelineElementTooltip } from '@/features/timeline/TimelineElementTooltip';
 import { TimelineYearAxis } from '@/features/timeline/TimelineYearAxis';
 
 interface TimelineSvgProps {
@@ -48,7 +49,13 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     <svg width="100%" height="100%" viewBox={svgViewBox}>
       <TimelineYearAxis xScale={scaleX} yScale={scaleY} />
       {persons.map((person) => {
-        return <TimelineElement key={person.id} scaleX={scaleX} scaleY={scaleY} person={person} />;
+        const personProps = { scaleX, scaleY, person };
+
+        return (
+          <TimelineElementTooltip key={person.id} {...personProps}>
+            <TimelineElement key={person.id} {...personProps} />
+          </TimelineElementTooltip>
+        );
       })}
     </svg>
   );
