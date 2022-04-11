@@ -48,7 +48,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(): Array<Relation> {
+function createLifeSpanRelations(): [Relation, Relation] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -86,6 +86,31 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
+export const eventTypes: Array<string> = ['type1', 'type2', 'type3', 'type4', 'type5'];
+function createExtraRelations(birth: Date, death: Date): Array<Relation> {
+  const relations: Array<Relation> = [];
+
+  const numRelations = faker.datatype.number(8);
+  const numWithinLifetime = faker.datatype.number({
+    min: Math.floor(numRelations * 0.6),
+    max: numRelations,
+  });
+  const numAfterDeath = numRelations - numWithinLifetime;
+
+  for (let i = 0; i < numWithinLifetime; ++i) {
+    const date = faker.date.between(birth, death);
+    const type_ = eventTypes[faker.datatype.number(eventTypes.length - 1)] as string;
+    relations.push({ date, type: type_, placeId: faker.random.arrayElement(db.place.getIds()) });
+  }
+  for (let i = 0; i < numAfterDeath; ++i) {
+    const date = faker.date.future(120, death);
+    const type_ = eventTypes[faker.datatype.number(eventTypes.length - 1)] as string;
+    relations.push({ date, type: type_, placeId: faker.random.arrayElement(db.place.getIds()) });
+  }
+
+  return relations;
+}
+
 export function seed() {
   faker.seed(123456);
   faker.locale = 'de_AT';
@@ -104,12 +129,15 @@ export function seed() {
   });
 
   times(100).forEach(() => {
+    const [birth, death] = createLifeSpanRelations();
+    const extraRelations = createExtraRelations(birth.date as Date, death.date as Date);
+
     db.person.create({
       id: faker.datatype.uuid(),
       kind: 'person',
       name: faker.name.findName(),
       description: faker.lorem.paragraph(6),
-      history: createLifeSpanRelations(),
+      history: [birth, death, ...extraRelations],
       gender: faker.name.gender(true),
       categories: faker.helpers.uniqueArray(categories, faker.datatype.number({ min: 1, max: 4 })),
       occupation: faker.helpers.uniqueArray(occupations, faker.datatype.number({ min: 1, max: 3 })),

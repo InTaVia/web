@@ -7,7 +7,7 @@ import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
-import { eventTypes, getAdditionalPersonEvents } from '@/features/timeline/personEvent.mock';
+import { eventTypes } from '@/mocks/db';
 
 export interface TimelineElementProps {
   scaleX: ScaleTime<number, number>;
@@ -41,14 +41,16 @@ function _TimelineElement(
   const dob = new Date(dobEvent.date);
   const dod = new Date(dodEvent.date);
 
-  const additionalEvents = getAdditionalPersonEvents(person, dob, dod);
+  const additionalEvents = hist.filter((d) => {
+    return d.type !== 'beginning' && d.type !== 'end';
+  });
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
   const first = dob; // for now
   const last = max([
     dod,
     ...additionalEvents.map((d): Date => {
-      return d.date as Date;
+      return new Date(d.date || 0);
     }),
   ]) as Date;
   const x00 = scaleX(first);
@@ -96,8 +98,8 @@ function _TimelineElement(
         {person.name}
       </text>
       {additionalEvents.map((evt, idx) => {
-        const x = scaleX(evt.date as Date);
-        const yBase = (evt.date as Date) > dod ? y + scaleY.bandwidth() / 2 + 5 : y + 4;
+        const x = scaleX(new Date(evt.date || 0));
+        const yBase = new Date(evt.date || 0) > dod ? y + scaleY.bandwidth() / 2 + 5 : y + 4;
         const color: string = additionalEventColors(evt.type) as string;
         const colorFill = d3color(color)?.brighter(2)?.formatHex() as string;
 
