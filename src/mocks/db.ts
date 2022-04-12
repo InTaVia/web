@@ -101,14 +101,14 @@ function createExtraRelations(birth: Date, death: Date): Array<Relation> {
 
   for (let i = 0; i < numWithinLifetime; ++i) {
     relations.push({
-      date: faker.date.between(birth, death),
+      date: faker.date.between(birth, death).toISOString(),
       type: faker.random.arrayElement(lifetimeEventTypes),
       placeId: faker.random.arrayElement(db.place.getIds()),
     });
   }
   for (let i = 0; i < numAfterDeath; ++i) {
     relations.push({
-      date: faker.date.future(60, death),
+      date: faker.date.future(60, death).toISOString(),
       type: faker.random.arrayElement(afterDeathEventTypes),
       placeId: faker.random.arrayElement(db.place.getIds()),
     });
@@ -220,7 +220,7 @@ export function seed() {
       return;
     }
 
-    const extraRelations = createExtraRelations(dateOfBirth, dateOfDeath);
+    const extraRelations = createExtraRelations(new Date(dateOfBirth), new Date(dateOfDeath));
     extraRelations.forEach((rel) => {
       db.person.addRelationToHistory(personId, rel);
     });

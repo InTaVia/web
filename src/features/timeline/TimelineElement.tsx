@@ -47,12 +47,14 @@ function _TimelineElement(
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
   const first = dob; // for now
-  const last = max([
-    dod,
-    ...additionalEvents.map((d): Date => {
-      return new Date(d.date || 0);
-    }),
-  ]) as Date;
+  const last =
+    max<Date>([
+      dod,
+      ...additionalEvents.map((d): Date => {
+        if (d.date !== undefined) return new Date(d.date);
+        return dod; // just to keep the return type at Date, won't hurt the maximum function
+      }),
+    ]) ?? dod;
   const x00 = scaleX(first);
   const x01 = scaleX(last);
 
@@ -98,8 +100,11 @@ function _TimelineElement(
         {person.name}
       </text>
       {additionalEvents.map((evt, idx) => {
-        const x = scaleX(new Date(evt.date || 0));
-        const yBase = new Date(evt.date || 0) > dod ? y + scaleY.bandwidth() / 2 + 5 : y + 4;
+        if (evt.date === undefined) return '';
+
+        const date = new Date(evt.date);
+        const x = scaleX(date);
+        const yBase = date > dod ? y + scaleY.bandwidth() / 2 + 5 : y + 4; // put in middle vertically if after death
         const color: string = additionalEventColors(evt.type) as string;
         const colorFill = d3color(color)?.brighter(2)?.formatHex() as string;
 
