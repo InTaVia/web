@@ -1,5 +1,6 @@
+import { styled } from '@mui/material/styles';
 import type { TooltipProps } from '@mui/material/Tooltip';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { Fragment, useState } from 'react';
 
 import { PersonTooltipContents } from '@/features/timeline/PersonTooltipContents';
@@ -39,7 +40,7 @@ export function TimelineElementTooltip(props: TimelineElementTooltipProps): JSX.
   };
 
   return (
-    <Tooltip
+    <CustomTooltip
       open={open}
       onClose={handleClose}
       onOpen={handleOpen}
@@ -49,6 +50,20 @@ export function TimelineElementTooltip(props: TimelineElementTooltipProps): JSX.
       title={tooltipContent}
     >
       {props.children}
-    </Tooltip>
+    </CustomTooltip>
   );
 }
+
+const CustomTooltip = styled(({ className, ...props }: TooltipProps) => {
+  return <Tooltip {...props} classes={{ popper: className }} />;
+})(({ theme }) => {
+  return {
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 500,
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, .87)',
+      boxShadow: theme.shadows[1],
+      border: '1px solid hsl(0, 0%, 80%)',
+    },
+  };
+});

@@ -86,7 +86,7 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
-export const eventTypes: Array<string> = ['type1', 'type2', 'type3', 'type4', 'type5'];
+export const eventTypes: Array<string> = ['stayed', 'lived'];
 function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   const relations: Array<Relation> = [];
 
