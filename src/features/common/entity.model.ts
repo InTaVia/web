@@ -8,7 +8,7 @@ export interface EntityBase {
 export interface Relation {
   type: string;
   targetId?: Entity['id'];
-  date?: Date;
+  date?: IsoDateString;
   placeId?: Place['id'];
 }
 

@@ -3,6 +3,6 @@
   "compilerOptions": {
     "types": ["cypress", "@testing-library/cypress"]
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "../src/mocks/mocks.browser.ts"],
+  "include": ["./**/*.ts", "./**/*.tsx", "../app.d.ts", "../src/mocks/mocks.browser.ts"],
   "exclude": []
 }
