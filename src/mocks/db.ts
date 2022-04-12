@@ -129,15 +129,12 @@ export function seed() {
   });
 
   times(100).forEach(() => {
-    const [birth, death] = createLifeSpanRelations();
-    const extraRelations = createExtraRelations(birth.date as Date, death.date as Date);
-
     db.person.create({
       id: faker.datatype.uuid(),
       kind: 'person',
       name: faker.name.findName(),
       description: faker.lorem.paragraph(6),
-      history: [birth, death, ...extraRelations],
+      history: createLifeSpanRelations(),
       gender: faker.name.gender(true),
       categories: faker.helpers.uniqueArray(categories, faker.datatype.number({ min: 1, max: 4 })),
       occupation: faker.helpers.uniqueArray(occupations, faker.datatype.number({ min: 1, max: 3 })),
@@ -197,6 +194,28 @@ export function seed() {
       personId,
       createPersonRelation(relationType, targetPersonId, relationDate),
     );
+  });
+
+  // Populate persons with additional test events. Do this at the end because
+  // some of the CI events rely on the random seed and the order in which the
+  // random entities are created.
+  personIds.forEach((personId) => {
+    const person = db.person.findById(personId);
+    const dateOfBirth = person?.history?.find((item) => {
+      return item.type === 'beginning';
+    })?.date;
+    const dateOfDeath = person?.history?.find((item) => {
+      return item.type === 'end';
+    })?.date;
+
+    if (dateOfBirth == null || dateOfDeath == null) {
+      return;
+    }
+
+    const extraRelations = createExtraRelations(dateOfBirth, dateOfDeath);
+    extraRelations.forEach((rel) => {
+      db.person.addRelationToHistory(personId, rel);
+    });
   });
 }
 
