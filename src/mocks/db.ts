@@ -58,12 +58,12 @@ function createLifeSpanRelations(): [Relation, Relation] {
   return [
     {
       type: 'beginning',
-      date: dateOfBirth,
+      date: dateOfBirth.toISOString(),
       placeId: faker.random.arrayElement(db.place.getIds()),
     },
     {
       type: 'end',
-      date: dateOfDeath,
+      date: dateOfDeath.toISOString(),
       placeId: faker.random.arrayElement(db.place.getIds()),
     },
   ];
@@ -81,7 +81,7 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
       type,
       targetId,
       placeId: faker.random.arrayElement(db.place.getIds()),
-      date,
+      date: date.toISOString(),
     };
   }
 }
@@ -185,11 +185,13 @@ export function seed() {
     ) {
       //overlapping dates
       relationType = 'was in contact with';
-      const start = new Date(
-        Math.max(sourcePersonDateOfBirth.getTime(), targetPersonDateOfBirth.getTime()),
+      const start = Math.max(
+        new Date(sourcePersonDateOfBirth).getTime(),
+        new Date(targetPersonDateOfBirth).getTime(),
       );
-      const end = new Date(
-        Math.min(sourcePersonDateOfDeath.getTime(), targetPersonDateOfDeath.getTime()),
+      const end = Math.min(
+        new Date(sourcePersonDateOfDeath).getTime(),
+        new Date(targetPersonDateOfDeath).getTime(),
       );
       relationDate = faker.date.between(start, end);
     } else {
