@@ -86,7 +86,9 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
-export const eventTypes: Array<string> = ['stayed', 'lived'];
+const lifetimeEventTypes: Array<string> = ['stayed', 'lived'];
+const afterDeathEventTypes: Array<string> = ['statue erected'];
+export const eventTypes = [...lifetimeEventTypes, ...afterDeathEventTypes];
 function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   const relations: Array<Relation> = [];
 
@@ -98,14 +100,18 @@ function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   const numAfterDeath = numRelations - numWithinLifetime;
 
   for (let i = 0; i < numWithinLifetime; ++i) {
-    const date = faker.date.between(birth, death);
-    const type_ = eventTypes[faker.datatype.number(eventTypes.length - 1)] as string;
-    relations.push({ date, type: type_, placeId: faker.random.arrayElement(db.place.getIds()) });
+    relations.push({
+      date: faker.date.between(birth, death),
+      type: faker.random.arrayElement(lifetimeEventTypes),
+      placeId: faker.random.arrayElement(db.place.getIds()),
+    });
   }
   for (let i = 0; i < numAfterDeath; ++i) {
-    const date = faker.date.future(120, death);
-    const type_ = eventTypes[faker.datatype.number(eventTypes.length - 1)] as string;
-    relations.push({ date, type: type_, placeId: faker.random.arrayElement(db.place.getIds()) });
+    relations.push({
+      date: faker.date.future(60, death),
+      type: faker.random.arrayElement(afterDeathEventTypes),
+      placeId: faker.random.arrayElement(db.place.getIds()),
+    });
   }
 
   return relations;
