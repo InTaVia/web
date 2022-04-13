@@ -12,8 +12,7 @@ export interface TimelineState {
 
 const initialState: TimelineState = {
   zoomToTimeRange: true,
-  //timeRangeBrush: null,
-  timeRangeBrush: [new Date(1890, 1, 1), new Date(1940, 1, 1)],
+  timeRangeBrush: null,
 };
 
 const timelineSlice = createSlice({
