@@ -1,4 +1,5 @@
 /** @typedef {import('next').NextConfig} NextConfig */
+/** @typedef {import('webpack').Configuration} WebpackConfig */
 
 /** @type {NextConfig} */
 const config = {
@@ -37,12 +38,19 @@ const config = {
       ],
     });
 
-    console.warn('⚠️ Indexing by search engines is disallowed.');
+    console.warn('⚠️  Indexing by search engines is disallowed.');
 
     return headers;
   },
   pageExtensions: ['page.tsx', 'api.ts'],
   reactStrictMode: true,
+  webpack(/** @type {WebpackConfig} */ config) {
+    // eslint-disable-next-line no-param-reassign
+    config.experiments = config.experiments ?? {};
+    // eslint-disable-next-line no-param-reassign
+    config.experiments.topLevelAwait = true;
+    return config;
+  },
 };
 
 /** @type {Array<(config: NextConfig) => NextConfig>} */

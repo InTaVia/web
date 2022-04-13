@@ -1,15 +1,26 @@
 export interface EntityBase {
   id: string;
+  name: string;
+  description: string;
+  history?: Array<Relation>;
+}
+
+export interface Relation {
+  type: string;
+  targetId?: Entity['id'];
+  date?: Date;
+  placeId?: Place['id'];
 }
 
 export interface Person extends EntityBase {
   kind: 'person';
-  name: string;
+  gender: string;
+  occupation: Array<string>;
+  categories: Array<string>;
 }
 
 export interface Place extends EntityBase {
   kind: 'place';
-  name: string;
   lat: number;
   lng: number;
 }

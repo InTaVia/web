@@ -1,7 +1,5 @@
+import { PageTitle } from '@/features/ui/PageTitle';
+
 export default function HomePage(): JSX.Element {
-  return (
-    <main>
-      <h1>Welcome to InTaVia!</h1>
-    </main>
-  );
+  return <PageTitle>Welcome to InTaVia!</PageTitle>;
 }

@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
 import { store } from '@/features/common/store';
+import { PageLayout } from '@/features/layouts/PageLayout';
 import { Notifications } from '@/features/notifications/Notifications';
 import { log } from '@/lib/log';
 import { theme } from '@/styles/theme';
@@ -36,7 +37,9 @@ export default function App(props: AppProps): JSX.Element {
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Component {...pageProps} />
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
             <Notifications />
           </ThemeProvider>
         </CacheProvider>
@@ -46,24 +49,18 @@ export default function App(props: AppProps): JSX.Element {
 }
 
 if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
-  // Top level await is currently stil experimental in webpack.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { seed } = require('@/mocks/db');
+  const { seed } = await import('@/mocks/db');
   seed();
 
   if (typeof window !== 'undefined') {
     log.warn('API mocking enabled (client).');
 
-    // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require('@/mocks/mocks.browser');
-    worker.start();
+    const { worker } = await import('@/mocks/mocks.browser');
+    void worker.start({ onUnhandledRequest: 'bypass' });
   } else {
     log.warn('API mocking enabled (server).');
 
-    // Top level await is currently stil experimental in webpack.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { server } = require('@/mocks/mocks.server');
-    server.listen();
+    const { server } = await import('@/mocks/mocks.server');
+    server.listen({ onUnhandledRequest: 'bypass' });
   }
 }
