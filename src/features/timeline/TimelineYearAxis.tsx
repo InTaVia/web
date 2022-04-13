@@ -1,77 +1,90 @@
+import { axisBottom } from 'd3-axis';
+import { brushX } from 'd3-brush';
 import type { ScaleBand, ScaleTime } from 'd3-scale';
+import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
+import { useEffect, useRef, useState } from 'react';
 
 interface TimelineYearAxisProps<_T> {
   xScale: ScaleTime<number, number>;
   yScale: ScaleBand<_T>;
 }
 
-interface LabelData {
-  x: number;
-  y: number;
-  text: string;
-}
-
 export function TimelineYearAxis<_T>(props: TimelineYearAxisProps<_T>): JSX.Element {
   const { xScale, yScale } = props;
 
-  const yVal = yScale.range()[1] + 10;
-  const [x0, x1] = xScale.range();
+  // v1: as local prop
+  const [brushRange, setBrushRange] = useState<[Date, Date] | null>(null);
 
-  const pathComponents: Array<string> = [`M ${x0} ${yVal} H ${x1}`];
-  const labels: Array<LabelData> = [];
+  const brushRef = useRef<SVGGElement>(null);
+  const axisRef = useRef<SVGGElement>(null);
 
-  const yearFormatter = timeFormat('%Y');
+  // repaint axis
+  useEffect(() => {
+    if (axisRef.current) {
+      const sel = select(axisRef.current);
+      const ax = axisBottom<Date>(xScale).tickFormat(timeFormat('%Y'));
+      sel.call(ax);
+      sel.attr('transform', `translate(0, ${yScale.range()[1] + 10})`);
 
-  xScale
-    .nice()
-    .ticks(10)
-    .forEach((tick) => {
-      const x = xScale(tick);
-      pathComponents.push(`M ${x} ${yVal} v 5`);
+      // vertical grid lines for each axis tick
+      const dateTicks = sel.selectAll<SVGGElement, Date>('g.tick').data();
+      sel
+        .selectAll<SVGPathElement, Date>('.dummy')
+        .data(dateTicks)
+        .enter()
+        .append('path')
+        .attr('stroke-width', 1)
+        .attr('stroke', 'black')
+        .attr('stroke-opacity', 0.2)
+        .attr('shape-rendering', 'crispEdges')
+        .attr('d', (date) => {
+          const x = xScale(date);
+          const [y0, y1] = yScale.range();
 
-      labels.push({ x, y: yVal + 5, text: yearFormatter(tick) });
+          return `M ${x} 0 V ${y0 - y1 - 20}`;
+        });
+
+      return () => {
+        sel.html('');
+      };
+    }
+  }, [xScale, yScale, axisRef]);
+
+  // timeline brush
+  useEffect(() => {
+    if (!brushRef.current) return;
+
+    const xRange = xScale.range() as [number, number];
+    const yRange = [yScale.range()[0] - 10, yScale.range()[1] + 40] as [number, number];
+    const extent: [[number, number], [number, number]] = [
+      [xRange[0], yRange[0]],
+      [xRange[1], yRange[1]],
+    ];
+
+    const sel = select<SVGGElement, number>(brushRef.current);
+    const brush = brushX<number>().extent(extent);
+    const moveTo = brushRange?.map((d: Date): number => {
+      return xScale(d);
+    }) as [number, number] | null;
+    sel.call(brush);
+
+    brush.move(sel, moveTo);
+
+    // do not handle first call
+    brush.on('end', (evt) => {
+      setBrushRange(
+        evt.selection?.map((d: number): Date => {
+          return xScale.invert(d);
+        }) as [Date, Date] | null,
+      );
     });
-
-  const axisPathData = pathComponents.join('');
+  }, [brushRange, xScale, yScale, brushRef]);
 
   return (
-    <g id="x-axis" className="axis axis--time">
-      <path
-        stroke="black"
-        strokeWidth="1"
-        fill="none"
-        shapeRendering="crispEdges"
-        d={axisPathData}
-      />
-      {labels.map((label) => {
-        return (
-          <text
-            key={label.text}
-            x={label.x}
-            y={label.y}
-            dy="1em"
-            dx="-1ex"
-            textAnchor="end"
-            fontSize="x-small"
-            transform="rotate(-45)"
-            transform-origin={`${label.x} ${label.y}`}
-          >
-            {label.text}
-          </text>
-        );
-      })}
-      {labels.map((label) => {
-        return (
-          <path
-            key={`${label.text}.path`}
-            strokeWidth="1"
-            stroke="black"
-            strokeOpacity="0.2"
-            d={`M ${label.x} ${yVal} V ${yScale.range()[0] - 10}`}
-          />
-        );
-      })}
+    <g id="x-axis">
+      <g id="x-axis__brush" ref={brushRef}></g>
+      <g id="x-axis__axis" ref={axisRef}></g>
     </g>
   );
 }

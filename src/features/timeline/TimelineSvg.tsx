@@ -67,7 +67,7 @@ function getTemporalExtent(persons: Array<Person>): [Date, Date] {
   persons.forEach((person) => {
     if (person.history) {
       person.history.forEach((event) => {
-        if (event.date) dates.push(new Date(event.date));
+        if (event.date !== undefined) dates.push(new Date(event.date));
       });
     }
   });
