@@ -21,7 +21,7 @@
     "stories:build:docs": "npm run stories:build --docs",
     "stories:dev": "start-storybook --config-dir stories --no-open --port 6006",
     "stories:dev:docs": "npm run stories:dev --docs",
-    "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest --config ./test/jest.config.mjs --passWithNoTests",
+    "test": "jest --config ./test/jest.config.mjs --passWithNoTests",
     "test:ci": "npm run test -- --ci",
     "test:coverage": "npm run test -- --coverage",
     "test:watch": "npm run test -- --watch",
