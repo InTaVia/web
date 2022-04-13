@@ -46,7 +46,7 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     .paddingInner(0.2);
 
   return (
-    <svg width="100%" height="100%" viewBox={svgViewBox}>
+    <svg id="timeline" width="100%" height="100%" viewBox={svgViewBox}>
       <TimelineYearAxis xScale={scaleX} yScale={scaleY} />
       {persons.map((person) => {
         const personProps = { scaleX, scaleY, person };
