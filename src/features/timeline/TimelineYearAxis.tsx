@@ -3,7 +3,10 @@ import { brushX } from 'd3-brush';
 import type { ScaleBand, ScaleTime } from 'd3-scale';
 import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { selectTimeRangeBrush, setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 
 interface TimelineYearAxisProps<_T> {
   xScale: ScaleTime<number, number>;
@@ -13,8 +16,8 @@ interface TimelineYearAxisProps<_T> {
 export function TimelineYearAxis<_T>(props: TimelineYearAxisProps<_T>): JSX.Element {
   const { xScale, yScale } = props;
 
-  // v1: as local prop
-  const [brushRange, setBrushRange] = useState<[Date, Date] | null>(null);
+  const dispatch = useAppDispatch();
+  const brushRange = useAppSelector(selectTimeRangeBrush);
 
   const brushRef = useRef<SVGGElement>(null);
   const axisRef = useRef<SVGGElement>(null);
@@ -73,13 +76,15 @@ export function TimelineYearAxis<_T>(props: TimelineYearAxisProps<_T>): JSX.Elem
 
     // do not handle first call
     brush.on('end', (evt) => {
-      setBrushRange(
-        evt.selection?.map((d: number): Date => {
-          return xScale.invert(d);
-        }) as [Date, Date] | null,
+      dispatch(
+        setTimeRangeBrush(
+          evt.selection?.map((d: number): Date => {
+            return xScale.invert(d);
+          }) as [Date, Date] | null,
+        ),
       );
     });
-  }, [brushRange, xScale, yScale, brushRef]);
+  }, [brushRange, xScale, yScale, brushRef, dispatch]);
 
   return (
     <g id="x-axis">
