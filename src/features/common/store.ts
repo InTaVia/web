@@ -10,6 +10,7 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
+import timelineReducer from '@/features/timeline/timeline.slice';
 import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 
 export function configureAppStore() {
@@ -19,6 +20,7 @@ export function configureAppStore() {
       notifications: notificationsReducer,
       visualQuerying: visualQueryingReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+      timeline: timelineReducer,
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({

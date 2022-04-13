@@ -1,6 +1,7 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
+import TimelineIcon from '@mui/icons-material/LinearScale';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/SearchOutlined';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -41,6 +42,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       label: 'Visual Query',
       icon: <DataSaverOnOutlinedIcon />,
     },
+    { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
   ];
 
   return (
