@@ -11,6 +11,8 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^~/(.*)$': '<rootDir>/$1',
+    /** @see https://github.com/facebook/jest/issues/12036 */
+    '^d3-(.*)$': `d3-$1/dist/d3-$1`,
   },
   setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
