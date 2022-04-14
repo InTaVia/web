@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
@@ -186,6 +186,32 @@ describe('TimelinePage', () => {
     await waitFor(() => {
       const tooltip = screen.queryByRole('tooltip');
       expect(tooltip).not.toBeInTheDocument();
+    });
+  });
+
+  it('should show person relations in the tooltip', async () => {
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const timelineItem = document.querySelector(
+      'svg#timeline g#person-c934da85-ef34-4366-9078-64260bdc398d',
+    );
+    expect(timelineItem).toBeInTheDocument();
+
+    await userEvent.hover(timelineItem);
+
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+
+    await waitFor(() => {
+      const content = within(tooltip).getByText(/lorena kluge/i);
+      expect(content).toBeInTheDocument();
     });
   });
 });
