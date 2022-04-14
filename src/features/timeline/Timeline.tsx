@@ -4,9 +4,9 @@ import type { MutableRefObject } from 'react';
 import { useRef } from 'react';
 
 import { useAppSelector } from '@/features/common/store';
+import { usePersonsSearchResults } from '@/features/search/usePersonsSearchResults';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
-import { usePersonsSearchResults } from '@/features/timeline/usePersonsSearchResults';
 
 export function Timeline(): JSX.Element {
   const searchResults = usePersonsSearchResults();

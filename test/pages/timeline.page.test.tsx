@@ -1,8 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
 import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
-import { server } from '@/mocks/mocks.server';
+import { rest, server } from '@/mocks/mocks.server';
 import TimelinePage from '@/pages/timeline.page';
 import { createWrapper } from '~/test/test-utils';
 
@@ -54,6 +55,22 @@ describe('TimelinePage', () => {
 
     expect(push).toHaveBeenCalledTimes(1);
     expect(push).toHaveBeenCalledWith({ query: 'q=abcdef' });
+  });
+
+  it('should display error message when request failed', async () => {
+    server.use(
+      rest.get(
+        String(createIntaviaApiUrl({ pathname: '/api/persons' })),
+        (request, response, context) => {
+          return response(context.status(500));
+        },
+      ),
+    );
+
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    const errorMessage = await screen.findByRole('alert');
+    expect(errorMessage).toHaveTextContent(/rejected/i);
   });
 
   it('should render an SVG if there are results', async () => {
