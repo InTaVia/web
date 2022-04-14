@@ -14,15 +14,18 @@ interface TimelineSvgProps {
   zoomToData: boolean;
 }
 
+const svgMinWidth = 300;
+const svgMinHeight = 150;
+
 export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
   const { parentRef, persons, zoomToData } = props;
-  const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
-  const [svgWidth, setSvgWidth] = useState(0);
-  const [svgHeight, setSvgHeight] = useState(0);
+  const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
+  const [svgWidth, setSvgWidth] = useState(svgMinWidth);
+  const [svgHeight, setSvgHeight] = useState(svgMinHeight);
 
   useEffect(() => {
-    const w = parentRef.current.clientWidth;
-    const h = parentRef.current.clientHeight;
+    const w = Math.max(svgMinWidth, parentRef.current?.clientWidth ?? 0);
+    const h = Math.max(svgMinHeight, parentRef.current?.clientHeight ?? 0);
 
     setSvgWidth(w);
     setSvgHeight(h);
@@ -44,7 +47,13 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     .paddingInner(0.2);
 
   return (
-    <svg id="timeline" width="100%" height="100%" viewBox={svgViewBox}>
+    <svg
+      id="timeline"
+      width={svgWidth}
+      height={svgHeight}
+      style={{ minWidth: `${svgMinWidth}px`, minHeight: `${svgMinHeight}px` }}
+      viewBox={svgViewBox}
+    >
       <TimelineYearAxis xScale={scaleX} yScale={scaleY} />
       {persons.map((person) => {
         const personProps = { scaleX, scaleY, person };
