@@ -163,4 +163,29 @@ describe('TimelinePage', () => {
     const label1820Post = await screen.findByText(/^1820$/);
     expect(label1820Post).toBeInTheDocument();
   });
+
+  it('should show a tooltip on hover', async () => {
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const timelineItemOne = document.querySelector('svg#timeline g[id^="person-"]');
+    expect(timelineItemOne).toBeInTheDocument();
+
+    await userEvent.hover(timelineItemOne);
+
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+
+    await userEvent.unhover(timelineItemOne);
+    await waitFor(() => {
+      const tooltip = screen.queryByRole('tooltip');
+      expect(tooltip).not.toBeInTheDocument();
+    });
+  });
 });
