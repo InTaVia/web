@@ -214,4 +214,123 @@ describe('TimelinePage', () => {
       expect(content).toBeInTheDocument();
     });
   });
+
+  it('should handle empty relations properly', async () => {
+    server.use(
+      rest.get(
+        String(createIntaviaApiUrl({ pathname: '/api/persons' })),
+        (request, response, context) => {
+          return response(
+            context.json({
+              entities: [
+                {
+                  categories: ['Classical', 'Rap', 'Country'],
+                  description:
+                    'Modi quo sapiente sunt repudiandae dolor maiores dolor. Non possimus provident perferendis tenetur dolores iure quia nemo neque. Enim neque aut ut voluptates ea molestias est. Sequi et in voluptatibus. Dolorem culpa minus tempora eaque. Eius quia dolorem deserunt voluptatem distinctio totam dolore occaecati debitis.',
+                  gender: 'Male',
+                  id: 'c1865151-d2c3-49c5-8eb5-d2ce16d86c4c',
+                  kind: 'person',
+                  name: 'Deborah Knoll V',
+                  occupation: ['Developer', 'Agent'],
+                },
+              ],
+            }),
+          );
+        },
+      ),
+    );
+
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const timelineItems = document.querySelectorAll('svg#timeline g[id^="person-"]');
+    expect(timelineItems).toHaveLength(1);
+    const timelineItemWithoutRelations = timelineItems[0];
+
+    await userEvent.hover(timelineItemWithoutRelations);
+
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const content = tooltip.querySelectorAll(':scope li');
+      expect(content).toHaveLength(0);
+    });
+  });
+
+  it('should handle empty dates in relations properly', async () => {
+    server.use(
+      rest.get(
+        String(createIntaviaApiUrl({ pathname: '/api/persons' })),
+        (request, response, context) => {
+          return response(
+            context.json({
+              entities: [
+                {
+                  id: '44e23b91-57d6-4270-bb89-2a554daf3002',
+                  kind: 'person',
+                  name: 'Susan Scheurer',
+                  description:
+                    'Porro et fugiat natus velit dolore. Rerum enim mollitia sed aperiam eos dolores est distinctio. Accusantium officia aut dicta deleniti. Nihil quasi numquam autem voluptatem quia doloribus enim. Debitis et deserunt velit maxime inventore aliquid. Sequi harum est nesciunt dolorum unde cumque asperiores. Ullam in excepturi. Vel quia reprehenderit et ipsum. Facilis alias minus necessitatibus ratione magni.',
+                  history: [
+                    {
+                      type: 'beginning',
+                      date: '1904-03-08T07:37:49.797Z',
+                      placeId: '1e4f9504-ac86-462f-a4c8-b7389f532491',
+                    },
+                    {
+                      type: 'end',
+                      date: '1947-11-13T14:00:28.057Z',
+                      placeId: '625ca042-6d00-4b92-abc0-2825cf1b7e49',
+                    },
+                    {
+                      type: 'misc',
+                      placeId: '625ca042-6d00-4b92-abc0-2825cf1b7e49',
+                    },
+                  ],
+                  gender: 'Female',
+                  categories: ['Non Music', 'Country', 'Rap'],
+                  occupation: ['Consultant'],
+                },
+              ],
+            }),
+          );
+        },
+      ),
+    );
+
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const timelineItems = document.querySelectorAll('svg#timeline g[id^="person-"]');
+    expect(timelineItems).toHaveLength(1);
+    const timelineItem = timelineItems[0];
+
+    await userEvent.hover(timelineItem);
+
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const content = tooltip.querySelectorAll(':scope li');
+      expect(content).toHaveLength(3);
+      const dateSegment = within(content[2]).queryByText(/ on /);
+      // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
+      expect(dateSegment).not.toBeInTheDocument();
+    });
+  });
 });
