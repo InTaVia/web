@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
 import { server } from '@/mocks/mocks.server';
@@ -38,6 +39,21 @@ describe('TimelinePage', () => {
 
     const searchField = screen.getByRole('searchbox');
     expect(searchField).toHaveValue('abcdef');
+  });
+
+  it('should update search params when search textfield value changed', () => {
+    const push = jest.fn();
+    render(<TimelinePage />, {
+      wrapper: createWrapper({ router: { pathname: '/timeline', push } }),
+    });
+
+    const searchField = screen.getByRole('searchbox');
+    userEvent.type(searchField, 'abcdef');
+    const submitButton = screen.getByRole('button', { name: /search/i });
+    userEvent.click(submitButton);
+
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledWith({ query: 'q=abcdef' });
   });
 
   it('should render an SVG if there are results', async () => {
@@ -101,5 +117,33 @@ describe('TimelinePage', () => {
     const heading = screen.getByRole('heading', { name: /timeline/i });
 
     expect(heading).toBeInTheDocument();
+  });
+
+  it('should zoom out to the entire time range when unchecking zoom button', async () => {
+    render(<TimelinePage />, { wrapper: createWrapper({ router: { pathname: '/timeline' } }) });
+
+    const switchButton = screen.getByRole('checkbox', { name: /zoom to data time range/i });
+    expect(switchButton).toBeInTheDocument();
+    expect(switchButton).toBeChecked();
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    const label1820Pre = screen.queryByText(/^1820$/);
+    expect(label1820Pre).not.toBeInTheDocument();
+
+    await userEvent.click(switchButton);
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-node-access
+      const svg = document.querySelector('svg#timeline');
+      expect(svg).toBeInTheDocument();
+    });
+
+    const label1820Post = await screen.findByText(/^1820$/);
+    expect(label1820Post).toBeInTheDocument();
   });
 });
