@@ -21,8 +21,6 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
   const [svgHeight, setSvgHeight] = useState(0);
 
   useEffect(() => {
-    if (!parentRef.current) return;
-
     const w = parentRef.current.clientWidth;
     const h = parentRef.current.clientHeight;
 
