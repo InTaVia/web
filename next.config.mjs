@@ -4,7 +4,10 @@
 /** @type {NextConfig} */
 const config = {
   eslint: {
-    dirs: ['.'],
+    dirs: [process.cwd()],
+  },
+  experimental: {
+    outputStandalone: true,
   },
   async headers() {
     const headers = [
