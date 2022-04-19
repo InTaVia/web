@@ -1,12 +1,19 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import maplibregl from 'maplibre-gl';
+import type { MutableRefObject } from 'react';
 import { useRef, useState } from 'react';
 import Map, { Layer, Source } from 'react-map-gl';
 
 import { MapMarker } from '@/features/geomap/MapMarker';
 
-export function MaplibreMap() {
+import type { Person } from '../common/entity.model';
+
+interface MapProps {
+  data: Array<Person>;
+}
+
+export function MapLibre(props: MapProps): JSX.Element {
   const parent = useRef() as MutableRefObject<HTMLDivElement | null>;
 
   const [mapViewport, setMapViewport] = useState({
@@ -29,15 +36,17 @@ export function MaplibreMap() {
     features: [{ type: 'Feature', geometry: { type: 'Point', coordinates: [-122.4, 37.8] } }],
   };
 
-  const markers = [
-    [7.571606, 50.226913],
-    [8.571606, 50.226913],
-    [9.571606, 50.226913],
-    [10.571606, 50.226913],
-    [11.571606, 50.226913],
-    [9.571606, 51.226913],
-    [8.571606, 52.226913],
-  ];
+  const markers = props.data
+    .flatMap((person) => {
+      const history = person.history?.filter((relation) => {
+        return relation.type === 'beginning';
+      });
+      if (history == null) return;
+      return history.map((relation) => {
+        return [relation.place?.lng, relation.place?.lat];
+      });
+    })
+    .filter(Boolean);
 
   return (
     <div className="map-wrapper" ref={parent}>

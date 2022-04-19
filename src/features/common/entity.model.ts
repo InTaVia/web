@@ -10,6 +10,7 @@ export interface Relation {
   targetId?: Entity['id'];
   date?: Date;
   placeId?: Place['id'];
+  place?: Place;
 }
 
 export interface Person extends EntityBase {
