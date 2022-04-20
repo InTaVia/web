@@ -10,12 +10,14 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
+import uiReducer from '@/features/ui/ui.slice';
 
 export function configureAppStore() {
   const store = configureStore({
     reducer: {
       entities: entitiesReducer,
       notifications: notificationsReducer,
+      ui: uiReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
     },
     middleware(getDefaultMiddleware) {
