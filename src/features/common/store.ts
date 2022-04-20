@@ -11,12 +11,14 @@ import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
 import timelineReducer from '@/features/timeline/timeline.slice';
+import uiReducer from '@/features/ui/ui.slice';
 
 export function configureAppStore() {
   const store = configureStore({
     reducer: {
       entities: entitiesReducer,
       notifications: notificationsReducer,
+      ui: uiReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
       timeline: timelineReducer,
     },

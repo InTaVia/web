@@ -1,3 +1,4 @@
+import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
@@ -36,6 +37,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
+    {
+      id: 'storycreator',
+      href: { pathname: '/storycreator' },
+      label: 'Story Creator',
+      icon: <StoryCreatorIcon />,
+    },
   ];
 
   return (
