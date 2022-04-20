@@ -7,7 +7,7 @@ import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
-import { eventTypes } from '@/mocks/db';
+import { eventTypes } from '@/mocks/event-types';
 
 export interface TimelineElementProps {
   scaleX: ScaleTime<number, number>;
