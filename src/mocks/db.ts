@@ -92,7 +92,7 @@ export const eventTypes = [...lifetimeEventTypes, ...afterDeathEventTypes];
 function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   const relations: Array<Relation> = [];
 
-  const numRelations = faker.datatype.number(8);
+  const numRelations = 8;
   const numWithinLifetime = faker.datatype.number({
     min: Math.floor(numRelations * 0.6),
     max: numRelations,
