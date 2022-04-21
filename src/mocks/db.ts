@@ -3,6 +3,7 @@ import { matchSorter } from 'match-sorter';
 
 import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
+import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
 
 export const db = {
   person: createTable<Person>(),
@@ -86,13 +87,10 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
-const lifetimeEventTypes: Array<string> = ['stayed', 'lived'];
-const afterDeathEventTypes: Array<string> = ['statue erected'];
-export const eventTypes = [...lifetimeEventTypes, ...afterDeathEventTypes];
 function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   const relations: Array<Relation> = [];
 
-  const numRelations = 8;
+  const numRelations = faker.datatype.number(8);
   const numWithinLifetime = faker.datatype.number({
     min: Math.floor(numRelations * 0.6),
     max: numRelations,

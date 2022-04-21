@@ -5,6 +5,7 @@ import { useRef } from 'react';
 
 import { useAppSelector } from '@/features/common/store';
 import { usePersonsSearchResults } from '@/features/search/usePersonsSearchResults';
+import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 
@@ -51,7 +52,7 @@ export function Timeline(): JSX.Element {
   }
 
   return (
-    <div className="timeline-wrapper" ref={parent}>
+    <div className={styles['timeline-wrapper']} ref={parent}>
       <TimelineSvg parentRef={parent} persons={persons} zoomToData={zoomToTimeRange} />
     </div>
   );
