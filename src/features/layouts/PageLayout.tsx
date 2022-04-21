@@ -1,7 +1,9 @@
+import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
+import MapIcon from '@mui/icons-material/MapOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/SearchOutlined';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -43,6 +45,13 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       icon: <DataSaverOnOutlinedIcon />,
     },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
+    { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
+    {
+      id: 'storycreator',
+      href: { pathname: '/storycreator' },
+      label: 'Story Creator',
+      icon: <StoryCreatorIcon />,
+    },
   ];
 
   return (

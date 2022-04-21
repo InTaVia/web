@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 
+import entitiesSlice from '@/features/common/entities.slice';
 import type { Person, Place } from '@/features/common/entity.model';
 import { clamp } from '@/lib/clamp';
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
@@ -17,7 +18,14 @@ export const handlers = [
       const page = clamp(Number(request.url.searchParams.get('page') ?? 1), 1, pages);
       const offset = (page - 1) * limit;
 
-      const entities = persons.slice(offset, offset + limit);
+      const entities = persons.slice(offset, offset + limit).map((person) => {
+        return {
+          ...person,
+          history: person.history?.map((relation) => {
+            return { ...relation, place: db.place.findById(relation.placeId!) };
+          }),
+        };
+      });
 
       return response(
         context.status(200),
