@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { matchSorter } from 'match-sorter';
 
+// import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
 import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
@@ -38,8 +39,12 @@ function createTable<T extends Entity>() {
       }
       entity.history.push(relation);
     },
-    count() {
-      return table.size;
+    count(dateOfBirth?: Date | undefined) {
+      if (dateOfBirth == null) {
+        return table.size;
+      }
+      // const entities = Array.from(table.values());
+      // return filterEntities(entities, dateOfBirth).length;
     },
     clear() {
       table.clear();
@@ -229,3 +234,15 @@ export function clear() {
   db.person.clear();
   db.place.clear();
 }
+
+// function filterEntities(entities: Array<Entity>, dateOfBirth: Date): Array<Entity> {
+//   const filteredEntities = Array<Entity>();
+
+//   entities.forEach((entity) => {
+//     if (entity.history) {
+//       entity.history.filter((relation) => {
+//         return relation.type === 'beginning';
+//       });
+//     }
+//   });
+// }
