@@ -2,6 +2,7 @@ import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui
 import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import MapExample from '@/features/storycreator/MapExample';
 import styles from '@/features/storycreator/storycreator.module.css';
 import uiStyles from '@/features/ui/ui.module.css';
 import { addWindow, editWindow, removeWindow, selectWindows } from '@/features/ui/ui.slice';
@@ -148,6 +149,7 @@ export function SlideEditor(props: any) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
+        return <MapExample></MapExample>;
         //return <LeafletExample data={[]} />;
         return [];
       default:

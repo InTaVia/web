@@ -2,6 +2,7 @@ import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
+import MapIcon from '@mui/icons-material/MapOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/SearchOutlined';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -37,6 +38,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
+    { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
     {
       id: 'storycreator',
       href: { pathname: '/storycreator' },

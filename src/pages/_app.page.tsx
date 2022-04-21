@@ -1,5 +1,6 @@
 import '@/styles/index.css';
 import '@/styles/timeline.css';
+import '@/styles/map.css';
 
 import type { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
