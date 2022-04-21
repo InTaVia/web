@@ -1,4 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,6 +36,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
   const links = [
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
+    {
+      id: 'visual-query',
+      href: { pathname: '/visual-querying' },
+      label: 'Visual Query',
+      icon: <DataSaverOnOutlinedIcon />,
+    },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
   ];
 

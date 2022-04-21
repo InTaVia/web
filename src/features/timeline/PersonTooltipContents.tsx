@@ -32,9 +32,7 @@ export function PersonTooltipContents(props: PersonTooltipContentsProps): JSX.El
   return (
     <Box>
       <Typography variant="h5">{person.name}</Typography>
-
       {relationList}
-
       <Typography variant="body2" component="p">
         {person.description}
       </Typography>

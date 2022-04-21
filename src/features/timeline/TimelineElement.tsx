@@ -55,6 +55,7 @@ function _TimelineElement(
         return dod; // just to keep the return type at Date, won't hurt the maximum function
       }),
     ]) ?? dod;
+
   const x00 = scaleX(first);
   const x01 = scaleX(last);
 
