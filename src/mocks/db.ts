@@ -127,8 +127,8 @@ export function seed() {
       kind: 'place',
       name: faker.address.cityName(),
       description: faker.lorem.paragraph(6),
-      lat: Number(faker.address.longitude()),
-      lng: Number(faker.address.latitude()),
+      lat: Number(faker.address.latitude(49, 45)),
+      lng: Number(faker.address.longitude(17, 9)),
     });
   });
 
