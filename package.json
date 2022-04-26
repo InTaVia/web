@@ -45,8 +45,9 @@
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
     "@reduxjs/toolkit": "^1.8.0",
-    "d3": "^7.0.0",
     "@turf/turf": "^6.5.0",
+    "d3": "^7.0.0",
+    "mapbox-gl": "npm:empty-npm-package@^1.0.0",
     "maplibre-gl": "^2.1.9",
     "next": "^12.1.2",
     "react": "^17.0.2",
@@ -342,6 +343,7 @@
     }
   },
   "prettier": {
+    "endOfLine": "lf",
     "printWidth": 100,
     "proseWrap": "always",
     "semi": true,
