@@ -3,6 +3,7 @@
 import type { MouseEvent } from 'react';
 
 import { useAppDispatch } from '@/features/common/store';
+import styles from '@/features/visual-querying/visual-querying.module.css';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
 import { addConstraint, ConstraintType } from '@/features/visual-querying/visualQuerying.slice';
 
@@ -32,11 +33,11 @@ export function ConstraintList(props: ConstraintListProps) {
 
   return (
     <foreignObject width={props.width} height={props.height}>
-      <div className="constraint-list-wrapper">
-        <ul className="constraint-list">
+      <div className={styles['constraint-list-wrapper']}>
+        <ul className={styles['constraint-list']}>
           {Object.keys(ConstraintType).map((key) => {
             return (
-              <li key={key} className="constraint-list-elem" onClick={handleClick}>
+              <li key={key} className={styles['constraint-list-elem']} onClick={handleClick}>
                 {key}
               </li>
             );
