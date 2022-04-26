@@ -1,3 +1,4 @@
+// @ts-expect-error Missing module declaration.
 import worldGeoJSON from 'geojson-world-map';
 import { useEffect, useRef, useState } from 'react';
 import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
