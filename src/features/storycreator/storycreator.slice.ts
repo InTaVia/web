@@ -2,36 +2,39 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/features/common/store';
 
-export interface UiState {
-  windows: Array<any>;
+export interface StoryCreatorState {
+  stories: Array<any>;
 }
 
-const initialState: UiState = {
-  windows: [],
+const initialState: StoryCreatorState = {
+  stories: [{ title: 'The Life of Vergerio', i: 'story0' }],
 };
 
-export const uiSlice = createSlice({
-  name: 'ui',
+export const storyCreatorSlice = createSlice({
+  name: 'storycreator',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    addWindow: (state, action) => {
-      const window = action.payload;
+    createStory: (state, action) => {
+      const story = action.payload;
 
-      const newWindows = [...state.windows];
-      window.i = 'gridWindow' + newWindows.length;
-      newWindows.push(window);
-      state.windows = newWindows;
+      const newStories = [...state.stories];
+      story.i = 'story' + newStories.length;
+      story.title = 'Story ' + newStories.length;
+      newStories.push(story);
+      state.stories = newStories;
     },
-    removeWindow: (state, action) => {
-      const newWindows = [...state.windows].filter((e: any) => {
+    removeStory: (state, action) => {
+      console.log('REMOVE STORY', action.payload);
+
+      /* const newWindows = [...state.windows].filter((e: any) => {
         return e.i !== action.payload.i;
       });
 
-      state.windows = newWindows;
+      state.windows = newWindows; */
     },
-    editWindow: (state, action) => {
-      const window = action.payload;
+    editStory: (state, action) => {
+      /*  const window = action.payload;
       const newWindows = [...state.windows];
       for (const w of newWindows) {
         if (w.i === window.i) {
@@ -43,7 +46,7 @@ export const uiSlice = createSlice({
         }
       }
 
-      state.windows = newWindows;
+      state.windows = newWindows; */
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -56,10 +59,10 @@ export const uiSlice = createSlice({
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // export const selectCount = (state: RootState) => state.counter.value;
 
-export const { addWindow, removeWindow, editWindow } = uiSlice.actions;
+export const { createStory, removeStory, editStory } = storyCreatorSlice.actions;
 
-export const selectWindows = (state: RootState) => {
-  return state.ui.windows;
+export const selectStories = (state: RootState) => {
+  return state.storycreator.stories;
 };
 
-export default uiSlice.reducer;
+export default storyCreatorSlice.reducer;

@@ -10,6 +10,7 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
+import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import uiReducer from '@/features/ui/ui.slice';
 
 export function configureAppStore() {
@@ -18,6 +19,7 @@ export function configureAppStore() {
       entities: entitiesReducer,
       notifications: notificationsReducer,
       ui: uiReducer,
+      storycreator: storycreatorReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
     },
     middleware(getDefaultMiddleware) {
