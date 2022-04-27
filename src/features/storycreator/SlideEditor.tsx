@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
@@ -24,12 +24,13 @@ interface DropProps {
   props: any;
 }
 
-const ReactGridLayout = WidthProvider(Responsive);
-
 const rowHeight = 30;
-const height = 600;
+const height = 400;
 
-export function SlideEditor(props: any) {
+export default function SlideEditor(props: any) {
+  const myWidth = props.width;
+  const targetRef = props.targetRef;
+
   const dispatch = useAppDispatch();
 
   const windows = useAppSelector(selectWindows);
@@ -82,6 +83,8 @@ export function SlideEditor(props: any) {
         break;
 
       default:
+        layoutItem['x'] = 0;
+        layoutItem['y'] = 0;
         layoutItem['h'] = 2;
         layoutItem['w'] = 2;
         break;
@@ -89,12 +92,10 @@ export function SlideEditor(props: any) {
 
     dispatch(
       addWindow({
-        grid: {
-          x: layoutItem['x'],
-          y: layoutItem['y'],
-          w: layoutItem['w'],
-          h: layoutItem['h'],
-        },
+        x: layoutItem['x'],
+        y: layoutItem['y'],
+        w: layoutItem['w'],
+        h: layoutItem['h'],
         type: layoutItem['type'],
         key: newText,
       }),
@@ -148,7 +149,7 @@ export function SlideEditor(props: any) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        //return <LeafletExample data={[]} />;
+        /* return <MapExample></MapExample>; */
         return [];
       default:
         return [];
@@ -161,15 +162,14 @@ export function SlideEditor(props: any) {
       case 'Image':
       case 'Map':
         return (
-          <div key={'gridWindow' + element.id} className={styles.elevated} data-grid={element.grid}>
+          <div key={element.i} className={styles.elevated}>
             <Window
               className={styles['annotation-window']}
               title={element.type}
-              id={element.id}
+              id={element.i}
               onRemoveWindow={removeWindowHandler}
               static={element.static}
               isDraggable={true}
-              key={element.key}
             >
               {createWindowContent(element)}
             </Window>
@@ -177,13 +177,12 @@ export function SlideEditor(props: any) {
         );
       default:
         return (
-          <div key={'gridWindow' + element.id} className={styles.elevated} data-grid={element.grid}>
+          <div key={element.i} className={styles.elevated}>
             <Window
               className={styles['annotation-window']}
               title={element.type}
-              id={element.id}
+              id={element.i}
               onRemoveWindow={removeWindowHandler}
-              key={element.key}
             >
               {element.key}
             </Window>
@@ -193,17 +192,19 @@ export function SlideEditor(props: any) {
   };
 
   return (
-    <div className={styles['slide-editor-wrapper']}>
+    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
         className="layout"
-        /* cols={48} */
         layout={windows}
         rowHeight={30}
-        compactType="horizontal"
-        width={1200}
-        height={height}
+        cols={12}
+        width={myWidth}
         allowOverlap={true}
         isDroppable={true}
+        compactType={null}
+        useCSSTransforms={true}
+        measureBeforeMount={false}
+        preventCollision={false}
         draggableHandle={'.' + uiStyles['header-area']}
         style={{
           width: '100%',
@@ -211,36 +212,12 @@ export function SlideEditor(props: any) {
         }}
         onDrop={onDrop}
         onResize={(iLayout, element, resized) => {
-          /*           let oldLayout = [...layout];
-            let newLayout = [] as any;
-            for (let entry of oldLayout) {
-              if (entry.i === resized.i) {
-                entry = { ...entry, ...resized };
-              }
-              newLayout.push(entry);
-            } */
-          /* setLayout(newLayout); */
-
-          const oldLayout = [...iLayout];
-          for (const entry of oldLayout) {
-            if (entry.i === resized.i) {
-              dispatch(editWindow({ ...entry, ...resized }));
-            }
-          }
+          dispatch(editWindow({ ...resized }));
         }}
         onDrag={(iLayout, element, dragged) => {
-          //dispatch(editWindow({ entry: dragged }));
-          const oldLayout = [...iLayout];
-          for (const entry of oldLayout) {
-            if (entry.i === dragged.i) {
-              console.log(JSON.stringify(entry), JSON.stringify(dragged));
-
-              //dispatch(editWindow({ ...entry, ...dragged }));
-            }
-          }
+          dispatch(editWindow({ ...dragged }));
         }}
       >
-        {/* ({layout.map((e) => createLayoutPane(e))}) */}
         {windows.map((e: any) => {
           return createLayoutPane(e);
         })}

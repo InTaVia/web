@@ -17,28 +17,32 @@ export const uiSlice = createSlice({
   reducers: {
     addWindow: (state, action) => {
       const window = action.payload;
+
       const newWindows = [...state.windows];
-      window.id = newWindows.length;
+      window.i = 'gridWindow' + newWindows.length;
       newWindows.push(window);
       state.windows = newWindows;
     },
     removeWindow: (state, action) => {
       const newWindows = [...state.windows].filter((e: any) => {
-        return e.id !== action.payload.id;
+        return e.i !== action.payload.i;
       });
 
       state.windows = newWindows;
     },
     editWindow: (state, action) => {
-      //console.log('REDUCER', state, action);
-
       const window = action.payload;
       const newWindows = [...state.windows];
       for (const w of newWindows) {
-        console.log('WINDOW', JSON.stringify(w), window);
-        /* if (w.key === window.i) {
-        } */
+        if (w.i === window.i) {
+          w.x = window.x;
+          w.y = window.y;
+          w.w = window.w;
+          w.h = window.h;
+          break;
+        }
       }
+
       state.windows = newWindows;
     },
   },
