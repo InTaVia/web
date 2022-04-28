@@ -10,7 +10,7 @@ export default function StoryCreatorPage(): JSX.Element {
 
   let content;
   if (id) {
-    content = <StoryCreator />;
+    content = <StoryCreator storyID={id} />;
   } else {
     content = <StoryOverview />;
   }

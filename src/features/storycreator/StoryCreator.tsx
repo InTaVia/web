@@ -8,8 +8,11 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { useAppSelector } from '@/features/common/store';
 import SlideEditor from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
+import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
+import StoryFlow from '@/features/storycreator/StoryFlow';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -84,7 +87,13 @@ const createDrops = (type, props = {}) => {
   );
 };
 
-export default function StoryCreatorPage(): JSX.Element {
+export default function StoryCreatorPage(props): JSX.Element {
+  const storyID = props.storyID;
+
+  const story = useAppSelector((state) => {
+    return selectStoryByID(state, storyID);
+  });
+
   return (
     <div className={styles['story-editor-wrapper']}>
       <ResponsiveGridLayout
@@ -143,7 +152,13 @@ export default function StoryCreatorPage(): JSX.Element {
             h: 2,
           }}
         >
-          bottom
+          <ReactResizeDetector handleWidth handleHeight>
+            {({ width, height, targetRef }) => {
+              return (
+                <StoryFlow targetRef={targetRef} width={width} height={height} story={story} />
+              );
+            }}
+          </ReactResizeDetector>
         </div>
       </ResponsiveGridLayout>
     </div>
