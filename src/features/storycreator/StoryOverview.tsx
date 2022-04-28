@@ -1,4 +1,5 @@
 import { Button, Paper } from '@mui/material';
+import Link from 'next/link';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { createStory, selectStories } from '@/features/storycreator/storycreator.slice';
@@ -19,7 +20,9 @@ export default function StoryOverview(props: any) {
         {stories.map((e, i) => {
           return (
             <div key={`story${i}`}>
-              <a href={`/storycreator?id=${e.i}`}>{e.title}</a>
+              <Link href={`/storycreator?id=${e.i}`} passHref>
+                {e.title}
+              </Link>
             </div>
           );
         })}

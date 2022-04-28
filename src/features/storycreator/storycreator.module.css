@@ -35,3 +35,11 @@
 .annotation-window > .header-area {
   box-shadow: none !important;
 }
+
+.story-flow-card {
+  cursor: pointer;
+}
+
+.story-flow-card.selected {
+  border: 3px solid blue !important;
+}

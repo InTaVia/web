@@ -11,7 +11,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import { useAppSelector } from '@/features/common/store';
 import SlideEditor from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
-import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
+import { selectSlidesByStoryID, selectStoryByID } from '@/features/storycreator/storycreator.slice';
 import StoryFlow from '@/features/storycreator/StoryFlow';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -94,8 +94,18 @@ export default function StoryCreatorPage(props): JSX.Element {
     return selectStoryByID(state, storyID);
   });
 
+  const slides = useAppSelector((state) => {
+    return selectSlidesByStoryID(state, storyID);
+  });
+
+  const filteredSlides = slides.filter((s) => {
+    return s.selected;
+  });
+  const selectedSlide = filteredSlides[0] ? filteredSlides[0] : slides[0];
+
   return (
     <div className={styles['story-editor-wrapper']}>
+      {story.title}
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -114,7 +124,14 @@ export default function StoryCreatorPage(props): JSX.Element {
         >
           <ReactResizeDetector handleWidth handleHeight>
             {({ width, height, targetRef }) => {
-              return <SlideEditor targetRef={targetRef} width={width} height={height} />;
+              return (
+                <SlideEditor
+                  targetRef={targetRef}
+                  width={width}
+                  height={height}
+                  slide={selectedSlide}
+                />
+              );
             }}
           </ReactResizeDetector>
         </div>

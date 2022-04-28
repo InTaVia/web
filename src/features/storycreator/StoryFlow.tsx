@@ -1,10 +1,10 @@
 import { Button, Card, CardContent } from '@mui/material';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 
-import { createSlide } from './storycreator.slice';
+import { createSlide, selectSlide, selectSlidesByStoryID } from './storycreator.slice';
 
 export default function StoryFlow(props: any) {
   const myWidth = props.width;
@@ -13,7 +13,9 @@ export default function StoryFlow(props: any) {
 
   const dispatch = useAppDispatch();
 
-  const slides = story.slides;
+  const slides = useAppSelector((state) => {
+    return selectSlidesByStoryID(state, story.i);
+  });
 
   const layout = generateLayout(slides);
 
@@ -26,8 +28,8 @@ export default function StoryFlow(props: any) {
     let y = 0;
     let x = 0;
     for (const i in newSlides) {
-      //let s = newSlides[i];
-      newLayout.push({ i: `slide${i}`, x: x, y: y, w: 1, h: 1 });
+      const s = newSlides[parseInt(i)];
+      newLayout.push({ i: 'slide' + s.i, x: x, y: y, w: 1, h: 1 });
       x = x + 1;
 
       if ((parseInt(i) + 1) % 8 === 0) {
@@ -43,12 +45,16 @@ export default function StoryFlow(props: any) {
     dispatch(createSlide({ story: story.i, content: 'c' }));
   }
 
+  function onClick(slideID) {
+    dispatch(selectSlide({ story: story.i, slide: slideID }));
+  }
+
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
         className="layout"
         layout={layout}
-        rowHeight={30}
+        rowHeight={80}
         cols={8}
         autoSize={true}
         width={myWidth}
@@ -58,15 +64,22 @@ export default function StoryFlow(props: any) {
       >
         {slides.map((e: any, i: number) => {
           return (
-            <Card key={`slide${i}`} sx={{ minWidth: 50 }}>
-              <CardContent>{e.content}</CardContent>
+            <Card
+              onClick={(event) => {
+                onClick(e.i);
+              }}
+              className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
+              key={'slide' + e.i}
+              sx={{ minWidth: 50 }}
+            >
+              <CardContent>{e.i}</CardContent>
             </Card>
           );
         })}
       </ReactGridLayout>
       <Button
         onClick={() => {
-          dispatch(createSlide({ story: story.i, content: 'c' }));
+          dispatch(createSlide({ story: story.i }));
         }}
       >
         Add Slide

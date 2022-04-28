@@ -7,6 +7,8 @@ import uiStyles from '@/features/ui/ui.module.css';
 import { addWindow, editWindow, removeWindow, selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
 
+import { addContent, selectContentBySlide } from './storycreator.slice';
+
 interface Layout {
   i: string;
   x: number;
@@ -30,6 +32,11 @@ const height = 400;
 export default function SlideEditor(props: any) {
   const myWidth = props.width;
   const targetRef = props.targetRef;
+  const slide = props.slide;
+
+  const content = useAppSelector((state) => {
+    return selectContentBySlide(state, slide);
+  });
 
   const dispatch = useAppDispatch();
 
@@ -91,7 +98,9 @@ export default function SlideEditor(props: any) {
     }
 
     dispatch(
-      addWindow({
+      addContent({
+        story: slide.story,
+        slide: slide.i,
         x: layoutItem['x'],
         y: layoutItem['y'],
         w: layoutItem['w'],
@@ -195,7 +204,7 @@ export default function SlideEditor(props: any) {
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
         className="layout"
-        layout={windows}
+        layout={content}
         rowHeight={30}
         cols={12}
         width={myWidth}
@@ -211,14 +220,14 @@ export default function SlideEditor(props: any) {
           height: '100%',
         }}
         onDrop={onDrop}
-        onResize={(iLayout, element, resized) => {
+        /*  onResize={(iLayout, element, resized) => {
           dispatch(editWindow({ ...resized }));
         }}
         onDrag={(iLayout, element, dragged) => {
           dispatch(editWindow({ ...dragged }));
-        }}
+        }} */
       >
-        {windows.map((e: any) => {
+        {content.map((e: any) => {
           return createLayoutPane(e);
         })}
       </ReactGridLayout>

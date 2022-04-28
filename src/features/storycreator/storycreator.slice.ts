@@ -1,9 +1,12 @@
+import { Slide } from '@mui/material';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/features/common/store';
 
 export interface StoryCreatorState {
   stories: Array<any>;
+  slides: Array<any>;
+  content: Array<any>;
 }
 
 const initialState: StoryCreatorState = {
@@ -11,11 +14,15 @@ const initialState: StoryCreatorState = {
     {
       title: 'The Life of Vergerio',
       i: 'story0',
-      slides: [
-        { i: 'a', content: 'a', sort: 0 },
-        { i: 'b', content: 'b', sort: 1 },
-      ],
     },
+  ],
+  slides: [
+    { i: 'a', sort: 0, story: 'story0', selected: true },
+    { i: 'b', sort: 1, story: 'story0' },
+  ],
+  content: [
+    /* { i: 'contentA1', story: 'story0', slide: 'a' },
+    { i: 'contentB1', story: 'story0', slide: 'b' }, */
   ],
 };
 
@@ -60,14 +67,32 @@ export const storyCreatorSlice = createSlice({
     createSlide: (state, action) => {
       const slide = action.payload;
 
-      const newStories = [...state.stories];
-      for (const s of newStories) {
-        if (s.story === slide.i) {
-          s.slides.push(slide);
-          break;
+      const newSlides = [...state.slides];
+      slide.i = newSlides.length;
+      newSlides.push(slide);
+
+      state.slides = newSlides;
+    },
+    selectSlide: (state, action) => {
+      const select = action.payload;
+      const newSlides = [...state.slides];
+      for (const slide of newSlides) {
+        if (slide.story === select.story && slide.i === select.slide) {
+          slide.selected = true;
+        } else {
+          slide.selected = false;
         }
       }
-      state.stories = newStories;
+      state.slides = newSlides;
+    },
+    addContent: (state, action) => {
+      const content = action.payload;
+
+      const newContent = [...state.content];
+      content.i = 'content' + newContent.length;
+      newContent.push(content);
+
+      state.content = newContent;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -80,7 +105,8 @@ export const storyCreatorSlice = createSlice({
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // export const selectCount = (state: RootState) => state.counter.value;
 
-export const { createStory, removeStory, editStory, createSlide } = storyCreatorSlice.actions;
+export const { createStory, removeStory, editStory, createSlide, selectSlide, addContent } =
+  storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(
   [
@@ -95,6 +121,38 @@ export const selectStoryByID = createSelector(
     return stories.filter((story) => {
       return story.i === id;
     })[0];
+  },
+);
+
+export const selectSlidesByStoryID = createSelector(
+  [
+    (state) => {
+      return state.storycreator.slides;
+    },
+    (state, id) => {
+      return id;
+    },
+  ],
+  (slides, id) => {
+    return slides.filter((slide) => {
+      return slide.story === id;
+    });
+  },
+);
+
+export const selectContentBySlide = createSelector(
+  [
+    (state) => {
+      return state.storycreator.content;
+    },
+    (state, slide) => {
+      return slide;
+    },
+  ],
+  (content, slide) => {
+    return content.filter((c) => {
+      return c.story === slide.story && c.slide === slide.i;
+    });
   },
 );
 
