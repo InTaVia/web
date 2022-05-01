@@ -1,18 +1,27 @@
-import '~/node_modules/react-resizable/css/styles.css';
 import '~/node_modules/react-grid-layout/css/styles.css';
+import '~/node_modules/react-resizable/css/styles.css';
 
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+import { IconButton, TextareaAutosize } from '@mui/material';
+import { useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppSelector } from '@/features/common/store';
 import SlideEditor from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
-import { selectSlidesByStoryID, selectStoryByID } from '@/features/storycreator/storycreator.slice';
+import {
+  selectContentByStory,
+  selectSlidesByStoryID,
+  selectStoryByID,
+} from '@/features/storycreator/storycreator.slice';
 import StoryFlow from '@/features/storycreator/StoryFlow';
+
+import ButtonRow from './ButtonRow';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -98,14 +107,42 @@ export default function StoryCreatorPage(props): JSX.Element {
     return selectSlidesByStoryID(state, storyID);
   });
 
+  const allSlidesContent = useAppSelector((state) => {
+    return selectContentByStory(state, story);
+  });
+
   const filteredSlides = slides.filter((s) => {
     return s.selected;
   });
   const selectedSlide = filteredSlides[0] ? filteredSlides[0] : slides[0];
 
-  return (
-    <div className={styles['story-editor-wrapper']}>
-      {story.title}
+  const [textMode, setTextMode] = useState(false);
+
+  function toggleTextMode(): void {
+    setTextMode(!textMode);
+  }
+
+  let content = [];
+
+  if (textMode) {
+    const slideOutput = slides.map((s) => {
+      return {
+        ...s,
+        content: allSlidesContent.filter((c) => {
+          return c.slide === s.i;
+        }),
+      };
+    });
+
+    const storyObject = { ...story, slides: slideOutput };
+
+    content = (
+      <TextareaAutosize className={styles['story-textarea']}>
+        {JSON.stringify(storyObject, null, 2)}
+      </TextareaAutosize>
+    );
+  } else {
+    content = (
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -178,6 +215,18 @@ export default function StoryCreatorPage(props): JSX.Element {
           </ReactResizeDetector>
         </div>
       </ResponsiveGridLayout>
+    );
+  }
+
+  return (
+    <div className={styles['story-editor-wrapper']}>
+      {story.title}
+      <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
+        <IconButton onClick={toggleTextMode}>
+          <IntegrationInstructionsOutlinedIcon />
+        </IconButton>
+      </ButtonRow>
+      <div className={styles['story-editor-content']}>{content}</div>
     </div>
   );
 }

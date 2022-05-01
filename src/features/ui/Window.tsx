@@ -6,6 +6,8 @@ export interface WindowProperties {
   class: string;
   id: string;
   children: any; //todo: replace any with real type
+  onClick: void;
+  onRemoveWindow: () => void;
 }
 
 function Window(props: WindowProperties) {
@@ -28,7 +30,11 @@ function Window(props: WindowProperties) {
   }
 
   return (
-    <div className={props.class} style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+    <div
+      className={props.class}
+      onClick={props.onClick}
+      style={{ width: '100%', height: '100%', overflow: 'hidden' }}
+    >
       <div className={uiStyles['header-area']}>
         {props.title}
         {buttonArea}

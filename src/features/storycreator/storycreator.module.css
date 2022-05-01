@@ -2,6 +2,7 @@
   width: 100%;
   height: 100%;
   border: solid 1px rgb(0, 0, 0);
+  position: relative;
 }
 
 .story-editor-pane {
@@ -42,4 +43,12 @@
 
 .story-flow-card.selected {
   border: 3px solid blue !important;
+}
+
+.button-row {
+  display: inline-block;
+}
+
+.story-textarea {
+  width: 100%;
 }

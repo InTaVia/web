@@ -1,10 +1,15 @@
-import { Button, Card, CardContent } from '@mui/material';
+import { Button, Card } from '@mui/material';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
-
-import { createSlide, selectSlide, selectSlidesByStoryID } from './storycreator.slice';
+import {
+  createSlide,
+  removeSlide,
+  selectSlide,
+  selectSlidesByStoryID,
+} from '@/features/storycreator/storycreator.slice';
+import Window from '@/features/ui/Window';
 
 export default function StoryFlow(props: any) {
   const myWidth = props.width;
@@ -49,6 +54,10 @@ export default function StoryFlow(props: any) {
     dispatch(selectSlide({ story: story.i, slide: slideID }));
   }
 
+  function onRemove(slideID) {
+    dispatch(removeSlide({ story: story.i, slide: slideID }));
+  }
+
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
@@ -65,14 +74,19 @@ export default function StoryFlow(props: any) {
         {slides.map((e: any, i: number) => {
           return (
             <Card
+              key={'slide' + e.i}
               onClick={(event) => {
                 onClick(e.i);
               }}
               className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
-              key={'slide' + e.i}
-              sx={{ minWidth: 50 }}
             >
-              <CardContent>{e.i}</CardContent>
+              <Window
+                onRemoveWindow={() => {
+                  onRemove(e.i);
+                }}
+              >
+                {e.i}
+              </Window>
             </Card>
           );
         })}

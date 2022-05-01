@@ -2,7 +2,11 @@ import { Button, Paper } from '@mui/material';
 import Link from 'next/link';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
-import { createStory, selectStories } from '@/features/storycreator/storycreator.slice';
+import {
+  createStory,
+  removeStory,
+  selectStories,
+} from '@/features/storycreator/storycreator.slice';
 
 export default function StoryOverview(props: any) {
   const dispatch = useAppDispatch();
@@ -11,6 +15,10 @@ export default function StoryOverview(props: any) {
 
   function onCreateStory() {
     dispatch(createStory({}));
+  }
+
+  function onRemove(storyID: string) {
+    dispatch(removeStory({ i: storyID }));
   }
 
   return (
@@ -23,6 +31,14 @@ export default function StoryOverview(props: any) {
               <Link href={`/storycreator?id=${e.i}`} passHref>
                 {e.title}
               </Link>
+              <Button
+                color="error"
+                onClick={() => {
+                  onRemove(e.i);
+                }}
+              >
+                X
+              </Button>
             </div>
           );
         })}

@@ -3,11 +3,15 @@ import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
+import {
+  addContent,
+  editContent,
+  removeContent,
+  selectContentBySlide,
+} from '@/features/storycreator/storycreator.slice';
 import uiStyles from '@/features/ui/ui.module.css';
-import { addWindow, editWindow, removeWindow, selectWindows } from '@/features/ui/ui.slice';
+import { selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
-
-import { addContent, selectContentBySlide } from './storycreator.slice';
 
 interface Layout {
   i: string;
@@ -43,7 +47,7 @@ export default function SlideEditor(props: any) {
   const windows = useAppSelector(selectWindows);
 
   const removeWindowHandler = (id: any) => {
-    dispatch(removeWindow({ id: id }));
+    dispatch(removeContent({ i: id, story: slide.story, slide: slide.i }));
   };
 
   const onDrop = (i_layout, i_layoutItem, event) => {
@@ -176,7 +180,9 @@ export default function SlideEditor(props: any) {
               className={styles['annotation-window']}
               title={element.type}
               id={element.i}
-              onRemoveWindow={removeWindowHandler}
+              onRemoveWindow={() => {
+                removeWindowHandler(element.i);
+              }}
               static={element.static}
               isDraggable={true}
             >
@@ -191,7 +197,9 @@ export default function SlideEditor(props: any) {
               className={styles['annotation-window']}
               title={element.type}
               id={element.i}
-              onRemoveWindow={removeWindowHandler}
+              onRemoveWindow={() => {
+                removeWindowHandler(element.i);
+              }}
             >
               {element.key}
             </Window>
@@ -220,12 +228,12 @@ export default function SlideEditor(props: any) {
           height: '100%',
         }}
         onDrop={onDrop}
-        /*  onResize={(iLayout, element, resized) => {
-          dispatch(editWindow({ ...resized }));
+        onResize={(iLayout, element, resized) => {
+          dispatch(editContent({ ...resized, story: slide.story, slide: slide.i }));
         }}
         onDrag={(iLayout, element, dragged) => {
-          dispatch(editWindow({ ...dragged }));
-        }} */
+          dispatch(editContent({ ...dragged, story: slide.story, slide: slide.i }));
+        }}
       >
         {content.map((e: any) => {
           return createLayoutPane(e);
