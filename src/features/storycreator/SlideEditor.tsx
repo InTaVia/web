@@ -1,4 +1,5 @@
 import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
@@ -37,10 +38,16 @@ export default function SlideEditor(props: any) {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const slide = props.slide;
+  const imageRef = props.imageRef;
+  const takeScreenshot = props.takeScreenshot;
 
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
   });
+
+  useEffect(() => {
+    takeScreenshot();
+  }, [content]);
 
   const dispatch = useAppDispatch();
 
@@ -144,7 +151,7 @@ export default function SlideEditor(props: any) {
           >
             <CardMedia
               style={{ height: '85%', width: '100%' }}
-              image="https://post.healthline.com/wp-content/uploads/2021/06/lizard-iguana-1200x628-facebook.jpg"
+              image="lizard.jpg"
               title="Contemplative Reptile"
             />
             <CardContent className={styles['card-content']}>
@@ -211,6 +218,7 @@ export default function SlideEditor(props: any) {
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
+        innerRef={imageRef}
         className="layout"
         layout={content}
         rowHeight={30}
@@ -228,10 +236,10 @@ export default function SlideEditor(props: any) {
           height: '100%',
         }}
         onDrop={onDrop}
-        onResize={(iLayout, element, resized) => {
+        onResizeStop={(iLayout, element, resized) => {
           dispatch(editContent({ ...resized, story: slide.story, slide: slide.i }));
         }}
-        onDrag={(iLayout, element, dragged) => {
+        onDragStop={(iLayout, element, dragged) => {
           dispatch(editContent({ ...dragged, story: slide.story, slide: slide.i }));
         }}
       >

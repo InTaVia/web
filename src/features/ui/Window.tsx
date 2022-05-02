@@ -1,30 +1,49 @@
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+
 import uiStyles from '@/features/ui/ui.module.css';
 
 export interface WindowProperties {
-  closable: boolean;
   title: string;
   class: string;
   id: string;
   children: any; //todo: replace any with real type
   onClick: void;
   onRemoveWindow: () => void;
+  onCopyWindow: () => void;
 }
 
 function Window(props: WindowProperties) {
-  const closable: boolean = props.closable ? props.closable : true;
+  const onRemoveWindow = props.onRemoveWindow;
+  const onCopyWindow = props.onCopyWindow;
+  const id = props.id;
 
   const buttonArea: any = [];
 
-  if (closable) {
+  if (onRemoveWindow) {
     buttonArea.push(
       <div
         key="closeButton"
-        className={uiStyles['close-button']}
+        className={uiStyles['button-area-button']}
         onClick={(e) => {
-          props.onRemoveWindow(props.id);
+          onRemoveWindow(id);
         }}
       >
-        X
+        <ClearOutlinedIcon fontSize="medium" />
+      </div>,
+    );
+  }
+
+  if (onCopyWindow) {
+    buttonArea.push(
+      <div
+        key="copyButton"
+        className={uiStyles['button-area-button']}
+        onClick={(e) => {
+          onCopyWindow(id);
+        }}
+      >
+        <ContentCopyOutlinedIcon fontSize="medium" />
       </div>,
     );
   }

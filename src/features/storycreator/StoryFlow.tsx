@@ -4,6 +4,7 @@ import ReactGridLayout from 'react-grid-layout';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
+  copySlide,
   createSlide,
   removeSlide,
   selectSlide,
@@ -58,12 +59,16 @@ export default function StoryFlow(props: any) {
     dispatch(removeSlide({ story: story.i, slide: slideID }));
   }
 
+  function onCopy(slideID) {
+    dispatch(copySlide({ story: story.i, slide: slideID }));
+  }
+
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
         className="layout"
         layout={layout}
-        rowHeight={80}
+        rowHeight={120}
         cols={8}
         autoSize={true}
         width={myWidth}
@@ -81,11 +86,17 @@ export default function StoryFlow(props: any) {
               className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
             >
               <Window
+                title={e.i}
                 onRemoveWindow={() => {
                   onRemove(e.i);
                 }}
+                onCopyWindow={() => {
+                  onCopy(e.i);
+                }}
               >
-                {e.i}
+                {e.image !== null && (
+                  <img style={{ height: '100%' }} src={e.image} alt={'ScreenShot'} />
+                )}
               </Window>
             </Card>
           );

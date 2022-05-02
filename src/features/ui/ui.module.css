@@ -1,9 +1,6 @@
-.close-button {
-  width: 10px;
-  height: 10px;
+.button-area-button {
   float: right;
   line-height: 25px;
-  margin-right: 5px;
   cursor: pointer;
 }
 

@@ -1,221 +1,31 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
-import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
-import { IconButton, TextareaAutosize } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
-import ReactResizeDetector from 'react-resize-detector';
 
-import { useAppSelector } from '@/features/common/store';
-import SlideEditor from '@/features/storycreator/SlideEditor';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
-import {
-  selectContentByStory,
-  selectSlidesByStoryID,
-  selectStoryByID,
-} from '@/features/storycreator/storycreator.slice';
-import StoryFlow from '@/features/storycreator/StoryFlow';
+import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 
 import ButtonRow from './ButtonRow';
+import StoryGUICreator from './StoryGUICreator';
+import StoryTextCreator from './StoryTextCreator';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
-
-const createDrops = (type, props = {}) => {
-  function getContent(t) {
-    let content = [];
-    switch (t) {
-      case 'Timeline':
-        content = [
-          <LinearScaleOutlinedIcon fontSize="large" key="timelineIcon"></LinearScaleOutlinedIcon>,
-        ];
-        break;
-      case 'Map':
-        content = [<MapOutlinedIcon fontSize="large" key="mapIcon"></MapOutlinedIcon>];
-        break;
-      case 'Annotation':
-        content = [
-          <NoteAltOutlinedIcon fontSize="large" key="annotationIcon"></NoteAltOutlinedIcon>,
-        ];
-        break;
-      case 'Image':
-        content = [
-          <ImageOutlinedIcon fontSize="large" key="imageIcon">
-            Image
-          </ImageOutlinedIcon>,
-        ];
-        break;
-    }
-
-    content.push(
-      <div
-        key="imageLabel"
-        style={{
-          verticalAlign: 'top',
-          paddingLeft: '10px',
-          display: 'inline-block',
-          lineHeight: '30px',
-        }}
-      >
-        {t}
-      </div>,
-    );
-
-    return <div>{content}</div>;
-  }
-
-  return (
-    <div
-      key={type + 'Drop'}
-      className="droppable-element"
-      draggable={true}
-      unselectable="on"
-      onDragStart={(e) => {
-        return e.dataTransfer.setData(
-          'text/plain',
-          JSON.stringify({
-            type: type,
-            props: props,
-            content: '',
-          }),
-        );
-      }}
-      style={{
-        border: 'solid 1px black',
-        margin: 10,
-        padding: 30,
-        cursor: 'pointer',
-      }}
-    >
-      {getContent(type)}
-    </div>
-  );
-};
-
-export default function StoryCreatorPage(props): JSX.Element {
+export default function StoryCreator(props): JSX.Element {
   const storyID = props.storyID;
+
+  const dispatch = useAppDispatch();
 
   const story = useAppSelector((state) => {
     return selectStoryByID(state, storyID);
   });
 
-  const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, storyID);
-  });
-
-  const allSlidesContent = useAppSelector((state) => {
-    return selectContentByStory(state, story);
-  });
-
-  const filteredSlides = slides.filter((s) => {
-    return s.selected;
-  });
-  const selectedSlide = filteredSlides[0] ? filteredSlides[0] : slides[0];
-
   const [textMode, setTextMode] = useState(false);
 
   function toggleTextMode(): void {
     setTextMode(!textMode);
-  }
-
-  let content = [];
-
-  if (textMode) {
-    const slideOutput = slides.map((s) => {
-      return {
-        ...s,
-        content: allSlidesContent.filter((c) => {
-          return c.slide === s.i;
-        }),
-      };
-    });
-
-    const storyObject = { ...story, slides: slideOutput };
-
-    content = (
-      <TextareaAutosize className={styles['story-textarea']}>
-        {JSON.stringify(storyObject, null, 2)}
-      </TextareaAutosize>
-    );
-  } else {
-    content = (
-      <ResponsiveGridLayout
-        className="layout"
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 1, sm: 1, xs: 1, xxs: 1 }}
-        isDraggable={false}
-      >
-        <div
-          key="gridWindowContent"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 2,
-            y: 0,
-            w: 8,
-            h: 4,
-          }}
-        >
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <SlideEditor
-                  targetRef={targetRef}
-                  width={width}
-                  height={height}
-                  slide={selectedSlide}
-                />
-              );
-            }}
-          </ReactResizeDetector>
-        </div>
-        <div
-          key="gridWindowLeft"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 4,
-          }}
-        >
-          {[createDrops('Map', { static: true }), createDrops('Timeline', { static: true })]}
-        </div>
-        <div
-          key="gridWindowRight"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 10,
-            y: 0,
-            w: 2,
-            h: 4,
-          }}
-        >
-          {[createDrops('Annotation'), createDrops('Image'), createDrops('Timeline')]}
-        </div>
-        <div
-          key="gridWindowBottom"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 0,
-            y: 8,
-            w: 12,
-            h: 2,
-          }}
-        >
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <StoryFlow targetRef={targetRef} width={width} height={height} story={story} />
-              );
-            }}
-          </ReactResizeDetector>
-        </div>
-      </ResponsiveGridLayout>
-    );
   }
 
   return (
@@ -226,7 +36,13 @@ export default function StoryCreatorPage(props): JSX.Element {
           <IntegrationInstructionsOutlinedIcon />
         </IconButton>
       </ButtonRow>
-      <div className={styles['story-editor-content']}>{content}</div>
+      <div className={styles['story-editor-content']}>
+        {textMode ? (
+          <StoryTextCreator story={story}></StoryTextCreator>
+        ) : (
+          <StoryGUICreator story={story}></StoryGUICreator>
+        )}
+      </div>
     </div>
   );
 }
