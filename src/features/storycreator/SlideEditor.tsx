@@ -151,7 +151,7 @@ export default function SlideEditor(props: any) {
           >
             <CardMedia
               style={{ height: '85%', width: '100%' }}
-              image="lizard.jpg"
+              image="https://upload.wikimedia.org/wikipedia/commons/7/74/Peter_Pavel_Vergerij.jpg"
               title="Contemplative Reptile"
             />
             <CardContent className={styles['card-content']}>
