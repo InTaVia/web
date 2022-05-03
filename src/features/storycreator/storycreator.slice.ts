@@ -1,7 +1,7 @@
-import { Slide } from '@mui/material';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/features/common/store';
+
 
 export interface StoryCreatorState {
   stories: Array<any>;

@@ -5,6 +5,14 @@
   position: relative;
 }
 
+.story-editor-header {
+  padding: 5px;
+}
+
+.story-editor-headline {
+  font-size: 18px;
+}
+
 .story-editor-pane {
   background: rgb(255, 255, 255) !important;
 }

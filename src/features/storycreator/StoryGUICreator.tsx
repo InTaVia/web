@@ -79,8 +79,8 @@ const createDrops = (type, props = {}) => {
       }}
       style={{
         border: 'solid 1px black',
-        margin: 10,
         padding: 30,
+        marginBottom: 10,
         cursor: 'pointer',
       }}
     >
@@ -160,9 +160,7 @@ export default function StoryCreator(props): JSX.Element {
           w: 2,
           h: 4,
         }}
-      >
-        {[createDrops('Map', { static: true }), createDrops('Timeline', { static: true })]}
-      </div>
+      ></div>
       <div
         key="gridWindowRight"
         className={styles['story-editor-pane']}
@@ -173,7 +171,12 @@ export default function StoryCreator(props): JSX.Element {
           h: 4,
         }}
       >
-        {[createDrops('Annotation'), createDrops('Image'), createDrops('Timeline')]}
+        {[
+          createDrops('Map'),
+          createDrops('Timeline'),
+          createDrops('Annotation'),
+          createDrops('Image'),
+        ]}
       </div>
       <div
         key="gridWindowBottom"

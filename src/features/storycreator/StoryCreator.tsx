@@ -30,12 +30,14 @@ export default function StoryCreator(props): JSX.Element {
 
   return (
     <div className={styles['story-editor-wrapper']}>
-      {story.title}
-      <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-        <IconButton onClick={toggleTextMode}>
-          <IntegrationInstructionsOutlinedIcon />
-        </IconButton>
-      </ButtonRow>
+      <div className={styles['story-editor-header']}>
+        <div className={styles['story-editor-headline']}>{story.title}</div>
+        <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
+          <IconButton onClick={toggleTextMode}>
+            <IntegrationInstructionsOutlinedIcon />
+          </IconButton>
+        </ButtonRow>
+      </div>
       <div className={styles['story-editor-content']}>
         {textMode ? (
           <StoryTextCreator story={story}></StoryTextCreator>
