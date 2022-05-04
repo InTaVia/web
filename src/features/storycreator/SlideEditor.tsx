@@ -10,6 +10,7 @@ import {
   removeContent,
   selectContentBySlide,
 } from '@/features/storycreator/storycreator.slice';
+import StoryMap from '@/features/storycreator/StoryMap';
 import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
@@ -40,6 +41,11 @@ export default function SlideEditor(props: any) {
   const slide = props.slide;
   const imageRef = props.imageRef;
   const takeScreenshot = props.takeScreenshot;
+  const persons = props.persons;
+
+  const markers = persons.map((p) => {
+    return p.birthLocation;
+  });
 
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
@@ -169,8 +175,7 @@ export default function SlideEditor(props: any) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        /* return <MapExample></MapExample>; */
-        return [];
+        return <StoryMap markers={markers}></StoryMap>;
       default:
         return [];
     }

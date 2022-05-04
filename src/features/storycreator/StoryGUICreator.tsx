@@ -5,6 +5,7 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
@@ -16,50 +17,51 @@ import styles from '@/features/storycreator/storycreator.module.css';
 import { selectSlidesByStoryID, setImage } from '@/features/storycreator/storycreator.slice';
 import StoryFlow from '@/features/storycreator/StoryFlow';
 
+import { selectEntitiesByKind } from '../common/entities.slice';
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
+const iconMap = {
+  Timeline: <LinearScaleOutlinedIcon fontSize="large" key="timelineIcon" />,
+  Map: <MapOutlinedIcon fontSize="large" key="mapIcon" />,
+  Annotation: <NoteAltOutlinedIcon fontSize="large" key="annotationIcon" />,
+  Image: <ImageOutlinedIcon fontSize="large" key="imageIcon" />,
+  Person: <PersonOutlineOutlinedIcon fontSize="large" key="annotationIcon" />,
+};
+
 const createDrops = (type, props = {}) => {
-  function getContent(t) {
-    let content = [];
-    switch (t) {
-      case 'Timeline':
-        content = [
-          <LinearScaleOutlinedIcon fontSize="large" key="timelineIcon"></LinearScaleOutlinedIcon>,
-        ];
-        break;
-      case 'Map':
-        content = [<MapOutlinedIcon fontSize="large" key="mapIcon"></MapOutlinedIcon>];
-        break;
-      case 'Annotation':
-        content = [
-          <NoteAltOutlinedIcon fontSize="large" key="annotationIcon"></NoteAltOutlinedIcon>,
-        ];
-        break;
-      case 'Image':
-        content = [
-          <ImageOutlinedIcon fontSize="large" key="imageIcon">
-            Image
-          </ImageOutlinedIcon>,
-        ];
-        break;
-    }
-
-    content.push(
-      <div
-        key="imageLabel"
-        style={{
-          verticalAlign: 'top',
-          paddingLeft: '10px',
-          display: 'inline-block',
-          lineHeight: '30px',
-        }}
-      >
-        {t}
-      </div>,
-    );
-
-    return <div>{content}</div>;
+  function getIcon(t) {
+    return iconMap[t];
   }
+
+  const content = [getIcon(type)];
+
+  let text = '';
+  let padding = 0;
+  switch (type) {
+    case 'Person':
+      text = props.name;
+      padding = 5;
+      break;
+    default:
+      text = type;
+      padding = 30;
+      break;
+  }
+
+  content.push(
+    <div
+      key="imageLabel"
+      style={{
+        verticalAlign: 'top',
+        paddingLeft: '10px',
+        display: 'inline-block',
+        lineHeight: '30px',
+      }}
+    >
+      {text}
+    </div>,
+  );
 
   return (
     <div
@@ -79,12 +81,12 @@ const createDrops = (type, props = {}) => {
       }}
       style={{
         border: 'solid 1px black',
-        padding: 30,
+        padding: padding,
         marginBottom: 10,
         cursor: 'pointer',
       }}
     >
-      {getContent(type)}
+      {content}
     </div>
   );
 };
@@ -119,6 +121,21 @@ export default function StoryCreator(props): JSX.Element {
       });
   };
 
+  const entitiesByKind = useAppSelector(selectEntitiesByKind);
+  const persons = Object.values(entitiesByKind.person).map((person) => {
+    const newPerson = { ...person };
+    const history = person.history?.filter((relation) => {
+      return relation.type === 'beginning';
+    });
+    if (history != null) {
+      newPerson.birthLocation = history.flatMap((relation) => {
+        return [relation.place?.lng, relation.place?.lat];
+      });
+    }
+
+    return newPerson;
+  });
+
   return (
     <ResponsiveGridLayout
       className="layout"
@@ -146,6 +163,7 @@ export default function StoryCreator(props): JSX.Element {
                 slide={selectedSlide}
                 imageRef={ref}
                 takeScreenshot={takeScreenshot}
+                persons={persons}
               />
             );
           }}
@@ -160,7 +178,13 @@ export default function StoryCreator(props): JSX.Element {
           w: 2,
           h: 4,
         }}
-      ></div>
+      >
+        <div style={{ overflow: 'hidden', width: '100%', height: '100%', overflowY: 'scroll' }}>
+          {persons.map((p, index) => {
+            return createDrops('Person', p);
+          })}
+        </div>
+      </div>
       <div
         key="gridWindowRight"
         className={styles['story-editor-pane']}
