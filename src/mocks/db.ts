@@ -3,6 +3,7 @@ import { matchSorter } from 'match-sorter';
 
 import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
+import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
 
 export const db = {
   person: createTable<Person>(),
@@ -48,7 +49,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(): Array<Relation> {
+function createLifeSpanRelations(): [Relation, Relation] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -86,6 +87,34 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
+function createExtraRelations(birth: Date, death: Date): Array<Relation> {
+  const relations: Array<Relation> = [];
+
+  const numRelations = faker.datatype.number(8);
+  const numWithinLifetime = faker.datatype.number({
+    min: Math.floor(numRelations * 0.6),
+    max: numRelations,
+  });
+  const numAfterDeath = numRelations - numWithinLifetime;
+
+  for (let i = 0; i < numWithinLifetime; ++i) {
+    relations.push({
+      date: faker.date.between(birth, death).toISOString(),
+      type: faker.random.arrayElement(lifetimeEventTypes),
+      placeId: faker.random.arrayElement(db.place.getIds()),
+    });
+  }
+  for (let i = 0; i < numAfterDeath; ++i) {
+    relations.push({
+      date: faker.date.future(60, death).toISOString(),
+      type: faker.random.arrayElement(afterDeathEventTypes),
+      placeId: faker.random.arrayElement(db.place.getIds()),
+    });
+  }
+
+  return relations;
+}
+
 export function seed() {
   faker.seed(123456);
   faker.locale = 'de_AT';
@@ -98,8 +127,8 @@ export function seed() {
       kind: 'place',
       name: faker.address.cityName(),
       description: faker.lorem.paragraph(6),
-      lat: Number(faker.address.longitude()),
-      lng: Number(faker.address.latitude()),
+      lat: Number(faker.address.latitude(49, 45)),
+      lng: Number(faker.address.longitude(17, 9)),
     });
   });
 
@@ -171,6 +200,28 @@ export function seed() {
       personId,
       createPersonRelation(relationType, targetPersonId, relationDate),
     );
+  });
+
+  // Populate persons with additional test events. Do this at the end because
+  // some of the CI events rely on the random seed and the order in which the
+  // random entities are created.
+  personIds.forEach((personId) => {
+    const person = db.person.findById(personId);
+    const dateOfBirth = person?.history?.find((item) => {
+      return item.type === 'beginning';
+    })?.date;
+    const dateOfDeath = person?.history?.find((item) => {
+      return item.type === 'end';
+    })?.date;
+
+    if (dateOfBirth == null || dateOfDeath == null) {
+      return;
+    }
+
+    const extraRelations = createExtraRelations(new Date(dateOfBirth), new Date(dateOfDeath));
+    extraRelations.forEach((rel) => {
+      db.person.addRelationToHistory(personId, rel);
+    });
   });
 }
 

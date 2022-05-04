@@ -1,3 +1,5 @@
+type IsoDateString = string;
+
 export interface EntityBase {
   id: string;
   name: string;
@@ -10,6 +12,7 @@ export interface Relation {
   targetId?: Entity['id'];
   date?: IsoDateString;
   placeId?: Place['id'];
+  place?: Place;
 }
 
 export interface Person extends EntityBase {

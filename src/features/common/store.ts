@@ -11,6 +11,7 @@ import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
+import timelineReducer from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
 
 export function configureAppStore() {
@@ -21,6 +22,7 @@ export function configureAppStore() {
       ui: uiReducer,
       storycreator: storycreatorReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+      timeline: timelineReducer,
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
