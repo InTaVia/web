@@ -3,16 +3,24 @@ import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
+import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   copySlide,
   createSlide,
   removeSlide,
   selectSlide,
-  selectSlidesByStoryID,
+  selectSlidesByStoryId,
 } from '@/features/storycreator/storycreator.slice';
-import Window from '@/features/ui/Window';
+import { Window } from '@/features/ui/Window';
 
-export default function StoryFlow(props: any) {
+interface StoryFlowProps {
+  width?: number;
+  height?: number; // FIXME: unused currently
+  targetRef: any;
+  story: any;
+}
+
+export function StoryFlow(props: StoryFlowProps): JSX.Element {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const story = props.story;
@@ -20,12 +28,12 @@ export default function StoryFlow(props: any) {
   const dispatch = useAppDispatch();
 
   const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.i);
+    return selectSlidesByStoryId(state, story.id);
   });
 
   const layout = generateLayout(slides);
 
-  function generateLayout(i_slides) {
+  function generateLayout(i_slides: any) {
     const newSlides = [...i_slides].sort((a, b) => {
       return a.sort - b.sort;
     });
@@ -47,20 +55,20 @@ export default function StoryFlow(props: any) {
     return newLayout;
   }
 
-  function onAdd() {
-    dispatch(createSlide({ story: story.i, content: 'c' }));
+  // function onAdd() {
+  //   dispatch(createSlide({ story: story.id, content: 'c' }));
+  // }
+
+  function onClick(slideID: Slide['i']) {
+    dispatch(selectSlide({ story: story.id, slide: slideID }));
   }
 
-  function onClick(slideID) {
-    dispatch(selectSlide({ story: story.i, slide: slideID }));
+  function onRemove(slideID: Slide['i']) {
+    dispatch(removeSlide({ story: story.id, slide: slideID }));
   }
 
-  function onRemove(slideID) {
-    dispatch(removeSlide({ story: story.i, slide: slideID }));
-  }
-
-  function onCopy(slideID) {
-    dispatch(copySlide({ story: story.i, slide: slideID }));
+  function onCopy(slideID: Slide['i']) {
+    dispatch(copySlide({ story: story.id, slide: slideID }));
   }
 
   return (
@@ -76,26 +84,30 @@ export default function StoryFlow(props: any) {
         isResizable={false}
         useCSSTransforms={true}
       >
-        {slides.map((e: any, i: number) => {
+        {slides.map((slide: any) => {
           return (
             <Card
-              key={'slide' + e.i}
-              onClick={(event) => {
-                onClick(e.i);
+              key={'slide' + slide.i}
+              onClick={() => {
+                onClick(slide.i);
               }}
-              className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
+              className={`${styles['story-flow-card']} ${
+                slide.selected === true ? styles['selected'] : ''
+              }`}
             >
               <Window
-                title={e.i}
+                id={slide.i}
+                title={slide.i}
                 onRemoveWindow={() => {
-                  onRemove(e.i);
+                  onRemove(slide.i);
                 }}
                 onCopyWindow={() => {
-                  onCopy(e.i);
+                  onCopy(slide.i);
                 }}
               >
-                {e.image !== null && (
-                  <img style={{ height: '100%' }} src={e.image} alt={'ScreenShot'} />
+                {slide.image !== null && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img style={{ height: '100%' }} src={slide.image} alt={'ScreenShot'} />
                 )}
               </Window>
             </Card>

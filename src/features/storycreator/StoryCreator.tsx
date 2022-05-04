@@ -1,26 +1,22 @@
-import '~/node_modules/react-grid-layout/css/styles.css';
-import '~/node_modules/react-resizable/css/styles.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { ButtonRow } from '@/features/storycreator/ButtonRow';
 import styles from '@/features/storycreator/storycreator.module.css';
-import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
+import type { Story } from '@/features/storycreator/storycreator.slice';
+import { StoryGUICreator } from '@/features/storycreator/StoryGUICreator';
+import { StoryTextCreator } from '@/features/storycreator/StoryTextCreator';
 
-import ButtonRow from './ButtonRow';
-import StoryGUICreator from './StoryGUICreator';
-import StoryTextCreator from './StoryTextCreator';
+interface StoryCreatorProps {
+  story: Story;
+}
 
-export default function StoryCreator(props): JSX.Element {
-  const storyID = props.storyID;
-
-  const dispatch = useAppDispatch();
-
-  const story = useAppSelector((state) => {
-    return selectStoryByID(state, storyID);
-  });
+export default function StoryCreator(props: StoryCreatorProps): JSX.Element {
+  const { story } = props;
 
   const [textMode, setTextMode] = useState(false);
 
@@ -33,17 +29,13 @@ export default function StoryCreator(props): JSX.Element {
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-          <IconButton onClick={toggleTextMode}>
+          <IconButton aria-label="Toggle text mode" onClick={toggleTextMode}>
             <IntegrationInstructionsOutlinedIcon />
           </IconButton>
         </ButtonRow>
       </div>
       <div className={styles['story-editor-content']}>
-        {textMode ? (
-          <StoryTextCreator story={story}></StoryTextCreator>
-        ) : (
-          <StoryGUICreator story={story}></StoryGUICreator>
-        )}
+        {textMode ? <StoryTextCreator story={story} /> : <StoryGUICreator story={story} />}
       </div>
     </div>
   );

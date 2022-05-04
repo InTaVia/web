@@ -12,18 +12,18 @@ import {
 } from '@/features/storycreator/storycreator.slice';
 import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
-import Window from '@/features/ui/Window';
+import { Window } from '@/features/ui/Window';
 
-interface Layout {
-  i: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  static: boolean;
-  isDraggable: boolean;
-  content: string;
-}
+// interface Layout {
+//   i: string;
+//   x: number;
+//   y: number;
+//   w: number;
+//   h: number;
+//   static: boolean;
+//   isDraggable: boolean;
+//   content: string;
+// }
 
 interface DropProps {
   type: string;
@@ -34,7 +34,16 @@ interface DropProps {
 const rowHeight = 30;
 const height = 400;
 
-export default function SlideEditor(props: any) {
+interface SlideEditorProps {
+  width?: number;
+  height?: number; // FIXME: unused currently
+  targetRef: any;
+  slide: any;
+  imageRef: any;
+  takeScreenshot: any;
+}
+
+export function SlideEditor(props: SlideEditorProps): JSX.Element {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const slide = props.slide;
@@ -44,20 +53,18 @@ export default function SlideEditor(props: any) {
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
   });
+  const windows = useAppSelector(selectWindows);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     takeScreenshot();
   }, [content]);
 
-  const dispatch = useAppDispatch();
-
-  const windows = useAppSelector(selectWindows);
-
-  const removeWindowHandler = (id: any) => {
+  function removeWindowHandler(id: any) {
     dispatch(removeContent({ i: id, story: slide.story, slide: slide.i }));
-  };
+  }
 
-  const onDrop = (i_layout, i_layoutItem, event) => {
+  function onDrop(i_layout: any, i_layoutItem: any, event: any) {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
     const layoutItem = i_layoutItem;
 
@@ -120,9 +127,9 @@ export default function SlideEditor(props: any) {
         key: newText,
       }),
     );
-  };
+  }
 
-  const createWindowContent = (element: any) => {
+  function createWindowContent(element: any) {
     switch (element.type) {
       case 'Annotation':
         return (
@@ -174,9 +181,9 @@ export default function SlideEditor(props: any) {
       default:
         return [];
     }
-  };
+  }
 
-  const createLayoutPane = (element: any) => {
+  function createLayoutPane(element: any) {
     switch (element.type) {
       case 'Annotation':
       case 'Image':
@@ -213,7 +220,7 @@ export default function SlideEditor(props: any) {
           </div>
         );
     }
-  };
+  }
 
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
@@ -228,6 +235,7 @@ export default function SlideEditor(props: any) {
         isDroppable={true}
         compactType={null}
         useCSSTransforms={true}
+        // @ts-expect-error Missing in type declaration.
         measureBeforeMount={false}
         preventCollision={false}
         draggableHandle={'.' + uiStyles['header-area']}

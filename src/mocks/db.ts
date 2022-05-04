@@ -65,12 +65,12 @@ function createLifeSpanRelations(): [Relation, Relation] {
     {
       type: 'beginning',
       date: dateOfBirth.toISOString(),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     },
     {
       type: 'end',
       date: dateOfDeath.toISOString(),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     },
   ];
 }
@@ -80,13 +80,13 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
     return {
       type,
       targetId,
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     };
   } else {
     return {
       type,
       targetId,
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
       date: date.toISOString(),
     };
   }
@@ -105,15 +105,15 @@ function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   for (let i = 0; i < numWithinLifetime; ++i) {
     relations.push({
       date: faker.date.between(birth, death).toISOString(),
-      type: faker.random.arrayElement(lifetimeEventTypes),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      type: faker.helpers.arrayElement(lifetimeEventTypes),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     });
   }
   for (let i = 0; i < numAfterDeath; ++i) {
     relations.push({
       date: faker.date.future(60, death).toISOString(),
-      type: faker.random.arrayElement(afterDeathEventTypes),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      type: faker.helpers.arrayElement(afterDeathEventTypes),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     });
   }
 
@@ -155,7 +155,7 @@ export function seed() {
 
   selectedPersonIds.forEach((personId) => {
     const sourcePerson = db.person.findById(personId);
-    const targetPersonId = faker.random.arrayElement(personIds);
+    const targetPersonId = faker.helpers.arrayElement(personIds);
     const targetPerson = db.person.findById(personId);
     const sourcePersonDateOfBirth = sourcePerson?.history?.find((item) => {
       return item.type === 'beginning';

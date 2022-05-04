@@ -1,66 +1,67 @@
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import type { ReactNode } from 'react';
 
-import uiStyles from '@/features/ui/ui.module.css';
+import styles from '@/features/ui/ui.module.css';
 
-export interface WindowProperties {
-  title: string;
-  class: string;
+export interface WindowProps {
+  children?: ReactNode;
+  className?: string;
   id: string;
-  children: any; //todo: replace any with real type
-  onClick: void;
-  onRemoveWindow: () => void;
-  onCopyWindow: () => void;
+  isDraggable?: boolean; // FIXME: unused currently
+  onClick?: () => void;
+  onCopyWindow?: (id: string) => void;
+  onRemoveWindow?: (id: string) => void;
+  static?: boolean; // FIXME: unused currently
+  title: string;
 }
 
-function Window(props: WindowProperties) {
-  const onRemoveWindow = props.onRemoveWindow;
-  const onCopyWindow = props.onCopyWindow;
-  const id = props.id;
+export function Window(props: WindowProps): JSX.Element {
+  const { children, id, onCopyWindow, onRemoveWindow } = props;
 
-  const buttonArea: any = [];
+  const buttonArea: Array<any> = [];
 
   if (onRemoveWindow) {
     buttonArea.push(
-      <div
+      <button
         key="closeButton"
-        className={uiStyles['button-area-button']}
-        onClick={(e) => {
+        className={styles['button-area-button']}
+        onClick={() => {
           onRemoveWindow(id);
         }}
       >
         <ClearOutlinedIcon fontSize="medium" />
-      </div>,
+      </button>,
     );
   }
 
   if (onCopyWindow) {
     buttonArea.push(
-      <div
+      <button
         key="copyButton"
-        className={uiStyles['button-area-button']}
-        onClick={(e) => {
+        className={styles['button-area-button']}
+        onClick={() => {
           onCopyWindow(id);
         }}
       >
         <ContentCopyOutlinedIcon fontSize="medium" />
-      </div>,
+      </button>,
     );
   }
 
   return (
+    // FIXME:
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      className={props.class}
+      className={props.className}
       onClick={props.onClick}
       style={{ width: '100%', height: '100%', overflow: 'hidden' }}
     >
-      <div className={uiStyles['header-area']}>
+      <div className={styles['header-area']}>
         {props.title}
         {buttonArea}
       </div>
-      <div className={uiStyles['content-area']}>{props.children}</div>
+      <div className={styles['content-area']}>{children}</div>
     </div>
   );
 }
-
-export default Window;

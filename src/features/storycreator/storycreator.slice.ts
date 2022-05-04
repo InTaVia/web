@@ -1,20 +1,47 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/features/common/store';
+import { length } from '@/lib/length';
+
+type DataUrlString = string;
+
+export interface Story {
+  id: string;
+  title: string;
+}
+
+export interface Slide {
+  i: string;
+  sort: number;
+  story: Story['id'];
+  selected?: boolean;
+  image: DataUrlString | null;
+}
+
+export interface SlideContent {
+  i: string;
+  story: Story['id'];
+  slide: Slide['i'];
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
 
 export interface StoryCreatorState {
-  stories: Array<any>;
-  slides: Array<any>;
-  content: Array<any>;
+  stories: Record<Story['id'], Story>;
+  slides: Array<Slide>;
+  content: Array<SlideContent>;
 }
 
 const initialState: StoryCreatorState = {
-  stories: [
-    {
+  stories: {
+    story0: {
+      id: 'story0',
       title: 'The Life of Vergerio',
-      i: 'story0',
     },
-  ],
+  },
   slides: [
     { i: 'a', sort: 0, story: 'story0', selected: true, image: null },
     { i: 'b', sort: 1, story: 'story0', image: null },
@@ -28,47 +55,42 @@ const initialState: StoryCreatorState = {
 export const storyCreatorSlice = createSlice({
   name: 'storycreator',
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    createStory: (state, action) => {
+    createStory(state, action: PayloadAction<Omit<Story, 'id' | 'title'>>) {
       const story = action.payload;
 
-      const newStories = [...state.stories];
-      story.i = 'story' + newStories.length;
-      story.title = 'Story ' + newStories.length;
-      newStories.push(story);
-      state.stories = newStories;
-    },
-    removeStory: (state, action) => {
-      console.log('REMOVE STORY', action.payload);
+      const id = nanoid();
+      const title = `Story ${length(state.stories)}`;
 
-      const newStories = [...state.stories].filter((e: any) => {
-        return e.i !== action.payload.i;
-      });
+      state.stories[id] = { ...story, id, title };
+    },
+    removeStory(state, action: PayloadAction<Story['id']>) {
+      const id = action.payload;
+
+      delete state.stories[id];
 
       const newSlides = [...state.slides].filter((e: any) => {
-        return e.story !== action.payload.i;
+        return e.story !== id;
       });
 
       const newContent = [...state.content].filter((e: any) => {
-        return e.story !== action.payload.i;
+        return e.story !== id;
       });
 
-      state.stories = newStories;
       state.slides = newSlides;
       state.content = newContent;
     },
-    createSlide: (state, action) => {
+    createSlide: (state, action: PayloadAction<any>) => {
       const slide = action.payload;
 
       const newSlides = [...state.slides];
-      slide.i = newSlides.length;
+      slide.i = String(newSlides.length);
       slide.image = null;
       newSlides.push(slide);
 
       state.slides = newSlides;
     },
-    selectSlide: (state, action) => {
+    selectSlide: (state, action: PayloadAction<any>) => {
       const select = action.payload;
       const newSlides = [...state.slides];
       for (const slide of newSlides) {
@@ -80,7 +102,7 @@ export const storyCreatorSlice = createSlice({
       }
       state.slides = newSlides;
     },
-    copySlide: (state, action) => {
+    copySlide: (state, action: PayloadAction<any>) => {
       const slide = action.payload.slide;
       const story = action.payload.story;
 
@@ -129,14 +151,14 @@ export const storyCreatorSlice = createSlice({
       state.slides = newSlides;
       state.content = newContent;
     },
-    removeSlide: (state, action) => {
+    removeSlide: (state, action: PayloadAction<any>) => {
       const newSlides = [...state.slides].filter((e: any) => {
         return !(action.payload.story === e.story && e.i === action.payload.slide);
       });
 
       state.slides = newSlides;
     },
-    removeContent: (state, action) => {
+    removeContent: (state, action: PayloadAction<any>) => {
       const newContent = [...state.content].filter((e: any) => {
         return !(
           action.payload.story === e.story &&
@@ -147,7 +169,7 @@ export const storyCreatorSlice = createSlice({
 
       state.content = newContent;
     },
-    addContent: (state, action) => {
+    addContent: (state, action: PayloadAction<any>) => {
       const content = action.payload;
 
       const newContent = [...state.content];
@@ -156,7 +178,7 @@ export const storyCreatorSlice = createSlice({
 
       state.content = newContent;
     },
-    editContent: (state, action) => {
+    editContent: (state, action: PayloadAction<any>) => {
       const content = action.payload;
       const newContent = [...state.content];
       for (const c of newContent) {
@@ -170,7 +192,7 @@ export const storyCreatorSlice = createSlice({
 
       state.content = newContent;
     },
-    setImage: (state, action) => {
+    setImage: (state, action: PayloadAction<any>) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
 
@@ -184,54 +206,37 @@ export const storyCreatorSlice = createSlice({
       state.slides = newSlides;
     },
   },
-  // The `extraReducers` field lets the slice handle actions defined elsewhere,
-  // including actions generated by createAsyncThunk or in other slices.
-  extraReducers: (builder) => {},
 });
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-// export const selectCount = (state: RootState) => state.counter.value;
 
 export const {
   createStory,
   removeStory,
-  removeSlide,
-  removeContent,
   createSlide,
+  removeSlide,
   selectSlide,
+  copySlide,
   addContent,
   editContent,
+  removeContent,
   setImage,
-  copySlide,
 } = storyCreatorSlice.actions;
+export default storyCreatorSlice.reducer;
 
-export const selectStoryByID = createSelector(
-  [
-    (state) => {
-      return state.storycreator.stories;
-    },
-    (state, id) => {
-      return id;
-    },
-  ],
-  (stories, id) => {
-    return stories.filter((story) => {
-      return story.i === id;
-    })[0];
+export function selectStories(state: RootState) {
+  return state.storycreator.stories;
+}
+
+export function selectStoryById(state: RootState, id: Story['id']) {
+  return state.storycreator.stories[id];
+}
+
+export const selectSlidesByStoryId = createSelector(
+  (state: RootState) => {
+    return state.storycreator.slides;
   },
-);
-
-export const selectSlidesByStoryID = createSelector(
-  [
-    (state) => {
-      return state.storycreator.slides;
-    },
-    (state, id) => {
-      return id;
-    },
-  ],
+  (state: RootState, id: string) => {
+    return id;
+  },
   (slides, id) => {
     return slides.filter((slide) => {
       return slide.story === id;
@@ -240,14 +245,12 @@ export const selectSlidesByStoryID = createSelector(
 );
 
 export const selectContentBySlide = createSelector(
-  [
-    (state) => {
-      return state.storycreator.content;
-    },
-    (state, slide) => {
-      return slide;
-    },
-  ],
+  (state: RootState) => {
+    return state.storycreator.content;
+  },
+  (state: RootState, slide: Slide) => {
+    return slide;
+  },
   (content, slide) => {
     return content.filter((c) => {
       return c.story === slide.story && c.slide === slide.i;
@@ -256,23 +259,15 @@ export const selectContentBySlide = createSelector(
 );
 
 export const selectContentByStory = createSelector(
-  [
-    (state) => {
-      return state.storycreator.content;
-    },
-    (state, story) => {
-      return story;
-    },
-  ],
+  (state: RootState) => {
+    return state.storycreator.content;
+  },
+  (state: RootState, story: Story) => {
+    return story;
+  },
   (content, story) => {
     return content.filter((c) => {
-      return c.story === story.i;
+      return c.story === story.id;
     });
   },
 );
-
-export const selectStories = (state: RootState) => {
-  return state.storycreator.stories;
-};
-
-export default storyCreatorSlice.reducer;

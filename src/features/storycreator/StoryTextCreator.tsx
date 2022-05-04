@@ -1,36 +1,39 @@
-import '~/node_modules/react-grid-layout/css/styles.css';
-import '~/node_modules/react-resizable/css/styles.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 import { TextareaAutosize } from '@mui/material';
-import { Responsive, WidthProvider } from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+// import { Responsive, WidthProvider } from 'react-grid-layout';
+import { useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
+import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   selectContentByStory,
-  selectSlidesByStoryID,
+  selectSlidesByStoryId,
 } from '@/features/storycreator/storycreator.slice';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+// const ResponsiveGridLayout = WidthProvider(Responsive);
 
-export default function StoryTextCreator(props): JSX.Element {
-  const story = props.story;
+interface StoryTextCreatorProps {
+  story: Story;
+}
 
-  const dispatch = useAppDispatch();
+export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
+  const { story } = props;
 
   const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.i);
+    return selectSlidesByStoryId(state, story.id);
   });
 
   const allSlidesContent = useAppSelector((state) => {
     return selectContentByStory(state, story);
   });
 
-  const slideOutput = slides.map((s) => {
+  const slideOutput = slides.map((slide: any) => {
     const ret = {
-      ...s,
-      content: allSlidesContent.filter((c) => {
-        return c.slide === s.i;
+      ...slide,
+      content: allSlidesContent.filter((content: any) => {
+        return content.slide === slide.i;
       }),
     };
 
@@ -41,8 +44,9 @@ export default function StoryTextCreator(props): JSX.Element {
   const storyObject = { ...story, slides: slideOutput };
 
   return (
-    <TextareaAutosize className={styles['story-textarea']}>
-      {JSON.stringify(storyObject, null, 2)}
-    </TextareaAutosize>
+    <TextareaAutosize
+      className={styles['story-textarea']}
+      value={JSON.stringify(storyObject, null, 2)}
+    />
   );
 }
