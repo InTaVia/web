@@ -28,6 +28,21 @@ const slice = createSlice({
     clearEntities() {
       return initialState;
     },
+    createEntity(state, action) {
+      const entity = action.payload;
+      console.log(entity);
+
+      const newEntitiesById = { ...state.entities.byId };
+      newEntitiesById[entity.id] = entity;
+
+      state.entities.byId = newEntitiesById;
+
+      const newEntitiesByKind = { ...state.entities.byKind };
+      const newEntities = newEntitiesByKind[entity.kind];
+      newEntities[entity.id] = entity;
+
+      state.entities.byKind = newEntitiesByKind;
+    },
   },
   extraReducers(builder) {
     builder.addMatcher(
@@ -57,7 +72,7 @@ const slice = createSlice({
   },
 });
 
-export const { clearEntities } = slice.actions;
+export const { clearEntities, createEntity } = slice.actions;
 export default slice.reducer;
 
 export function selectEntities(state: RootState) {

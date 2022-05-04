@@ -5,7 +5,7 @@ import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/Integration
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 
@@ -16,8 +16,6 @@ import StoryTextCreator from './StoryTextCreator';
 
 export default function StoryCreator(props): JSX.Element {
   const storyID = props.storyID;
-
-  const dispatch = useAppDispatch();
 
   const story = useAppSelector((state) => {
     return selectStoryByID(state, storyID);

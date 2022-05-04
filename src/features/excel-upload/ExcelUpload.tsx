@@ -3,7 +3,12 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import * as XLSX from 'xlsx';
 
+import { createEntity } from '../common/entities.slice';
+import { useAppDispatch } from '../common/store';
+
 export default function ExcelUpload(props): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const processData = (dataString) => {
     const dataStringLines = dataString.split(/\r\n|\n/);
     const headers = dataStringLines[0].split(/,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -43,12 +48,43 @@ export default function ExcelUpload(props): JSX.Element {
       };
     });
 
-    console.log(list);
-    console.log(columns);
-
-    /* setData(list);
-    setColumns(columns); */
+    convertData(list);
   };
+
+  function convertData(data) {
+    console.log(data);
+
+    const events = [];
+    for (const raw of data) {
+      const newPlace = {
+        name: raw['Place Name'],
+        lat: raw['Lat'] === '' ? null : raw['Lat'],
+        lng: raw['Lon'] === '' ? null : raw['Lon'],
+        kind: 'place',
+      };
+
+      const newDate = raw['Event Start'];
+
+      const newDescription = raw['Event Description'];
+
+      const newEvent = {
+        place: newPlace,
+        date: newDate,
+        description: newDescription,
+      };
+      events.push(newEvent);
+    }
+
+    const person = {
+      name: 'Pier Paolo Vergerio',
+      kind: 'person',
+      gender: 'Male',
+      history: events,
+      id: 'c1865151-d2c3-49c5-8eb5-d2ce16d86c4f',
+    };
+
+    dispatch(createEntity(person));
+  }
 
   function handleFileUpload(e) {
     const file = e.target.files[0];
