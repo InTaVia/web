@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 
+import ExcelUpload from '../excel-upload/ExcelUpload';
 import ButtonRow from './ButtonRow';
 import StoryGUICreator from './StoryGUICreator';
 import StoryTextCreator from './StoryTextCreator';
@@ -30,6 +31,7 @@ export default function StoryCreator(props): JSX.Element {
 
   return (
     <div className={styles['story-editor-wrapper']}>
+      <ExcelUpload />
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>

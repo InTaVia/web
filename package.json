@@ -64,7 +64,8 @@
     "react-leaflet": "^3.2.5",
     "react-map-gl": "^7.0.10",
     "react-redux": "^7.2.6",
-    "react-resize-detector": "^7.0.0"
+    "react-resize-detector": "^7.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
