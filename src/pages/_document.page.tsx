@@ -13,6 +13,12 @@ export default class Document extends NextDocument<{ emotionStyleTags: Array<JSX
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
             crossOrigin="anonymous"
           />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossOrigin=""
+          />
           {this.props.emotionStyleTags}
         </Head>
         <body>

@@ -13,16 +13,18 @@ import notificationsReducer, {
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
+import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 
 export function configureAppStore() {
   const store = configureStore({
     reducer: {
       entities: entitiesReducer,
-      notifications: notificationsReducer,
-      ui: uiReducer,
-      storycreator: storycreatorReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+      notifications: notificationsReducer,
+      storycreator: storycreatorReducer,
       timeline: timelineReducer,
+      ui: uiReducer,
+      visualQuerying: visualQueryingReducer,
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({

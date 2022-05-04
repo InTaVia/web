@@ -1,0 +1,22 @@
+.search-wrapper {
+  padding: 0;
+  height: 100vh;
+}
+
+.constraint-list-wrapper {
+  background-color: rgb(255 255 255);
+  border: 1px rgb(128 128 128);
+}
+
+.constraint-list {
+  text-align: start;
+}
+
+.constraint-list-elem {
+  cursor: pointer;
+}
+
+.leaflet-constraint-wrapper {
+  width: 100%;
+  height: 100%;
+}
