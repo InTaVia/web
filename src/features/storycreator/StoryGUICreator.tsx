@@ -1,6 +1,7 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
+import AdjustIcon from '@mui/icons-material/Adjust';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
@@ -26,21 +27,28 @@ const iconMap = {
   Map: <MapOutlinedIcon fontSize="large" key="mapIcon" />,
   Annotation: <NoteAltOutlinedIcon fontSize="large" key="annotationIcon" />,
   Image: <ImageOutlinedIcon fontSize="large" key="imageIcon" />,
-  Person: <PersonOutlineOutlinedIcon fontSize="large" key="annotationIcon" />,
+  Person: <PersonOutlineOutlinedIcon fontSize="large" key="personIcon" />,
+  Event: <AdjustIcon fontSize="large" key="EventIcon" />,
 };
 
 const createDrops = (type, props = {}) => {
   function getIcon(t) {
-    return iconMap[t];
+    return <div style={{ verticalAlign: 'middle', display: 'inline-block' }}>{iconMap[t]}</div>;
   }
 
   const content = [getIcon(type)];
 
   let text = '';
+  const subline = '';
   let padding = 0;
   switch (type) {
     case 'Person':
       text = props.name;
+      padding = 5;
+      break;
+    case 'Event':
+      text = props.type;
+      subline = `in ${props.place.name} in ${props.date.substring(0, 4)}`;
       padding = 5;
       break;
     default:
@@ -53,13 +61,14 @@ const createDrops = (type, props = {}) => {
     <div
       key="imageLabel"
       style={{
-        verticalAlign: 'top',
+        verticalAlign: 'middle',
         paddingLeft: '10px',
         display: 'inline-block',
-        lineHeight: '30px',
       }}
     >
       {text}
+      <br />
+      {subline}
     </div>,
   );
 
@@ -122,19 +131,21 @@ export default function StoryCreator(props): JSX.Element {
   };
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entitiesByKind.person).map((person) => {
-    const newPerson = { ...person };
-    const history = person.history?.filter((relation) => {
-      return relation.type === 'beginning';
-    });
-    if (history != null) {
-      newPerson.birthLocation = history.flatMap((relation) => {
-        return [relation.place?.lng, relation.place?.lat];
+  const persons = Object.values(entitiesByKind.person)
+    .map((person) => {
+      const newPerson = { ...person };
+      const history = person.history?.filter((relation) => {
+        return relation.type === 'beginning';
       });
-    }
+      if (history != null) {
+        newPerson.birthLocation = history.flatMap((relation) => {
+          return [relation.place?.lng, relation.place?.lat];
+        });
+      }
 
-    return newPerson;
-  });
+      return newPerson;
+    })
+    .slice(0, 1);
 
   return (
     <ResponsiveGridLayout
@@ -180,9 +191,19 @@ export default function StoryCreator(props): JSX.Element {
         }}
       >
         <div style={{ overflow: 'hidden', width: '100%', height: '100%', overflowY: 'scroll' }}>
-          {persons.map((p, index) => {
-            return createDrops('Person', p);
-          })}
+          {persons.length > 1
+            ? persons.map((p, index) => {
+                return createDrops('Person', p);
+              })
+            : persons.map((p, index) => {
+                return [...p.history]
+                  .sort((a, b) => {
+                    return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
+                  })
+                  .map((e) => {
+                    return createDrops('Event', e);
+                  });
+              })}
         </div>
       </div>
       <div
