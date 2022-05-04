@@ -1,0 +1,62 @@
+.story-editor-wrapper {
+  width: 100%;
+  height: 100%;
+  border: solid 1px rgb(0 0 0);
+  position: relative;
+}
+
+.story-editor-header {
+  padding: 5px;
+}
+
+.story-editor-headline {
+  font-size: 18px;
+}
+
+.story-editor-pane {
+  background: rgb(255 255 255) !important;
+}
+
+.slide-editor-wrapper {
+  width: 100%;
+  height: 100%;
+  border: solid 1px rgb(0 0 0);
+}
+
+.elevated {
+  overflow: hidden !important;
+  box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 3px 4px 0 rgb(0 0 0 / 14%),
+    0 1px 8px 0 rgb(0 0 0 / 12%);
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  background-color: rgb(255 255 255);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.annotation-window > .content-area {
+  padding: 0 !important;
+}
+
+.annotation-window > .header-area {
+  box-shadow: none !important;
+}
+
+.story-flow-card {
+  cursor: pointer;
+}
+
+.story-flow-card.selected {
+  border: 3px solid rgb(0 0 255) !important;
+}
+
+.button-row {
+  display: inline-block;
+}
+
+.story-textarea {
+  width: 100%;
+}

@@ -1,3 +1,4 @@
+import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
@@ -45,6 +46,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
     },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
+    {
+      id: 'storycreator',
+      href: { pathname: '/storycreator' },
+      label: 'Story Creator',
+      icon: <StoryCreatorIcon />,
+    },
   ];
 
   return (

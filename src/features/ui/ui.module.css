@@ -1,0 +1,27 @@
+.button-area-button {
+  float: right;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: rgb(255 0 0);
+  font-weight: 700;
+}
+
+.header-area {
+  height: 25px;
+  background-color: rgb(245 245 245 / 96.1%);
+  width: 100%;
+  box-shadow: 0 0 8px rgb(136 136 136);
+  line-height: 25px;
+  position: relative;
+  cursor: grabbing;
+}
+
+.content-area {
+  overflow: scroll;
+  width: 100%;
+  height: calc(100% - 25px);
+  padding: 5px;
+}
