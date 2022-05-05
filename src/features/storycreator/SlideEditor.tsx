@@ -43,8 +43,16 @@ export default function SlideEditor(props: any) {
   const takeScreenshot = props.takeScreenshot;
   const persons = props.persons;
 
-  const markers = persons.map((p) => {
-    return p.birthLocation;
+  const markers = persons.flatMap((p) => {
+    const historyEventsWithLocation = p.history.filter((e) => {
+      return e.place.lat && e.place.lng;
+    });
+
+    return historyEventsWithLocation
+      .map((e) => {
+        return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
+      })
+      .filter(Boolean) as Array<[number, number]>;
   });
 
   const content = useAppSelector((state) => {

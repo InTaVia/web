@@ -70,7 +70,6 @@ export default function StoryFlow(props: any) {
         layout={layout}
         rowHeight={120}
         cols={8}
-        autoSize={true}
         width={myWidth}
         compactType="horizontal"
         isResizable={false}
