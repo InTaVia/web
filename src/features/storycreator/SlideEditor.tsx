@@ -1,19 +1,19 @@
-import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
-import { useEffect } from 'react';
-import ReactGridLayout from 'react-grid-layout';
-
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
   addContent,
   editContent,
   removeContent,
-  selectContentBySlide,
+  selectContentBySlide
 } from '@/features/storycreator/storycreator.slice';
 import StoryMap from '@/features/storycreator/StoryMap';
 import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
+import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import ReactGridLayout from 'react-grid-layout';
+
 
 interface Layout {
   i: string;
@@ -42,8 +42,9 @@ export default function SlideEditor(props: any) {
   const imageRef = props.imageRef;
   const takeScreenshot = props.takeScreenshot;
   const persons = props.persons;
+  const events = props.events;
 
-  const markers = persons.flatMap((p) => {
+  const personMarkers = persons?.flatMap((p) => {
     const historyEventsWithLocation = p.history.filter((e) => {
       return e.place.lat && e.place.lng;
     });
@@ -54,6 +55,17 @@ export default function SlideEditor(props: any) {
       })
       .filter(Boolean) as Array<[number, number]>;
   });
+
+  const eventDescriptions = events?
+    .map((e) => {
+      return e.description;
+    });
+
+  const eventMarkers = events?
+    .map((e) => {
+      return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
+    })
+    .filter(Boolean) as Array<[number, number]>;
 
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
@@ -152,7 +164,9 @@ export default function SlideEditor(props: any) {
               resize: 'none',
             }}
             placeholder={element.key}
-          />
+          >
+            {eventDescriptions?.join("")}
+            </TextareaAutosize>
         );
       case 'Image':
         return (
@@ -161,20 +175,21 @@ export default function SlideEditor(props: any) {
               height: '100%',
               maxHeight: '100%',
               position: 'relative',
+              backgroundColor: "white",
+              padding: 0
             }}
           >
             <CardMedia
               style={{ height: '85%', width: '100%' }}
               image="https://upload.wikimedia.org/wikipedia/commons/7/74/Peter_Pavel_Vergerij.jpg"
-              title="Contemplative Reptile"
+              title="Vergerio"
             />
             <CardContent className={styles['card-content']}>
               <Typography gutterBottom variant="h5" component="h2">
-                Lizard
+                Pier Paolo Vergerio
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species,
-                ranging across all continents except Antarctica
+              Pier (also: Pietro) Paolo Vergerio (c. 1498 – October 4, 1565) (Latin: Vergerius, Slovene: Peter Pavel Vergerius mlajši, also spelled Vergerij), the Younger, was an Italian papal nuncio and later Protestant reformer. Although at first opposed to Primož Trubar, the consolidator of Slovene as a language, he later supported him and was his mentor for some time.[1] He also contributed to the development of Croatian literature.
               </Typography>
             </CardContent>
           </Card>
@@ -183,7 +198,7 @@ export default function SlideEditor(props: any) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        return <StoryMap markers={markers}></StoryMap>;
+        return <StoryMap markers={eventMarkers}></StoryMap>;
       default:
         return [];
     }

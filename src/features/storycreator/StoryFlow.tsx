@@ -64,7 +64,11 @@ export default function StoryFlow(props: any) {
   }
 
   return (
-    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
+    <div
+      ref={targetRef}
+      className={styles['slide-editor-wrapper']}
+      style={{ overflow: 'hidden', overflowY: 'scroll' }}
+    >
       <ReactGridLayout
         className="layout"
         layout={layout}
@@ -85,7 +89,7 @@ export default function StoryFlow(props: any) {
               className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
             >
               <Window
-                title={e.i}
+                title={e.title ? e.title : e.i}
                 onRemoveWindow={() => {
                   onRemove(e.i);
                 }}

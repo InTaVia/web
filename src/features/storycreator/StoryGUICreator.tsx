@@ -15,7 +15,11 @@ import ReactResizeDetector from 'react-resize-detector';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import SlideEditor from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
-import { selectSlidesByStoryID, setImage } from '@/features/storycreator/storycreator.slice';
+import {
+  createSlidesInBulk,
+  selectSlidesByStoryID,
+  setImage,
+} from '@/features/storycreator/storycreator.slice';
 import StoryFlow from '@/features/storycreator/StoryFlow';
 
 import { selectEntitiesByKind } from '../common/entities.slice';
@@ -139,6 +143,8 @@ export default function StoryCreator(props): JSX.Element {
       });
   };
 
+  const entitiesInSlide = selectedSlide?.entities;
+
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entitiesByKind.person).map((person) => {
     const newPerson = { ...person };
@@ -154,7 +160,39 @@ export default function StoryCreator(props): JSX.Element {
     return newPerson;
   });
 
-  console.log(width, height);
+  if (persons.length === 1 && slides.length === 0) {
+    const newSlides = [];
+    const sortedHistory = [...persons[0]?.history].sort((a, b) => {
+      return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
+    });
+    for (const event of sortedHistory) {
+      newSlides.push({
+        story: story.i,
+        title: event.name,
+        entities: [event],
+        content: [
+          {
+            x: 0,
+            y: 0,
+            w: 12,
+            h: 13,
+            type: 'Map',
+            key: 'Map',
+          },
+          {
+            x: 9,
+            y: 8,
+            w: 2,
+            h: 3,
+            type: 'Annotation',
+            key: 'Annotation',
+          },
+        ],
+      });
+    }
+
+    dispatch(createSlidesInBulk(newSlides));
+  }
 
   const gridHeight = Math.round(height / 5);
 
@@ -188,7 +226,7 @@ export default function StoryCreator(props): JSX.Element {
                   slide={selectedSlide}
                   imageRef={ref}
                   takeScreenshot={takeScreenshot}
-                  persons={persons}
+                  events={entitiesInSlide}
                 />
               );
             }}

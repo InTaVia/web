@@ -52,7 +52,7 @@ function Window(props: WindowProperties) {
     <div
       className={props.class}
       onClick={props.onClick}
-      style={{ width: '100%', height: '100%', overflow: 'hidden' }}
+      style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'white' }}
     >
       <div className={uiStyles['header-area']}>
         {props.title}
