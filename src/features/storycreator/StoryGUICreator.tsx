@@ -28,13 +28,13 @@ import StoryFlow from '@/features/storycreator/StoryFlow';
 import { selectEntitiesByKind } from '../common/entities.slice';
 
 const iconMap = {
-  Timeline: <LinearScaleOutlinedIcon fontSize="large" key="timelineIcon" />,
-  Map: <MapOutlinedIcon fontSize="large" key="mapIcon" />,
-  Annotation: <NoteAltOutlinedIcon fontSize="large" key="annotationIcon" />,
-  Image: <ImageOutlinedIcon fontSize="large" key="imageIcon" />,
-  Person: <PersonOutlineOutlinedIcon key="personIcon" />,
-  Event: <AdjustIcon key="EventIcon" />,
-  Quiz: <QuizOutlinedIcon fontSize="large" key="EventIcon" />,
+  Timeline: <LinearScaleOutlinedIcon fontSize="large" color="primary" key="timelineIcon" />,
+  Map: <MapOutlinedIcon fontSize="large" color="primary" key="mapIcon" />,
+  Annotation: <NoteAltOutlinedIcon fontSize="large" color="primary" key="annotationIcon" />,
+  Image: <ImageOutlinedIcon fontSize="large" color="primary" key="imageIcon" />,
+  Person: <PersonOutlineOutlinedIcon color="primary" key="personIcon" />,
+  Event: <AdjustIcon color="primary" key="EventIcon" />,
+  Quiz: <QuizOutlinedIcon fontSize="large" color="primary" key="EventIcon" />,
 };
 
 const createDrops = (type, props = {}) => {
@@ -187,7 +187,7 @@ export default function StoryCreator(props): JSX.Element {
             x: 9,
             y: 8,
             w: 2,
-            h: 3,
+            h: 4,
             type: 'Annotation',
             key: 'Annotation',
           },
