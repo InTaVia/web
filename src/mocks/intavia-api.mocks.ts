@@ -1,3 +1,4 @@
+import type { Bin } from 'd3-array';
 import { rest } from 'msw';
 
 import type { Person, Place } from '@/features/common/entity.model';
@@ -79,6 +80,26 @@ export const handlers = [
       }
 
       return response(context.status(200), context.delay(), context.json(place));
+    },
+  ),
+  rest.get<never, never, Array<Bin<number, number>>>(
+    String(createIntaviaApiUrl({ pathname: '/api/persons/statistics' })),
+    (request, response, context) => {
+      console.log('i got here');
+
+      const property = request.url.searchParams.get('property')?.trim();
+
+      if (property != null) {
+        const bins = db.person.getDistribution(property) as Array<Bin<number, number>>;
+
+        console.log(`bins length: ${bins.length}`);
+
+        if (bins.length <= 0) {
+          return response(context.status(404), context.delay());
+        }
+
+        return response(context.status(200), context.delay(), context.json(bins));
+      }
     },
   ),
 ];

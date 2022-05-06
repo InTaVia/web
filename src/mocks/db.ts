@@ -1,4 +1,6 @@
 import { faker } from '@faker-js/faker';
+import type { Bin } from 'd3-array';
+import { bin } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
 // import { selectEntitiesByKind } from '@/features/common/entities.slice';
@@ -39,12 +41,14 @@ function createTable<T extends Entity>() {
       }
       entity.history.push(relation);
     },
-    count(dateOfBirth?: Date | undefined) {
-      if (dateOfBirth == null) {
-        return table.size;
+    getDistribution(property: string) {
+      const entities = Array.from(table.values());
+      switch (property) {
+        case 'dateOfBirth':
+          return computeDateOfBirthBins(entities as Array<Person>);
+        default:
+          return Array<number>();
       }
-      // const entities = Array.from(table.values());
-      // return filterEntities(entities, dateOfBirth).length;
     },
     clear() {
       table.clear();
@@ -235,14 +239,30 @@ export function clear() {
   db.place.clear();
 }
 
-// function filterEntities(entities: Array<Entity>, dateOfBirth: Date): Array<Entity> {
-//   const filteredEntities = Array<Entity>();
+// Computes bins for date of birth histogram
+function computeDateOfBirthBins(entities: Array<Person>): Array<Bin<number, number>> {
+  let bins = Array<Bin<number, number>>();
+  const birthyears = Array<number>();
 
-//   entities.forEach((entity) => {
-//     if (entity.history) {
-//       entity.history.filter((relation) => {
-//         return relation.type === 'beginning';
-//       });
-//     }
-//   });
-// }
+  // Create an array with all birthdates
+  entities.forEach((entity) => {
+    if (entity.history) {
+      const beginningRelation = entity.history.filter((relation) => {
+        return relation.type === 'beginning';
+      })[0];
+
+      if (beginningRelation && beginningRelation.date != null) {
+        birthyears.push(new Date(beginningRelation.date).getFullYear());
+      }
+    }
+  });
+
+  const minYear = Math.min(...birthyears);
+  const maxYear = Math.max(...birthyears);
+  const numBins = Math.ceil(Math.sqrt(birthyears.length));
+
+  const distGen = bin().domain([minYear, maxYear]).thresholds(numBins);
+  bins = distGen(birthyears);
+
+  return bins;
+}

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Bin } from 'd3-array';
 
 import type { Person, Place } from '@/features/common/entity.model';
 import { createUrlSearchParams } from '@/lib/create-url-search-params';
@@ -51,6 +52,16 @@ const service = createApi({
           return { url: `/api/places/${id}` };
         },
       }),
+      getPersonDistributionByProperty: builder.query<
+        Array<Bin<number, number>>,
+        { property: string }
+      >({
+        query(params) {
+          const { property } = params;
+
+          return { url: '/api/persons/statistics', params: { property } };
+        },
+      }),
     };
   },
 });
@@ -60,5 +71,6 @@ export const {
   useGetPersonByIdQuery,
   useGetPlacesQuery,
   useGetPlaceByIdQuery,
+  useGetPersonDistributionByPropertyQuery,
 } = service;
 export default service;
