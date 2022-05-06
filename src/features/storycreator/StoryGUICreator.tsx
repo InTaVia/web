@@ -7,6 +7,8 @@ import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+import { Button } from '@mui/material';
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
@@ -16,6 +18,7 @@ import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import SlideEditor from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
+  createSlide,
   createSlidesInBulk,
   selectSlidesByStoryID,
   setImage,
@@ -31,6 +34,7 @@ const iconMap = {
   Image: <ImageOutlinedIcon fontSize="large" key="imageIcon" />,
   Person: <PersonOutlineOutlinedIcon key="personIcon" />,
   Event: <AdjustIcon key="EventIcon" />,
+  Quiz: <QuizOutlinedIcon fontSize="large" key="EventIcon" />,
 };
 
 const createDrops = (type, props = {}) => {
@@ -62,7 +66,7 @@ const createDrops = (type, props = {}) => {
       break;
     default:
       text = type;
-      padding = 30;
+      padding = 5;
       break;
   }
 
@@ -280,6 +284,7 @@ export default function StoryCreator(props): JSX.Element {
             createDrops('Timeline'),
             createDrops('Annotation'),
             createDrops('Image'),
+            createDrops('Quiz'),
           ]}
         </div>
         <div
@@ -301,6 +306,13 @@ export default function StoryCreator(props): JSX.Element {
           </ReactResizeDetector>
         </div>
       </ReactGridLayout>
+      <Button
+        onClick={() => {
+          dispatch(createSlide({ story: story.i }));
+        }}
+      >
+        Add Slide
+      </Button>
     </div>
   );
 }

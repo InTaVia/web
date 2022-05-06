@@ -1,18 +1,28 @@
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import ContentEditable from 'react-contenteditable'
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
   addContent,
   editContent,
   removeContent,
+  resizeMoveContent,
   selectContentBySlide
 } from '@/features/storycreator/storycreator.slice';
 import StoryMap from '@/features/storycreator/StoryMap';
 import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
-import { Card, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  TextareaAutosize,
+  TextField,
+  Typography
+} from '@mui/material';
+import { useEffect, useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
+
 
 
 interface Layout {
@@ -148,6 +158,14 @@ export default function SlideEditor(props: any) {
     );
   };
 
+  const onTextfieldChange = (newElement) => {
+      dispatch(editContent(newElement));
+  };
+
+  const editRef = useRef();
+  const editRef2 = useRef();
+  const editRef3 = useRef();
+
   const createWindowContent = (element: any) => {
     switch (element.type) {
       case 'Annotation':
@@ -179,18 +197,48 @@ export default function SlideEditor(props: any) {
               padding: 0
             }}
           >
-            <CardMedia
-              style={{ height: '85%', width: '100%' }}
-              image="https://upload.wikimedia.org/wikipedia/commons/7/74/Peter_Pavel_Vergerij.jpg"
-              title="Vergerio"
-            />
+            <div className={styles["flip-card"]}>
+              <div className={styles["flip-card-inner"]}>
+                <div className={styles["flip-card-front"]}>
+                  <img src={`${element.link}`} alt="Avatar" style={{width:"100%"}}/>
+                </div>
+                <div className={styles["flip-card-back"]}>
+                <ContentEditable
+                  innerRef={editRef2}
+                  html={element.link ? element.link : "Enter Link"}
+                  disabled={false}
+                  style={{width: "100%", padding: "5px"}}
+                  onBlur={(e) => {
+                    const val = e.target.innerHTML;
+                    onTextfieldChange({ ...element, link: val });
+                  }} 
+                />
+                </div>
+              </div>
+            </div>
             <CardContent className={styles['card-content']}>
               <Typography gutterBottom variant="h5" component="h2">
-                Pier Paolo Vergerio
+              <ContentEditable
+                  innerRef={editRef}
+                  html={element.title ? element.title : "Title"}
+                  disabled={false}
+                  onBlur={(e) => {
+                    const val = e.target.innerHTML;
+                    onTextfieldChange({ ...element, title: val });
+                  }} 
+                />
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-              Pier (also: Pietro) Paolo Vergerio (c. 1498 – October 4, 1565) (Latin: Vergerius, Slovene: Peter Pavel Vergerius mlajši, also spelled Vergerij), the Younger, was an Italian papal nuncio and later Protestant reformer. Although at first opposed to Primož Trubar, the consolidator of Slovene as a language, he later supported him and was his mentor for some time.[1] He also contributed to the development of Croatian literature.
-              </Typography>
+                  <ContentEditable
+                  innerRef={editRef3}
+                  html={element.text ? element.text : "Text"}
+                  disabled={false}
+                  onBlur={(e) => {
+                    const val = e.target.innerHTML;
+                    onTextfieldChange({ ...element, text: val });
+                  }} 
+                />
+                </Typography>
             </CardContent>
           </Card>
         );
@@ -265,10 +313,10 @@ export default function SlideEditor(props: any) {
         }}
         onDrop={onDrop}
         onResizeStop={(iLayout, element, resized) => {
-          dispatch(editContent({ ...resized, story: slide.story, slide: slide.i }));
+          dispatch(resizeMoveContent({ ...resized, story: slide.story, slide: slide.i }));
         }}
         onDragStop={(iLayout, element, dragged) => {
-          dispatch(editContent({ ...dragged, story: slide.story, slide: slide.i }));
+          dispatch(resizeMoveContent({ ...dragged, story: slide.story, slide: slide.i }));
         }}
       >
         {content.map((e: any) => {

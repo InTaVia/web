@@ -105,13 +105,6 @@ export default function StoryFlow(props: any) {
           );
         })}
       </ReactGridLayout>
-      <Button
-        onClick={() => {
-          dispatch(createSlide({ story: story.i }));
-        }}
-      >
-        Add Slide
-      </Button>
     </div>
   );
 }

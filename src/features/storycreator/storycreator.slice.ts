@@ -15,10 +15,7 @@ const initialState: StoryCreatorState = {
       i: 'story0',
     },
   ],
-  slides: [
-    /* { i: 'a', sort: 0, story: 'story0', selected: true, image: null },
-    { i: 'b', sort: 1, story: 'story0', image: null }, */
-  ],
+  slides: [{ i: '0', sort: 0, story: 'story0', selected: true, image: null }],
   content: [
     /* { i: 'contentA1', story: 'story0', slide: 'a' },
     { i: 'contentB1', story: 'story0', slide: 'b' }, */
@@ -178,7 +175,7 @@ export const storyCreatorSlice = createSlice({
 
       state.content = newContent;
     },
-    editContent: (state, action) => {
+    resizeMoveContent: (state, action) => {
       const content = action.payload;
       const newContent = [...state.content];
       for (const c of newContent) {
@@ -187,6 +184,20 @@ export const storyCreatorSlice = createSlice({
           c.y = content.y;
           c.w = content.w;
           c.h = content.h;
+        }
+      }
+
+      state.content = newContent;
+    },
+    editContent: (state, action) => {
+      const content = action.payload;
+
+      const newContent = [...state.content];
+      for (const i in newContent) {
+        const c = newContent[i];
+        if (c.i === content.i && c.slide === content.slide && c.story === c.story) {
+          newContent[i] = content;
+          break;
         }
       }
 
@@ -237,6 +248,7 @@ export const {
   createSlide,
   selectSlide,
   addContent,
+  resizeMoveContent,
   editContent,
   setImage,
   copySlide,
