@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/features/common/store';
 
 export enum ConstraintType {
-  Date = 'Date',
+  DateOfBirth = 'Date of Birth',
+  DateOfDeath = 'Date of Death',
   Place = 'Place',
 }
 
@@ -15,7 +16,7 @@ export type Constraint = {
 };
 
 export interface DateConstraint extends Constraint {
-  type: ConstraintType.Date;
+  type: ConstraintType.DateOfBirth | ConstraintType.DateOfDeath;
   minDate: Date | null;
   maxDate: Date | null;
 }

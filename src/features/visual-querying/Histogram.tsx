@@ -1,4 +1,4 @@
-import { max } from 'd3';
+import { format, max } from 'd3';
 import type { Bin } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
@@ -53,7 +53,9 @@ export function Histogram(props: HistogramProps) {
 
   const lastTickValue = [thresholds[thresholds.length - 1]! + binSize];
 
-  const xAxis = axisBottom(xScale).tickValues(thresholds.concat(lastTickValue));
+  const xAxis = axisBottom(xScale)
+    .tickValues(thresholds.concat(lastTickValue))
+    .tickFormat(format('d'));
   const yAxis = axisLeft(yScale);
 
   // Add brush
@@ -102,8 +104,8 @@ export function Histogram(props: HistogramProps) {
       </g>
 
       {bins.map((bin, idx) => {
-        const x = xScale(Math.min(...bin));
-        const w = xScale(Math.min(...bin) + binSize) - x;
+        const x = xScale(thresholds[idx]!);
+        const w = xScale(thresholds[idx]! + binSize) - x;
         const y = yScale(bin.length);
         const h = yScale(0) - y;
 

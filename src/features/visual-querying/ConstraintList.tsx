@@ -35,10 +35,10 @@ export function ConstraintList(props: ConstraintListProps) {
     <foreignObject width={props.width} height={props.height}>
       <div className={styles['constraint-list-wrapper']}>
         <ul className={styles['constraint-list']}>
-          {Object.keys(ConstraintType).map((key) => {
+          {Object.values(ConstraintType).map((value) => {
             return (
-              <li key={key} className={styles['constraint-list-elem']} onClick={handleClick}>
-                {key}
+              <li key={value} className={styles['constraint-list-elem']} onClick={handleClick}>
+                {value}
               </li>
             );
           })}

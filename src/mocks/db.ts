@@ -44,8 +44,9 @@ function createTable<T extends Entity>() {
     getDistribution(property: string) {
       const entities = Array.from(table.values());
       switch (property) {
-        case 'dateOfBirth':
-          return computeDateOfBirthBins(entities as Array<Person>);
+        case 'Date of Birth':
+        case 'Date of Death':
+          return computeDateBins(entities as Array<Person>, property);
         default:
           return Array<number>();
       }
@@ -240,35 +241,39 @@ export function clear() {
 }
 
 // Computes bins for date of birth histogram
-function computeDateOfBirthBins(entities: Array<Person>): {
+function computeDateBins(
+  entities: Array<Person>,
+  property: string,
+): {
   minYear: number;
   maxYear: number;
   thresholds: Array<number>;
   bins: Array<Bin<number, number>>;
 } {
   let bins = Array<Bin<number, number>>();
-  const birthyears = Array<number>();
+  const years = Array<number>();
+  const relationType = property === 'Date of Birth' ? 'beginning' : 'end';
 
   // Create an array with all birthdates
   entities.forEach((entity) => {
     if (entity.history) {
       const beginningRelation = entity.history.filter((relation) => {
-        return relation.type === 'beginning';
+        return relation.type === relationType;
       })[0];
 
       if (beginningRelation && beginningRelation.date != null) {
-        birthyears.push(new Date(beginningRelation.date).getFullYear());
+        years.push(new Date(beginningRelation.date).getFullYear());
       }
     }
   });
 
-  const minYear = Math.min(...birthyears);
-  const maxYear = Math.max(...birthyears);
-  const numBins = Math.ceil(Math.sqrt(birthyears.length));
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+  const numBins = Math.ceil(Math.sqrt(years.length));
   const thresholds = range(minYear, maxYear, (maxYear - minYear) / numBins);
 
   const distGen = bin().domain([minYear, maxYear]).thresholds(thresholds);
-  bins = distGen(birthyears);
+  bins = distGen(years);
 
   return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
 }

@@ -31,13 +31,13 @@ export function PersonShape(): JSX.Element {
 
   return (
     <g>
-      <circle r="100" fill="blue" style={{ cursor: 'pointer' }} onClick={handleClick} />
+      <circle r="100" fill="lightGray" style={{ cursor: 'pointer' }} onClick={handleClick} />
       <text
         x="0"
         y="0"
         fontSize="xx-large"
         textAnchor="middle"
-        fill="white"
+        fill="black"
         style={{ cursor: 'pointer' }}
         onClick={handleClick}
       >
@@ -66,7 +66,8 @@ export function PersonShape(): JSX.Element {
           const y = Math.sin((startAngle / 180) * Math.PI) * 200;
 
           switch (constraint.type) {
-            case ConstraintType.Date:
+            case ConstraintType.DateOfBirth:
+            case ConstraintType.DateOfDeath:
               return (
                 <DateConstraintView
                   key={idx}

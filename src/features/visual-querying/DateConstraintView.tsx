@@ -13,9 +13,11 @@ interface DateConstraintProps {
 }
 
 export function DateConstraintView(props: DateConstraintProps): JSX.Element {
-  const { x, y, width, height } = props;
+  const { x, y, width, height, constraint } = props;
 
-  const { data, isLoading } = useGetPersonDistributionByPropertyQuery({ property: 'dateOfBirth' });
+  const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
+    property: constraint.type,
+  });
 
   const dimensions = {
     x: x,
