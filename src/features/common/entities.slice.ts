@@ -1,18 +1,29 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import type { Entity, EntityKind } from '@/features/common/entity.model';
 import intaviaApiService from '@/features/common/intavia-api.service';
 import type { RootState } from '@/features/common/store';
 
+interface IndexedEntities {
+  byId: Record<Entity['id'], Entity>;
+  byKind: Record<EntityKind, Record<Entity['id'], Entity>>;
+}
+
 interface EntitiesState {
-  entities: {
-    byId: Record<Entity['id'], Entity>;
-    byKind: Record<EntityKind, Record<Entity['id'], Entity>>;
-  };
+  upstreamEntities: IndexedEntities;
+  localEntities: IndexedEntities;
 }
 
 const initialState: EntitiesState = {
-  entities: {
+  upstreamEntities: {
+    byId: {},
+    byKind: {
+      person: {},
+      place: {},
+    },
+  },
+  localEntities: {
     byId: {},
     byKind: {
       person: {},
@@ -25,6 +36,11 @@ const slice = createSlice({
   name: 'entities',
   initialState,
   reducers: {
+    addLocalEntity(state, action: PayloadAction<Entity>) {
+      const entity = action.payload;
+      state.localEntities.byId[entity.id] = entity;
+      state.localEntities.byKind[entity.kind][entity.id] = entity;
+    },
     clearEntities() {
       return initialState;
     },
@@ -37,8 +53,8 @@ const slice = createSlice({
       ),
       (state, action) => {
         action.payload.entities.forEach((entity) => {
-          state.entities.byId[entity.id] = entity;
-          state.entities.byKind[entity.kind][entity.id] = entity;
+          state.upstreamEntities.byId[entity.id] = entity;
+          state.upstreamEntities.byKind[entity.kind][entity.id] = entity;
         });
       },
     );
@@ -50,20 +66,49 @@ const slice = createSlice({
       ),
       (state, action) => {
         const entity = action.payload;
-        state.entities.byId[entity.id] = entity;
-        state.entities.byKind[entity.kind][entity.id] = entity;
+        state.upstreamEntities.byId[entity.id] = entity;
+        state.upstreamEntities.byKind[entity.kind][entity.id] = entity;
       },
     );
   },
 });
 
-export const { clearEntities } = slice.actions;
+export const { addLocalEntity, clearEntities } = slice.actions;
 export default slice.reducer;
 
-export function selectEntities(state: RootState) {
-  return state.entities.entities.byId;
+export function selectUpstreamEntities(state: RootState): IndexedEntities['byId'] {
+  return state.entities.upstreamEntities.byId;
 }
 
-export function selectEntitiesByKind(state: RootState) {
-  return state.entities.entities.byKind;
+export function selectUpstreamEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
+  return state.entities.upstreamEntities.byKind;
+}
+
+export function selectLocalEntities(state: RootState): IndexedEntities['byId'] {
+  return state.entities.localEntities.byId;
+}
+
+export function selectLocalEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
+  return state.entities.localEntities.byKind;
+}
+
+export function selectEntities(state: RootState): IndexedEntities['byId'] {
+  const upstreamEntities = selectUpstreamEntities(state);
+  const localEntities = selectLocalEntities(state);
+
+  const entities = { ...upstreamEntities, ...localEntities };
+
+  return entities;
+}
+
+export function selectEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
+  const upstreamEntitiesByKind = selectUpstreamEntities(state);
+  const localEntitiesByKind = selectLocalEntitiesByKind(state);
+
+  const entitiesByKind = {
+    person: { ...upstreamEntitiesByKind.person, ...localEntitiesByKind.person },
+    place: { ...upstreamEntitiesByKind.place, ...localEntitiesByKind.place },
+  };
+
+  return entitiesByKind;
 }
