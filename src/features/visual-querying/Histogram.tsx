@@ -1,17 +1,22 @@
+import { max } from 'd3';
+import type { Bin } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
-import type { ScaleLinear, ScaleTime } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
-import { timeFormat } from 'd3-time-format';
 import { useEffect, useRef, useState } from 'react';
 
 interface HistogramProps {
-  xScale: ScaleTime<number, number>;
-  yScale: ScaleLinear<number, number>;
-  binSize: number;
-  data: Array<{ date: Date; value: number }>;
+  data: {
+    minYear: number;
+    maxYear: number;
+    thresholds: Array<number>;
+    bins: Array<Bin<number, number>>;
+  };
   brushedArea: [Date, Date] | null;
   dimensions: {
+    x: number;
+    y: number;
     width: number;
     height: number;
     boundedWidth: number;
@@ -22,21 +27,37 @@ interface HistogramProps {
 }
 
 export function Histogram(props: HistogramProps) {
-  const { xScale, yScale, binSize, data, dimensions } = props;
+  const { data, dimensions } = props;
+
+  const { minYear, maxYear, thresholds, bins } = data;
+  const Y = Array.from(bins, (bin) => {
+    return bin.length;
+  });
+
+  const binSize = thresholds.length > 1 ? thresholds[1]! - thresholds[0]! : 10;
+
   const ref = useRef<SVGGElement>(null);
+
+  const xScale = scaleLinear()
+    .domain([minYear, maxYear])
+    .range([0, dimensions.width - 100]);
+
+  const yScale = scaleLinear()
+    .domain([0, max(Y) as number])
+    .range([0, 50 - dimensions.height]);
 
   const [brushExtent, setBrushExtent] = useState(props.brushedArea);
 
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
 
-  const xAxis = axisBottom<Date>(xScale).tickFormat(timeFormat('%Y'));
+  const lastTickValue = [thresholds[thresholds.length - 1]! + binSize];
+
+  const xAxis = axisBottom(xScale).tickValues(thresholds.concat(lastTickValue));
   const yAxis = axisLeft(yScale);
 
   // Add brush
   useEffect(() => {
-    console.log(dimensions);
-
     const g = select(ref.current);
 
     const brush = brushX<null>().extent([
@@ -80,11 +101,12 @@ export function Histogram(props: HistogramProps) {
         <g ref={yAxisRef} />
       </g>
 
-      {data.map((d, idx) => {
-        const x = xScale(d.date);
-        const w = xScale(Number(d.date) + binSize) - x;
-        const y = yScale(d.value);
+      {bins.map((bin, idx) => {
+        const x = xScale(Math.min(...bin));
+        const w = xScale(Math.min(...bin) + binSize) - x;
+        const y = yScale(bin.length);
         const h = yScale(0) - y;
+
         return <rect key={idx} width={w} height={h} x={x} y={y} fill="blue" />;
       })}
     </g>

@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import type { Bin } from 'd3-array';
-import { bin } from 'd3-array';
+import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
 // import { selectEntitiesByKind } from '@/features/common/entities.slice';
@@ -240,7 +240,12 @@ export function clear() {
 }
 
 // Computes bins for date of birth histogram
-function computeDateOfBirthBins(entities: Array<Person>): Array<Bin<number, number>> {
+function computeDateOfBirthBins(entities: Array<Person>): {
+  minYear: number;
+  maxYear: number;
+  thresholds: Array<number>;
+  bins: Array<Bin<number, number>>;
+} {
   let bins = Array<Bin<number, number>>();
   const birthyears = Array<number>();
 
@@ -260,9 +265,10 @@ function computeDateOfBirthBins(entities: Array<Person>): Array<Bin<number, numb
   const minYear = Math.min(...birthyears);
   const maxYear = Math.max(...birthyears);
   const numBins = Math.ceil(Math.sqrt(birthyears.length));
+  const thresholds = range(minYear, maxYear, (maxYear - minYear) / numBins);
 
-  const distGen = bin().domain([minYear, maxYear]).thresholds(numBins);
+  const distGen = bin().domain([minYear, maxYear]).thresholds(thresholds);
   bins = distGen(birthyears);
 
-  return bins;
+  return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
 }

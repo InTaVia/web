@@ -53,7 +53,12 @@ const service = createApi({
         },
       }),
       getPersonDistributionByProperty: builder.query<
-        Array<Bin<number, number>>,
+        {
+          minYear: number;
+          maxYear: number;
+          thresholds: Array<number>;
+          bins: Array<Bin<number, number>>;
+        },
         { property: string }
       >({
         query(params) {

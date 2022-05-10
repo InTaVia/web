@@ -74,8 +74,8 @@ export function PersonShape(): JSX.Element {
                   constraint={constraint as DateConstraint}
                   x={x}
                   y={y}
-                  width={400}
-                  height={120}
+                  width={500}
+                  height={250}
                 />
               );
             case ConstraintType.Place:
