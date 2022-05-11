@@ -4,9 +4,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/features/common/store';
 
 export enum ConstraintType {
+  Name = 'Name',
   DateOfBirth = 'Date of Birth',
   DateOfDeath = 'Date of Death',
-  Name = 'Name',
   // Place = 'Place',
 }
 

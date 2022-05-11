@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { List, ListItemButton, Paper, Typography } from '@mui/material';
 import type { MouseEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
-import styles from '@/features/visual-querying/visual-querying.module.css';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
 import {
   addConstraint,
@@ -46,17 +44,21 @@ export function ConstraintList(props: ConstraintListProps) {
 
   return (
     <foreignObject width={props.width} height={props.height}>
-      <div className={styles['constraint-list-wrapper']}>
-        <ul className={styles['constraint-list']}>
+      <Paper>
+        <List
+          component="ul"
+          role="list"
+          sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}
+        >
           {Object.values(ConstraintType).map((value) => {
             return (
-              <li key={value} className={styles['constraint-list-elem']} onClick={handleClick}>
-                {value}
-              </li>
+              <ListItemButton key={value} sx={{ paddingBlock: 2 }} onClick={handleClick}>
+                <Typography>{value}</Typography>
+              </ListItemButton>
             );
           })}
-        </ul>
-      </div>
+        </List>
+      </Paper>
     </foreignObject>
   );
 }

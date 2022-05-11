@@ -67,6 +67,9 @@ export function VisualQuerying(): JSX.Element {
 
   return (
     <div className="visual-querying-wrapper">
+      <Button variant="contained" onClick={sendQuery}>
+        Search
+      </Button>
       <svg
         width="100%"
         height="100%"
@@ -76,9 +79,6 @@ export function VisualQuerying(): JSX.Element {
       >
         <PersonShape />
       </svg>
-      <Button variant="contained" onClick={sendQuery}>
-        Search
-      </Button>
     </div>
   );
 }

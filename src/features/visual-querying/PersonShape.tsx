@@ -89,7 +89,7 @@ export function PersonShape(): JSX.Element {
                   x={x}
                   y={y}
                   width={300}
-                  height={50}
+                  height={80}
                 />
               );
             // case ConstraintType.Place:

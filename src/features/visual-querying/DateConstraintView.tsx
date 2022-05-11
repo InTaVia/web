@@ -1,3 +1,5 @@
+import { Paper, Typography } from '@mui/material';
+
 import { Histogram } from '@/features/visual-querying/Histogram';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
@@ -44,31 +46,34 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
 
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <rect
-        fill="white"
-        stroke="blue"
-        strokeWidth={1}
-        x="0"
-        y="0"
-        width={dimensions.width}
-        height={dimensions.height}
-      />
-
-      {isLoading ? (
-        <text>Loading ...</text>
-      ) : (
-        <g
-          className="data"
-          transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}
+      <foreignObject width={dimensions.width} height={dimensions.height}>
+        <Paper
+          elevation={3}
+          sx={{
+            margin: '2px',
+            width: dimensions.width - 4,
+            height: dimensions.height - 4,
+          }}
         >
-          <Histogram
-            brushedArea={constraint.dateRange}
-            setBrushedArea={setBrushedArea}
-            data={data!}
-            dimensions={dimensions}
-          />
-        </g>
-      )}
+          {isLoading ? (
+            <Typography>Loading ...</Typography>
+          ) : (
+            <svg width="100%" height="100%">
+              <g
+                className="data"
+                transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}
+              >
+                <Histogram
+                  brushedArea={constraint.dateRange}
+                  setBrushedArea={setBrushedArea}
+                  data={data!}
+                  dimensions={dimensions}
+                />
+              </g>
+            </svg>
+          )}
+        </Paper>
+      </foreignObject>
     </g>
   );
 }

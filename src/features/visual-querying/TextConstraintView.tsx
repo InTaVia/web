@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Button, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 
 import { useAppDispatch } from '../common/store';
@@ -43,17 +43,16 @@ export function TextConstraintView(props: TextConstraintProps): JSX.Element {
 
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <rect
-        fill="white"
-        stroke="blue"
-        strokeWidth={1}
-        x="0"
-        y="0"
-        width={dimensions.width}
-        height={dimensions.height}
-      />
       <foreignObject width={dimensions.width} height={dimensions.height}>
-        <Box autoComplete="off" component="form" name="text_constraint" noValidate>
+        <Paper
+          elevation={3}
+          sx={{
+            margin: '2px',
+            width: dimensions.width - 4,
+            height: dimensions.height - 4,
+            padding: '8px',
+          }}
+        >
           <TextField
             label={constraint.type}
             variant="standard"
@@ -63,7 +62,7 @@ export function TextConstraintView(props: TextConstraintProps): JSX.Element {
             }}
           />
           <Button onClick={handleClick}>Add</Button>
-        </Box>
+        </Paper>
       </foreignObject>
     </g>
   );
