@@ -52,6 +52,8 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       href: { pathname: '/coordination' },
       label: 'Coordinated View',
       icon: <GridViewIcon />,
+    },
+    {
       id: 'storycreator',
       href: { pathname: '/storycreator' },
       label: 'Story Creator',

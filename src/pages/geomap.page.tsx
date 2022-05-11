@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
@@ -9,6 +10,7 @@ import { useAppSelector } from '@/features/common/store';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
+import { PageTitle } from '@/features/ui/PageTitle';
 import { length } from '@/lib/length';
 
 export default function MapPage(): JSX.Element {
@@ -29,7 +31,8 @@ export default function MapPage(): JSX.Element {
     );
   }
   return (
-    <Container maxWidth="xl" sx={{ display: 'grid', gap: 4, padding: 4, height: '80vh' }}>
+    <Container maxWidth="xl" sx={{ padding: 4, height: '80vh' }}>
+      <PageTitle>Map of Lifespans</PageTitle>
       <MapLibre>
         <LineStringLayer
           persons={Object.values(entitiesByKind.person) as Array<Person>}

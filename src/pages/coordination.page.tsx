@@ -13,7 +13,7 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
 import { useRouter } from 'next/router';
 import type { MutableRefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
@@ -23,6 +23,7 @@ import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
+import { PageTitle } from '@/features/ui/PageTitle';
 import { length } from '@/lib/length';
 
 export const eventTypes = [
@@ -83,75 +84,78 @@ export default function CoordinationPage(): JSX.Element {
     return <></>;
   }
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="stretch"
-      sx={{ height: '80vh' }}
-    >
-      <Grid item xs={2}>
-        <EntitySelectionList
-          entities={personArray}
-          checked={visibleEntityIds}
-          setChecked={setVisibleEntityIds}
-          hovered={hoveredEntityId}
-          setHovered={setHoveredEntityId}
-        ></EntitySelectionList>
-      </Grid>
-      <Grid item xs={5} ref={timelineParent}>
-        <TimelineSvg
-          parentRef={timelineParent}
-          persons={filteredPersonArray}
-          zoomToData={zoomToTimeRange}
-          renderLabel={false}
-          hovered={hoveredEntityId}
-          setHovered={setHoveredEntityId}
-        />
-      </Grid>
-      <Grid item xs={5}>
-        <MapLibre>
-          {showEventTypes.length >= 2 ? (
-            <LineStringLayer
+    <Fragment>
+      <PageTitle>Multiple Views</PageTitle>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="stretch"
+        sx={{ height: '80vh' }}
+      >
+        <Grid item xs={2}>
+          <EntitySelectionList
+            entities={personArray}
+            checked={visibleEntityIds}
+            setChecked={setVisibleEntityIds}
+            hovered={hoveredEntityId}
+            setHovered={setHoveredEntityId}
+          ></EntitySelectionList>
+        </Grid>
+        <Grid item xs={5} ref={timelineParent}>
+          <TimelineSvg
+            parentRef={timelineParent}
+            persons={filteredPersonArray}
+            zoomToData={zoomToTimeRange}
+            renderLabel={false}
+            hovered={hoveredEntityId}
+            setHovered={setHoveredEntityId}
+          />
+        </Grid>
+        <Grid item xs={5}>
+          <MapLibre>
+            {showEventTypes.length >= 2 ? (
+              <LineStringLayer
+                persons={filteredPersonArray}
+                showEventTypes={showEventTypes as Array<EventType>}
+                hovered={hoveredEntityId}
+                setHovered={setHoveredEntityId}
+              ></LineStringLayer>
+            ) : (
+              <></>
+            )}
+            <PinLayer
               persons={filteredPersonArray}
               showEventTypes={showEventTypes as Array<EventType>}
               hovered={hoveredEntityId}
               setHovered={setHoveredEntityId}
-            ></LineStringLayer>
-          ) : (
-            <></>
-          )}
-          <PinLayer
-            persons={filteredPersonArray}
-            showEventTypes={showEventTypes as Array<EventType>}
-            hovered={hoveredEntityId}
-            setHovered={setHoveredEntityId}
-          ></PinLayer>
-        </MapLibre>
-        <FormControl
-          sx={{ m: 1, minWidth: 120, position: 'absolute', top: 100, backgroundColor: 'white' }}
-          size="small"
-        >
-          <InputLabel id="select-event-type">Event Type</InputLabel>
-          <Select
-            labelId="select-event-type"
-            id="select-event-type"
-            multiple
-            value={showEventTypes}
-            label="Event Type"
-            onChange={handleChange}
+            ></PinLayer>
+          </MapLibre>
+          <FormControl
+            sx={{ m: 1, minWidth: 120, position: 'absolute', top: 100, backgroundColor: 'white' }}
+            size="small"
           >
-            {eventTypes.map((eventType: EventType) => {
-              return (
-                <MenuItem key={`event-type-${eventType}`} value={eventType}>
-                  {eventType}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+            <InputLabel id="select-event-type">Event Type</InputLabel>
+            <Select
+              labelId="select-event-type"
+              id="select-event-type"
+              multiple
+              value={showEventTypes}
+              label="Event Type"
+              onChange={handleChange}
+            >
+              {eventTypes.map((eventType: EventType) => {
+                return (
+                  <MenuItem key={`event-type-${eventType}`} value={eventType}>
+                    {eventType}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
-    </Grid>
+    </Fragment>
   );
 }
 
