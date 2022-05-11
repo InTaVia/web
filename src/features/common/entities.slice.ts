@@ -102,7 +102,7 @@ export function selectEntities(state: RootState): IndexedEntities['byId'] {
 }
 
 export function selectEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
-  const upstreamEntitiesByKind = selectUpstreamEntities(state);
+  const upstreamEntitiesByKind = selectUpstreamEntitiesByKind(state);
   const localEntitiesByKind = selectLocalEntitiesByKind(state);
 
   const entitiesByKind = {
