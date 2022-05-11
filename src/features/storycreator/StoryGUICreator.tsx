@@ -28,19 +28,60 @@ import StoryFlow from '@/features/storycreator/StoryFlow';
 import { selectEntitiesByKind } from '../common/entities.slice';
 
 const iconMap = {
-  Timeline: <LinearScaleOutlinedIcon fontSize="large" color="primary" key="timelineIcon" />,
-  Map: <MapOutlinedIcon fontSize="large" color="primary" key="mapIcon" />,
-  Annotation: <NoteAltOutlinedIcon fontSize="large" color="primary" key="annotationIcon" />,
-  Image: <ImageOutlinedIcon fontSize="large" color="primary" key="imageIcon" />,
-  Person: <PersonOutlineOutlinedIcon color="primary" key="personIcon" />,
-  Event: <AdjustIcon color="primary" key="EventIcon" />,
-  Quiz: <QuizOutlinedIcon fontSize="large" color="primary" key="EventIcon" />,
+  Timeline: (
+    <LinearScaleOutlinedIcon
+      className={styles['droppable-icon']}
+      fontSize="large"
+      color="primary"
+      key="timelineIcon"
+    />
+  ),
+  Map: (
+    <MapOutlinedIcon
+      className={styles['droppable-icon']}
+      fontSize="large"
+      color="primary"
+      key="mapIcon"
+    />
+  ),
+  Annotation: (
+    <NoteAltOutlinedIcon
+      className={styles['droppable-icon']}
+      fontSize="large"
+      color="primary"
+      key="annotationIcon"
+    />
+  ),
+  Image: (
+    <ImageOutlinedIcon
+      className={styles['droppable-icon']}
+      fontSize="large"
+      color="primary"
+      key="imageIcon"
+    />
+  ),
+  Person: (
+    <PersonOutlineOutlinedIcon
+      className={styles['droppable-icon']}
+      color="primary"
+      key="personIcon"
+    />
+  ),
+  Event: <AdjustIcon className={styles['droppable-icon']} color="primary" key="EventIcon" />,
+  Quiz: (
+    <QuizOutlinedIcon
+      className={styles['droppable-icon']}
+      fontSize="large"
+      color="primary"
+      key="EventIcon"
+    />
+  ),
 };
 
 const createDrops = (type, props = {}) => {
   function getIcon(t) {
     return (
-      <div style={{ verticalAlign: 'middle', display: 'table-cell', width: '1%' }}>
+      <div key={`icon${t}`} style={{ verticalAlign: 'middle', display: 'table-cell', width: '1%' }}>
         {iconMap[t]}
       </div>
     );
@@ -115,10 +156,11 @@ const createDrops = (type, props = {}) => {
   );
 };
 
-export default function StoryCreator(props): JSX.Element {
+export default function StoryCreatorGUI(props): JSX.Element {
   const story = props.story;
   const height = props.height;
   const width = props.width;
+  const parentRef = props.targetRef;
 
   const dispatch = useAppDispatch();
 
@@ -146,8 +188,6 @@ export default function StoryCreator(props): JSX.Element {
         //console.log(err);
       });
   };
-
-  const entitiesInSlide = selectedSlide?.entities;
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entitiesByKind.person).map((person) => {
@@ -195,13 +235,15 @@ export default function StoryCreator(props): JSX.Element {
       });
     }
 
-    dispatch(createSlidesInBulk(newSlides));
+    dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
   }
+
+  const entitiesInSlide = selectedSlide?.entities ? selectedSlide?.entities : persons;
 
   const gridHeight = Math.round(height / 5);
 
   return (
-    <div style={{ height: '100%', width: '100%', maxHeight: '100%' }}>
+    <div ref={parentRef} style={{ height: '100%', width: '100%', maxHeight: '100%' }}>
       <ReactGridLayout
         className="layout"
         isDraggable={false}
@@ -230,7 +272,7 @@ export default function StoryCreator(props): JSX.Element {
                   slide={selectedSlide}
                   imageRef={ref}
                   takeScreenshot={takeScreenshot}
-                  events={entitiesInSlide}
+                  entities={entitiesInSlide}
                 />
               );
             }}

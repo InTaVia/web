@@ -19,9 +19,11 @@ export default function StoryFlow(props: any) {
 
   const dispatch = useAppDispatch();
 
-  const slides = useAppSelector((state) => {
+  /* const slides = useAppSelector((state) => {
     return selectSlidesByStoryID(state, story.i);
-  });
+  }); */
+
+  const slides = Object.values(story.slides);
 
   const layout = generateLayout(slides);
 

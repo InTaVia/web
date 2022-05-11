@@ -4,7 +4,7 @@ import '~/node_modules/react-resizable/css/styles.css';
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import { withResizeDetector } from 'react-resize-detector';
+import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
@@ -28,8 +28,6 @@ export default function StoryCreator(props): JSX.Element {
     setTextMode(!textMode);
   }
 
-  const AdaptiveStoryGUICreator = withResizeDetector(StoryGUICreator);
-
   return (
     <div className={styles['story-editor-wrapper']}>
       <ExcelUpload />
@@ -45,7 +43,18 @@ export default function StoryCreator(props): JSX.Element {
         {textMode ? (
           <StoryTextCreator story={story}></StoryTextCreator>
         ) : (
-          <AdaptiveStoryGUICreator story={story}></AdaptiveStoryGUICreator>
+          <ReactResizeDetector handleWidth handleHeight>
+            {({ width, height, targetRef }) => {
+              return (
+                <StoryGUICreator
+                  targetRef={targetRef}
+                  width={width}
+                  height={height}
+                  story={story}
+                />
+              );
+            }}
+          </ReactResizeDetector>
         )}
       </div>
     </div>
