@@ -1,5 +1,4 @@
 import ClearIcon from '@mui/icons-material/Close';
-import { IconButton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -7,15 +6,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
-import { formatISO } from 'date-fns';
 import { Fragment, useState } from 'react';
-import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
 
 import {
@@ -24,17 +22,20 @@ import {
   selectLocalEntitiesByKind,
 } from '@/features/common/entities.slice';
 import type { Entity, Person } from '@/features/common/entity.model';
+import { person } from '@/features/common/entity.validation-schema';
 import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import type { FormProps } from '@/features/form/form';
 import { Form } from '@/features/form/form';
+import { FormDateField } from '@/features/form/form-date-field';
+import { FormSelect } from '@/features/form/form-select';
+import { FormTextArea } from '@/features/form/form-text-area';
+import { FormTextField } from '@/features/form/form-text-field';
+import { validateSchema } from '@/features/form/validate-schema';
 import { PageTitle } from '@/features/ui/PageTitle';
 import { formatDate } from '@/lib/format-date';
 import { useSearchParams } from '@/lib/use-search-params';
 
-/**
- * Currently client-side only.
- */
 export default function PersonPage(): JSX.Element {
   const searchParams = useSearchParams();
   const id = searchParams?.get('id');
@@ -194,7 +195,11 @@ export default function PersonPage(): JSX.Element {
                 return (
                   <ListItem key={index} disablePadding>
                     <Box component="article">
-                      <Typography>{event.type}</Typography>
+                      <Typography>
+                        {event.type in relationTypes
+                          ? relationTypes[event.type as keyof typeof relationTypes].label
+                          : event.type}
+                      </Typography>
                       <Typography color="text.secondary">
                         {event.date != null ? (
                           <span>{formatDate(new Date(event.date))}</span>
@@ -235,12 +240,17 @@ function EntityEditButton<T extends Entity>(props: EntityEditButtonProps<T>): JS
       <Button onClick={dialog.open} variant="outlined">
         Edit
       </Button>
-      <Dialog fullWidth maxWidth="sm" open={dialog.isOpen} onClose={dialog.close}>
+      <Dialog fullWidth maxWidth="md" open={dialog.isOpen} onClose={dialog.close}>
         <DialogTitle component="h2" variant="h4">
           Edit {entity.kind}
         </DialogTitle>
         <DialogContent dividers>
-          <EditEntityForm id={formId} initialValues={entity} onSubmit={onSubmit} />
+          <EditEntityForm
+            id={formId}
+            initialValues={entity}
+            onSubmit={onSubmit}
+            validate={validateSchema(person)}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={dialog.close}>Cancel</Button>
@@ -285,32 +295,27 @@ function useDialogState(): UseDialogStateResult {
   };
 }
 
-type EditEntityFormProps<T> = Pick<FormProps<T>, 'id' | 'initialValues' | 'onSubmit'>;
+type EditEntityFormProps<T> = Pick<FormProps<T>, 'id' | 'initialValues' | 'onSubmit' | 'validate'>;
 
 function EditEntityForm<T>(props: EditEntityFormProps<T>): JSX.Element {
-  const { id, initialValues, onSubmit } = props;
+  const { id, initialValues, onSubmit, validate } = props;
 
   return (
-    <Form<T> id={id} initialValues={initialValues} onSubmit={onSubmit}>
+    <Form<T> id={id} initialValues={initialValues} onSubmit={onSubmit} validate={validate}>
       <Box sx={{ display: 'grid', gap: 3 }}>
         <FormTextField label="Name" name="name" />
         <FormTextArea label="Description" name="description" rows={5} />
         <EntityHistoryFormSection />
-        {/* <FormSpy>
-          {(values) => {
-            return <pre>{JSON.stringify(values, null, 2)}</pre>;
-          }}
-        </FormSpy> */}
       </Box>
     </Form>
   );
 }
 
 function EntityHistoryFormSection(): JSX.Element {
-  const historyFieldArray = useFieldArray('history', { subscription: { value: true } });
+  const historyFieldArray = useFieldArray('history', { subscription: {} });
 
   function onAdd() {
-    historyFieldArray.fields.push(undefined);
+    historyFieldArray.fields.push({ type: undefined, date: undefined });
   }
 
   return (
@@ -337,11 +342,30 @@ function EntityHistoryFormSection(): JSX.Element {
             <ListItem
               key={name}
               disablePadding
-              sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 1 }}
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr auto',
+                gap: 1,
+                alignItems: 'start',
+              }}
             >
-              <FormTextField label="Type" name={`${name}.type`} />
+              <FormSelect label="Type" name={`${name}.type`}>
+                {Object.values(relationTypes).map((relationType) => {
+                  return (
+                    <MenuItem key={relationType.id} value={relationType.id}>
+                      {relationType.label}
+                    </MenuItem>
+                  );
+                })}
+              </FormSelect>
               <FormDateField label="Date" name={`${name}.date`} />
-              <IconButton aria-label="Remove" color="error" onClick={onRemove} size="small">
+              <IconButton
+                aria-label="Remove"
+                color="error"
+                onClick={onRemove}
+                size="small"
+                sx={{ alignSelf: 'center' }}
+              >
                 <ClearIcon fontSize="inherit" />
               </IconButton>
             </ListItem>
@@ -355,51 +379,14 @@ function EntityHistoryFormSection(): JSX.Element {
   );
 }
 
-interface FormTextFieldProps {
-  label: string;
-  name: string;
-}
-
-function FormTextField(props: FormTextFieldProps): JSX.Element {
-  const { name } = props;
-
-  const field = useField(name);
-
-  return <TextField {...props} {...field.input} />;
-}
-
-interface FormTextAreaProps {
-  label: string;
-  name: string;
-  rows?: number;
-}
-
-function FormTextArea(props: FormTextAreaProps): JSX.Element {
-  const { name } = props;
-
-  const field = useField(name);
-
-  return <TextField {...props} {...field.input} multiline />;
-}
-
-interface FormDateFieldProps {
-  label: string;
-  name: string;
-}
-
-function FormDateField(props: FormDateFieldProps): JSX.Element {
-  const { name } = props;
-
-  const field = useField(name, {
-    format(value: IsoDateString | undefined) {
-      if (value == null) return '';
-      return formatISO(new Date(value), { representation: 'date' });
-    },
-    parse(value: string) {
-      if (value === '') return undefined;
-      return new Date(value).toISOString();
-    },
-  });
-
-  return <TextField {...props} {...field.input} type="date" />;
-}
+// FIXME: see mocks/event-types and mocks/db
+const relationTypes = {
+  // FIXME: why generic `beginning` and `end` instead of entity-type specific, e.g. `birth` and `death` for `person`
+  beginning: { id: 'beginning', label: 'Beginning' },
+  end: { id: 'end', label: 'End' },
+  stayed: { id: 'stayed', label: 'Stayed at' },
+  lived: { id: 'lived', label: 'Lived in' },
+  'statue erected': { id: 'statue erected', label: 'Statue erected' },
+  'was in contact with': { id: 'was in contact with', label: 'Was in contact with' },
+  'was related to': { id: 'was related to', label: 'Was related to' },
+};
