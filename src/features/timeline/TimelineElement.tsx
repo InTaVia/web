@@ -13,13 +13,16 @@ export interface TimelineElementProps {
   scaleX: ScaleTime<number, number>;
   scaleY: ScaleBand<string>;
   person: Person;
+  renderLabel: boolean;
+  hovered?: Person['id'] | null;
+  setHovered?: (val: Person['id'] | null) => void;
 }
 
 function _TimelineElement(
   props: TimelineElementProps,
   ref: ForwardedRef<SVGGElement>,
 ): JSX.Element {
-  const { person, scaleX, scaleY, ...extraProps } = props;
+  const { person, scaleX, scaleY, renderLabel, hovered, setHovered, ...extraProps } = props;
 
   const hist = person.history || [];
   const dobEvent = hist.find((d) => {
@@ -62,8 +65,24 @@ function _TimelineElement(
   const x1 = scaleX(dod);
   const y = scaleY(person.id) ?? 0;
 
+  const handleMouseEnter = (entityId: Person['id']) => {
+    setHovered && setHovered(entityId);
+  };
+
+  // const handleMouseLeave = () => {
+  //   setHovered && setHovered(null);
+  // };
+
   return (
-    <g id={`person-${person.id}`} ref={ref} {...extraProps}>
+    <g
+      id={`person-${person.id}`}
+      ref={ref}
+      {...extraProps}
+      onMouseEnter={() => {
+        return handleMouseEnter(person.id);
+      }}
+      // onMouseLeave={handleMouseLeave}
+    >
       <rect
         stroke="none"
         fillOpacity={0}
@@ -87,18 +106,20 @@ function _TimelineElement(
         x={x0}
         y={y}
         fill="#6d89d6"
-        stroke="#0731a6"
-        strokeWidth="2"
+        stroke={person.id === hovered ? 'salmon' : '#0731a6'}
+        strokeWidth={person.id === hovered ? '4' : '2'}
       />
-      <text
-        fill="#0731a6"
-        x={(x0 + x1) / 2}
-        y={y + scaleY.bandwidth() / 2}
-        dy="0.3em"
-        textAnchor="middle"
-      >
-        {person.name}
-      </text>
+      {renderLabel && (
+        <text
+          fill="#0731a6"
+          x={(x0 + x1) / 2}
+          y={y + scaleY.bandwidth() / 2}
+          dy="0.3em"
+          textAnchor="middle"
+        >
+          {person.name}
+        </text>
+      )}
       {additionalEvents.map((evt, idx) => {
         if (evt.date === undefined) return '';
 
