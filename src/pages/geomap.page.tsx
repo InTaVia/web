@@ -2,27 +2,17 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { Marker } from 'react-map-gl';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import type { Person } from '@/features/common/entity.model';
 import { useAppSelector } from '@/features/common/store';
+import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
+import { PinLayer } from '@/features/geomap/PinLayer';
 import { length } from '@/lib/length';
 
 export default function MapPage(): JSX.Element {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
-
-  const markers = Object.values(entitiesByKind.person)
-    .flatMap((person) => {
-      const history = person.history?.filter((relation) => {
-        return relation.type === 'beginning';
-      });
-      if (history == null) return;
-      return history.map((relation) => {
-        return [relation.place?.lng, relation.place?.lat];
-      });
-    })
-    .filter(Boolean) as Array<[number, number]>;
 
   if (length(entitiesByKind.person) === 0) {
     return (
@@ -41,19 +31,14 @@ export default function MapPage(): JSX.Element {
   return (
     <Container maxWidth="xl" sx={{ display: 'grid', gap: 4, padding: 4, height: '80vh' }}>
       <MapLibre>
-        {markers.map((marker, index) => {
-          return (
-            <Marker
-              key={`marker-${index}`}
-              anchor="bottom"
-              latitude={marker[1]}
-              longitude={marker[0]}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.icons8.com/color/48/000000/marker.png" alt="marker1" />
-            </Marker>
-          );
-        })}
+        <LineStringLayer
+          persons={Object.values(entitiesByKind.person) as Array<Person>}
+          showEventTypes={['beginning', 'end']}
+        ></LineStringLayer>
+        <PinLayer
+          persons={Object.values(entitiesByKind.person) as Array<Person>}
+          showEventTypes={['beginning', 'end']}
+        ></PinLayer>
       </MapLibre>
     </Container>
   );

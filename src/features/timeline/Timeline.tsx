@@ -17,7 +17,12 @@ export function Timeline(): JSX.Element {
 
   return (
     <div className={styles['timeline-wrapper']} ref={parent}>
-      <TimelineSvg parentRef={parent} persons={persons} zoomToData={zoomToTimeRange} />
+      <TimelineSvg
+        parentRef={parent}
+        persons={persons}
+        zoomToData={zoomToTimeRange}
+        renderLabel={true}
+      />
     </div>
   );
 }

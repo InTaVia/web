@@ -5,8 +5,6 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import ReactMapGL, { NavigationControl, ScaleControl } from 'react-map-gl';
 
-import styles from '@/features/geomap/maplibremap.module.css';
-
 interface MapProps {
   children: ReactNode;
 }
@@ -19,21 +17,20 @@ export function MapLibre(props: MapProps): JSX.Element {
   });
 
   return (
-    <div className={styles['map-wrapper']}>
-      <ReactMapGL
-        {...mapViewport}
-        reuseMaps
-        mapLib={maplibregl}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-        // mapStyle="https://demotiles.maplibre.org/style.json"
-        onMove={(e) => {
-          return setMapViewport({ ...e.viewState });
-        }}
-      >
-        <NavigationControl />
-        <ScaleControl />
-        {props.children}
-      </ReactMapGL>
-    </div>
+    <ReactMapGL
+      reuseMaps
+      mapLib={maplibregl}
+      initialViewState={mapViewport}
+      style={{ width: '100%', height: '100%' }}
+      mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+      // mapStyle="https://demotiles.maplibre.org/style.json"
+      onMove={(e) => {
+        return setMapViewport({ ...e.viewState });
+      }}
+    >
+      <NavigationControl />
+      <ScaleControl />
+      {props.children}
+    </ReactMapGL>
   );
 }

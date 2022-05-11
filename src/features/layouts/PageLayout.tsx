@@ -1,6 +1,7 @@
 import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
+import GridViewIcon from '@mui/icons-material/GridViewOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
 import MapIcon from '@mui/icons-material/MapOutlined';
@@ -47,6 +48,10 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
     {
+      id: 'coordination',
+      href: { pathname: '/coordination' },
+      label: 'Coordinated View',
+      icon: <GridViewIcon />,
       id: 'storycreator',
       href: { pathname: '/storycreator' },
       label: 'Story Creator',

@@ -88,6 +88,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.0.0",
+    "@types/maplibre-gl": "^1.14.0",
     "@types/d3-axis": "^3.0.1",
     "@types/d3-brush": "^3.0.1",
     "@types/d3-path": "^3.0.0",

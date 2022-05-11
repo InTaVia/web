@@ -19,10 +19,11 @@ export function TimelineElementTooltip(props: TimelineElementTooltipProps): JSX.
   const [tooltipContent, setTooltipContent] = useState(<Fragment />);
   const [initialized, setInitialized] = useState(false);
 
-  const { person } = props;
+  const { person, setHovered } = props;
 
   const handleClose = () => {
     setOpen(false);
+    setHovered && setHovered(null);
   };
 
   const handleOpen = () => {

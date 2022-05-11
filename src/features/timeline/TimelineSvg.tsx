@@ -12,13 +12,16 @@ interface TimelineSvgProps {
   persons: Array<Person>;
   parentRef: MutableRefObject<HTMLDivElement | null>;
   zoomToData: boolean;
+  renderLabel: boolean;
+  hovered?: Person['id'] | null;
+  setHovered?: (val: Person['id'] | null) => void;
 }
 
 const svgMinWidth = 300;
 const svgMinHeight = 150;
 
 export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
-  const { parentRef, persons, zoomToData } = props;
+  const { parentRef, persons, zoomToData, renderLabel, hovered, setHovered } = props;
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
@@ -56,7 +59,7 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     >
       <TimelineYearAxis xScale={scaleX} yScale={scaleY} />
       {persons.map((person) => {
-        const personProps = { scaleX, scaleY, person };
+        const personProps = { scaleX, scaleY, person, renderLabel, hovered, setHovered };
 
         return (
           <TimelineElementTooltip key={person.id} {...personProps}>
