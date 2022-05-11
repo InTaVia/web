@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useAppSelector } from '@/features/common/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
-import { PlaceConstraintView } from '@/features/visual-querying/PlaceConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
+import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
   DateConstraint,
-  PlaceConstraint,
+  TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 
@@ -31,13 +31,14 @@ export function PersonShape(): JSX.Element {
 
   return (
     <g>
-      <circle r="100" fill="blue" style={{ cursor: 'pointer' }} onClick={handleClick} />
+      <circle r="100" fill="lightGray" style={{ cursor: 'pointer' }} onClick={handleClick} />
       <text
         x="0"
         y="0"
-        fontSize="xx-large"
+        fontSize="xxx-large"
         textAnchor="middle"
-        fill="white"
+        dominantBaseline="central"
+        fill="black"
         style={{ cursor: 'pointer' }}
         onClick={handleClick}
       >
@@ -66,7 +67,8 @@ export function PersonShape(): JSX.Element {
           const y = Math.sin((startAngle / 180) * Math.PI) * 200;
 
           switch (constraint.type) {
-            case ConstraintType.Date:
+            case ConstraintType.DateOfBirth:
+            case ConstraintType.DateOfDeath:
               return (
                 <DateConstraintView
                   key={idx}
@@ -74,22 +76,34 @@ export function PersonShape(): JSX.Element {
                   constraint={constraint as DateConstraint}
                   x={x}
                   y={y}
-                  width={400}
-                  height={120}
+                  width={500}
+                  height={250}
                 />
               );
-            case ConstraintType.Place:
+            case ConstraintType.Name:
               return (
-                <PlaceConstraintView
+                <TextConstraintView
                   key={idx}
                   idx={idx}
-                  constraint={constraint as PlaceConstraint}
+                  constraint={constraint as TextConstraint}
                   x={x}
                   y={y}
-                  width={550}
-                  height={350}
+                  width={300}
+                  height={80}
                 />
               );
+            // case ConstraintType.Place:
+            //   return (
+            //     <PlaceConstraintView
+            //       key={idx}
+            //       idx={idx}
+            //       constraint={constraint as PlaceConstraint}
+            //       x={x}
+            //       y={y}
+            //       width={550}
+            //       height={350}
+            //     />
+            //   );
             default:
               return (
                 <text x={x} y={y} fill="red">

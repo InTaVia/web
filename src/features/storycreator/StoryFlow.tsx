@@ -1,39 +1,32 @@
-import { Button, Card } from '@mui/material';
+import { Card } from '@mui/material';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   copySlide,
   createSlide,
   removeSlide,
   selectSlide,
-  selectSlidesByStoryId,
 } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
 
-interface StoryFlowProps {
-  width?: number;
-  height?: number; // FIXME: unused currently
-  targetRef: any;
-  story: any;
-}
-
-export function StoryFlow(props: StoryFlowProps): JSX.Element {
+export function StoryFlow(props: any) {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const story = props.story;
 
   const dispatch = useAppDispatch();
 
-  const slides = useAppSelector((state) => {
-    return selectSlidesByStoryId(state, story.id);
-  });
+  /* const slides = useAppSelector((state) => {
+    return selectSlidesByStoryID(state, story.i);
+  }); */
+
+  const slides = Object.values(story.slides);
 
   const layout = generateLayout(slides);
 
-  function generateLayout(i_slides: any) {
+  function generateLayout(i_slides) {
     const newSlides = [...i_slides].sort((a, b) => {
       return a.sort - b.sort;
     });
@@ -55,72 +48,64 @@ export function StoryFlow(props: StoryFlowProps): JSX.Element {
     return newLayout;
   }
 
-  // function onAdd() {
-  //   dispatch(createSlide({ story: story.id, content: 'c' }));
-  // }
-
-  function onClick(slideID: Slide['i']) {
-    dispatch(selectSlide({ story: story.id, slide: slideID }));
+  function onAdd() {
+    dispatch(createSlide({ story: story.i, content: 'c' }));
   }
 
-  function onRemove(slideID: Slide['i']) {
-    dispatch(removeSlide({ story: story.id, slide: slideID }));
+  function onClick(slideID) {
+    dispatch(selectSlide({ story: story.i, slide: slideID }));
   }
 
-  function onCopy(slideID: Slide['i']) {
-    dispatch(copySlide({ story: story.id, slide: slideID }));
+  function onRemove(slideID) {
+    dispatch(removeSlide({ story: story.i, slide: slideID }));
+  }
+
+  function onCopy(slideID) {
+    dispatch(copySlide({ story: story.i, slide: slideID }));
   }
 
   return (
-    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
+    <div
+      ref={targetRef}
+      className={styles['slide-editor-wrapper']}
+      style={{ overflow: 'hidden', overflowY: 'scroll' }}
+    >
       <ReactGridLayout
         className="layout"
         layout={layout}
         rowHeight={120}
         cols={8}
-        autoSize={true}
         width={myWidth}
         compactType="horizontal"
         isResizable={false}
         useCSSTransforms={true}
       >
-        {slides.map((slide: any) => {
+        {slides.map((e: any, i: number) => {
           return (
             <Card
-              key={'slide' + slide.i}
-              onClick={() => {
-                onClick(slide.i);
+              key={'slide' + e.i}
+              onClick={(event) => {
+                onClick(e.i);
               }}
-              className={`${styles['story-flow-card']} ${
-                slide.selected === true ? styles['selected'] : ''
-              }`}
+              className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
             >
               <Window
-                id={slide.i}
-                title={slide.i}
+                title={e.title ? e.title : e.i}
                 onRemoveWindow={() => {
-                  onRemove(slide.i);
+                  onRemove(e.i);
                 }}
                 onCopyWindow={() => {
-                  onCopy(slide.i);
+                  onCopy(e.i);
                 }}
               >
-                {slide.image !== null && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img style={{ height: '100%' }} src={slide.image} alt={'ScreenShot'} />
+                {e.image !== null && (
+                  <img style={{ height: '100%' }} src={e.image} alt={'ScreenShot'} />
                 )}
               </Window>
             </Card>
           );
         })}
       </ReactGridLayout>
-      <Button
-        onClick={() => {
-          dispatch(createSlide({ story: story.i }));
-        }}
-      >
-        Add Slide
-      </Button>
     </div>
   );
 }

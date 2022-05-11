@@ -1,18 +1,10 @@
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
+import '~/node_modules/react-grid-layout/css/styles.css';
+import '~/node_modules/react-resizable/css/styles.css';
 
-import { TextareaAutosize } from '@mui/material';
+import { Button, TextareaAutosize } from '@mui/material';
 
-// import { Responsive, WidthProvider } from 'react-grid-layout';
-import { useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
-import {
-  selectContentByStory,
-  selectSlidesByStoryId,
-} from '@/features/storycreator/storycreator.slice';
-
-// const ResponsiveGridLayout = WidthProvider(Responsive);
 
 interface StoryTextCreatorProps {
   story: Story;
@@ -21,32 +13,31 @@ interface StoryTextCreatorProps {
 export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
   const { story } = props;
 
-  const slides = useAppSelector((state) => {
-    return selectSlidesByStoryId(state, story.id);
-  });
-
-  const allSlidesContent = useAppSelector((state) => {
-    return selectContentByStory(state, story);
-  });
-
-  const slideOutput = slides.map((slide: any) => {
-    const ret = {
-      ...slide,
-      content: allSlidesContent.filter((content: any) => {
-        return content.slide === slide.i;
-      }),
-    };
-
+  const slideOutput = Object.values(story.slides).map((s) => {
+    const ret = { ...s };
+    // @ts-expect-error Ignore
     delete ret.image;
     return ret;
   });
 
   const storyObject = { ...story, slides: slideOutput };
 
+  const download = () => {
+    const element = document.createElement('a');
+    const textFile = new Blob([JSON.stringify(storyObject)], { type: 'text/plain' }); //pass data from localStorage API to blob
+    element.href = URL.createObjectURL(textFile);
+    element.download = `${storyObject['title']}_story_export.txt`;
+    document.body.appendChild(element);
+    element.click();
+  };
+
   return (
-    <TextareaAutosize
-      className={styles['story-textarea']}
-      value={JSON.stringify(storyObject, null, 2)}
-    />
+    <div>
+      <TextareaAutosize
+        className={styles['story-textarea']}
+        defaultValue={JSON.stringify(storyObject, null, 2)}
+      />
+      <Button onClick={download}>Download</Button>
+    </div>
   );
 }

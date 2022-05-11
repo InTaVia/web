@@ -1,11 +1,13 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { List, ListItemButton, Paper, Typography } from '@mui/material';
 import type { MouseEvent } from 'react';
 
-import { useAppDispatch } from '@/features/common/store';
-import styles from '@/features/visual-querying/visual-querying.module.css';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
-import { addConstraint, ConstraintType } from '@/features/visual-querying/visualQuerying.slice';
+import {
+  addConstraint,
+  ConstraintType,
+  selectConstraints,
+} from '@/features/visual-querying/visualQuerying.slice';
 
 interface ConstraintListProps {
   width: number;
@@ -15,35 +17,48 @@ interface ConstraintListProps {
 
 export function ConstraintList(props: ConstraintListProps) {
   const dispatch = useAppDispatch();
+  const constraints = useAppSelector(selectConstraints);
 
   function handleClick(e: MouseEvent<HTMLElement>) {
     const type = e.currentTarget.innerText as ConstraintType;
     props.setIsConstListShown(false);
 
+    if (
+      constraints.filter((constraint) => {
+        return constraint.type === type;
+      }).length > 0
+    ) {
+      console.log(`Constraint ${type} already exists.`);
+      return;
+    }
+
     dispatch(
       addConstraint({
         id: type,
-        opened: false,
+        opened: true,
         type: type,
-        minDate: null,
-        maxDate: null,
+        dateRange: null,
       } as Constraint),
     );
   }
 
   return (
     <foreignObject width={props.width} height={props.height}>
-      <div className={styles['constraint-list-wrapper']}>
-        <ul className={styles['constraint-list']}>
-          {Object.keys(ConstraintType).map((key) => {
+      <Paper>
+        <List
+          component="ul"
+          role="list"
+          sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}
+        >
+          {Object.values(ConstraintType).map((value) => {
             return (
-              <li key={key} className={styles['constraint-list-elem']} onClick={handleClick}>
-                {key}
-              </li>
+              <ListItemButton key={value} sx={{ paddingBlock: 2 }} onClick={handleClick}>
+                <Typography>{value}</Typography>
+              </ListItemButton>
             );
           })}
-        </ul>
-      </div>
+        </List>
+      </Paper>
     </foreignObject>
   );
 }

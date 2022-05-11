@@ -1,4 +1,6 @@
 import { faker } from '@faker-js/faker';
+import type { Bin } from 'd3-array';
+import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
 // import { selectEntitiesByKind } from '@/features/common/entities.slice';
@@ -25,6 +27,55 @@ function createTable<T extends Entity>() {
     findById(id: T['id']) {
       return table.get(id);
     },
+    findByParams(
+      dateOfBirthRange?: Array<number>,
+      dateOfDeathRange?: Array<number>,
+      name?: string,
+    ) {
+      let entities = Array.from(table.values());
+
+      if (name != null) {
+        entities = matchSorter(entities, name, { keys: ['name'] });
+      }
+
+      if (dateOfBirthRange != null) {
+        entities = entities.filter((entity) => {
+          // Get beginning relation
+          const beginningRelation = entity.history?.find((relation) => {
+            return relation.type === 'beginning';
+          });
+
+          // Check if date is within range
+          if (beginningRelation != null && beginningRelation.date != null) {
+            const birthYear = new Date(beginningRelation.date).getFullYear();
+            if (dateOfBirthRange[0]! <= birthYear && birthYear <= dateOfBirthRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      if (dateOfDeathRange != null) {
+        entities = entities.filter((entity) => {
+          // Get end relation
+          const endRelation = entity.history?.find((relation) => {
+            return relation.type === 'end';
+          });
+
+          // Check if date is within range
+          if (endRelation != null && endRelation.date != null) {
+            const deathYear = new Date(endRelation.date).getFullYear();
+            if (dateOfDeathRange[0]! <= deathYear && deathYear <= dateOfDeathRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      return entities;
+    },
     getIds() {
       return Array.from(table.keys());
     },
@@ -39,12 +90,15 @@ function createTable<T extends Entity>() {
       }
       entity.history.push(relation);
     },
-    count(dateOfBirth?: Date | undefined) {
-      if (dateOfBirth == null) {
-        return table.size;
+    getDistribution(property: string) {
+      const entities = Array.from(table.values());
+      switch (property) {
+        case 'Date of Birth':
+        case 'Date of Death':
+          return computeDateBins(entities as Array<Person>, property);
+        default:
+          return Array<number>();
       }
-      // const entities = Array.from(table.values());
-      // return filterEntities(entities, dateOfBirth).length;
     },
     clear() {
       table.clear();
@@ -235,14 +289,40 @@ export function clear() {
   db.place.clear();
 }
 
-// function filterEntities(entities: Array<Entity>, dateOfBirth: Date): Array<Entity> {
-//   const filteredEntities = Array<Entity>();
+// Computes bins for date of birth histogram
+function computeDateBins(
+  entities: Array<Person>,
+  property: string,
+): {
+  minYear: number;
+  maxYear: number;
+  thresholds: Array<number>;
+  bins: Array<Bin<number, number>>;
+} {
+  let bins = Array<Bin<number, number>>();
+  const years = Array<number>();
+  const relationType = property === 'Date of Birth' ? 'beginning' : 'end';
 
-//   entities.forEach((entity) => {
-//     if (entity.history) {
-//       entity.history.filter((relation) => {
-//         return relation.type === 'beginning';
-//       });
-//     }
-//   });
-// }
+  // Create an array with all birthdates
+  entities.forEach((entity) => {
+    if (entity.history) {
+      const beginningRelation = entity.history.filter((relation) => {
+        return relation.type === relationType;
+      })[0];
+
+      if (beginningRelation && beginningRelation.date != null) {
+        years.push(new Date(beginningRelation.date).getFullYear());
+      }
+    }
+  });
+
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+  const numBins = Math.ceil(Math.sqrt(years.length));
+  const thresholds = range(minYear, maxYear, (maxYear - minYear) / numBins);
+
+  const distGen = bin().domain([minYear, maxYear]).thresholds(thresholds);
+  bins = distGen(years);
+
+  return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
+}
