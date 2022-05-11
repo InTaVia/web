@@ -38,12 +38,18 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
 
   let fillColor = 'red';
   switch (type) {
-    case ConstraintType.Date:
-      fillColor = 'red';
+    case ConstraintType.DateOfBirth:
+      fillColor = 'lightGreen';
       break;
-    case ConstraintType.Place:
+    case ConstraintType.DateOfDeath:
       fillColor = 'green';
       break;
+    case ConstraintType.Name:
+      fillColor = 'skyBlue';
+      break;
+    // case ConstraintType.Place:
+    //   fillColor = 'red';
+    //   break;
     default:
       fillColor = 'pink';
       break;
