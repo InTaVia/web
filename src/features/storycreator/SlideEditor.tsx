@@ -13,17 +13,25 @@ import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
 import Window from '@/features/ui/Window';
 import {
+  Button,
   Card,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  IconButton,
   TextareaAutosize,
   TextField,
   Typography
 } from '@mui/material';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
-
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 interface Layout {
   i: string;
@@ -51,14 +59,17 @@ export default function SlideEditor(props: any) {
   const slide = props.slide;
   const imageRef = props.imageRef;
   const takeScreenshot = props.takeScreenshot;
-  const persons = props.persons;
-  const events = props.events;
+
+  const entities = props.entities;
+
+  const persons = entities.filter(e=> e.kind==="person");
+  const events = entities.filter(e=> e.kind==="event")
 
   const personMarkers = persons?.flatMap((p) => {
     const historyEventsWithLocation = p.history.filter((e) => {
       return e.place.lat && e.place.lng;
     });
-
+    
     return historyEventsWithLocation
       .map((e) => {
         return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
@@ -77,6 +88,7 @@ export default function SlideEditor(props: any) {
     })
     .filter(Boolean) as Array<[number, number]>;
 
+  /* const content = Object.values(slide.content); */
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
   });
@@ -166,6 +178,28 @@ export default function SlideEditor(props: any) {
   const editRef2 = useRef();
   const editRef3 = useRef();
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSave = (event, element) => {
+    event.preventDefault();
+    let newElement = {...element};
+    for(let tar of event.target) {
+      if(tar.type ==="text") {
+        newElement[tar.id] = tar.value;
+      }
+    }
+    event.target.reset();
+    dispatch(editContent(newElement));
+  };
+
   const createWindowContent = (element: any) => {
     switch (element.type) {
       case 'Annotation':
@@ -197,24 +231,16 @@ export default function SlideEditor(props: any) {
               padding: 0
             }}
           >
-            <div className={styles["flip-card"]}>
-              <div className={styles["flip-card-inner"]}>
-                <div className={styles["flip-card-front"]}>
-                  <img src={`${element.link}`} alt="Avatar" style={{width:"100%"}}/>
-                </div>
-                <div className={styles["flip-card-back"]}>
-                <ContentEditable
-                  innerRef={editRef2}
-                  html={element.link ? element.link : "Enter Link"}
-                  disabled={false}
-                  style={{width: "100%", padding: "5px"}}
-                  onBlur={(e) => {
-                    const val = e.target.innerHTML;
-                    onTextfieldChange({ ...element, link: val });
-                  }} 
-                />
-                </div>
-              </div>
+            <IconButton color="primary" aria-label="edit icon" component="span" onClick={handleClickOpen} style={{position: "absolute", right: 0}}>
+              <EditOutlinedIcon/>
+            </IconButton>
+            <div style={{height: "100%"}}>
+              <CardMedia
+                component="img"
+                image={element.link}
+                alt="card image"
+                height="100%"
+              />
             </div>
             <CardContent className={styles['card-content']}>
               <Typography gutterBottom variant="h5" component="h2">
@@ -240,13 +266,58 @@ export default function SlideEditor(props: any) {
                 />
                 </Typography>
             </CardContent>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Edit Image</DialogTitle>
+              <DialogContent>
+              <form onSubmit={(event) => {
+                handleSave(event, element);
+              }} id="myform">
+                <FormControl>
+                <TextField
+                  margin="dense"
+                  id="link"
+                  label="Image Link"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  defaultValue={element.link}
+                  onChange={()=>{}}
+                />
+                <TextField
+                  margin="dense"
+                  id="title"
+                  label="Title"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  defaultValue={element.title}
+                  onChange={()=>{}}
+                />
+                <TextField
+                  margin="dense"
+                  id="text"
+                  label="Text"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  defaultValue={element.text}
+                  onChange={()=>{}}
+                />
+                </FormControl>
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit" form="myform" onClick={handleClose}>Save</Button>
+              </DialogActions>
+            </Dialog>
           </Card>
         );
       case 'Timeline':
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        return <StoryMap markers={eventMarkers}></StoryMap>;
+        return <StoryMap markers={eventMarkers ? eventMarkers : personMarkers}></StoryMap>;
       default:
         return [];
     }
