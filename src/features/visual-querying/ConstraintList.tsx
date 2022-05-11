@@ -37,7 +37,7 @@ export function ConstraintList(props: ConstraintListProps) {
     dispatch(
       addConstraint({
         id: type,
-        opened: false,
+        opened: true,
         type: type,
         dateRange: null,
       } as Constraint),

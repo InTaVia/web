@@ -1,16 +1,19 @@
 import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { PersonShape } from '@/features/visual-querying/PersonShape';
 
 import { useLazyGetPersonsByParamQuery } from '../common/intavia-api.service';
-import { useAppSelector } from '../common/store';
+import { useAppDispatch, useAppSelector } from '../common/store';
 import type { DateConstraint, TextConstraint } from './visualQuerying.slice';
-import { ConstraintType, selectConstraints } from './visualQuerying.slice';
+import { ConstraintType, selectConstraints, toggleConstraint } from './visualQuerying.slice';
 
 export function VisualQuerying(): JSX.Element {
-  const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
+  const dispatch = useAppDispatch();
   const constraints = useAppSelector(selectConstraints);
+  const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const [trigger] = useLazyGetPersonsByParamQuery();
 
@@ -52,9 +55,25 @@ export function VisualQuerying(): JSX.Element {
     });
   }
 
+  function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {
+    if (e.target === svgRef.current) {
+      constraints.forEach((constraint, idx) => {
+        if (constraint.opened) {
+          dispatch(toggleConstraint(idx));
+        }
+      });
+    }
+  }
+
   return (
     <div className="visual-querying-wrapper">
-      <svg width="100%" height="100%" viewBox={svgViewBox}>
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={svgViewBox}
+        onClick={dismissConstraintViews}
+        ref={svgRef}
+      >
         <PersonShape />
       </svg>
       <Button variant="contained" onClick={sendQuery}>
