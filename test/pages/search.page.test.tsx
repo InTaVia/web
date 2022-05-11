@@ -26,7 +26,8 @@ afterAll(() => {
 
 describe('SearchPage', () => {
   it('should display persons search results on page load', async () => {
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+    const router = { pathname: '/search' };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const searchResults = await screen.findAllByRole('listitem');
     expect(searchResults[0]).toHaveTextContent(/deborah knoll v/i);
@@ -43,7 +44,8 @@ describe('SearchPage', () => {
       ),
     );
 
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+    const router = { pathname: '/search' };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const errorMessage = await screen.findByRole('alert');
     expect(errorMessage).toHaveTextContent(/rejected/i);
@@ -51,7 +53,8 @@ describe('SearchPage', () => {
 
   it('should update search params when search textfield value changed', () => {
     const push = jest.fn();
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search', push } }) });
+    const router = { pathname: '/search', push };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const searchField = screen.getByRole('searchbox');
     userEvent.type(searchField, 'abcdef');
@@ -63,9 +66,8 @@ describe('SearchPage', () => {
   });
 
   it('should use search params in search query', async () => {
-    render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'emily' } } }),
-    });
+    const router = { pathname: '/search', query: { q: 'emily' } };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const searchResults = await screen.findAllByRole('listitem');
     // eslint-disable-next-line jest-dom/prefer-in-document
@@ -74,9 +76,8 @@ describe('SearchPage', () => {
   });
 
   it('should use search params to prepopulate search textfield', () => {
-    render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'abcdef' } } }),
-    });
+    const router = { pathname: '/search', query: { q: 'abcdef' } };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const searchField = screen.getByRole('searchbox');
     expect(searchField).toHaveValue('abcdef');
@@ -84,24 +85,25 @@ describe('SearchPage', () => {
 
   it('should add search results pagination buttons', async () => {
     const push = jest.fn();
+    const router = { pathname: '/search', query: { q: 'em' }, push };
 
-    render(<SearchPage />, {
-      wrapper: createWrapper({ router: { pathname: '/search', query: { q: 'em' }, push } }),
-    });
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const link = await screen.findByRole('link', { name: /go to page 2/i });
     expect(link).toHaveAttribute('href', '/search?page=2&q=em');
   });
 
   it('should display loading indicator', () => {
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+    const router = { pathname: '/search' };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const loading = screen.getByRole('status');
     expect(loading).toHaveTextContent(/loading/i);
   });
 
   it('should display search results count', async () => {
-    render(<SearchPage />, { wrapper: createWrapper({ router: { pathname: '/search' } }) });
+    const router = { pathname: '/search' };
+    render(<SearchPage />, { wrapper: createWrapper({ router }) });
 
     const count = await screen.findByText(/results: 10/i);
     expect(count).toBeInTheDocument();

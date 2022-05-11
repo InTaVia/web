@@ -3,6 +3,7 @@ import type { NextRouter } from 'next/router';
 import type { FC } from 'react';
 import { Provider } from 'react-redux';
 
+import intaviaApisService from '@/features/common/intavia-api.service';
 import type { AppStore } from '@/features/common/store';
 import { configureAppStore } from '@/features/common/store';
 import { Notifications } from '@/features/notifications/Notifications';
@@ -37,4 +38,14 @@ export function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
   }
 
   return Wrapper;
+}
+
+export async function createStoreWithSearchResults() {
+  const store = configureAppStore();
+  await intaviaApisService.endpoints.getPersons.initiate({})(
+    store.dispatch,
+    store.getState,
+    undefined,
+  );
+  return store;
 }
