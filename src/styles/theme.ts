@@ -15,16 +15,16 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      light: 'rgb(189, 238, 45)',
-      main: 'rgb(132, 177, 91)',
-      dark: 'rgb(92, 130, 57)',
-      contrastText: '#fff',
+      light: 'var(--gray)',
+      main: 'var(--green)',
+      dark: 'var(--dark-green)',
+      contrastText: 'var(--white)',
     },
     secondary: {
-      light: 'rgb(35, 167, 234)',
-      main: 'rgb(35, 167, 234)',
-      dark: 'rgb(120, 66, 163)',
-      contrastText: '#000',
+      light: 'var(--blue)',
+      main: 'var(--blue)',
+      dark: 'var(--purple)',
+      contrastText: 'var(--black)',
     },
   },
   typography: {
