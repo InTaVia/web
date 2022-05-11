@@ -3,6 +3,7 @@ import ContentEditable from 'react-contenteditable'
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
   addContent,
+  addEntityToSlide,
   editContent,
   removeContent,
   resizeMoveContent,
@@ -63,7 +64,7 @@ export default function SlideEditor(props: any) {
   const entities = props.entities;
 
   const persons = entities.filter(e=> e.kind==="person");
-  const events = entities.filter(e=> e.kind==="event")
+  const events = entities.filter(e=> e.kind==="event");
 
   const personMarkers = persons?.flatMap((p) => {
     const historyEventsWithLocation = p.history.filter((e) => {
@@ -109,65 +110,72 @@ export default function SlideEditor(props: any) {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
     const layoutItem = i_layoutItem;
 
-    const ids = windows.map((e: any) => {
-      return e.key;
-    });
-
-    let counter = 1;
-    const text = dropProps.type;
-    let newText = text;
-    while (ids.includes(newText)) {
-      newText = text + ' (' + counter + ')';
-      counter++;
+    if(dropProps.type === "Event" || dropProps.type === "Person") {
+      dispatch(addEntityToSlide({slide: slide, entity: {...dropProps.props}}));
     }
-    layoutItem['i'] = newText;
-    layoutItem['type'] = dropProps.type;
+    else {
+      const ids = windows.map((e: any) => {
+        return e.key;
+      });
 
-    switch (dropProps.type) {
-      case 'Annotation':
-        layoutItem['h'] = 3;
-        layoutItem['w'] = 2;
-        break;
-      case 'Image':
-        layoutItem['h'] = 12;
-        layoutItem['w'] = 3;
-        break;
-      case 'Timeline':
-        layoutItem['h'] = 12;
-        layoutItem['w'] = 3;
-        break;
-      case 'Map':
-        layoutItem['h'] = height / rowHeight;
-        layoutItem['w'] = 48;
+      let counter = 1;
+      const text = dropProps.type;
+      let newText = text;
+      while (ids.includes(newText)) {
+        newText = text + ' (' + counter + ')';
+        counter++;
+      }
+      layoutItem['i'] = newText;
+      layoutItem['type'] = dropProps.type;
 
-        if (dropProps.props.static as boolean) {
+      switch (dropProps.type) {
+        case 'Annotation':
+          layoutItem['h'] = 3;
+          layoutItem['w'] = 2;
+          break;
+        case 'Image':
+          layoutItem['h'] = 12;
+          layoutItem['w'] = 3;
+          break;
+        case 'Timeline':
+          layoutItem['h'] = 12;
+          layoutItem['w'] = 3;
+          break;
+        case 'Map':
+          layoutItem['h'] = height / rowHeight;
+          layoutItem['w'] = 48;
           layoutItem['x'] = 0;
           layoutItem['y'] = 0;
-          layoutItem['static'] = true;
-          layoutItem['isDraggable'] = false;
-        }
-        break;
 
-      default:
-        layoutItem['x'] = 0;
-        layoutItem['y'] = 0;
-        layoutItem['h'] = 2;
-        layoutItem['w'] = 2;
-        break;
+          if (dropProps.props.static as boolean) {
+            layoutItem['x'] = 0;
+            layoutItem['y'] = 0;
+            layoutItem['static'] = true;
+            layoutItem['isDraggable'] = false;
+          }
+          break;
+
+        default:
+          layoutItem['x'] = 0;
+          layoutItem['y'] = 0;
+          layoutItem['h'] = 2;
+          layoutItem['w'] = 2;
+          break;
+      }
+
+      dispatch(
+        addContent({
+          story: slide.story,
+          slide: slide.i,
+          x: layoutItem['x'],
+          y: layoutItem['y'],
+          w: layoutItem['w'],
+          h: layoutItem['h'],
+          type: layoutItem['type'],
+          key: newText,
+        }),
+      );
     }
-
-    dispatch(
-      addContent({
-        story: slide.story,
-        slide: slide.i,
-        x: layoutItem['x'],
-        y: layoutItem['y'],
-        w: layoutItem['w'],
-        h: layoutItem['h'],
-        type: layoutItem['type'],
-        key: newText,
-      }),
-    );
   };
 
   const onTextfieldChange = (newElement) => {
@@ -237,33 +245,17 @@ export default function SlideEditor(props: any) {
             <div style={{height: "100%"}}>
               <CardMedia
                 component="img"
-                image={element.link}
+                image={element.link ? element.link : "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png"}
                 alt="card image"
                 height="100%"
               />
             </div>
             <CardContent className={styles['card-content']}>
               <Typography gutterBottom variant="h5" component="h2">
-              <ContentEditable
-                  innerRef={editRef}
-                  html={element.title ? element.title : "Title"}
-                  disabled={false}
-                  onBlur={(e) => {
-                    const val = e.target.innerHTML;
-                    onTextfieldChange({ ...element, title: val });
-                  }} 
-                />
+                  {element.title ? element.title : "Title"}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  <ContentEditable
-                  innerRef={editRef3}
-                  html={element.text ? element.text : "Text"}
-                  disabled={false}
-                  onBlur={(e) => {
-                    const val = e.target.innerHTML;
-                    onTextfieldChange({ ...element, text: val });
-                  }} 
-                />
+                  {element.text ? element.text : "Text"}
                 </Typography>
             </CardContent>
             <Dialog open={open} onClose={handleClose}>
@@ -317,7 +309,7 @@ export default function SlideEditor(props: any) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        return <StoryMap markers={eventMarkers ? eventMarkers : personMarkers}></StoryMap>;
+        return <StoryMap markers={[...eventMarkers, ...personMarkers]}></StoryMap>;
       default:
         return [];
     }

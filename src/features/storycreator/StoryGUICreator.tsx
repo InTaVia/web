@@ -92,13 +92,16 @@ const createDrops = (type, props = {}) => {
   let text = '';
   const subline = '';
   let padding = 0;
+  let key = `${type}Drop`;
   switch (type) {
     case 'Person':
       text = props.name;
+      key = key + props.name;
       padding = 5;
       break;
     case 'Event':
       text = props.name ? props.name : props.type;
+      key = key + JSON.stringify(props);
       subline = `in ${props.place.name}`;
       if (props.date !== '') {
         subline += ` in ${props.date.substring(0, 4)}`;
@@ -128,7 +131,7 @@ const createDrops = (type, props = {}) => {
 
   return (
     <div
-      key={type + 'Drop'}
+      key={key}
       className="droppable-element"
       draggable={true}
       unselectable="on"

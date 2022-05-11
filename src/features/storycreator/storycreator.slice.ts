@@ -12,7 +12,15 @@ const initialState: StoryCreatorState = {
       title: 'The Life of Vergerio',
       i: 'story0',
       slides: {
-        '0': { i: '0', sort: 0, story: 'story0', selected: true, image: null, content: {} },
+        '0': {
+          i: '0',
+          sort: 0,
+          story: 'story0',
+          entities: [],
+          selected: true,
+          image: null,
+          content: {},
+        },
       },
     },
   },
@@ -37,7 +45,15 @@ export const storyCreatorSlice = createSlice({
       story.i = newID;
       story.title = 'Story ' + counter;
       story.slides = {
-        '0': { i: '0', sort: 0, story: story.i, selected: true, image: null, content: [] },
+        '0': {
+          i: '0',
+          sort: 0,
+          story: story.i,
+          selected: true,
+          image: null,
+          content: [],
+          entities: [],
+        },
       };
       newStories[story.i] = story;
       state.stories = newStories;
@@ -64,6 +80,7 @@ export const storyCreatorSlice = createSlice({
       slide.i = newID;
       slide.image = null;
       slide.content = {};
+      slide.entities = [];
       newStories[slide.story].slides[slide.i] = slide;
 
       state.stories = newStories;
@@ -219,14 +236,12 @@ export const storyCreatorSlice = createSlice({
       const slide = action.payload.slide;
       const entity = action.payload.entity;
 
-      const newSlides = [...state.slides];
-      for (const s of newSlides) {
-        if (slide.story === s.story && slide.i === s.i) {
-          s.entities = [...s.entities, entity];
-          break;
-        }
-      }
-      state.slides = newSlides;
+      console.log(slide, entity);
+
+      const newStories = { ...state.stories };
+      newStories[slide.story].slides[slide.i].entities.push(entity);
+
+      state.stories = newStories;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -252,6 +267,7 @@ export const {
   setImage,
   copySlide,
   createSlidesInBulk,
+  addEntityToSlide,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

@@ -18,22 +18,8 @@ export default function StoryTextCreator(props): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.i);
-  });
-
-  const allSlidesContent = useAppSelector((state) => {
-    return selectContentByStory(state, story);
-  });
-
-  const slideOutput = slides.map((s) => {
-    const ret = {
-      ...s,
-      content: allSlidesContent.filter((c) => {
-        return c.slide === s.i;
-      }),
-    };
-
+  const slideOutput = Object.values(story.slides).map((s) => {
+    const ret = { ...s };
     delete ret.image;
     return ret;
   });
