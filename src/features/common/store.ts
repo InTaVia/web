@@ -10,7 +10,7 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
-import timelineReducer from '@/features/timeline/timeline.slice';
+import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 
 export function configureAppStore() {
   const store = configureStore({
@@ -23,7 +23,7 @@ export function configureAppStore() {
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
         serializableCheck: {
-          ignoredActions: [String(addNotification)],
+          ignoredActions: [String(addNotification), String(setTimeRangeBrush)],
           ignoreState: true,
         },
       }).concat(intaviaApiService.middleware, errorMiddleware);
