@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { useAppSelector } from '@/features/common/store';
+import { StoryCreator } from '@/features/storycreator/StoryCreator';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
-import { StoryGUICreator } from '@/features/storycreator/StoryGUICreator';
 import { useSearchParams } from '@/lib/use-search-params';
 
 export default function StoryPage(): JSX.Element | null {
@@ -30,7 +30,7 @@ export default function StoryPage(): JSX.Element | null {
 
   return (
     <Container maxWidth={false} sx={{ display: 'grid', gap: 4, padding: 4 }}>
-      <StoryGUICreator story={story} />
+      <StoryCreator story={story} />
     </Container>
   );
 }

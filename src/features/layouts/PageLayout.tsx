@@ -117,7 +117,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
           </List>
         </nav>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
         <DrawerHeader />
         {children}
       </Box>

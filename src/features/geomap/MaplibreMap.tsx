@@ -25,7 +25,7 @@ export function MapLibre(props: MapProps): JSX.Element {
       mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
       // mapStyle="https://demotiles.maplibre.org/style.json"
       onMove={(e) => {
-        return setMapViewport(e.viewState);
+        return setMapViewport({ ...e.viewState });
       }}
     >
       <NavigationControl />

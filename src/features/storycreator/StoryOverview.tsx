@@ -21,7 +21,7 @@ export function StoryOverview(): JSX.Element {
     dispatch(createStory({}));
   }
 
-  function onRemoveStory(id: Story['id']) {
+  function onRemoveStory(id: Story['i']) {
     dispatch(removeStory(id));
   }
 
@@ -32,15 +32,15 @@ export function StoryOverview(): JSX.Element {
         <List role="list">
           {Object.values(stories).map((story) => {
             return (
-              <ListItem key={story.id}>
-                <Link href={{ pathname: `/storycreator/${story.id}` }}>
+              <ListItem key={story.i}>
+                <Link href={{ pathname: `/storycreator/${story.i}` }}>
                   <a>{story.title}</a>
                 </Link>
                 <Button
                   aria-label="Remove story"
                   color="error"
                   onClick={() => {
-                    onRemoveStory(story.id);
+                    onRemoveStory(story.i);
                   }}
                 >
                   <RemoveIcon />
