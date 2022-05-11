@@ -44,6 +44,16 @@ const slice = createSlice({
     );
 
     builder.addMatcher(
+      isAnyOf(intaviaApiService.endpoints.getPersonsByParam.matchFulfilled),
+      (state, action) => {
+        action.payload.entities.forEach((entity) => {
+          state.entities.byId[entity.id] = entity;
+          state.entities.byKind[entity.kind][entity.id] = entity;
+        });
+      },
+    );
+
+    builder.addMatcher(
       isAnyOf(
         intaviaApiService.endpoints.getPersonById.matchFulfilled,
         intaviaApiService.endpoints.getPlaceById.matchFulfilled,

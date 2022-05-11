@@ -1,55 +1,19 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import type { MutableRefObject } from 'react';
 import { useRef } from 'react';
 
+import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import type { Person } from '@/features/common/entity.model';
 import { useAppSelector } from '@/features/common/store';
-import { usePersonsSearchResults } from '@/features/search/usePersonsSearchResults';
 import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 
 export function Timeline(): JSX.Element {
-  const searchResults = usePersonsSearchResults();
-  const persons = searchResults.data?.entities ?? [];
+  const entities = useAppSelector(selectEntitiesByKind);
+  const persons = Object.values(entities.person).slice(0, 10) as Array<Person>;
 
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
 
-  const parent = useRef() as MutableRefObject<HTMLDivElement | null>;
-
-  if (searchResults.isLoading) {
-    return (
-      <Box
-        sx={{
-          display: 'grid',
-          placeContent: 'center',
-          borderTopWidth: 1,
-          borderTopStyle: 'solid',
-          borderTopColor: '#eee',
-          padding: 2,
-        }}
-      >
-        <Typography role="status">Loading...</Typography>
-      </Box>
-    );
-  }
-
-  if (persons.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: 'grid',
-          placeContent: 'center',
-          borderTopWidth: 1,
-          borderTopStyle: 'solid',
-          borderTopColor: '#eee',
-          padding: 2,
-        }}
-      >
-        <Typography>Nothing to see.</Typography>
-      </Box>
-    );
-  }
+  const parent = useRef<HTMLDivElement>(null);
 
   return (
     <div className={styles['timeline-wrapper']} ref={parent}>

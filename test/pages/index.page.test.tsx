@@ -5,7 +5,8 @@ import { createWrapper } from '~/test/test-utils';
 
 describe('HomePage', () => {
   it('should display welcome message', () => {
-    render(<HomePage />, { wrapper: createWrapper({ router: { pathname: '/' } }) });
+    const router = { pathname: '/' };
+    render(<HomePage />, { wrapper: createWrapper({ router }) });
 
     const heading = screen.getByRole('heading', { name: /welcome to intavia!/i });
 

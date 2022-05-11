@@ -10,15 +10,21 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import notificationsReducer, {
   addNotification,
 } from '@/features/notifications/notifications.slice';
+import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
+import uiReducer from '@/features/ui/ui.slice';
+import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 
 export function configureAppStore() {
   const store = configureStore({
     reducer: {
       entities: entitiesReducer,
-      notifications: notificationsReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+      notifications: notificationsReducer,
+      storycreator: storycreatorReducer,
       timeline: timelineReducer,
+      ui: uiReducer,
+      visualQuerying: visualQueryingReducer,
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({

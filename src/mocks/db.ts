@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker';
+import type { Bin } from 'd3-array';
+import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
+// import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
 import { times } from '@/lib/times';
 import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
@@ -24,6 +27,55 @@ function createTable<T extends Entity>() {
     findById(id: T['id']) {
       return table.get(id);
     },
+    findByParams(
+      dateOfBirthRange?: Array<number>,
+      dateOfDeathRange?: Array<number>,
+      name?: string,
+    ) {
+      let entities = Array.from(table.values());
+
+      if (name != null) {
+        entities = matchSorter(entities, name, { keys: ['name'] });
+      }
+
+      if (dateOfBirthRange != null) {
+        entities = entities.filter((entity) => {
+          // Get beginning relation
+          const beginningRelation = entity.history?.find((relation) => {
+            return relation.type === 'beginning';
+          });
+
+          // Check if date is within range
+          if (beginningRelation != null && beginningRelation.date != null) {
+            const birthYear = new Date(beginningRelation.date).getFullYear();
+            if (dateOfBirthRange[0]! <= birthYear && birthYear <= dateOfBirthRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      if (dateOfDeathRange != null) {
+        entities = entities.filter((entity) => {
+          // Get end relation
+          const endRelation = entity.history?.find((relation) => {
+            return relation.type === 'end';
+          });
+
+          // Check if date is within range
+          if (endRelation != null && endRelation.date != null) {
+            const deathYear = new Date(endRelation.date).getFullYear();
+            if (dateOfDeathRange[0]! <= deathYear && deathYear <= dateOfDeathRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      return entities;
+    },
     getIds() {
       return Array.from(table.keys());
     },
@@ -38,8 +90,15 @@ function createTable<T extends Entity>() {
       }
       entity.history.push(relation);
     },
-    count() {
-      return table.size;
+    getDistribution(property: string) {
+      const entities = Array.from(table.values());
+      switch (property) {
+        case 'Date of Birth':
+        case 'Date of Death':
+          return computeDateBins(entities as Array<Person>, property);
+        default:
+          return Array<number>();
+      }
     },
     clear() {
       table.clear();
@@ -60,12 +119,12 @@ function createLifeSpanRelations(): [Relation, Relation] {
     {
       type: 'beginning',
       date: dateOfBirth.toISOString(),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     },
     {
       type: 'end',
       date: dateOfDeath.toISOString(),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     },
   ];
 }
@@ -75,13 +134,13 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
     return {
       type,
       targetId,
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     };
   } else {
     return {
       type,
       targetId,
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
       date: date.toISOString(),
     };
   }
@@ -100,15 +159,15 @@ function createExtraRelations(birth: Date, death: Date): Array<Relation> {
   for (let i = 0; i < numWithinLifetime; ++i) {
     relations.push({
       date: faker.date.between(birth, death).toISOString(),
-      type: faker.random.arrayElement(lifetimeEventTypes),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      type: faker.helpers.arrayElement(lifetimeEventTypes),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     });
   }
   for (let i = 0; i < numAfterDeath; ++i) {
     relations.push({
       date: faker.date.future(60, death).toISOString(),
-      type: faker.random.arrayElement(afterDeathEventTypes),
-      placeId: faker.random.arrayElement(db.place.getIds()),
+      type: faker.helpers.arrayElement(afterDeathEventTypes),
+      placeId: faker.helpers.arrayElement(db.place.getIds()),
     });
   }
 
@@ -150,7 +209,7 @@ export function seed() {
 
   selectedPersonIds.forEach((personId) => {
     const sourcePerson = db.person.findById(personId);
-    const targetPersonId = faker.random.arrayElement(personIds);
+    const targetPersonId = faker.helpers.arrayElement(personIds);
     const targetPerson = db.person.findById(personId);
     const sourcePersonDateOfBirth = sourcePerson?.history?.find((item) => {
       return item.type === 'beginning';
@@ -228,4 +287,42 @@ export function seed() {
 export function clear() {
   db.person.clear();
   db.place.clear();
+}
+
+// Computes bins for date of birth histogram
+function computeDateBins(
+  entities: Array<Person>,
+  property: string,
+): {
+  minYear: number;
+  maxYear: number;
+  thresholds: Array<number>;
+  bins: Array<Bin<number, number>>;
+} {
+  let bins = Array<Bin<number, number>>();
+  const years = Array<number>();
+  const relationType = property === 'Date of Birth' ? 'beginning' : 'end';
+
+  // Create an array with all birthdates
+  entities.forEach((entity) => {
+    if (entity.history) {
+      const beginningRelation = entity.history.filter((relation) => {
+        return relation.type === relationType;
+      })[0];
+
+      if (beginningRelation && beginningRelation.date != null) {
+        years.push(new Date(beginningRelation.date).getFullYear());
+      }
+    }
+  });
+
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+  const numBins = Math.ceil(Math.sqrt(years.length));
+  const thresholds = range(minYear, maxYear, (maxYear - minYear) / numBins);
+
+  const distGen = bin().domain([minYear, maxYear]).thresholds(thresholds);
+  bins = distGen(years);
+
+  return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
 }

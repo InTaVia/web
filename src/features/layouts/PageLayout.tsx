@@ -1,4 +1,6 @@
+import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import GridViewIcon from '@mui/icons-material/GridViewOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
@@ -37,6 +39,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
   const links = [
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
+    {
+      id: 'visual-query',
+      href: { pathname: '/visual-querying' },
+      label: 'Visual Query',
+      icon: <DataSaverOnOutlinedIcon />,
+    },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
     {
@@ -44,6 +52,10 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       href: { pathname: '/coordination' },
       label: 'Coordinated View',
       icon: <GridViewIcon />,
+      id: 'storycreator',
+      href: { pathname: '/storycreator' },
+      label: 'Story Creator',
+      icon: <StoryCreatorIcon />,
     },
   ];
 
