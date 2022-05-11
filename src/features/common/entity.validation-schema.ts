@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const relation = z.object({
   type: z.string(),
+  // FIXME: date cannot really be optional for e.g. `beginning` and `end` events
   date: z.string().optional(),
   // FIXME: why both targetId and placeId?
   targetId: z.string().optional(),

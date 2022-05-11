@@ -25,10 +25,10 @@ import type { Entity, Person } from '@/features/common/entity.model';
 import { person } from '@/features/common/entity.validation-schema';
 import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
-import type { FormProps } from '@/features/form/form';
 import { Form } from '@/features/form/form';
 import { FormDateField } from '@/features/form/form-date-field';
 import { FormSelect } from '@/features/form/form-select';
+import { FormSubmitButton } from '@/features/form/form-submit-button';
 import { FormTextArea } from '@/features/form/form-text-area';
 import { FormTextField } from '@/features/form/form-text-field';
 import { validateSchema } from '@/features/form/validate-schema';
@@ -233,8 +233,6 @@ function EntityEditButton<T extends Entity>(props: EntityEditButtonProps<T>): JS
     dialog.close();
   }
 
-  const formId = 'entity-edit';
-
   return (
     <Fragment>
       <Button onClick={dialog.open} variant="outlined">
@@ -244,20 +242,19 @@ function EntityEditButton<T extends Entity>(props: EntityEditButtonProps<T>): JS
         <DialogTitle component="h2" variant="h4">
           Edit {entity.kind}
         </DialogTitle>
-        <DialogContent dividers>
-          <EditEntityForm
-            id={formId}
-            initialValues={entity}
-            onSubmit={onSubmit}
-            validate={validateSchema(person)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={dialog.close}>Cancel</Button>
-          <Button form={formId} type="submit">
-            Submit
-          </Button>
-        </DialogActions>
+        <Form<T> initialValues={entity} onSubmit={onSubmit} validate={validateSchema(person)}>
+          <DialogContent dividers>
+            <Box sx={{ display: 'grid', gap: 3 }}>
+              <FormTextField label="Name" name="name" />
+              <FormTextArea label="Description" name="description" rows={5} />
+              <EntityHistoryFormSection />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={dialog.close}>Cancel</Button>
+            <FormSubmitButton>Submit</FormSubmitButton>
+          </DialogActions>
+        </Form>
       </Dialog>
     </Fragment>
   );
@@ -293,22 +290,6 @@ function useDialogState(): UseDialogStateResult {
     close,
     toggle,
   };
-}
-
-type EditEntityFormProps<T> = Pick<FormProps<T>, 'id' | 'initialValues' | 'onSubmit' | 'validate'>;
-
-function EditEntityForm<T>(props: EditEntityFormProps<T>): JSX.Element {
-  const { id, initialValues, onSubmit, validate } = props;
-
-  return (
-    <Form<T> id={id} initialValues={initialValues} onSubmit={onSubmit} validate={validate}>
-      <Box sx={{ display: 'grid', gap: 3 }}>
-        <FormTextField label="Name" name="name" />
-        <FormTextArea label="Description" name="description" rows={5} />
-        <EntityHistoryFormSection />
-      </Box>
-    </Form>
-  );
 }
 
 function EntityHistoryFormSection(): JSX.Element {
