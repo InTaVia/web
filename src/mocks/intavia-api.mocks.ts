@@ -38,11 +38,16 @@ export const handlers = [
     (request, response, context) => {
       const id = request.params.id;
 
-      const person = db.person.findById(id);
-
-      if (person == null) {
+      const _person = db.person.findById(id);
+      if (_person == null) {
         return response(context.status(404), context.delay());
       }
+      const person = {
+        ..._person,
+        history: _person.history?.map((relation) => {
+          return { ...relation, place: db.place.findById(relation.placeId!) };
+        }),
+      };
 
       return response(context.status(200), context.delay(), context.json(person));
     },
