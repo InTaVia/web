@@ -70,6 +70,7 @@ export default function ExcelUpload(props): JSX.Element {
         date: newDate,
         description: newDescription,
         name: raw['Event ID'].split(':')[1],
+        kind: 'event',
       };
       events.push(newEvent);
     }
