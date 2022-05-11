@@ -1,4 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import GridViewIcon from '@mui/icons-material/GridViewOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
 import TimelineIcon from '@mui/icons-material/LinearScale';
 import MapIcon from '@mui/icons-material/MapOutlined';
@@ -38,6 +39,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
     { id: 'search', href: { pathname: '/search' }, label: 'Search', icon: <SearchIcon /> },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
+    {
+      id: 'coordination',
+      href: { pathname: '/coordination' },
+      label: 'Coordinated View',
+      icon: <GridViewIcon />,
+    },
   ];
 
   return (
