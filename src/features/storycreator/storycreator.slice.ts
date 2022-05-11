@@ -3,23 +3,19 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/features/common/store';
 
 export interface StoryCreatorState {
-  stories: Array<any>;
-  slides: Array<any>;
-  content: Array<any>;
+  stories: object;
 }
 
 const initialState: StoryCreatorState = {
-  stories: [
-    {
+  stories: {
+    story0: {
       title: 'The Life of Vergerio',
       i: 'story0',
+      slides: {
+        '0': { i: '0', sort: 0, story: 'story0', selected: true, image: null, content: {} },
+      },
     },
-  ],
-  slides: [{ i: '0', sort: 0, story: 'story0', selected: true, image: null }],
-  content: [
-    /* { i: 'contentA1', story: 'story0', slide: 'a' },
-    { i: 'contentB1', story: 'story0', slide: 'b' }, */
-  ],
+  },
 };
 
 export const storyCreatorSlice = createSlice({
@@ -30,178 +26,181 @@ export const storyCreatorSlice = createSlice({
     createStory: (state, action) => {
       const story = action.payload;
 
-      const newStories = [...state.stories];
-      story.i = 'story' + newStories.length;
-      story.title = 'Story ' + newStories.length;
-      newStories.push(story);
+      const newStories = { ...state.stories };
+      const oldIDs = Object.keys(newStories);
+      let counter = oldIDs.length - 1;
+      let newID = null;
+      do {
+        counter = counter + 1;
+        newID = `story${counter}`;
+      } while (oldIDs.includes(newID));
+      story.i = newID;
+      story.title = 'Story ' + counter;
+      story.slides = {
+        '0': { i: '0', sort: 0, story: story.i, selected: true, image: null, content: [] },
+      };
+      newStories[story.i] = story;
       state.stories = newStories;
     },
     removeStory: (state, action) => {
-      console.log('REMOVE STORY', action.payload);
-
-      const newStories = [...state.stories].filter((e: any) => {
-        return e.i !== action.payload.i;
-      });
-
-      const newSlides = [...state.slides].filter((e: any) => {
-        return e.story !== action.payload.i;
-      });
-
-      const newContent = [...state.content].filter((e: any) => {
-        return e.story !== action.payload.i;
-      });
-
+      const newStories = { ...state.stories };
+      delete newStories[action.payload.i];
       state.stories = newStories;
-      state.slides = newSlides;
-      state.content = newContent;
     },
     createSlide: (state, action) => {
       const slide = action.payload;
 
-      const newSlides = [...state.slides];
-      slide.i = newSlides.length;
-      slide.image = null;
-      newSlides.push(slide);
+      const newStories = { ...state.stories };
+      const newSlides = { ...newStories[slide.story].slides };
 
-      state.slides = newSlides;
+      const oldIDs = Object.keys(newSlides);
+      let counter = oldIDs.length - 1;
+      let newID = null;
+      do {
+        counter = counter + 1;
+        newID = `slide${counter}`;
+      } while (oldIDs.includes(newID));
+
+      slide.i = newID;
+      slide.image = null;
+      slide.content = {};
+      newStories[slide.story].slides[slide.i] = slide;
+
+      state.stories = newStories;
     },
     createSlidesInBulk: (state, action) => {
-      const slides = action.payload;
+      const story = action.payload.story;
+      const slides = action.payload.newSlides;
 
-      const newSlides = [...state.slides];
-      const newContent = [...state.content];
-      for (const slide of slides) {
-        slide.i = newSlides.length;
+      const newStories = { ...state.stories };
+      const newSlides = { ...newStories[story.i].slides };
+      for (const s of slides) {
+        const slide = { ...s };
+        slide.i = `${Object.keys(newSlides).length}`;
         slide.image = null;
+        slide.content = {};
 
-        for (const newContentPiece of slide.content) {
-          newContentPiece.i = 'content' + newContent.length;
+        for (const newContentPiece of s.content) {
+          newContentPiece.i = 'content' + Object.values(slide.content).length;
           newContentPiece.story = slide.story;
           newContentPiece.slide = slide.i;
-          newContent.push(newContentPiece);
+          slide.content[newContentPiece.i] = newContentPiece;
         }
-        delete slide.content;
 
-        newSlides.push(slide);
+        newSlides[slide.i] = slide;
       }
-      state.slides = newSlides;
-      state.content = newContent;
+
+      newStories[story.i].slides = newSlides;
+
+      state.stories = newStories;
     },
     selectSlide: (state, action) => {
       const select = action.payload;
-      const newSlides = [...state.slides];
-      for (const slide of newSlides) {
-        if (slide.story === select.story && slide.i === select.slide) {
+      const newStories: object = { ...state.stories };
+      const oldStory: object = { ...newStories[select.story] };
+      for (const slide of Object.values(oldStory.slides)) {
+        if (slide.i === select.slide) {
           slide.selected = true;
         } else {
           slide.selected = false;
         }
       }
-      state.slides = newSlides;
+      newStories[oldStory.i] = oldStory;
+      state.stories = newStories;
     },
     copySlide: (state, action) => {
       const slide = action.payload.slide;
       const story = action.payload.story;
 
-      const newSlides = [...state.slides];
-      const newContent = [...state.content];
-      const oldIDs = newSlides.map((s) => {
+      const newStories = { ...state.stories };
+      const oldStory: object = { ...newStories[story] };
+
+      const oldIDs = Object.values(oldStory.slides).map((s) => {
         return s.i;
       });
-      for (const s of newSlides) {
-        if (s.story === story && s.i === slide) {
-          const newSlide = { ...s };
-          let counter = 0;
+
+      const s = oldStory.slides[slide];
+      const newSlide = { ...s };
+      let counter = 0;
+      let newID;
+      do {
+        counter = counter + 1;
+        newID = `${newSlide.i}(${counter})`;
+      } while (oldIDs.includes(newID));
+
+      newSlide.i = newID;
+
+      /* const oldContentIDs = Object.values(newSlide.content).map((c) => {
+        return c.i;
+      });
+      for (const c of Object.keys(newSlide.content)) {
+          const copiedContent = { ...c };
+
           let newID;
+          let counter = 0;
           do {
             counter = counter + 1;
-            newID = `${newSlide.i}(${counter})`;
-          } while (oldIDs.includes(newID));
+            newID = `${c.i}(${counter})`;
+          } while (oldContentIDs.includes(newID));
 
-          newSlide.i = newID;
-          newSlides.push(newSlide);
+          copiedContent.i = newID;
+          copiedContent.slide = newSlide.i;
 
-          const oldContentIDs = newContent.map((c) => {
-            return c.i;
-          });
-          for (const c of newContent) {
-            if (c.story === story && c.slide === slide) {
-              const copiedContent = { ...c };
-
-              let newID;
-              let counter = 0;
-              do {
-                counter = counter + 1;
-                newID = `${c.i}(${counter})`;
-              } while (oldContentIDs.includes(newID));
-
-              copiedContent.i = newID;
-              copiedContent.slide = newSlide.i;
-
-              newContent.push(copiedContent);
-            }
-          }
-          break;
+          newSlide.content.push(copiedContent);
         }
-      }
+      } */
 
-      state.slides = newSlides;
-      state.content = newContent;
+      oldStory.slides[newSlide.i] = newSlide;
+      newStories[oldStory.i] = oldStory;
+      state.stories = newStories;
     },
     removeSlide: (state, action) => {
-      const newSlides = [...state.slides].filter((e: any) => {
-        return !(action.payload.story === e.story && e.i === action.payload.slide);
-      });
+      const storyID = action.payload.story;
+      const slideID = action.payload.slide;
+      const newStories = { ...state.stories };
+      const story = newStories[storyID];
+      delete story.slides[slideID];
 
-      state.slides = newSlides;
+      state.stories = newStories;
     },
     removeContent: (state, action) => {
-      const newContent = [...state.content].filter((e: any) => {
-        return !(
-          action.payload.story === e.story &&
-          action.payload.slide === e.slide &&
-          e.i === action.payload.i
-        );
-      });
+      const content = action.payload;
 
-      state.content = newContent;
+      const newStories = { ...state.stories };
+      delete newStories[content.story].slides[content.slide].content[content.i];
+      state.stories = newStories;
     },
     addContent: (state, action) => {
       const content = action.payload;
+      const newStories = state.stories;
+      content.i =
+        'content' + Object.keys(newStories[content.story].slides[content.slide].content).length;
 
-      const newContent = [...state.content];
-      content.i = 'content' + newContent.length;
-      newContent.push(content);
+      newStories[content.story].slides[content.slide].content[content.i] = content;
 
-      state.content = newContent;
+      state.stories = newStories;
     },
     resizeMoveContent: (state, action) => {
       const content = action.payload;
-      const newContent = [...state.content];
-      for (const c of newContent) {
-        if (c.i === content.i && c.slide === content.slide && c.story === c.story) {
-          c.x = content.x;
-          c.y = content.y;
-          c.w = content.w;
-          c.h = content.h;
-        }
-      }
 
-      state.content = newContent;
+      const newStories = { ...state.stories };
+      const newContent = newStories[content.story].slides[content.slide].content[content.i];
+      newContent.x = content.x;
+      newContent.y = content.y;
+      newContent.w = content.w;
+      newContent.h = content.h;
+
+      newStories[content.story].slides[content.slide].content[content.i] = newContent;
+
+      state.stories = newStories;
     },
     editContent: (state, action) => {
       const content = action.payload;
 
-      const newContent = [...state.content];
-      for (const i in newContent) {
-        const c = newContent[i];
-        if (c.i === content.i && c.slide === content.slide && c.story === c.story) {
-          newContent[i] = content;
-          break;
-        }
-      }
+      const newStories = { ...state.stories };
+      newStories[content.story].slides[content.slide].content[content.i] = content;
 
-      state.content = newContent;
+      state.stories = newStories;
     },
     setImage: (state, action) => {
       const slide = action.payload.slide;
@@ -265,62 +264,60 @@ export const selectStoryByID = createSelector(
     },
   ],
   (stories, id) => {
-    return stories.filter((story) => {
-      return story.i === id;
-    })[0];
+    return stories[id];
   },
 );
 
 export const selectSlidesByStoryID = createSelector(
   [
     (state) => {
-      return state.storycreator.slides;
+      return state.storycreator.stories;
     },
     (state, id) => {
       return id;
     },
   ],
-  (slides, id) => {
-    return slides.filter((slide) => {
-      return slide.story === id;
-    });
+  (stories, id) => {
+    return Object.values(stories[id].slides);
   },
 );
 
 export const selectContentBySlide = createSelector(
   [
     (state) => {
-      return state.storycreator.content;
+      return state.storycreator.stories;
     },
     (state, slide) => {
       return slide;
     },
   ],
-  (content, slide) => {
-    return content.filter((c) => {
-      return c.story === slide.story && c.slide === slide.i;
-    });
+  (stories, slide) => {
+    if (slide) {
+      return Object.values(stories[slide.story].slides[slide.i].content);
+    } else {
+      return [];
+    }
   },
 );
 
 export const selectContentByStory = createSelector(
   [
     (state) => {
-      return state.storycreator.content;
+      return state.storycreator.stories;
     },
     (state, story) => {
       return story;
     },
   ],
-  (content, story) => {
-    return content.filter((c) => {
-      return c.story === story.i;
+  (stories, story) => {
+    return Object.values(stories[stories.i].slides).flatMap((s) => {
+      return Object.values(s.content);
     });
   },
 );
 
 export const selectStories = (state: RootState) => {
-  return state.storycreator.stories;
+  return Object.values(state.storycreator.stories);
 };
 
 export default storyCreatorSlice.reducer;
