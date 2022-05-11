@@ -5,9 +5,11 @@ import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
 import { PlaceConstraintView } from '@/features/visual-querying/PlaceConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
+import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
   DateConstraint,
   PlaceConstraint,
+  TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 
@@ -35,8 +37,9 @@ export function PersonShape(): JSX.Element {
       <text
         x="0"
         y="0"
-        fontSize="xx-large"
+        fontSize="xxx-large"
         textAnchor="middle"
+        dominantBaseline="central"
         fill="black"
         style={{ cursor: 'pointer' }}
         onClick={handleClick}
@@ -77,6 +80,18 @@ export function PersonShape(): JSX.Element {
                   y={y}
                   width={500}
                   height={250}
+                />
+              );
+            case ConstraintType.Name:
+              return (
+                <TextConstraintView
+                  key={idx}
+                  idx={idx}
+                  constraint={constraint as TextConstraint}
+                  x={x}
+                  y={y}
+                  width={300}
+                  height={50}
                 />
               );
             case ConstraintType.Place:

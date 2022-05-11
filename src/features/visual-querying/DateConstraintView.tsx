@@ -1,7 +1,9 @@
 import { Histogram } from '@/features/visual-querying/Histogram';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
 
 import { useGetPersonDistributionByPropertyQuery } from '../common/intavia-api.service';
+import { useAppDispatch } from '../common/store';
 
 interface DateConstraintProps {
   idx: number;
@@ -14,6 +16,7 @@ interface DateConstraintProps {
 
 export function DateConstraintView(props: DateConstraintProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
+  const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
     property: constraint.type,
@@ -29,6 +32,15 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
     boundedWidth: width - 50,
     boundedHeight: height - 100,
   };
+
+  function setBrushedArea(area: Array<number>) {
+    dispatch(
+      updateDateRange({
+        id: constraint.id,
+        dateRange: area,
+      }),
+    );
+  }
 
   return (
     <g transform={`translate(${x}, ${y})`}>
@@ -49,7 +61,12 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
           className="data"
           transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}
         >
-          <Histogram brushedArea={null} data={data!} dimensions={dimensions} />
+          <Histogram
+            brushedArea={constraint.dateRange}
+            setBrushedArea={setBrushedArea}
+            data={data!}
+            dimensions={dimensions}
+          />
         </g>
       )}
     </g>

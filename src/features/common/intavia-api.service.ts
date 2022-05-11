@@ -28,6 +28,40 @@ const service = createApi({
           return { url: '/api/persons', params: { page, q } };
         },
       }),
+      getPersonsByParam: builder.query<
+        { page: number; pages: number; entities: Array<Person> },
+        {
+          page?: number;
+          name?: string;
+          dateOfBirthStart?: number;
+          dateOfBirthEnd?: number;
+          dateOfDeathStart?: number;
+          dateOfDeathEnd?: number;
+        }
+      >({
+        query(params) {
+          const {
+            page = 1,
+            name,
+            dateOfBirthStart,
+            dateOfBirthEnd,
+            dateOfDeathStart,
+            dateOfDeathEnd,
+          } = params;
+
+          return {
+            url: '/api/persons/byParam',
+            params: {
+              page,
+              name,
+              dateOfBirthStart,
+              dateOfBirthEnd,
+              dateOfDeathStart,
+              dateOfDeathEnd,
+            },
+          };
+        },
+      }),
       getPersonById: builder.query<Person, { id: Person['id'] }>({
         query(params) {
           const { id } = params;
@@ -73,6 +107,7 @@ const service = createApi({
 
 export const {
   useGetPersonsQuery,
+  useLazyGetPersonsByParamQuery,
   useGetPersonByIdQuery,
   useGetPlacesQuery,
   useGetPlaceByIdQuery,

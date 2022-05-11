@@ -34,6 +34,48 @@ export const handlers = [
       );
     },
   ),
+  rest.get<never, never, { page: number; pages: number; entities: Array<Person> }>(
+    String(createIntaviaApiUrl({ pathname: '/api/persons/byParam' })),
+    (request, response, context) => {
+      const name = request.url.searchParams.get('name')?.trim() ?? undefined;
+      const dateOfBirthStart =
+        request.url.searchParams.get('dateOfBirthStart')?.trim() ?? undefined;
+      const dateOfBirthEnd = request.url.searchParams.get('dateOfBirthEnd')?.trim() ?? undefined;
+      const dateOfDeathStart =
+        request.url.searchParams.get('dateOfDeathStart')?.trim() ?? undefined;
+      const dateOfDeathEnd = request.url.searchParams.get('dateOfDeathEnd')?.trim() ?? undefined;
+      const dateOfBirthRange =
+        dateOfBirthStart !== undefined && dateOfBirthEnd !== undefined
+          ? [Number(dateOfBirthStart), Number(dateOfBirthEnd)]
+          : undefined;
+      const dateOfDeathRange =
+        dateOfDeathStart !== undefined && dateOfDeathEnd !== undefined
+          ? [Number(dateOfDeathStart), Number(dateOfDeathEnd)]
+          : undefined;
+
+      const persons = db.person.findByParams(dateOfBirthRange, dateOfDeathRange, name);
+
+      const limit = 10;
+      const pages = Math.ceil(persons.length / limit);
+      const page = clamp(Number(request.url.searchParams.get('page') ?? 1), 1, pages);
+      const offset = (page - 1) * limit;
+
+      const entities = persons.slice(offset, offset + limit).map((person) => {
+        return {
+          ...person,
+          history: person.history?.map((relation) => {
+            return { ...relation, place: db.place.findById(relation.placeId!) };
+          }),
+        };
+      });
+
+      return response(
+        context.status(200),
+        context.delay(),
+        context.json({ page, pages, entities }),
+      );
+    },
+  ),
   rest.get<
     never,
     never,

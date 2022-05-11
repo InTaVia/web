@@ -4,7 +4,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface HistogramProps {
   data: {
@@ -13,7 +13,8 @@ interface HistogramProps {
     thresholds: Array<number>;
     bins: Array<Bin<number, number>>;
   };
-  brushedArea: [Date, Date] | null;
+  brushedArea: Array<number> | null;
+  setBrushedArea: (area: Array<number>) => void;
   dimensions: {
     x: number;
     y: number;
@@ -46,8 +47,6 @@ export function Histogram(props: HistogramProps) {
     .domain([0, max(Y) as number])
     .range([0, 50 - dimensions.height]);
 
-  const [brushExtent, setBrushExtent] = useState(props.brushedArea);
-
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
 
@@ -76,23 +75,25 @@ export function Histogram(props: HistogramProps) {
       .call(brush);
     selection.exit().remove();
 
-    brush.move(sel, brushExtent === null ? null : (brushExtent.map(xScale) as [number, number]));
+    brush.move(
+      sel,
+      props.brushedArea === null ? null : (props.brushedArea.map(xScale) as [number, number]),
+    );
     brush.on('end', (e) => {
       const extent = e.selection;
-      const dates =
+      const years =
         extent === null
           ? null
-          : (extent.map((d: number) => {
-              return xScale.invert(d);
-            }) as [Date, Date]);
-      setBrushExtent(dates);
+          : extent.map((d: number) => {
+              return Math.trunc(xScale.invert(d));
+            });
+      props.setBrushedArea(years);
     });
-  }, [brushExtent, dimensions, xScale, yScale]);
+  }, [dimensions, props, xScale, yScale]);
 
   // Add axes
   useEffect(() => {
     if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
-
     if (yAxisRef.current) select(yAxisRef.current).call(yAxis);
   });
 
@@ -109,7 +110,7 @@ export function Histogram(props: HistogramProps) {
         const y = yScale(bin.length);
         const h = yScale(0) - y;
 
-        return <rect key={idx} width={w} height={h} x={x} y={y} fill="blue" />;
+        return <rect key={idx} width={w} height={h} x={x} y={y} fill="lightGray" />;
       })}
     </g>
   );

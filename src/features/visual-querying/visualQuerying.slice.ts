@@ -6,6 +6,7 @@ import type { RootState } from '@/features/common/store';
 export enum ConstraintType {
   DateOfBirth = 'Date of Birth',
   DateOfDeath = 'Date of Death',
+  Name = 'Name',
   Place = 'Place',
 }
 
@@ -17,12 +18,16 @@ export type Constraint = {
 
 export interface DateConstraint extends Constraint {
   type: ConstraintType.DateOfBirth | ConstraintType.DateOfDeath;
-  minDate: Date | null;
-  maxDate: Date | null;
+  dateRange: Array<number> | null;
 }
 
 export interface PlaceConstraint extends Constraint {
   type: ConstraintType.Place;
+}
+
+export interface TextConstraint extends Constraint {
+  type: ConstraintType.Name;
+  text: string | null;
 }
 
 export interface VisualQueryingState {
@@ -51,10 +56,36 @@ const visualQueryingSlice = createSlice({
         constraint.opened = !constraint.opened;
       }
     },
+    updateDateRange: (
+      state,
+      action: PayloadAction<{ id: string; dateRange: Array<number> | null }>,
+    ) => {
+      const constraint = state.constraints.find((constraint) => {
+        return (
+          constraint.id === action.payload.id &&
+          (constraint.type === ConstraintType.DateOfBirth ||
+            constraint.type === ConstraintType.DateOfDeath)
+        );
+      }) as DateConstraint | undefined;
+
+      if (constraint) {
+        constraint.dateRange = action.payload.dateRange;
+      }
+    },
+    updateText: (state, action: PayloadAction<{ id: string; text: string | null }>) => {
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload.id && constraint.type === ConstraintType.Name;
+      }) as TextConstraint | undefined;
+
+      if (constraint) {
+        constraint.text = action.payload.text;
+      }
+    },
   },
 });
 
-export const { addConstraint, removeConstraint, toggleConstraint } = visualQueryingSlice.actions;
+export const { addConstraint, removeConstraint, toggleConstraint, updateDateRange, updateText } =
+  visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
 
 export function selectConstraints(state: RootState) {

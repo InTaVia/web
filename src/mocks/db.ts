@@ -27,6 +27,55 @@ function createTable<T extends Entity>() {
     findById(id: T['id']) {
       return table.get(id);
     },
+    findByParams(
+      dateOfBirthRange?: Array<number>,
+      dateOfDeathRange?: Array<number>,
+      name?: string,
+    ) {
+      let entities = Array.from(table.values());
+
+      if (name != null) {
+        entities = matchSorter(entities, name, { keys: ['name'] });
+      }
+
+      if (dateOfBirthRange != null) {
+        entities = entities.filter((entity) => {
+          // Get beginning relation
+          const beginningRelation = entity.history?.find((relation) => {
+            return relation.type === 'beginning';
+          });
+
+          // Check if date is within range
+          if (beginningRelation != null && beginningRelation.date != null) {
+            const birthYear = new Date(beginningRelation.date).getFullYear();
+            if (dateOfBirthRange[0]! <= birthYear && birthYear <= dateOfBirthRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      if (dateOfDeathRange != null) {
+        entities = entities.filter((entity) => {
+          // Get end relation
+          const endRelation = entity.history?.find((relation) => {
+            return relation.type === 'end';
+          });
+
+          // Check if date is within range
+          if (endRelation != null && endRelation.date != null) {
+            const deathYear = new Date(endRelation.date).getFullYear();
+            if (dateOfDeathRange[0]! <= deathYear && deathYear <= dateOfDeathRange[1]!) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      return entities;
+    },
     getIds() {
       return Array.from(table.keys());
     },

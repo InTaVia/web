@@ -44,6 +44,9 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
     case ConstraintType.DateOfDeath:
       fillColor = 'green';
       break;
+    case ConstraintType.Name:
+      fillColor = 'yellow';
+      break;
     case ConstraintType.Place:
       fillColor = 'red';
       break;
