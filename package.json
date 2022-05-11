@@ -11,7 +11,7 @@
     "format:fix": "npm run format -- --write",
     "lint": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "next lint --ignore-path .gitignore",
+    "lint:code:check": "next lint --ext js --ext mjs --ext ts --ext tsx --ignore-path .gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
     "lint:styles:check": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",

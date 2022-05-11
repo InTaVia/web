@@ -9,7 +9,7 @@ import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 
 export function Timeline(): JSX.Element {
   const entities = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entities.person) as Array<Person>;
+  const persons = Object.values(entities.person).slice(0, 10) as Array<Person>;
 
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
 
