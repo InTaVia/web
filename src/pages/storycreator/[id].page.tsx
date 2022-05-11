@@ -29,7 +29,7 @@ export default function StoryPage(): JSX.Element | null {
   }
 
   return (
-    <Container maxWidth={false} sx={{ display: 'grid', gap: 4, padding: 4 }}>
+    <Container maxWidth={false} sx={{ height: "95vh", display: 'grid', gap: 4, padding: 4 }}>
       <StoryCreator story={story} />
     </Container>
   );
