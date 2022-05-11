@@ -1,8 +1,9 @@
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 import { selectLocalEntities } from '@/features/common/entities.slice';
 import type { Entity } from '@/features/common/entity.model';
@@ -79,12 +80,12 @@ function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX.Elemen
 
   return (
     <Box component="article" sx={{ width: '100%' }}>
-      <Link href={{ pathname: `/${entity.kind}/${entity.id}` }}>
-        <a style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <NextLink href={{ pathname: `/${entity.kind}/${entity.id}` }} passHref>
+        <Link style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography>{entity.name}</Typography>
           {hasLocalEntity ? <span> (edited locally)</span> : null}
-        </a>
-      </Link>
+        </Link>
+      </NextLink>
     </Box>
   );
 }
