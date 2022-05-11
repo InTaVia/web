@@ -1,3 +1,4 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import type { Entity, EntityKind } from '@/features/common/entity.model';
@@ -27,6 +28,20 @@ const slice = createSlice({
   reducers: {
     clearEntities() {
       return initialState;
+    },
+    createEntity(state, action: PayloadAction<Entity>) {
+      const entity = action.payload;
+
+      const newEntitiesById = { ...state.entities.byId };
+      newEntitiesById[entity.id] = entity;
+
+      state.entities.byId = newEntitiesById;
+
+      const newEntitiesByKind = { ...state.entities.byKind };
+      const newEntities = newEntitiesByKind[entity.kind];
+      newEntities[entity.id] = entity;
+
+      state.entities.byKind = newEntitiesByKind;
     },
   },
   extraReducers(builder) {
@@ -67,7 +82,7 @@ const slice = createSlice({
   },
 });
 
-export const { clearEntities } = slice.actions;
+export const { clearEntities, createEntity } = slice.actions;
 export default slice.reducer;
 
 export function selectEntities(state: RootState) {
