@@ -1,9 +1,9 @@
 import { Button, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import { useAppDispatch } from '../common/store';
-import type { TextConstraint } from './visualQuerying.slice';
-import { updateText } from './visualQuerying.slice';
+import { useAppDispatch } from '@/features/common/store';
+import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import { updateText } from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintProps {
   idx: number;

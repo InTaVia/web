@@ -1,3 +1,4 @@
+import type { LayerProps } from 'react-map-gl';
 import { Layer, Source } from 'react-map-gl';
 
 import type { Person } from '@/features/common/entity.model';
@@ -61,7 +62,7 @@ export function LineStringLayer(props: LineStringLayerProps): JSX.Element {
       .filter(Boolean),
   };
 
-  const layerStyle = {
+  const layerStyle: LayerProps = {
     id: 'life-lines',
     type: 'line',
     paint: {

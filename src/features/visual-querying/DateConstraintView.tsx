@@ -1,11 +1,10 @@
 import { Paper, Typography } from '@mui/material';
 
+import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intavia-api.service';
+import { useAppDispatch } from '@/features/common/store';
 import { Histogram } from '@/features/visual-querying/Histogram';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
-
-import { useGetPersonDistributionByPropertyQuery } from '../common/intavia-api.service';
-import { useAppDispatch } from '../common/store';
 
 interface DateConstraintProps {
   idx: number;
