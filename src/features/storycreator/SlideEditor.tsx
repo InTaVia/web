@@ -1,18 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
-import ContentEditable from 'react-contenteditable'
-import styles from '@/features/storycreator/storycreator.module.css';
-import {
-  addContent,
-  addEntityToSlide,
-  editContent,
-  removeContent,
-  resizeMoveContent,
-  selectContentBySlide
-} from '@/features/storycreator/storycreator.slice';
-import StoryMap from '@/features/storycreator/StoryMap';
-import uiStyles from '@/features/ui/ui.module.css';
-import { selectWindows } from '@/features/ui/ui.slice';
-import Window from '@/features/ui/Window';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import {
   Button,
   Card,
@@ -21,29 +7,42 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControl,
   IconButton,
   TextareaAutosize,
   TextField,
-  Typography
+  Typography,
 } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import ContentEditable from 'react-contenteditable';
 import ReactGridLayout from 'react-grid-layout';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import styles from '@/features/storycreator/storycreator.module.css';
+import {
+  addContent,
+  addEntityToSlide,
+  editContent,
+  removeContent,
+  resizeMoveContent,
+  selectContentBySlide,
+} from '@/features/storycreator/storycreator.slice';
+import { StoryMap } from '@/features/storycreator/StoryMap';
+import uiStyles from '@/features/ui/ui.module.css';
+import { selectWindows } from '@/features/ui/ui.slice';
+import { Window } from '@/features/ui/Window';
 
-interface Layout {
-  i: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  static: boolean;
-  isDraggable: boolean;
-  content: string;
-}
+// interface Layout {
+//   i: string;
+//   x: number;
+//   y: number;
+//   w: number;
+//   h: number;
+//   static: boolean;
+//   isDraggable: boolean;
+//   content: string;
+// }
 
 interface DropProps {
   type: string;
@@ -54,7 +53,7 @@ interface DropProps {
 const rowHeight = 30;
 const height = 400;
 
-export default function SlideEditor(props: any) {
+export function SlideEditor(props: any) {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const slide = props.slide;
@@ -63,14 +62,18 @@ export default function SlideEditor(props: any) {
 
   const entities = props.entities;
 
-  const persons = entities.filter(e=> e.kind==="person");
-  const events = entities.filter(e=> e.kind==="event");
+  const persons = entities.filter((e) => {
+    return e.kind === 'person';
+  });
+  const events = entities.filter((e) => {
+    return e.kind === 'event';
+  });
 
   const personMarkers = persons?.flatMap((p) => {
     const historyEventsWithLocation = p.history.filter((e) => {
       return e.place.lat && e.place.lng;
     });
-    
+
     return historyEventsWithLocation
       .map((e) => {
         return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
@@ -78,13 +81,12 @@ export default function SlideEditor(props: any) {
       .filter(Boolean) as Array<[number, number]>;
   });
 
-  const eventDescriptions = events?
-    .map((e) => {
-      return e.description;
-    });
+  const eventDescriptions = events?.map((e) => {
+    return e.description;
+  });
 
-  const eventMarkers = events?
-    .map((e) => {
+  const eventMarkers = events
+    ?.map((e) => {
       return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
     })
     .filter(Boolean) as Array<[number, number]>;
@@ -110,10 +112,9 @@ export default function SlideEditor(props: any) {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
     const layoutItem = i_layoutItem;
 
-    if(dropProps.type === "Event" || dropProps.type === "Person") {
-      dispatch(addEntityToSlide({slide: slide, entity: {...dropProps.props}}));
-    }
-    else {
+    if (dropProps.type === 'Event' || dropProps.type === 'Person') {
+      dispatch(addEntityToSlide({ slide: slide, entity: { ...dropProps.props } }));
+    } else {
       const ids = windows.map((e: any) => {
         return e.key;
       });
@@ -179,7 +180,7 @@ export default function SlideEditor(props: any) {
   };
 
   const onTextfieldChange = (newElement) => {
-      dispatch(editContent(newElement));
+    dispatch(editContent(newElement));
   };
 
   const editRef = useRef();
@@ -198,9 +199,9 @@ export default function SlideEditor(props: any) {
 
   const handleSave = (event, element) => {
     event.preventDefault();
-    let newElement = {...element};
-    for(let tar of event.target) {
-      if(tar.type ==="text") {
+    const newElement = { ...element };
+    for (const tar of event.target) {
+      if (tar.type === 'text') {
         newElement[tar.id] = tar.value;
       }
     }
@@ -224,9 +225,8 @@ export default function SlideEditor(props: any) {
               resize: 'none',
             }}
             placeholder={element.key}
-          >
-            {eventDescriptions?.join("")}
-            </TextareaAutosize>
+            defaultValue={eventDescriptions?.join('')}
+          />
         );
       case 'Image':
         return (
@@ -235,72 +235,87 @@ export default function SlideEditor(props: any) {
               height: '100%',
               maxHeight: '100%',
               position: 'relative',
-              backgroundColor: "white",
-              padding: 0
+              backgroundColor: 'white',
+              padding: 0,
             }}
           >
-            <IconButton color="primary" aria-label="edit icon" component="span" onClick={handleClickOpen} style={{position: "absolute", right: 0}}>
-              <EditOutlinedIcon/>
+            <IconButton
+              color="primary"
+              aria-label="edit icon"
+              component="span"
+              onClick={handleClickOpen}
+              style={{ position: 'absolute', right: 0 }}
+            >
+              <EditOutlinedIcon />
             </IconButton>
-            <div style={{height: "100%"}}>
+            <div style={{ height: '100%' }}>
               <CardMedia
                 component="img"
-                image={element.link ? element.link : "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png"}
+                image={
+                  element.link
+                    ? element.link
+                    : 'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png'
+                }
                 alt="card image"
                 height="100%"
               />
             </div>
             <CardContent className={styles['card-content']}>
               <Typography gutterBottom variant="h5" component="h2">
-                  {element.title ? element.title : "Title"}
+                {element.title ? element.title : 'Title'}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                  {element.text ? element.text : "Text"}
-                </Typography>
+                {element.text ? element.text : 'Text'}
+              </Typography>
             </CardContent>
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle>Edit Image</DialogTitle>
               <DialogContent>
-              <form onSubmit={(event) => {
-                handleSave(event, element);
-              }} id="myform">
-                <FormControl>
-                <TextField
-                  margin="dense"
-                  id="link"
-                  label="Image Link"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  defaultValue={element.link}
-                  onChange={()=>{}}
-                />
-                <TextField
-                  margin="dense"
-                  id="title"
-                  label="Title"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  defaultValue={element.title}
-                  onChange={()=>{}}
-                />
-                <TextField
-                  margin="dense"
-                  id="text"
-                  label="Text"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  defaultValue={element.text}
-                  onChange={()=>{}}
-                />
-                </FormControl>
+                <form
+                  onSubmit={(event) => {
+                    handleSave(event, element);
+                  }}
+                  id="myform"
+                >
+                  <FormControl>
+                    <TextField
+                      margin="dense"
+                      id="link"
+                      label="Image Link"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      defaultValue={element.link}
+                      onChange={() => {}}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="title"
+                      label="Title"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      defaultValue={element.title}
+                      onChange={() => {}}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="text"
+                      label="Text"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      defaultValue={element.text}
+                      onChange={() => {}}
+                    />
+                  </FormControl>
                 </form>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" form="myform" onClick={handleClose}>Save</Button>
+                <Button type="submit" form="myform" onClick={handleClose}>
+                  Save
+                </Button>
               </DialogActions>
             </Dialog>
           </Card>

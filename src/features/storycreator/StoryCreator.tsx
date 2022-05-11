@@ -6,21 +6,19 @@ import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { useAppSelector } from '@/features/common/store';
+import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
+import { ButtonRow } from '@/features/storycreator/ButtonRow';
 import styles from '@/features/storycreator/storycreator.module.css';
-import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
+import type { Story } from '@/features/storycreator/storycreator.slice';
+import { StoryGUICreator } from '@/features/storycreator/StoryGUICreator';
+import { StoryTextCreator } from '@/features/storycreator/StoryTextCreator';
 
-import ExcelUpload from '../excel-upload/ExcelUpload';
-import ButtonRow from './ButtonRow';
-import StoryGUICreator from './StoryGUICreator';
-import StoryTextCreator from './StoryTextCreator';
+interface StoryCreatorProps {
+  story: Story;
+}
 
-export default function StoryCreator(props): JSX.Element {
-  const storyID = props.storyID;
-
-  const story = useAppSelector((state) => {
-    return selectStoryByID(state, storyID);
-  });
+export function StoryCreator(props: StoryCreatorProps): JSX.Element {
+  const { story } = props;
 
   const [textMode, setTextMode] = useState(false);
 
@@ -41,7 +39,7 @@ export default function StoryCreator(props): JSX.Element {
       </div>
       <div className={styles['story-editor-content']}>
         {textMode ? (
-          <StoryTextCreator story={story}></StoryTextCreator>
+          <StoryTextCreator story={story} />
         ) : (
           <ReactResizeDetector handleWidth handleHeight>
             {({ width, height, targetRef }) => {

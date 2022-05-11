@@ -3,10 +3,10 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import * as XLSX from 'xlsx';
 
-import { createEntity } from '../common/entities.slice';
-import { useAppDispatch } from '../common/store';
+import { createEntity } from '@/features/common/entities.slice';
+import { useAppDispatch } from '@/features/common/store';
 
-export default function ExcelUpload(props): JSX.Element {
+export function ExcelUpload(props: any): JSX.Element {
   const dispatch = useAppDispatch();
 
   const processData = (dataString) => {

@@ -6,7 +6,7 @@ import { Marker } from 'react-map-gl';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { length } from '@/lib/length';
 
-export default function StoryMap(props): JSX.Element {
+export function StoryMap(props): JSX.Element {
   const markers = props.markers;
 
   if (length(markers) === 0) {

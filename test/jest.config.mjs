@@ -6,9 +6,11 @@ import createConfigFactory from 'next/jest.js';
 const config = {
   coverageProvider: 'v8',
   collectCoverageFrom: ['**/*.@(ts|tsx)', '!**/*.d.ts', '!**/node_modules/**'],
-  // extensionsToTreatAsEsm: ['.ts', '.tsx'],
   rootDir: '../',
   moduleNameMapper: {
+    '^.+\\.module\\.css$': 'next/dist/build/jest/object-proxy.js',
+    '^.+\\.css$': 'next/dist/build/jest/__mocks__/styleMock.js',
+    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$': `next/dist/build/jest/__mocks__/fileMock.js`,
     '^@/(.*)$': '<rootDir>/src/$1',
     '^~/(.*)$': '<rootDir>/$1',
     /** @see https://github.com/facebook/jest/issues/12036 */

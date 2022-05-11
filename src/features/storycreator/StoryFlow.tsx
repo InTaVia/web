@@ -1,18 +1,17 @@
-import { Button, Card } from '@mui/material';
+import { Card } from '@mui/material';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import {
   copySlide,
   createSlide,
   removeSlide,
   selectSlide,
-  selectSlidesByStoryID,
 } from '@/features/storycreator/storycreator.slice';
-import Window from '@/features/ui/Window';
+import { Window } from '@/features/ui/Window';
 
-export default function StoryFlow(props: any) {
+export function StoryFlow(props: any) {
   const myWidth = props.width;
   const targetRef = props.targetRef;
   const story = props.story;

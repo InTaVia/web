@@ -1,9 +1,37 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
+import type { Entity } from '@/features/common/entity.model';
 import type { RootState } from '@/features/common/store';
 
+type DataUrlString = string;
+
+export interface SlideContent {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface Slide {
+  i: string;
+  sort: number;
+  selected?: boolean;
+  image: DataUrlString | null;
+  entities: Array<Entity>;
+  content: Record<SlideContent['i'], SlideContent>;
+  story: Story['i'];
+}
+
+export interface Story {
+  i: string;
+  title: string;
+  slides: Record<Slide['i'], Slide>;
+}
+
 export interface StoryCreatorState {
-  stories: object;
+  stories: Record<Story['i'], Story>;
 }
 
 const initialState: StoryCreatorState = {
@@ -58,12 +86,11 @@ export const storyCreatorSlice = createSlice({
       newStories[story.i] = story;
       state.stories = newStories;
     },
-    removeStory: (state, action) => {
-      const newStories = { ...state.stories };
-      delete newStories[action.payload.i];
-      state.stories = newStories;
+    removeStory: (state, action: PayloadAction<Story['i']>) => {
+      const id = action.payload;
+      delete state.stories[id];
     },
-    createSlide: (state, action) => {
+    createSlide: (state, action: PayloadAction<Slide>) => {
       const slide = action.payload;
 
       const newStories = { ...state.stories };
@@ -271,42 +298,36 @@ export const {
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(
-  [
-    (state) => {
-      return state.storycreator.stories;
-    },
-    (state, id) => {
-      return id;
-    },
-  ],
+  (state) => {
+    return state.storycreator.stories;
+  },
+  (state, id) => {
+    return id;
+  },
   (stories, id) => {
     return stories[id];
   },
 );
 
 export const selectSlidesByStoryID = createSelector(
-  [
-    (state) => {
-      return state.storycreator.stories;
-    },
-    (state, id) => {
-      return id;
-    },
-  ],
+  (state) => {
+    return state.storycreator.stories;
+  },
+  (state, id) => {
+    return id;
+  },
   (stories, id) => {
     return Object.values(stories[id].slides);
   },
 );
 
 export const selectContentBySlide = createSelector(
-  [
-    (state) => {
-      return state.storycreator.stories;
-    },
-    (state, slide) => {
-      return slide;
-    },
-  ],
+  (state) => {
+    return state.storycreator.stories;
+  },
+  (state, slide) => {
+    return slide;
+  },
   (stories, slide) => {
     if (slide) {
       return Object.values(stories[slide.story].slides[slide.i].content);
@@ -317,14 +338,12 @@ export const selectContentBySlide = createSelector(
 );
 
 export const selectContentByStory = createSelector(
-  [
-    (state) => {
-      return state.storycreator.stories;
-    },
-    (state, story) => {
-      return story;
-    },
-  ],
+  (state) => {
+    return state.storycreator.stories;
+  },
+  (state, story) => {
+    return story;
+  },
   (stories, story) => {
     return Object.values(stories[stories.i].slides).flatMap((s) => {
       return Object.values(s.content);
@@ -333,7 +352,7 @@ export const selectContentByStory = createSelector(
 );
 
 export const selectStories = (state: RootState) => {
-  return Object.values(state.storycreator.stories);
+  return state.storycreator.stories;
 };
 
 export default storyCreatorSlice.reducer;

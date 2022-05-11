@@ -1,3 +1,4 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import type { Entity, EntityKind } from '@/features/common/entity.model';
@@ -28,9 +29,8 @@ const slice = createSlice({
     clearEntities() {
       return initialState;
     },
-    createEntity(state, action) {
+    createEntity(state, action: PayloadAction<Entity>) {
       const entity = action.payload;
-      console.log(entity);
 
       const newEntitiesById = { ...state.entities.byId };
       newEntitiesById[entity.id] = entity;

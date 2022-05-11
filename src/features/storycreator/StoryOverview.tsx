@@ -1,14 +1,18 @@
-import { Button, Paper } from '@mui/material';
+import RemoveIcon from '@mui/icons-material/Clear';
+import { Button, List, ListItem, Paper } from '@mui/material';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   createStory,
   removeStory,
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
+import { PageTitle } from '@/features/ui/PageTitle';
 
-export default function StoryOverview(props: any) {
+export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const stories = useAppSelector(selectStories);
@@ -17,33 +21,36 @@ export default function StoryOverview(props: any) {
     dispatch(createStory({}));
   }
 
-  function onRemove(storyID: string) {
-    dispatch(removeStory({ i: storyID }));
+  function onRemoveStory(id: Story['i']) {
+    dispatch(removeStory(id));
   }
 
   return (
-    <Paper>
-      <h1>Stories Overview</h1>
-      <div>
-        {stories.map((e, i) => {
-          return (
-            <div key={`story${i}`}>
-              <Link href={`/storycreator?id=${e.i}`} passHref>
-                {e.title}
-              </Link>
-              <Button
-                color="error"
-                onClick={() => {
-                  onRemove(e.i);
-                }}
-              >
-                X
-              </Button>
-            </div>
-          );
-        })}
+    <Fragment>
+      <PageTitle>Stories Overview</PageTitle>
+      <Paper sx={{ padding: 2 }}>
+        <List role="list">
+          {Object.values(stories).map((story) => {
+            return (
+              <ListItem key={story.i}>
+                <Link href={{ pathname: `/storycreator/${story.i}` }}>
+                  <a>{story.title}</a>
+                </Link>
+                <Button
+                  aria-label="Remove story"
+                  color="error"
+                  onClick={() => {
+                    onRemoveStory(story.i);
+                  }}
+                >
+                  <RemoveIcon />
+                </Button>
+              </ListItem>
+            );
+          })}
+        </List>
         <Button onClick={onCreateStory}>New Story</Button>
-      </div>
-    </Paper>
+      </Paper>
+    </Fragment>
   );
 }

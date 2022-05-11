@@ -10,22 +10,23 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
 import { Button } from '@mui/material';
 import { toPng } from 'html-to-image';
+import type { RefObject } from 'react';
 import { useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
-import SlideEditor from '@/features/storycreator/SlideEditor';
+import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
+import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
   createSlidesInBulk,
   selectSlidesByStoryID,
   setImage,
 } from '@/features/storycreator/storycreator.slice';
-import StoryFlow from '@/features/storycreator/StoryFlow';
-
-import { selectEntitiesByKind } from '../common/entities.slice';
+import { StoryFlow } from '@/features/storycreator/StoryFlow';
 
 const iconMap = {
   Timeline: (
@@ -159,11 +160,15 @@ const createDrops = (type, props = {}) => {
   );
 };
 
-export default function StoryCreatorGUI(props): JSX.Element {
-  const story = props.story;
-  const height = props.height;
-  const width = props.width;
-  const parentRef = props.targetRef;
+interface StoryGUICreatorProps {
+  targetRef?: RefObject<HTMLElement>;
+  width?: number;
+  height?: number;
+  story: Story;
+}
+
+export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
+  const { story, height, width, targetRef: parentRef } = props;
 
   const dispatch = useAppDispatch();
 
@@ -174,7 +179,7 @@ export default function StoryCreatorGUI(props): JSX.Element {
   const filteredSlides = slides.filter((s) => {
     return s.selected;
   });
-  const selectedSlide = filteredSlides[0] ? filteredSlides[0] : slides[0];
+  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
 
   const ref = useRef<HTMLDivElement>(null);
 
