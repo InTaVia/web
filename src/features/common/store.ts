@@ -29,7 +29,12 @@ export function configureAppStore() {
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
         serializableCheck: {
-          ignoredActions: [String(addNotification), String(setTimeRangeBrush)],
+          ignoredActions: [
+            /** Ignore JSX element allowed as action button. */
+            String(addNotification),
+            /** Ignore `Date` objects. */
+            String(setTimeRangeBrush),
+          ],
           ignoreState: true,
         },
       }).concat(intaviaApiService.middleware, errorMiddleware);
