@@ -3,7 +3,7 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import * as XLSX from 'xlsx';
 
-import { createEntity } from '@/features/common/entities.slice';
+import { addLocalEntity } from '@/features/common/entities.slice';
 import { useAppDispatch } from '@/features/common/store';
 
 export function ExcelUpload(props: any): JSX.Element {
@@ -83,7 +83,7 @@ export function ExcelUpload(props: any): JSX.Element {
       id: 'c1865151-d2c3-49c5-8eb5-d2ce16d86c4f',
     };
 
-    dispatch(createEntity(person));
+    dispatch(addLocalEntity(person));
   }
 
   function handleFileUpload(e) {
