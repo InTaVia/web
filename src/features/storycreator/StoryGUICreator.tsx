@@ -45,7 +45,7 @@ const iconMap = {
       key="mapIcon"
     />
   ),
-  Annotation: (
+  Text: (
     <NoteAltOutlinedIcon
       className={styles['droppable-icon']}
       fontSize="large"
@@ -236,8 +236,9 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             y: 8,
             w: 2,
             h: 4,
-            type: 'Annotation',
-            key: 'Annotation',
+            type: 'Text',
+            key: 'Text',
+            text: event?.description,
           },
         ],
       });
@@ -331,10 +332,10 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
         >
           {[
             createDrops('Map'),
-            createDrops('Timeline'),
-            createDrops('Annotation'),
+            /* createDrops('Timeline'), */
+            createDrops('Text'),
             createDrops('Image'),
-            createDrops('Quiz'),
+            /* createDrops('Quiz'), */
           ]}
         </div>
         <div

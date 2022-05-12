@@ -1,5 +1,6 @@
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import type { ReactNode } from 'react';
 
 import styles from '@/features/ui/ui.module.css';
@@ -12,12 +13,13 @@ export interface WindowProps {
   onClick?: () => void;
   onCopyWindow?: (id: string) => void;
   onRemoveWindow?: (id: string) => void;
+  onEditContent?: () => void;
   static?: boolean; // FIXME: unused currently
   title: string;
 }
 
 export function Window(props: WindowProps): JSX.Element {
-  const { children, id, onCopyWindow, onRemoveWindow } = props;
+  const { children, id, onCopyWindow, onRemoveWindow, onEditContent } = props;
 
   const buttonArea: Array<JSX.Element> = [];
 
@@ -45,6 +47,19 @@ export function Window(props: WindowProps): JSX.Element {
         }}
       >
         <ContentCopyOutlinedIcon fontSize="medium" />
+      </button>,
+    );
+  }
+  if (onEditContent) {
+    buttonArea.push(
+      <button
+        key="editButton"
+        className={styles['button-area-button']}
+        onClick={() => {
+          onEditContent();
+        }}
+      >
+        <EditOutlinedIcon fontSize="medium" />
       </button>,
     );
   }

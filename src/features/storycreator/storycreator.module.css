@@ -66,6 +66,10 @@
   display: inline-block;
 }
 
+.button-row-button {
+  display: inline-block;
+}
+
 .story-textarea {
   width: 100%;
 }
