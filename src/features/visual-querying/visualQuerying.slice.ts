@@ -7,7 +7,7 @@ export enum ConstraintType {
   Name = 'Name',
   DateOfBirth = 'Date of Birth',
   DateOfDeath = 'Date of Death',
-  // Place = 'Place',
+  Place = 'Place',
 }
 
 export type Constraint = {
@@ -21,9 +21,9 @@ export interface DateConstraint extends Constraint {
   dateRange: Array<number> | null;
 }
 
-// export interface PlaceConstraint extends Constraint {
-//   type: ConstraintType.Place;
-// }
+export interface PlaceConstraint extends Constraint {
+  type: ConstraintType.Place;
+}
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
