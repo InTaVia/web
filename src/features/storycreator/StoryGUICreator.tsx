@@ -8,6 +8,9 @@ import { useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import type { Place } from '@/features/common/entity.model';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
@@ -19,10 +22,6 @@ import {
   setImage,
 } from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
-
-import { selectEntitiesByKind } from '../common/entities.slice';
-import type { Place } from '../common/entity.model';
-import { useAppDispatch, useAppSelector } from '../common/store';
 
 interface DropProps {
   name?: string | null;

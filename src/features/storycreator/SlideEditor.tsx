@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, StoryContent, StoryImage } from '@/features/storycreator/storycreator.slice';
 import {
@@ -19,8 +20,6 @@ import uiStyles from '@/features/ui/ui.module.css';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
-
-import { StoryContentDialog } from './StoryContentDialog';
 
 interface DropProps {
   type: string;
