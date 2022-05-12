@@ -14,12 +14,16 @@ export default function TimelinePage(): JSX.Element | null {
   const entities = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entities.person) as Array<Person>;
   const router = useRouter();
+
   useEffect(() => {
     if (persons.length === 0) {
       void router.push({ pathname: '/search' });
     }
   }, [router, persons.length]);
-  if (persons.length === 0) return null;
+
+  if (persons.length === 0) {
+    return null;
+  }
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>

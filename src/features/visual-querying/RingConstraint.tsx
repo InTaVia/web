@@ -10,6 +10,7 @@ interface RingConstraintProps {
   endAngle: number;
   outerRadius: number;
   type: ConstraintType;
+  valueDescription: string | null;
 }
 
 export function RingConstraint(props: RingConstraintProps): JSX.Element {
@@ -70,7 +71,7 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
 
       <text dy={-9} pointerEvents="none">
         <textPath xlinkHref={`#textPath-${props.idx}`} textAnchor="middle" startOffset="50%">
-          {props.type}
+          {props.valueDescription != null ? `${props.type}: ${props.valueDescription}` : props.type}
         </textPath>
       </text>
     </g>
