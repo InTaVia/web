@@ -5,6 +5,7 @@
 const config = {
   eslint: {
     dirs: [process.cwd()],
+    ignoreDuringBuilds: true,
   },
   experimental: {
     outputStandalone: true,
@@ -47,6 +48,9 @@ const config = {
   },
   pageExtensions: ['page.tsx', 'api.ts'],
   reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   webpack(/** @type {WebpackConfig} */ config) {
     // eslint-disable-next-line no-param-reassign
     config.experiments = config.experiments ?? {};
