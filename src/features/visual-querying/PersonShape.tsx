@@ -46,6 +46,22 @@ export function PersonShape(): JSX.Element {
       </text>
 
       {ringDims.map(({ startAngle, endAngle, constraint }, idx) => {
+        let valueDescription: string | null = null;
+        switch (constraint.type) {
+          case ConstraintType.Name:
+            valueDescription = (constraint as TextConstraint).text;
+            break;
+          case ConstraintType.DateOfBirth:
+          case ConstraintType.DateOfDeath:
+            // eslint-disable-next-line no-case-declarations
+            const dateRange = (constraint as DateConstraint).dateRange;
+            valueDescription = dateRange ? dateRange.toString() : null;
+            break;
+          default:
+            valueDescription = null;
+            break;
+        }
+
         return (
           <RingConstraint
             key={idx}
@@ -55,6 +71,7 @@ export function PersonShape(): JSX.Element {
             endAngle={endAngle}
             outerRadius={130}
             type={constraint.type}
+            valueDescription={valueDescription}
           />
         );
       })}
