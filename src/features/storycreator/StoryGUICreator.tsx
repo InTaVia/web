@@ -246,7 +246,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
   }
 
-  const entitiesInSlide = selectedSlide?.entities ? selectedSlide?.entities : persons;
+  const entitiesInSlide = selectedSlide?.entities ? selectedSlide.entities : persons;
 
   const gridHeight = Math.round(height / 5);
 

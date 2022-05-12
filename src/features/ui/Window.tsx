@@ -19,7 +19,7 @@ export interface WindowProps {
 export function Window(props: WindowProps): JSX.Element {
   const { children, id, onCopyWindow, onRemoveWindow } = props;
 
-  const buttonArea: Array<any> = [];
+  const buttonArea: Array<JSX.Element> = [];
 
   if (onRemoveWindow) {
     buttonArea.push(
