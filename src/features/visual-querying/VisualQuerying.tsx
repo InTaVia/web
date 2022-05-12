@@ -2,12 +2,18 @@ import { Button } from '@mui/material';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useLazyGetPersonsByParamQuery } from '@/features/common/intavia-api.service';
+import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { PersonShape } from '@/features/visual-querying/PersonShape';
-
-import { useLazyGetPersonsByParamQuery } from '../common/intavia-api.service';
-import { useAppDispatch, useAppSelector } from '../common/store';
-import type { DateConstraint, TextConstraint } from './visualQuerying.slice';
-import { ConstraintType, selectConstraints, toggleConstraint } from './visualQuerying.slice';
+import type {
+  DateConstraint,
+  TextConstraint,
+} from '@/features/visual-querying/visualQuerying.slice';
+import {
+  ConstraintType,
+  selectConstraints,
+  toggleConstraint,
+} from '@/features/visual-querying/visualQuerying.slice';
 
 export function VisualQuerying(): JSX.Element {
   const dispatch = useAppDispatch();

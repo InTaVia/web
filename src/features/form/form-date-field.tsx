@@ -31,6 +31,9 @@ export function FormDateField(props: FormDateFieldProps): JSX.Element {
       {...props}
       {...field.input}
       {...getFormFieldValidationProps(validation, props)}
+      InputLabelProps={{
+        shrink: true,
+      }}
       type="date"
     />
   );

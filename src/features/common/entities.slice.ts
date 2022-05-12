@@ -49,22 +49,13 @@ const slice = createSlice({
     builder.addMatcher(
       isAnyOf(
         intaviaApiService.endpoints.getPersons.matchFulfilled,
+        intaviaApiService.endpoints.getPersonsByParam.matchFulfilled,
         intaviaApiService.endpoints.getPlaces.matchFulfilled,
       ),
       (state, action) => {
         action.payload.entities.forEach((entity) => {
           state.upstreamEntities.byId[entity.id] = entity;
           state.upstreamEntities.byKind[entity.kind][entity.id] = entity;
-        });
-      },
-    );
-
-    builder.addMatcher(
-      isAnyOf(intaviaApiService.endpoints.getPersonsByParam.matchFulfilled),
-      (state, action) => {
-        action.payload.entities.forEach((entity) => {
-          state.entities.byId[entity.id] = entity;
-          state.entities.byKind[entity.kind][entity.id] = entity;
         });
       },
     );
@@ -83,7 +74,7 @@ const slice = createSlice({
   },
 });
 
-export const { clearEntities, addLocalEntity } = slice.actions;
+export const { addLocalEntity, clearEntities } = slice.actions;
 export default slice.reducer;
 
 export function selectUpstreamEntities(state: RootState): IndexedEntities['byId'] {

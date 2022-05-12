@@ -12,7 +12,7 @@
     "format:fix": "npm run format -- --write",
     "lint": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "next lint --ext js --ext mjs --ext ts --ext tsx --ignore-path .gitignore",
+    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext js,mjs,ts,tsx --ignore-path .gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
     "lint:styles:check": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",
@@ -74,8 +74,8 @@
     "react-map-gl": "^7.0.10",
     "react-redux": "^7.2.6",
     "react-resize-detector": "^7.0.0",
-    "zod": "^3.15.1",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "zod": "^3.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
@@ -96,7 +96,6 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.0.0",
-    "@types/maplibre-gl": "^1.14.0",
     "@types/d3-axis": "^3.0.1",
     "@types/d3-brush": "^3.0.1",
     "@types/d3-path": "^3.0.0",

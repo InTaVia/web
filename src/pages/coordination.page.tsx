@@ -12,8 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
 import { useRouter } from 'next/router';
-import type { MutableRefObject } from 'react';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
@@ -24,7 +23,6 @@ import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 import { PageTitle } from '@/features/ui/PageTitle';
-import { length } from '@/lib/length';
 
 export const eventTypes = [
   'stayed',
@@ -34,20 +32,23 @@ export const eventTypes = [
   'beginning',
   'end',
 ] as const;
+
 export type EventType = typeof eventTypes[number];
 
-export default function CoordinationPage(): JSX.Element {
+export default function CoordinationPage(): JSX.Element | null {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
   const router = useRouter();
-  const personArray = Object.values(entitiesByKind.person) as Array<Person>;
+  const personArray = useMemo(() => {
+    return Object.values(entitiesByKind.person) as Array<Person>;
+  }, [entitiesByKind.person]);
   const allEntityIds = personArray.map((person) => {
     return person.id;
   });
   const [filteredPersonArray, setFilteredPersonArray] = useState<Array<Person>>(personArray);
-  const [visibleEntityIds, setVisibleEntityIds] = useState<Set<Person['id']>>(
-    new Set(allEntityIds),
-  );
+  const [visibleEntityIds, setVisibleEntityIds] = useState<Set<Person['id']>>(() => {
+    return new Set(allEntityIds);
+  });
   const [hoveredEntityId, setHoveredEntityId] = useState<Person['id'] | null>(null);
   const [showEventTypes, setShowEventTypes] = useState<Array<EventType>>(['beginning', 'end']);
   useEffect(() => {
@@ -56,14 +57,11 @@ export default function CoordinationPage(): JSX.Element {
         return visibleEntityIds.has(person.id);
       }),
     );
-  }, [visibleEntityIds]);
+  }, [personArray, visibleEntityIds]);
 
-  const timelineParent = useRef() as MutableRefObject<HTMLDivElement | null>;
+  const timelineParent = useRef<HTMLDivElement>(null);
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setShowEventType(event.target.value);
-  // };
-  const handleChange = (event: SelectChangeEvent<typeof showEventTypes>) => {
+  function handleChange(event: SelectChangeEvent<typeof showEventTypes>) {
     const {
       target: { value },
     } = event;
@@ -71,18 +69,18 @@ export default function CoordinationPage(): JSX.Element {
       // On autofill we get a stringified value.
       typeof value === 'string' ? (value.split(',') as Array<EventType>) : value,
     );
-  };
+  }
 
   useEffect(() => {
-    if (length(entitiesByKind.person) === 0) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      router.push('/search');
+    if (personArray.length === 0) {
+      void router.push('/search');
     }
-  });
+  }, [personArray, router]);
 
-  if (length(entitiesByKind.person) === 0) {
-    return <></>;
+  if (personArray.length === 0) {
+    return null;
   }
+
   return (
     <Fragment>
       <PageTitle>Multiple Views</PageTitle>
@@ -100,7 +98,7 @@ export default function CoordinationPage(): JSX.Element {
             setChecked={setVisibleEntityIds}
             hovered={hoveredEntityId}
             setHovered={setHoveredEntityId}
-          ></EntitySelectionList>
+          />
         </Grid>
         <Grid item xs={5} ref={timelineParent}>
           <TimelineSvg
@@ -120,16 +118,14 @@ export default function CoordinationPage(): JSX.Element {
                 showEventTypes={showEventTypes as Array<EventType>}
                 hovered={hoveredEntityId}
                 setHovered={setHoveredEntityId}
-              ></LineStringLayer>
-            ) : (
-              <></>
-            )}
+              />
+            ) : null}
             <PinLayer
               persons={filteredPersonArray}
               showEventTypes={showEventTypes as Array<EventType>}
               hovered={hoveredEntityId}
               setHovered={setHoveredEntityId}
-            ></PinLayer>
+            />
           </MapLibre>
           <FormControl
             sx={{ m: 1, minWidth: 120, position: 'absolute', top: 100, backgroundColor: 'white' }}
@@ -170,7 +166,7 @@ interface EntitySelectionListProps {
 function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
   const { entities, checked, setChecked, hovered, setHovered } = props;
 
-  const handleToggle = (entityId: Person['id']) => {
+  function handleToggle(entityId: Person['id']) {
     const newChecked = new Set(checked);
     if (checked.has(entityId)) {
       newChecked.delete(entityId);
@@ -178,15 +174,15 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
       newChecked.add(entityId);
     }
     setChecked(newChecked);
-  };
+  }
 
-  const handleMouseEnter = (entityId: Person['id']) => {
+  function handleMouseEnter(entityId: Person['id']) {
     setHovered(entityId);
-  };
+  }
 
-  const handleMouseLeave = () => {
+  function handleMouseLeave() {
     setHovered(null);
-  };
+  }
 
   return (
     <List
@@ -203,21 +199,13 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
         const labelId = `entity-list-secondary-label-${value.id}`;
         return (
           <ListItem
-            sx={() => {
-              if (value.id === hovered) {
-                return {
-                  backgroundColor: 'salmon',
-                };
-              } else {
-                return {};
-              }
-            }}
+            sx={value.id === hovered ? { backgroundColor: 'salmon' } : undefined}
             key={value.id}
             secondaryAction={
               <Checkbox
                 edge="end"
                 onChange={() => {
-                  return handleToggle(value.id);
+                  handleToggle(value.id);
                 }}
                 checked={checked.has(value.id)}
                 inputProps={{ 'aria-labelledby': labelId }}
@@ -225,7 +213,7 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
             }
             disablePadding
             onMouseEnter={() => {
-              return handleMouseEnter(value.id);
+              handleMouseEnter(value.id);
             }}
             onMouseLeave={handleMouseLeave}
           >
