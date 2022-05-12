@@ -1,5 +1,5 @@
-import '~/node_modules/react-grid-layout/css/styles.css';
-import '~/node_modules/react-resizable/css/styles.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 import {
   Button,
@@ -10,15 +10,12 @@ import {
   FormControl,
   TextField,
 } from '@mui/material';
+import type { FormEvent } from 'react';
 
-interface StoryContentDialog {
-  open: boolean;
-  element: object;
-  onClose: () => void;
-  onSave: () => void;
-}
+// FIXME: needs proper types somewhere else
+type StoryElementType = 'Image' | 'Text';
 
-const contentTypes: obj = {
+const contentTypes = {
   Image: {
     link: { label: 'Image Link', type: 'Text', sort: 0 },
     title: { label: 'Image Title', type: 'Text', sort: 1 },
@@ -30,9 +27,16 @@ const contentTypes: obj = {
   },
 };
 
-export function StoryContentDialog(props: StoryContentDialog): JSX.Element {
+interface StoryContentDialogProps<T = any> {
+  open: boolean;
+  element: T; // FIXME:
+  onClose: () => void;
+  onSave: (event: FormEvent<HTMLFormElement>, element: T) => void;
+}
+
+export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element {
   const { open, element, onClose, onSave } = props;
-  const attributes = contentTypes[element.type];
+  const attributes = contentTypes[element.type as StoryElementType];
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -45,8 +49,7 @@ export function StoryContentDialog(props: StoryContentDialog): JSX.Element {
           id="myform"
         >
           <FormControl>
-            {Object.keys(attributes).map((attributeName: string) => {
-              const attribute = attributes[attributeName];
+            {Object.entries(attributes).map(([attributeName, attribute]) => {
               return (
                 <TextField
                   margin="dense"
