@@ -15,6 +15,7 @@ export interface SlideContent {
 }
 
 export interface Slide {
+  title?: string;
   i: string;
   sort: number;
   selected?: boolean;
