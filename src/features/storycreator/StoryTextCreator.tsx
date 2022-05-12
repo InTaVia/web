@@ -2,6 +2,7 @@ import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
 import { Button, FormControl, TextareaAutosize } from '@mui/material';
+import type { FormEvent } from 'react';
 
 import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
@@ -35,14 +36,10 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
     element.click();
   };
 
-  const handleSave = (event) => {
+  const handleSave = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let newStory: Story = { ...story };
-    for (const tar of event.target) {
-      newStory = { ...JSON.parse(tar.value) } as Story;
-      break;
-    }
-    event.target.reset();
+    const newStory = { ...story, ...JSON.parse(event.currentTarget.value) } as Story;
+    event.currentTarget.reset();
     dispatch(editStory(newStory));
   };
 
