@@ -156,7 +156,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const [openDialog, setOpenDialog] = useState(false);
 
-  const [editElement, setEditElement] = useState(null);
+  const [editElement, setEditElement] = useState<any | null>(null);
 
   const handleClose = () => {
     setOpenDialog(false);
@@ -341,7 +341,7 @@ export function SlideEditor(props: SlideEditorProps) {
           return createLayoutPane(e);
         })}
       </ReactGridLayout>
-      {editElement !== null && (
+      {editElement != null && (
         <StoryContentDialog
           open={openDialog}
           onClose={handleClose}
