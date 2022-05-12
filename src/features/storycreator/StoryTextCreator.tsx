@@ -49,7 +49,7 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
   return (
     <div>
       <form onSubmit={handleSave} id="storytexteditor">
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
           <TextareaAutosize
             className={styles['story-textarea']}
             defaultValue={JSON.stringify(storyObject, null, 2)}
