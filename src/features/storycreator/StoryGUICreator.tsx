@@ -1,13 +1,6 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import AdjustIcon from '@mui/icons-material/Adjust';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
 import { Button } from '@mui/material';
 import { toPng } from 'html-to-image';
 import type { RefObject } from 'react';
@@ -15,8 +8,7 @@ import { useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
@@ -28,89 +20,56 @@ import {
 } from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
 
-const iconMap = {
-  Timeline: (
-    <LinearScaleOutlinedIcon
-      className={styles['droppable-icon']}
-      fontSize="large"
-      color="primary"
-      key="timelineIcon"
-    />
-  ),
-  Map: (
-    <MapOutlinedIcon
-      className={styles['droppable-icon']}
-      fontSize="large"
-      color="primary"
-      key="mapIcon"
-    />
-  ),
-  Text: (
-    <NoteAltOutlinedIcon
-      className={styles['droppable-icon']}
-      fontSize="large"
-      color="primary"
-      key="annotationIcon"
-    />
-  ),
-  Image: (
-    <ImageOutlinedIcon
-      className={styles['droppable-icon']}
-      fontSize="large"
-      color="primary"
-      key="imageIcon"
-    />
-  ),
-  Person: (
-    <PersonOutlineOutlinedIcon
-      className={styles['droppable-icon']}
-      color="primary"
-      key="personIcon"
-    />
-  ),
-  Event: <AdjustIcon className={styles['droppable-icon']} color="primary" key="EventIcon" />,
-  Quiz: (
-    <QuizOutlinedIcon
-      className={styles['droppable-icon']}
-      fontSize="large"
-      color="primary"
-      key="EventIcon"
-    />
-  ),
-};
+import { selectEntitiesByKind } from '../common/entities.slice';
+import type { Place } from '../common/entity.model';
+import { useAppDispatch, useAppSelector } from '../common/store';
 
-const createDrops = (type, props = {}) => {
-  function getIcon(t) {
-    return (
-      <div key={`icon${t}`} style={{ verticalAlign: 'middle', display: 'table-cell', width: '1%' }}>
-        {iconMap[t]}
-      </div>
-    );
-  }
+interface DropProps {
+  name?: string | null;
+  title?: string | null;
+  type?: string;
+  place?: Place | null;
+  date?: IsoDateString;
+}
 
-  const content = [getIcon(type)];
+//FIXME: correct type of props!
+const createDrops = (props: DropProps = {}) => {
+  const { type } = props;
+  // eslint-disable-next-line react/jsx-key
+  const content = [<DroppableIcon type={type} />];
 
   let text = '';
-  const subline = '';
+  let subline = '';
   let padding = 0;
   let key = `${type}Drop`;
   switch (type) {
     case 'Person':
-      text = props.name;
+      if (props.name != null) {
+        text = props.name;
+      }
       key = key + props.name;
       padding = 5;
       break;
     case 'Event':
-      text = props.name ? props.name : props.type;
+      if (props.name != null) {
+        text = props.name;
+      } else {
+        text = type;
+      }
+
       key = key + JSON.stringify(props);
-      subline = `in ${props.place.name}`;
-      if (props.date !== '') {
+      if (props.place != null) {
+        subline = `in ${props.place.name}`;
+      }
+      if (props.date !== undefined && props.date !== '') {
         subline += ` in ${props.date.substring(0, 4)}`;
       }
       padding = 5;
       break;
     default:
-      text = type;
+      if (type !== undefined) {
+        text = type;
+      }
       padding = 5;
       break;
   }
@@ -161,9 +120,9 @@ const createDrops = (type, props = {}) => {
 };
 
 interface StoryGUICreatorProps {
-  targetRef?: RefObject<HTMLElement>;
-  width?: number;
-  height?: number;
+  targetRef: RefObject<HTMLElement>;
+  width: number;
+  height: number;
   story: Story;
 }
 
@@ -193,58 +152,51 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
         dispatch(setImage({ slide: selectedSlide, image: dataUrl }));
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
       });
   };
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entitiesByKind.person).map((person) => {
-    const newPerson = { ...person };
-    const history = person.history?.filter((relation) => {
-      return relation.type === 'beginning';
-    });
-    if (history != null) {
-      newPerson.birthLocation = history.flatMap((relation) => {
-        return [relation.place?.lng, relation.place?.lat];
-      });
-    }
-
-    return newPerson;
-  });
+  const persons = Object.values(entitiesByKind.person);
 
   if (persons.length === 1 && slides.length === 0) {
     const newSlides = [];
-    const sortedHistory = [...persons[0]?.history].sort((a, b) => {
-      return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
-    });
-    for (const event of sortedHistory) {
-      newSlides.push({
-        story: story.i,
-        title: event.name,
-        entities: [event],
-        content: [
-          {
-            x: 0,
-            y: 0,
-            w: 12,
-            h: 13,
-            type: 'Map',
-            key: 'Map',
-          },
-          {
-            x: 9,
-            y: 8,
-            w: 2,
-            h: 4,
-            type: 'Text',
-            key: 'Text',
-            text: event?.description,
-          },
-        ],
+    const person = persons[0];
+    if (person?.history !== undefined) {
+      const history = [...person.history] as Array<any>;
+      //FIXME: use real types for events/relations
+      const sortedHistory = history.sort((a: any, b: any) => {
+        return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
       });
-    }
+      for (const event of sortedHistory) {
+        newSlides.push({
+          story: story.i,
+          title: event.name,
+          entities: [event],
+          content: [
+            {
+              x: 0,
+              y: 0,
+              w: 12,
+              h: 13,
+              type: 'Map',
+              key: 'Map',
+            },
+            {
+              x: 9,
+              y: 8,
+              w: 2,
+              h: 4,
+              type: 'Text',
+              key: 'Text',
+              text: event.description,
+            },
+          ],
+        });
+      }
 
-    dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
+      dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
+    }
   }
 
   const entitiesInSlide = selectedSlide?.entities ? selectedSlide.entities : persons;
@@ -271,21 +223,23 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             h: 3,
           }}
         >
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <SlideEditor
-                  targetRef={targetRef}
-                  width={width}
-                  height={height}
-                  slide={selectedSlide}
-                  imageRef={ref}
-                  takeScreenshot={takeScreenshot}
-                  entities={entitiesInSlide}
-                />
-              );
-            }}
-          </ReactResizeDetector>
+          {selectedSlide !== undefined && (
+            <ReactResizeDetector handleWidth handleHeight>
+              {({ width, height, targetRef }) => {
+                return (
+                  <SlideEditor
+                    targetRef={targetRef}
+                    width={width as number}
+                    height={height as number}
+                    slide={selectedSlide}
+                    imageRef={ref}
+                    takeScreenshot={takeScreenshot}
+                    entities={entitiesInSlide}
+                  />
+                );
+              }}
+            </ReactResizeDetector>
+          )}
         </div>
         <div
           key="gridWindowLeft"
@@ -305,17 +259,18 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
               overflowY: 'scroll',
             }}
           >
+            {/* FIXME: use real types */}
             {persons.length > 1
-              ? persons.map((p, index) => {
-                  return createDrops('Person', p);
+              ? persons.map((person: any) => {
+                  return createDrops({ ...person, type: 'Person' });
                 })
-              : persons.map((p, index) => {
-                  return [...p.history]
+              : persons.map((person: any) => {
+                  return [...person.history]
                     .sort((a, b) => {
                       return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
                     })
-                    .map((e) => {
-                      return createDrops('Event', e);
+                    .map((element: any) => {
+                      return createDrops({ ...element, type: 'Event' });
                     });
                 })}
           </div>
@@ -331,10 +286,10 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           }}
         >
           {[
-            createDrops('Map'),
+            createDrops({ type: 'Map' }),
             /* createDrops('Timeline'), */
-            createDrops('Text'),
-            createDrops('Image'),
+            createDrops({ type: 'Text' }),
+            createDrops({ type: 'Image' }),
             /* createDrops('Quiz'), */
           ]}
         </div>
@@ -359,7 +314,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
       </ReactGridLayout>
       <Button
         onClick={() => {
-          dispatch(createSlide({ story: story.i }));
+          dispatch(createSlide(story.i));
         }}
       >
         Add Slide

@@ -31,6 +31,17 @@ export interface Story {
   slides: Record<Slide['i'], Slide>;
 }
 
+export interface StoryContent {
+  type: 'Image' | 'Map' | 'Text' | 'Timeline';
+  title: string;
+  text: string;
+}
+
+export interface StoryImage extends StoryContent {
+  type: 'Image';
+  link: string;
+}
+
 export interface StoryCreatorState {
   stories: Record<Story['i'], Story>;
 }
@@ -94,11 +105,10 @@ export const storyCreatorSlice = createSlice({
       const id = action.payload;
       delete state.stories[id];
     },
-    createSlide: (state, action: PayloadAction<Slide>) => {
-      const slide = action.payload;
+    createSlide: (state, action: PayloadAction<Story['i']>) => {
+      const storyID = action.payload;
 
-      const newStories = { ...state.stories };
-      const newSlides = { ...newStories[slide.story].slides };
+      const newSlides = { ...state.stories[storyID].slides };
 
       const oldIDs = Object.keys(newSlides);
       let counter = oldIDs.length - 1;
@@ -108,13 +118,16 @@ export const storyCreatorSlice = createSlice({
         newID = `${counter}`;
       } while (oldIDs.includes(newID));
 
-      slide.i = newID;
-      slide.image = null;
-      slide.content = {};
-      slide.entities = [];
-      newStories[slide.story].slides[slide.i] = slide;
+      const slide = {
+        story: storyID,
+        i: newID,
+        image: null,
+        content: {},
+        entities: [],
+        sort: counter,
+      } as Slide;
 
-      state.stories = newStories;
+      state.stories[slide.story].slides[slide.i] = slide;
     },
     createSlidesInBulk: (state, action) => {
       const story = action.payload.story;
