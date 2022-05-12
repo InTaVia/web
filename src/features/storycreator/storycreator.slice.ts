@@ -86,6 +86,10 @@ export const storyCreatorSlice = createSlice({
       newStories[story.i] = story;
       state.stories = newStories;
     },
+    editStory: (state, action: PayloadAction<Story>) => {
+      const story = action.payload;
+      state.stories[story.i] = story;
+    },
     removeStory: (state, action: PayloadAction<Story['i']>) => {
       const id = action.payload;
       delete state.stories[id];
@@ -101,7 +105,7 @@ export const storyCreatorSlice = createSlice({
       let newID = null;
       do {
         counter = counter + 1;
-        newID = `slide${counter}`;
+        newID = `${counter}`;
       } while (oldIDs.includes(newID));
 
       slide.i = newID;
@@ -116,8 +120,7 @@ export const storyCreatorSlice = createSlice({
       const story = action.payload.story;
       const slides = action.payload.newSlides;
 
-      const newStories = { ...state.stories };
-      const newSlides = { ...newStories[story.i].slides };
+      const newSlides = { ...state.stories[story.i].slides };
       for (const s of slides) {
         const slide = { ...s };
         slide.i = `${Object.keys(newSlides).length}`;
@@ -134,9 +137,7 @@ export const storyCreatorSlice = createSlice({
         newSlides[slide.i] = slide;
       }
 
-      newStories[story.i].slides = newSlides;
-
-      state.stories = newStories;
+      state.stories[story.i].slides = newSlides;
     },
     selectSlide: (state, action) => {
       const select = action.payload;
@@ -249,22 +250,11 @@ export const storyCreatorSlice = createSlice({
     setImage: (state, action) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
-
-      const newSlides = [...state.slides];
-      for (const s of newSlides) {
-        if (slide.story === s.story && slide.i === s.i) {
-          s.image = image;
-          break;
-        }
-      }
-      state.slides = newSlides;
+      state.stories[slide.story].slides[slide.i].image = image;
     },
     addEntityToSlide: (state, action) => {
       const slide = action.payload.slide;
       const entity = action.payload.entity;
-
-      console.log(slide, entity);
-
       const newStories = { ...state.stories };
       newStories[slide.story].slides[slide.i].entities.push(entity);
 
@@ -283,6 +273,7 @@ export const storyCreatorSlice = createSlice({
 
 export const {
   createStory,
+  editStory,
   removeStory,
   removeSlide,
   removeContent,

@@ -28,13 +28,15 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
 
   return (
     <div className={styles['story-editor-wrapper']}>
-      <ExcelUpload />
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-          <IconButton onClick={toggleTextMode}>
-            <IntegrationInstructionsOutlinedIcon />
-          </IconButton>
+          <ExcelUpload />
+          <div className={styles['button-row-button']}>
+            <IconButton color="primary" onClick={toggleTextMode} component="span">
+              <IntegrationInstructionsOutlinedIcon />
+            </IconButton>
+          </div>
         </ButtonRow>
       </div>
       <div className={styles['story-editor-content']}>

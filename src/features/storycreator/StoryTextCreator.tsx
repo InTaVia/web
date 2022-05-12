@@ -1,10 +1,12 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import { Button, TextareaAutosize } from '@mui/material';
+import { Button, FormControl, TextareaAutosize } from '@mui/material';
 
+import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
+import { editStory } from '@/features/storycreator/storycreator.slice';
 
 interface StoryTextCreatorProps {
   story: Story;
@@ -12,6 +14,8 @@ interface StoryTextCreatorProps {
 
 export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
   const { story } = props;
+
+  const dispatch = useAppDispatch();
 
   const slideOutput = Object.values(story.slides).map((s) => {
     const ret = { ...s };
@@ -31,12 +35,30 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
     element.click();
   };
 
+  const handleSave = (event) => {
+    event.preventDefault();
+    let newStory: Story = { ...story };
+    for (const tar of event.target) {
+      newStory = { ...JSON.parse(tar.value) } as Story;
+      break;
+    }
+    event.target.reset();
+    dispatch(editStory(newStory));
+  };
+
   return (
     <div>
-      <TextareaAutosize
-        className={styles['story-textarea']}
-        defaultValue={JSON.stringify(storyObject, null, 2)}
-      />
+      <form onSubmit={handleSave} id="storytexteditor">
+        <FormControl>
+          <TextareaAutosize
+            className={styles['story-textarea']}
+            defaultValue={JSON.stringify(storyObject, null, 2)}
+          />
+        </FormControl>
+      </form>
+      <Button type="submit" form="storytexteditor">
+        Save
+      </Button>
       <Button onClick={download}>Download</Button>
     </div>
   );

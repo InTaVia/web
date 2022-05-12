@@ -1,21 +1,5 @@
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  IconButton,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import ContentEditable from 'react-contenteditable';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
@@ -32,6 +16,8 @@ import { StoryMap } from '@/features/storycreator/StoryMap';
 import uiStyles from '@/features/ui/ui.module.css';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
+
+import { StoryContentDialog } from './StoryContentDialog';
 
 // interface Layout {
 //   i: string;
@@ -130,8 +116,8 @@ export function SlideEditor(props: any) {
       layoutItem['type'] = dropProps.type;
 
       switch (dropProps.type) {
-        case 'Annotation':
-          layoutItem['h'] = 3;
+        case 'Text':
+          layoutItem['h'] = 4;
           layoutItem['w'] = 2;
           break;
         case 'Image':
@@ -179,22 +165,20 @@ export function SlideEditor(props: any) {
     }
   };
 
-  const onTextfieldChange = (newElement) => {
-    dispatch(editContent(newElement));
-  };
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const editRef = useRef();
-  const editRef2 = useRef();
-  const editRef3 = useRef();
-
-  const [open, setOpen] = useState(false);
+  const [editElement, setEditElement] = useState(null);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialog(false);
+  };
+
+  const onTextfieldChange = (newElement) => {
+    dispatch(editContent(newElement));
   };
 
   const handleSave = (event, element) => {
@@ -211,22 +195,34 @@ export function SlideEditor(props: any) {
 
   const createWindowContent = (element: any) => {
     switch (element.type) {
-      case 'Annotation':
+      case 'Text':
         return (
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            style={{
-              width: '100%',
-              height: '100%',
-              minWidth: '100%',
-              minHeight: '100%',
-              border: 'none',
-              resize: 'none',
-            }}
-            placeholder={element.key}
-            defaultValue={eventDescriptions?.join('')}
-          />
+          <div style={{ height: '100%' }}>
+            <Card
+              style={{
+                height: '100%',
+                maxHeight: '100%',
+                position: 'relative',
+                backgroundColor: 'white',
+                padding: 0,
+              }}
+            >
+              {(element.title || element.text) && (
+                <CardContent className={styles['card-content']}>
+                  {element.title && (
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {element.title ? element.title : 'Title'}
+                    </Typography>
+                  )}
+                  {element.text && (
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {element.text ? element.text : 'Text'}
+                    </Typography>
+                  )}
+                </CardContent>
+              )}
+            </Card>
+          </div>
         );
       case 'Image':
         return (
@@ -239,15 +235,6 @@ export function SlideEditor(props: any) {
               padding: 0,
             }}
           >
-            <IconButton
-              color="primary"
-              aria-label="edit icon"
-              component="span"
-              onClick={handleClickOpen}
-              style={{ position: 'absolute', right: 0 }}
-            >
-              <EditOutlinedIcon />
-            </IconButton>
             <div style={{ height: '100%' }}>
               <CardMedia
                 component="img"
@@ -260,64 +247,20 @@ export function SlideEditor(props: any) {
                 height="100%"
               />
             </div>
-            <CardContent className={styles['card-content']}>
-              <Typography gutterBottom variant="h5" component="h2">
-                {element.title ? element.title : 'Title'}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {element.text ? element.text : 'Text'}
-              </Typography>
-            </CardContent>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Edit Image</DialogTitle>
-              <DialogContent>
-                <form
-                  onSubmit={(event) => {
-                    handleSave(event, element);
-                  }}
-                  id="myform"
-                >
-                  <FormControl>
-                    <TextField
-                      margin="dense"
-                      id="link"
-                      label="Image Link"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      defaultValue={element.link}
-                      onChange={() => {}}
-                    />
-                    <TextField
-                      margin="dense"
-                      id="title"
-                      label="Title"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      defaultValue={element.title}
-                      onChange={() => {}}
-                    />
-                    <TextField
-                      margin="dense"
-                      id="text"
-                      label="Text"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      defaultValue={element.text}
-                      onChange={() => {}}
-                    />
-                  </FormControl>
-                </form>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" form="myform" onClick={handleClose}>
-                  Save
-                </Button>
-              </DialogActions>
-            </Dialog>
+            {(element.title || element.text) && (
+              <CardContent className={styles['card-content']}>
+                {element.title && (
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {element.title ? element.title : 'Title'}
+                  </Typography>
+                )}
+                {element.text && (
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    {element.text ? element.text : 'Text'}
+                  </Typography>
+                )}
+              </CardContent>
+            )}
           </Card>
         );
       case 'Timeline':
@@ -332,8 +275,28 @@ export function SlideEditor(props: any) {
 
   const createLayoutPane = (element: any) => {
     switch (element.type) {
-      case 'Annotation':
+      case 'Text':
       case 'Image':
+        return (
+          <div key={element.i} className={styles.elevated}>
+            <Window
+              className={styles['annotation-window']}
+              title={element.type}
+              id={element.i}
+              onRemoveWindow={() => {
+                removeWindowHandler(element.i);
+              }}
+              onEditContent={() => {
+                setEditElement(element);
+                setOpenDialog(true);
+              }}
+              static={element.static}
+              isDraggable={true}
+            >
+              {createWindowContent(element)}
+            </Window>
+          </div>
+        );
       case 'Map':
         return (
           <div key={element.i} className={styles.elevated}>
@@ -401,6 +364,14 @@ export function SlideEditor(props: any) {
           return createLayoutPane(e);
         })}
       </ReactGridLayout>
+      {editElement && (
+        <StoryContentDialog
+          open={openDialog}
+          onClose={handleClose}
+          element={editElement}
+          onSave={handleSave}
+        />
+      )}
     </div>
   );
 }

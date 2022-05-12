@@ -48,10 +48,6 @@ export function StoryFlow(props: any) {
     return newLayout;
   }
 
-  function onAdd() {
-    dispatch(createSlide({ story: story.i, content: 'c' }));
-  }
-
   function onClick(slideID) {
     dispatch(selectSlide({ story: story.i, slide: slideID }));
   }
@@ -80,11 +76,11 @@ export function StoryFlow(props: any) {
         isResizable={false}
         useCSSTransforms={true}
       >
-        {slides.map((e: any, i: number) => {
+        {slides.map((e: any) => {
           return (
             <Card
               key={'slide' + e.i}
-              onClick={(event) => {
+              onClick={() => {
                 onClick(e.i);
               }}
               className={`${styles['story-flow-card']} ${e.selected ? styles['selected'] : ''}`}
