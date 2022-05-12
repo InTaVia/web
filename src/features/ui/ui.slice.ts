@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/features/common/store';
 
-interface UiWindow {
+export interface UiWindow {
   i: string;
   x: number;
   y: number;
@@ -48,7 +48,7 @@ export const uiSlice = createSlice({
 
 export const { addWindow, editWindow, removeWindow } = uiSlice.actions;
 
-export function selectWindows(state: RootState) {
+export function selectWindows(state: RootState): Array<UiWindow> {
   return state.ui.windows;
 }
 

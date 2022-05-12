@@ -1,9 +1,11 @@
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
+import type { Slide, StoryContent, StoryImage } from '@/features/storycreator/storycreator.slice';
 import {
   addContent,
   addEntityToSlide,
@@ -14,66 +16,54 @@ import {
 } from '@/features/storycreator/storycreator.slice';
 import { StoryMap } from '@/features/storycreator/StoryMap';
 import uiStyles from '@/features/ui/ui.module.css';
+import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
 
 import { StoryContentDialog } from './StoryContentDialog';
 
-// interface Layout {
-//   i: string;
-//   x: number;
-//   y: number;
-//   w: number;
-//   h: number;
-//   static: boolean;
-//   isDraggable: boolean;
-//   content: string;
-// }
-
 interface DropProps {
   type: string;
   static: boolean;
-  props: any;
+  props: object;
+}
+
+interface SlideEditorProps {
+  width: number;
+  targetRef: RefObject<HTMLInputElement>;
+  imageRef: RefObject<HTMLInputElement>;
+  slide: Slide;
+  takeScreenshot: () => void;
+  //FIXME: use real types for storyevents and persons!
+  entities: Array<any>;
 }
 
 const rowHeight = 30;
 const height = 400;
 
-export function SlideEditor(props: any) {
-  const myWidth = props.width;
-  const targetRef = props.targetRef;
-  const slide = props.slide;
-  const imageRef = props.imageRef;
-  const takeScreenshot = props.takeScreenshot;
+export function SlideEditor(props: SlideEditorProps) {
+  const { width: myWidth, targetRef, slide, imageRef, entities, takeScreenshot } = props;
 
-  const entities = props.entities;
-
-  const persons = entities.filter((e) => {
-    return e.kind === 'person';
-  });
-  const events = entities.filter((e) => {
-    return e.kind === 'event';
+  const persons = entities.filter((entity: any) => {
+    return entity.kind === 'Person';
   });
 
-  const personMarkers = persons?.flatMap((p) => {
-    const historyEventsWithLocation = p.history.filter((e) => {
-      return e.place.lat && e.place.lng;
-    });
+  const events = entities.filter((entity: any) => {
+    return entity.type === 'Event';
+  });
 
-    return historyEventsWithLocation
-      .map((e) => {
-        return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
+  const personMarkers = persons.flatMap((person) => {
+    const history = person.history;
+    return history
+      ?.map((event: any) => {
+        return [event.place?.lng, event.place?.lat];
       })
       .filter(Boolean) as Array<[number, number]>;
   });
 
-  const eventDescriptions = events?.map((e) => {
-    return e.description;
-  });
-
   const eventMarkers = events
-    ?.map((e) => {
-      return [parseFloat(e.place.lng), parseFloat(e.place.lat)];
+    .map((e) => {
+      return [e.place?.lng, e.place?.lat];
     })
     .filter(Boolean) as Array<[number, number]>;
 
@@ -84,25 +74,25 @@ export function SlideEditor(props: any) {
 
   useEffect(() => {
     takeScreenshot();
-  }, [content]);
+  }, [content, takeScreenshot]);
 
   const dispatch = useAppDispatch();
 
   const windows = useAppSelector(selectWindows);
 
-  const removeWindowHandler = (id: any) => {
+  const removeWindowHandler = (id: string) => {
     dispatch(removeContent({ i: id, story: slide.story, slide: slide.i }));
   };
 
-  const onDrop = (i_layout, i_layoutItem, event) => {
+  const onDrop = (i_layout: any, i_layoutItem: any, event: any) => {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
     const layoutItem = i_layoutItem;
 
     if (dropProps.type === 'Event' || dropProps.type === 'Person') {
       dispatch(addEntityToSlide({ slide: slide, entity: { ...dropProps.props } }));
     } else {
-      const ids = windows.map((e: any) => {
-        return e.key;
+      const ids = windows.map((window: UiWindow) => {
+        return window.i;
       });
 
       let counter = 1;
@@ -134,7 +124,7 @@ export function SlideEditor(props: any) {
           layoutItem['x'] = 0;
           layoutItem['y'] = 0;
 
-          if (dropProps.props.static as boolean) {
+          if (dropProps.static as boolean) {
             layoutItem['x'] = 0;
             layoutItem['y'] = 0;
             layoutItem['static'] = true;
@@ -169,19 +159,12 @@ export function SlideEditor(props: any) {
 
   const [editElement, setEditElement] = useState(null);
 
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
-
   const handleClose = () => {
     setOpenDialog(false);
   };
 
-  const onTextfieldChange = (newElement) => {
-    dispatch(editContent(newElement));
-  };
-
-  const handleSave = (event, element) => {
+  //FIXME: use real type for event and element
+  const handleSave = (event: any, element: any) => {
     event.preventDefault();
     const newElement = { ...element };
     for (const tar of event.target) {
@@ -193,7 +176,7 @@ export function SlideEditor(props: any) {
     dispatch(editContent(newElement));
   };
 
-  const createWindowContent = (element: any) => {
+  const createWindowContent = (element: StoryContent) => {
     switch (element.type) {
       case 'Text':
         return (
@@ -207,16 +190,16 @@ export function SlideEditor(props: any) {
                 padding: 0,
               }}
             >
-              {(element.title || element.text) && (
+              {(Boolean(element.title) || Boolean(element.text)) && (
                 <CardContent className={styles['card-content']}>
-                  {element.title && (
+                  {Boolean(element.title) && (
                     <Typography gutterBottom variant="h5" component="h2">
-                      {element.title ? element.title : 'Title'}
+                      {element.title}
                     </Typography>
                   )}
-                  {element.text && (
+                  {Boolean(element.text) && (
                     <Typography variant="body2" color="textSecondary" component="p">
-                      {element.text ? element.text : 'Text'}
+                      {element.text}
                     </Typography>
                   )}
                 </CardContent>
@@ -238,25 +221,21 @@ export function SlideEditor(props: any) {
             <div style={{ height: '100%' }}>
               <CardMedia
                 component="img"
-                image={
-                  element.link
-                    ? element.link
-                    : 'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png'
-                }
+                image={(element as StoryImage).link}
                 alt="card image"
                 height="100%"
               />
             </div>
-            {(element.title || element.text) && (
+            {(element.title !== '' || element.text !== '') && (
               <CardContent className={styles['card-content']}>
-                {element.title && (
+                {element.title !== '' && (
                   <Typography gutterBottom variant="h5" component="h2">
-                    {element.title ? element.title : 'Title'}
+                    {element.title}
                   </Typography>
                 )}
-                {element.text && (
+                {element.text !== '' && (
                   <Typography variant="body2" color="textSecondary" component="p">
-                    {element.text ? element.text : 'Text'}
+                    {element.text}
                   </Typography>
                 )}
               </CardContent>
@@ -345,7 +324,6 @@ export function SlideEditor(props: any) {
         isDroppable={true}
         compactType={null}
         useCSSTransforms={true}
-        measureBeforeMount={false}
         preventCollision={false}
         draggableHandle={'.' + uiStyles['header-area']}
         style={{
@@ -364,7 +342,7 @@ export function SlideEditor(props: any) {
           return createLayoutPane(e);
         })}
       </ReactGridLayout>
-      {editElement && (
+      {editElement !== null && (
         <StoryContentDialog
           open={openDialog}
           onClose={handleClose}
