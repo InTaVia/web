@@ -1,3 +1,4 @@
+import 'leaflet/dist/leaflet.css';
 import '@/styles/index.css';
 
 import type { EmotionCache } from '@emotion/cache';
