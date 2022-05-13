@@ -49,7 +49,7 @@ export function SlideEditor(props: SlideEditorProps) {
   });
 
   const events = entities.filter((entity: any) => {
-    return entity.type === 'event';
+    return entity.kind === 'event';
   });
 
   const personMarkers = persons.flatMap((person) => {
@@ -63,7 +63,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const eventMarkers = events
     .map((e) => {
-      return [e.place?.lng, e.place?.lat];
+      return [parseFloat(e.place?.lng), parseFloat(e.place?.lat)];
     })
     .filter(Boolean) as Array<[number, number]>;
 
