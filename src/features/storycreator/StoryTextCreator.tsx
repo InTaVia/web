@@ -3,6 +3,7 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import { Button, FormControl, TextareaAutosize } from '@mui/material';
 import type { FormEvent } from 'react';
+import { createRef } from 'react';
 
 import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
@@ -15,6 +16,8 @@ interface StoryTextCreatorProps {
 
 export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
   const { story } = props;
+
+  const textAreaRef = createRef<HTMLTextAreaElement>();
 
   const dispatch = useAppDispatch();
 
@@ -38,9 +41,11 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
 
   const handleSave = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const newStory = { ...story, ...JSON.parse(event.currentTarget.value) } as Story;
-    event.currentTarget.reset();
-    dispatch(editStory(newStory));
+    if (textAreaRef.current) {
+      const newStory = { ...story, ...JSON.parse(textAreaRef.current.value) } as Story;
+      event.currentTarget.reset();
+      dispatch(editStory(newStory));
+    }
   };
 
   return (
@@ -48,6 +53,7 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
       <form onSubmit={handleSave} id="storytexteditor">
         <FormControl style={{ width: '100%' }}>
           <TextareaAutosize
+            ref={textAreaRef}
             className={styles['story-textarea']}
             defaultValue={JSON.stringify(storyObject, null, 2)}
           />
