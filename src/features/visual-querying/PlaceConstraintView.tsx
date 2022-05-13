@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import type { LeafletCountriesProps } from '@/features/visual-querying/LeafletCountries';
 import styles from '@/features/visual-querying/visual-querying.module.css';
-import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
+// import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 // Dynamically load LeafletCountries component as Leaflet has problems with SSR
 const LeafletCountries = dynamic<LeafletCountriesProps>(
@@ -20,7 +20,7 @@ interface PlaceConstraintProps {
   y: number;
   width: number;
   height: number;
-  constraint: PlaceConstraint;
+  // constraint: PlaceConstraint;
 }
 
 export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
