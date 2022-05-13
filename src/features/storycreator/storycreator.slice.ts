@@ -108,7 +108,7 @@ export const storyCreatorSlice = createSlice({
     createSlide: (state, action: PayloadAction<Story['i']>) => {
       const storyID = action.payload;
 
-      const newSlides = { ...state.stories[storyID].slides };
+      const newSlides = { ...state.stories[storyID]!.slides };
 
       const oldIDs = Object.keys(newSlides);
       let counter = oldIDs.length - 1;
@@ -127,13 +127,13 @@ export const storyCreatorSlice = createSlice({
         sort: counter,
       } as Slide;
 
-      state.stories[slide.story].slides[slide.i] = slide;
+      state.stories[slide.story]!.slides[slide.i] = slide;
     },
     createSlidesInBulk: (state, action) => {
       const story = action.payload.story;
       const slides = action.payload.newSlides;
 
-      const newSlides = { ...state.stories[story.i].slides };
+      const newSlides = { ...state.stories[story.i]!.slides };
       for (const s of slides) {
         const slide = { ...s };
         slide.i = `${Object.keys(newSlides).length}`;
@@ -150,20 +150,20 @@ export const storyCreatorSlice = createSlice({
         newSlides[slide.i] = slide;
       }
 
-      state.stories[story.i].slides = newSlides;
+      state.stories[story.i]!.slides = newSlides;
     },
     selectSlide: (state, action) => {
       const select = action.payload;
-      const newStories: object = { ...state.stories };
-      const oldStory: object = { ...newStories[select.story] };
-      for (const slide of Object.values(oldStory.slides)) {
+      const newStories = { ...state.stories };
+      const oldStory = { ...newStories[select.story] };
+      for (const slide of Object.values(oldStory.slides!)) {
         if (slide.i === select.slide) {
           slide.selected = true;
         } else {
           slide.selected = false;
         }
       }
-      newStories[oldStory.i] = oldStory;
+      newStories[oldStory.i!] = oldStory as any;
       state.stories = newStories;
     },
     copySlide: (state, action) => {
@@ -171,13 +171,13 @@ export const storyCreatorSlice = createSlice({
       const story = action.payload.story;
 
       const newStories = { ...state.stories };
-      const oldStory: object = { ...newStories[story] };
+      const oldStory = { ...newStories[story] };
 
-      const oldIDs = Object.values(oldStory.slides).map((s) => {
+      const oldIDs = Object.values(oldStory.slides!).map((s) => {
         return s.i;
       });
 
-      const s = oldStory.slides[slide];
+      const s = oldStory.slides![slide];
       const newSlide = { ...s };
       let counter = 0;
       let newID;
@@ -208,8 +208,8 @@ export const storyCreatorSlice = createSlice({
         }
       } */
 
-      oldStory.slides[newSlide.i] = newSlide;
-      newStories[oldStory.i] = oldStory;
+      oldStory.slides![newSlide.i!] = newSlide as any;
+      newStories[oldStory.i!] = oldStory as any;
       state.stories = newStories;
     },
     removeSlide: (state, action) => {
@@ -217,7 +217,7 @@ export const storyCreatorSlice = createSlice({
       const slideID = action.payload.slide;
       const newStories = { ...state.stories };
       const story = newStories[storyID];
-      delete story.slides[slideID];
+      delete story!.slides[slideID];
 
       state.stories = newStories;
     },
@@ -225,16 +225,16 @@ export const storyCreatorSlice = createSlice({
       const content = action.payload;
 
       const newStories = { ...state.stories };
-      delete newStories[content.story].slides[content.slide].content[content.i];
+      delete newStories[content.story]!.slides[content.slide]!.content[content.i];
       state.stories = newStories;
     },
     addContent: (state, action) => {
       const content = action.payload;
       const newStories = state.stories;
       content.i =
-        'content' + Object.keys(newStories[content.story].slides[content.slide].content).length;
+        'content' + Object.keys(newStories[content.story]!.slides[content.slide]!.content).length;
 
-      newStories[content.story].slides[content.slide].content[content.i] = content;
+      newStories[content.story]!.slides[content.slide]!.content[content.i] = content;
 
       state.stories = newStories;
     },
@@ -242,13 +242,13 @@ export const storyCreatorSlice = createSlice({
       const content = action.payload;
 
       const newStories = { ...state.stories };
-      const newContent = newStories[content.story].slides[content.slide].content[content.i];
+      const newContent = newStories[content.story]!.slides[content.slide]!.content[content.i]!;
       newContent.x = content.x;
       newContent.y = content.y;
       newContent.w = content.w;
       newContent.h = content.h;
 
-      newStories[content.story].slides[content.slide].content[content.i] = newContent;
+      newStories[content.story]!.slides[content.slide]!.content[content.i] = newContent;
 
       state.stories = newStories;
     },
@@ -256,21 +256,21 @@ export const storyCreatorSlice = createSlice({
       const content = action.payload;
 
       const newStories = { ...state.stories };
-      newStories[content.story].slides[content.slide].content[content.i] = content;
+      newStories[content.story]!.slides[content.slide]!.content[content.i] = content;
 
       state.stories = newStories;
     },
     setImage: (state, action) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
-      state.stories[slide.story].slides[slide.i].image = image;
+      state.stories[slide.story]!.slides[slide.i]!.image = image;
     },
     addEntityToSlide: (state, action) => {
       const slide = action.payload.slide;
       const entity = action.payload.entity;
 
       const newStories = { ...state.stories };
-      newStories[slide.story].slides[slide.i].entities.push(entity);
+      newStories[slide.story]!.slides[slide.i]!.entities.push(entity);
 
       state.stories = newStories;
     },
@@ -314,7 +314,7 @@ export const selectSlidesByStoryID = createSelector(
     return id;
   },
   (stories, id) => {
-    return Object.values(stories[id].slides);
+    return Object.values(stories[id]!.slides);
   },
 );
 
@@ -327,7 +327,7 @@ export const selectContentBySlide = createSelector(
   },
   (stories, slide) => {
     if (slide) {
-      return Object.values(stories[slide.story].slides[slide.i].content);
+      return Object.values(stories[slide.story]!.slides[slide.i]!.content);
     } else {
       return [];
     }
@@ -342,7 +342,7 @@ export const selectContentByStory = createSelector(
     return story;
   },
   (stories, story) => {
-    return Object.values(stories[story.i].slides).flatMap((s) => {
+    return Object.values(stories[story.i]!.slides).flatMap((s) => {
       return Object.values(s.content);
     });
   },
