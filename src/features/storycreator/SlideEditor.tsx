@@ -45,11 +45,11 @@ export function SlideEditor(props: SlideEditorProps) {
   const { width: myWidth, targetRef, slide, imageRef, entities, takeScreenshot } = props;
 
   const persons = entities.filter((entity: any) => {
-    return entity.kind === 'Person';
+    return entity.kind === 'person';
   });
 
   const events = entities.filter((entity: any) => {
-    return entity.type === 'Event';
+    return entity.type === 'event';
   });
 
   const personMarkers = persons.flatMap((person) => {
