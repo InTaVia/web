@@ -27,18 +27,19 @@ interface DropProps {
   props: object;
 }
 
+const rowHeight = 30;
+const height = 400;
+
 interface SlideEditorProps {
-  width: number;
-  targetRef: RefObject<HTMLInputElement>;
-  imageRef: RefObject<HTMLInputElement>;
+  width: number | undefined;
+  height: number | undefined; // FIXME: unused
+  targetRef: RefObject<HTMLDivElement>;
+  imageRef: RefObject<HTMLDivElement>;
   slide: Slide;
   takeScreenshot: () => void;
   //FIXME: use real types for storyevents and persons!
   entities: Array<any>;
 }
-
-const rowHeight = 30;
-const height = 400;
 
 export function SlideEditor(props: SlideEditorProps) {
   const { width: myWidth, targetRef, slide, imageRef, entities, takeScreenshot } = props;

@@ -26,13 +26,13 @@ import { StoryFlow } from '@/features/storycreator/StoryFlow';
 interface DropProps {
   name?: string | null;
   title?: string | null;
-  type?: string;
+  type: string;
   place?: Place | null;
   date?: IsoDateString;
 }
 
 //FIXME: correct type of props!
-const createDrops = (props: DropProps = {}) => {
+const createDrops = (props: DropProps) => {
   const { type } = props;
   // eslint-disable-next-line react/jsx-key
   const content = [<DroppableIcon type={type} />];
@@ -66,9 +66,7 @@ const createDrops = (props: DropProps = {}) => {
       padding = 5;
       break;
     default:
-      if (type !== undefined) {
-        text = type;
-      }
+      text = type;
       padding = 5;
       break;
   }
@@ -119,14 +117,14 @@ const createDrops = (props: DropProps = {}) => {
 };
 
 interface StoryGUICreatorProps {
-  targetRef: RefObject<HTMLElement>;
-  width: number;
-  height: number;
+  targetRef: RefObject<HTMLElement> | undefined;
+  width: number | undefined;
+  height: number | undefined;
   story: Story;
 }
 
 export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
-  const { story, height, width, targetRef: parentRef } = props;
+  const { story, height = 0, width, targetRef: parentRef } = props;
 
   const dispatch = useAppDispatch();
 
@@ -203,7 +201,10 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
   const gridHeight = Math.round(height / 5);
 
   return (
-    <div ref={parentRef} style={{ height: '100%', width: '100%', maxHeight: '100%' }}>
+    <div
+      ref={parentRef as RefObject<HTMLDivElement>}
+      style={{ height: '100%', width: '100%', maxHeight: '100%' }}
+    >
       <ReactGridLayout
         className="layout"
         isDraggable={false}
@@ -227,9 +228,9 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
               {({ width, height, targetRef }) => {
                 return (
                   <SlideEditor
-                    targetRef={targetRef}
-                    width={width as number}
-                    height={height as number}
+                    targetRef={targetRef as RefObject<HTMLDivElement>}
+                    width={width}
+                    height={height}
                     slide={selectedSlide}
                     imageRef={ref}
                     takeScreenshot={takeScreenshot}
