@@ -14,7 +14,7 @@
     "lint:fix": "run-p lint:*:fix",
     "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext js,mjs,ts,tsx --ignore-path .gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
-    "lint:styles:check": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
+    "lint:styles:check": "stylelint \"**/*.css\" --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",
     "prepare": "simple-git-hooks || true",
     "start": "next start",
@@ -394,6 +394,7 @@
     "plugins": [
       "stylelint-order"
     ],
+    "reportNeedlessDisables": true,
     "rules": {
       "at-rule-no-vendor-prefix": true,
       "media-feature-name-no-vendor-prefix": true,
