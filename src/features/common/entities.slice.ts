@@ -7,7 +7,9 @@ import type { RootState } from '@/features/common/store';
 
 interface IndexedEntities {
   byId: Record<Entity['id'], Entity>;
-  byKind: Record<EntityKind, Record<Entity['id'], Entity>>;
+  byKind: {
+    [Kind in EntityKind]: Record<Entity['id'], GetKind<Entity, Kind>>;
+  };
 }
 
 interface EntitiesState {

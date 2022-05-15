@@ -40,7 +40,7 @@ export default function CoordinationPage(): JSX.Element | null {
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
   const router = useRouter();
   const personArray = useMemo(() => {
-    return Object.values(entitiesByKind.person) as Array<Person>;
+    return Object.values(entitiesByKind.person);
   }, [entitiesByKind.person]);
   const allEntityIds = personArray.map((person) => {
     return person.id;

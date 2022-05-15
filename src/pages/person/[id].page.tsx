@@ -59,7 +59,7 @@ export default function PersonPage(): JSX.Element {
     );
   }
 
-  if (person == null || person.kind !== 'person') {
+  if (person == null) {
     return (
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4, placeItems: 'center' }}>
         <Typography>Not found.</Typography>

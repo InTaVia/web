@@ -4,18 +4,17 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import type { Person } from '@/features/common/entity.model';
 import { useAppSelector } from '@/features/common/store';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { PageTitle } from '@/features/ui/PageTitle';
-import { length } from '@/lib/length';
 
 export default function MapPage(): JSX.Element {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
+  const persons = Object.values(entitiesByKind.person);
 
-  if (length(entitiesByKind.person) === 0) {
+  if (persons.length === 0) {
     return (
       <Box sx={{ display: 'grid', placeItems: 'center', height: '800px' }}>
         <Typography paragraph>
@@ -33,14 +32,8 @@ export default function MapPage(): JSX.Element {
     <Container maxWidth="xl" sx={{ padding: 4, height: '80vh' }}>
       <PageTitle>Map of Lifespans</PageTitle>
       <MapLibre>
-        <LineStringLayer
-          persons={Object.values(entitiesByKind.person) as Array<Person>}
-          showEventTypes={['beginning', 'end']}
-        ></LineStringLayer>
-        <PinLayer
-          persons={Object.values(entitiesByKind.person) as Array<Person>}
-          showEventTypes={['beginning', 'end']}
-        ></PinLayer>
+        <LineStringLayer persons={persons} showEventTypes={['beginning', 'end']} />
+        <PinLayer persons={persons} showEventTypes={['beginning', 'end']} />
       </MapLibre>
     </Container>
   );

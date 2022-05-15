@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import type { Person } from '@/features/common/entity.model';
 import { useAppSelector } from '@/features/common/store';
 import { Timeline } from '@/features/timeline/Timeline';
 import { TimelinePageHeader } from '@/features/timeline/TimelinePageHeader';
@@ -12,7 +11,7 @@ import { ZoomRangeToggle } from '@/features/timeline/ZoomRangeToggle';
 
 export default function TimelinePage(): JSX.Element | null {
   const entities = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entities.person) as Array<Person>;
+  const persons = Object.values(entities.person);
   const router = useRouter();
 
   useEffect(() => {
