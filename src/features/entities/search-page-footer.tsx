@@ -1,8 +1,8 @@
 import { Box } from '@mui/system';
 
-import { SearchResultsCount } from '@/features/search/SearchResultsCount';
-import { SearchResultsLoadingIndicator } from '@/features/search/SearchResultsLoadingIndicator';
-import { SearchResultsPagination } from '@/features/search/SearchResultsPagination';
+import { SearchResultsCount } from '@/features/entities/search-results-count';
+import { SearchResultsLoadingIndicator } from '@/features/entities/search-results-loading-indicator';
+import { SearchResultsPagination } from '@/features/entities/search-results-pagination';
 
 export function SearchPageFooter(): JSX.Element {
   return (

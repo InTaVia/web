@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import InputBase from '@mui/material/InputBase';
 import type { FormEvent } from 'react';
 
-import { usePersonsSearch } from '@/features/search/usePersonsSearch';
-import { usePersonsSearchFilters } from '@/features/search/usePersonsSearchFilters';
+import { usePersonsSearch } from '@/features/entities/use-persons-search';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 
 export function SearchForm(): JSX.Element {
   const searchFilters = usePersonsSearchFilters();

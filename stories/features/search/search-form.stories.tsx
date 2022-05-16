@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 
-import { SearchForm } from '@/features/search/SearchForm';
+import { SearchForm } from '@/features/entities/search-form';
 
 const meta: Meta = {
   title: 'Components/Search/SearchForm',

@@ -1,4 +1,4 @@
-import type { PersonsSearchFilters } from '@/features/search/usePersonsSearchFilters';
+import type { PersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 
 export function sanitizePersonsSearchParams(
   searchParams: Partial<PersonsSearchFilters>,

@@ -6,32 +6,50 @@ import intaviaApiService from '@/features/common/intavia-api.service';
 import type { RootState } from '@/features/common/store';
 
 interface IndexedEntities {
+  // TODO: should be `Map` even though that's not json-serializable ootb?
   byId: Record<Entity['id'], Entity>;
   byKind: {
+    // TODO: should be `Map` even though that's not json-serializable ootb?
     [Kind in EntityKind]: Record<Entity['id'], GetKind<Entity, Kind>>;
   };
 }
 
+export interface Collection {
+  id: string;
+  name: string;
+  // TODO: should be `Set` even though that's not json-serializable ootb?
+  entities: Array<Entity['id']>;
+  metadata: {
+    queries?: Array<string>;
+  };
+}
+
 interface EntitiesState {
-  upstreamEntities: IndexedEntities;
-  localEntities: IndexedEntities;
+  entities: {
+    upstream: IndexedEntities;
+    local: IndexedEntities;
+  };
+  collections: Record<Collection['id'], Collection>;
 }
 
 const initialState: EntitiesState = {
-  upstreamEntities: {
-    byId: {},
-    byKind: {
-      person: {},
-      place: {},
+  entities: {
+    upstream: {
+      byId: {},
+      byKind: {
+        person: {},
+        place: {},
+      },
+    },
+    local: {
+      byId: {},
+      byKind: {
+        person: {},
+        place: {},
+      },
     },
   },
-  localEntities: {
-    byId: {},
-    byKind: {
-      person: {},
-      place: {},
-    },
-  },
+  collections: {},
 };
 
 const slice = createSlice({
@@ -40,10 +58,20 @@ const slice = createSlice({
   reducers: {
     addLocalEntity(state, action: PayloadAction<Entity>) {
       const entity = action.payload;
-      state.localEntities.byId[entity.id] = entity;
-      state.localEntities.byKind[entity.kind][entity.id] = entity;
+      state.entities.local.byId[entity.id] = entity;
+      state.entities.local.byKind[entity.kind][entity.id] = entity;
     },
-    clearEntities() {
+    clearEntities(state) {
+      state.entities = initialState.entities;
+    },
+    addCollection(state, action: PayloadAction<Collection>) {
+      const collection = action.payload;
+      state.collections[collection.id] = collection;
+    },
+    clearCollections(state) {
+      state.collections = initialState.collections;
+    },
+    clear() {
       return initialState;
     },
   },
@@ -56,8 +84,8 @@ const slice = createSlice({
       ),
       (state, action) => {
         action.payload.entities.forEach((entity) => {
-          state.upstreamEntities.byId[entity.id] = entity;
-          state.upstreamEntities.byKind[entity.kind][entity.id] = entity;
+          state.entities.upstream.byId[entity.id] = entity;
+          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
         });
       },
     );
@@ -69,33 +97,34 @@ const slice = createSlice({
       ),
       (state, action) => {
         const entity = action.payload;
-        state.upstreamEntities.byId[entity.id] = entity;
-        state.upstreamEntities.byKind[entity.kind][entity.id] = entity;
+        state.entities.upstream.byId[entity.id] = entity;
+        state.entities.upstream.byKind[entity.kind][entity.id] = entity;
       },
     );
   },
 });
 
-export const { addLocalEntity, clearEntities } = slice.actions;
+export const { addLocalEntity, clearEntities, addCollection, clearCollections, clear } =
+  slice.actions;
 export default slice.reducer;
 
-export function selectUpstreamEntities(state: RootState): IndexedEntities['byId'] {
-  return state.entities.upstreamEntities.byId;
+export function selectUpstreamEntities(state: RootState) {
+  return state.entities.entities.upstream.byId;
 }
 
-export function selectUpstreamEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
-  return state.entities.upstreamEntities.byKind;
+export function selectUpstreamEntitiesByKind(state: RootState) {
+  return state.entities.entities.upstream.byKind;
 }
 
-export function selectLocalEntities(state: RootState): IndexedEntities['byId'] {
-  return state.entities.localEntities.byId;
+export function selectLocalEntities(state: RootState) {
+  return state.entities.entities.local.byId;
 }
 
-export function selectLocalEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
-  return state.entities.localEntities.byKind;
+export function selectLocalEntitiesByKind(state: RootState) {
+  return state.entities.entities.local.byKind;
 }
 
-export function selectEntities(state: RootState): IndexedEntities['byId'] {
+export function selectEntities(state: RootState) {
   const upstreamEntities = selectUpstreamEntities(state);
   const localEntities = selectLocalEntities(state);
 
@@ -104,7 +133,7 @@ export function selectEntities(state: RootState): IndexedEntities['byId'] {
   return entities;
 }
 
-export function selectEntitiesByKind(state: RootState): IndexedEntities['byKind'] {
+export function selectEntitiesByKind(state: RootState) {
   const upstreamEntitiesByKind = selectUpstreamEntitiesByKind(state);
   const localEntitiesByKind = selectLocalEntitiesByKind(state);
 
@@ -114,4 +143,8 @@ export function selectEntitiesByKind(state: RootState): IndexedEntities['byKind'
   };
 
   return entitiesByKind;
+}
+
+export function selectCollections(state: RootState) {
+  return state.entities.collections;
 }

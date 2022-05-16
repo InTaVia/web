@@ -1,10 +1,10 @@
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 
-import { SearchForm } from '@/features/search/SearchForm';
-import { SearchPageFooter } from '@/features/search/SearchPageFooter';
-import { SearchPageHeader } from '@/features/search/SearchPageHeader';
-import { SearchResultsList } from '@/features/search/SearchResultsList';
+import { SearchForm } from '@/features/entities/search-form';
+import { SearchPageFooter } from '@/features/entities/search-page-footer';
+import { SearchPageHeader } from '@/features/entities/search-page-header';
+import { SearchResultsList } from '@/features/entities/search-results-list';
 
 export default function SearchPage(): JSX.Element {
   return (
