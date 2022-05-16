@@ -13,8 +13,8 @@ import { SearchResult } from '@/features/entities/search-result';
 export function CollectionEntitiesList(): JSX.Element {
   const _collections = useAppSelector(selectCollections);
   const collections = Object.values(_collections);
-  const [selected, setSelected] = useState<Collection['id'] | null>(null);
-  const collection = selected != null ? _collections[selected] : null;
+  const [selected, setSelected] = useState<Collection['id']>('');
+  const collection = selected.length === 0 ? null : _collections[selected];
 
   function onSelectionChange(event: ChangeEvent<HTMLInputElement>) {
     setSelected(event.target.value);

@@ -5,13 +5,9 @@ import type { Entity, EntityKind } from '@/features/common/entity.model';
 import intaviaApiService from '@/features/common/intavia-api.service';
 import type { RootState } from '@/features/common/store';
 
-interface IndexedEntities {
-  // TODO: should be `Map` even though that's not json-serializable ootb?
-  byId: Record<Entity['id'], Entity>;
-  byKind: {
-    // TODO: should be `Map` even though that's not json-serializable ootb?
-    [Kind in EntityKind]: Record<Entity['id'], GetKind<Entity, Kind>>;
-  };
+export interface QueryMetadata {
+  endpoint: string;
+  params: Record<string, unknown>;
 }
 
 export interface Collection {
@@ -20,7 +16,16 @@ export interface Collection {
   // TODO: should be `Set` even though that's not json-serializable ootb?
   entities: Array<Entity['id']>;
   metadata: {
-    queries?: Array<string>;
+    queries?: Array<QueryMetadata>;
+  };
+}
+
+interface IndexedEntities {
+  // TODO: should be `Map` even though that's not json-serializable ootb?
+  byId: Record<Entity['id'], Entity>;
+  byKind: {
+    // TODO: should be `Map` even though that's not json-serializable ootb?
+    [Kind in EntityKind]: Record<Entity['id'], GetKind<Entity, Kind>>;
   };
 }
 
