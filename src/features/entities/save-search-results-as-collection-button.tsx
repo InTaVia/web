@@ -19,6 +19,8 @@ import { useDialogState } from '@/features/ui/use-dialog-state';
 export function SaveSearchResultsAsCollectionButton(): JSX.Element {
   const dispatch = useAppDispatch();
   const searchFilters = usePersonsSearchFilters();
+  const endpoint = 'getPersons';
+  const [trigger] = intaviaService.endpoints[endpoint].useLazyQuery();
   const dialog = useDialogState();
 
   async function onSave(name: string) {
@@ -33,10 +35,9 @@ export function SaveSearchResultsAsCollectionButton(): JSX.Element {
 
     async function getEntities(page = 1) {
       const params = { ...searchParams, page };
-      const endpoint = 'getPersons';
       queries.push({ endpoint, params });
 
-      const query = await dispatch(intaviaService.endpoints[endpoint].initiate(params));
+      const query = await trigger(params, true);
       const entities = query.data?.entities ?? [];
       ids.push(
         ...entities.map((entity) => {
