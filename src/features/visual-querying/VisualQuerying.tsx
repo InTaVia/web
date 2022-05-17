@@ -52,13 +52,16 @@ export function VisualQuerying(): JSX.Element {
       : null;
 
     // Send the query
-    void trigger({
-      q: name ?? undefined,
-      dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
-      dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
-      dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
-      dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
-    });
+    void trigger(
+      {
+        q: name ?? undefined,
+        dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
+        dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
+        dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
+        dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+      },
+      true,
+    );
   }
 
   function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {
