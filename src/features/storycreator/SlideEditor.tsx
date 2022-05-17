@@ -6,10 +6,16 @@ import ReactGridLayout from 'react-grid-layout';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type { Slide, StoryContent, StoryImage } from '@/features/storycreator/storycreator.slice';
+import type {
+  Slide,
+  StoryContent,
+  StoryEvent,
+  StoryImage,
+} from '@/features/storycreator/storycreator.slice';
 import {
   addContent,
-  addEntityToSlide,
+  addEventsToSlide,
+  addEventToSlide,
   editContent,
   removeContent,
   resizeMoveContent,
@@ -20,6 +26,8 @@ import uiStyles from '@/features/ui/ui.module.css';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
+
+import type { Person } from '../common/entity.model';
 
 interface DropProps {
   type: string;
@@ -37,35 +45,19 @@ interface SlideEditorProps {
   imageRef: RefObject<HTMLDivElement>;
   slide: Slide;
   takeScreenshot: () => void;
-  //FIXME: use real types for storyevents and persons!
-  entities: Array<any>;
+  events: Array<StoryEvent>; //FIXME: use real types for storyevents and persons!
 }
 
 export function SlideEditor(props: SlideEditorProps) {
-  const { width: myWidth, targetRef, slide, imageRef, entities, takeScreenshot } = props;
+  const { width: myWidth, targetRef, slide, imageRef, events, takeScreenshot } = props;
 
-  const persons = entities.filter((entity: any) => {
-    return entity.kind === 'person';
-  });
+  /*   const eventMarkers = events
+    .map((event) => {
+      console.log('event', event);
 
-  const events = entities.filter((entity: any) => {
-    return entity.kind === 'event';
-  });
-
-  const personMarkers = persons.flatMap((person) => {
-    const history = person.history;
-    return history
-      ?.map((event: any) => {
-        return [event.place?.lng, event.place?.lat];
-      })
-      .filter(Boolean) as Array<[number, number]>;
-  });
-
-  const eventMarkers = events
-    .map((e) => {
-      return [parseFloat(e.place?.lng), parseFloat(e.place?.lat)];
+      return [parseFloat(event.place?.lng), parseFloat(event.place?.lat)];
     })
-    .filter(Boolean) as Array<[number, number]>;
+    .filter(Boolean) as Array<[number, number]>; */
 
   /* const content = Object.values(slide.content); */
   const content = useAppSelector((state) => {
@@ -88,8 +80,13 @@ export function SlideEditor(props: SlideEditorProps) {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
     const layoutItem = i_layoutItem;
 
-    if (dropProps.type === 'Event' || dropProps.type === 'Person') {
-      dispatch(addEntityToSlide({ slide: slide, entity: { ...dropProps.props } }));
+    if (dropProps.type === 'Event') {
+      dispatch(addEventToSlide({ slide: slide, event: { ...dropProps.props } }));
+    } else if (dropProps.type === 'Person') {
+      const person = dropProps.props as Person;
+      if (person.history !== undefined) {
+        dispatch(addEventsToSlide({ slide: slide, events: [...person.history] }));
+      }
     } else {
       const ids = windows.map((window: UiWindow) => {
         return window.i;
@@ -221,7 +218,11 @@ export function SlideEditor(props: SlideEditorProps) {
             <div style={{ height: '100%' }}>
               <CardMedia
                 component="img"
-                image={(element as StoryImage).link}
+                image={
+                  (element as StoryImage).link
+                    ? (element as StoryImage).link
+                    : 'https://via.placeholder.com/300'
+                }
                 alt="card image"
                 height="100%"
               />
@@ -246,7 +247,7 @@ export function SlideEditor(props: SlideEditorProps) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        return <StoryMap markers={[...eventMarkers, ...personMarkers]}></StoryMap>;
+        return <StoryMap events={events}></StoryMap>;
       default:
         return [];
     }
