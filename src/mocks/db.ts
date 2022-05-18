@@ -3,7 +3,6 @@ import type { Bin } from 'd3-array';
 import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
-// import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Entity, EntityEvent, Person, Place } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { times } from '@/lib/times';
@@ -17,64 +16,15 @@ function createTable<T extends Entity>() {
   const table = new Map<T['id'], T>();
 
   const methods = {
-    findMany(q?: string | undefined) {
+    findMany(q?: string | undefined, start?: [number, number], end?: [number, number]) {
       const entities = Array.from(table.values());
-      if (q == null || q.length === 0) {
-        return entities;
-      }
-      return matchSorter(entities, q, { keys: ['name'] });
+      let matches = q != null ? matchSorter(entities, q, { keys: ['name'] }) : entities;
+      matches = start != null ? filterByRelationDateRange(matches, 'beginning', start) : matches;
+      matches = end != null ? filterByRelationDateRange(matches, 'end', end) : matches;
+      return matches;
     },
     findById(id: T['id']) {
       return table.get(id);
-    },
-    findByParams(
-      dateOfBirthRange?: Array<number>,
-      dateOfDeathRange?: Array<number>,
-      name?: string,
-    ) {
-      let entities = Array.from(table.values());
-
-      if (name != null) {
-        entities = matchSorter(entities, name, { keys: ['name'] });
-      }
-
-      if (dateOfBirthRange != null) {
-        entities = entities.filter((entity) => {
-          // Get beginning relation
-          const beginningRelation = entity.history?.find((relation) => {
-            return relation.type === 'beginning';
-          });
-
-          // Check if date is within range
-          if (beginningRelation != null && beginningRelation.date != null) {
-            const birthYear = new Date(beginningRelation.date).getFullYear();
-            if (dateOfBirthRange[0]! <= birthYear && birthYear <= dateOfBirthRange[1]!) {
-              return true;
-            }
-          }
-          return false;
-        });
-      }
-
-      if (dateOfDeathRange != null) {
-        entities = entities.filter((entity) => {
-          // Get end relation
-          const endRelation = entity.history?.find((relation) => {
-            return relation.type === 'end';
-          });
-
-          // Check if date is within range
-          if (endRelation != null && endRelation.date != null) {
-            const deathYear = new Date(endRelation.date).getFullYear();
-            if (dateOfDeathRange[0]! <= deathYear && deathYear <= dateOfDeathRange[1]!) {
-              return true;
-            }
-          }
-          return false;
-        });
-      }
-
-      return entities;
     },
     getIds() {
       return Array.from(table.keys());
@@ -302,19 +252,19 @@ function computeDateBins(
   thresholds: Array<number>;
   bins: Array<Bin<number, number>>;
 } {
-  let bins = Array<Bin<number, number>>();
-  const years = Array<number>();
+  let bins: Array<Bin<number, number>> = [];
+  const years: Array<number> = [];
   const relationType = property === 'Date of Birth' ? 'beginning' : 'end';
 
   // Create an array with all birthdates
   entities.forEach((entity) => {
     if (entity.history) {
-      const beginningRelation = entity.history.filter((relation) => {
+      const beginningRelation = entity.history.find((relation) => {
         return relation.type === relationType;
-      })[0];
+      });
 
       if (beginningRelation && beginningRelation.date != null) {
-        years.push(new Date(beginningRelation.date).getFullYear());
+        years.push(new Date(beginningRelation.date).getUTCFullYear());
       }
     }
   });
@@ -328,4 +278,26 @@ function computeDateBins(
   bins = distGen(years);
 
   return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
+}
+
+function filterByRelationDateRange<T extends Entity>(
+  entities: Array<T>,
+  relationType: string,
+  dateRange: [number, number],
+) {
+  return entities.filter((entity) => {
+    const relation = entity.history?.find((relation) => {
+      return relation.type === relationType;
+    });
+
+    if (relation != null && relation.date != null) {
+      const [start, end] = dateRange;
+      const year = new Date(relation.date).getUTCFullYear();
+      if (start <= year && year <= end) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 }
