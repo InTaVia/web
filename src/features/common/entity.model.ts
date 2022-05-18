@@ -16,7 +16,7 @@ export interface EntityEvent {
 }
 
 // FIXME: remove
-export type Relation = EntityEvent;
+export type Relation = Omit<EntityEvent, 'type'> & { type: string };
 
 export interface Person extends EntityBase {
   kind: 'person';

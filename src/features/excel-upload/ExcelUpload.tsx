@@ -94,7 +94,7 @@ export function ExcelUpload(): JSX.Element {
       events.push(newEvent);
     }
 
-    const person: Person = {
+    const person = {
       name: 'Pier Paolo Vergerio',
       kind: 'person',
       gender: 'Male',
@@ -103,7 +103,7 @@ export function ExcelUpload(): JSX.Element {
       occupation: [],
       categories: [],
       description: '',
-    };
+    } as Person;
 
     dispatch(addLocalEntity(person));
   }
