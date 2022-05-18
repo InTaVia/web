@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 
-import { usePersonsSearchResults } from '@/features/search/usePersonsSearchResults';
+import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
 
 export function SearchResultsCount(): JSX.Element | null {
   const searchResults = usePersonsSearchResults();

@@ -2,9 +2,9 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Link from 'next/link';
 
-import { usePersonsSearch } from '@/features/search/usePersonsSearch';
-import { usePersonsSearchFilters } from '@/features/search/usePersonsSearchFilters';
-import { usePersonsSearchResults } from '@/features/search/usePersonsSearchResults';
+import { usePersonsSearch } from '@/features/entities/use-persons-search';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
 
 export function SearchResultsPagination(): JSX.Element | null {
   const searchFilters = usePersonsSearchFilters();
