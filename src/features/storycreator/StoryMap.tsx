@@ -21,10 +21,6 @@ interface StoryMapMarker {
   type: string;
 }
 
-const applyToArray = (func: () => number, array: Array<number>) => {
-  return func.apply(Math, array as []);
-};
-
 const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
   // Calculate corner values of bounds
   const pointsLong = points.map((point) => {
@@ -34,10 +30,10 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
     return point[1];
   });
   const cornersLongLat = [
-    applyToArray(Math.min, pointsLong),
-    applyToArray(Math.min, pointsLat),
-    applyToArray(Math.max, pointsLong),
-    applyToArray(Math.max, pointsLat),
+    Math.min(...pointsLong),
+    Math.min(...pointsLat),
+    Math.max(...pointsLong),
+    Math.max(...pointsLat),
   ];
 
   return cornersLongLat;
