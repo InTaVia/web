@@ -13,7 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
-import { useRouter } from 'next/router';
 import { Fragment, useState } from 'react';
 import { useFieldArray } from 'react-final-form-arrays';
 
@@ -35,11 +34,11 @@ import { FormTextField } from '@/features/form/form-text-field';
 import { validateSchema } from '@/features/form/validate-schema';
 import { PageTitle } from '@/features/ui/PageTitle';
 import { formatDate } from '@/lib/format-date';
+import { useParams } from '@/lib/use-params';
 
 export default function PersonPage(): JSX.Element {
-  const router = useRouter();
-  const _id = router.query['id'];
-  const id = _id != null && Array.isArray(_id) ? _id[0] : _id;
+  const params = useParams();
+  const id = params?.get('id');
   const dispatch = useAppDispatch();
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const localEntitiesByKind = useAppSelector(selectLocalEntitiesByKind);
