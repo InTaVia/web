@@ -13,7 +13,7 @@
     "generate:favicons": "ts-script scripts/generate-favicons",
     "lint": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext js,mjs,ts,tsx --ignore-path .gitignore",
+    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path .gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
     "lint:styles:check": "stylelint \"**/*.css\" --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",
@@ -357,8 +357,7 @@
           "storybook/use-storybook-testing-library": "error"
         }
       }
-    ],
-    "ignorePatterns": "public/mockServiceWorker.js"
+    ]
   },
   "lint-staged": {
     "*.@(cjs|js|mjs|ts|tsx)": [
