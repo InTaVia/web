@@ -1,3 +1,5 @@
+// @ts-expect-error Missing module declaration.
+import createBundleAnalyzer from '@next/bundle-analyzer';
 import { log } from '@stefanprobst/log';
 
 /** @typedef {import('next').NextConfig} NextConfig */
@@ -63,7 +65,7 @@ const config = {
 };
 
 /** @type {Array<(config: NextConfig) => NextConfig>} */
-const plugins = [];
+const plugins = [createBundleAnalyzer({ enabled: process.env['BUNDLE_ANALYZER'] === 'enabled' })];
 
 export default plugins.reduce((config, plugin) => {
   return plugin(config);
