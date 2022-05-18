@@ -10,18 +10,18 @@ import { useParams } from '@/lib/use-params';
 export default function StoryPage(): JSX.Element | null {
   const router = useRouter();
   const params = useParams();
-  const id = params?.get('id');
-
   const stories = useAppSelector(selectStories);
-
+  const id = params?.get('id');
   const story = id != null ? stories[id] : null;
 
   useEffect(() => {
     /** Router is not ready yet. */
+    if (params == null) return;
+
     if (story == null) {
       void router.replace({ pathname: '/storycreator' });
     }
-  }, [router, story]);
+  }, [router, params, story]);
 
   if (story == null) {
     return null;
