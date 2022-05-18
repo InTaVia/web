@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import type { Entity } from '@/features/common/entity.model';
+import type { Relation } from '@/features/common/entity.model';
 import type { RootState } from '@/features/common/store';
 
 type DataUrlString = string;
@@ -20,7 +20,7 @@ export interface Slide {
   sort: number;
   selected?: boolean;
   image: DataUrlString | null;
-  entities: Array<Entity>;
+  events: Array<StoryEvent>;
   content: Record<SlideContent['i'], SlideContent>;
   story: Story['i'];
 }
@@ -46,6 +46,11 @@ export interface StoryCreatorState {
   stories: Record<Story['i'], Story>;
 }
 
+export interface StoryEvent extends Relation {
+  description?: string;
+  label?: string;
+}
+
 const initialState: StoryCreatorState = {
   stories: {
     story0: {
@@ -56,10 +61,25 @@ const initialState: StoryCreatorState = {
           i: '0',
           sort: 0,
           story: 'story0',
-          entities: [],
+          events: [],
           selected: true,
           image: null,
           content: {},
+        },
+      },
+    },
+    story2: {
+      i: 'story2',
+      title: 'Hofburg',
+      slides: {
+        '0': {
+          i: '0',
+          sort: 0,
+          story: 'story2',
+          selected: true,
+          content: {},
+          events: [],
+          image: null,
         },
       },
     },
@@ -90,9 +110,9 @@ export const storyCreatorSlice = createSlice({
           story: story.i,
           selected: true,
           image: null,
-          content: [],
-          entities: [],
-        },
+          content: {},
+          events: [],
+        } as Slide,
       };
       newStories[story.i] = story;
       state.stories = newStories;
@@ -123,8 +143,9 @@ export const storyCreatorSlice = createSlice({
         i: newID,
         image: null,
         content: {},
-        entities: [],
+        events: [],
         sort: counter,
+        selected: false,
       } as Slide;
 
       state.stories[slide.story]!.slides[slide.i] = slide;
@@ -265,14 +286,19 @@ export const storyCreatorSlice = createSlice({
       const image = action.payload.image;
       state.stories[slide.story]!.slides[slide.i]!.image = image;
     },
-    addEntityToSlide: (state, action) => {
-      const slide = action.payload.slide;
-      const entity = action.payload.entity;
+    addEventsToSlide: (state, action) => {
+      const slide: Slide = action.payload.slide;
+      const events: Array<StoryEvent> = action.payload.events;
 
-      const newStories = { ...state.stories };
-      newStories[slide.story]!.slides[slide.i]!.entities.push(entity);
+      console.log(slide, events);
 
-      state.stories = newStories;
+      state.stories[slide.story]!.slides[slide.i]!.events.push(...events);
+    },
+    addEventToSlide: (state, action) => {
+      const slide: Slide = action.payload.slide;
+      const event: StoryEvent = action.payload.event;
+
+      state.stories[slide.story]!.slides[slide.i]!.events.push(event);
     },
   },
 });
@@ -291,7 +317,8 @@ export const {
   setImage,
   copySlide,
   createSlidesInBulk,
-  addEntityToSlide,
+  addEventToSlide,
+  addEventsToSlide,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(
