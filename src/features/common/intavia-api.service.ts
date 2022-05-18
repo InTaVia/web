@@ -2,8 +2,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createUrlSearchParams } from '@stefanprobst/request';
 import type { Bin } from 'd3-array';
 
-import type { Person, Place } from '@/features/common/entity.model';
+import type { Entity, Person, Place } from '@/features/common/entity.model';
 import { baseUrl } from '~/config/intavia.config';
+
+export interface PaginatedEntitiesResponse<T extends Entity> {
+  count: number;
+  page: number;
+  pages: number;
+  entities: Array<T>;
+}
 
 const service = createApi({
   reducerPath: 'intavia-api',
@@ -19,7 +26,7 @@ const service = createApi({
   endpoints(builder) {
     return {
       getPersons: builder.query<
-        { page: number; pages: number; q?: string; entities: Array<Person> },
+        PaginatedEntitiesResponse<Person>,
         {
           page?: number;
           q?: string;
@@ -67,10 +74,7 @@ const service = createApi({
           return { url: `/api/persons/${id}` };
         },
       }),
-      getPlaces: builder.query<
-        { page: number; pages: number; q?: string; entities: Array<Place> },
-        { page?: number; q?: string }
-      >({
+      getPlaces: builder.query<PaginatedEntitiesResponse<Place>, { page?: number; q?: string }>({
         query(params) {
           const { page = 1, q } = params;
 

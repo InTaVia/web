@@ -2,12 +2,13 @@ import type { Bin } from 'd3-array';
 import { rest } from 'msw';
 
 import type { Person, Place } from '@/features/common/entity.model';
+import type { PaginatedEntitiesResponse } from '@/features/common/intavia-api.service';
 import { clamp } from '@/lib/clamp';
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
 import { db } from '@/mocks/db';
 
 export const handlers = [
-  rest.get<never, never, { page: number; pages: number; entities: Array<Person> }>(
+  rest.get<never, never, PaginatedEntitiesResponse<Person>>(
     String(createIntaviaApiUrl({ pathname: '/api/persons' })),
     (request, response, context) => {
       const q = getSearchParam(request.url, 'q');
@@ -42,7 +43,7 @@ export const handlers = [
       return response(
         context.status(200),
         context.delay(),
-        context.json({ page, pages, q, entities }),
+        context.json({ count: persons.length, page, pages, entities }),
       );
     },
   ),
@@ -90,7 +91,7 @@ export const handlers = [
       return response(context.status(200), context.delay(), context.json(person));
     },
   ),
-  rest.get<never, never, { page: number; pages: number; entities: Array<Place> }>(
+  rest.get<never, never, PaginatedEntitiesResponse<Place>>(
     String(createIntaviaApiUrl({ pathname: '/api/places' })),
     (request, response, context) => {
       const q = getSearchParam(request.url, 'q');
@@ -106,7 +107,7 @@ export const handlers = [
       return response(
         context.status(200),
         context.delay(),
-        context.json({ page, pages, q, entities }),
+        context.json({ count: places.length, page, pages, entities }),
       );
     },
   ),
