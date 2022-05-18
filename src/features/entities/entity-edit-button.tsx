@@ -15,7 +15,7 @@ import { useFieldArray } from 'react-final-form-arrays';
 
 import type { Entity } from '@/features/common/entity.model';
 import { person } from '@/features/common/entity.validation-schema';
-import { relationTypes } from '@/features/entities/relation-types';
+import { eventTypes } from '@/features/common/event-types';
 import { Form } from '@/features/form/form';
 import { FormDateField } from '@/features/form/form-date-field';
 import { FormSelect } from '@/features/form/form-select';
@@ -106,10 +106,10 @@ function EntityHistoryFormSection(): JSX.Element {
               }}
             >
               <FormSelect label="Type" name={`${name}.type`}>
-                {Object.values(relationTypes).map((relationType) => {
+                {Object.values(eventTypes).map((eventType) => {
                   return (
-                    <MenuItem key={relationType.id} value={relationType.id}>
-                      {relationType.label}
+                    <MenuItem key={eventType.id} value={eventType.id}>
+                      {eventType.label}
                     </MenuItem>
                   );
                 })}

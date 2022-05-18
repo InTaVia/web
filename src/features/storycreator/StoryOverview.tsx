@@ -10,7 +10,7 @@ import {
   removeStory,
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
-import { PageTitle } from '@/features/ui/PageTitle';
+import { PageTitle } from '@/features/ui/page-title';
 
 export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();

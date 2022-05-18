@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 
 import { CollectionEntitiesList } from '@/features/entities/collection-entities-list';
-import { PageTitle } from '@/features/ui/PageTitle';
+import { PageTitle } from '@/features/ui/page-title';
 
 export default function CollectionsPage(): JSX.Element {
   return (

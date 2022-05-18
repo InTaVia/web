@@ -4,9 +4,9 @@ import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
-import { TimelineElement } from '@/features/timeline/TimelineElement';
-import { TimelineElementTooltip } from '@/features/timeline/TimelineElementTooltip';
-import { TimelineYearAxis } from '@/features/timeline/TimelineYearAxis';
+import { TimelineElement } from '@/features/timeline/timeline-element';
+import { TimelineElementTooltip } from '@/features/timeline/timeline-element-tooltip';
+import { TimelineYearAxis } from '@/features/timeline/timeline-year-axis';
 
 interface TimelineSvgProps {
   persons: Array<Person>;

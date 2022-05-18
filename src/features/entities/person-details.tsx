@@ -7,10 +7,10 @@ import { Fragment } from 'react';
 
 import { addLocalEntity } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
+import { eventTypes } from '@/features/common/event-types';
 import { useAppDispatch } from '@/features/common/store';
 import { EntityEditButton } from '@/features/entities/entity-edit-button';
-import { relationTypes } from '@/features/entities/relation-types';
-import { PageTitle } from '@/features/ui/PageTitle';
+import { PageTitle } from '@/features/ui/page-title';
 import { formatDate } from '@/lib/format-date';
 
 interface PersonDetailsProps {
@@ -26,17 +26,16 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
     dispatch(addLocalEntity(person));
   }
 
-  const eventTypes = { birth: 'beginning', death: 'end' };
-  const birth = person.history?.find((relation) => {
-    return relation.type === eventTypes.birth;
+  const birth = person.history?.find((event) => {
+    return event.type === 'beginning';
   });
-  const death = person.history?.find((relation) => {
-    return relation.type === eventTypes.death;
+  const death = person.history?.find((event) => {
+    return event.type === 'end';
   });
   const history =
     person.history
-      ?.filter((relation) => {
-        return ![eventTypes.birth, eventTypes.death].includes(relation.type);
+      ?.filter((event) => {
+        return !['beginning', 'end'].includes(event.type);
       })
       ?.sort((a, b) => {
         const _a = a.date == null ? 0 : new Date(a.date).getTime();
@@ -150,11 +149,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
                 return (
                   <ListItem key={index} disablePadding>
                     <Box component="article">
-                      <Typography>
-                        {event.type in relationTypes
-                          ? relationTypes[event.type as keyof typeof relationTypes].label
-                          : event.type}
-                      </Typography>
+                      <Typography>{eventTypes[event.type].label}</Typography>
                       <Typography color="text.secondary">
                         {event.date != null ? (
                           <span>{formatDate(new Date(event.date))}</span>

@@ -3,9 +3,9 @@ import type { Bin } from 'd3-array';
 import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
-import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
+import type { Entity, EntityEvent, Person, Place } from '@/features/common/entity.model';
+import type { EventType } from '@/features/common/event-types';
 import { times } from '@/lib/times';
-import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
 
 export const db = {
   person: createTable<Person>(),
@@ -19,8 +19,8 @@ function createTable<T extends Entity>() {
     findMany(q?: string | undefined, start?: [number, number], end?: [number, number]) {
       const entities = Array.from(table.values());
       let matches = q != null ? matchSorter(entities, q, { keys: ['name'] }) : entities;
-      matches = start != null ? filterByRelationDateRange(matches, 'beginning', start) : matches;
-      matches = end != null ? filterByRelationDateRange(matches, 'end', end) : matches;
+      matches = start != null ? filterByEventDateRange(matches, 'beginning', start) : matches;
+      matches = end != null ? filterByEventDateRange(matches, 'end', end) : matches;
       return matches;
     },
     findById(id: T['id']) {
@@ -32,7 +32,7 @@ function createTable<T extends Entity>() {
     create(entity: T) {
       table.set(entity.id, entity);
     },
-    addRelationToHistory(id: Entity['id'], relation: Relation) {
+    addEventToHistory(id: Entity['id'], relation: EntityEvent) {
       const entity = table.get(id);
       if (entity == null) return;
       if (entity.history == null) {
@@ -58,7 +58,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(): [Relation, Relation] {
+function createLifeSpanRelations(): [EntityEvent, EntityEvent] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -79,7 +79,7 @@ function createLifeSpanRelations(): [Relation, Relation] {
   ];
 }
 
-function createPersonRelation(type: string, targetId: Entity['id'], date?: Date): Relation {
+function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date): EntityEvent {
   if (date === undefined) {
     return {
       type,
@@ -96,8 +96,11 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
-function createExtraRelations(birth: Date, death: Date): Array<Relation> {
-  const relations: Array<Relation> = [];
+function createExtraRelations(birth: Date, death: Date): Array<EntityEvent> {
+  const lifetimeEventTypes: Array<EventType> = ['stayed', 'lived'];
+  const afterDeathEventTypes: Array<EventType> = ['statue erected'];
+
+  const relations: Array<EntityEvent> = [];
 
   const numRelations = faker.datatype.number(8);
   const numWithinLifetime = faker.datatype.number({
@@ -183,15 +186,15 @@ export function seed() {
       return;
     }
 
-    let relationType = undefined;
-    let relationDate = undefined;
+    let eventType = undefined;
+    let eventDate = undefined;
 
     if (
       sourcePersonDateOfBirth <= targetPersonDateOfDeath &&
       targetPersonDateOfBirth <= sourcePersonDateOfDeath
     ) {
       //overlapping dates
-      relationType = 'was in contact with';
+      eventType = 'was in contact with' as const;
       const start = Math.max(
         new Date(sourcePersonDateOfBirth).getTime(),
         new Date(targetPersonDateOfBirth).getTime(),
@@ -200,15 +203,12 @@ export function seed() {
         new Date(sourcePersonDateOfDeath).getTime(),
         new Date(targetPersonDateOfDeath).getTime(),
       );
-      relationDate = faker.date.between(start, end);
+      eventDate = faker.date.between(start, end);
     } else {
-      relationType = 'was related to';
+      eventType = 'was related to' as const;
     }
 
-    db.person.addRelationToHistory(
-      personId,
-      createPersonRelation(relationType, targetPersonId, relationDate),
-    );
+    db.person.addEventToHistory(personId, createPersonEvent(eventType, targetPersonId, eventDate));
   });
 
   // Populate persons with additional test events. Do this at the end because
@@ -229,7 +229,7 @@ export function seed() {
 
     const extraRelations = createExtraRelations(new Date(dateOfBirth), new Date(dateOfDeath));
     extraRelations.forEach((rel) => {
-      db.person.addRelationToHistory(personId, rel);
+      db.person.addEventToHistory(personId, rel);
     });
   });
 }
@@ -251,17 +251,17 @@ function computeDateBins(
 } {
   let bins: Array<Bin<number, number>> = [];
   const years: Array<number> = [];
-  const relationType = property === 'Date of Birth' ? 'beginning' : 'end';
+  const eventType = property === 'Date of Birth' ? 'beginning' : 'end';
 
   // Create an array with all birthdates
   entities.forEach((entity) => {
     if (entity.history) {
-      const beginningRelation = entity.history.find((relation) => {
-        return relation.type === relationType;
+      const beginningEvent = entity.history.find((event) => {
+        return event.type === eventType;
       });
 
-      if (beginningRelation && beginningRelation.date != null) {
-        years.push(new Date(beginningRelation.date).getUTCFullYear());
+      if (beginningEvent && beginningEvent.date != null) {
+        years.push(new Date(beginningEvent.date).getUTCFullYear());
       }
     }
   });
@@ -277,19 +277,19 @@ function computeDateBins(
   return { minYear: minYear, maxYear: maxYear, thresholds: thresholds, bins: bins };
 }
 
-function filterByRelationDateRange<T extends Entity>(
+function filterByEventDateRange<T extends Entity>(
   entities: Array<T>,
-  relationType: string,
+  eventType: EventType,
   dateRange: [number, number],
 ) {
   return entities.filter((entity) => {
-    const relation = entity.history?.find((relation) => {
-      return relation.type === relationType;
+    const event = entity.history?.find((event) => {
+      return event.type === eventType;
     });
 
-    if (relation != null && relation.date != null) {
+    if (event != null && event.date != null) {
       const [start, end] = dateRange;
-      const year = new Date(relation.date).getUTCFullYear();
+      const year = new Date(event.date).getUTCFullYear();
       if (start <= year && year <= end) {
         return true;
       }
