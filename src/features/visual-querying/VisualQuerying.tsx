@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import { useLazyGetPersonsByParamQuery } from '@/features/common/intavia-api.service';
+import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { PersonShape } from '@/features/visual-querying/PersonShape';
 import type {
@@ -21,7 +21,7 @@ export function VisualQuerying(): JSX.Element {
   const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const [trigger] = useLazyGetPersonsByParamQuery();
+  const [trigger] = useLazyGetPersonsQuery();
 
   useEffect(() => {
     const newSvgViewBox = `${-window.innerWidth / 2} ${-window.innerHeight / 2} ${
@@ -52,13 +52,16 @@ export function VisualQuerying(): JSX.Element {
       : null;
 
     // Send the query
-    void trigger({
-      name: name ?? undefined,
-      dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
-      dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
-      dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
-      dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
-    });
+    void trigger(
+      {
+        q: name ?? undefined,
+        dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
+        dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
+        dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
+        dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+      },
+      true,
+    );
   }
 
   function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {

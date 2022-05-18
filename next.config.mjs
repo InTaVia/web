@@ -1,3 +1,5 @@
+import { log } from '@stefanprobst/log';
+
 /** @typedef {import('next').NextConfig} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 
@@ -42,7 +44,7 @@ const config = {
       ],
     });
 
-    console.warn('⚠️  Indexing by search engines is disallowed.');
+    log.warn('Indexing by search engines is disallowed.');
 
     return headers;
   },
