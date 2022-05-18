@@ -26,6 +26,7 @@
     "package-lock.json": true
   },
   "stylelint.enable": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "node_modules/typescript/lib",
   "[markdown]": {
     "editor.wordWrap": "on"

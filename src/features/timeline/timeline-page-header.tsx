@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 
-import { PageTitle } from '@/features/ui/PageTitle';
+import { PageTitle } from '@/features/ui/page-title';
 
 export function TimelinePageHeader(): JSX.Element {
   return (

@@ -7,7 +7,7 @@ import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
-import { eventTypes } from '@/mocks/event-types';
+import { eventTypes } from '@/features/common/event-types';
 
 export interface TimelineElementProps {
   scaleX: ScaleTime<number, number>;
@@ -47,7 +47,9 @@ function _TimelineElement(
   const additionalEvents = hist.filter((d) => {
     return d.type !== 'beginning' && d.type !== 'end';
   });
-  const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
+  const additionalEventColors = scaleOrdinal()
+    .domain(Object.keys(eventTypes))
+    .range(schemeTableau10);
 
   const first = dob; // for now
   const last =

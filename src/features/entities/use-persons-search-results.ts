@@ -1,5 +1,5 @@
 import { useGetPersonsQuery } from '@/features/common/intavia-api.service';
-import { usePersonsSearchFilters } from '@/features/search/usePersonsSearchFilters';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 
 export function usePersonsSearchResults() {
   const searchFilters = usePersonsSearchFilters();
