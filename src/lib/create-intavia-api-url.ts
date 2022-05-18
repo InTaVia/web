@@ -1,7 +1,10 @@
-import type { CreateUrlArgs } from '@/lib/create-url';
-import { createUrl } from '@/lib/create-url';
+import type { UrlInit } from '@stefanprobst/request';
+import { createUrl } from '@stefanprobst/request';
+
 import { baseUrl } from '~/config/intavia.config';
 
-export function createIntaviaApiUrl(args: Omit<CreateUrlArgs, 'baseUrl'>): URL {
+type CreateIntaviaApiUrlArgs = Omit<UrlInit, 'baseUrl'>;
+
+export function createIntaviaApiUrl(args: CreateIntaviaApiUrlArgs): URL {
   return createUrl({ ...args, baseUrl });
 }

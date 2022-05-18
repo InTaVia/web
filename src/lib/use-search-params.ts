@@ -1,16 +1,12 @@
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 
-import { createUrlSearchParams } from '@/lib/create-url-search-params';
+import { useRoute } from '@/lib/use-route';
 
 export function useSearchParams(): URLSearchParams | null {
   const router = useRouter();
+  const route = useRoute();
 
-  const searchParams = useMemo(() => {
-    if (!router.isReady) return null;
+  if (!router.isReady) return null;
 
-    return createUrlSearchParams({ searchParams: router.query });
-  }, [router]);
-
-  return searchParams;
+  return route.searchParams;
 }

@@ -34,11 +34,11 @@ import { FormTextField } from '@/features/form/form-text-field';
 import { validateSchema } from '@/features/form/validate-schema';
 import { PageTitle } from '@/features/ui/PageTitle';
 import { formatDate } from '@/lib/format-date';
-import { useSearchParams } from '@/lib/use-search-params';
+import { useParams } from '@/lib/use-params';
 
 export default function PersonPage(): JSX.Element {
-  const searchParams = useSearchParams();
-  const id = searchParams?.get('id');
+  const params = useParams();
+  const id = params?.get('id');
   const dispatch = useAppDispatch();
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const localEntitiesByKind = useAppSelector(selectLocalEntitiesByKind);
@@ -51,7 +51,7 @@ export default function PersonPage(): JSX.Element {
   );
   const person = entity ?? getPersonByIdQuery.data;
 
-  if (searchParams == null || getPersonByIdQuery.isLoading) {
+  if (id == null || getPersonByIdQuery.isLoading) {
     return (
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4, placeItems: 'center' }}>
         <Typography>Loading...</Typography>

@@ -1,7 +1,6 @@
+import type { UrlSearchParamsInit } from '@stefanprobst/request';
+import { createUrlSearchParams } from '@stefanprobst/request';
 import { useRouter } from 'next/router';
-
-import type { UrlSearchParamsInit } from '@/lib/create-url-search-params';
-import { createUrlSearchParams } from '@/lib/create-url-search-params';
 
 interface UseSearchResult<T extends UrlSearchParamsInit> {
   getSearchParams: (searchParams: T) => string;
@@ -16,7 +15,7 @@ export function useSearch<T extends UrlSearchParamsInit>(
   function getSearchParams(searchParams: T): string {
     const sanitizedSearchParams =
       sanitizeSearchParams != null ? sanitizeSearchParams(searchParams) : searchParams;
-    return String(createUrlSearchParams({ searchParams: sanitizedSearchParams }));
+    return String(createUrlSearchParams(sanitizedSearchParams));
   }
 
   function search(searchParams: T): void {
