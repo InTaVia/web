@@ -15,6 +15,9 @@ export interface EntityEvent {
   place?: Place;
 }
 
+// FIXME: remove
+export type Relation = EntityEvent;
+
 export interface Person extends EntityBase {
   kind: 'person';
   gender: string;

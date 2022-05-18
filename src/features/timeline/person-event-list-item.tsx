@@ -6,30 +6,29 @@ import { useGetPersonByIdQuery, useGetPlaceByIdQuery } from '@/features/common/i
 
 const dateFmt = timeFormat('%B %_d, %Y');
 
-interface PersonRelationListItemProps {
-  relation: EntityEvent;
+interface PersonEventListItemProps {
+  event: EntityEvent;
 }
 
-export function PersonRelationListItem(props: PersonRelationListItemProps): JSX.Element {
-  const { relation } = props;
+export function PersonEventListItem(props: PersonEventListItemProps): JSX.Element {
+  const { event } = props;
 
   // pattern: <action> [<other entity name>] [in <place name>] [on <date>]
-  const verb =
-    relation.type === 'beginning' ? 'born' : relation.type === 'end' ? 'died' : relation.type;
+  const verb = event.type === 'beginning' ? 'born' : event.type === 'end' ? 'died' : event.type;
 
   const otherEntityName =
-    relation.targetId === undefined ? '' : <OtherEntityName targetId={relation.targetId} />;
+    event.targetId === undefined ? '' : <OtherEntityName targetId={event.targetId} />;
 
-  const placeName = relation.placeId === undefined ? '' : <PlaceName placeId={relation.placeId} />;
+  const placeName = event.placeId === undefined ? '' : <PlaceName placeId={event.placeId} />;
 
   const date =
-    relation.date === undefined ? (
+    event.date === undefined ? (
       ''
     ) : (
       <Typography variant="body2" component="span">
         {' on '}
         <Typography variant="body2" component="span" sx={{ fontWeight: 'bold' }}>
-          {dateFmt(new Date(relation.date))}
+          {dateFmt(new Date(event.date))}
         </Typography>
       </Typography>
     );

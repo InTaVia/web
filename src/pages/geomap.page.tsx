@@ -8,7 +8,7 @@ import { useAppSelector } from '@/features/common/store';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
-import { PageTitle } from '@/features/ui/PageTitle';
+import { PageTitle } from '@/features/ui/page-title';
 
 export default function MapPage(): JSX.Element {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);

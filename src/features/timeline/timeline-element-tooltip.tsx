@@ -3,8 +3,8 @@ import type { TooltipProps } from '@mui/material/Tooltip';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { Fragment, useState } from 'react';
 
-import { PersonTooltipContents } from '@/features/timeline/PersonTooltipContents';
-import type { TimelineElementProps } from '@/features/timeline/TimelineElement';
+import { PersonTooltipContents } from '@/features/timeline/person-tooltip-content';
+import type { TimelineElementProps } from '@/features/timeline/timeline-element';
 
 interface _TimelineElementTooltipProps {
   children: TooltipProps['children'];

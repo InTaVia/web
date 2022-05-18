@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createUrlSearchParams } from '@stefanprobst/request';
 import type { Bin } from 'd3-array';
 
 import type { Person, Place } from '@/features/common/entity.model';
-import { createUrlSearchParams } from '@/lib/create-url-search-params';
 import { baseUrl } from '~/config/intavia.config';
 
 const service = createApi({
@@ -10,7 +10,7 @@ const service = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: String(baseUrl),
     paramsSerializer(searchParams) {
-      return String(createUrlSearchParams({ searchParams }));
+      return String(createUrlSearchParams(searchParams));
     },
     prepareHeaders(headers) {
       return headers;

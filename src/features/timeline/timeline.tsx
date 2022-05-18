@@ -4,7 +4,7 @@ import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { useAppSelector } from '@/features/common/store';
 import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
-import { TimelineSvg } from '@/features/timeline/TimelineSvg';
+import { TimelineSvg } from '@/features/timeline/timeline-svg';
 
 export function Timeline(): JSX.Element {
   const entities = useAppSelector(selectEntitiesByKind);

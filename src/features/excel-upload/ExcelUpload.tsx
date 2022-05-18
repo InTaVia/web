@@ -7,9 +7,11 @@ import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
 import { addLocalEntity } from '@/features/common/entities.slice';
-import type { Person } from '@/features/common/entity.model';
+import type { Person, Place } from '@/features/common/entity.model';
 import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
+
+import type { StoryEvent } from '../storycreator/storycreator.slice';
 
 export function ExcelUpload(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -63,24 +65,30 @@ export function ExcelUpload(): JSX.Element {
   }
 
   function convertData(data: Array<any>) {
-    const events = [];
+    const events: Array<StoryEvent> = [];
 
     for (const raw of data) {
-      // FIXME: Missing id and description for Place
-      const newPlace: any = {
-        name: raw['Place Name'],
-        lat: raw['Lat'] === '' ? null : raw['Lat'],
-        lng: raw['Lon'] === '' ? null : raw['Lon'],
-        kind: 'place',
-      };
+      let newPlace = undefined;
+      if (!Number.isNaN(parseFloat(raw['Lat'])) && !Number.isNaN(parseFloat(raw['Lon']))) {
+        // FIXME: Missing id and description for Place
+        newPlace = {
+          id: 'placeholderID',
+          name: raw['Place Name'],
+          lat: parseFloat(raw['Lat']),
+          lng: parseFloat(raw['Lon']),
+          kind: 'place',
+          description: 'Why does a place need a description?',
+        } as Place;
+      }
 
-      // FIXME: `Relation` has `type` but not `kind`, `name`, `description`
-      const newEvent: any = {
+      const newEvent: StoryEvent = {
         place: newPlace,
         date: raw['Event Start'],
         description: raw['Event Description'],
-        name: raw['Event ID'].split(':')[1],
-        kind: 'event',
+        label: String(raw['Event ID']).includes(':')
+          ? raw['Event ID'].split(':')[1]
+          : raw['Event ID'],
+        type: 'placeholder',
       };
 
       events.push(newEvent);

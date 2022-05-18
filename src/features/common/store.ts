@@ -1,8 +1,20 @@
-import type { Action, ThunkAction } from '@reduxjs/toolkit';
+import type { Action, AnyAction, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist';
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
+import storage from 'redux-persist/lib/storage';
 
 import entitiesReducer from '@/features/common/entities.slice';
 import errorMiddleware from '@/features/common/error.middleware';
@@ -15,10 +27,23 @@ import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline
 import uiReducer from '@/features/ui/ui.slice';
 import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 
+const persistConfig = {
+  key: 'entities',
+  version: 1,
+  storage,
+  stateReconciler: hardSet,
+  blacklist: [intaviaApiService.reducerPath],
+};
+
+const persistedEntitiesReducer = persistReducer<ReturnType<typeof entitiesReducer>, AnyAction>(
+  persistConfig,
+  entitiesReducer,
+);
+
 export function configureAppStore() {
   const store = configureStore({
     reducer: {
-      entities: entitiesReducer,
+      entities: persistedEntitiesReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
       notifications: notificationsReducer,
       storycreator: storycreatorReducer,
@@ -30,10 +55,17 @@ export function configureAppStore() {
       return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [
-            /** Ignore JSX element allowed as action button. */
+            /** Ignore JSX element allowed as notification action button. */
             String(addNotification),
             /** Ignore `Date` objects. */
             String(setTimeRangeBrush),
+            /** `redux-persist` */
+            FLUSH,
+            PAUSE,
+            PERSIST,
+            PURGE,
+            REGISTER,
+            REHYDRATE,
           ],
           ignoreState: true,
         },
@@ -45,6 +77,7 @@ export function configureAppStore() {
 }
 
 export const store = configureAppStore();
+export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
 

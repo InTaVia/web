@@ -1,6 +1,13 @@
 import { useState } from 'react';
 
-export function useDrawerState() {
+interface UseDialogStateResult {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+}
+
+export function useDialogState(): UseDialogStateResult {
   const [isOpen, setIsOpen] = useState(false);
 
   function open() {

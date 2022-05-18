@@ -1,10 +1,8 @@
 import { z } from 'zod';
 
-export const relation = z.object({
+export const event = z.object({
   type: z.string(),
-  // FIXME: date cannot really be optional for e.g. `beginning` and `end` events
   date: z.string().optional(),
-  // FIXME: why both targetId and placeId?
   targetId: z.string().optional(),
   placeId: z.string().optional(),
 });
@@ -13,8 +11,7 @@ export const entity = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string(),
-  // FIXME: should not be optional
-  history: z.array(relation).optional(),
+  history: z.array(event).optional(),
 });
 
 export const person = entity.extend({

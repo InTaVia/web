@@ -23,8 +23,8 @@ import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
-import { TimelineSvg } from '@/features/timeline/TimelineSvg';
-import { PageTitle } from '@/features/ui/PageTitle';
+import { TimelineSvg } from '@/features/timeline/timeline-svg';
+import { PageTitle } from '@/features/ui/page-title';
 
 export default function CoordinationPage(): JSX.Element | null {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
