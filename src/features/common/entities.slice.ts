@@ -51,7 +51,6 @@ const slice = createSlice({
     builder.addMatcher(
       isAnyOf(
         intaviaApiService.endpoints.getPersons.matchFulfilled,
-        intaviaApiService.endpoints.getPersonsByParam.matchFulfilled,
         intaviaApiService.endpoints.getPlaces.matchFulfilled,
       ),
       (state, action) => {
