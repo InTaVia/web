@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist';
 
 import type { Entity, EntityKind } from '@/features/common/entity.model';
 import intaviaApiService from '@/features/common/intavia-api.service';
@@ -81,6 +82,10 @@ const slice = createSlice({
     },
   },
   extraReducers(builder) {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
+
     builder.addMatcher(
       isAnyOf(
         intaviaApiService.endpoints.getPersons.matchFulfilled,

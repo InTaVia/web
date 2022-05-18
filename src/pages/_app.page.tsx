@@ -10,9 +10,10 @@ import type { AppProps as NextAppProps } from 'next/app';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { createEmotionCache } from '@/features/common/create-emotion-cache';
-import { store } from '@/features/common/store';
+import { persistor, store } from '@/features/common/store';
 import { PageLayout } from '@/features/layouts/PageLayout';
 import { Notifications } from '@/features/notifications/Notifications';
 import { createAppUrl } from '@/lib/create-app-url';
@@ -59,9 +60,11 @@ export default function App(props: AppProps): JSX.Element {
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <PageLayout>
-              <Component {...pageProps} />
-            </PageLayout>
+            <PersistGate loading={null} persistor={persistor}>
+              <PageLayout>
+                <Component {...pageProps} />
+              </PageLayout>
+            </PersistGate>
             <Notifications />
           </ThemeProvider>
         </CacheProvider>
