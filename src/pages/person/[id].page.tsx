@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
+import { useRouter } from 'next/router';
 import { Fragment, useState } from 'react';
 import { useFieldArray } from 'react-final-form-arrays';
 
@@ -34,11 +35,11 @@ import { FormTextField } from '@/features/form/form-text-field';
 import { validateSchema } from '@/features/form/validate-schema';
 import { PageTitle } from '@/features/ui/PageTitle';
 import { formatDate } from '@/lib/format-date';
-import { useSearchParams } from '@/lib/use-search-params';
 
 export default function PersonPage(): JSX.Element {
-  const searchParams = useSearchParams();
-  const id = searchParams?.get('id');
+  const router = useRouter();
+  const _id = router.query['id'];
+  const id = _id != null && Array.isArray(_id) ? _id[0] : _id;
   const dispatch = useAppDispatch();
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const localEntitiesByKind = useAppSelector(selectLocalEntitiesByKind);
@@ -51,7 +52,7 @@ export default function PersonPage(): JSX.Element {
   );
   const person = entity ?? getPersonByIdQuery.data;
 
-  if (searchParams == null || getPersonByIdQuery.isLoading) {
+  if (id == null || getPersonByIdQuery.isLoading) {
     return (
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4, placeItems: 'center' }}>
         <Typography>Loading...</Typography>
