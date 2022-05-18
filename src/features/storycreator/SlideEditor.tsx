@@ -41,6 +41,26 @@ interface SlideEditorProps {
   entities: Array<any>;
 }
 
+interface SlideDrop {
+  type: string;
+}
+
+interface SlideImage extends SlideDrop {
+  text?: string;
+  title?: string;
+  link?: string;
+}
+
+type SlideMap = SlideDrop;
+
+type SlideTimeline = SlideDrop;
+
+interface SlideQuiz extends SlideDrop {
+  question: string;
+  answers: Array<string>;
+  solutions: Array<string>;
+}
+
 export function SlideEditor(props: SlideEditorProps) {
   const { width: myWidth, targetRef, slide, imageRef, entities, takeScreenshot } = props;
 
@@ -107,6 +127,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
       switch (dropProps.type) {
         case 'Text':
+        case 'Quiz':
           layoutItem['h'] = 4;
           layoutItem['w'] = 2;
           break;
@@ -256,6 +277,7 @@ export function SlideEditor(props: SlideEditorProps) {
     switch (element.type) {
       case 'Text':
       case 'Image':
+      case 'Quiz':
         return (
           <div key={element.i} className={styles.elevated}>
             <Window

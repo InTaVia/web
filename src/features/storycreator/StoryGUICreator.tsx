@@ -290,7 +290,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             /* createDrops('Timeline'), */
             createDrops({ type: 'Text' }),
             createDrops({ type: 'Image' }),
-            /* createDrops('Quiz'), */
+            createDrops({ type: 'Quiz' }),
           ]}
         </div>
         <div
