@@ -1,18 +1,10 @@
-import dynamic from 'next/dynamic';
+import Paper from '@mui/material/Paper';
+import { useState } from 'react';
+import { DrawPolygonMode, Editor } from 'react-map-gl-draw';
 
-import type { LeafletCountriesProps } from '@/features/visual-querying/LeafletCountries';
-import styles from '@/features/visual-querying/visual-querying.module.css';
-// import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
-// Dynamically load LeafletCountries component as Leaflet has problems with SSR
-const LeafletCountries = dynamic<LeafletCountriesProps>(
-  () => {
-    return import('@/features/visual-querying/LeafletCountries').then((mod) => {
-      return mod.LeafletCountries;
-    });
-  },
-  { ssr: false },
-);
+import { MapLibre } from '../geomap/MaplibreMap';
 
 interface PlaceConstraintProps {
   idx: number;
@@ -20,7 +12,7 @@ interface PlaceConstraintProps {
   y: number;
   width: number;
   height: number;
-  // constraint: PlaceConstraint;
+  constraint: PlaceConstraint;
 }
 
 export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
@@ -35,21 +27,30 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
     boundedHeight: height - 100,
   };
 
+  const mode = useState(() => {
+    return new DrawPolygonMode();
+  });
+
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <rect
-        fill="white"
-        stroke="blue"
-        strokeWidth={1}
-        x="0"
-        y="0"
-        width={dimensions.width}
-        height={dimensions.height}
-      />
       <foreignObject width={dimensions.width} height={dimensions.height}>
-        <div className={styles['leaflet-constraint-wrapper']}>
-          <LeafletCountries selected={[]} />
-        </div>
+        <Paper
+          elevation={3}
+          sx={{
+            margin: '2px',
+            width: dimensions.width - 4,
+            height: dimensions.height - 4,
+            padding: '8px',
+          }}
+        >
+          <MapLibre>
+            <Editor
+              // to make the lines/vertices easier to interact with
+              clickRadius={12}
+              // mode={mode}
+            />
+          </MapLibre>
+        </Paper>
       </foreignObject>
     </g>
   );
