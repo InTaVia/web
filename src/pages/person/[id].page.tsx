@@ -23,6 +23,7 @@ import {
 } from '@/features/common/entities.slice';
 import type { Entity, Person } from '@/features/common/entity.model';
 import { person } from '@/features/common/entity.validation-schema';
+import { eventTypes } from '@/features/common/event-types';
 import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { Form } from '@/features/form/form';
@@ -71,17 +72,16 @@ export default function PersonPage(): JSX.Element {
     dispatch(addLocalEntity(person));
   }
 
-  const eventTypes = { birth: 'beginning', death: 'end' };
-  const birth = person.history?.find((relation) => {
-    return relation.type === eventTypes.birth;
+  const birth = person.history?.find((event) => {
+    return event.type === 'beginning';
   });
-  const death = person.history?.find((relation) => {
-    return relation.type === eventTypes.death;
+  const death = person.history?.find((event) => {
+    return event.type === 'end';
   });
   const history =
     person.history
-      ?.filter((relation) => {
-        return ![eventTypes.birth, eventTypes.death].includes(relation.type);
+      ?.filter((event) => {
+        return !['beginning', 'end'].includes(event.type);
       })
       ?.sort((a, b) => {
         const _a = a.date == null ? 0 : new Date(a.date).getTime();
@@ -195,11 +195,7 @@ export default function PersonPage(): JSX.Element {
                 return (
                   <ListItem key={index} disablePadding>
                     <Box component="article">
-                      <Typography>
-                        {event.type in relationTypes
-                          ? relationTypes[event.type as keyof typeof relationTypes].label
-                          : event.type}
-                      </Typography>
+                      <Typography>{eventTypes[event.type].label}</Typography>
                       <Typography color="text.secondary">
                         {event.date != null ? (
                           <span>{formatDate(new Date(event.date))}</span>
@@ -331,10 +327,10 @@ function EntityHistoryFormSection(): JSX.Element {
               }}
             >
               <FormSelect label="Type" name={`${name}.type`}>
-                {Object.values(relationTypes).map((relationType) => {
+                {Object.values(eventTypes).map((eventType) => {
                   return (
-                    <MenuItem key={relationType.id} value={relationType.id}>
-                      {relationType.label}
+                    <MenuItem key={eventType.id} value={eventType.id}>
+                      {eventType.label}
                     </MenuItem>
                   );
                 })}
@@ -359,15 +355,3 @@ function EntityHistoryFormSection(): JSX.Element {
     </Box>
   );
 }
-
-// FIXME: see mocks/event-types and mocks/db
-const relationTypes = {
-  // FIXME: why generic `beginning` and `end` instead of entity-type specific, e.g. `birth` and `death` for `person`
-  beginning: { id: 'beginning', label: 'Beginning' },
-  end: { id: 'end', label: 'End' },
-  stayed: { id: 'stayed', label: 'Stayed at' },
-  lived: { id: 'lived', label: 'Lived in' },
-  'statue erected': { id: 'statue erected', label: 'Statue erected' },
-  'was in contact with': { id: 'was in contact with', label: 'Was in contact with' },
-  'was related to': { id: 'was related to', label: 'Was related to' },
-};

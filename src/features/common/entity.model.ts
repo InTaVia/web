@@ -1,14 +1,14 @@
-type IsoDateString = string;
+import type { EventType } from '@/features/common/event-types';
 
 export interface EntityBase {
   id: string;
   name: string;
   description: string;
-  history?: Array<Relation>;
+  history?: Array<EntityEvent>;
 }
 
-export interface Relation {
-  type: string;
+export interface EntityEvent {
+  type: EventType;
   targetId?: Entity['id'];
   date?: IsoDateString;
   placeId?: Place['id'];

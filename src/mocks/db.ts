@@ -4,9 +4,9 @@ import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
 // import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import type { Entity, Person, Place, Relation } from '@/features/common/entity.model';
+import type { Entity, EntityEvent, Person, Place } from '@/features/common/entity.model';
+import type { EventType } from '@/features/common/event-types';
 import { times } from '@/lib/times';
-import { afterDeathEventTypes, lifetimeEventTypes } from '@/mocks/event-types';
 
 export const db = {
   person: createTable<Person>(),
@@ -82,7 +82,7 @@ function createTable<T extends Entity>() {
     create(entity: T) {
       table.set(entity.id, entity);
     },
-    addRelationToHistory(id: Entity['id'], relation: Relation) {
+    addRelationToHistory(id: Entity['id'], relation: EntityEvent) {
       const entity = table.get(id);
       if (entity == null) return;
       if (entity.history == null) {
@@ -108,7 +108,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(): [Relation, Relation] {
+function createLifeSpanRelations(): [EntityEvent, EntityEvent] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -129,7 +129,7 @@ function createLifeSpanRelations(): [Relation, Relation] {
   ];
 }
 
-function createPersonRelation(type: string, targetId: Entity['id'], date?: Date): Relation {
+function createPersonRelation(type: EventType, targetId: Entity['id'], date?: Date): EntityEvent {
   if (date === undefined) {
     return {
       type,
@@ -146,8 +146,11 @@ function createPersonRelation(type: string, targetId: Entity['id'], date?: Date)
   }
 }
 
-function createExtraRelations(birth: Date, death: Date): Array<Relation> {
-  const relations: Array<Relation> = [];
+function createExtraRelations(birth: Date, death: Date): Array<EntityEvent> {
+  const lifetimeEventTypes: Array<EventType> = ['stayed', 'lived'];
+  const afterDeathEventTypes: Array<EventType> = ['statue erected'];
+
+  const relations: Array<EntityEvent> = [];
 
   const numRelations = faker.datatype.number(8);
   const numWithinLifetime = faker.datatype.number({
@@ -241,7 +244,7 @@ export function seed() {
       targetPersonDateOfBirth <= sourcePersonDateOfDeath
     ) {
       //overlapping dates
-      relationType = 'was in contact with';
+      relationType = 'was in contact with' as const;
       const start = Math.max(
         new Date(sourcePersonDateOfBirth).getTime(),
         new Date(targetPersonDateOfBirth).getTime(),
@@ -252,7 +255,7 @@ export function seed() {
       );
       relationDate = faker.date.between(start, end);
     } else {
-      relationType = 'was related to';
+      relationType = 'was related to' as const;
     }
 
     db.person.addRelationToHistory(

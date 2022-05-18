@@ -16,6 +16,8 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
+import type { EventType } from '@/features/common/event-types';
+import { eventTypes } from '@/features/common/event-types';
 import { useAppSelector } from '@/features/common/store';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
@@ -23,17 +25,6 @@ import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/TimelineSvg';
 import { PageTitle } from '@/features/ui/PageTitle';
-
-export const eventTypes = [
-  'stayed',
-  'lived',
-  'statue erected',
-  'was in contact with',
-  'beginning',
-  'end',
-] as const;
-
-export type EventType = typeof eventTypes[number];
 
 export default function CoordinationPage(): JSX.Element | null {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
@@ -140,10 +131,10 @@ export default function CoordinationPage(): JSX.Element | null {
               label="Event Type"
               onChange={handleChange}
             >
-              {eventTypes.map((eventType: EventType) => {
+              {Object.values(eventTypes).map((eventType) => {
                 return (
-                  <MenuItem key={`event-type-${eventType}`} value={eventType}>
-                    {eventType}
+                  <MenuItem key={`event-type-${eventType.id}`} value={eventType.id}>
+                    {eventType.label}
                   </MenuItem>
                 );
               })}

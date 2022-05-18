@@ -1,13 +1,13 @@
 import Typography from '@mui/material/Typography';
 import { timeFormat } from 'd3-time-format';
 
-import type { Relation } from '@/features/common/entity.model';
+import type { EntityEvent } from '@/features/common/entity.model';
 import { useGetPersonByIdQuery, useGetPlaceByIdQuery } from '@/features/common/intavia-api.service';
 
 const dateFmt = timeFormat('%B %_d, %Y');
 
 interface PersonRelationListItemProps {
-  relation: Relation;
+  relation: EntityEvent;
 }
 
 export function PersonRelationListItem(props: PersonRelationListItemProps): JSX.Element {
