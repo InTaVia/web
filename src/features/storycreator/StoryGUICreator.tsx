@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type { Story } from '@/features/storycreator/storycreator.slice';
+import type { Story, StoryEvent } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
   createSlidesInBulk,
@@ -196,7 +196,11 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     }
   }
 
-  const entitiesInSlide = selectedSlide?.entities ? selectedSlide.entities : persons;
+  const eventsInSlide: Array<StoryEvent> = selectedSlide?.events
+    ? selectedSlide.events
+    : persons.flatMap((person) => {
+        return person.history as Array<StoryEvent>;
+      });
 
   const gridHeight = Math.round(height / 5);
 
@@ -234,7 +238,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
                     slide={selectedSlide}
                     imageRef={ref}
                     takeScreenshot={takeScreenshot}
-                    entities={entitiesInSlide}
+                    events={eventsInSlide}
                   />
                 );
               }}

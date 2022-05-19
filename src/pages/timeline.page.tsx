@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { useAppSelector } from '@/features/common/store';
-import { Timeline } from '@/features/timeline/Timeline';
-import { TimelinePageHeader } from '@/features/timeline/TimelinePageHeader';
-import { ZoomRangeToggle } from '@/features/timeline/ZoomRangeToggle';
+import { Timeline } from '@/features/timeline/timeline';
+import { TimelinePageHeader } from '@/features/timeline/timeline-page-header';
+import { ZoomRangeToggle } from '@/features/timeline/zoom-range-toggle';
 
 export default function TimelinePage(): JSX.Element | null {
   const entities = useAppSelector(selectEntitiesByKind);

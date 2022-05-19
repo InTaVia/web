@@ -46,7 +46,6 @@ export function ConstraintList(props: ConstraintListProps) {
     <foreignObject width={props.width} height={props.height}>
       <Paper>
         <List
-          component="ul"
           role="list"
           sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}
         >

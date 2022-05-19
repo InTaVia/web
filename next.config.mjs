@@ -1,3 +1,7 @@
+// @ts-expect-error Missing module declaration.
+import createBundleAnalyzer from '@next/bundle-analyzer';
+import { log } from '@stefanprobst/log';
+
 /** @typedef {import('next').NextConfig} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 
@@ -42,7 +46,7 @@ const config = {
       ],
     });
 
-    console.warn('⚠️  Indexing by search engines is disallowed.');
+    log.warn('Indexing by search engines is disallowed.');
 
     return headers;
   },
@@ -61,7 +65,7 @@ const config = {
 };
 
 /** @type {Array<(config: NextConfig) => NextConfig>} */
-const plugins = [];
+const plugins = [createBundleAnalyzer({ enabled: process.env['BUNDLE_ANALYZER'] === 'enabled' })];
 
 export default plugins.reduce((config, plugin) => {
   return plugin(config);

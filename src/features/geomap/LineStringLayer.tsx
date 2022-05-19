@@ -2,7 +2,7 @@ import type { LayerProps } from 'react-map-gl';
 import { Layer, Source } from 'react-map-gl';
 
 import type { Person } from '@/features/common/entity.model';
-import type { EventType } from '@/pages/coordination.page';
+import type { EventType } from '@/features/common/event-types';
 
 interface LineStringLayerProps {
   persons: Array<Person>;
@@ -10,6 +10,7 @@ interface LineStringLayerProps {
   hovered?: Person['id'] | null;
   setHovered?: (val: Person['id'] | null) => void;
 }
+
 export function LineStringLayer(props: LineStringLayerProps): JSX.Element {
   const { persons, showEventTypes } = props;
 

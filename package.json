@@ -4,18 +4,21 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "analyze-bundle": "cross-env BUNDLE_ANALYZER='enabled' NEXT_PUBLIC_API_MOCKING='disabled' next build --no-lint",
     "build": "next build",
     "cypress": "cypress open --config-file ./cypress/cypress.config.json",
     "cypress:headless": "cypress run --config-file ./cypress/cypress.config.json",
     "dev": "next dev",
     "format": "prettier . --list-different --ignore-path .gitignore",
     "format:fix": "npm run format -- --write",
+    "generate:favicons": "ts-script scripts/generate-favicons",
     "lint": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext js,mjs,ts,tsx --ignore-path .gitignore",
+    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path .gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
     "lint:styles:check": "stylelint \"**/*.css\" --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",
+    "prebuild": "npm run generate:favicons",
     "prepare": "simple-git-hooks || true",
     "start": "next start",
     "stories:build": "build-storybook --config-dir stories --quiet",
@@ -45,7 +48,11 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
+    "@next/bundle-analyzer": "^12.1.6",
     "@reduxjs/toolkit": "^1.8.0",
+    "@stefanprobst/log": "^1.0.3",
+    "@stefanprobst/next-page-metadata": "2.0.5-legacy",
+    "@stefanprobst/request": "^0.1.10",
     "@turf/turf": "^6.5.0",
     "d3": "^7.0.0",
     "d3-axis": "^3.0.0",
@@ -63,7 +70,7 @@
     "leaflet": "^1.8.0",
     "mapbox-gl": "npm:empty-npm-package@^1.0.0",
     "maplibre-gl": "^2.1.9",
-    "next": "^12.1.2",
+    "next": "^12.1.6",
     "react": "^17.0.2",
     "react-contenteditable": "^3.3.6",
     "react-dom": "^17.0.2",
@@ -74,14 +81,17 @@
     "react-map-gl": "^7.0.10",
     "react-redux": "^7.2.6",
     "react-resize-detector": "^7.0.0",
+    "redux-persist": "^6.0.0",
     "xlsx": "^0.18.5",
     "zod": "^3.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
-    "@faker-js/faker": "^6.1.1",
+    "@faker-js/faker": "^6.3.1",
     "@jest/types": "^27.5.1",
-    "@next/eslint-plugin-next": "^12.1.2",
+    "@next/eslint-plugin-next": "^12.1.6",
+    "@stefanprobst/favicons": "^2.0.4",
+    "@stefanprobst/ts-script": "^1.0.2",
     "@storybook/addon-a11y": "^6.4.19",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
@@ -349,8 +359,7 @@
           "storybook/use-storybook-testing-library": "error"
         }
       }
-    ],
-    "ignorePatterns": "public/mockServiceWorker.js"
+    ]
   },
   "lint-staged": {
     "*.@(cjs|js|mjs|ts|tsx)": [

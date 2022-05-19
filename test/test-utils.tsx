@@ -42,10 +42,6 @@ export function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
 
 export async function createStoreWithSearchResults() {
   const store = configureAppStore();
-  await intaviaApisService.endpoints.getPersons.initiate({})(
-    store.dispatch,
-    store.getState,
-    undefined,
-  );
+  await store.dispatch(intaviaApisService.endpoints.getPersons.initiate({}));
   return store;
 }

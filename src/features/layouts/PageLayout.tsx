@@ -1,5 +1,6 @@
 import StoryCreatorIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import DataSaverOnOutlinedIcon from '@mui/icons-material/DataSaverOnOutlined';
 import GridViewIcon from '@mui/icons-material/GridViewOutlined';
 import HomeIcon from '@mui/icons-material/HomeOutlined';
@@ -25,7 +26,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-import { useDrawerState } from '@/features/layouts/use-drawer-state';
+import { useDialogState } from '@/features/ui/use-dialog-state';
 
 export interface PageLayoutProps {
   children?: ReactNode;
@@ -34,7 +35,7 @@ export interface PageLayoutProps {
 export function PageLayout(props: PageLayoutProps): JSX.Element {
   const { children } = props;
 
-  const drawer = useDrawerState();
+  const drawer = useDialogState();
 
   const links = [
     { id: 'home', href: { pathname: '/' }, label: 'Home', icon: <HomeIcon /> },
@@ -44,6 +45,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       href: { pathname: '/visual-querying' },
       label: 'Visual Query',
       icon: <DataSaverOnOutlinedIcon />,
+    },
+    {
+      id: 'collections',
+      href: { pathname: '/collections' },
+      label: 'Collections',
+      icon: <CollectionsOutlinedIcon />,
     },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },

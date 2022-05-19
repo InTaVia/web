@@ -1,11 +1,12 @@
 import { color as d3color } from 'd3-color';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
+import { Fragment } from 'react';
 import { Marker } from 'react-map-gl';
 
 import type { Person } from '@/features/common/entity.model';
-import type { EventType } from '@/pages/coordination.page';
-import { eventTypes } from '@/pages/coordination.page';
+import type { EventType } from '@/features/common/event-types';
+import { eventTypes } from '@/features/common/event-types';
 
 interface PinLayerProps {
   persons: Array<Person>;
@@ -65,18 +66,20 @@ export function PinLayer(props: PinLayerProps): JSX.Element {
 
   const size = 16;
 
-  const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
+  const additionalEventColors = scaleOrdinal()
+    .domain(Object.keys(eventTypes))
+    .range(schemeTableau10);
 
   const handleMouseEnter = (entityId: Person['id']) => {
-    setHovered && setHovered(entityId);
+    setHovered?.(entityId);
   };
 
   const handleMouseLeave = () => {
-    setHovered && setHovered(null);
+    setHovered?.(null);
   };
 
   return (
-    <>
+    <Fragment>
       {markers.map((marker, index) => {
         const color: string = additionalEventColors(marker.eventType) as string;
         const colorFill = d3color(color)?.brighter(2)?.formatHex() as string;
@@ -113,12 +116,12 @@ export function PinLayer(props: PinLayerProps): JSX.Element {
                   fill={colorFill}
                   stroke={marker.id.startsWith(hovered as string) ? 'salmon' : color}
                   strokeWidth={marker.id.startsWith(hovered as string) ? 4 : 2}
-                ></path>
+                />
               )}
             </svg>
           </Marker>
         );
       })}
-    </>
+    </Fragment>
   );
 }

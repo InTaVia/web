@@ -13,7 +13,7 @@ COPY --chown=node:node package.json package-lock.json ./
 RUN npm install --ci --no-audit --no-fund
 
 COPY --chown=node:node next.config.mjs tsconfig.json app.d.ts next-env.d.ts ./
-# COPY --chown=node:node scripts ./scripts
+COPY --chown=node:node scripts ./scripts
 COPY --chown=node:node config ./config
 COPY --chown=node:node public ./public
 COPY --chown=node:node src ./src
