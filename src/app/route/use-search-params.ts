@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useRoute } from '@/lib/use-route';
+import { useRoute } from '@/app/route/use-route';
 
 export function useSearchParams(): URLSearchParams | null {
   const router = useRouter();

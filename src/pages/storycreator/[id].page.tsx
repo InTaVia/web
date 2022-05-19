@@ -2,10 +2,10 @@ import { Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { useAppSelector } from '@/features/common/store';
+import { useParams } from '@/app/route/use-params';
+import { useAppSelector } from '@/app/store';
 import { StoryCreator } from '@/features/storycreator/StoryCreator';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
-import { useParams } from '@/lib/use-params';
 
 export default function StoryPage(): JSX.Element | null {
   const router = useRouter();

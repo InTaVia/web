@@ -5,11 +5,11 @@ describe('HomePage', () => {
     cy.visit('/');
   });
 
-  it.skip('should set document title', () => {
-    cy.title().contains('Home');
+  it('should set document title', () => {
+    cy.title().should('eq', 'Home | In/Tangible European Heritage (InTaVia)');
   });
 
   it('should display page title', () => {
-    cy.get('h1').contains('Welcome to InTaVia!');
+    cy.findByRole('heading', { name: 'Welcome to InTaVia!' }).should('be.visible');
   });
 });

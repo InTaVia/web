@@ -8,9 +8,9 @@ import { useRef } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Place } from '@/features/common/entity.model';
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';

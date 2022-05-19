@@ -5,9 +5,9 @@ import TextField from '@mui/material/TextField';
 import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
+import { useAppSelector } from '@/app/store';
 import type { Collection } from '@/features/common/entities.slice';
 import { selectCollections, selectEntities } from '@/features/common/entities.slice';
-import { useAppSelector } from '@/features/common/store';
 import { SearchResult } from '@/features/entities/search-result';
 
 export function CollectionEntitiesList(): JSX.Element {

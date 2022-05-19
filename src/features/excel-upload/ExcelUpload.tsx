@@ -6,9 +6,9 @@ import { IconButton, Input } from '@mui/material';
 import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
+import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/features/common/entities.slice';
 import type { Person, Place } from '@/features/common/entity.model';
-import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 
 import type { StoryEvent } from '../storycreator/storycreator.slice';

@@ -2,20 +2,22 @@ import type { NextRouter } from 'next/router';
 
 import { createAppUrl } from '@/lib/create-app-url';
 import { noop } from '@/lib/noop';
+import type { Locale } from '~/config/i18n.config';
+import { defaultLocale, locales } from '~/config/i18n.config';
 
 export const router: NextRouter = {
   asPath: '/',
   back: noop,
   basePath: '/',
   beforePopState: noop,
-  defaultLocale: undefined,
+  defaultLocale,
   events: { on: noop, off: noop, emit: noop },
   isFallback: false,
   isLocaleDomain: false,
   isReady: true,
   isPreview: false,
-  locale: undefined,
-  locales: undefined,
+  locale: defaultLocale,
+  locales: locales as unknown as Array<Locale>,
   pathname: '/',
   prefetch() {
     return Promise.resolve();

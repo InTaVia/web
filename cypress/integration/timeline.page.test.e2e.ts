@@ -9,12 +9,12 @@ describe('TimelinePage', () => {
     cy.location('pathname').should('include', 'timeline');
   });
 
-  it.skip('should set document title', () => {
-    cy.window().title().contains('Timeline');
+  it('should set document title', () => {
+    cy.title().should('eq', 'Home | In/Tangible European Heritage (InTaVia)');
   });
 
   it('should display page title', () => {
-    cy.get('h1').contains('Timeline');
+    cy.findByRole('heading', { name: 'Timeline' }).should('be.visible');
   });
 
   it('should display a tooltip on hover over a person', () => {

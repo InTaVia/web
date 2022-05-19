@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ReactNode } from 'react';
 
-import type { RootState } from '@/features/common/store';
+import type { RootState } from '@/app/store';
 
 export interface Notification {
   id: string;

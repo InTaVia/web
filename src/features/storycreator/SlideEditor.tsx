@@ -3,7 +3,7 @@ import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {

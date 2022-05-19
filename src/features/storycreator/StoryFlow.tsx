@@ -2,7 +2,7 @@ import { Card } from '@mui/material';
 import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch } from '@/app/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import { copySlide, removeSlide, selectSlide } from '@/features/storycreator/storycreator.slice';

@@ -2,11 +2,11 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 
+import { useParams } from '@/app/route/use-params';
+import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/features/common/entities.slice';
 import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
-import { useAppSelector } from '@/features/common/store';
 import { PersonDetails } from '@/features/entities/person-details';
-import { useParams } from '@/lib/use-params';
 
 export default function PersonPage(): JSX.Element {
   const params = useParams();

@@ -3,7 +3,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import type { ChangeEvent } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectZoomToTimeRange, setZoomToTimeRange } from '@/features/timeline/timeline.slice';
 
 export function ZoomRangeToggle(): JSX.Element {

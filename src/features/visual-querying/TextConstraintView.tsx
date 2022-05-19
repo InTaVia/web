@@ -1,7 +1,7 @@
 import { Button, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch } from '@/app/store';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateText } from '@/features/visual-querying/visualQuerying.slice';
 

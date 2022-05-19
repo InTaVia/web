@@ -14,11 +14,11 @@ import Select from '@mui/material/Select';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes } from '@/features/common/event-types';
-import { useAppSelector } from '@/features/common/store';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
 import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';

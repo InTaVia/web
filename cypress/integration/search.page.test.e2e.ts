@@ -5,12 +5,12 @@ describe('SearchPage', () => {
     cy.visit('/search');
   });
 
-  it.skip('should set document title', () => {
-    cy.title().contains('Search');
+  it('should set document title', () => {
+    cy.title().should('eq', 'Home | In/Tangible European Heritage (InTaVia)');
   });
 
   it('should display page title', () => {
-    cy.get('h1').contains('Search');
+    cy.findByRole('heading', { name: 'Search' }).should('be.visible');
   });
 
   it('should display first page of search results and hide loading message', () => {

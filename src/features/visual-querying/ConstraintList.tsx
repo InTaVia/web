@@ -1,7 +1,7 @@
 import { List, ListItemButton, Paper, Typography } from '@mui/material';
 import type { MouseEvent } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
 import {
   addConstraint,

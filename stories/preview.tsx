@@ -12,7 +12,7 @@ import {
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { Fragment } from 'react';
 
-import { Notifications } from '@/features/notifications/Notifications';
+import { Notifications } from '@/app/notifications/notifications';
 import { createMockRouter } from '@/mocks/create-mock-router';
 import { theme } from '@/styles/theme';
 

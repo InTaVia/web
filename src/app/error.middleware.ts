@@ -1,7 +1,7 @@
 import type { Action, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 
-import { addNotification } from '@/features/notifications/notifications.slice';
+import { addNotification } from '@/app/notifications/notifications.slice';
 
 const middleware: Middleware = function errorMiddleware(api: MiddlewareAPI) {
   return (next) => {

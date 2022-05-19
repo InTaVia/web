@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useAppSelector } from '@/features/common/store';
+import { useAppSelector } from '@/app/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';

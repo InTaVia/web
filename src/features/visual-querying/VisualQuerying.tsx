@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { PersonShape } from '@/features/visual-querying/PersonShape';
 import type {
   DateConstraint,

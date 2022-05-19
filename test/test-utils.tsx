@@ -3,10 +3,10 @@ import type { NextRouter } from 'next/router';
 import type { FC } from 'react';
 import { Provider } from 'react-redux';
 
+import { Notifications } from '@/app/notifications/notifications';
+import type { AppStore } from '@/app/store';
+import { configureAppStore } from '@/app/store';
 import intaviaApisService from '@/features/common/intavia-api.service';
-import type { AppStore } from '@/features/common/store';
-import { configureAppStore } from '@/features/common/store';
-import { Notifications } from '@/features/notifications/Notifications';
 import { createMockRouter } from '@/mocks/create-mock-router';
 
 interface WrapperProps {

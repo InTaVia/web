@@ -7,14 +7,14 @@ import { nanoid } from '@reduxjs/toolkit';
 import type { FormEvent } from 'react';
 import { Fragment } from 'react';
 
+import { addNotification } from '@/app/notifications/notifications.slice';
+import { useAppDispatch } from '@/app/store';
 import type { QueryMetadata } from '@/features/common/entities.slice';
 import { addCollection } from '@/features/common/entities.slice';
 import type { Entity } from '@/features/common/entity.model';
 import intaviaService from '@/features/common/intavia-api.service';
-import { useAppDispatch } from '@/features/common/store';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
-import { addNotification } from '@/features/notifications/notifications.slice';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 
 export function SaveSearchResultsAsCollectionButton(): JSX.Element {

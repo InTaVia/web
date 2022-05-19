@@ -1,6 +1,6 @@
 import { path } from 'd3-path';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch } from '@/app/store';
 import { ConstraintType, toggleConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 interface RingConstraintProps {

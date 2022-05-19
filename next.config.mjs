@@ -1,9 +1,13 @@
+/** @typedef {import('next').NextConfig} NextConfig */
+/** @typedef {import('webpack').Configuration} WebpackConfig */
+/** @typedef {import('~/config/i18n.config').Locale} Locale */
+
 // @ts-expect-error Missing module declaration.
 import createBundleAnalyzer from '@next/bundle-analyzer';
 import { log } from '@stefanprobst/log';
 
-/** @typedef {import('next').NextConfig} NextConfig */
-/** @typedef {import('webpack').Configuration} WebpackConfig */
+const defaultLocale = /** @type {Locale} */ 'en';
+const locales = /** @type {Array<Locale>} */ (['en']);
 
 /** @type {NextConfig} */
 const config = {
@@ -14,7 +18,7 @@ const config = {
   experimental: {
     outputStandalone: true,
   },
-  async headers() {
+  headers() {
     const headers = [
       {
         source: '/:path*',
@@ -48,7 +52,11 @@ const config = {
 
     log.warn('Indexing by search engines is disallowed.');
 
-    return headers;
+    return Promise.resolve(headers);
+  },
+  i18n: {
+    defaultLocale,
+    locales,
   },
   pageExtensions: ['page.tsx', 'api.ts'],
   reactStrictMode: true,

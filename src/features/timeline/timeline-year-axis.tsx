@@ -5,7 +5,7 @@ import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
 import { useEffect, useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectTimeRangeBrush, setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 
 interface TimelineYearAxisProps<_T> {

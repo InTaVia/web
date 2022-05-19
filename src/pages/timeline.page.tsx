@@ -1,15 +1,20 @@
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
+import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import { useAppSelector } from '@/features/common/store';
 import { Timeline } from '@/features/timeline/timeline';
 import { TimelinePageHeader } from '@/features/timeline/timeline-page-header';
 import { ZoomRangeToggle } from '@/features/timeline/zoom-range-toggle';
 
 export default function TimelinePage(): JSX.Element | null {
+  const metadata = { title: 'Timeline' };
+
+  const titleTemplate = usePageTitleTemplate();
   const entities = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entities.person);
   const router = useRouter();
@@ -25,12 +30,15 @@ export default function TimelinePage(): JSX.Element | null {
   }
 
   return (
-    <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
-      <TimelinePageHeader />
-      <Paper>
-        <ZoomRangeToggle />
-        <Timeline />
-      </Paper>
-    </Container>
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
+        <TimelinePageHeader />
+        <Paper>
+          <ZoomRangeToggle />
+          <Timeline />
+        </Paper>
+      </Container>
+    </Fragment>
   );
 }

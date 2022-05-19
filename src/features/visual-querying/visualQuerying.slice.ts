@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-import type { RootState } from '@/features/common/store';
+import type { RootState } from '@/app/store';
 
 export enum ConstraintType {
   Name = 'Name',

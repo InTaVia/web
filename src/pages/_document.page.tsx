@@ -1,7 +1,7 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 
-import { createEmotionCache } from '@/features/common/create-emotion-cache';
+import { createEmotionCache } from '@/app/create-emotion-cache';
 
 export default class Document extends NextDocument<{ emotionStyleTags: Array<JSX.Element> }> {
   render(): JSX.Element {

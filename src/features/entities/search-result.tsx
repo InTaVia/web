@@ -3,9 +3,9 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
 
+import { useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/features/common/entities.slice';
 import type { Entity } from '@/features/common/entity.model';
-import { useAppSelector } from '@/features/common/store';
 
 interface SearchResultProps<T extends Entity> {
   entity: T;

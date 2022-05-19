@@ -5,10 +5,10 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Fragment } from 'react';
 
+import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import { eventTypes } from '@/features/common/event-types';
-import { useAppDispatch } from '@/features/common/store';
 import { EntityEditButton } from '@/features/entities/entity-edit-button';
 import { PageTitle } from '@/features/ui/page-title';
 import { formatDate } from '@/lib/format-date';

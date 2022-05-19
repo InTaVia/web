@@ -4,12 +4,12 @@ import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Snackbar from '@mui/material/Snackbar';
 import { Fragment, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import {
   Notification,
   removeNotification,
   selectNotifications,
-} from '@/features/notifications/notifications.slice';
+} from '@/app/notifications/notifications.slice';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 
 const autoHideDuration = 7500;
 

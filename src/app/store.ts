@@ -16,12 +16,10 @@ import {
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 import storage from 'redux-persist/lib/storage';
 
+import errorMiddleware from '@/app/error.middleware';
+import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import entitiesReducer from '@/features/common/entities.slice';
-import errorMiddleware from '@/features/common/error.middleware';
 import intaviaApiService from '@/features/common/intavia-api.service';
-import notificationsReducer, {
-  addNotification,
-} from '@/features/notifications/notifications.slice';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
