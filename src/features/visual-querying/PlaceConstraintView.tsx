@@ -1,6 +1,6 @@
 import { GeoMapDrawControls } from '@/features/geomap/geo-amp-draw-controls';
 import { GeoMap } from '@/features/geomap/geo-map';
-import { base } from '@/features/geomap/map-styles';
+import { base as baseMap } from '@/features/geomap/maps.config';
 import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 interface PlaceConstraintProps {
@@ -36,7 +36,7 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
         height={dimensions.height}
       />
       <foreignObject width={dimensions.width} height={dimensions.height}>
-        <GeoMap mapStyle={base}>
+        <GeoMap {...baseMap}>
           <GeoMapDrawControls
             position="top-left"
             displayControlsDefault={false}

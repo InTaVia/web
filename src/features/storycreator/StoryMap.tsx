@@ -7,10 +7,10 @@ import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
 import { GeoMap } from '@/features/geomap/geo-map';
+import { base as baseMap } from '@/features/geomap/maps.config';
+import type { StoryEvent } from '@/features/storycreator/storycreator.slice';
+import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
-
-import type { StoryEvent } from './storycreator.slice';
-import { StoryMapPin } from './StoryMapPin';
 
 interface StoryMapProps {
   events: Array<StoryEvent>;
@@ -95,7 +95,7 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     );
   }
   return (
-    <GeoMap ref={mapRef}>
+    <GeoMap ref={mapRef} {...baseMap}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin

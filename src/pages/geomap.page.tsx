@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { GeoMap } from '@/features/geomap/geo-map';
-import { base } from '@/features/geomap/map-styles';
+import { base as baseMap } from '@/features/geomap/maps.config';
 import { PersonEventsLayer } from '@/features/geomap/person-events-layer';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { PageTitle } from '@/features/ui/page-title';
@@ -32,7 +32,7 @@ export default function MapPage(): JSX.Element {
   return (
     <Container maxWidth="xl" sx={{ padding: 4, height: '80vh' }}>
       <PageTitle>Map of Lifespans</PageTitle>
-      <GeoMap mapStyle={base}>
+      <GeoMap {...baseMap}>
         <PersonEventsLayer persons={persons} eventTypes={['beginning', 'end']} />
         <PinLayer persons={persons} showEventTypes={['beginning', 'end']} />
       </GeoMap>
