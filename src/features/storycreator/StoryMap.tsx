@@ -3,10 +3,10 @@ import Typography from '@mui/material/Typography';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
 import Link from 'next/link';
-import { createRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
-import { MapLibre } from '@/features/geomap/MaplibreMap';
+import { GeoMap } from '@/features/geomap/geo-map';
 import { length } from '@/lib/length';
 
 import type { StoryEvent } from './storycreator.slice';
@@ -42,7 +42,9 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
 export function StoryMap(props: StoryMapProps): JSX.Element {
   const { events } = props;
 
-  const mapRef = createRef<MapRef>();
+  const mapRef = useRef<MapRef>(null);
+
+  // TODO: memoize
 
   const markers = events
     .map((event) => {
@@ -74,7 +76,7 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     if (mapRef.current) {
       mapRef.current.fitBounds(bounds, { padding: 50, duration: 100 });
     }
-  }, [bounds, mapRef]);
+  }, [bounds]);
 
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
@@ -93,7 +95,7 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     );
   }
   return (
-    <MapLibre mapRef={mapRef}>
+    <GeoMap ref={mapRef}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin
@@ -105,6 +107,6 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
           />
         );
       })}
-    </MapLibre>
+    </GeoMap>
   );
 }

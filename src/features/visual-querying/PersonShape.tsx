@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { useAppSelector } from '@/app/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
+import { PlaceConstraintView } from '@/features/visual-querying/PlaceConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
 import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
   DateConstraint,
+  PlaceConstraint,
   TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
@@ -109,18 +111,18 @@ export function PersonShape(): JSX.Element {
                   height={80}
                 />
               );
-            // case ConstraintType.Place:
-            //   return (
-            //     <PlaceConstraintView
-            //       key={idx}
-            //       idx={idx}
-            //       constraint={constraint as PlaceConstraint}
-            //       x={x}
-            //       y={y}
-            //       width={550}
-            //       height={350}
-            //     />
-            //   );
+            case ConstraintType.Place:
+              return (
+                <PlaceConstraintView
+                  key={idx}
+                  idx={idx}
+                  constraint={constraint as PlaceConstraint}
+                  x={x}
+                  y={y}
+                  width={550}
+                  height={350}
+                />
+              );
             default:
               return (
                 <text x={x} y={y} fill="red">

@@ -48,9 +48,9 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
     case ConstraintType.Name:
       fillColor = 'skyBlue';
       break;
-    // case ConstraintType.Place:
-    //   fillColor = 'red';
-    //   break;
+    case ConstraintType.Place:
+      fillColor = 'red';
+      break;
     default:
       fillColor = 'pink';
       break;

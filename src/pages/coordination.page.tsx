@@ -19,8 +19,8 @@ import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes } from '@/features/common/event-types';
+import { GeoMap } from '@/features/geomap/geo-map';
 import { LineStringLayer } from '@/features/geomap/LineStringLayer';
-import { MapLibre } from '@/features/geomap/MaplibreMap';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
@@ -102,7 +102,7 @@ export default function CoordinationPage(): JSX.Element | null {
           />
         </Grid>
         <Grid item xs={5}>
-          <MapLibre>
+          <GeoMap>
             {showEventTypes.length >= 2 ? (
               <LineStringLayer
                 persons={filteredPersonArray}
@@ -117,7 +117,7 @@ export default function CoordinationPage(): JSX.Element | null {
               hovered={hoveredEntityId}
               setHovered={setHoveredEntityId}
             />
-          </MapLibre>
+          </GeoMap>
           <FormControl
             sx={{ m: 1, minWidth: 120, position: 'absolute', top: 100, backgroundColor: 'white' }}
             size="small"
