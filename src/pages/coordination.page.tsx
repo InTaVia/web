@@ -20,7 +20,7 @@ import type { Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes } from '@/features/common/event-types';
 import { GeoMap } from '@/features/geomap/geo-map';
-import { LineStringLayer } from '@/features/geomap/LineStringLayer';
+import { PersonEventsLayer } from '@/features/geomap/person-events-layer';
 import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
@@ -104,9 +104,9 @@ export default function CoordinationPage(): JSX.Element | null {
         <Grid item xs={5}>
           <GeoMap>
             {showEventTypes.length >= 2 ? (
-              <LineStringLayer
+              <PersonEventsLayer
                 persons={filteredPersonArray}
-                showEventTypes={showEventTypes as Array<EventType>}
+                eventTypes={showEventTypes as Array<EventType>}
                 hovered={hoveredEntityId}
                 setHovered={setHoveredEntityId}
               />
