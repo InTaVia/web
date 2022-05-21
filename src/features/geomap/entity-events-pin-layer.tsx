@@ -7,13 +7,16 @@ import { Marker } from 'react-map-gl';
 import type { EntityEvent, Person as Entity } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';
+import { keys } from '@/lib/keys';
 
 const size = 16;
 
-const eventColors = scaleOrdinal().domain(Object.keys(allEventTypes)).range(schemeTableau10);
+const eventColors = scaleOrdinal<EventType, string>()
+  .domain(keys(allEventTypes))
+  .range(schemeTableau10);
 
 interface Pin {
-  id: string;
+  id: Entity['id'];
   eventType: EventType;
   lat: number;
   lng: number;
@@ -54,7 +57,7 @@ export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Elem
     <Fragment>
       {markers.map((marker, index) => {
         const color = eventColors(marker.eventType);
-        const fillColor = d3color(color).brighter(2).formatHex();
+        const fillColor = d3color(color)?.brighter(2).formatHex();
         const isHovered = marker.id === hoveredEntityId;
 
         return (
