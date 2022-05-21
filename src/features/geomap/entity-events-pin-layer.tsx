@@ -1,0 +1,120 @@
+import { color as d3color } from 'd3-color';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeTableau10 } from 'd3-scale-chromatic';
+import { Fragment } from 'react';
+import { Marker } from 'react-map-gl';
+
+import type { EntityEvent, Person as Entity } from '@/features/common/entity.model';
+import type { EventType } from '@/features/common/event-types';
+import { eventTypes as allEventTypes } from '@/features/common/event-types';
+
+const size = 16;
+
+const eventColors = scaleOrdinal().domain(Object.keys(allEventTypes)).range(schemeTableau10);
+
+interface Pin {
+  id: string;
+  eventType: EventType;
+  lat: number;
+  lng: number;
+}
+
+interface EntityEventyPinLayerProps {
+  entities: Array<Entity>;
+  eventTypes: Array<EventType>;
+  hovered?: Entity['id'] | null;
+  setHovered?: (id: Entity['id'] | null) => void;
+}
+
+export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Element {
+  const { entities, eventTypes, hovered, setHovered } = props;
+
+  const markers: Array<Pin> = [];
+
+  entities.forEach((entity) => {
+    if (entity.history == null) return;
+
+    const events = entity.history.filter((event) => {
+      if (eventTypes.includes(event.type)) return true;
+      return false;
+    });
+
+    markers.push(...createMarkers(entity.id, events));
+  });
+
+  // TODO: do we actually need hover state in the parent?
+
+  function onMouseEnter(entityId: Entity['id']) {
+    setHovered?.(entityId);
+  }
+
+  function onMouseLeave() {
+    setHovered?.(null);
+  }
+
+  return (
+    <Fragment>
+      {markers.map((marker, index) => {
+        const color = eventColors(marker.eventType);
+        const fillColor = d3color(color).brighter(2).formatHex();
+        const isHovered = marker.id === hovered;
+
+        return (
+          <Marker
+            key={[marker.id, index].join('+')}
+            anchor="center"
+            latitude={marker.lat}
+            longitude={marker.lng}
+          >
+            <svg
+              height={size}
+              viewBox="0 0 24 24"
+              style={{ cursor: 'pointer' }}
+              onMouseEnter={() => {
+                onMouseEnter(marker.id);
+              }}
+              onMouseLeave={onMouseLeave}
+            >
+              {['beginning', 'end'].includes(marker.eventType) ? (
+                <circle
+                  cx={12}
+                  cy={12}
+                  r={size / 2}
+                  fill={fillColor}
+                  stroke={isHovered ? 'salmon' : color}
+                  strokeWidth={isHovered ? 4 : 2}
+                />
+              ) : (
+                <path
+                  d={`M ${12} ${12 + size / 2} l ${size / 2} ${-size / 2} ${-size / 2} ${
+                    -size / 2
+                  } ${-size / 2} ${size / 2} z`}
+                  fill={fillColor}
+                  stroke={isHovered ? 'salmon' : color}
+                  strokeWidth={isHovered ? 4 : 2}
+                />
+              )}
+            </svg>
+          </Marker>
+        );
+      })}
+    </Fragment>
+  );
+}
+
+function createMarkers(id: string, events: Array<EntityEvent>): Array<Pin> {
+  const markers: Array<Pin> = [];
+
+  events.forEach((event) => {
+    if (event.place) {
+      markers.push({
+        lng: event.place.lng,
+        lat: event.place.lat,
+        id,
+        eventType: event.type,
+      });
+    }
+  });
+
+  return markers;
+}

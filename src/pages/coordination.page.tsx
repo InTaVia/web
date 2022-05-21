@@ -19,10 +19,10 @@ import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes } from '@/features/common/event-types';
+import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
+import { EntityEventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { base as baseMap } from '@/features/geomap/maps.config';
-import { PersonEventsLayer } from '@/features/geomap/person-events-layer';
-import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 import { PageTitle } from '@/features/ui/page-title';
@@ -105,16 +105,16 @@ export default function CoordinationPage(): JSX.Element | null {
         <Grid item xs={5}>
           <GeoMap {...baseMap}>
             {showEventTypes.length >= 2 ? (
-              <PersonEventsLayer
-                persons={filteredPersonArray}
+              <EntityEventsLineStringLayer
+                entities={filteredPersonArray}
                 eventTypes={showEventTypes as Array<EventType>}
                 hovered={hoveredEntityId}
                 setHovered={setHoveredEntityId}
               />
             ) : null}
-            <PinLayer
-              persons={filteredPersonArray}
-              showEventTypes={showEventTypes as Array<EventType>}
+            <EntityEventyPinLayer
+              entities={filteredPersonArray}
+              eventTypes={showEventTypes as Array<EventType>}
               hovered={hoveredEntityId}
               setHovered={setHoveredEntityId}
             />
