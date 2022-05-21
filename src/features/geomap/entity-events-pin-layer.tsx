@@ -22,12 +22,12 @@ interface Pin {
 interface EntityEventyPinLayerProps {
   entities: Array<Entity>;
   eventTypes: Array<EventType>;
-  hovered?: Entity['id'] | null;
-  setHovered?: (id: Entity['id'] | null) => void;
+  hoveredEntityId?: Entity['id'] | null;
+  setHoveredEntityId?: (id: Entity['id'] | null) => void;
 }
 
 export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Element {
-  const { entities, eventTypes, hovered, setHovered } = props;
+  const { entities, eventTypes, hoveredEntityId, setHoveredEntityId } = props;
 
   const markers: Array<Pin> = [];
 
@@ -42,14 +42,12 @@ export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Elem
     markers.push(...createMarkers(entity.id, events));
   });
 
-  // TODO: do we actually need hover state in the parent?
-
   function onMouseEnter(entityId: Entity['id']) {
-    setHovered?.(entityId);
+    setHoveredEntityId?.(entityId);
   }
 
   function onMouseLeave() {
-    setHovered?.(null);
+    setHoveredEntityId?.(null);
   }
 
   return (
@@ -57,7 +55,7 @@ export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Elem
       {markers.map((marker, index) => {
         const color = eventColors(marker.eventType);
         const fillColor = d3color(color).brighter(2).formatHex();
-        const isHovered = marker.id === hovered;
+        const isHovered = marker.id === hoveredEntityId;
 
         return (
           <Marker

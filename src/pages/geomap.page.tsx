@@ -25,10 +25,10 @@ export default function MapPage(): JSX.Element {
           </Link>
           !
         </Typography>
-        ;
       </Box>
     );
   }
+
   return (
     <Container maxWidth="xl" sx={{ padding: 4, height: '80vh' }}>
       <PageTitle>Map of Lifespans</PageTitle>
