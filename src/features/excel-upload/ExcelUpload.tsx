@@ -7,10 +7,10 @@ import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
 import { useAppDispatch } from '@/app/store';
-import type { StoryEvent } from '@/feaatures/storycreator/storycreator.slice';
 import { addLocalEntity } from '@/features/common/entities.slice';
 import type { Person, Place } from '@/features/common/entity.model';
 import styles from '@/features/storycreator/storycreator.module.css';
+import type { StoryEvent } from '@/features/storycreator/storycreator.slice';
 
 export function ExcelUpload(): JSX.Element {
   const dispatch = useAppDispatch();
