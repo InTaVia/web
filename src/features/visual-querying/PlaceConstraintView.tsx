@@ -1,7 +1,9 @@
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import Paper from '@mui/material/Paper';
-import { useState } from 'react';
-import { DrawPolygonMode, Editor } from 'react-map-gl-draw';
+import { CircleMode, DirectMode, DragCircleMode, SimpleSelectMode } from 'maplibre-gl-draw-circle';
+import { useCallback, useState } from 'react';
 
+import { DrawControl } from '@/features/geomap/draw-control';
 import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 import { MapLibre } from '../geomap/MaplibreMap';
@@ -27,9 +29,28 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
     boundedHeight: height - 100,
   };
 
-  const mode = useState(() => {
-    return new DrawPolygonMode();
-  });
+  const [features, setFeatures] = useState({});
+
+  const onUpdate = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        newFeatures[f.id] = f;
+      }
+      console.log(e);
+      return newFeatures;
+    });
+  }, []);
+
+  const onDelete = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        delete newFeatures[f.id];
+      }
+      return newFeatures;
+    });
+  }, []);
 
   return (
     <g transform={`translate(${x}, ${y})`}>
@@ -44,10 +65,26 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
           }}
         >
           <MapLibre>
-            <Editor
-              // to make the lines/vertices easier to interact with
-              clickRadius={12}
-              // mode={mode}
+            <DrawControl
+              position="top-left"
+              displayControlsDefault={false}
+              // controls={{
+              //   polygon: true,
+              //   trash: true,
+              //   combine_features: true,
+              //   point: true,
+              // }}
+              modes={{
+                ...MapboxDraw.modes,
+                draw_circle: CircleMode,
+                drag_circle: DragCircleMode,
+                direct_select: DirectMode,
+                simple_select: SimpleSelectMode,
+              }}
+              defaultMode="drag_circle"
+              onCreate={onUpdate}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
             />
           </MapLibre>
         </Paper>
