@@ -1,64 +1,143 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import type { Relation } from '@/features/common/entity.model';
+import type { EntityEvent } from '@/features/common/entity.model';
 import type { RootState } from '@/features/common/store';
 
 type DataUrlString = string;
 
 export interface SlideContent {
-  i: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  id: string;
+  type: 'Image' | 'Map' | 'Quiz' | 'Text' | 'Timeline';
+  layout: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  };
+  properties: Record<StoryContentProperty['id'], StoryContentProperty>;
 }
 
 export interface Slide {
   title?: string;
-  i: string;
+  id: string;
   sort: number;
   selected?: boolean;
   image: DataUrlString | null;
   events: Array<StoryEvent>;
-  content: Record<SlideContent['i'], SlideContent>;
-  story: Story['i'];
+  content: Record<SlideContent['id'], SlideContent>;
+  story: Story['id'];
 }
 
 export interface Story {
-  i: string;
+  id: string;
   title: string;
-  slides: Record<Slide['i'], Slide>;
+  slides: Record<Slide['id'], Slide>;
 }
 
-export interface StoryContent {
-  type: 'Image' | 'Map' | 'Text' | 'Timeline';
-  title: string;
-  text: string;
+export interface StoryContentProperty {
+  type: 'text' | 'textarea';
+  id: string;
+  label: string;
+  value: string;
+  editable: boolean | false;
+  sort: number | 0;
 }
 
-export interface StoryImage extends StoryContent {
+export interface StoryImage extends SlideContent {
   type: 'Image';
-  link: string;
+  properties: Record<string, StoryContentProperty>;
+}
+
+export interface StoryText extends SlideContent {
+  type: 'Text';
+  properties: Record<string, StoryContentProperty>;
 }
 
 export interface StoryCreatorState {
-  stories: Record<Story['i'], Story>;
+  stories: Record<Story['id'], Story>;
 }
 
-export interface StoryEvent extends Relation {
+export interface StoryEvent extends EntityEvent {
   description?: string;
   label?: string;
+}
+
+export class StoryTextObject implements StoryText {
+  type: 'Text' = 'Text';
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  properties: Record<string, StoryContentProperty>;
+  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+    this.id = id;
+    this.layout = layout;
+    this.properties = {
+      title: {
+        type: 'text',
+        id: 'title',
+        editable: true,
+        label: 'Title',
+        value: '',
+        sort: 0,
+      } as StoryContentProperty,
+      text: {
+        type: 'textarea',
+        id: 'text',
+        editable: true,
+        label: 'Text',
+        value: '',
+        sort: 1,
+      } as StoryContentProperty,
+    };
+  }
+}
+
+export class StoryImageObject implements StoryImage {
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  type: 'Image' = 'Image';
+
+  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+    this.id = id;
+    this.layout = layout;
+    this.properties = {
+      title: {
+        type: 'text',
+        id: 'title',
+        editable: true,
+        label: 'Title',
+        value: '',
+        sort: 1,
+      } as StoryContentProperty,
+      text: {
+        type: 'text',
+        id: 'text',
+        editable: true,
+        label: 'Text',
+        value: '',
+        sort: 2,
+      } as StoryContentProperty,
+      link: {
+        type: 'text',
+        id: 'link',
+        editable: true,
+        label: 'Link',
+        value: '',
+        sort: 0,
+      } as StoryContentProperty,
+    };
+  }
+  properties: Record<string, StoryContentProperty>;
 }
 
 const initialState: StoryCreatorState = {
   stories: {
     story0: {
       title: 'The Life of Vergerio',
-      i: 'story0',
+      id: 'story0',
       slides: {
         '0': {
-          i: '0',
+          id: '0',
           sort: 0,
           story: 'story0',
           events: [],
@@ -69,11 +148,11 @@ const initialState: StoryCreatorState = {
       },
     },
     story2: {
-      i: 'story2',
+      id: 'story2',
       title: 'Hofburg',
       slides: {
         '0': {
-          i: '0',
+          id: '0',
           sort: 0,
           story: 'story2',
           selected: true,
@@ -101,31 +180,31 @@ export const storyCreatorSlice = createSlice({
         counter = counter + 1;
         newID = `story${counter}`;
       } while (oldIDs.includes(newID));
-      story.i = newID;
+      story.id = newID;
       story.title = 'Story ' + counter;
       story.slides = {
         '0': {
-          i: '0',
+          id: '0',
           sort: 0,
-          story: story.i,
+          story: story.id,
           selected: true,
           image: null,
           content: {},
           events: [],
         } as Slide,
       };
-      newStories[story.i] = story;
+      newStories[story.id] = story;
       state.stories = newStories;
     },
     editStory: (state, action: PayloadAction<Story>) => {
       const story = action.payload;
-      state.stories[story.i] = story;
+      state.stories[story.id] = story;
     },
-    removeStory: (state, action: PayloadAction<Story['i']>) => {
+    removeStory: (state, action: PayloadAction<Story['id']>) => {
       const id = action.payload;
       delete state.stories[id];
     },
-    createSlide: (state, action: PayloadAction<Story['i']>) => {
+    createSlide: (state, action: PayloadAction<Story['id']>) => {
       const storyID = action.payload;
 
       const newSlides = { ...state.stories[storyID]!.slides };
@@ -140,7 +219,7 @@ export const storyCreatorSlice = createSlice({
 
       const slide = {
         story: storyID,
-        i: newID,
+        id: newID,
         image: null,
         content: {},
         events: [],
@@ -148,43 +227,43 @@ export const storyCreatorSlice = createSlice({
         selected: false,
       } as Slide;
 
-      state.stories[slide.story]!.slides[slide.i] = slide;
+      state.stories[slide.story]!.slides[slide.id] = slide;
     },
     createSlidesInBulk: (state, action) => {
       const story = action.payload.story;
       const slides = action.payload.newSlides;
 
-      const newSlides = { ...state.stories[story.i]!.slides };
+      const newSlides = { ...state.stories[story.id]!.slides };
       for (const s of slides) {
         const slide = { ...s };
-        slide.i = `${Object.keys(newSlides).length}`;
+        slide.id = `${Object.keys(newSlides).length}`;
         slide.image = null;
         slide.content = {};
 
         for (const newContentPiece of s.content) {
           newContentPiece.i = 'content' + Object.values(slide.content).length;
           newContentPiece.story = slide.story;
-          newContentPiece.slide = slide.i;
-          slide.content[newContentPiece.i] = newContentPiece;
+          newContentPiece.slide = slide.id;
+          slide.content[newContentPiece.id] = newContentPiece;
         }
 
-        newSlides[slide.i] = slide;
+        newSlides[slide.id] = slide;
       }
 
-      state.stories[story.i]!.slides = newSlides;
+      state.stories[story.id]!.slides = newSlides;
     },
     selectSlide: (state, action) => {
       const select = action.payload;
       const newStories = { ...state.stories };
       const oldStory = { ...newStories[select.story] };
       for (const slide of Object.values(oldStory.slides!)) {
-        if (slide.i === select.slide) {
+        if (slide.id === select.slide) {
           slide.selected = true;
         } else {
           slide.selected = false;
         }
       }
-      newStories[oldStory.i!] = oldStory as any;
+      newStories[oldStory.id!] = oldStory as any;
       state.stories = newStories;
     },
     copySlide: (state, action) => {
@@ -195,7 +274,7 @@ export const storyCreatorSlice = createSlice({
       const oldStory = { ...newStories[story] };
 
       const oldIDs = Object.values(oldStory.slides!).map((s) => {
-        return s.i;
+        return s.id;
       });
 
       const s = oldStory.slides![slide];
@@ -204,10 +283,10 @@ export const storyCreatorSlice = createSlice({
       let newID;
       do {
         counter = counter + 1;
-        newID = `${newSlide.i}(${counter})`;
+        newID = `${newSlide.id}(${counter})`;
       } while (oldIDs.includes(newID));
 
-      newSlide.i = newID;
+      newSlide.id = newID;
 
       /* const oldContentIDs = Object.values(newSlide.content).map((c) => {
         return c.i;
@@ -229,8 +308,8 @@ export const storyCreatorSlice = createSlice({
         }
       } */
 
-      oldStory.slides![newSlide.i!] = newSlide as any;
-      newStories[oldStory.i!] = oldStory as any;
+      oldStory.slides![newSlide.id!] = newSlide as any;
+      newStories[oldStory.id!] = oldStory as any;
       state.stories = newStories;
     },
     removeSlide: (state, action) => {
@@ -246,59 +325,77 @@ export const storyCreatorSlice = createSlice({
       const content = action.payload;
 
       const newStories = { ...state.stories };
-      delete newStories[content.story]!.slides[content.slide]!.content[content.i];
+      delete newStories[content.story]!.slides[content.slide]!.content[content.id];
       state.stories = newStories;
     },
     addContent: (state, action) => {
-      const content = action.payload;
-      const newStories = state.stories;
-      content.i =
-        'content' + Object.keys(newStories[content.story]!.slides[content.slide]!.content).length;
+      let content = action.payload;
 
-      newStories[content.story]!.slides[content.slide]!.content[content.i] = content;
+      let contentObject;
+      console.log(content);
 
-      state.stories = newStories;
+      content.id =
+        'content' +
+        Object.keys(state.stories[content.story]!.slides[content.slide]!.content).length;
+
+      switch (content.type) {
+        case 'Image':
+          contentObject = new StoryImageObject(content.id, content.layout);
+          break;
+        case 'Text':
+          contentObject = new StoryTextObject(content.id, content.layout);
+          break;
+
+        default:
+          break;
+      }
+
+      content = { ...content, ...contentObject };
+
+      state.stories[content.story]!.slides[content.slide]!.content[content.id] = content;
     },
     resizeMoveContent: (state, action) => {
       const content = action.payload;
 
-      const newStories = { ...state.stories };
-      const newContent = newStories[content.story]!.slides[content.slide]!.content[content.i]!;
-      newContent.x = content.x;
-      newContent.y = content.y;
-      newContent.w = content.w;
-      newContent.h = content.h;
-
-      newStories[content.story]!.slides[content.slide]!.content[content.i] = newContent;
-
-      state.stories = newStories;
+      const story = state.stories[content.story];
+      const slides = story?.slides;
+      if (slides) {
+        const slide = slides[content.slide] as Slide;
+        const wantedContent = slide.content[content.id];
+        if (wantedContent) {
+          wantedContent.layout = {
+            x: content.x,
+            y: content.y,
+            w: content.w,
+            h: content.h,
+          };
+        }
+      }
     },
     editContent: (state, action) => {
       const content = action.payload;
 
       const newStories = { ...state.stories };
-      newStories[content.story]!.slides[content.slide]!.content[content.i] = content;
+      newStories[content.story]!.slides[content.slide]!.content[content.id] = content;
 
       state.stories = newStories;
     },
     setImage: (state, action) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
-      state.stories[slide.story]!.slides[slide.i]!.image = image;
+      state.stories[slide.story]!.slides[slide.id]!.image = image;
     },
     addEventsToSlide: (state, action) => {
       const slide: Slide = action.payload.slide;
       const events: Array<StoryEvent> = action.payload.events;
 
-      console.log(slide, events);
-
-      state.stories[slide.story]!.slides[slide.i]!.events.push(...events);
+      state.stories[slide.story]!.slides[slide.id]!.events.push(...events);
     },
     addEventToSlide: (state, action) => {
       const slide: Slide = action.payload.slide;
       const event: StoryEvent = action.payload.event;
 
-      state.stories[slide.story]!.slides[slide.i]!.events.push(event);
+      state.stories[slide.story]!.slides[slide.id]!.events.push(event);
     },
   },
 });
@@ -354,7 +451,7 @@ export const selectContentBySlide = createSelector(
   },
   (stories, slide) => {
     if (slide) {
-      return Object.values(stories[slide.story]!.slides[slide.i]!.content);
+      return Object.values(stories[slide.story]!.slides[slide.id]!.content);
     } else {
       return [];
     }
@@ -369,7 +466,7 @@ export const selectContentByStory = createSelector(
     return story;
   },
   (stories, story) => {
-    return Object.values(stories[story.i]!.slides).flatMap((s) => {
+    return Object.values(stories[story.id]!.slides).flatMap((s) => {
       return Object.values(s.content);
     });
   },

@@ -8,7 +8,7 @@ import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
   Slide,
-  StoryContent,
+  SlideContent,
   StoryEvent,
   StoryImage,
 } from '@/features/storycreator/storycreator.slice';
@@ -48,38 +48,9 @@ interface SlideEditorProps {
   events: Array<StoryEvent>; //FIXME: use real types for storyevents and persons!
 }
 
-interface SlideDrop {
-  type: string;
-}
-
-interface SlideImage extends SlideDrop {
-  text?: string;
-  title?: string;
-  link?: string;
-}
-
-type SlideMap = SlideDrop;
-
-type SlideTimeline = SlideDrop;
-
-interface SlideQuiz extends SlideDrop {
-  question: string;
-  answers: Array<string>;
-  solutions: Array<string>;
-}
-
 export function SlideEditor(props: SlideEditorProps) {
   const { width: myWidth, targetRef, slide, imageRef, events, takeScreenshot } = props;
 
-  /*   const eventMarkers = events
-    .map((event) => {
-      console.log('event', event);
-
-      return [parseFloat(event.place?.lng), parseFloat(event.place?.lat)];
-    })
-    .filter(Boolean) as Array<[number, number]>; */
-
-  /* const content = Object.values(slide.content); */
   const content = useAppSelector((state) => {
     return selectContentBySlide(state, slide);
   });
@@ -93,7 +64,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const windows = useAppSelector(selectWindows);
 
   const removeWindowHandler = (id: string) => {
-    dispatch(removeContent({ i: id, story: slide.story, slide: slide.i }));
+    dispatch(removeContent({ id: id, story: slide.story, slide: slide.id }));
   };
 
   const onDrop = (i_layout: any, i_layoutItem: any, event: any) => {
@@ -161,11 +132,13 @@ export function SlideEditor(props: SlideEditorProps) {
       dispatch(
         addContent({
           story: slide.story,
-          slide: slide.i,
-          x: layoutItem['x'],
-          y: layoutItem['y'],
-          w: layoutItem['w'],
-          h: layoutItem['h'],
+          slide: slide.id,
+          layout: {
+            x: layoutItem['x'],
+            y: layoutItem['y'],
+            w: layoutItem['w'],
+            h: layoutItem['h'],
+          },
           type: layoutItem['type'],
           key: newText,
         }),
@@ -184,17 +157,15 @@ export function SlideEditor(props: SlideEditorProps) {
   //FIXME: use real type for event and element
   const handleSave = (event: any, element: any) => {
     event.preventDefault();
-    const newElement = { ...element };
+    const newProperties = { ...element.properties };
     for (const tar of event.target) {
-      if (tar.type === 'text') {
-        newElement[tar.id] = tar.value;
-      }
+      newProperties[tar.id] = { ...newProperties[tar.id], value: tar.value };
     }
     event.target.reset();
-    dispatch(editContent(newElement));
+    dispatch(editContent({ ...element, properties: newProperties }));
   };
 
-  const createWindowContent = (element: StoryContent) => {
+  const createWindowContent = (element: SlideContent) => {
     switch (element.type) {
       case 'Text':
         return (
@@ -208,16 +179,17 @@ export function SlideEditor(props: SlideEditorProps) {
                 padding: 0,
               }}
             >
-              {(Boolean(element.title) || Boolean(element.text)) && (
+              {(Boolean(element.properties.title?.value) ||
+                Boolean(element.properties.text?.value)) && (
                 <CardContent className={styles['card-content']}>
-                  {Boolean(element.title) && (
+                  {Boolean(element.properties.title?.value) && (
                     <Typography gutterBottom variant="h5" component="h2">
-                      {element.title}
+                      {element.properties.title?.value}
                     </Typography>
                   )}
-                  {Boolean(element.text) && (
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {element.text}
+                  {Boolean(element.properties.text?.value) && (
+                    <Typography variant="subtitle1" color="subtitle1" component="p">
+                      {element.properties.text?.value}
                     </Typography>
                   )}
                 </CardContent>
@@ -240,24 +212,24 @@ export function SlideEditor(props: SlideEditorProps) {
               <CardMedia
                 component="img"
                 image={
-                  (element as StoryImage).link
-                    ? (element as StoryImage).link
+                  (element as StoryImage).properties.link?.value !== ''
+                    ? (element as StoryImage).properties.link?.value
                     : 'https://via.placeholder.com/300'
                 }
                 alt="card image"
                 height="100%"
               />
             </div>
-            {(element.title !== '' || element.text !== '') && (
+            {(element.properties.title?.value !== '' || element.properties.text?.value !== '') && (
               <CardContent className={styles['card-content']}>
-                {element.title !== '' && (
+                {element.properties.title?.value !== '' && (
                   <Typography gutterBottom variant="h5" component="h2">
-                    {element.title}
+                    {element.properties.title?.value}
                   </Typography>
                 )}
-                {element.text !== '' && (
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    {element.text}
+                {element.properties.text?.value !== '' && (
+                  <Typography variant="subtitle1" color="textSecondary" component="p">
+                    {element.properties.text?.value}
                   </Typography>
                 )}
               </CardContent>
@@ -280,13 +252,13 @@ export function SlideEditor(props: SlideEditorProps) {
       case 'Image':
       case 'Quiz':
         return (
-          <div key={element.i} className={styles.elevated}>
+          <div key={element.id} className={styles.elevated}>
             <Window
               className={styles['annotation-window']}
               title={element.type}
-              id={element.i}
+              id={element.id}
               onRemoveWindow={() => {
-                removeWindowHandler(element.i);
+                removeWindowHandler(element.id);
               }}
               onEditContent={() => {
                 setEditElement(element);
@@ -301,11 +273,11 @@ export function SlideEditor(props: SlideEditorProps) {
         );
       case 'Map':
         return (
-          <div key={element.i} className={styles.elevated}>
+          <div key={element.id} className={styles.elevated}>
             <Window
               className={styles['annotation-window']}
               title={element.type}
-              id={element.i}
+              id={element.id}
               onRemoveWindow={() => {
                 removeWindowHandler(element.i);
               }}
@@ -318,13 +290,13 @@ export function SlideEditor(props: SlideEditorProps) {
         );
       default:
         return (
-          <div key={element.i} className={styles.elevated}>
+          <div key={element.id} className={styles.elevated}>
             <Window
               className={styles['annotation-window']}
               title={element.type}
-              id={element.i}
+              id={element.id}
               onRemoveWindow={() => {
-                removeWindowHandler(element.i);
+                removeWindowHandler(element.id);
               }}
             >
               {element.key}
@@ -334,12 +306,16 @@ export function SlideEditor(props: SlideEditorProps) {
     }
   };
 
+  const layout = content.map((content) => {
+    return { i: content.id, ...content.layout };
+  });
+
   return (
     <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       <ReactGridLayout
         innerRef={imageRef}
         className="layout"
-        layout={content}
+        layout={layout}
         rowHeight={30}
         cols={12}
         width={myWidth}
@@ -355,10 +331,14 @@ export function SlideEditor(props: SlideEditorProps) {
         }}
         onDrop={onDrop}
         onResizeStop={(iLayout, element, resized) => {
-          dispatch(resizeMoveContent({ ...resized, story: slide.story, slide: slide.i }));
+          dispatch(
+            resizeMoveContent({ ...resized, story: slide.story, slide: slide.id, id: resized.i }),
+          );
         }}
         onDragStop={(iLayout, element, dragged) => {
-          dispatch(resizeMoveContent({ ...dragged, story: slide.story, slide: slide.i }));
+          dispatch(
+            resizeMoveContent({ ...dragged, story: slide.story, slide: slide.id, id: dragged.i }),
+          );
         }}
       >
         {content.map((e: any) => {

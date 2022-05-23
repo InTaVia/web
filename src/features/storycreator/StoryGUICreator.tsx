@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type { Story, StoryEvent } from '@/features/storycreator/storycreator.slice';
+import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
   createSlidesInBulk,
@@ -31,7 +31,6 @@ interface DropProps {
   date?: IsoDateString;
 }
 
-//FIXME: correct type of props!
 const createDrops = (props: DropProps) => {
   const { type } = props;
   // eslint-disable-next-line react/jsx-key
@@ -129,7 +128,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.i);
+    return selectSlidesByStoryID(state, story.id);
   });
 
   const filteredSlides = slides.filter((s) => {
@@ -167,7 +166,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
       });
       for (const event of sortedHistory) {
         newSlides.push({
-          story: story.i,
+          story: story.id,
           title: event.name,
           entities: [event],
           content: [
@@ -196,11 +195,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     }
   }
 
-  const eventsInSlide: Array<StoryEvent> = selectedSlide?.events
-    ? selectedSlide.events
-    : persons.flatMap((person) => {
-        return person.history as Array<StoryEvent>;
-      });
+  const entitiesInSlide = selectedSlide?.events ? selectedSlide.events : persons;
 
   const gridHeight = Math.round(height / 5);
 
@@ -238,7 +233,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
                     slide={selectedSlide}
                     imageRef={ref}
                     takeScreenshot={takeScreenshot}
-                    events={eventsInSlide}
+                    events={entitiesInSlide}
                   />
                 );
               }}
@@ -294,7 +289,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             /* createDrops('Timeline'), */
             createDrops({ type: 'Text' }),
             createDrops({ type: 'Image' }),
-            createDrops({ type: 'Quiz' }),
+            /* createDrops('Quiz'), */
           ]}
         </div>
         <div
@@ -318,7 +313,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
       </ReactGridLayout>
       <Button
         onClick={() => {
-          dispatch(createSlide(story.i));
+          dispatch(createSlide(story.id));
         }}
       >
         Add Slide

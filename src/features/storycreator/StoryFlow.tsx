@@ -39,7 +39,7 @@ export function StoryFlow(props: StoryFlowProps) {
     let x = 0;
     for (const i in newSlides) {
       const s = newSlides[parseInt(i)]!;
-      newLayout.push({ i: 'slide' + s.i, x: x, y: y, w: 1, h: 1 });
+      newLayout.push({ i: 'slide' + s.id, x: x, y: y, w: 1, h: 1 });
       x = x + 1;
 
       if ((parseInt(i) + 1) % 8 === 0) {
@@ -51,16 +51,16 @@ export function StoryFlow(props: StoryFlowProps) {
     return newLayout;
   }
 
-  function onClick(slideID: Slide['i']) {
-    dispatch(selectSlide({ story: story.i, slide: slideID }));
+  function onClick(slideID: Slide['id']) {
+    dispatch(selectSlide({ story: story.id, slide: slideID }));
   }
 
-  function onRemove(slideID: Slide['i']) {
-    dispatch(removeSlide({ story: story.i, slide: slideID }));
+  function onRemove(slideID: Slide['id']) {
+    dispatch(removeSlide({ story: story.id, slide: slideID }));
   }
 
-  function onCopy(slideID: Slide['i']) {
-    dispatch(copySlide({ story: story.i, slide: slideID }));
+  function onCopy(slideID: Slide['id']) {
+    dispatch(copySlide({ story: story.id, slide: slideID }));
   }
 
   return (
@@ -82,22 +82,22 @@ export function StoryFlow(props: StoryFlowProps) {
         {slides.map((slide: Slide) => {
           return (
             <Card
-              key={'slide' + slide.i}
+              key={'slide' + slide.id}
               onClick={() => {
-                onClick(slide.i);
+                onClick(slide.id);
               }}
               className={`${styles['story-flow-card']} ${
                 slide.selected ?? true ? styles['selected'] : ''
               }`}
             >
               <Window
-                id={`slide-window-${slide.i}`}
-                title={slide.title != null ? slide.title : slide.i}
+                id={`slide-window-${slide.id}`}
+                title={slide.title != null ? slide.title : slide.id}
                 onRemoveWindow={() => {
-                  onRemove(slide.i);
+                  onRemove(slide.id);
                 }}
                 onCopyWindow={() => {
-                  onCopy(slide.i);
+                  onCopy(slide.id);
                 }}
               >
                 {slide.image !== null && (

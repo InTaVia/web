@@ -8,35 +8,33 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  TextareaAutosize,
   TextField,
 } from '@mui/material';
 import type { FormEvent } from 'react';
 
-// FIXME: needs proper types somewhere else
-type StoryElementType = 'Image' | 'Text';
+import type {
+  SlideContent,
+  StoryContentProperty,
+} from '@/features/storycreator/storycreator.slice';
 
-const contentTypes = {
-  Image: {
-    link: { label: 'Image Link', type: 'Text', sort: 0 },
-    title: { label: 'Image Title', type: 'Text', sort: 1 },
-    text: { label: 'Caption Text', type: 'Text', sort: 2 },
-  },
-  Text: {
-    text: { label: 'Text', type: 'Text', sort: 0 },
-    title: { label: 'Title', type: 'Text', sort: 1 },
-  },
-};
-
-interface StoryContentDialogProps<T = any> {
+interface StoryContentDialogProps {
   open: boolean;
-  element: T; // FIXME:
+  element: SlideContent;
   onClose: () => void;
-  onSave: (event: FormEvent<HTMLFormElement>, element: T) => void;
+  onSave: (event: FormEvent<HTMLFormElement>, element: SlideContent) => void;
 }
 
 export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element {
   const { open, element, onClose, onSave } = props;
-  const attributes = contentTypes[element.type as StoryElementType];
+
+  const editableAttributes = Object.values(element.properties)
+    .filter((prop: StoryContentProperty) => {
+      return prop.editable;
+    })
+    .sort((a: StoryContentProperty, b: StoryContentProperty) => {
+      return a.sort - b.sort;
+    });
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -49,20 +47,33 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
           id="myform"
         >
           <FormControl>
-            {Object.entries(attributes).map(([attributeName, attribute]) => {
-              return (
-                <TextField
-                  margin="dense"
-                  id={attributeName}
-                  key={attributeName}
-                  label={attribute.label}
-                  type={attribute.type}
-                  fullWidth
-                  variant="standard"
-                  defaultValue={element[attributeName]}
-                  sx={{ width: '500px' }}
-                />
-              );
+            {editableAttributes.map((property: StoryContentProperty) => {
+              switch (property.type) {
+                case 'text':
+                  return (
+                    <TextField
+                      margin="dense"
+                      id={property.id}
+                      key={property.label}
+                      label={property.label}
+                      fullWidth
+                      variant="standard"
+                      defaultValue={property.value}
+                      sx={{ width: '500px' }}
+                    />
+                  );
+                case 'textarea':
+                  return (
+                    <TextareaAutosize
+                      id={property.id}
+                      key={property.label}
+                      defaultValue={property.value}
+                      placeholder={property.label}
+                      style={{ width: '100%' }}
+                      minRows={3}
+                    />
+                  );
+              }
             })}
           </FormControl>
         </form>
