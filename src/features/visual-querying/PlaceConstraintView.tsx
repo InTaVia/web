@@ -62,6 +62,7 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
             }}
             displayControlsDefault={false}
             defaultMode="draw_polygon"
+            initialFeatures={constraint.features}
             onCreate={onCreate}
             onDelete={onDelete}
             onUpdate={onUpdate}
