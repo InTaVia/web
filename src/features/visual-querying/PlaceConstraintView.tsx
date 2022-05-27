@@ -61,6 +61,7 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
               trash: true,
             }}
             displayControlsDefault={false}
+            defaultMode="draw_polygon"
             onCreate={onCreate}
             onDelete={onDelete}
             onUpdate={onUpdate}
