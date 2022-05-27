@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { Feature } from 'geojson';
 
 import type { RootState } from '@/app/store';
 
@@ -23,6 +24,7 @@ export interface DateConstraint extends Constraint {
 
 export interface PlaceConstraint extends Constraint {
   type: ConstraintType.Place;
+  features: Array<Feature> | null;
 }
 
 export interface TextConstraint extends Constraint {
@@ -81,11 +83,32 @@ const visualQueryingSlice = createSlice({
         constraint.text = action.payload.text;
       }
     },
+    updatePlaceConstraint(
+      state,
+      action: PayloadAction<{ id: string; features: Array<Feature> | null }>,
+    ) {
+      const id = action.payload.id;
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === id;
+      });
+      function isPlaceConstraint(constraint: Constraint): constraint is PlaceConstraint {
+        return constraint.type === ConstraintType.Place;
+      }
+      if (constraint != null && isPlaceConstraint(constraint)) {
+        constraint.features = action.payload.features;
+      }
+    },
   },
 });
 
-export const { addConstraint, removeConstraint, toggleConstraint, updateDateRange, updateText } =
-  visualQueryingSlice.actions;
+export const {
+  addConstraint,
+  removeConstraint,
+  toggleConstraint,
+  updateDateRange,
+  updateText,
+  updatePlaceConstraint,
+} = visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
 
 export function selectConstraints(state: RootState) {
