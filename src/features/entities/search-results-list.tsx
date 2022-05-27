@@ -49,7 +49,7 @@ export function SearchResultsList(): JSX.Element {
       {persons.map((person) => {
         return (
           <ListItem key={person.id} sx={{ paddingBlock: 2 }}>
-            <SearchResult entity={person} />
+            <SearchResult displaySelectionCheckBox entity={person} />
           </ListItem>
         );
       })}
