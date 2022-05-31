@@ -2,6 +2,7 @@ import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { schemeRdYlGn, interpolateCool, interpolateWarm } from 'd3-scale-chromatic';
 import { color as d3color, hsl } from 'd3-color';
 import { hierarchy, partition } from 'd3-hierarchy';
+import type { HierarchyNode } from 'd3-hierarchy';
 import { extent, group } from 'd3-array';
 import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
@@ -9,10 +10,13 @@ import { useEffect, useState } from 'react';
 import type { Person } from '@/features/common/entity.model';
 import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
 
+type LeafSizing = 'qualitative' | 'quantitative';
+
 interface ProfessionsSvgProps {
   persons: Array<Person>;
   parentRef: MutableRefObject<HTMLDivElement | null>;
   renderLabel: boolean;
+  leafSizing?: LeafSizing;
   hovered?: Person['id'] | null;
   setHovered?: (val: Array<Person['id']> | null) => void;
 }
@@ -24,12 +28,18 @@ const noOccupation = Symbol('no occupation');
 export type NoOccupation = typeof noOccupation;
 
 export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
-  const { parentRef, persons, renderLabel, hovered, setHovered } = props;
+  const {
+    parentRef,
+    persons,
+    renderLabel,
+    hovered, setHovered,
+    leafSizing = 'quantitative',
+  } = props;
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
 
-  const hierarchyRoot = createHierarchy(persons);
+  const hierarchyRoot = createHierarchy(persons, leafSizing);
   const allButRootNode = hierarchyRoot.descendants().filter(d => d.depth > 0);
 
   // x is y, y is x
@@ -107,7 +117,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   );
 }
 
-function createHierarchy(persons: Array<Person>) {
+function createHierarchy(persons: Array<Person>, leafSizing: LeafSizing) {
   const alphabeticalGroups = [
     ['A-I', /^[a-i]/i],
     ['J-P', /^[j-p]/i],
@@ -146,8 +156,12 @@ function createHierarchy(persons: Array<Person>) {
     children: unifyTree(groupedByProfession),
   };
 
+  const leafSizeFn = (leafSizing === 'quantitative')
+    ? (node: HierarchyNode<typeof root>): number => node.children ? 0 : node.personIds.length
+    : (node: HierarchyNode<typeof root>): number => node.children ? 0 : 1;
+
   const hier = hierarchy(root)
-    .sum(d => d.children ? 0 : d.personIds.length)
+    .sum(leafSizeFn)
     .sort((a, b) => a.data.label.localeCompare(b.data.label));
 
   const part = partition()(hier);

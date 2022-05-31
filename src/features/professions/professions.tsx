@@ -13,7 +13,7 @@ export function Professions(): JSX.Element {
 
   return (
     <div className={styles['professions-wrapper']} ref={parent}>
-      <ProfessionsSvg parentRef={parent} persons={persons} renderLabel={true} />
+      <ProfessionsSvg parentRef={parent} persons={persons} renderLabel={true} leafSizing={'qualitative'} />
     </div>
   );
 }
