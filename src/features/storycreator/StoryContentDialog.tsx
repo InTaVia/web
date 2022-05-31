@@ -15,8 +15,10 @@ import type { FormEvent } from 'react';
 
 import type {
   SlideContent,
+  StoryAnswerList,
   StoryContentProperty,
 } from '@/features/storycreator/storycreator.slice';
+import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 
 interface StoryContentDialogProps {
   open: boolean;
@@ -73,6 +75,18 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
                       minRows={3}
                     />
                   );
+                case 'answerlist':
+                  return <StoryQuizAnswerList answerList={property as StoryAnswerList} />;
+                  {
+                    /* <TextareaAutosize
+                      id={property.id}
+                      key={property.label}
+                      defaultValue={property.value}
+                      placeholder={property.label}
+                      style={{ width: '100%' }}
+                      minRows={3}
+                    /> */
+                  }
               }
             })}
           </FormControl>

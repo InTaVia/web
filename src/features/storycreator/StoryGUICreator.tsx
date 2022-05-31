@@ -153,7 +153,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
   };
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entitiesByKind.person);
+  const persons = Object.values(entitiesByKind.person).slice(-1);
 
   if (persons.length === 1 && slides.length === 0) {
     const newSlides = [];
@@ -195,7 +195,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     }
   }
 
-  const entitiesInSlide = selectedSlide?.events ? selectedSlide.events : persons;
+  const entitiesInSlide = selectedSlide?.events ? selectedSlide.events : [];
 
   const gridHeight = Math.round(height / 5);
 
@@ -289,7 +289,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             /* createDrops('Timeline'), */
             createDrops({ type: 'Text' }),
             createDrops({ type: 'Image' }),
-            /* createDrops('Quiz'), */
+            createDrops({ type: 'Quiz' }),
           ]}
         </div>
         <div

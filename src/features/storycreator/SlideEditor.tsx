@@ -158,7 +158,9 @@ export function SlideEditor(props: SlideEditorProps) {
   const handleSave = (event: any, element: any) => {
     event.preventDefault();
     const newProperties = { ...element.properties };
+    console.log(event);
     for (const tar of event.target) {
+      console.log(tar, Object.keys(tar));
       newProperties[tar.id] = { ...newProperties[tar.id], value: tar.value };
     }
     event.target.reset();

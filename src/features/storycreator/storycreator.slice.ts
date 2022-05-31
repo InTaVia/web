@@ -36,12 +36,17 @@ export interface Story {
 }
 
 export interface StoryContentProperty {
-  type: 'text' | 'textarea';
+  type: 'answerlist' | 'text' | 'textarea';
   id: string;
   label: string;
   value: string;
   editable: boolean | false;
   sort: number | 0;
+}
+
+export interface StoryAnswerList extends StoryContentProperty {
+  type: 'answerlist';
+  answers: Array<[string, boolean]>;
 }
 
 export interface StoryImage extends SlideContent {
@@ -54,6 +59,11 @@ export interface StoryText extends SlideContent {
   properties: Record<string, StoryContentProperty>;
 }
 
+export interface StoryQuiz extends SlideContent {
+  type: 'Quiz';
+  properties: Record<string, StoryContentProperty>;
+}
+
 export interface StoryCreatorState {
   stories: Record<Story['id'], Story>;
 }
@@ -61,6 +71,36 @@ export interface StoryCreatorState {
 export interface StoryEvent extends EntityEvent {
   description?: string;
   label?: string;
+}
+
+export class StoryQuizObject implements StoryQuiz {
+  type: 'Quiz' = 'Quiz';
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  properties: Record<string, StoryContentProperty>;
+  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+    this.id = id;
+    this.layout = layout;
+    this.properties = {
+      title: {
+        type: 'textarea',
+        id: 'question',
+        editable: true,
+        label: 'Question',
+        value: '',
+        sort: 0,
+      } as StoryContentProperty,
+      text: {
+        type: 'answerlist',
+        id: 'answers',
+        editable: true,
+        label: 'Answers',
+        value: '',
+        sort: 1,
+        answers: [['Answer 1', false]],
+      } as StoryAnswerList,
+    };
+  }
 }
 
 export class StoryTextObject implements StoryText {
@@ -332,7 +372,6 @@ export const storyCreatorSlice = createSlice({
       let content = action.payload;
 
       let contentObject;
-      console.log(content);
 
       content.id =
         'content' +
@@ -345,7 +384,9 @@ export const storyCreatorSlice = createSlice({
         case 'Text':
           contentObject = new StoryTextObject(content.id, content.layout);
           break;
-
+        case 'Quiz':
+          contentObject = new StoryQuizObject(content.id, content.layout);
+          break;
         default:
           break;
       }
