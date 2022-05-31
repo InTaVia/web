@@ -7,7 +7,7 @@ import { ProfessionsSvg } from '@/features/professions/professions-svg';
 
 export function Professions(): JSX.Element {
   const entities = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entities.person).slice(0 /*10*/); // XXX
+  const persons = Object.values(entities.person).slice(0, /*10*/); // XXX
 
   const parent = useRef<HTMLDivElement>(null);
 

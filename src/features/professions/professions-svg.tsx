@@ -1,14 +1,13 @@
-//import { extent } from 'd3-array';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleOrdinal } from 'd3-scale';
+import { schemeRdYlGn, interpolateCool, interpolateWarm } from 'd3-scale-chromatic';
+import { color as d3color, hsl } from 'd3-color';
 import { hierarchy, partition } from 'd3-hierarchy';
-import { group } from 'd3-array';
+import { extent, group } from 'd3-array';
 import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
-//import { TimelineElement } from '@/features/timeline/timeline-element';
-//import { TimelineElementTooltip } from '@/features/timeline/timeline-element-tooltip';
-//import { TimelineYearAxis } from '@/features/timeline/timeline-year-axis';
+import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
 
 interface ProfessionsSvgProps {
   persons: Array<Person>;
@@ -30,13 +29,40 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
 
-  const x = createHierarchy(persons);
-  console.log(x.descendants().slice(1));
+  const hierarchyRoot = createHierarchy(persons);
+  const allButRootNode = hierarchyRoot.descendants().filter(d => d.depth > 0);
 
-  const xScale = scaleLinear().range([20, 300]);
-  const yScale = scaleLinear().range([20, 300]);
+  // x is y, y is x
+  const dataXRange: [number, number] = extent<number>(allButRootNode.map(d => [d.y0, d.y1]).flat());
 
-  const _placateEslint = { parentRef, persons, renderLabel, hovered, setHovered };  // XXX
+  const xScale = scaleLinear()
+    .domain(dataXRange)
+    .range([20, svgWidth - 20]);
+  const yScale = scaleLinear().range([20, svgHeight - 20]);
+
+  // store colors per node in a map
+  const colorMap = new Map<string, string>();
+  // XXX: assume two levels of hierarchy for now
+  hierarchyRoot.children.forEach((child, i, arr) => {
+    const idx = i / (arr.length - 1);
+    const col1 = interpolateCool(idx);
+    const hsl1 = hsl(d3color(col1));
+
+    // root color: mostly saturated
+    const rootColor = hsl(hsl1.h, 0.8, 0.4);
+    colorMap.set(child.data.label, rootColor.toString());
+
+    const childColor1 = hsl(hsl1.h, 0.5, 0.5);
+    const childColor2 = hsl(hsl1.h, 0.5, 0.75);
+    const childColorScale = scaleLinear()
+      .domain([0, Math.max(4, child.children.length - 1)])
+      .range([childColor1, childColor2]);
+
+    child.children.forEach((child, i) => {
+      const color = childColorScale(i);
+      colorMap.set(child.data.label, color);
+    });
+  });
 
   useEffect(() => {
     const w = Math.max(svgMinWidth, parentRef.current?.clientWidth ?? 0);
@@ -47,20 +73,6 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     setSvgViewBox(`0 0 ${w} ${h}`);
   }, [parentRef]);
 
-  //const timeDomain = zoomToData ? getTemporalExtent(persons) : getTemporalExtent([]);
-  //
-  //const scaleX = scaleTime()
-  //  .domain(timeDomain)
-  //  .range([50, svgWidth - 50]);
-  //const scaleY = scaleBand()
-  //  .domain(
-  //    persons.map((d) => {
-  //      return d.id;
-  //    }),
-  //  )
-  //  .range([50, svgHeight - 80])
-  //  .paddingInner(0.2);
-
   return (
     <svg
       id="professions"
@@ -69,31 +81,24 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
       style={{ minWidth: `${svgMinWidth}px`, minHeight: `${svgMinHeight}px` }}
       viewBox={svgViewBox}
     >
-      {x.descendants().slice(1).map((node) => {
+      {allButRootNode.map((node) => {
         return (
-          <g key={node.data.label}>
-            <rect x={xScale(node.y0)}
-                  y={yScale(node.x0)}
-                  width={xScale(node.y1) - xScale(node.y0)}
-                  height={yScale(node.x1) - yScale(node.x0)}
-                  fill="red" />
-            <text x={xScale(node.y0) + 2}
-                  y={yScale(node.x0) + 10}>{node.data.label}</text>
-          </g>
+          <ProfessionHierarchyNode
+            key={node.data.label}
+            x0={node.y0}
+            x1={node.y1}
+            y0={node.x0}
+            y1={node.x1}
+            personIds={node.data.personIds}
+            scaleX={xScale}
+            scaleY={yScale}
+            renderLabel={renderLabel}
+            hovered={hovered}
+            setHovered={setHovered}
+            label={node.data.label}
+            color={colorMap.get(node.data.label) ?? 'hotpink'} />
         );
       })}
-      {/**
-      <TimelineYearAxis xScale={scaleX} yScale={scaleY} />
-      {persons.map((person) => {
-        const personProps = { scaleX, scaleY, person, renderLabel, hovered, setHovered };
-
-        return (
-          <TimelineElementTooltip key={person.id} {...personProps}>
-            <TimelineElement key={person.id} {...personProps} />
-          </TimelineElementTooltip>
-        );
-      })}
-      */}
     </svg>
   );
 }
@@ -131,9 +136,6 @@ function createHierarchy(persons: Array<Person>) {
     d => d[1],
   );
 
-
-  console.log(groupedByProfession);
-
   const root = {
     label: 'all',
     personIds: persons.map(d => d.id),
@@ -143,9 +145,7 @@ function createHierarchy(persons: Array<Person>) {
     .sum(d => d.children ? 0 : d.personIds.length)
     .sort((a, b) => a.data.label.localeCompare(b.data.label));
 
-  const part = partition()
-    .padding(0.005)
-    (hier);
+  const part = partition()(hier);
 
   return part;
 }
