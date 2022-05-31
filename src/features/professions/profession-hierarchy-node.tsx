@@ -27,13 +27,16 @@ export interface ProfessionHierarchyNodeProps {
 export function ProfessionHierarchyNode(
   props: ProfessionHierarchyNodeProps,
 ): JSX.Element {
-  const { label, x0, x1, y0, y1, color, personIds, scaleX, scaleY, renderLabel, hovered, setHovered, ...extraProps } = props;
+  const { label, color, renderLabel } = props;
+  const { x0, x1, y0, y1, scaleX, scaleY } = props;
+  const { personIds, hovered, setHovered } = props;
 
   const x = scaleX(x0);
   const width = scaleX(x1) - x;
   const y = scaleY(y0);
   const height = scaleY(y1) - y;
 
+  // only render label if set to be rendered AND enough vertical space to do so
   const reallyRenderLabel = renderLabel && height > 14;
 
   const handleMouseEnter = (entityIds: Array<Person['id']>) => {

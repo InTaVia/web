@@ -42,7 +42,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
 
   // store colors per node in a map
   const colorMap = new Map<string, string>();
-  // XXX: assume two levels of hierarchy for now
+
   hierarchyRoot.children.forEach((child, i, arr) => {
     const idx = i / (arr.length - 1);
     const col1 = interpolateCool(idx);
@@ -61,6 +61,10 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     child.children.forEach((child, i) => {
       const color = childColorScale(i);
       colorMap.set(child.data.label, color);
+
+      // XXX: assume two levels of hierarchy for now, rest is same color
+      const grandchildren = child.descendants().filter(d => d.depth !== child.depth);
+      grandchildren.forEach(grandchild => colorMap.set(grandchild.data.label, color));
     });
   });
 
@@ -141,6 +145,7 @@ function createHierarchy(persons: Array<Person>) {
     personIds: persons.map(d => d.id),
     children: unifyTree(groupedByProfession),
   };
+
   const hier = hierarchy(root)
     .sum(d => d.children ? 0 : d.personIds.length)
     .sort((a, b) => a.data.label.localeCompare(b.data.label));
