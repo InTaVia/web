@@ -11,9 +11,15 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
+import type { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
+import type { DictionariesProps } from '@/app/i18n/dictionaries';
+import { load } from '@/app/i18n/load';
+import { useI18n } from '@/app/i18n/use-i18n';
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Person } from '@/features/common/entity.model';
@@ -25,8 +31,34 @@ import { PinLayer } from '@/features/geomap/PinLayer';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 import { PageTitle } from '@/features/ui/page-title';
+import type { Locale } from '~/config/i18n.config';
 
-export default function CoordinationPage(): JSX.Element | null {
+type CoordinationPageProps = DictionariesProps<'common'>;
+
+export async function getStaticProps(
+  context: GetStaticPropsContext,
+): Promise<GetStaticPropsResult<CoordinationPageProps>> {
+  const locale = context.locale as Locale;
+  const dictionaries = await load(locale, ['common']);
+
+  return { props: { dictionaries } };
+}
+
+export default function CoordinationPage(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const titleTemplate = usePageTitleTemplate();
+
+  const metadata = { title: t(['common', 'coordination', 'metadata', 'title']) };
+
+  return (
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <CoordinationScreen />
+    </Fragment>
+  );
+}
+
+function CoordinationScreen(): JSX.Element | null {
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
   const router = useRouter();

@@ -1,13 +1,45 @@
 import { Container } from '@mui/material';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
+import type { DictionariesProps } from '@/app/i18n/dictionaries';
+import { load } from '@/app/i18n/load';
+import { useI18n } from '@/app/i18n/use-i18n';
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppSelector } from '@/app/store';
 import { StoryCreator } from '@/features/storycreator/StoryCreator';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
+import type { Locale } from '~/config/i18n.config';
 
-export default function StoryPage(): JSX.Element | null {
+type StoryPageProps = DictionariesProps<'common'>;
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<StoryPageProps>> {
+  const locale = context.locale as Locale;
+  const dictionaries = await load(locale, ['common']);
+
+  return { props: { dictionaries } };
+}
+
+export default function StoryPage(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const titleTemplate = usePageTitleTemplate();
+
+  const metadata = { title: t(['common', 'story', 'metadata', 'title']) };
+
+  return (
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <StoryScreen />
+    </Fragment>
+  );
+}
+
+function StoryScreen(): JSX.Element | null {
   const router = useRouter();
   const params = useParams();
   const stories = useAppSelector(selectStories);

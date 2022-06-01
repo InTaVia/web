@@ -1,14 +1,47 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { Fragment } from 'react';
 
+import type { DictionariesProps } from '@/app/i18n/dictionaries';
+import { load } from '@/app/i18n/load';
+import { useI18n } from '@/app/i18n/use-i18n';
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/features/common/entities.slice';
 import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
 import { PersonDetails } from '@/features/entities/person-details';
+import type { Locale } from '~/config/i18n.config';
+
+type PersonPageProps = DictionariesProps<'common'>;
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<PersonPageProps>> {
+  const locale = context.locale as Locale;
+  const dictionaries = await load(locale, ['common']);
+
+  return { props: { dictionaries } };
+}
 
 export default function PersonPage(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const titleTemplate = usePageTitleTemplate();
+
+  const metadata = { title: t(['common', 'person', 'metadata', 'title']) };
+
+  return (
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <PersonScreen />
+    </Fragment>
+  );
+}
+
+function PersonScreen(): JSX.Element {
   const params = useParams();
   const id = params?.get('id');
   const entitiesByKind = useAppSelector(selectEntitiesByKind);

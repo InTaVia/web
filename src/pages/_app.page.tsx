@@ -6,6 +6,7 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { ErrorBoundary } from '@stefanprobst/next-error-boundary';
+import { I18nProvider } from '@stefanprobst/next-i18n';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import type { AppProps as NextAppProps } from 'next/app';
 import Head from 'next/head';
@@ -36,6 +37,7 @@ interface AppProps extends NextAppProps {
 
 export default function App(props: AppProps): JSX.Element {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { dictionaries } = pageProps;
 
   const { locale } = useLocale();
   const metadata = useAppMetadata();
@@ -82,19 +84,21 @@ export default function App(props: AppProps): JSX.Element {
         twitter={metadata.twitter}
       />
       <Provider store={store}>
-        <CacheProvider value={emotionCache}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <PersistGate loading={null} persistor={persistor}>
-              <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
-                <PageLayout>
-                  <Component {...pageProps} />
-                </PageLayout>
-              </ErrorBoundary>
-            </PersistGate>
-            <Notifications />
-          </ThemeProvider>
-        </CacheProvider>
+        <I18nProvider dictionaries={dictionaries}>
+          <CacheProvider value={emotionCache}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <PersistGate loading={null} persistor={persistor}>
+                <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
+                  <PageLayout>
+                    <Component {...pageProps} />
+                  </PageLayout>
+                </ErrorBoundary>
+              </PersistGate>
+              <Notifications />
+            </ThemeProvider>
+          </CacheProvider>
+        </I18nProvider>
       </Provider>
     </Fragment>
   );
