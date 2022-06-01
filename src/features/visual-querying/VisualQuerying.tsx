@@ -1,35 +1,21 @@
 import { Button } from '@mui/material';
-import type { MouseEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useAppSelector } from '@/app/store';
 import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
-import { PersonShape } from '@/features/visual-querying/PersonShape';
+import styles from '@/features/visual-querying/visual-querying.module.css';
 import type {
   DateConstraint,
   TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
-import {
-  ConstraintType,
-  selectConstraints,
-  toggleConstraint,
-} from '@/features/visual-querying/visualQuerying.slice';
-import { Origin } from '@/features/visual-querying/Origin';
+import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
 
 export function VisualQuerying(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const parent = useRef<HTMLDivElement>(null);
+
   const constraints = useAppSelector(selectConstraints);
-  const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
-  const [origin, setOrigin] = useState(new Origin());
-  const svgRef = useRef<SVGSVGElement>(null);
-
   const [trigger] = useLazyGetPersonsQuery();
-
-  useEffect(() => {
-    const newSvgViewBox = `0 0 ${window.innerWidth} ${window.innerHeight}`;
-    setSvgViewBox(newSvgViewBox);
-    setOrigin(new Origin(window.innerWidth/2, window.innerHeight/2));
-  }, []);
 
   function sendQuery() {
     // Get parameters from constraints
@@ -65,30 +51,14 @@ export function VisualQuerying(): JSX.Element {
     );
   }
 
-  function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {
-    if (e.target === svgRef.current) {
-      constraints.forEach((constraint, idx) => {
-        if (constraint.opened) {
-          dispatch(toggleConstraint(idx));
-        }
-      });
-    }
-  }
-
   return (
-    <div className="visual-querying-wrapper">
-      <Button variant="contained" onClick={sendQuery}>
+    <div className={styles['visual-querying-outer-wrapper']}>
+      <Button variant="contained" onClick={sendQuery} className={styles['search-button']}>
         Search
       </Button>
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={svgViewBox}
-        onClick={dismissConstraintViews}
-        ref={svgRef}
-      >
-        <PersonShape parentOrigin={origin} />
-      </svg>
+      <div className={styles['visual-querying-inner-wrapper']} ref={parent}>
+        <VisualQueryingSvg parentRef={parent} />
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { useEffect, useRef } from 'react';
 
-import { Origin } from '@/features/visual-querying/Origin';
+import type { Origin } from '@/features/visual-querying/Origin';
 
 interface HistogramProps {
   data: {
@@ -96,8 +96,12 @@ export function Histogram(props: HistogramProps) {
 
   // Add axes
   useEffect(() => {
-    if (xAxisRef.current) select(xAxisRef.current).attr('transform', `translate(0, ${yScale(0)})`).call(xAxis);
-    if (yAxisRef.current) select(yAxisRef.current).attr('transform', `translate(${xScale.range()[0]}, 0)`).call(yAxis);
+    if (xAxisRef.current)
+      select(xAxisRef.current)
+        .attr('transform', `translate(0, ${yScale(0)})`)
+        .call(xAxis);
+    if (yAxisRef.current)
+      select(yAxisRef.current).attr('transform', `translate(${xScale.range()[0]}, 0)`).call(yAxis);
   });
 
   return (

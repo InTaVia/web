@@ -3,9 +3,9 @@ import { Paper, Typography } from '@mui/material';
 import { useAppDispatch } from '@/app/store';
 import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intavia-api.service';
 import { Histogram } from '@/features/visual-querying/Histogram';
+import { Origin } from '@/features/visual-querying/Origin';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
-import { Origin } from '@/features/visual-querying/Origin';
 
 interface DateConstraintProps {
   idx: number;
@@ -18,7 +18,7 @@ interface DateConstraintProps {
 }
 
 export function DateConstraintView(props: DateConstraintProps): JSX.Element {
-  const { x, y, width, height, constraint, origin } = props;
+  const { x, y, width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
@@ -62,9 +62,7 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
           <Typography>Loading ...</Typography>
         ) : (
           <svg width="100%" height="100%">
-            <g
-              className="data"
-            >
+            <g className="data">
               <Histogram
                 brushedArea={constraint.dateRange}
                 setBrushedArea={setBrushedArea}

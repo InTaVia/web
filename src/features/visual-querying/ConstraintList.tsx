@@ -2,13 +2,13 @@ import { List, ListItemButton, Paper, Typography } from '@mui/material';
 import type { MouseEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { Origin } from '@/features/visual-querying/Origin';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
 import {
   addConstraint,
   ConstraintType,
   selectConstraints,
 } from '@/features/visual-querying/visualQuerying.slice';
-import { Origin } from '@/features/visual-querying/Origin';
 
 interface ConstraintListProps {
   width: number;
@@ -45,7 +45,12 @@ export function ConstraintList(props: ConstraintListProps) {
   }
 
   return (
-    <foreignObject width={props.width} height={props.height} x={props.origin.x()} y={props.origin.y()}>
+    <foreignObject
+      width={props.width}
+      height={props.height}
+      x={props.origin.x()}
+      y={props.origin.y()}
+    >
       <Paper>
         <List
           role="list"

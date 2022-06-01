@@ -1,8 +1,8 @@
 import { path } from 'd3-path';
 
 import { useAppDispatch } from '@/app/store';
+import type { Origin } from '@/features/visual-querying/Origin';
 import { ConstraintType, toggleConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { Origin } from '@/features/visual-querying/Origin';
 
 interface RingConstraintProps {
   idx: number;
@@ -30,13 +30,10 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
   const p = path();
   p.moveTo(
     origin.x(Math.cos(startAngle) * innerRadius),
-    origin.y(Math.sin(startAngle) * innerRadius)
+    origin.y(Math.sin(startAngle) * innerRadius),
   );
   p.arc(origin.x(0), origin.y(0), innerRadius, startAngle, endAngle, false);
-  p.lineTo(
-    origin.x(Math.cos(endAngle) * outerRadius),
-    origin.y(Math.sin(endAngle) * outerRadius)
-  );
+  p.lineTo(origin.x(Math.cos(endAngle) * outerRadius), origin.y(Math.sin(endAngle) * outerRadius));
   p.arc(origin.x(0), origin.y(0), outerRadius, endAngle, startAngle, true);
   p.closePath();
 
@@ -44,7 +41,7 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
   const textPath = path();
   textPath.moveTo(
     origin.x(Math.cos(startAngle) * innerRadius),
-    origin.y(Math.sin(startAngle) * innerRadius)
+    origin.y(Math.sin(startAngle) * innerRadius),
   );
   textPath.arc(origin.x(0), origin.y(0), innerRadius, startAngle, endAngle, false);
 

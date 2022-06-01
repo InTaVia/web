@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAppSelector } from '@/app/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
+import type { Origin } from '@/features/visual-querying/Origin';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
 import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
@@ -10,15 +11,14 @@ import type {
   TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
-import { Origin } from '@/features/visual-querying/Origin';
 
 interface PersonShapeProps {
-  parentOrigin: Origin;
+  origin: Origin;
 }
 
 export function PersonShape(props: PersonShapeProps): JSX.Element {
   const constraints = useAppSelector(selectConstraints);
-  const { parentOrigin } = props;
+  const { origin } = props;
 
   const [isConstListShown, setIsConstListShown] = useState(false);
 
@@ -37,11 +37,17 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
 
   return (
     <g>
-      <circle cx={parentOrigin.x(0)} cy={parentOrigin.y(0)} r="100"
-    fill="lightGray" style={{ cursor: 'pointer' }} onClick={handleClick} />
+      <circle
+        cx={origin.x(0)}
+        cy={origin.y(0)}
+        r="100"
+        fill="lightGray"
+        style={{ cursor: 'pointer' }}
+        onClick={handleClick}
+      />
       <text
-        x={parentOrigin.x(0)}
-        y={parentOrigin.y(0)}
+        x={origin.x(0)}
+        y={origin.y(0)}
         fontSize="xxx-large"
         textAnchor="middle"
         dominantBaseline="central"
@@ -79,7 +85,7 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
             outerRadius={130}
             type={constraint.type}
             valueDescription={valueDescription}
-            origin={parentOrigin.clone()}
+            origin={origin.clone()}
           />
         );
       })}
@@ -88,8 +94,8 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
           return constraint.opened;
         })
         .map(({ constraint, startAngle }, idx) => {
-          const x = parentOrigin.x(Math.cos((startAngle / 180) * Math.PI) * 200);
-          const y = parentOrigin.y(Math.sin((startAngle / 180) * Math.PI) * 200);
+          const x = origin.x(Math.cos((startAngle / 180) * Math.PI) * 200);
+          const y = origin.y(Math.sin((startAngle / 180) * Math.PI) * 200);
 
           switch (constraint.type) {
             case ConstraintType.DateOfBirth:
@@ -103,7 +109,7 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
                   y={y}
                   width={500}
                   height={250}
-                  origin={parentOrigin.clone()}
+                  origin={origin.clone()}
                 />
               );
             case ConstraintType.Name:
@@ -116,7 +122,7 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
                   y={y}
                   width={300}
                   height={80}
-                  origin={parentOrigin.clone()}
+                  origin={origin.clone()}
                 />
               );
             // case ConstraintType.Place:
@@ -141,7 +147,12 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
         })}
 
       {isConstListShown && (
-        <ConstraintList setIsConstListShown={setIsConstListShown} width={200} height={200} origin={parentOrigin.clone()} />
+        <ConstraintList
+          setIsConstListShown={setIsConstListShown}
+          width={200}
+          height={200}
+          origin={origin.clone()}
+        />
       )}
     </g>
   );
