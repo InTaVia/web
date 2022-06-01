@@ -5,6 +5,7 @@ import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intav
 import { Histogram } from '@/features/visual-querying/Histogram';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
+import { Origin } from '@/features/visual-querying/Origin';
 
 interface DateConstraintProps {
   idx: number;
@@ -13,10 +14,11 @@ interface DateConstraintProps {
   width: number;
   height: number;
   constraint: DateConstraint;
+  origin: Origin;
 }
 
 export function DateConstraintView(props: DateConstraintProps): JSX.Element {
-  const { x, y, width, height, constraint } = props;
+  const { x, y, width, height, constraint, origin } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
@@ -43,36 +45,37 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
     );
   }
 
+  // this is inside the foreignObject: completely new coordinate system
+  const histogramOrigin = new Origin(dimensions.marginLeft, dimensions.marginTop);
+
   return (
-    <g transform={`translate(${x}, ${y})`}>
-      <foreignObject width={dimensions.width} height={dimensions.height}>
-        <Paper
-          elevation={3}
-          sx={{
-            margin: '2px',
-            width: dimensions.width - 4,
-            height: dimensions.height - 4,
-          }}
-        >
-          {isLoading ? (
-            <Typography>Loading ...</Typography>
-          ) : (
-            <svg width="100%" height="100%">
-              <g
-                className="data"
-                transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}
-              >
-                <Histogram
-                  brushedArea={constraint.dateRange}
-                  setBrushedArea={setBrushedArea}
-                  data={data!}
-                  dimensions={dimensions}
-                />
-              </g>
-            </svg>
-          )}
-        </Paper>
-      </foreignObject>
-    </g>
+    <foreignObject width={dimensions.width} height={dimensions.height} x={x} y={y}>
+      <Paper
+        elevation={3}
+        sx={{
+          margin: '2px',
+          width: dimensions.width - 4,
+          height: dimensions.height - 4,
+        }}
+      >
+        {isLoading ? (
+          <Typography>Loading ...</Typography>
+        ) : (
+          <svg width="100%" height="100%">
+            <g
+              className="data"
+            >
+              <Histogram
+                brushedArea={constraint.dateRange}
+                setBrushedArea={setBrushedArea}
+                data={data!}
+                dimensions={dimensions}
+                origin={histogramOrigin}
+              />
+            </g>
+          </svg>
+        )}
+      </Paper>
+    </foreignObject>
   );
 }

@@ -8,11 +8,13 @@ import {
   ConstraintType,
   selectConstraints,
 } from '@/features/visual-querying/visualQuerying.slice';
+import { Origin } from '@/features/visual-querying/Origin';
 
 interface ConstraintListProps {
   width: number;
   height: number;
   setIsConstListShown: (isShown: boolean) => void;
+  origin: Origin;
 }
 
 export function ConstraintList(props: ConstraintListProps) {
@@ -43,7 +45,7 @@ export function ConstraintList(props: ConstraintListProps) {
   }
 
   return (
-    <foreignObject width={props.width} height={props.height}>
+    <foreignObject width={props.width} height={props.height} x={props.origin.x()} y={props.origin.y()}>
       <Paper>
         <List
           role="list"

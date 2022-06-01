@@ -2,6 +2,7 @@ import { path } from 'd3-path';
 
 import { useAppDispatch } from '@/app/store';
 import { ConstraintType, toggleConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import { Origin } from '@/features/visual-querying/Origin';
 
 interface RingConstraintProps {
   idx: number;
@@ -11,12 +12,13 @@ interface RingConstraintProps {
   outerRadius: number;
   type: ConstraintType;
   valueDescription: string | null;
+  origin: Origin;
 }
 
 export function RingConstraint(props: RingConstraintProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const { innerRadius, outerRadius, type } = props;
+  const { innerRadius, outerRadius, type, origin } = props;
   const startAngle = (props.startAngle * Math.PI) / 180;
   const endAngle = (props.endAngle * Math.PI) / 180;
 
@@ -26,16 +28,25 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
 
   // Define path for ring element
   const p = path();
-  p.moveTo(Math.cos(startAngle) * innerRadius, Math.sin(startAngle) * innerRadius);
-  p.arc(0, 0, innerRadius, startAngle, endAngle, false);
-  p.lineTo(Math.cos(endAngle) * outerRadius, Math.sin(endAngle) * outerRadius);
-  p.arc(0, 0, outerRadius, endAngle, startAngle, true);
+  p.moveTo(
+    origin.x(Math.cos(startAngle) * innerRadius),
+    origin.y(Math.sin(startAngle) * innerRadius)
+  );
+  p.arc(origin.x(0), origin.y(0), innerRadius, startAngle, endAngle, false);
+  p.lineTo(
+    origin.x(Math.cos(endAngle) * outerRadius),
+    origin.y(Math.sin(endAngle) * outerRadius)
+  );
+  p.arc(origin.x(0), origin.y(0), outerRadius, endAngle, startAngle, true);
   p.closePath();
 
   // Define textPath for label
   const textPath = path();
-  textPath.moveTo(Math.cos(startAngle) * innerRadius, Math.sin(startAngle) * innerRadius);
-  textPath.arc(0, 0, innerRadius, startAngle, endAngle, false);
+  textPath.moveTo(
+    origin.x(Math.cos(startAngle) * innerRadius),
+    origin.y(Math.sin(startAngle) * innerRadius)
+  );
+  textPath.arc(origin.x(0), origin.y(0), innerRadius, startAngle, endAngle, false);
 
   let fillColor = 'red';
   switch (type) {

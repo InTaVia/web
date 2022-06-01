@@ -14,20 +14,21 @@ import {
   selectConstraints,
   toggleConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
+import { Origin } from '@/features/visual-querying/Origin';
 
 export function VisualQuerying(): JSX.Element {
   const dispatch = useAppDispatch();
   const constraints = useAppSelector(selectConstraints);
   const [svgViewBox, setSvgViewBox] = useState('0 0 0 0');
+  const [origin, setOrigin] = useState(new Origin());
   const svgRef = useRef<SVGSVGElement>(null);
 
   const [trigger] = useLazyGetPersonsQuery();
 
   useEffect(() => {
-    const newSvgViewBox = `${-window.innerWidth / 2} ${-window.innerHeight / 2} ${
-      window.innerWidth
-    } ${window.innerHeight}`;
+    const newSvgViewBox = `0 0 ${window.innerWidth} ${window.innerHeight}`;
     setSvgViewBox(newSvgViewBox);
+    setOrigin(new Origin(window.innerWidth/2, window.innerHeight/2));
   }, []);
 
   function sendQuery() {
@@ -86,7 +87,7 @@ export function VisualQuerying(): JSX.Element {
         onClick={dismissConstraintViews}
         ref={svgRef}
       >
-        <PersonShape />
+        <PersonShape parentOrigin={origin} />
       </svg>
     </div>
   );
