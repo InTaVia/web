@@ -1,29 +1,17 @@
 import { Container } from '@mui/material';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect } from 'react';
 
-import type { DictionariesProps } from '@/app/i18n/dictionaries';
-import { load } from '@/app/i18n/load';
 import { useI18n } from '@/app/i18n/use-i18n';
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppSelector } from '@/app/store';
 import { StoryCreator } from '@/features/storycreator/StoryCreator';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
-import type { Locale } from '~/config/i18n.config';
 
-type StoryPageProps = DictionariesProps<'common'>;
-
-export async function getServerSideProps(
-  context: GetServerSidePropsContext,
-): Promise<GetServerSidePropsResult<StoryPageProps>> {
-  const locale = context.locale as Locale;
-  const dictionaries = await load(locale, ['common']);
-
-  return { props: { dictionaries } };
-}
+export const getServerSideProps = withDictionaries(['common']);
 
 export default function StoryPage(): JSX.Element {
   const { t } = useI18n<'common'>();
