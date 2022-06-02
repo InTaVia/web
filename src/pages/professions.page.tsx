@@ -40,7 +40,7 @@ export default function ProfessionsPage(): JSX.Element | null {
       selection: ['Developer', 'Liaison', 'Strategist'],
     };
     dispatch(addConstraint(constraint));
-  }, []);
+  }, [dispatch]);
   const constraints = useAppSelector(selectConstraints);
   const constraint = constraints.find((d) => {
     return d.type === 'Profession';
