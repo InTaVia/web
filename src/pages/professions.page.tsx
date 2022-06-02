@@ -28,13 +28,21 @@ export default function ProfessionsPage(): JSX.Element | null {
     return null;
   }
 
+  // TODO: testing only
+  const constraint = {
+    id: 'foo bar',
+    opened: true,
+    type: 'Profession',
+    selection: new Set<string>(['Developer', 'Liaison', 'Strategist']),
+  };
+
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
         <ProfessionsPageHeader />
         <Paper>
-          <Professions />
+          <Professions constraint={constraint} />
         </Paper>
       </Container>
     </Fragment>

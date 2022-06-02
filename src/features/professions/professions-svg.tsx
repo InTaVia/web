@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
 import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
+import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import type { ToggleProfessionFn } from '@/features/professions/professions.tsx';
 
 export enum LeafSizing {
   Qualitative,
@@ -24,6 +26,8 @@ interface ProfessionsSvgProps {
   leafSizing?: LeafSizing;
   hovered?: Array<Person['id']> | null;
   setHovered?: (val: Array<Person['id']> | null) => void;
+  constraint?: ProfessionConstraint;
+  toggleProfession: ToggleProfessionFn;
 }
 
 const svgMinWidth = 300;
@@ -40,6 +44,8 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     hovered,
     setHovered,
     leafSizing = LeafSizing.Quantitative,
+    constraint,
+    toggleProfession,
   } = props;
 
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
@@ -116,6 +122,9 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     >
       {allButRootNode.map((node) => {
         const label = node.data.label === noOccupation ? 'no occupation' : node.data.label;
+        const professionIds = node.data.label === noOccupation
+          ? []
+          : node.descendants().filter(d => (d.children?.length ?? 0) === 0).map(d => d.data.label);
 
         return (
           <ProfessionHierarchyNode
@@ -125,6 +134,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             y0={node.x0}
             y1={node.x1}
             personIds={node.data.personIds}
+            professionIds={professionIds}
             scaleX={xScale}
             scaleY={yScale}
             renderLabel={renderLabel}
@@ -132,6 +142,10 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             setHovered={setHovered}
             label={label}
             color={colorMap.get(node.data.label) ?? 'hotpink'}
+
+            selectable={!!constraint}
+            selected={constraint?.selection?.has(node.data.label) ?? false}
+            toggleProfession={toggleProfession}
           />
         );
       })}
