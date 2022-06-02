@@ -11,8 +11,8 @@ import { useEffect, useState } from 'react';
 
 import type { Person } from '@/features/common/entity.model';
 import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
+import type { ToggleProfessionFn } from '@/features/professions/professions';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import type { ToggleProfessionFn } from '@/features/professions/professions.tsx';
 
 export enum LeafSizing {
   Qualitative,
@@ -122,9 +122,20 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     >
       {allButRootNode.map((node) => {
         const label = node.data.label === noOccupation ? 'no occupation' : node.data.label;
-        const professionIds = node.data.label === noOccupation
-          ? []
-          : node.descendants().filter(d => (d.children?.length ?? 0) === 0).map(d => d.data.label);
+        const professionIds: Array<string> =
+          node.data.label === noOccupation
+            ? []
+            : (node
+                .descendants()
+                .filter((d) => {
+                  return (d.children?.length ?? 0) === 0;
+                })
+                .map((d) => {
+                  return d.data.label;
+                })
+                .filter((d) => {
+                  return typeof d === 'string';
+                }) as Array<string>);
 
         return (
           <ProfessionHierarchyNode
@@ -142,9 +153,8 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             setHovered={setHovered}
             label={label}
             color={colorMap.get(node.data.label) ?? 'hotpink'}
-
-            selectable={!!constraint}
-            selected={constraint?.selection?.has(node.data.label) ?? false}
+            selectable={Boolean(constraint)}
+            selected={constraint?.selection?.includes(node.data.label as string) ?? false}
             toggleProfession={toggleProfession}
           />
         );

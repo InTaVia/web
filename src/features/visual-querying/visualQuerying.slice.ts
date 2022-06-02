@@ -31,10 +31,10 @@ export interface TextConstraint extends Constraint {
   text: string;
 }
 
-type Profession = string; // XXX
+export type Profession = string; // XXX
 export interface ProfessionConstraint extends Constraint {
   type: ConstraintType.Profession;
-  selection: Set<Profession> | null;
+  selection: Array<Profession> | null;
 }
 
 export interface VisualQueryingState {

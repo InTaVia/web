@@ -2,7 +2,7 @@ import { lch } from 'd3-color';
 import type { ScaleLinear } from 'd3-scale';
 
 import type { Person } from '@/features/common/entity.model';
-import type { ToggleProfessionFn } from '@/features/professions/Professions';
+import type { ToggleProfessionFn } from '@/features/professions/professions';
 
 export interface ProfessionHierarchyNodeProps {
   label: string;
@@ -56,11 +56,15 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
       }}
       // onMouseLeave={handleMouseLeave}
       onClick={() => {
-        selectable && toggleProfession(professionIds, !selected);
+        selectable && toggleProfession(professionIds);
       }}
-      style={!selectable ? {
-        cursor: 'pointer',
-      } : {}}
+      style={
+        selectable
+          ? {
+              cursor: 'pointer',
+            }
+          : {}
+      }
     >
       <title>
         {label}: {personIds.length} persons
@@ -74,7 +78,10 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
       {selectable && selected && (
         <>
           {/* checkbox */}
-          <path fill="black" d={`M ${x + width} ${y + height} m -20 -12 l 2 -2 4 4 8 -8 2 2 -10 10 -6 -6 z`} />
+          <path
+            fill={labelColor}
+            d={`M ${x + width} ${y + height} m -20 -12 l 2 -2 4 4 8 -8 2 2 -10 10 -6 -6 z`}
+          />
         </>
       )}
     </g>

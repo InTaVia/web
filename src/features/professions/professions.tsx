@@ -1,22 +1,20 @@
 import { useRef } from 'react';
 
-import { useAppSelector, useAppDispatch } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import styles from '@/features/professions/professions.module.css';
 import { LeafSizing, ProfessionsSvg } from '@/features/professions/professions-svg';
-import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import type {
+  Profession,
+  ProfessionConstraint,
+} from '@/features/visual-querying/visualQuerying.slice';
 import { updateProfessions } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ProfessionsProps {
   constraint?: ProfessionConstraint;
-};
+}
 
-export type ToggleProfessionFn = (
-  (
-    profession: Iterable<Parameters<ProfessionConstraint['selection']['has']>[0]>,
-    contained: boolean
-  ) => void
-);
+export type ToggleProfessionFn = (professions: Array<Profession>) => void;
 
 export function Professions({ constraint }: ProfessionsProps): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,9 +24,32 @@ export function Professions({ constraint }: ProfessionsProps): JSX.Element {
 
   const parent = useRef<HTMLDivElement>(null);
 
-  function toggleProfession(profession: Parameters<ToggleProfessionFn>[0], contained: Parameters<ToggleProfessionFn>[1]) {
-    console.log('toggle', profession);
-    // TODO
+  function toggleProfession(professions: Parameters<ToggleProfessionFn>[0]) {
+    if (!constraint) return;
+    const numContained = professions
+      .map((d) => {
+        return constraint.selection?.includes(d);
+      })
+      .filter((d) => {
+        return d;
+      }).length;
+    const totalNumber = professions.length;
+    const mostOn = numContained >= totalNumber / 2;
+
+    const newSelection = new Set<typeof professions[0]>(constraint.selection ?? []);
+    if (mostOn) {
+      // remove contained
+      professions.forEach((v) => {
+        return newSelection.delete(v);
+      });
+    } else {
+      // add contained
+      professions.forEach((v) => {
+        return newSelection.add(v);
+      });
+    }
+
+    dispatch(updateProfessions({ id: constraint.id, selection: Array.from(newSelection) }));
   }
 
   return (

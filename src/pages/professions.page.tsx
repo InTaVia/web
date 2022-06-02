@@ -5,14 +5,21 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect } from 'react';
 
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { Professions } from '@/features/professions/professions';
 import { ProfessionsPageHeader } from '@/features/professions/professions-page-header';
+import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import {
+  addConstraint,
+  ConstraintType,
+  selectConstraints,
+} from '@/features/visual-querying/visualQuerying.slice';
 
 export default function ProfessionsPage(): JSX.Element | null {
   const metadata = { title: 'Profession Hierarchy' };
 
+  const dispatch = useAppDispatch();
   const titleTemplate = usePageTitleTemplate();
   const entities = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entities.person);
@@ -24,17 +31,24 @@ export default function ProfessionsPage(): JSX.Element | null {
     }
   }, [router, persons.length]);
 
+  // TODO: testing only
+  useEffect(() => {
+    const constraint: ProfessionConstraint = {
+      id: 'Profession',
+      opened: true,
+      type: ConstraintType.Profession,
+      selection: ['Developer', 'Liaison', 'Strategist'],
+    };
+    dispatch(addConstraint(constraint));
+  }, []);
+  const constraints = useAppSelector(selectConstraints);
+  const constraint = constraints.find((d) => {
+    return d.type === 'Profession';
+  }) as ProfessionConstraint | undefined;
+
   if (persons.length === 0) {
     return null;
   }
-
-  // TODO: testing only
-  const constraint = {
-    id: 'foo bar',
-    opened: true,
-    type: 'Profession',
-    selection: new Set<string>(['Developer', 'Liaison', 'Strategist']),
-  };
 
   return (
     <Fragment>
