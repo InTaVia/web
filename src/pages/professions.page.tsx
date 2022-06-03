@@ -55,7 +55,7 @@ export default function ProfessionsPage(): JSX.Element | null {
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
         <ProfessionsPageHeader />
-        <Paper>
+        <Paper sx={{ minHeight: '50vh', display: 'grid' }}>
           <Professions constraint={constraint} />
         </Paper>
       </Container>
