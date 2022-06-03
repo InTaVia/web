@@ -24,7 +24,11 @@ export const handlers = [
         dateOfDeathStart != null && dateOfDeathEnd != null
           ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
           : undefined;
-      const persons = db.person.findMany(q, start, end);
+      const professionsStr = getSearchParam(request.url, 'professions');
+      const professions =
+        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
+
+      const persons = db.person.findMany(q, start, end, professions);
 
       const limit = 10;
       const pages = Math.ceil(persons.length / limit);
@@ -141,8 +145,13 @@ export const handlers = [
         dateOfDeathStart != null && dateOfDeathEnd != null
           ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
           : undefined;
-      const persons = db.person.findMany(q, start, end);
+      const professionsStr = getSearchParam(request.url, 'professions');
+      const professions =
+        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
 
+      const persons = db.person.findMany(q, start, end, professions);
+
+      // TODO: not feasible for the real data, a list of possible professions would be necessary here
       const allPersons = db.person.findMany();
       const allProfessions = Array.from(
         new Set<string>(

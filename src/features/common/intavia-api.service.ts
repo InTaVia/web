@@ -34,6 +34,7 @@ const service = createApi({
           dateOfBirthEnd?: number;
           dateOfDeathStart?: number;
           dateOfDeathEnd?: number;
+          professions?: string;
         }
       >({
         query(params) {
@@ -44,11 +45,20 @@ const service = createApi({
             dateOfBirthEnd,
             dateOfDeathStart,
             dateOfDeathEnd,
+            professions,
           } = params;
 
           return {
             url: '/api/persons',
-            params: { page, q, dateOfBirthStart, dateOfBirthEnd, dateOfDeathStart, dateOfDeathEnd },
+            params: {
+              page,
+              q,
+              dateOfBirthStart,
+              dateOfBirthEnd,
+              dateOfDeathStart,
+              dateOfDeathEnd,
+              professions,
+            },
           };
         },
       }),
@@ -96,6 +106,7 @@ const service = createApi({
           dateOfBirthEnd?: number;
           dateOfDeathStart?: number;
           dateOfDeathEnd?: number;
+          professions?: string;
         }
       >({
         query(params) {
