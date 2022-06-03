@@ -31,8 +31,15 @@ export function Professions({
 
   const parent = useRef<HTMLDivElement>(null);
 
+  /**
+   * Toggle professions on or off in the constraint. If the profession is a
+   * subtree parent, only the leaves are toggled. Here, the inverse of the
+   * majority value will be the new value for all nodes (i.e., if more than 50%
+   * of nodes are deselected previously, all will be selected, and vice versa).
+   */
   function toggleProfession(professions: Parameters<ToggleProfessionFn>[0]) {
     if (!constraint) return;
+
     const numContained = professions
       .map((d) => {
         return constraint.selection?.includes(d);

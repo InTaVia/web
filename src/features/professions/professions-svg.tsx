@@ -13,9 +13,26 @@ import type { ToggleProfessionFn } from '@/features/professions/professions';
 import { Origin } from '@/features/visual-querying/Origin';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
+/**
+ * Determines how the tree is split up into its leaves size-wise.
+ */
 export enum LeafSizing {
+  /**
+   * All leaf nodes have the same height. Parent nodes have the height of the
+   * sum of their children.
+   */
   Qualitative,
+  /**
+   * Same sizing as above, but the leaf nodes also contain a bar encoding the
+   * leaf's value. Bar scaling is consistent across all leaves. This is used,
+   * for example, in the visual querying profession constraint, where all
+   * leaves (even those with value 0) should be visible, but the number of
+   * persons with that profession should still be gleanable (scented widget).
+   */
   QualitativeWithBar,
+  /**
+   * Leaf node height is determined by the node's value.
+   */
   Quantitative,
 }
 
@@ -147,6 +164,12 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
 
 type _HierarchyData = Profession & { count: number };
 
+/**
+ * Convert the list of { name, parent, count } tuples to a d3 hierarchy,
+ * respecting the chosen leaf sizing. A dummy root element is added as there
+ * might be multiple elements with no parent (subtree roots). This global root
+ * is later cut away before visualizing the tree.
+ */
 function createHierarchy(
   professions: Array<_HierarchyData>,
   leafSizing: LeafSizing,

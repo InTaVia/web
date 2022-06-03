@@ -27,6 +27,13 @@ export interface ProfessionHierarchyNodeProps {
   toggleProfession: ToggleProfessionFn;
 }
 
+/**
+ * Rectangular node with background, label, maybe an extra bar chart bar, and
+ * maybe a tick mark. The bar is only drawn in the `QualitativeWithBar`
+ * `LeafSizing` mode, and the tick mark (and click interactions) are only
+ * available in the `selectable` mode, when the `Professions` element is used
+ * as a scented widget.
+ */
 export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JSX.Element {
   const { label, colorForeground, colorBackground, renderLabel } = props;
   const { isLeaf, leafSizing, barWidth } = props;
@@ -89,14 +96,12 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
           {label}
         </text>
       )}
+      {/* checkbox */}
       {selectable && selected && (
-        <>
-          {/* checkbox */}
-          <path
-            fill={labelColor}
-            d={`M ${x + width} ${y + height} m -20 -12 l 2 -2 4 4 8 -8 2 2 -10 10 -6 -6 z`}
-          />
-        </>
+        <path
+          fill={labelColor}
+          d={`M ${x + width} ${y + height} m -20 -12 l 2 -2 4 4 8 -8 2 2 -10 10 -6 -6 z`}
+        />
       )}
     </g>
   );
