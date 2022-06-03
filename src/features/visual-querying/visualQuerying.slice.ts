@@ -27,7 +27,7 @@ export interface DateConstraint extends Constraint {
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
-  text: string | null;
+  text: string;
 }
 
 export interface VisualQueryingState {
@@ -72,7 +72,7 @@ const visualQueryingSlice = createSlice({
         constraint.dateRange = action.payload.dateRange;
       }
     },
-    updateText: (state, action: PayloadAction<{ id: string; text: string | null }>) => {
+    updateText: (state, action: PayloadAction<{ id: string; text: string }>) => {
       const constraint = state.constraints.find((constraint) => {
         return constraint.id === action.payload.id && constraint.type === ConstraintType.Name;
       }) as TextConstraint | undefined;
