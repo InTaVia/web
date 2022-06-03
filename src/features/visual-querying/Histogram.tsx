@@ -1,7 +1,8 @@
-import { format, max } from 'd3';
 import type { Bin } from 'd3-array';
+import { max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
+import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { useEffect, useRef } from 'react';

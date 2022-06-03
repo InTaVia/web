@@ -58,7 +58,12 @@ export function ConstraintList(props: ConstraintListProps) {
         >
           {Object.values(ConstraintType).map((value) => {
             return (
-              <ListItemButton key={value} sx={{ paddingBlock: 2 }} onClick={handleClick}>
+              <ListItemButton
+                role="listitem"
+                key={value}
+                sx={{ paddingBlock: 2 }}
+                onClick={handleClick}
+              >
                 <Typography>{value}</Typography>
               </ListItemButton>
             );
