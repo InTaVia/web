@@ -1,8 +1,9 @@
-import { lch } from 'd3-color';
+import { hsl, lch } from 'd3-color';
 import type { ScaleLinear } from 'd3-scale';
 
 import type { Person } from '@/features/common/entity.model';
 import type { ToggleProfessionFn } from '@/features/professions/professions';
+import { LeafSizing } from '@/features/professions/professions-svg';
 
 export interface ProfessionHierarchyNodeProps {
   label: string;
@@ -12,12 +13,16 @@ export interface ProfessionHierarchyNodeProps {
   y1: number;
   scaleX: ScaleLinear<number, number>;
   scaleY: ScaleLinear<number, number>;
-  color: string;
+  colorForeground: string;
+  colorBackground: string;
+  isLeaf: boolean;
   personIds: Array<Person['id']>;
   renderLabel: boolean;
   hovered?: Array<Person['id']> | null;
   setHovered?: (val: Array<Person['id']> | null) => void;
   professionIds: Array<string>;
+  leafSizing: LeafSizing;
+  barWidth: number;
 
   selectable: boolean;
   selected: boolean;
@@ -25,7 +30,8 @@ export interface ProfessionHierarchyNodeProps {
 }
 
 export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JSX.Element {
-  const { label, color, renderLabel } = props;
+  const { label, colorForeground, colorBackground, renderLabel } = props;
+  const { isLeaf, leafSizing, barWidth } = props;
   const { x0, x1, y0, y1, scaleX, scaleY } = props;
   const { personIds, professionIds, setHovered } = props;
   const { selected, selectable, toggleProfession } = props;
@@ -45,8 +51,10 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
   // const handleMouseLeave = () => {
   //   setHovered?.(null);
   // };
-  const backgroundLightness = lch(color).l;
+  const backgroundLightness = lch(colorBackground).l;
   const labelColor = backgroundLightness < 45 ? 'white' : 'black';
+  const fg = hsl(colorForeground);
+  const frameColor = hsl(fg.h, 0.3, 0.3).toString();
 
   return (
     <g
@@ -69,7 +77,26 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
       <title>
         {label}: {personIds.length} persons
       </title>
-      <rect stroke="white" strokeWidth={1} fill={color} x={x} width={width} y={y} height={height} />
+      <rect
+        stroke="white"
+        strokeWidth={1}
+        fill={colorBackground}
+        x={x}
+        width={width}
+        y={y}
+        height={height}
+      />
+      {isLeaf && leafSizing === LeafSizing.QualitativeWithBar && (
+        <rect
+          stroke={frameColor}
+          strokeWidth={1}
+          fill={colorForeground}
+          x={x + 1}
+          width={width * barWidth - 2}
+          y={y + 1}
+          height={height - 2}
+        />
+      )}
       {reallyRenderLabel && (
         <text fill={labelColor} x={x + width / 2} y={y + height / 2} dy="0.3em" textAnchor="middle">
           {label}

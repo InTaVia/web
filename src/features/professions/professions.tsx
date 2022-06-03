@@ -3,7 +3,8 @@ import { useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import styles from '@/features/professions/professions.module.css';
-import { LeafSizing, ProfessionsSvg } from '@/features/professions/professions-svg';
+import type { LeafSizing } from '@/features/professions/professions-svg';
+import { ProfessionsSvg } from '@/features/professions/professions-svg';
 import type { Origin } from '@/features/visual-querying/Origin';
 import type {
   Profession,
@@ -13,12 +14,13 @@ import { updateProfessions } from '@/features/visual-querying/visualQuerying.sli
 
 interface ProfessionsProps {
   origin: Origin;
+  leafSizing: LeafSizing;
   constraint?: ProfessionConstraint;
 }
 
 export type ToggleProfessionFn = (professions: Array<Profession>) => void;
 
-export function Professions({ constraint, origin }: ProfessionsProps): JSX.Element {
+export function Professions({ constraint, leafSizing, origin }: ProfessionsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const entities = useAppSelector(selectEntitiesByKind);
@@ -60,7 +62,7 @@ export function Professions({ constraint, origin }: ProfessionsProps): JSX.Eleme
         parentRef={parent}
         persons={persons}
         renderLabel={true}
-        leafSizing={LeafSizing.Qualitative}
+        leafSizing={leafSizing}
         constraint={constraint}
         toggleProfession={toggleProfession}
         origin={origin}

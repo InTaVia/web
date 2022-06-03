@@ -1,6 +1,5 @@
 import type { InternMap } from 'd3-array';
-import { extent, group } from 'd3-array';
-import type { HSLColor } from 'd3-color';
+import { extent, group, max } from 'd3-array';
 import { hsl } from 'd3-color';
 import type { HierarchyRectangularNode } from 'd3-hierarchy';
 import { hierarchy, partition } from 'd3-hierarchy';
@@ -17,6 +16,7 @@ import type { ProfessionConstraint } from '@/features/visual-querying/visualQuer
 
 export enum LeafSizing {
   Qualitative,
+  QualitativeWithBar,
   Quantitative,
 }
 
@@ -77,36 +77,24 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   const yScale = scaleLinear().range([origin.y(20), origin.y(svgHeight - 20)]);
 
   // store colors per node in a map
-  const colorMap = new Map<NoOccupation | string, string>();
+  const colorMap = new Map<NoOccupation | string, number>();
 
   hierarchyRoot.children?.forEach((child, i, arr) => {
     const idx = i / (arr.length - 1);
     const col1 = interpolateCool(idx);
     const hsl1 = hsl(col1);
 
-    // root color: mostly saturated
-    const rootColor = hsl(hsl1.h, 0.8, 0.4);
-    colorMap.set(child.data.label, rootColor.toString());
-
-    const childColor1 = hsl(hsl1.h, 0.5, 0.5);
-    const childColor2 = hsl(hsl1.h, 0.5, 0.75);
-    const childColorScale = scaleLinear<HSLColor>()
-      .domain([0, Math.max(4, (child.children?.length ?? 0) - 1)])
-      .range([childColor1, childColor2]);
-
-    child.children?.forEach((child, i) => {
-      const color = childColorScale(i);
-      colorMap.set(child.data.label, color.toString());
-
-      // XXX: assume two levels of hierarchy for now, rest is same color
-      const grandchildren = child.descendants().filter((d) => {
-        return d.depth !== child.depth;
-      });
-      grandchildren.forEach((grandchild) => {
-        return colorMap.set(grandchild.data.label, color.toString());
-      });
+    child.descendants().forEach((d) => {
+      return colorMap.set(d.data.label, hsl1.h);
     });
   });
+
+  const maxChildValue =
+    max<number>(
+      hierarchyRoot.leaves().map((d) => {
+        return d.data.personIds.length;
+      }),
+    ) ?? 1;
 
   useEffect(() => {
     const w = Math.max(svgMinWidth, parentRef.current?.clientWidth ?? 0);
@@ -142,6 +130,12 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
                   return typeof d === 'string';
                 }) as Array<string>);
 
+        const nodeHue = colorMap.get(node.data.label)!;
+        const bgLightness = node.depth === 1 ? 0.4 : 0.6;
+        const fgLightness = 0.5;
+        const colorBackground = hsl(nodeHue, node.depth === 1 ? 0.5 : 0.3, bgLightness).toString();
+        const colorForeground = hsl(nodeHue, 0.4, fgLightness).toString();
+
         return (
           <ProfessionHierarchyNode
             key={label}
@@ -157,7 +151,11 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             hovered={hovered}
             setHovered={setHovered}
             label={label}
-            color={colorMap.get(node.data.label) ?? 'hotpink'}
+            colorForeground={colorForeground}
+            colorBackground={colorBackground}
+            isLeaf={node.depth === hierarchyRoot.height}
+            barWidth={node.data.personIds.length / maxChildValue}
+            leafSizing={leafSizing}
             selectable={Boolean(constraint)}
             selected={constraint?.selection?.includes(node.data.label as string) ?? false}
             toggleProfession={toggleProfession}

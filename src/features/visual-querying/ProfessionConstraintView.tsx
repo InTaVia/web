@@ -1,6 +1,7 @@
 import { Paper } from '@mui/material';
 
 import { Professions } from '@/features/professions/professions';
+import { LeafSizing } from '@/features/professions/professions-svg';
 import { Origin } from '@/features/visual-querying/Origin';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
@@ -31,7 +32,11 @@ export function ProfessionConstraintView(props: ProfessionConstraintProps): JSX.
           display: 'grid',
         }}
       >
-        <Professions constraint={constraint} origin={origin} />
+        <Professions
+          constraint={constraint}
+          origin={origin}
+          leafSizing={LeafSizing.QualitativeWithBar}
+        />
       </Paper>
     </foreignObject>
   );
