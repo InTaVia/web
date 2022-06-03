@@ -1,14 +1,13 @@
-import type { InternMap } from 'd3-array';
-import { extent, group, max } from 'd3-array';
+import { extent, max } from 'd3-array';
 import { hsl } from 'd3-color';
 import type { HierarchyRectangularNode } from 'd3-hierarchy';
-import { hierarchy, partition } from 'd3-hierarchy';
+import { partition, stratify } from 'd3-hierarchy';
 import { scaleLinear } from 'd3-scale';
 import { interpolateCool } from 'd3-scale-chromatic';
 import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
 
-import type { Person } from '@/features/common/entity.model';
+import type { Profession } from '@/features/common/entity.model';
 import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
 import type { ToggleProfessionFn } from '@/features/professions/professions';
 import { Origin } from '@/features/visual-querying/Origin';
@@ -21,12 +20,10 @@ export enum LeafSizing {
 }
 
 interface ProfessionsSvgProps {
-  persons: Array<Person>;
+  professions: Array<Profession & { count: number }>;
   parentRef: MutableRefObject<HTMLDivElement | null>;
   renderLabel: boolean;
   leafSizing?: LeafSizing;
-  hovered?: Array<Person['id']> | null;
-  setHovered?: (val: Array<Person['id']> | null) => void;
   constraint?: ProfessionConstraint;
   toggleProfession: ToggleProfessionFn;
   origin: Origin;
@@ -35,16 +32,11 @@ interface ProfessionsSvgProps {
 const svgMinWidth = 300;
 const svgMinHeight = 150;
 
-const noOccupation = Symbol('no occupation');
-export type NoOccupation = typeof noOccupation;
-
 export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   const {
     parentRef,
-    persons,
+    professions,
     renderLabel,
-    hovered,
-    setHovered,
     leafSizing = LeafSizing.Quantitative,
     constraint,
     toggleProfession,
@@ -54,7 +46,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
 
-  const hierarchyRoot = createHierarchy(persons, leafSizing);
+  const hierarchyRoot = createHierarchy(professions, leafSizing);
   const allButRootNode = hierarchyRoot.descendants().filter((d) => {
     return d.depth > 0;
   });
@@ -77,7 +69,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   const yScale = scaleLinear().range([origin.y(20), origin.y(svgHeight - 20)]);
 
   // store colors per node in a map
-  const colorMap = new Map<NoOccupation | string, number>();
+  const colorMap = new Map<string, number>();
 
   hierarchyRoot.children?.forEach((child, i, arr) => {
     const idx = i / (arr.length - 1);
@@ -85,14 +77,14 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     const hsl1 = hsl(col1);
 
     child.descendants().forEach((d) => {
-      return colorMap.set(d.data.label, hsl1.h);
+      return colorMap.set(d.data.name, hsl1.h);
     });
   });
 
   const maxChildValue =
     max<number>(
       hierarchyRoot.leaves().map((d) => {
-        return d.data.personIds.length;
+        return d.data.count;
       }),
     ) ?? 1;
 
@@ -114,23 +106,12 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
       viewBox={svgViewBox}
     >
       {allButRootNode.map((node) => {
-        const label = node.data.label === noOccupation ? 'no occupation' : node.data.label;
-        const professionIds: Array<string> =
-          node.data.label === noOccupation
-            ? []
-            : (node
-                .descendants()
-                .filter((d) => {
-                  return (d.children?.length ?? 0) === 0;
-                })
-                .map((d) => {
-                  return d.data.label;
-                })
-                .filter((d) => {
-                  return typeof d === 'string';
-                }) as Array<string>);
+        const label = node.data.name;
+        const professionIds: Array<string> = node.leaves().map((d) => {
+          return d.data.name;
+        });
 
-        const nodeHue = colorMap.get(node.data.label)!;
+        const nodeHue = colorMap.get(node.data.name)!;
         const bgLightness = node.depth === 1 ? 0.4 : 0.6;
         const fgLightness = 0.5;
         const colorBackground = hsl(nodeHue, node.depth === 1 ? 0.5 : 0.3, bgLightness).toString();
@@ -143,21 +124,19 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             x1={node.y1}
             y0={node.x0}
             y1={node.x1}
-            personIds={node.data.personIds}
             professionIds={professionIds}
             scaleX={xScale}
             scaleY={yScale}
             renderLabel={renderLabel}
-            hovered={hovered}
-            setHovered={setHovered}
             label={label}
             colorForeground={colorForeground}
             colorBackground={colorBackground}
             isLeaf={node.depth === hierarchyRoot.height}
-            barWidth={node.data.personIds.length / maxChildValue}
+            barWidth={node.data.count / maxChildValue}
             leafSizing={leafSizing}
+            profession={node.data}
             selectable={Boolean(constraint)}
-            selected={constraint?.selection?.includes(node.data.label as string) ?? false}
+            selected={constraint?.selection?.includes(node.data.name) ?? false}
             toggleProfession={toggleProfession}
           />
         );
@@ -166,125 +145,53 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
   );
 }
 
-// XXX use alphabetical groups for now, with the mock data
-const alphabeticalGroups: Array<[string, RegExp]> = [
-  ['A-I', /^[a-i]/i],
-  ['J-P', /^[j-p]/i],
-  ['Q-Z', /^[q-z]/i],
-  ['other', /^./i], // rest
-];
-
-type OccupationEntryTriple = [typeof alphabeticalGroups[0][0], NoOccupation | string, Person['id']];
-interface OccupationTreeEntry {
-  label: NoOccupation | string;
-  personIds: Array<Person['id']>;
-  children?: Array<OccupationTreeEntry>;
-}
-type ProfessionGroupingResult =
-  | Array<OccupationEntryTriple>
-  | InternMap<OccupationTreeEntry['label'], ProfessionGroupingResult>;
-type ParentProfessionGroupingResult = InternMap<
-  OccupationTreeEntry['label'],
-  ProfessionGroupingResult
->;
+type _HierarchyData = Profession & { count: number };
 
 function createHierarchy(
-  persons: Array<Person>,
+  professions: Array<_HierarchyData>,
   leafSizing: LeafSizing,
-): HierarchyRectangularNode<OccupationTreeEntry> {
-  const flattened: Array<OccupationEntryTriple> = [];
-  persons.forEach((person) => {
-    if (person.occupation.length === 0) {
-      flattened.push(['other', noOccupation, person.id]);
-
-      return;
-    }
-
-    person.occupation.forEach((occupation) => {
-      const [alphabeticalGroup, _] = alphabeticalGroups.find(([_, regex]) => {
-        return regex.test(occupation);
-      }) ?? ['other', null];
-
-      flattened.push([alphabeticalGroup, occupation, person.id]);
-    });
-  });
-
-  const groupedByProfession = group(
-    flattened,
-    (d) => {
-      return d[0];
-    },
-    (d) => {
-      return d[1];
-    },
-  );
-
-  const root: OccupationTreeEntry = {
-    label: 'all',
-    personIds: persons.map((d) => {
-      return d.id;
+): HierarchyRectangularNode<_HierarchyData> {
+  const hier = stratify<_HierarchyData>()
+    .id((d) => {
+      return d.name;
+    })
+    .parentId((d) => {
+      return d.parent;
+    })([
+    { name: 'root', parent: null, count: 0 },
+    ...professions.map((d) => {
+      if (d.parent === null) return { ...d, parent: 'root' };
+      return d;
     }),
-    children: unifyTree(groupedByProfession),
-  };
+  ]);
 
+  // remove empty categories from top level
+  hier.children =
+    hier.children?.filter((d) => {
+      return d.children?.length;
+    }) ?? [];
+
+  const leaves = hier.leaves().map((d) => {
+    return d.data.name;
+  });
   const leafSizeFn =
     leafSizing === LeafSizing.Quantitative
-      ? (node: OccupationTreeEntry): number => {
-          return node.children ? 0 : node.personIds.length;
+      ? (node: _HierarchyData): number => {
+          return node.count;
         }
-      : (node: OccupationTreeEntry): number => {
-          return node.children ? 0 : 1;
+      : (node: _HierarchyData): number => {
+          return leaves.includes(node.name) ? 1 : 0;
         };
 
-  const hier = hierarchy<OccupationTreeEntry>(root)
-    .sum(leafSizeFn)
-    .sort((a, b) => {
-      // no occupation: first
-      if (a.data.label === noOccupation) return -1;
-      if (b.data.label === noOccupation) return 1;
+  const hier2 = hier.sum(leafSizeFn).sort((a, b) => {
+    // "other" category at end
+    if (a.depth === 1 && a.data.name === 'other') return 1;
+    if (b.depth === 1 && b.data.name === 'other') return -1;
 
-      return a.data.label.localeCompare(b.data.label);
-    });
+    return a.data.name.localeCompare(b.data.name);
+  });
 
-  const part = partition<OccupationTreeEntry>()(hier);
+  const part = partition<_HierarchyData>()(hier2);
 
   return part;
-}
-
-/**
- * Take the result of a multi-level `d3.group`, and return an object that can
- * be fed into `d3.hierarchy`.
- */
-function unifyTree(groupNode: ParentProfessionGroupingResult): Array<OccupationTreeEntry> {
-  const entries = Array.from(groupNode.entries());
-  if (entries.at(0)?.at(1) instanceof Array) {
-    // lowest level
-    return entries.map(([key, value]) => {
-      return {
-        label: key,
-        personIds: (value as Array<OccupationEntryTriple>).map((d) => {
-          return d[2];
-        }),
-      };
-    });
-  } else {
-    // entries' values are also maps
-    return entries.map(([key, value]) => {
-      const children = unifyTree(value as ParentProfessionGroupingResult);
-      const personIds = Array.from(
-        new Set<string>(
-          children
-            .map((d) => {
-              return d.personIds;
-            })
-            .flat(),
-        ),
-      );
-      return {
-        label: key,
-        personIds,
-        children,
-      };
-    });
-  }
 }

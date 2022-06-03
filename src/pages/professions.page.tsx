@@ -1,12 +1,13 @@
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
-import { useRouter } from 'next/router';
 import { Fragment, useEffect } from 'react';
 
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { useGetProfessionsQuery } from '@/features/common/intavia-api.service';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { Professions } from '@/features/professions/professions';
 import { ProfessionsPageHeader } from '@/features/professions/professions-page-header';
 import { LeafSizing } from '@/features/professions/professions-svg';
@@ -23,17 +24,11 @@ export default function ProfessionsPage(): JSX.Element | null {
 
   const dispatch = useAppDispatch();
   const titleTemplate = usePageTitleTemplate();
-  const entities = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entities.person);
-  const router = useRouter();
+
+  const searchFilters = usePersonsSearchFilters();
+  const { data, isLoading } = useGetProfessionsQuery(searchFilters);
 
   const origin = new Origin();
-
-  useEffect(() => {
-    if (persons.length === 0) {
-      void router.push({ pathname: '/search' });
-    }
-  }, [router, persons.length]);
 
   // for testing only
   useEffect(() => {
@@ -50,21 +45,22 @@ export default function ProfessionsPage(): JSX.Element | null {
     return d.type === 'Profession';
   }) as ProfessionConstraint | undefined;
 
-  if (persons.length === 0) {
-    return null;
-  }
-
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
         <ProfessionsPageHeader />
         <Paper sx={{ minHeight: '50vh', display: 'grid' }}>
-          <Professions
-            constraint={constraint}
-            origin={origin}
-            leafSizing={LeafSizing.QualitativeWithBar}
-          />
+          {isLoading ? (
+            <Typography role="status">Loading...</Typography>
+          ) : (
+            <Professions
+              constraint={constraint}
+              origin={origin}
+              leafSizing={LeafSizing.QualitativeWithBar}
+              professions={data!}
+            />
+          )}
         </Paper>
       </Container>
     </Fragment>

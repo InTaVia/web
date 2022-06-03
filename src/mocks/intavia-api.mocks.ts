@@ -1,7 +1,7 @@
 import type { Bin } from 'd3-array';
 import { rest } from 'msw';
 
-import type { Person, Place } from '@/features/common/entity.model';
+import type { Person, Place, Profession } from '@/features/common/entity.model';
 import type { PaginatedEntitiesResponse } from '@/features/common/intavia-api.service';
 import { clamp } from '@/lib/clamp';
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
@@ -123,6 +123,65 @@ export const handlers = [
       }
 
       return response(context.status(200), context.delay(), context.json(place));
+    },
+  ),
+  rest.get<never, never, Array<Profession & { count: number }>>(
+    String(createIntaviaApiUrl({ pathname: '/api/professions/statistics' })),
+    (request, response, context) => {
+      const q = getSearchParam(request.url, 'q');
+      const dateOfBirthStart = getSearchParam(request.url, 'dateOfBirthStart');
+      const dateOfBirthEnd = getSearchParam(request.url, 'dateOfBirthEnd');
+      const dateOfDeathStart = getSearchParam(request.url, 'dateOfDeathStart');
+      const dateOfDeathEnd = getSearchParam(request.url, 'dateOfBirthEnd');
+      const start =
+        dateOfBirthStart != null && dateOfBirthEnd != null
+          ? ([Number(dateOfBirthStart), Number(dateOfBirthEnd)] as [number, number])
+          : undefined;
+      const end =
+        dateOfDeathStart != null && dateOfDeathEnd != null
+          ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
+          : undefined;
+      const persons = db.person.findMany(q, start, end);
+
+      const allPersons = db.person.findMany();
+      const allProfessions = Array.from(
+        new Set<string>(
+          allPersons.flatMap((d) => {
+            return d.occupation;
+          }),
+        ),
+      );
+
+      // group alphabetically
+      const alphabeticalGroups: Array<[string, RegExp]> = [
+        ['A-I', /^[a-i]/i],
+        ['J-P', /^[j-p]/i],
+        ['Q-Z', /^[q-z]/i],
+        ['other', /./],
+      ];
+
+      const professionsArray: Array<Profession & { count: number }> = [];
+
+      alphabeticalGroups.forEach(([name, regex]) => {
+        const count = persons.filter((d) => {
+          return d.occupation.some((occupation) => {
+            return regex.exec(occupation);
+          });
+        }).length;
+
+        professionsArray.push({ parent: null, name, count });
+      });
+
+      allProfessions.forEach((profession) => {
+        const [parent] = alphabeticalGroups.find(([_, regex]) => {
+          return regex.exec(profession);
+        })!;
+        const count = persons.filter((d) => {
+          return d.occupation.includes(profession);
+        }).length;
+        professionsArray.push({ parent, name: profession, count });
+      });
+      return response(context.status(200), context.delay(), context.json(professionsArray));
     },
   ),
 ];

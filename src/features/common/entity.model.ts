@@ -18,10 +18,15 @@ export interface EntityEvent {
 // FIXME: remove
 export type Relation = Omit<EntityEvent, 'type'> & { type: string };
 
+export interface Profession {
+  name: string;
+  parent: string | null;
+}
+
 export interface Person extends EntityBase {
   kind: 'person';
   gender: string;
-  occupation: Array<string>;
+  occupation: Array<Profession['name']>;
   categories: Array<string>;
 }
 

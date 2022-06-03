@@ -1,5 +1,7 @@
 import { Paper } from '@mui/material';
 
+import { useGetProfessionsQuery } from '@/features/common/intavia-api.service';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { Professions } from '@/features/professions/professions';
 import { LeafSizing } from '@/features/professions/professions-svg';
 import { Origin } from '@/features/visual-querying/Origin';
@@ -18,6 +20,11 @@ interface ProfessionConstraintProps {
 export function ProfessionConstraintView(props: ProfessionConstraintProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
+  // TODO:mfranke93: This is currently not considering the filters from other
+  // constraints, but that *COULD* be considered a feature, not a bug.
+  const searchFilters = usePersonsSearchFilters();
+  const { data, isLoading } = useGetProfessionsQuery(searchFilters);
+
   // this is inside the foreignObject: completely new coordinate system
   const origin = new Origin();
 
@@ -32,11 +39,14 @@ export function ProfessionConstraintView(props: ProfessionConstraintProps): JSX.
           display: 'grid',
         }}
       >
-        <Professions
-          constraint={constraint}
-          origin={origin}
-          leafSizing={LeafSizing.QualitativeWithBar}
-        />
+        {!isLoading && (
+          <Professions
+            constraint={constraint}
+            origin={origin}
+            leafSizing={LeafSizing.QualitativeWithBar}
+            professions={data!}
+          />
+        )}
       </Paper>
     </foreignObject>
   );

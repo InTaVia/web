@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { useAppDispatch } from '@/app/store';
+import type { Profession as ProfessionEntity } from '@/features/common/entity.model';
 import styles from '@/features/professions/professions.module.css';
 import type { LeafSizing } from '@/features/professions/professions-svg';
 import { ProfessionsSvg } from '@/features/professions/professions-svg';
@@ -13,6 +13,7 @@ import type {
 import { updateProfessions } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ProfessionsProps {
+  professions: Array<ProfessionEntity & { count: number }>;
   origin: Origin;
   leafSizing: LeafSizing;
   constraint?: ProfessionConstraint;
@@ -20,11 +21,13 @@ interface ProfessionsProps {
 
 export type ToggleProfessionFn = (professions: Array<Profession>) => void;
 
-export function Professions({ constraint, leafSizing, origin }: ProfessionsProps): JSX.Element {
+export function Professions({
+  constraint,
+  leafSizing,
+  origin,
+  professions,
+}: ProfessionsProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  const entities = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entities.person).slice(0 /*10*/); // XXX
 
   const parent = useRef<HTMLDivElement>(null);
 
@@ -60,7 +63,7 @@ export function Professions({ constraint, leafSizing, origin }: ProfessionsProps
     <div className={styles['professions-wrapper']} ref={parent}>
       <ProfessionsSvg
         parentRef={parent}
-        persons={persons}
+        professions={professions}
         renderLabel={true}
         leafSizing={leafSizing}
         constraint={constraint}

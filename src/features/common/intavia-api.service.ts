@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createUrlSearchParams } from '@stefanprobst/request';
 import type { Bin } from 'd3-array';
 
-import type { Entity, Person, Place } from '@/features/common/entity.model';
+import type { Entity, Person, Place, Profession } from '@/features/common/entity.model';
 import { baseUrl } from '~/config/intavia.config';
 
 export interface PaginatedEntitiesResponse<T extends Entity> {
@@ -88,6 +88,20 @@ const service = createApi({
           return { url: `/api/places/${id}` };
         },
       }),
+      getProfessions: builder.query<
+        Array<Profession & { count: number }>,
+        {
+          q?: string;
+          dateOfBirthStart?: number;
+          dateOfBirthEnd?: number;
+          dateOfDeathStart?: number;
+          dateOfDeathEnd?: number;
+        }
+      >({
+        query(params) {
+          return { url: '/api/professions/statistics', params };
+        },
+      }),
     };
   },
 });
@@ -99,5 +113,6 @@ export const {
   useGetPlacesQuery,
   useGetPlaceByIdQuery,
   useGetPersonDistributionByPropertyQuery,
+  useGetProfessionsQuery,
 } = service;
 export default service;

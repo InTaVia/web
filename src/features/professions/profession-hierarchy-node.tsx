@@ -1,7 +1,7 @@
 import { hsl, lch } from 'd3-color';
 import type { ScaleLinear } from 'd3-scale';
 
-import type { Person } from '@/features/common/entity.model';
+import type { Profession } from '@/features/common/entity.model';
 import type { ToggleProfessionFn } from '@/features/professions/professions';
 import { LeafSizing } from '@/features/professions/professions-svg';
 
@@ -16,13 +16,11 @@ export interface ProfessionHierarchyNodeProps {
   colorForeground: string;
   colorBackground: string;
   isLeaf: boolean;
-  personIds: Array<Person['id']>;
   renderLabel: boolean;
-  hovered?: Array<Person['id']> | null;
-  setHovered?: (val: Array<Person['id']> | null) => void;
   professionIds: Array<string>;
   leafSizing: LeafSizing;
   barWidth: number;
+  profession: Profession & { count: number };
 
   selectable: boolean;
   selected: boolean;
@@ -33,7 +31,7 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
   const { label, colorForeground, colorBackground, renderLabel } = props;
   const { isLeaf, leafSizing, barWidth } = props;
   const { x0, x1, y0, y1, scaleX, scaleY } = props;
-  const { personIds, professionIds, setHovered } = props;
+  const { profession, professionIds } = props;
   const { selected, selectable, toggleProfession } = props;
 
   const x = scaleX(x0);
@@ -44,13 +42,6 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
   // only render label if set to be rendered AND enough vertical space to do so
   const reallyRenderLabel = renderLabel && height > 14;
 
-  const handleMouseEnter = (entityIds: Array<Person['id']>) => {
-    setHovered?.(entityIds);
-  };
-
-  // const handleMouseLeave = () => {
-  //   setHovered?.(null);
-  // };
   const backgroundLightness = lch(colorBackground).l;
   const labelColor = backgroundLightness < 45 ? 'white' : 'black';
   const fg = hsl(colorForeground);
@@ -59,10 +50,6 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
   return (
     <g
       id={`profession-${label}`}
-      onMouseEnter={() => {
-        return handleMouseEnter(personIds);
-      }}
-      // onMouseLeave={handleMouseLeave}
       onClick={() => {
         selectable && toggleProfession(professionIds);
       }}
@@ -75,7 +62,7 @@ export function ProfessionHierarchyNode(props: ProfessionHierarchyNodeProps): JS
       }
     >
       <title>
-        {label}: {personIds.length} persons
+        {label}: {profession.count} persons
       </title>
       <rect
         stroke="white"
