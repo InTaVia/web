@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import { Professions } from '@/features/professions/professions';
 import { ProfessionsPageHeader } from '@/features/professions/professions-page-header';
+import { Origin } from '@/features/visual-querying/Origin';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import {
   addConstraint,
@@ -24,6 +25,8 @@ export default function ProfessionsPage(): JSX.Element | null {
   const entities = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entities.person);
   const router = useRouter();
+
+  const origin = new Origin();
 
   useEffect(() => {
     if (persons.length === 0) {
@@ -56,7 +59,7 @@ export default function ProfessionsPage(): JSX.Element | null {
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4 }}>
         <ProfessionsPageHeader />
         <Paper sx={{ minHeight: '50vh', display: 'grid' }}>
-          <Professions constraint={constraint} />
+          <Professions constraint={constraint} origin={origin} />
         </Paper>
       </Container>
     </Fragment>

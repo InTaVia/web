@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import styles from '@/features/professions/professions.module.css';
 import { LeafSizing, ProfessionsSvg } from '@/features/professions/professions-svg';
+import type { Origin } from '@/features/visual-querying/Origin';
 import type {
   Profession,
   ProfessionConstraint,
@@ -11,12 +12,13 @@ import type {
 import { updateProfessions } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ProfessionsProps {
+  origin: Origin;
   constraint?: ProfessionConstraint;
 }
 
 export type ToggleProfessionFn = (professions: Array<Profession>) => void;
 
-export function Professions({ constraint }: ProfessionsProps): JSX.Element {
+export function Professions({ constraint, origin }: ProfessionsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const entities = useAppSelector(selectEntitiesByKind);
@@ -61,6 +63,7 @@ export function Professions({ constraint }: ProfessionsProps): JSX.Element {
         leafSizing={LeafSizing.Qualitative}
         constraint={constraint}
         toggleProfession={toggleProfession}
+        origin={origin}
       />
     </div>
   );

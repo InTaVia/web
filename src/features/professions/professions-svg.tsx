@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import type { Person } from '@/features/common/entity.model';
 import { ProfessionHierarchyNode } from '@/features/professions/profession-hierarchy-node';
 import type { ToggleProfessionFn } from '@/features/professions/professions';
+import { Origin } from '@/features/visual-querying/Origin';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 export enum LeafSizing {
@@ -28,6 +29,7 @@ interface ProfessionsSvgProps {
   setHovered?: (val: Array<Person['id']> | null) => void;
   constraint?: ProfessionConstraint;
   toggleProfession: ToggleProfessionFn;
+  origin: Origin;
 }
 
 const svgMinWidth = 300;
@@ -57,6 +59,9 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
     return d.depth > 0;
   });
 
+  // do not use origin, svg must have viewBox starting at 0 0
+  const origin = new Origin();
+
   // x is y, y is x
   const dataXRange: [number, number] = extent<number>(
     allButRootNode
@@ -68,8 +73,8 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
 
   const xScale = scaleLinear()
     .domain(dataXRange)
-    .range([20, svgWidth - 20]);
-  const yScale = scaleLinear().range([20, svgHeight - 20]);
+    .range([origin.x(20), origin.x(svgWidth - 20)]);
+  const yScale = scaleLinear().range([origin.y(20), origin.y(svgHeight - 20)]);
 
   // store colors per node in a map
   const colorMap = new Map<NoOccupation | string, string>();

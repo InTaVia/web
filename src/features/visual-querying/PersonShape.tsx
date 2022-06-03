@@ -168,6 +168,7 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
                   y={y}
                   width={300}
                   height={400}
+                  origin={origin.clone()}
                 />
               );
             default:
