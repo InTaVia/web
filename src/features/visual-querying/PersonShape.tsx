@@ -4,10 +4,13 @@ import { useAppSelector } from '@/app/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
 import type { Origin } from '@/features/visual-querying/Origin';
+import { ProfessionConstraintView } from '@/features/visual-querying/ProfessionConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
 import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
   DateConstraint,
+  Profession,
+  ProfessionConstraint,
   TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
@@ -70,7 +73,25 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
             const dateRange = (constraint as DateConstraint).dateRange;
             valueDescription = dateRange ? dateRange.toString() : null;
             break;
+          case ConstraintType.Profession: {
+            // <-- lexical scope to appease esline no-case-declarations
+            const selection = (constraint as ProfessionConstraint).selection;
+            if (!selection) break; // empty
+
+            if (selection.length <= 3) {
+              valueDescription = selection.join(', ');
+              break;
+            }
+
+            const [first, second, ...rest] = selection as Array<Profession>;
+            valueDescription = `${first}, ${second}, ... (${rest.length} more)`;
+            break;
+          }
           default:
+            console.warn(
+              'No constraint ring description defined for constraint type:',
+              constraint.type,
+            );
             valueDescription = null;
             break;
         }
@@ -137,6 +158,19 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
             //       height={350}
             //     />
             //   );
+            case ConstraintType.Profession:
+              return (
+                <ProfessionConstraintView
+                  key={idx}
+                  idx={idx}
+                  constraint={constraint as ProfessionConstraint}
+                  x={x}
+                  y={y}
+                  width={300}
+                  height={400}
+                  origin={origin.clone()}
+                />
+              );
             default:
               return (
                 <text x={x} y={y} fill="red">
