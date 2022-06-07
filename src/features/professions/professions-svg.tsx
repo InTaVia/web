@@ -200,7 +200,7 @@ function createHierarchy(
   const leafSizeFn =
     leafSizing === LeafSizing.Quantitative
       ? (node: _HierarchyData): number => {
-          return node.count;
+          return leaves.includes(node.name) ? node.count : 0;
         }
       : (node: _HierarchyData): number => {
           return leaves.includes(node.name) ? 1 : 0;
