@@ -139,7 +139,7 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
             //   );
             default:
               return (
-                <text x={x} y={y} fill="red">
+                <text key={idx} x={x} y={y} fill="red">
                   Unknown constraint type: {constraint.type}
                 </text>
               );
