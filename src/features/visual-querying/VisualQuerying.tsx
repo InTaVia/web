@@ -6,6 +6,7 @@ import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
 import styles from '@/features/visual-querying/visual-querying.module.css';
 import type {
   DateConstraint,
+  ProfessionConstraint,
   TextConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
@@ -38,6 +39,12 @@ export function VisualQuerying(): JSX.Element {
       ? (dateOfDeathConstraint as DateConstraint).dateRange
       : null;
 
+    const professionsConstraint = constraints.find((constraint) => {
+      return constraint.type === ConstraintType.Profession;
+    });
+    const professions =
+      (professionsConstraint as ProfessionConstraint | undefined)?.selection ?? undefined;
+
     // Send the query
     void trigger(
       {
@@ -46,6 +53,7 @@ export function VisualQuerying(): JSX.Element {
         dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
         dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
         dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+        professions: JSON.stringify(professions),
       },
       true,
     );

@@ -40,6 +40,7 @@ export function ConstraintList(props: ConstraintListProps) {
         opened: true,
         type: type,
         dateRange: null,
+        text: '',
       } as Constraint),
     );
   }

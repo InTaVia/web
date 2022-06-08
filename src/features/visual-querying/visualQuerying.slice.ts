@@ -7,6 +7,7 @@ export enum ConstraintType {
   Name = 'Name',
   DateOfBirth = 'Date of Birth',
   DateOfDeath = 'Date of Death',
+  Profession = 'Profession',
   // Place = 'Place',
 }
 
@@ -27,7 +28,13 @@ export interface DateConstraint extends Constraint {
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
-  text: string | null;
+  text: string;
+}
+
+export type Profession = string; // XXX
+export interface ProfessionConstraint extends Constraint {
+  type: ConstraintType.Profession;
+  selection: Array<Profession> | null;
 }
 
 export interface VisualQueryingState {
@@ -72,7 +79,7 @@ const visualQueryingSlice = createSlice({
         constraint.dateRange = action.payload.dateRange;
       }
     },
-    updateText: (state, action: PayloadAction<{ id: string; text: string | null }>) => {
+    updateText: (state, action: PayloadAction<{ id: string; text: string }>) => {
       const constraint = state.constraints.find((constraint) => {
         return constraint.id === action.payload.id && constraint.type === ConstraintType.Name;
       }) as TextConstraint | undefined;
@@ -81,11 +88,29 @@ const visualQueryingSlice = createSlice({
         constraint.text = action.payload.text;
       }
     },
+    updateProfessions: (
+      state,
+      action: PayloadAction<{ id: string; selection: ProfessionConstraint['selection'] }>,
+    ) => {
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload.id && constraint.type === ConstraintType.Profession;
+      }) as ProfessionConstraint | undefined;
+
+      if (constraint) {
+        constraint.selection = action.payload.selection;
+      }
+    },
   },
 });
 
-export const { addConstraint, removeConstraint, toggleConstraint, updateDateRange, updateText } =
-  visualQueryingSlice.actions;
+export const {
+  addConstraint,
+  removeConstraint,
+  toggleConstraint,
+  updateDateRange,
+  updateText,
+  updateProfessions,
+} = visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
 
 export function selectConstraints(state: RootState) {
