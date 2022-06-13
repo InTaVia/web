@@ -8,6 +8,7 @@ import TimelineIcon from '@mui/icons-material/LinearScale';
 import MapIcon from '@mui/icons-material/MapOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/SearchOutlined';
+import ProfessionsIcon from '@mui/icons-material/Work';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -53,6 +54,12 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
       icon: <CollectionsOutlinedIcon />,
     },
     { id: 'timeline', href: { pathname: '/timeline' }, label: 'Timeline', icon: <TimelineIcon /> },
+    {
+      id: 'professions',
+      href: { pathname: '/professions' },
+      label: 'Profession Hierarchy',
+      icon: <ProfessionsIcon />,
+    },
     { id: 'map', href: { pathname: '/geomap' }, label: 'Map', icon: <MapIcon /> },
     {
       id: 'coordination',

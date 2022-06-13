@@ -12,6 +12,7 @@
     "format": "prettier . --list-different --ignore-path .gitignore",
     "format:fix": "npm run format -- --write",
     "generate:favicons": "ts-script scripts/generate-favicons",
+    "generate:msw": "msw init public",
     "lint": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
     "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path .gitignore",
