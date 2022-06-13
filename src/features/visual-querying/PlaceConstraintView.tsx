@@ -1,8 +1,8 @@
 import type { Feature } from 'geojson';
 
 import { useAppDispatch } from '@/app/store';
-import { GeoMapDrawControls } from '@/features/geomap/geo-amp-draw-controls';
 import { GeoMap } from '@/features/geomap/geo-map';
+import { GeoMapDrawControls } from '@/features/geomap/geo-map-draw-controls';
 import { base as baseMap } from '@/features/geomap/maps.config';
 import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updatePlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
