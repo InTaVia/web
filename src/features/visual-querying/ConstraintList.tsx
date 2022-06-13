@@ -26,9 +26,9 @@ export function ConstraintList(props: ConstraintListProps) {
     props.setIsConstListShown(false);
 
     if (
-      constraints.filter((constraint) => {
+      constraints.findIndex((constraint) => {
         return constraint.type === type;
-      }).length > 0
+      }) !== -1
     ) {
       console.log(`Constraint ${type} already exists.`);
       return;

@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { Feature } from 'geojson';
 
 import type { RootState } from '@/app/store';
 
@@ -7,8 +8,8 @@ export enum ConstraintType {
   Name = 'Name',
   DateOfBirth = 'Date of Birth',
   DateOfDeath = 'Date of Death',
+  Place = 'Place',
   Profession = 'Profession',
-  // Place = 'Place',
 }
 
 export type Constraint = {
@@ -22,9 +23,10 @@ export interface DateConstraint extends Constraint {
   dateRange: Array<number> | null;
 }
 
-// export interface PlaceConstraint extends Constraint {
-//   type: ConstraintType.Place;
-// }
+export interface PlaceConstraint extends Constraint {
+  type: ConstraintType.Place;
+  features: Array<Feature> | null;
+}
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
@@ -88,6 +90,21 @@ const visualQueryingSlice = createSlice({
         constraint.text = action.payload.text;
       }
     },
+    updatePlaceConstraint(
+      state,
+      action: PayloadAction<{ id: string; features: Array<Feature> | null }>,
+    ) {
+      const id = action.payload.id;
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === id;
+      });
+      function isPlaceConstraint(constraint: Constraint): constraint is PlaceConstraint {
+        return constraint.type === ConstraintType.Place;
+      }
+      if (constraint != null && isPlaceConstraint(constraint)) {
+        constraint.features = action.payload.features;
+      }
+    },
     updateProfessions: (
       state,
       action: PayloadAction<{ id: string; selection: ProfessionConstraint['selection'] }>,
@@ -109,6 +126,7 @@ export const {
   toggleConstraint,
   updateDateRange,
   updateText,
+  updatePlaceConstraint,
   updateProfessions,
 } = visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
