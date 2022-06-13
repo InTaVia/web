@@ -52,6 +52,7 @@
     "@mui/material": "^5.5.0",
     "@next/bundle-analyzer": "^12.1.6",
     "@reduxjs/toolkit": "^1.8.0",
+    "@stefanprobst/assert": "^1.0.3",
     "@stefanprobst/log": "^1.0.3",
     "@stefanprobst/next-error-boundary": "3.0.2-legacy",
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
