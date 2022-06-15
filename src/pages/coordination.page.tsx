@@ -11,9 +11,13 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useI18n } from '@/app/i18n/use-i18n';
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
 import type { Entity, Person } from '@/features/common/entity.model';
@@ -27,7 +31,23 @@ import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 import { PageTitle } from '@/features/ui/page-title';
 
-export default function CoordinationPage(): JSX.Element | null {
+export const getStaticProps = withDictionaries(['common']);
+
+export default function CoordinationPage(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const titleTemplate = usePageTitleTemplate();
+
+  const metadata = { title: t(['common', 'coordination', 'metadata', 'title']) };
+
+  return (
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <CoordinationScreen />
+    </Fragment>
+  );
+}
+
+function CoordinationScreen(): JSX.Element | null {
   const router = useRouter();
   const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
