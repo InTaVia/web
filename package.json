@@ -94,7 +94,7 @@
     "@jest/types": "^27.5.1",
     "@next/eslint-plugin-next": "^12.1.6",
     "@stefanprobst/favicons": "^2.0.4",
-    "@stefanprobst/ts-script": "^2.0.4",
+    "@stefanprobst/ts-script": "^2.0.5",
     "@storybook/addon-a11y": "^6.4.19",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
