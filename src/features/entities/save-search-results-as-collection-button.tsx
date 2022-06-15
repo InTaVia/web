@@ -90,11 +90,11 @@ export function SaveSearchResultsAsCollectionButton(): JSX.Element {
           Save collection
         </DialogTitle>
         <form onSubmit={onSubmit}>
-          <DialogContent dividers>
+          <DialogContent dividers sx={{ display: 'grid', gap: 1.5 }}>
             {searchResults.data != null ? (
               <Typography>Save {searchResults.data.count} entities to new collection.</Typography>
             ) : null}
-            <TextField autoComplete="off" fullWidth label="Name" name="name" required />
+            <TextField autoComplete="off" label="Name" name="name" required />
           </DialogContent>
           <DialogActions>
             <Button onClick={dialog.close}>Cancel</Button>

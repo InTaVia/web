@@ -2,6 +2,7 @@ import { List, ListItemButton, Paper, Typography } from '@mui/material';
 import type { MouseEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { Origin } from '@/features/visual-querying/Origin';
 import type { Constraint } from '@/features/visual-querying/visualQuerying.slice';
 import {
   addConstraint,
@@ -13,6 +14,7 @@ interface ConstraintListProps {
   width: number;
   height: number;
   setIsConstListShown: (isShown: boolean) => void;
+  origin: Origin;
 }
 
 export function ConstraintList(props: ConstraintListProps) {
@@ -24,9 +26,9 @@ export function ConstraintList(props: ConstraintListProps) {
     props.setIsConstListShown(false);
 
     if (
-      constraints.filter((constraint) => {
+      constraints.findIndex((constraint) => {
         return constraint.type === type;
-      }).length > 0
+      }) !== -1
     ) {
       console.log(`Constraint ${type} already exists.`);
       return;
@@ -38,12 +40,18 @@ export function ConstraintList(props: ConstraintListProps) {
         opened: true,
         type: type,
         dateRange: null,
+        text: '',
       } as Constraint),
     );
   }
 
   return (
-    <foreignObject width={props.width} height={props.height}>
+    <foreignObject
+      width={props.width}
+      height={props.height}
+      x={props.origin.x()}
+      y={props.origin.y()}
+    >
       <Paper>
         <List
           role="list"
