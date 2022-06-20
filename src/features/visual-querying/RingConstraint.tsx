@@ -65,7 +65,7 @@ export function RingConstraint(props: RingConstraintProps): JSX.Element {
   }
 
   return (
-    <g>
+    <g id={`ring-constraint-${props.idx}`}>
       <defs>
         <path d={textPath.toString()} id={`textPath-${props.idx}`} />
       </defs>
