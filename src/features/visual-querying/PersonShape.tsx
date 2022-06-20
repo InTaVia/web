@@ -4,11 +4,13 @@ import { useAppSelector } from '@/app/store';
 import { ConstraintList } from '@/features/visual-querying/ConstraintList';
 import { DateConstraintView } from '@/features/visual-querying/DateConstraintView';
 import type { Origin } from '@/features/visual-querying/Origin';
+import { PlaceConstraintView } from '@/features/visual-querying/PlaceConstraintView';
 import { ProfessionConstraintView } from '@/features/visual-querying/ProfessionConstraintView';
 import { RingConstraint } from '@/features/visual-querying/RingConstraint';
 import { TextConstraintView } from '@/features/visual-querying/TextConstraintView';
 import type {
   DateConstraint,
+  PlaceConstraint,
   Profession,
   ProfessionConstraint,
   TextConstraint,
@@ -146,18 +148,18 @@ export function PersonShape(props: PersonShapeProps): JSX.Element {
                   origin={origin.clone()}
                 />
               );
-            // case ConstraintType.Place:
-            //   return (
-            //     <PlaceConstraintView
-            //       key={idx}
-            //       idx={idx}
-            //       constraint={constraint as PlaceConstraint}
-            //       x={x}
-            //       y={y}
-            //       width={550}
-            //       height={350}
-            //     />
-            //   );
+            case ConstraintType.Place:
+              return (
+                <PlaceConstraintView
+                  key={idx}
+                  idx={idx}
+                  constraint={constraint as PlaceConstraint}
+                  x={x}
+                  y={y}
+                  width={550}
+                  height={350}
+                />
+              );
             case ConstraintType.Profession:
               return (
                 <ProfessionConstraintView

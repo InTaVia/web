@@ -64,10 +64,17 @@ const config = {
     ignoreBuildErrors: true,
   },
   webpack(/** @type {WebpackConfig} */ config) {
-    // eslint-disable-next-line no-param-reassign
+    /* eslint-disable no-param-reassign */
     config.experiments = config.experiments ?? {};
-    // eslint-disable-next-line no-param-reassign
     config.experiments.topLevelAwait = true;
+
+    config.resolve = config.resolve ?? {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'mapbox-gl': 'maplibre-gl',
+    };
+
+    /* eslint-enable no-param-reassign */
     return config;
   },
 };

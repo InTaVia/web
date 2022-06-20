@@ -21,8 +21,3 @@
 .search-button {
   justify-self: start;
 }
-
-.leaflet-constraint-wrapper {
-  width: 100%;
-  height: 100%;
-}

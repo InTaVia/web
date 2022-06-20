@@ -1,18 +1,11 @@
-import dynamic from 'next/dynamic';
+import type { Feature } from 'geojson';
 
-import type { LeafletCountriesProps } from '@/features/visual-querying/LeafletCountries';
-import styles from '@/features/visual-querying/visual-querying.module.css';
-// import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
-
-// Dynamically load LeafletCountries component as Leaflet has problems with SSR
-const LeafletCountries = dynamic<LeafletCountriesProps>(
-  () => {
-    return import('@/features/visual-querying/LeafletCountries').then((mod) => {
-      return mod.LeafletCountries;
-    });
-  },
-  { ssr: false },
-);
+import { useAppDispatch } from '@/app/store';
+import { GeoMap } from '@/features/geomap/geo-map';
+import { GeoMapDrawControls } from '@/features/geomap/geo-map-draw-controls';
+import { base as baseMap } from '@/features/geomap/maps.config';
+import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import { updatePlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
 interface PlaceConstraintProps {
   idx: number;
@@ -20,11 +13,25 @@ interface PlaceConstraintProps {
   y: number;
   width: number;
   height: number;
-  // constraint: PlaceConstraint;
+  constraint: PlaceConstraint;
 }
 
 export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
-  const { x, y, width, height } = props;
+  const { x, y, width, height, constraint } = props;
+
+  const dispatch = useAppDispatch();
+
+  function onCreate({ features }: { features: Array<Feature> }) {
+    dispatch(updatePlaceConstraint({ id: constraint.id, features }));
+  }
+
+  function onDelete() {
+    dispatch(updatePlaceConstraint({ id: constraint.id, features: null }));
+  }
+
+  function onUpdate({ features }: { features: Array<Feature> }) {
+    dispatch(updatePlaceConstraint({ id: constraint.id, features }));
+  }
 
   const dimensions = {
     marginTop: 100,
@@ -47,9 +54,21 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
         height={dimensions.height}
       />
       <foreignObject width={dimensions.width} height={dimensions.height}>
-        <div className={styles['leaflet-constraint-wrapper']}>
-          <LeafletCountries selected={[]} />
-        </div>
+        <GeoMap {...baseMap}>
+          <GeoMapDrawControls
+            controls={{
+              polygon: true,
+              trash: true,
+            }}
+            displayControlsDefault={false}
+            defaultMode="draw_polygon"
+            initialFeatures={constraint.features}
+            onCreate={onCreate}
+            onDelete={onDelete}
+            onUpdate={onUpdate}
+            position="top-left"
+          />
+        </GeoMap>
       </foreignObject>
     </g>
   );
