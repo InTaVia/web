@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { Person } from '@/features/common/entity.model';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
@@ -26,8 +27,6 @@ import uiStyles from '@/features/ui/ui.module.css';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
-
-import type { Person } from '../common/entity.model';
 
 interface DropProps {
   type: string;

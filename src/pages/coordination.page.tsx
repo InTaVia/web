@@ -11,64 +11,84 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
+import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useI18n } from '@/app/i18n/use-i18n';
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
+import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import type { Person } from '@/features/common/entity.model';
+import type { Entity, Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
-import { eventTypes } from '@/features/common/event-types';
-import { LineStringLayer } from '@/features/geomap/LineStringLayer';
-import { MapLibre } from '@/features/geomap/MaplibreMap';
-import { PinLayer } from '@/features/geomap/PinLayer';
+import { eventTypes as allEventTypes } from '@/features/common/event-types';
+import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
+import { EntityEventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
+import { GeoMap } from '@/features/geomap/geo-map';
+import { base as baseMap } from '@/features/geomap/maps.config';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 import { PageTitle } from '@/features/ui/page-title';
 
-export default function CoordinationPage(): JSX.Element | null {
-  const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
+export const getStaticProps = withDictionaries(['common']);
+
+export default function CoordinationPage(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const titleTemplate = usePageTitleTemplate();
+
+  const metadata = { title: t(['common', 'coordination', 'metadata', 'title']) };
+
+  return (
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      <CoordinationScreen />
+    </Fragment>
+  );
+}
+
+function CoordinationScreen(): JSX.Element | null {
   const router = useRouter();
-  const personArray = useMemo(() => {
+  const zoomToTimeRange = useAppSelector(selectZoomToTimeRange);
+  const entitiesByKind = useAppSelector(selectEntitiesByKind);
+  const persons = useMemo(() => {
     return Object.values(entitiesByKind.person);
   }, [entitiesByKind.person]);
-  const allEntityIds = personArray.map((person) => {
+  const allPersonIds = persons.map((person) => {
     return person.id;
   });
-  const [filteredPersonArray, setFilteredPersonArray] = useState<Array<Person>>(personArray);
+  const [filteredPersons, setFilteredPersons] = useState<Array<Person>>(persons);
   const [visibleEntityIds, setVisibleEntityIds] = useState<Set<Person['id']>>(() => {
-    return new Set(allEntityIds);
+    return new Set(allPersonIds);
   });
   const [hoveredEntityId, setHoveredEntityId] = useState<Person['id'] | null>(null);
-  const [showEventTypes, setShowEventTypes] = useState<Array<EventType>>(['beginning', 'end']);
+  const [eventTypes, setEventTypes] = useState<Array<EventType>>(['beginning', 'end']);
+
   useEffect(() => {
-    setFilteredPersonArray(
-      personArray.filter((person) => {
+    setFilteredPersons(
+      persons.filter((person) => {
         return visibleEntityIds.has(person.id);
       }),
     );
-  }, [personArray, visibleEntityIds]);
+  }, [persons, visibleEntityIds]);
 
   const timelineParent = useRef<HTMLDivElement>(null);
 
-  function handleChange(event: SelectChangeEvent<typeof showEventTypes>) {
-    const {
-      target: { value },
-    } = event;
-    setShowEventTypes(
+  function onChange(event: SelectChangeEvent<typeof eventTypes>) {
+    const { value } = event.target;
+    setEventTypes(
       // On autofill we get a stringified value.
       typeof value === 'string' ? (value.split(',') as Array<EventType>) : value,
     );
   }
 
   useEffect(() => {
-    if (personArray.length === 0) {
+    if (persons.length === 0) {
       void router.push('/search');
     }
-  }, [personArray, router]);
+  }, [persons, router]);
 
-  if (personArray.length === 0) {
+  if (persons.length === 0) {
     return null;
   }
 
@@ -84,7 +104,7 @@ export default function CoordinationPage(): JSX.Element | null {
       >
         <Grid item xs={2}>
           <EntitySelectionList
-            entities={personArray}
+            entities={persons}
             checked={visibleEntityIds}
             setChecked={setVisibleEntityIds}
             hovered={hoveredEntityId}
@@ -94,30 +114,25 @@ export default function CoordinationPage(): JSX.Element | null {
         <Grid item xs={5} ref={timelineParent}>
           <TimelineSvg
             parentRef={timelineParent}
-            persons={filteredPersonArray}
+            persons={filteredPersons}
             zoomToData={zoomToTimeRange}
             renderLabel={false}
-            hovered={hoveredEntityId}
-            setHovered={setHoveredEntityId}
+            hoveredEntityId={hoveredEntityId}
+            setHoveredEntityId={setHoveredEntityId}
           />
         </Grid>
         <Grid item xs={5}>
-          <MapLibre>
-            {showEventTypes.length >= 2 ? (
-              <LineStringLayer
-                persons={filteredPersonArray}
-                showEventTypes={showEventTypes as Array<EventType>}
-                hovered={hoveredEntityId}
-                setHovered={setHoveredEntityId}
-              />
+          <GeoMap {...baseMap}>
+            {eventTypes.length >= 2 ? (
+              <EntityEventsLineStringLayer entities={filteredPersons} eventTypes={eventTypes} />
             ) : null}
-            <PinLayer
-              persons={filteredPersonArray}
-              showEventTypes={showEventTypes as Array<EventType>}
-              hovered={hoveredEntityId}
-              setHovered={setHoveredEntityId}
+            <EntityEventyPinLayer
+              entities={filteredPersons}
+              eventTypes={eventTypes}
+              hoveredEntityId={hoveredEntityId}
+              setHoveredEntityId={setHoveredEntityId}
             />
-          </MapLibre>
+          </GeoMap>
           <FormControl
             sx={{ m: 1, minWidth: 120, position: 'absolute', top: 100, backgroundColor: 'white' }}
             size="small"
@@ -125,15 +140,14 @@ export default function CoordinationPage(): JSX.Element | null {
             <InputLabel id="select-event-type">Event Type</InputLabel>
             <Select
               labelId="select-event-type"
-              id="select-event-type"
               multiple
-              value={showEventTypes}
+              value={eventTypes}
               label="Event Type"
-              onChange={handleChange}
+              onChange={onChange}
             >
-              {Object.values(eventTypes).map((eventType) => {
+              {Object.values(allEventTypes).map((eventType) => {
                 return (
-                  <MenuItem key={`event-type-${eventType.id}`} value={eventType.id}>
+                  <MenuItem key={eventType.id} value={eventType.id}>
                     {eventType.label}
                   </MenuItem>
                 );
@@ -147,17 +161,17 @@ export default function CoordinationPage(): JSX.Element | null {
 }
 
 interface EntitySelectionListProps {
-  entities: Array<Person>;
-  checked: Set<Person['id']>;
-  setChecked: (val: Set<Person['id']>) => void;
-  hovered: Person['id'] | null;
-  setHovered: (val: Person['id'] | null) => void;
+  entities: Array<Entity>;
+  checked: Set<Entity['id']>;
+  setChecked: (ids: Set<Entity['id']>) => void;
+  hovered: Entity['id'] | null;
+  setHovered: (id: Entity['id'] | null) => void;
 }
 
 function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
   const { entities, checked, setChecked, hovered, setHovered } = props;
 
-  function handleToggle(entityId: Person['id']) {
+  function onToggle(entityId: Entity['id']) {
     const newChecked = new Set(checked);
     if (checked.has(entityId)) {
       newChecked.delete(entityId);
@@ -167,11 +181,11 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
     setChecked(newChecked);
   }
 
-  function handleMouseEnter(entityId: Person['id']) {
+  function onMouseEnter(entityId: Entity['id']) {
     setHovered(entityId);
   }
 
-  function handleMouseLeave() {
+  function onMouseLeave() {
     setHovered(null);
   }
 
@@ -196,7 +210,7 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
               <Checkbox
                 edge="end"
                 onChange={() => {
-                  handleToggle(value.id);
+                  onToggle(value.id);
                 }}
                 checked={checked.has(value.id)}
                 inputProps={{ 'aria-labelledby': labelId }}
@@ -204,9 +218,9 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
             }
             disablePadding
             onMouseEnter={() => {
-              handleMouseEnter(value.id);
+              onMouseEnter(value.id);
             }}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave={onMouseLeave}
           >
             <ListItemButton>
               <ListItemIcon>
