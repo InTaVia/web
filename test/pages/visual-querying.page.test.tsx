@@ -64,7 +64,7 @@ describe('VisualQueryingPage', () => {
     expect(list).toBeInTheDocument();
 
     const listItems = screen.getAllByRole('listitem');
-    expect(listItems).toHaveLength(3);
+    expect(listItems).toHaveLength(4);
   });
 
   it('adds ring segment after selecting constraint', async () => {
