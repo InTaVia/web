@@ -6,7 +6,7 @@ describe('SearchPage', () => {
   });
 
   it('should set document title', () => {
-    cy.title().should('eq', 'Home | In/Tangible European Heritage (InTaVia)');
+    cy.title().should('eq', 'Search | In/Tangible European Heritage (InTaVia)');
   });
 
   it('should display page title', () => {
