@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { Origin } from '@/features/visual-querying/Origin';
-import { PersonShape } from '@/features/visual-querying/PersonShape';
+import { QueryNode } from '@/features/visual-querying/QueryNode';
 import {
   selectConstraints,
-  toggleConstraint,
+  toggleConstraintWidget,
 } from '@/features/visual-querying/visualQuerying.slice';
 
 interface SvgProps {
@@ -41,7 +41,7 @@ export function VisualQueryingSvg(props: SvgProps): JSX.Element {
     if (e.target === svgRef.current) {
       constraints.forEach((constraint, idx) => {
         if (constraint.opened) {
-          dispatch(toggleConstraint(idx));
+          dispatch(toggleConstraintWidget(idx));
         }
       });
     }
@@ -56,7 +56,7 @@ export function VisualQueryingSvg(props: SvgProps): JSX.Element {
       viewBox={svgViewBox}
       onClick={dismissConstraintViews}
     >
-      <PersonShape origin={origin.clone()} />
+      <QueryNode origin={origin.clone()} />
     </svg>
   );
 }

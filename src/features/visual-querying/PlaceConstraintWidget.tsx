@@ -7,7 +7,7 @@ import { base as baseMap } from '@/features/geomap/maps.config';
 import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updatePlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
-interface PlaceConstraintProps {
+interface PlaceConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -16,7 +16,7 @@ interface PlaceConstraintProps {
   constraint: PlaceConstraint;
 }
 
-export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
+export function PlaceConstraintWidget(props: PlaceConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
   const dispatch = useAppDispatch();

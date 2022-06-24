@@ -6,7 +6,7 @@ import type { Origin } from '@/features/visual-querying/Origin';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateText } from '@/features/visual-querying/visualQuerying.slice';
 
-interface TextConstraintProps {
+interface TextConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -16,7 +16,7 @@ interface TextConstraintProps {
   origin: Origin;
 }
 
-export function TextConstraintView(props: TextConstraintProps): JSX.Element {
+export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
   const dispatch = useAppDispatch();

@@ -7,7 +7,7 @@ import { Origin } from '@/features/visual-querying/Origin';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
 
-interface DateConstraintProps {
+interface DateConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -17,12 +17,12 @@ interface DateConstraintProps {
   origin: Origin;
 }
 
-export function DateConstraintView(props: DateConstraintProps): JSX.Element {
+export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
-    property: constraint.type,
+    property: constraint.id,
   });
 
   const dimensions = {

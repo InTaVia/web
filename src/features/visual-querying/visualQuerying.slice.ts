@@ -5,26 +5,26 @@ import type { Feature } from 'geojson';
 import type { RootState } from '@/app/store';
 
 export enum ConstraintType {
-  Name = 'Name',
-  DateOfBirth = 'Date of Birth',
-  DateOfDeath = 'Date of Death',
-  Place = 'Place',
+  Places = 'Places',
   Profession = 'Profession',
+  Name = 'Name',
+  Dates = 'Dates',
 }
 
 export type Constraint = {
   id: string;
-  opened: boolean;
   type: ConstraintType;
+  name: string;
+  opened: boolean;
 };
 
 export interface DateConstraint extends Constraint {
-  type: ConstraintType.DateOfBirth | ConstraintType.DateOfDeath;
+  type: ConstraintType.Dates;
   dateRange: Array<number> | null;
 }
 
 export interface PlaceConstraint extends Constraint {
-  type: ConstraintType.Place;
+  type: ConstraintType.Places;
   features: Array<Feature> | null;
 }
 
@@ -44,7 +44,64 @@ export interface VisualQueryingState {
 }
 
 const initialState: VisualQueryingState = {
-  constraints: [],
+  constraints: [
+    {
+      id: 'name-constraint',
+      type: ConstraintType.Name,
+      name: 'Name',
+      opened: false,
+      text: '',
+    } as Constraint,
+    {
+      id: 'date-lived-constraint',
+      type: ConstraintType.Dates,
+      name: 'Lived',
+      opened: false,
+      dateRange: null,
+    } as Constraint,
+    {
+      id: 'date-of-birth-constraint',
+      type: ConstraintType.Dates,
+      name: 'Birth',
+      opened: false,
+      dateRange: null,
+    } as Constraint,
+    {
+      id: 'date-of-death-constraint',
+      type: ConstraintType.Dates,
+      name: 'Death',
+      opened: false,
+      dateRange: null,
+    } as Constraint,
+    {
+      id: 'place-lived-constraint',
+      type: ConstraintType.Places,
+      name: 'Lived',
+      opened: false,
+      feature: null,
+    } as Constraint,
+    {
+      id: 'place-of-birth-constraint',
+      type: ConstraintType.Places,
+      name: 'Birth',
+      opened: false,
+      feature: null,
+    } as Constraint,
+    {
+      id: 'place-of-death-constraint',
+      type: ConstraintType.Places,
+      name: 'Death',
+      opened: false,
+      feature: null,
+    } as Constraint,
+    {
+      id: 'profession-constraint',
+      type: ConstraintType.Profession,
+      name: 'Profession',
+      opened: false,
+      selection: null,
+    } as Constraint,
+  ],
 };
 
 const visualQueryingSlice = createSlice({
@@ -59,9 +116,18 @@ const visualQueryingSlice = createSlice({
         return constraint.id !== action.payload.id;
       });
     },
-    toggleConstraint: (state, action: PayloadAction<number>) => {
-      const constraint = state.constraints[action.payload];
+    toggleConstraintWidget: (state, action: PayloadAction<string>) => {
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload;
+      });
+
       if (constraint) {
+        state.constraints.forEach((con) => {
+          if (con.id !== constraint.id) {
+            // eslint-disable-next-line no-param-reassign
+            con.opened = false;
+          }
+        });
         constraint.opened = !constraint.opened;
       }
     },
@@ -70,11 +136,7 @@ const visualQueryingSlice = createSlice({
       action: PayloadAction<{ id: string; dateRange: Array<number> | null }>,
     ) => {
       const constraint = state.constraints.find((constraint) => {
-        return (
-          constraint.id === action.payload.id &&
-          (constraint.type === ConstraintType.DateOfBirth ||
-            constraint.type === ConstraintType.DateOfDeath)
-        );
+        return constraint.id === action.payload.id && constraint.type === ConstraintType.Dates;
       }) as DateConstraint | undefined;
 
       if (constraint) {
@@ -99,7 +161,7 @@ const visualQueryingSlice = createSlice({
         return constraint.id === id;
       });
       function isPlaceConstraint(constraint: Constraint): constraint is PlaceConstraint {
-        return constraint.type === ConstraintType.Place;
+        return constraint.type === ConstraintType.Places;
       }
       if (constraint != null && isPlaceConstraint(constraint)) {
         constraint.features = action.payload.features;
@@ -123,7 +185,7 @@ const visualQueryingSlice = createSlice({
 export const {
   addConstraint,
   removeConstraint,
-  toggleConstraint,
+  toggleConstraintWidget,
   updateDateRange,
   updateText,
   updatePlaceConstraint,
