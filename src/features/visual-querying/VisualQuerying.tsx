@@ -25,15 +25,20 @@ export function VisualQuerying(): JSX.Element {
     });
     const name = nameConstraint ? (nameConstraint as TextConstraint).text : null;
 
+    // TODO (samuelbeck): add date-lived-constraint
     const dateOfBirthConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.DateOfBirth;
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-birth-constraint'
+      );
     });
     const dateOfBirth = dateOfBirthConstraint
       ? (dateOfBirthConstraint as DateConstraint).dateRange
       : null;
 
     const dateOfDeathConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.DateOfDeath;
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-death-constraint'
+      );
     });
     const dateOfDeath = dateOfDeathConstraint
       ? (dateOfDeathConstraint as DateConstraint).dateRange
@@ -44,6 +49,8 @@ export function VisualQuerying(): JSX.Element {
     });
     const professions =
       (professionsConstraint as ProfessionConstraint | undefined)?.selection ?? undefined;
+
+    // TODO (samuelbeck): add place constraints
 
     // Send the query
     void trigger(
