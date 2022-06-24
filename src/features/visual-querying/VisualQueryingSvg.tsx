@@ -39,9 +39,9 @@ export function VisualQueryingSvg(props: SvgProps): JSX.Element {
 
   function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {
     if (e.target === svgRef.current) {
-      constraints.forEach((constraint, idx) => {
+      constraints.forEach((constraint) => {
         if (constraint.opened) {
-          dispatch(toggleConstraintWidget(idx));
+          dispatch(toggleConstraintWidget(constraint.id));
         }
       });
     }
