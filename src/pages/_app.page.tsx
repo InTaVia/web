@@ -1,5 +1,5 @@
-import 'leaflet/dist/leaflet.css';
 import '@/styles/index.css';
+import 'allotment/dist/style.css';
 
 import type { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';

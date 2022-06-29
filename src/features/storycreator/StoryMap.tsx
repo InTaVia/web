@@ -14,6 +14,8 @@ import { StoryMapPin } from './StoryMapPin';
 
 interface StoryMapProps {
   events: Array<StoryEvent>;
+  width?: number;
+  height?: number;
 }
 
 interface StoryMapMarker {
@@ -40,7 +42,7 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
 };
 
 export function StoryMap(props: StoryMapProps): JSX.Element {
-  const { events } = props;
+  const { events, width, height } = props;
 
   const mapRef = createRef<MapRef>();
 
@@ -93,7 +95,7 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     );
   }
   return (
-    <MapLibre mapRef={mapRef}>
+    <MapLibre mapRef={mapRef} width={width} height={height}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin

@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
 
 import type {
   SlideContent,
@@ -24,11 +25,26 @@ interface StoryContentDialogProps {
   open: boolean;
   element: SlideContent;
   onClose: () => void;
-  onSave: (event: FormEvent<HTMLFormElement>, element: SlideContent) => void;
+  //onSave: (event: FormEvent<HTMLFormElement>, element: SlideContent) => void;
+  onSave: (element: SlideContent) => void;
 }
 
 export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element {
   const { open, element, onClose, onSave } = props;
+
+  const [tmpProperties, setTmpProperties] = useState({ ...element.properties });
+
+  const onChange = (event: any) => {
+    const newVal = { ...tmpProperties[event.target.id], value: event.target.value };
+    console.log('change', event.target, tmpProperties, newVal);
+    setTmpProperties({ ...tmpProperties, [event.target.id]: newVal });
+  };
+
+  const setAnswerListForQuiz = (answers: Array<[string, boolean]>) => {
+    const newVal = { ...tmpProperties.answerlist, answers: answers } as StoryAnswerList;
+    console.log('change', tmpProperties, newVal);
+    setTmpProperties({ ...tmpProperties, answerlist: newVal });
+  };
 
   const editableAttributes = Object.values(element.properties)
     .filter((prop: StoryContentProperty) => {
@@ -44,7 +60,9 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
       <DialogContent>
         <form
           onSubmit={(event) => {
-            onSave(event, element);
+            event.preventDefault();
+            const newElement = { ...element, properties: tmpProperties };
+            onSave(newElement);
           }}
           id="myform"
         >
@@ -62,6 +80,7 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
                       variant="standard"
                       defaultValue={property.value}
                       sx={{ width: '500px' }}
+                      onChange={onChange}
                     />
                   );
                 case 'textarea':
@@ -73,20 +92,17 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
                       placeholder={property.label}
                       style={{ width: '100%' }}
                       minRows={3}
+                      onChange={onChange}
                     />
                   );
                 case 'answerlist':
-                  return <StoryQuizAnswerList answerList={property as StoryAnswerList} />;
-                  {
-                    /* <TextareaAutosize
-                      id={property.id}
+                  return (
+                    <StoryQuizAnswerList
                       key={property.label}
-                      defaultValue={property.value}
-                      placeholder={property.label}
-                      style={{ width: '100%' }}
-                      minRows={3}
-                    /> */
-                  }
+                      setAnswerListForQuiz={setAnswerListForQuiz}
+                      answerList={property as StoryAnswerList}
+                    />
+                  );
               }
             })}
           </FormControl>

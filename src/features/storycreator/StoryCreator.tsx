@@ -40,22 +40,7 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
         </ButtonRow>
       </div>
       <div className={styles['story-editor-content']}>
-        {textMode ? (
-          <StoryTextCreator story={story} />
-        ) : (
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <StoryGUICreator
-                  targetRef={targetRef}
-                  width={width}
-                  height={height}
-                  story={story}
-                />
-              );
-            }}
-          </ReactResizeDetector>
-        )}
+        {textMode ? <StoryTextCreator story={story} /> : <StoryGUICreator story={story} />}
       </div>
     </div>
   );

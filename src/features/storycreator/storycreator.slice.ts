@@ -1,3 +1,4 @@
+import { ConstructionOutlined } from '@mui/icons-material';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
@@ -8,6 +9,7 @@ type DataUrlString = string;
 
 export interface SlideContent {
   id: string;
+  parentPane: string;
   type: 'Image' | 'Map' | 'Quiz' | 'Text' | 'Timeline';
   layout: {
     x: number;
@@ -15,7 +17,18 @@ export interface SlideContent {
     w: number;
     h: number;
   };
-  properties: Record<StoryContentProperty['id'], StoryContentProperty>;
+  properties?: Record<StoryContentProperty['id'], StoryContentProperty>;
+}
+
+export interface ContentPane {
+  id: string;
+  contents: Record<SlideContent['id'], SlideContent>;
+}
+
+export interface VisualisationPane {
+  id: string;
+  events: Array<StoryEvent>;
+  contents: Record<SlideContent['id'], SlideContent>;
 }
 
 export interface Slide {
@@ -24,9 +37,10 @@ export interface Slide {
   sort: number;
   selected?: boolean;
   image: DataUrlString | null;
-  events: Array<StoryEvent>;
-  content: Record<SlideContent['id'], SlideContent>;
+  contentPanes: Record<ContentPane['id'], ContentPane>;
+  visualizationPanes: Record<VisualisationPane['id'], VisualisationPane>;
   story: Story['id'];
+  layout: string;
 }
 
 export interface Story {
@@ -78,11 +92,16 @@ export class StoryQuizObject implements StoryQuiz {
   id: string;
   layout: { x: number; y: number; w: number; h: number };
   properties: Record<string, StoryContentProperty>;
-  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
     this.id = id;
     this.layout = layout;
+    this.parentPane = parentPane;
     this.properties = {
-      title: {
+      question: {
         type: 'textarea',
         id: 'question',
         editable: true,
@@ -90,7 +109,7 @@ export class StoryQuizObject implements StoryQuiz {
         value: '',
         sort: 0,
       } as StoryContentProperty,
-      text: {
+      answerlist: {
         type: 'answerlist',
         id: 'answers',
         editable: true,
@@ -101,6 +120,7 @@ export class StoryQuizObject implements StoryQuiz {
       } as StoryAnswerList,
     };
   }
+  parentPane: string;
 }
 
 export class StoryTextObject implements StoryText {
@@ -108,9 +128,14 @@ export class StoryTextObject implements StoryText {
   id: string;
   layout: { x: number; y: number; w: number; h: number };
   properties: Record<string, StoryContentProperty>;
-  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
     this.id = id;
     this.layout = layout;
+    this.parentPane = parentPane;
     this.properties = {
       title: {
         type: 'text',
@@ -130,6 +155,7 @@ export class StoryTextObject implements StoryText {
       } as StoryContentProperty,
     };
   }
+  parentPane: string;
 }
 
 export class StoryImageObject implements StoryImage {
@@ -137,8 +163,13 @@ export class StoryImageObject implements StoryImage {
   layout: { x: number; y: number; w: number; h: number };
   type: 'Image' = 'Image';
 
-  constructor(id: string, layout: { x: number; y: number; w: number; h: number }) {
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
     this.id = id;
+    this.parentPane = parentPane;
     this.layout = layout;
     this.properties = {
       title: {
@@ -167,6 +198,7 @@ export class StoryImageObject implements StoryImage {
       } as StoryContentProperty,
     };
   }
+  parentPane: string;
   properties: Record<string, StoryContentProperty>;
 }
 
@@ -180,10 +212,17 @@ const initialState: StoryCreatorState = {
           id: '0',
           sort: 0,
           story: 'story0',
-          events: [],
+          visualizationPanes: {
+            vis0: { id: 'vis0', events: [], contents: {} },
+            vis1: { id: 'vis1', events: [], contents: {} },
+          },
+          contentPanes: {
+            contentPane0: { id: 'contentPane0', contents: {} },
+            contentPane1: { id: 'contentPane1', contents: {} },
+          },
           selected: true,
           image: null,
-          content: {},
+          layout: 'singlevis',
         },
       },
     },
@@ -196,9 +235,16 @@ const initialState: StoryCreatorState = {
           sort: 0,
           story: 'story2',
           selected: true,
-          content: {},
-          events: [],
+          visualizationPanes: {
+            vis0: { id: 'vis0', events: [], contents: {} },
+            vis1: { id: 'vis1', events: [], contents: {} },
+          },
+          contentPanes: {
+            contentPane0: { id: 'contentPane0', contents: {} },
+            contentPane1: { id: 'contentPane1', contents: {} },
+          },
           image: null,
+          layout: 'singlevis',
         },
       },
     },
@@ -229,8 +275,15 @@ export const storyCreatorSlice = createSlice({
           story: story.id,
           selected: true,
           image: null,
-          content: {},
-          events: [],
+          visualizationPanes: {
+            vis0: { id: 'vis0', events: [], contents: {} },
+            vis1: { id: 'vis1', events: [], contents: {} },
+          },
+          contentPanes: {
+            contentPane0: { id: 'contentPane0', contents: {} },
+            contentPane1: { id: 'contentPane1', contents: {} },
+          },
+          layout: 'singlevis',
         } as Slide,
       };
       newStories[story.id] = story;
@@ -261,13 +314,27 @@ export const storyCreatorSlice = createSlice({
         story: storyID,
         id: newID,
         image: null,
-        content: {},
-        events: [],
+        //FIXME: Define default contentPanes and visualizationPanes
+        visualizationPanes: {
+          vis0: { id: 'vis0', events: [], contents: {} },
+          vis1: { id: 'vis1', events: [], contents: {} },
+        },
+        layout: 'singlevis',
+        contentPanes: {
+          contentPane0: { id: 'contentPane0', contents: {} },
+          contentPane1: { id: 'contentPane1', contents: {} },
+        },
         sort: counter,
         selected: false,
       } as Slide;
 
       state.stories[slide.story]!.slides[slide.id] = slide;
+    },
+    setLayoutForSlide: (state, action) => {
+      const slide = action.payload.slide as Slide;
+      const layout = action.payload.layout;
+
+      state.stories[slide.story]!.slides[slide.id]!.layout = layout;
     },
     createSlidesInBulk: (state, action) => {
       const story = action.payload.story;
@@ -368,6 +435,26 @@ export const storyCreatorSlice = createSlice({
       delete newStories[content.story]!.slides[content.slide]!.content[content.id];
       state.stories = newStories;
     },
+    removeSlideContent: (state, action) => {
+      const content = action.payload.content;
+      const slide = action.payload.slide;
+
+      console.log(JSON.stringify(content));
+
+      switch (content.type) {
+        case 'Text':
+        case 'Image':
+        case 'Quiz':
+          delete state.stories[slide.story]!.slides[slide.id]!.contentPanes[content.parentPane]!
+            .contents[content.id];
+          break;
+        case 'Map':
+        case 'Timeline':
+          delete state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[
+            content.parentPane
+          ]!.contents[content.id];
+      }
+    },
     addContent: (state, action) => {
       let content = action.payload;
 
@@ -395,22 +482,141 @@ export const storyCreatorSlice = createSlice({
 
       state.stories[content.story]!.slides[content.slide]!.content[content.id] = content;
     },
-    resizeMoveContent: (state, action) => {
+    addVisualization: (state, action) => {
       const content = action.payload;
 
-      const story = state.stories[content.story];
-      const slides = story?.slides;
-      if (slides) {
-        const slide = slides[content.slide] as Slide;
-        const wantedContent = slide.content[content.id];
-        if (wantedContent) {
-          wantedContent.layout = {
-            x: content.x,
-            y: content.y,
-            w: content.w,
-            h: content.h,
-          };
-        }
+      /* let contentObject; */
+
+      const visPaneId = content.parentPane;
+      /*      if (
+        Object.keys(
+          state.stories[content.story]!.slides[content.slide]!.visualizationPanes,
+        ).includes(visPaneId)
+      ) {
+      } else {
+      } */
+      const contentId = `content1`;
+      content.id = contentId;
+
+      const newContents = {} as Record<SlideContent['id'], SlideContent>;
+      newContents[contentId] = content as SlideContent;
+
+      console.log(JSON.stringify(content));
+
+      state.stories[content.story]!.slides[content.slide]!.visualizationPanes[visPaneId] = {
+        id: visPaneId,
+        type: content.type,
+        events: [],
+        contents: newContents,
+      } as VisualisationPane;
+
+      /* content.events = [];
+
+      switch (content.type) {
+        default:
+          break;
+      }
+
+      content = { ...content }; //content = { ...content, ...contentObject };
+
+      console.log('addVisualization');
+
+      state.stories[content.story]!.slides[content.slide]!.visualizations[content.id] = content; */
+    },
+    editSlideContent: (state, action) => {
+      const content = action.payload.content;
+      const slide = action.payload.slide;
+
+      switch (content.type) {
+        case 'Text':
+        case 'Image':
+        case 'Quiz':
+          state.stories[slide.story]!.slides[slide.id]!.contentPanes[content.parentPane]!.contents[
+            content.id
+          ] = content;
+          break;
+        case 'Map':
+        case 'Timeline':
+          state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[
+            content.parentPane
+          ]!.contents[content.id] = content;
+      }
+    },
+    addContentToContentPane: (state, action) => {
+      const content = action.payload;
+
+      const contentPaneID = content.contentPane;
+      const contentPane =
+        state.stories[content.story]!.slides[content.slide]!.contentPanes[contentPaneID];
+      //const contentId = `content${Object.keys(contentPane?.contents).length}`;
+
+      const contents = contentPane?.contents;
+      const oldIDs = Object.keys(contents);
+
+      let counter = 0;
+      let newID;
+      do {
+        counter = counter + 1;
+        newID = `${content.slide}(${counter})`;
+      } while (oldIDs.includes(newID));
+
+      content.id = newID;
+
+      let contentObject;
+      switch (content.type) {
+        case 'Image':
+          contentObject = new StoryImageObject(content.id, content.contentPane, content.layout);
+          break;
+        case 'Text':
+          contentObject = new StoryTextObject(content.id, content.contentPane, content.layout);
+          break;
+        case 'Quiz':
+          contentObject = new StoryQuizObject(content.id, content.contentPane, content.layout);
+          break;
+        default:
+          break;
+      }
+
+      state.stories[content.story]!.slides[content.slide]!.contentPanes[contentPaneID]!.contents[
+        newID
+      ] = contentObject;
+    },
+    resizeMoveContent: (state, action) => {
+      const layout = action.payload.layout;
+      const slide = action.payload.slide;
+      const story = action.payload.story;
+      const content = action.payload.content;
+      const parentPane = action.payload.parentPane;
+      const type = action.payload.parentType;
+      let objectToChange;
+
+      switch (type) {
+        case 'Content':
+          objectToChange =
+            state.stories[story]!.slides[slide]!.contentPanes[parentPane]!.contents[content];
+          if (objectToChange !== undefined) {
+            objectToChange.layout = {
+              x: layout.x,
+              y: layout.y,
+              w: layout.w,
+              h: layout.h,
+            };
+          }
+          break;
+        case 'Visualization':
+          objectToChange =
+            state.stories[story]!.slides[slide]!.visualizationPanes[parentPane]!.contents[content];
+          if (objectToChange !== undefined) {
+            objectToChange.layout = {
+              x: layout.x,
+              y: layout.y,
+              w: layout.w,
+              h: layout.h,
+            };
+          }
+          break;
+        default:
+          break;
       }
     },
     editContent: (state, action) => {
@@ -421,12 +627,23 @@ export const storyCreatorSlice = createSlice({
 
       state.stories = newStories;
     },
+    editContentOfContentPane: (state, action) => {
+      const content = action.payload;
+
+      console.log(JSON.stringify(content));
+
+      state.stories[content.story]!.slides[content.slide]!.contentPanes[content.id] = content;
+
+      /* newStories[content.story]!.slides[content.slide]!.content[content.id] = content;
+
+      state.stories = newStories; */
+    },
     setImage: (state, action) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
       state.stories[slide.story]!.slides[slide.id]!.image = image;
     },
-    addEventsToSlide: (state, action) => {
+    /* addEventsToSlide: (state, action) => {
       const slide: Slide = action.payload.slide;
       const events: Array<StoryEvent> = action.payload.events;
 
@@ -437,6 +654,24 @@ export const storyCreatorSlice = createSlice({
       const event: StoryEvent = action.payload.event;
 
       state.stories[slide.story]!.slides[slide.id]!.events.push(event);
+    }, */
+    addEventsToVisPane: (state, action) => {
+      const slide: Slide = action.payload.slide;
+      const visPaneId: string = action.payload.visPane;
+      const events: Array<StoryEvent> = action.payload.events;
+
+      state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[visPaneId]?.events.push(
+        ...events,
+      );
+    },
+    addEventToVisPane: (state, action) => {
+      const slide: Slide = action.payload.slide;
+      const visPaneId: string = action.payload.visPane;
+      const event: StoryEvent = action.payload.event;
+
+      state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[visPaneId]?.events.push(
+        event,
+      );
     },
   },
 });
@@ -447,16 +682,22 @@ export const {
   removeStory,
   removeSlide,
   removeContent,
+  removeSlideContent,
   createSlide,
   selectSlide,
   addContent,
+  addVisualization,
+  addContentToContentPane,
   resizeMoveContent,
   editContent,
+  editSlideContent,
+  editContentOfContentPane,
   setImage,
   copySlide,
   createSlidesInBulk,
-  addEventToSlide,
-  addEventsToSlide,
+  addEventsToVisPane,
+  addEventToVisPane,
+  setLayoutForSlide,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

@@ -9,20 +9,41 @@ import type { StoryAnswerList } from '@/features/storycreator/storycreator.slice
 
 interface StoryQuizAnswerListProps {
   answerList: StoryAnswerList;
+  setAnswerListForQuiz: (answers: any) => void;
 }
 
 export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Element {
-  const { answerList } = props;
-
-  /* let answers = [...answerList.answers]; */
+  const { answerList, setAnswerListForQuiz } = props;
 
   const [answers, setAnswers] = useState([...answerList.answers]);
+
+  const onChange = (event: any) => {
+    console.log(event.target.id, event.target, event.target.value);
+    // eslint-disable-next-line prefer-const
+    let newAnswers = [...answers];
+    const index = parseInt(event.target.name);
+
+    switch (event.target.type) {
+      case 'checkbox':
+        newAnswers[index][1] = event.target.checked;
+        break;
+      case 'text':
+        newAnswers[index][0] = event.target.value;
+        break;
+      default:
+        break;
+    }
+
+    setAnswers(newAnswers);
+    setAnswerListForQuiz(newAnswers);
+  };
 
   const addAnswer = () => {
     // eslint-disable-next-line prefer-const
     let newAnswers = [...answers];
     newAnswers.push(['...', false]);
     setAnswers(newAnswers);
+    setAnswerListForQuiz(newAnswers);
   };
 
   const deleteAnswer = (index: number) => {
@@ -30,6 +51,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
     let newAnswers = [...answers];
     newAnswers.splice(index, 1);
     setAnswers(newAnswers);
+    setAnswerListForQuiz(newAnswers);
   };
 
   return (
@@ -37,8 +59,15 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
       {answers.map((answer, index: number) => {
         return (
           <div style={{ display: 'flex' }} className="storyAnswerListOption" key={`option${index}`}>
-            <Checkbox defaultChecked={answer[1]} />
+            <Checkbox
+              key={`answer${index + 1}Checkbox`}
+              id={`answer${index + 1}Checkbox`}
+              name={`${index}`}
+              checked={answer[1]}
+              onChange={onChange}
+            />
             <IconButton
+              key={`answer${index + 1}Delete`}
               onClick={() => {
                 deleteAnswer(index);
               }}
@@ -47,12 +76,15 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
             </IconButton>
             <TextField
               margin="dense"
-              id={`answer${index}`}
               label={`Answer ${index + 1}`}
+              key={`answer${index + 1}`}
+              id={`answer${index + 1}`}
+              name={`${index}`}
               fullWidth
               variant="standard"
               defaultValue={answer[0]}
               sx={{ width: '400px' }}
+              onChange={onChange}
             />
           </div>
         );

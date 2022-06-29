@@ -1,11 +1,11 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
+import { Allotment } from 'allotment';
 import { toPng } from 'html-to-image';
 import type { RefObject } from 'react';
 import { useRef } from 'react';
-import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { selectEntitiesByKind } from '@/features/common/entities.slice';
@@ -13,13 +13,13 @@ import type { Place } from '@/features/common/entity.model';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
-import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
   createSlidesInBulk,
   selectSlidesByStoryID,
   setImage,
+  setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
 
@@ -31,11 +31,54 @@ interface DropProps {
   date?: IsoDateString;
 }
 
+interface SlideLayout {
+  numberOfVis: 0 | 1 | 2;
+  numberOfContentPanes: 0 | 1 | 2;
+  vertical: boolean;
+}
+
+const SlideLayouts: Record<string, SlideLayout> = {
+  singlevis: {
+    numberOfVis: 1,
+    numberOfContentPanes: 0,
+    vertical: false,
+  },
+  twovisvertical: {
+    numberOfVis: 2,
+    numberOfContentPanes: 0,
+    vertical: true,
+  },
+  twovishorizontal: {
+    numberOfVis: 2,
+    numberOfContentPanes: 0,
+    vertical: false,
+  },
+  singleviscontent: {
+    numberOfVis: 1,
+    numberOfContentPanes: 1,
+    vertical: false,
+  },
+  twoviscontenthorizontal: {
+    numberOfVis: 2,
+    numberOfContentPanes: 1,
+    vertical: false,
+  },
+  twoviscontentvertical: {
+    numberOfVis: 2,
+    numberOfContentPanes: 1,
+    vertical: true,
+  },
+  twocontents: {
+    numberOfVis: 0,
+    numberOfContentPanes: 2,
+    vertical: true,
+  },
+};
+
 const createDrops = (props: DropProps) => {
   const { type } = props;
-  // eslint-disable-next-line react/jsx-key
-  const content = [<DroppableIcon type={type} />];
 
+  const content = [<DroppableIcon key={`${type}Icon`} type={type} />];
   let text = '';
   let subline = '';
   let padding = 0;
@@ -93,7 +136,7 @@ const createDrops = (props: DropProps) => {
       unselectable="on"
       onDragStart={(e) => {
         return e.dataTransfer.setData(
-          'text/plain',
+          'Text',
           JSON.stringify({
             type: type,
             props: props,
@@ -123,7 +166,7 @@ interface StoryGUICreatorProps {
 }
 
 export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
-  const { story, height = 0, width, targetRef: parentRef } = props;
+  const { story, height, targetRef: parentRef } = props;
 
   const dispatch = useAppDispatch();
 
@@ -199,109 +242,154 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
 
   const gridHeight = Math.round(height / 5);
 
+  const switchLayout = (i_layout: string | null) => {
+    dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
+  };
+
+  /* const increaseNumberOfContentPanes = () => {
+    setLayout({ ...layout, numberOfContentPanes: 1 });
+  }; */
+
+  const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[selectedSlide.layout];
+
   return (
     <div
       ref={parentRef as RefObject<HTMLDivElement>}
-      style={{ height: '100%', width: '100%', maxHeight: '100%' }}
+      style={{ position: 'relative', height: `100%`, width: `100%` }}
     >
-      <ReactGridLayout
-        className="layout"
-        isDraggable={false}
-        cols={12}
-        rowHeight={gridHeight}
-        width={width}
-      >
-        <div
-          key="gridWindowContent"
-          className={styles['story-editor-pane']}
-          style={{ height, width }}
-          data-grid={{
-            x: 2,
-            y: 1,
-            w: 8,
-            h: 3,
+      <div style={{ width: '100%', backgroundColor: 'honeydew' }}>
+        <IconButton
+          key={'singlevisLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('singlevis');
           }}
         >
-          {selectedSlide !== undefined && (
-            <ReactResizeDetector handleWidth handleHeight>
-              {({ width, height, targetRef }) => {
-                return (
-                  <SlideEditor
-                    targetRef={targetRef as RefObject<HTMLDivElement>}
-                    width={width}
-                    height={height}
-                    slide={selectedSlide}
-                    imageRef={ref}
-                    takeScreenshot={takeScreenshot}
-                    events={entitiesInSlide}
-                  />
-                );
-              }}
-            </ReactResizeDetector>
-          )}
-        </div>
-        <div
-          key="gridWindowLeft"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 3,
+          <img src="/assets/images/singlevis.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'twovisverticalLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('twovisvertical');
           }}
         >
-          <div
-            style={{
-              overflow: 'hidden',
-              width: '100%',
-              height: '100%',
-              overflowY: 'scroll',
-            }}
-          >
-            {/* FIXME: use real types */}
-            {persons.length > 1
-              ? persons.map((person: any) => {
-                  return createDrops({ ...person, type: 'Person' });
-                })
-              : persons.map((person: any) => {
-                  return [...person.history]
-                    .sort((a, b) => {
-                      return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
+          <img src="/assets/images/twovisvertical.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'twovishorizontalLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('twovishorizontal');
+          }}
+        >
+          <img src="/assets/images/twovishorizontal.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'singleviscontentLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('singleviscontent');
+          }}
+        >
+          <img src="/assets/images/singleviscontent.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'twoviscontenthorizontalLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('twoviscontenthorizontal');
+          }}
+        >
+          <img src="/assets/images/twoviscontenthorizontal.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'twoviscontentverticalLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('twoviscontentvertical');
+          }}
+        >
+          <img src="/assets/images/twoviscontentvertical.png" height="30px" />
+        </IconButton>
+        <IconButton
+          key={'twocontentsLayoutButton'}
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            switchLayout('twocontents');
+          }}
+        >
+          <img src="/assets/images/twocontents.png" height="30px" />
+        </IconButton>
+      </div>
+      <Allotment vertical={true}>
+        <Allotment.Pane preferredSize="70%">
+          <Allotment>
+            <Allotment.Pane preferredSize="20%">
+              <div style={{ height: '100%', overflow: 'hidden', overflowY: 'scroll' }}>
+                {persons.length > 1
+                  ? persons.map((person: any) => {
+                      return createDrops({ ...person, type: 'Person' });
                     })
-                    .map((element: any) => {
-                      return createDrops({ ...element, type: 'Event' });
-                    });
-                })}
-          </div>
-        </div>
-        <div
-          key="gridWindowRight"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 10,
-            y: 0,
-            w: 2,
-            h: 3,
-          }}
-        >
-          {[
-            createDrops({ type: 'Map' }),
-            /* createDrops('Timeline'), */
-            createDrops({ type: 'Text' }),
-            createDrops({ type: 'Image' }),
-            createDrops({ type: 'Quiz' }),
-          ]}
-        </div>
-        <div
-          key="gridWindowBottom"
-          className={styles['story-editor-pane']}
-          data-grid={{
-            x: 0,
-            y: 4,
-            w: 12,
-            h: 1,
-          }}
-        >
+                  : persons.map((person: any) => {
+                      return [...person.history]
+                        .sort((a, b) => {
+                          return (
+                            parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4))
+                          );
+                        })
+                        .map((element: any) => {
+                          return createDrops({ ...element, type: 'Event' });
+                        });
+                    })}
+              </div>
+            </Allotment.Pane>
+            <Allotment.Pane preferredSize="60%">
+              <ReactResizeDetector handleWidth handleHeight>
+                {({ width, height, targetRef }) => {
+                  return (
+                    <SlideEditor
+                      targetRef={targetRef as RefObject<HTMLDivElement>}
+                      width={width}
+                      height={height}
+                      slide={selectedSlide}
+                      imageRef={ref}
+                      takeScreenshot={takeScreenshot}
+                      events={entitiesInSlide}
+                      numberOfVisPanes={numberOfVis}
+                      numberOfContentPanes={numberOfContentPanes}
+                      vertical={vertical}
+                      //increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                    />
+                  );
+                }}
+              </ReactResizeDetector>
+            </Allotment.Pane>
+            <Allotment.Pane preferredSize="20%">
+              {[
+                createDrops({ type: 'Map' }),
+                createDrops({ type: 'Text' }),
+                createDrops({ type: 'Image' }),
+                createDrops({ type: 'Quiz' }),
+              ]}
+            </Allotment.Pane>
+          </Allotment>
+        </Allotment.Pane>
+        <Allotment.Pane preferredSize="30%">
           <ReactResizeDetector handleWidth handleHeight>
             {({ width, height, targetRef }) => {
               return (
@@ -309,15 +397,15 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
               );
             }}
           </ReactResizeDetector>
-        </div>
-      </ReactGridLayout>
-      <Button
-        onClick={() => {
-          dispatch(createSlide(story.id));
-        }}
-      >
-        Add Slide
-      </Button>
+        </Allotment.Pane>
+        <Button
+          onClick={() => {
+            dispatch(createSlide(story.id));
+          }}
+        >
+          Add Slide
+        </Button>
+      </Allotment>
     </div>
   );
 }
