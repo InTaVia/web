@@ -5,7 +5,7 @@ import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intav
 import { Histogram } from '@/features/visual-querying/Histogram';
 import { Origin } from '@/features/visual-querying/Origin';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface DateConstraintWidgetProps {
   idx: number;
@@ -38,9 +38,9 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
 
   function setBrushedArea(area: Array<number>) {
     dispatch(
-      updateDateRange({
+      updateConstraintValue({
         id: constraint.id,
-        dateRange: area,
+        value: area,
       }),
     );
   }
@@ -64,7 +64,7 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
           <svg width="100%" height="100%">
             <g className="data">
               <Histogram
-                brushedArea={constraint.dateRange}
+                brushedArea={constraint.value}
                 setBrushedArea={setBrushedArea}
                 data={data!}
                 dimensions={dimensions}

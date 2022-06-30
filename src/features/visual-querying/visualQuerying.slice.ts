@@ -16,27 +16,28 @@ export type Constraint = {
   type: ConstraintType;
   name: string;
   opened: boolean;
+  value: Array<Feature> | Array<number> | Array<Profession> | string | null;
 };
 
 export interface DateConstraint extends Constraint {
   type: ConstraintType.Dates;
-  dateRange: Array<number> | null;
+  value: Array<number> | null;
 }
 
 export interface PlaceConstraint extends Constraint {
   type: ConstraintType.Places;
-  features: Array<Feature> | null;
+  value: Array<Feature> | null;
 }
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
-  text: string;
+  value: string;
 }
 
 export type Profession = string; // XXX
 export interface ProfessionConstraint extends Constraint {
   type: ConstraintType.Profession;
-  selection: Array<Profession> | null;
+  value: Array<Profession> | null;
 }
 
 export interface VisualQueryingState {
@@ -50,56 +51,56 @@ const initialState: VisualQueryingState = {
       type: ConstraintType.Name,
       name: 'Name',
       opened: false,
-      text: '',
+      value: '',
     } as Constraint,
     {
       id: 'date-lived-constraint',
       type: ConstraintType.Dates,
       name: 'Lived',
       opened: false,
-      dateRange: null,
+      value: null,
     } as Constraint,
     {
       id: 'date-of-birth-constraint',
       type: ConstraintType.Dates,
       name: 'Birth',
       opened: false,
-      dateRange: null,
+      value: null,
     } as Constraint,
     {
       id: 'date-of-death-constraint',
       type: ConstraintType.Dates,
       name: 'Death',
       opened: false,
-      dateRange: null,
+      value: null,
     } as Constraint,
     {
       id: 'place-lived-constraint',
       type: ConstraintType.Places,
       name: 'Lived',
       opened: false,
-      feature: null,
+      value: null,
     } as Constraint,
     {
       id: 'place-of-birth-constraint',
       type: ConstraintType.Places,
       name: 'Birth',
       opened: false,
-      feature: null,
+      value: null,
     } as Constraint,
     {
       id: 'place-of-death-constraint',
       type: ConstraintType.Places,
       name: 'Death',
       opened: false,
-      feature: null,
+      value: null,
     } as Constraint,
     {
       id: 'profession-constraint',
       type: ConstraintType.Profession,
       name: 'Profession',
       opened: false,
-      selection: null,
+      value: null,
     } as Constraint,
   ],
 };
@@ -131,66 +132,26 @@ const visualQueryingSlice = createSlice({
         constraint.opened = !constraint.opened;
       }
     },
-    updateDateRange: (
+    updateConstraintValue: (
       state,
-      action: PayloadAction<{ id: string; dateRange: Array<number> | null }>,
+      action: PayloadAction<{
+        id: string;
+        value: Array<Feature> | Array<number> | Array<Profession> | string | null;
+      }>,
     ) => {
       const constraint = state.constraints.find((constraint) => {
-        return constraint.id === action.payload.id && constraint.type === ConstraintType.Dates;
-      }) as DateConstraint | undefined;
-
-      if (constraint) {
-        constraint.dateRange = action.payload.dateRange;
-      }
-    },
-    updateText: (state, action: PayloadAction<{ id: string; text: string }>) => {
-      const constraint = state.constraints.find((constraint) => {
-        return constraint.id === action.payload.id && constraint.type === ConstraintType.Name;
-      }) as TextConstraint | undefined;
-
-      if (constraint) {
-        constraint.text = action.payload.text;
-      }
-    },
-    updatePlaceConstraint(
-      state,
-      action: PayloadAction<{ id: string; features: Array<Feature> | null }>,
-    ) {
-      const id = action.payload.id;
-      const constraint = state.constraints.find((constraint) => {
-        return constraint.id === id;
+        return constraint.id === action.payload.id;
       });
-      function isPlaceConstraint(constraint: Constraint): constraint is PlaceConstraint {
-        return constraint.type === ConstraintType.Places;
-      }
-      if (constraint != null && isPlaceConstraint(constraint)) {
-        constraint.features = action.payload.features;
-      }
-    },
-    updateProfessions: (
-      state,
-      action: PayloadAction<{ id: string; selection: ProfessionConstraint['selection'] }>,
-    ) => {
-      const constraint = state.constraints.find((constraint) => {
-        return constraint.id === action.payload.id && constraint.type === ConstraintType.Profession;
-      }) as ProfessionConstraint | undefined;
 
       if (constraint) {
-        constraint.selection = action.payload.selection;
+        constraint.value = action.payload.value;
       }
     },
   },
 });
 
-export const {
-  addConstraint,
-  removeConstraint,
-  toggleConstraintWidget,
-  updateDateRange,
-  updateText,
-  updatePlaceConstraint,
-  updateProfessions,
-} = visualQueryingSlice.actions;
+export const { addConstraint, removeConstraint, toggleConstraintWidget, updateConstraintValue } =
+  visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
 
 export function selectConstraints(state: RootState) {

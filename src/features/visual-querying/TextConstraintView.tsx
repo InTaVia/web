@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '@/app/store';
 import type { Origin } from '@/features/visual-querying/Origin';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateText } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintWidgetProps {
   idx: number;
@@ -21,7 +21,7 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   const dispatch = useAppDispatch();
 
-  const [text, setText] = useState(constraint.text);
+  const [text, setText] = useState(constraint.value);
 
   const dimensions = {
     x: x,
@@ -36,9 +36,9 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   function handleClick() {
     dispatch(
-      updateText({
+      updateConstraintValue({
         id: constraint.id,
-        text: text,
+        value: text,
       }),
     );
   }

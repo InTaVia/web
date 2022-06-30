@@ -153,7 +153,7 @@ export function ProfessionsSvg(props: ProfessionsSvgProps): JSX.Element {
             leafSizing={leafSizing}
             profession={node.data}
             selectable={Boolean(constraint)}
-            selected={constraint?.selection?.includes(node.data.name) ?? false}
+            selected={constraint?.value?.includes(node.data.name) ?? false}
             toggleProfession={toggleProfession}
           />
         );
