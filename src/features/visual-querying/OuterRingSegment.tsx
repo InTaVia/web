@@ -20,7 +20,9 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
   const { dims, origin, constraint } = props;
 
   const path = getRingSegmentPath(origin, dims);
-  const textPath = getArcedTextPath(origin, dims);
+  const centerTextPath = getArcedTextPath(origin, dims, 'center');
+  const topTextPath = getArcedTextPath(origin, dims, 'top');
+  const bottomTextPath = getArcedTextPath(origin, dims, 'bottom');
   const [fillColor, textColor] = getRingSegmentColors(constraint.id);
 
   function toggleOpenConstraint() {
@@ -30,16 +32,46 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
   return (
     <g id={`ring-constraint-${constraint.id}`} onClick={toggleOpenConstraint}>
       <defs>
-        <path d={textPath.toString()} id={`textPath-${constraint.id}`} />
+        <path d={centerTextPath.toString()} id={`centerTextPath-${constraint.id}`} />
+        <path d={topTextPath.toString()} id={`topTextPath-${constraint.id}`} />
+        <path d={bottomTextPath.toString()} id={`bottomTextPath-${constraint.id}`} />
       </defs>
 
       <path d={path.toString()} fill={fillColor} style={{ cursor: 'pointer' }} />
 
-      <text pointerEvents="none" fill={textColor} fontSize="large">
-        <textPath xlinkHref={`#textPath-${constraint.id}`} textAnchor="middle" startOffset="50%">
-          {constraint.name}
-        </textPath>
-      </text>
+      {constraint.value === null || constraint.value === '' ? (
+        <text pointerEvents="none" fill={textColor} fontSize="large">
+          <textPath
+            xlinkHref={`#centerTextPath-${constraint.id}`}
+            textAnchor="middle"
+            startOffset="50%"
+          >
+            {constraint.name}
+          </textPath>
+        </text>
+      ) : (
+        <g>
+          <text pointerEvents="none" fill={textColor} fontSize="small">
+            <textPath
+              xlinkHref={`#topTextPath-${constraint.id}`}
+              textAnchor="middle"
+              startOffset="50%"
+            >
+              {constraint.name}
+            </textPath>
+          </text>
+
+          <text pointerEvents="none" fill={textColor} fontSize="medium">
+            <textPath
+              xlinkHref={`#bottomTextPath-${constraint.id}`}
+              textAnchor="middle"
+              startOffset="50%"
+            >
+              {constraint.value}
+            </textPath>
+          </text>
+        </g>
+      )}
     </g>
   );
 }

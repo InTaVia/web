@@ -29,16 +29,27 @@ export function getRingSegmentPath(origin: Origin, dims: RingDims) {
   return p;
 }
 
-export function getArcedTextPath(origin: Origin, dims: RingDims) {
+export function getArcedTextPath(origin: Origin, dims: RingDims, position: string) {
   const startAngle = (dims.startAngle * Math.PI) / 180;
   const endAngle = (dims.endAngle * Math.PI) / 180;
+  let radius = dims.innerRadius + (dims.outerRadius - dims.innerRadius) / 2;
   const p = path();
 
-  p.moveTo(
-    origin.x(Math.cos(startAngle) * dims.innerRadius),
-    origin.y(Math.sin(startAngle) * dims.innerRadius),
-  );
-  p.arc(origin.x(0), origin.y(0), dims.innerRadius + 13, startAngle, endAngle, false);
+  switch (position) {
+    case 'center':
+      break;
+    case 'top':
+      radius = radius + 16;
+      break;
+    case 'bottom':
+      radius = radius - 8;
+      break;
+    default:
+      break;
+  }
+
+  p.moveTo(origin.x(Math.cos(startAngle) * radius), origin.y(Math.sin(startAngle) * radius));
+  p.arc(origin.x(0), origin.y(0), radius - 8, startAngle, endAngle, false);
 
   return p;
 }

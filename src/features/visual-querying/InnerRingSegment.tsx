@@ -40,8 +40,34 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
   });
 
   const path = getRingSegmentPath(origin, dims);
-  const textPath = getArcedTextPath(origin, dims);
+  const textPath = getArcedTextPath(origin, dims, 'center');
   const [fillColor, textColor] = getRingSegmentColors(type);
+
+  function drawOuterRing() {
+    let visibleOuterRingDims = outerRingDims;
+    if (!showOuterRing) {
+      // Only draw rings that have a value
+      visibleOuterRingDims = visibleOuterRingDims.filter(({ constraint }) => {
+        return constraint.value !== null && constraint.value !== '';
+      });
+    }
+
+    return visibleOuterRingDims.map(({ startAngle, endAngle, constraint }, idx) => {
+      return (
+        <OuterRingSegment
+          key={idx}
+          dims={{
+            startAngle: startAngle,
+            endAngle: endAngle,
+            innerRadius: dims.outerRadius,
+            outerRadius: dims.outerRadius + 55,
+          }}
+          origin={origin}
+          constraint={constraint}
+        />
+      );
+    });
+  }
 
   return (
     <g
@@ -73,22 +99,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
       </g>
 
       {/* Outer Ring */}
-      {showOuterRing &&
-        outerRingDims.map(({ startAngle, endAngle, constraint }, idx) => {
-          return (
-            <OuterRingSegment
-              key={idx}
-              dims={{
-                startAngle: startAngle,
-                endAngle: endAngle,
-                innerRadius: dims.outerRadius,
-                outerRadius: dims.outerRadius + 40,
-              }}
-              origin={origin}
-              constraint={constraint}
-            />
-          );
-        })}
+      {drawOuterRing()}
     </g>
   );
 }
