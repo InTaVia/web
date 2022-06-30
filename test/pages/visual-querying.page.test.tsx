@@ -71,24 +71,4 @@ describe('VisualQueryingPage', () => {
     });
     expect(constraints).toEqual(['Name', 'Date of Birth', 'Date of Death', 'Place', 'Profession']);
   });
-
-  it('adds ring segment after selecting constraint', async () => {
-    const router = { pathname: '/visual-querying' };
-    const { container } = render(<VisualQueryingPage />, { wrapper: createWrapper({ router }) });
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const circle = container.querySelector('svg g circle');
-    if (circle !== null) await userEvent.click(circle);
-
-    const item = screen.getAllByRole('listitem')[0];
-    if (item) await userEvent.click(item);
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const ringSegment = container.querySelector('svg g g#ring-constraint-0');
-    expect(ringSegment).toBeInTheDocument();
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const textPath = ringSegment?.querySelector('text textPath');
-    expect(textPath).toBeInTheDocument();
-  });
 });
