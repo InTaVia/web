@@ -1,3 +1,4 @@
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -24,6 +25,10 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
 
   const constraints = useAppSelector(selectConstraints);
 
+  const circleRadius = 100;
+  const iconSize = 2 * circleRadius * (2 / 3);
+  const innerRingRadius = 40;
+
   const [isConstListShown, setIsConstListShown] = useState(false);
 
   function handleClick() {
@@ -42,18 +47,20 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
 
   return (
     <g>
-      <circle cx={origin.x(0)} cy={origin.y(0)} r="100" fill="#EDEDED" onClick={handleClick} />
-      <text
-        x={origin.x(0)}
-        y={origin.y(0)}
-        fontSize="xxx-large"
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill="#A1A1A1"
+      <circle
+        cx={origin.x(0)}
+        cy={origin.y(0)}
+        r={circleRadius}
+        fill="#EDEDED"
         onClick={handleClick}
-      >
-        +
-      </text>
+      />
+      <PersonOutlineOutlinedIcon
+        width={iconSize}
+        height={iconSize}
+        x={origin.x(0) - iconSize / 2}
+        y={origin.y(0) - iconSize / 2}
+        htmlColor="#A1A1A1"
+      />
 
       {ringDims.map(({ startAngle, endAngle, constraintType }, idx) => {
         return (
@@ -63,8 +70,8 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
             dims={{
               startAngle: startAngle,
               endAngle: endAngle,
-              innerRadius: 100,
-              outerRadius: 140,
+              innerRadius: circleRadius,
+              outerRadius: circleRadius + innerRingRadius,
             }}
             type={constraintType}
             label={ConstraintType[constraintType]}
