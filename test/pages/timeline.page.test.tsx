@@ -125,10 +125,13 @@ describe('TimelinePage', () => {
     expect(tooltip).toBeInTheDocument();
 
     await userEvent.unhover(timelineItemOne);
-    await waitFor(() => {
-      const tooltip = screen.queryByRole('tooltip');
-      expect(tooltip).not.toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        const tooltip = screen.queryByRole('tooltip');
+        expect(tooltip).not.toBeInTheDocument();
+      },
+      { timeout: 3000 },
+    );
   });
 
   it('should show person relations in the tooltip', async () => {
