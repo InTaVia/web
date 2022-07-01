@@ -3,32 +3,18 @@ import Card from '@mui/material/Card';
 import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
   ContentPane,
   Slide,
   SlideContent,
+  StoryAnswerList,
   StoryImage,
 } from '@/features/storycreator/storycreator.slice';
-import {
-  addContentToContentPane,
-  addEventsToVisPane,
-  addEventToVisPane,
-  removeSlideContent,
-  resizeMoveContent,
-} from '@/features/storycreator/storycreator.slice';
-import type { UiWindow } from '@/features/ui/ui.slice';
-import { selectWindows } from '@/features/ui/ui.slice';
+import { removeSlideContent, resizeMoveContent } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
 
-import type { Person } from '../common/entity.model';
-
-interface DropProps {
-  type: string;
-  static: boolean;
-  props: object;
-}
 const rowHeight = 30;
 const margin: [number, number] = [0, 0];
 
@@ -36,7 +22,7 @@ interface StoryContentPaneProps {
   id: string;
   width: number | undefined;
   height: number | undefined;
-  targetRef: RefObject<HTMLDivElement>;
+  targetRef: RefObject<HTMLElement>;
   slide: Slide;
   setEditElement: (arg0: any) => void;
   setOpenDialog: (arg0: boolean) => void;
@@ -48,7 +34,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   const {
     id,
     width: myWidth,
-    height,
+    /* height, */
     targetRef,
     contentPane,
     slide,
@@ -57,8 +43,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     onDrop,
   } = props;
 
-  const myHeight =
-    height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12;
+  /* const myHeight =
+    height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
 
   const dispatch = useAppDispatch();
 
@@ -89,17 +75,17 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 padding: 0,
               }}
             >
-              {(Boolean(element.properties.title.value) ||
-                Boolean(element.properties.text.value)) && (
+              {(Boolean(element!.properties!.title!.value) ||
+                Boolean(element!.properties!.text!.value)) && (
                 <CardContent className={styles['card-content']}>
-                  {Boolean(element.properties.title.value) && (
+                  {Boolean(element!.properties!.title!.value) && (
                     <Typography gutterBottom variant="h5" component="h2">
-                      {element.properties.title.value}
+                      {element!.properties!.title!.value}
                     </Typography>
                   )}
-                  {Boolean(element.properties.text.value) && (
+                  {Boolean(element!.properties!.text!.value) && (
                     <Typography variant="subtitle1" color="subtitle1" component="p">
-                      {element.properties.text.value}
+                      {element!.properties!.text!.value}
                     </Typography>
                   )}
                 </CardContent>
@@ -107,27 +93,29 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             </Card>
           </div>
         );
-      case 'Quiz':
+      case 'Quiz': {
         const quizContent = [];
-        if (element.properties.question.value) {
-          quizContent.push(
-            <Typography variant="subtitle1" color="subtitle1" component="p">
-              {element.properties.answerlist.answers.map(
-                (answer: Array<[string, boolean]>, index: number) => {
-                  return (
-                    <div
-                      key={`answer${index}`}
-                      style={{
-                        backgroundColor: answer[1] === true ? '#f0fff0' : '#ff000047',
-                      }}
-                    >{`${answer[0]}`}</div>
-                  );
-                },
-              )}
-            </Typography>,
-          );
-        } else {
-          quizContent.push('Please state a question for the quiz!');
+        if (element.properties && element.properties.question) {
+          if (element.properties.question.value) {
+            quizContent.push(
+              <Typography variant="subtitle1" color="subtitle1" component="p">
+                {(element.properties.answerlist as StoryAnswerList).answers.map(
+                  (answer: [string, boolean], index: number) => {
+                    return (
+                      <div
+                        key={`answer${index}`}
+                        style={{
+                          backgroundColor: answer[1] === true ? '#f0fff0' : '#ff000047',
+                        }}
+                      >{`${answer[0]}`}</div>
+                    );
+                  },
+                )}
+              </Typography>,
+            );
+          } else {
+            quizContent.push('Please state a question for the quiz!');
+          }
         }
 
         return (
@@ -142,9 +130,9 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               }}
             >
               <CardContent className={styles['card-content']}>
-                {Boolean(element.properties.question.value) && (
+                {Boolean(element.properties!.question!.value) && (
                   <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties.question.value}
+                    {element.properties!.question!.value}
                   </Typography>
                 )}
                 {quizContent}
@@ -152,6 +140,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             </Card>
           </div>
         );
+      }
       case 'Image':
         return (
           <Card
@@ -175,16 +164,17 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 height="100%"
               />
             </div>
-            {(element.properties.title.value !== '' || element.properties.text.value !== '') && (
+            {(element.properties!.title!.value !== '' ||
+              element.properties!.text!.value !== '') && (
               <CardContent className={styles['card-content']}>
-                {element.properties.title.value !== '' && (
+                {element.properties!.title!.value !== '' && (
                   <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties.title.value}
+                    {element.properties!.title!.value}
                   </Typography>
                 )}
-                {element.properties.text.value !== '' && (
+                {element.properties!.text!.value !== '' && (
                   <Typography variant="subtitle1" color="textSecondary" component="p">
-                    {element.properties.text.value}
+                    {element.properties!.text!.value}
                   </Typography>
                 )}
               </CardContent>
@@ -235,7 +225,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
 
   return (
     <div
-      ref={targetRef}
+      ref={targetRef as RefObject<HTMLDivElement>}
       className={styles['slide-editor-wrapper']}
       style={{ backgroundColor: 'lightblue' }}
     >

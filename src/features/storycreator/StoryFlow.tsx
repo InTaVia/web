@@ -17,13 +17,9 @@ interface StoryFlowProps {
 }
 
 export function StoryFlow(props: StoryFlowProps) {
-  const { width: myWidth, height, targetRef, story } = props;
+  const { width: myWidth, targetRef, story } = props;
 
   const dispatch = useAppDispatch();
-
-  /* const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.i);
-  }); */
 
   const slides = Object.values(story.slides);
 

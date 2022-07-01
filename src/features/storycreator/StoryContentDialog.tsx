@@ -11,7 +11,6 @@ import {
   TextareaAutosize,
   TextField,
 } from '@mui/material';
-import type { FormEvent } from 'react';
 import { useState } from 'react';
 
 import type {
@@ -25,7 +24,6 @@ interface StoryContentDialogProps {
   open: boolean;
   element: SlideContent;
   onClose: () => void;
-  //onSave: (event: FormEvent<HTMLFormElement>, element: SlideContent) => void;
   onSave: (element: SlideContent) => void;
 }
 
@@ -36,17 +34,15 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
 
   const onChange = (event: any) => {
     const newVal = { ...tmpProperties[event.target.id], value: event.target.value };
-    console.log('change', event.target, tmpProperties, newVal);
     setTmpProperties({ ...tmpProperties, [event.target.id]: newVal });
   };
 
   const setAnswerListForQuiz = (answers: Array<[string, boolean]>) => {
     const newVal = { ...tmpProperties.answerlist, answers: answers } as StoryAnswerList;
-    console.log('change', tmpProperties, newVal);
     setTmpProperties({ ...tmpProperties, answerlist: newVal });
   };
 
-  const editableAttributes = Object.values(element.properties)
+  const editableAttributes = Object.values(element.properties as object)
     .filter((prop: StoryContentProperty) => {
       return prop.editable;
     })

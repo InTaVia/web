@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
 import Link from 'next/link';
-import { createRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
 import { MapLibre } from '@/features/geomap/MaplibreMap';
@@ -16,6 +16,7 @@ interface StoryMapProps {
   events: Array<StoryEvent>;
   width?: number;
   height?: number;
+  setMapBounds?: (bounds: Array<Array<number>>) => void;
 }
 
 interface StoryMapMarker {
@@ -41,10 +42,10 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
   return cornersLongLat;
 };
 
-export function StoryMap(props: StoryMapProps): JSX.Element {
-  const { events, width, height } = props;
+export function StoryMapComponent(props: StoryMapProps): JSX.Element {
+  const { events, setMapBounds } = props;
 
-  const mapRef = createRef<MapRef>();
+  const mapRef = useRef<MapRef>(null);
 
   const markers = events
     .map((event) => {
@@ -76,7 +77,13 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     if (mapRef.current) {
       mapRef.current.fitBounds(bounds, { padding: 50, duration: 100 });
     }
-  }, [bounds, mapRef]);
+  }, [events]);
+
+  const onMoveEnd = () => {
+    if (setMapBounds && mapRef.current) {
+      setMapBounds(mapRef!.current.getBounds().toArray());
+    }
+  };
 
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
@@ -88,14 +95,13 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
           <Link href="/search">
             <a>search</a>
           </Link>
-          !
         </Typography>
         ;
       </Box>
     );
   }
   return (
-    <MapLibre mapRef={mapRef} width={width} height={height}>
+    <MapLibre onMoveEnd={onMoveEnd} mapRef={mapRef}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin

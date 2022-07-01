@@ -4,7 +4,6 @@ import 'react-resizable/css/styles.css';
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 
 import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
 import { ButtonRow } from '@/features/storycreator/ButtonRow';

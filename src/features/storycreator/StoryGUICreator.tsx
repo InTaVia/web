@@ -13,7 +13,7 @@ import type { Place } from '@/features/common/entity.model';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
-import type { Story } from '@/features/storycreator/storycreator.slice';
+import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
   createSlidesInBulk,
@@ -26,6 +26,7 @@ import { StoryFlow } from '@/features/storycreator/StoryFlow';
 interface DropProps {
   name?: string | null;
   title?: string | null;
+  label?: string | null;
   type: string;
   place?: Place | null;
   date?: IsoDateString;
@@ -92,8 +93,8 @@ const createDrops = (props: DropProps) => {
       padding = 5;
       break;
     case 'Event':
-      if (props.name != null) {
-        text = props.name;
+      if (props.label != null) {
+        text = props.label;
       } else {
         text = type;
       }
@@ -159,14 +160,11 @@ const createDrops = (props: DropProps) => {
 };
 
 interface StoryGUICreatorProps {
-  targetRef: RefObject<HTMLElement> | undefined;
-  width: number | undefined;
-  height: number | undefined;
   story: Story;
 }
 
 export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
-  const { story, height, targetRef: parentRef } = props;
+  const { story } = props;
 
   const dispatch = useAppDispatch();
 
@@ -174,8 +172,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     return selectSlidesByStoryID(state, story.id);
   });
 
-  const filteredSlides = slides.filter((s) => {
-    return s.selected;
+  const filteredSlides = slides.filter((slide: Slide) => {
+    return slide.selected;
   });
   const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
 
@@ -238,25 +236,33 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     }
   }
 
-  const entitiesInSlide = selectedSlide?.events ? selectedSlide.events : [];
-
-  const gridHeight = Math.round(height / 5);
+  /* const gridHeight = height !== undefined ? Math.round(height / 5) : 15; */
 
   const switchLayout = (i_layout: string | null) => {
     dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
   };
 
-  /* const increaseNumberOfContentPanes = () => {
-    setLayout({ ...layout, numberOfContentPanes: 1 });
-  }; */
+  const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[
+    selectedSlide!.layout
+  ] as SlideLayout;
 
-  const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[selectedSlide.layout];
+  const increaseNumberOfContentPanes = () => {
+    if (numberOfContentPanes === 0) {
+      for (const key of Object.keys(SlideLayouts)) {
+        const layout = SlideLayouts[key];
+        if (
+          layout!.numberOfContentPanes === 1 &&
+          layout!.vertical === vertical &&
+          layout!.numberOfVis === numberOfVis
+        ) {
+          switchLayout(key);
+        }
+      }
+    }
+  };
 
   return (
-    <div
-      ref={parentRef as RefObject<HTMLDivElement>}
-      style={{ position: 'relative', height: `100%`, width: `100%` }}
-    >
+    <div style={{ position: 'relative', height: `100%`, width: `100%` }}>
       <div style={{ width: '100%', backgroundColor: 'honeydew' }}>
         <IconButton
           key={'singlevisLayoutButton'}
@@ -267,7 +273,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('singlevis');
           }}
         >
-          <img src="/assets/images/singlevis.png" height="30px" />
+          <img src="/assets/images/singlevis.png" alt="Single Visualization" height="30px" />
         </IconButton>
         <IconButton
           key={'twovisverticalLayoutButton'}
@@ -278,7 +284,11 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twovisvertical');
           }}
         >
-          <img src="/assets/images/twovisvertical.png" height="30px" />
+          <img
+            src="/assets/images/twovisvertical.png"
+            alt="Two Visualization Vertical"
+            height="30px"
+          />
         </IconButton>
         <IconButton
           key={'twovishorizontalLayoutButton'}
@@ -289,7 +299,11 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twovishorizontal');
           }}
         >
-          <img src="/assets/images/twovishorizontal.png" height="30px" />
+          <img
+            src="/assets/images/twovishorizontal.png"
+            alt="Two Visualization Horizontal"
+            height="30px"
+          />
         </IconButton>
         <IconButton
           key={'singleviscontentLayoutButton'}
@@ -300,7 +314,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('singleviscontent');
           }}
         >
-          <img src="/assets/images/singleviscontent.png" height="30px" />
+          <img src="/assets/images/singleviscontent.png" alt="Single Content" height="30px" />
         </IconButton>
         <IconButton
           key={'twoviscontenthorizontalLayoutButton'}
@@ -311,7 +325,11 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twoviscontenthorizontal');
           }}
         >
-          <img src="/assets/images/twoviscontenthorizontal.png" height="30px" />
+          <img
+            src="/assets/images/twoviscontenthorizontal.png"
+            alt="Two Visualization With Content"
+            height="30px"
+          />
         </IconButton>
         <IconButton
           key={'twoviscontentverticalLayoutButton'}
@@ -322,7 +340,11 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twoviscontentvertical');
           }}
         >
-          <img src="/assets/images/twoviscontentvertical.png" height="30px" />
+          <img
+            src="/assets/images/twoviscontentvertical.png"
+            alt="Two Visualization With Content Vertical"
+            height="30px"
+          />
         </IconButton>
         <IconButton
           key={'twocontentsLayoutButton'}
@@ -333,7 +355,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twocontents');
           }}
         >
-          <img src="/assets/images/twocontents.png" height="30px" />
+          <img src="/assets/images/twocontents.png" alt="Two Content Panes" height="30px" />
         </IconButton>
       </div>
       <Allotment vertical={true}>
@@ -366,14 +388,13 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
                       targetRef={targetRef as RefObject<HTMLDivElement>}
                       width={width}
                       height={height}
-                      slide={selectedSlide}
-                      imageRef={ref}
+                      slide={selectedSlide as Slide}
+                      /* imageRef={ref} */
                       takeScreenshot={takeScreenshot}
-                      events={entitiesInSlide}
                       numberOfVisPanes={numberOfVis}
                       numberOfContentPanes={numberOfContentPanes}
                       vertical={vertical}
-                      //increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                      increaseNumberOfContentPanes={increaseNumberOfContentPanes}
                     />
                   );
                 }}

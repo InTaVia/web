@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type { Slide, StoryEvent } from '@/features/storycreator/storycreator.slice';
+import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   addContentToContentPane,
   editSlideContent,
@@ -20,10 +20,9 @@ interface SlideEditorProps {
   width: number | undefined;
   height: number | undefined; // FIXME: unused
   targetRef: RefObject<HTMLDivElement>;
-  imageRef: RefObject<HTMLDivElement>;
+  /* imageRef: RefObject<HTMLDivElement>; */
   slide: Slide;
   takeScreenshot: () => void;
-  events: Array<StoryEvent>; //FIXME: use real types for storyevents and persons!
   numberOfVisPanes: number;
   numberOfContentPanes: number;
   vertical: boolean;
@@ -40,7 +39,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const {
     targetRef,
     slide,
-    imageRef,
+    /* imageRef, */
     numberOfContentPanes,
     numberOfVisPanes,
     vertical,
@@ -157,7 +156,7 @@ export function SlideEditor(props: SlideEditorProps) {
               <StoryContentPane
                 id={pane !== undefined ? pane.id : `contentPane${index}`}
                 contentPane={pane}
-                targetRef={targetRef}
+                targetRef={targetRef as RefObject<HTMLDivElement>}
                 width={width}
                 height={height}
                 setEditElement={setEditElement}
@@ -198,7 +197,8 @@ export function SlideEditor(props: SlideEditorProps) {
   };
 
   return (
-    <div innerref={imageRef} ref={targetRef} className={styles['slide-editor-wrapper']}>
+    /* innerref={imageRef} */
+    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
       {createSplitterLayout()}
       {editElement != null && (
         <StoryContentDialog

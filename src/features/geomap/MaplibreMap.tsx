@@ -1,18 +1,19 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import maplibregl from 'maplibre-gl';
-import type { ReactNode, RefObject } from 'react';
+import type { ReactNode, Ref } from 'react';
 import { useState } from 'react';
 import type { MapRef } from 'react-map-gl';
 import ReactMapGL, { NavigationControl, ScaleControl } from 'react-map-gl';
 
 interface MapProps {
   children: ReactNode;
-  mapRef?: RefObject<MapRef>;
+  mapRef?: Ref<MapRef>;
+  onMoveEnd?: () => void;
 }
 
 export function MapLibre(props: MapProps): JSX.Element {
-  const { children, mapRef } = props;
+  const { children, mapRef, onMoveEnd } = props;
 
   const [mapViewport, setMapViewport] = useState({
     longitude: 7.571606,
@@ -31,6 +32,11 @@ export function MapLibre(props: MapProps): JSX.Element {
       // mapStyle="https://demotiles.maplibre.org/style.json"
       onMove={(e) => {
         setMapViewport({ ...e.viewState });
+      }}
+      onMoveEnd={() => {
+        if (onMoveEnd) {
+          onMoveEnd();
+        }
       }}
     >
       <NavigationControl />

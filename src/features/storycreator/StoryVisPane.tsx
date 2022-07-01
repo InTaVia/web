@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
@@ -7,16 +8,18 @@ import type {
   Slide,
   SlideContent,
   StoryEvent,
+  StoryMap,
   VisualisationPane,
 } from '@/features/storycreator/storycreator.slice';
 import {
   addEventsToVisPane,
   addEventToVisPane,
   addVisualization,
+  editSlideContent,
   removeSlideContent,
   resizeMoveContent,
 } from '@/features/storycreator/storycreator.slice';
-import { StoryMap } from '@/features/storycreator/StoryMap';
+import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
@@ -69,6 +72,10 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   } else {
     events = [];
   }
+
+  useEffect(() => {
+    console.log('vis changed');
+  }, [visualization]);
 
   const removeWindowHandler = (element: SlideContent) => {
     //dispatch(removeContent({ id: id, story: slide.story, slide: slide.id }));
@@ -157,7 +164,18 @@ export function StoryVisPane(props: StoryVisPaneProps) {
         //return <TimelineExample data={[]} />;
         return [];
       case 'Map':
-        return <StoryMap events={events}></StoryMap>;
+        return (
+          <StoryMapComponent
+            setMapBounds={(bounds: Array<Array<number>>) => {
+              if ((element as StoryMap).bounds !== bounds) {
+                dispatch(
+                  editSlideContent({ slide: slide, content: { ...element, bounds: bounds } }),
+                );
+              }
+            }}
+            events={events}
+          ></StoryMapComponent>
+        );
       default:
         return [];
     }
