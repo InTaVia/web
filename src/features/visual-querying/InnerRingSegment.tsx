@@ -25,6 +25,8 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const outerRingWidth = 55;
+
   const constraints = useAppSelector(selectConstraints).filter((constraint) => {
     return constraint.type === type;
   });
@@ -60,7 +62,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
             startAngle: startAngle,
             endAngle: endAngle,
             innerRadius: dims.outerRadius,
-            outerRadius: dims.outerRadius + 55,
+            outerRadius: dims.outerRadius + outerRingWidth,
           }}
           origin={origin}
           constraint={constraint}
@@ -88,7 +90,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
         <path d={path.toString()} fill={fillColor} style={{ cursor: 'pointer' }} />
 
         <text pointerEvents="none" fill={textColor} fontSize="17px">
-          <textPath xlinkHref={`#textPath-${idx}`} textAnchor="middle" startOffset="53%">
+          <textPath xlinkHref={`#textPath-${idx}`} textAnchor="middle" startOffset="50%">
             {label}
           </textPath>
         </text>

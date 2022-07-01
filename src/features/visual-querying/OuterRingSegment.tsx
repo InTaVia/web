@@ -75,7 +75,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
           <textPath
             xlinkHref={`#centerTextPath-${constraint.id}`}
             textAnchor="middle"
-            startOffset="53%"
+            startOffset="50%"
           >
             {constraint.name}
           </textPath>
@@ -86,7 +86,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
             <textPath
               xlinkHref={`#topTextPath-${constraint.id}`}
               textAnchor="middle"
-              startOffset="53%"
+              startOffset="50%"
             >
               {constraint.name}
             </textPath>
@@ -96,7 +96,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
             <textPath
               xlinkHref={`#bottomTextPath-${constraint.id}`}
               textAnchor="middle"
-              startOffset="53%"
+              startOffset="50%"
             >
               {createValueDescription()}
             </textPath>

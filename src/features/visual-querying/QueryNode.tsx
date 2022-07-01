@@ -26,8 +26,8 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
   const constraints = useAppSelector(selectConstraints);
 
   const circleRadius = 100;
+  const innerRingWidth = 40;
   const iconSize = 2 * circleRadius * (2 / 3);
-  const innerRingRadius = 40;
 
   const [isConstListShown, setIsConstListShown] = useState(false);
 
@@ -71,7 +71,7 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
               startAngle: startAngle,
               endAngle: endAngle,
               innerRadius: circleRadius,
-              outerRadius: circleRadius + innerRingRadius,
+              outerRadius: circleRadius + innerRingWidth,
             }}
             type={constraintType}
             label={ConstraintType[constraintType]}
