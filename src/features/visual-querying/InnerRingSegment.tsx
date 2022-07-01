@@ -23,7 +23,7 @@ interface InnerRingSegmentProps {
 export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
   const { idx, dims, type, label, origin } = props;
 
-  const [showOuterRing, setShowOuterRing] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const constraints = useAppSelector(selectConstraints).filter((constraint) => {
     return constraint.type === type;
@@ -45,10 +45,10 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
 
   function drawOuterRing() {
     let visibleOuterRingDims = outerRingDims;
-    if (!showOuterRing) {
+    if (!isHovered) {
       // Only draw rings that have a value
       visibleOuterRingDims = visibleOuterRingDims.filter(({ constraint }) => {
-        return constraint.value !== null && constraint.value !== '';
+        return (constraint.value !== null && constraint.value !== '') || constraint.opened;
       });
     }
 
@@ -73,14 +73,10 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
     <g
       id={`ring-constraint-${idx}`}
       onMouseEnter={() => {
-        return setShowOuterRing(true);
+        return setIsHovered(true);
       }}
       onMouseLeave={() => {
-        const openWidgets = constraints.filter((constraint) => {
-          return constraint.opened;
-        });
-
-        return openWidgets.length > 0 ? null : setShowOuterRing(false);
+        return setIsHovered(false);
       }}
     >
       {/* Inner Ring */}
