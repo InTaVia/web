@@ -25,10 +25,12 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
 
     switch (event.target.type) {
       case 'checkbox':
-        newAnswers[index][1] = event.target.checked;
+        if (newAnswers[index]) {
+          newAnswers[index]!.correct = event.target.checked;
+        }
         break;
       case 'text':
-        newAnswers[index][0] = event.target.value;
+        newAnswers[index]!.text = event.target.value;
         break;
       default:
         break;
@@ -41,7 +43,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
   const addAnswer = () => {
     // eslint-disable-next-line prefer-const
     let newAnswers = [...answers];
-    newAnswers.push(['...', false]);
+    newAnswers.push({ text: '...', correct: false });
     setAnswers(newAnswers);
     setAnswerListForQuiz(newAnswers);
   };
@@ -63,7 +65,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
               key={`answer${index + 1}Checkbox`}
               id={`answer${index + 1}Checkbox`}
               name={`${index}`}
-              checked={answer[1]}
+              checked={answer.correct}
               onChange={onChange}
             />
             <IconButton
@@ -82,7 +84,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
               name={`${index}`}
               fullWidth
               variant="standard"
-              defaultValue={answer[0]}
+              defaultValue={answer.text}
               sx={{ width: '400px' }}
               onChange={onChange}
             />

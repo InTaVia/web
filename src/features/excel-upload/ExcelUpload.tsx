@@ -88,7 +88,7 @@ export function ExcelUpload(): JSX.Element {
         label: String(raw['Event ID']).includes(':')
           ? raw['Event ID'].split(':')[1]
           : raw['Event ID'],
-        type: 'placeholder',
+        type: 'was related to',
       };
 
       events.push(newEvent);

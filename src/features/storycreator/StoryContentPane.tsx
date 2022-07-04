@@ -11,6 +11,7 @@ import type {
   SlideContent,
   StoryAnswerList,
   StoryImage,
+  StoryQuizAnswer,
 } from '@/features/storycreator/storycreator.slice';
 import { removeSlideContent, resizeMoveContent } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
@@ -100,14 +101,14 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             quizContent.push(
               <Typography variant="subtitle1" color="subtitle1" component="p">
                 {(element.properties.answerlist as StoryAnswerList).answers.map(
-                  (answer: [string, boolean], index: number) => {
+                  (answer: StoryQuizAnswer, index: number) => {
                     return (
                       <div
                         key={`answer${index}`}
                         style={{
-                          backgroundColor: answer[1] === true ? '#f0fff0' : '#ff000047',
+                          backgroundColor: answer.correct === true ? '#f0fff0' : '#ff000047',
                         }}
-                      >{`${answer[0]}`}</div>
+                      >{`${answer.text}`}</div>
                     );
                   },
                 )}

@@ -62,9 +62,14 @@ export interface StoryContentProperty {
   sort: number | 0;
 }
 
+export interface StoryQuizAnswer {
+  text: string;
+  correct: boolean;
+}
+
 export interface StoryAnswerList extends StoryContentProperty {
   type: 'answerlist';
-  answers: Array<[string, boolean]>;
+  answers: Array<StoryQuizAnswer>;
 }
 
 export interface StoryMap extends SlideContent {
@@ -126,7 +131,7 @@ export class StoryQuizObject implements StoryQuiz {
         label: 'Answers',
         value: '',
         sort: 1,
-        answers: [['Answer 1', false]],
+        answers: [{ text: 'Answer 1', correct: false }],
       } as StoryAnswerList,
     };
   }

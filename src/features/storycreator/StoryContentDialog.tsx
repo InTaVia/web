@@ -17,6 +17,7 @@ import type {
   SlideContent,
   StoryAnswerList,
   StoryContentProperty,
+  StoryQuizAnswer,
 } from '@/features/storycreator/storycreator.slice';
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 
@@ -37,7 +38,7 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
     setTmpProperties({ ...tmpProperties, [event.target.id]: newVal });
   };
 
-  const setAnswerListForQuiz = (answers: Array<[string, boolean]>) => {
+  const setAnswerListForQuiz = (answers: Array<StoryQuizAnswer>) => {
     const newVal = { ...tmpProperties.answerlist, answers: answers } as StoryAnswerList;
     setTmpProperties({ ...tmpProperties, answerlist: newVal });
   };
