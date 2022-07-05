@@ -1,3 +1,4 @@
+import 'tailwindcss/tailwind.css';
 import '@/styles/index.css';
 
 import type { EmotionCache } from '@emotion/cache';
