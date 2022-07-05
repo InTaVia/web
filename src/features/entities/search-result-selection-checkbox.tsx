@@ -1,8 +1,12 @@
 import Checkbox from '@mui/material/Checkbox';
 import type { ChangeEvent } from 'react';
 
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Entity } from '@/features/common/entity.model';
-import { useSearchResultsSelection } from '@/features/entities/search-results-selection.context';
+import {
+  selectEntity,
+  selectSearchResultsSelection,
+} from '@/features/entities/search-results-selection.slice';
 
 interface SearchResultSelectionCheckBoxProps {
   id: Entity['id'];
@@ -13,15 +17,16 @@ export function SearchResultSelectionCheckBox(
 ): JSX.Element {
   const { id } = props;
 
-  const { onSelectEntity, selectedEntities } = useSearchResultsSelection();
+  const dispatch = useAppDispatch();
+  const selectedEntities = useAppSelector(selectSearchResultsSelection);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    onSelectEntity(id, event.target.checked);
+    dispatch(selectEntity({ id, isSelected: event.target.checked }));
   }
 
   return (
     <Checkbox
-      checked={selectedEntities.has(id)}
+      checked={selectedEntities.includes(id)}
       name="selected"
       onChange={onChange}
       size="small"
