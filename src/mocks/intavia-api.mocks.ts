@@ -74,6 +74,7 @@ export const handlers = [
 
         return response(context.status(200), context.delay(), context.json(data));
       }
+      return response(context.status(404), context.delay());
     },
   ),
   rest.get<never, { id: Person['id'] }, Person>(
