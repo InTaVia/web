@@ -1,5 +1,6 @@
 import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
@@ -8,6 +9,9 @@ function classNames(...classes: Array<string>) {
 }
 
 export function AppBar(): JSX.Element {
+  const router = useRouter();
+  const currentPath = router.pathname;
+
   const linksLeft = [
     {
       id: 'data-curation-lab',
@@ -43,8 +47,8 @@ export function AppBar(): JSX.Element {
                   key={item.id}
                   href={item.href.pathname}
                   className={classNames(
-                    item.current ? 'text-intavia-green' : 'text-black',
-                    'hover:text-intavia-green px-3 align-middle text-base',
+                    currentPath === item.href.pathname ? 'text-intavia-green' : 'text-black',
+                    'hover:text-intavia-green px-3',
                   )}
                 >
                   {item.label}
@@ -61,26 +65,14 @@ export function AppBar(): JSX.Element {
           <a href="/info">
             <InformationCircleIcon
               strokeWidth="1.25"
-              className="h-8 w-8 hover:text-intavia-green"
+              className={classNames(
+                currentPath === '/info' ? 'text-intavia-green' : 'text-black',
+                'hover:text-intavia-green h-8 w-8 hover:text-intavia-green',
+              )}
             />
           </a>
         </div>
       </div>
     </div>
   );
-}
-
-// <Image src={IntaviaLogo} layout="fill" />
-
-{
-  /* <div
-key={item.id}
-//href={item.href.pathname}
-className={classNames(
-  item.current ? 'text-intavia-green' : 'text-black',
-  'hover:bg-intavia-green hover:text-white px-3  h-full flex flex-row justify-center',
-)}
->
-<a className="m-auto">{item.label}</a>
-</div> */
 }
