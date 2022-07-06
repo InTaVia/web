@@ -1,7 +1,8 @@
 import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
+import { clsx } from 'clsx';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
+import { usePathname } from '@/app/route/use-pathname';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
@@ -11,13 +12,8 @@ interface Link {
   current: boolean;
 }
 
-function classNames(...classes: Array<string>) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export function AppBar(): JSX.Element {
-  const router = useRouter();
-  const currentPath = router.pathname;
+  const currentPath = usePathname();
 
   const linksLeft: Array<Link> = [
     {
@@ -49,16 +45,9 @@ export function AppBar(): JSX.Element {
     },
   ];
 
-  let currentLink = linksLeft.find((link) => {
+  const currentLink = linksLeft.concat(linksRight).find((link) => {
     return link.href.pathname === currentPath;
   });
-
-  if (!currentLink) {
-    currentLink = linksRight.find((link) => {
-      return link.href.pathname === currentPath;
-    });
-  }
-
   if (currentLink) {
     currentLink.current = true;
   }
@@ -78,10 +67,11 @@ export function AppBar(): JSX.Element {
                 <a
                   key={item.id}
                   href={item.href.pathname}
-                  className={classNames(
-                    item.current ? 'text-intavia-green' : 'text-black',
-                    'hover:text-intavia-green px-3 text-base',
+                  className={clsx(
+                    item.current ? 'text-intavia-brand' : 'text-black',
+                    'hover:text-intavia-brand px-3 text-base',
                   )}
+                  aria-current={item.current ? 'page' : false}
                 >
                   {item.label}
                 </a>
@@ -90,7 +80,7 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex flex-row h-16 gap-6 items-center pr-6">
-          <button className="bg-intavia-green px-4 py-1 text-white rounded-lg flex items-center gap-2 text-base hover:text-intavia-green hover:bg-white hover:border hover:border-intavia-green">
+          <button className="bg-intavia-brand px-4 py-1 text-white rounded-lg flex items-center gap-2 text-base hover:text-intavia-brand hover:bg-white hover:border hover:border-intavia-brand">
             <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
             Data Import
           </button>
@@ -100,10 +90,11 @@ export function AppBar(): JSX.Element {
               <a
                 key={item.id}
                 href={item.href.pathname}
-                className={classNames(
-                  item.current ? 'text-intavia-green' : 'text-black',
-                  'hover:text-intavia-green',
+                className={clsx(
+                  item.current ? 'text-intavia-brand' : 'text-black',
+                  'hover:text-intavia-brand',
                 )}
+                aria-current={item.current ? 'page' : false}
               >
                 {item.label}
               </a>

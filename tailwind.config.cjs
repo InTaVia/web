@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'intavia-green': '#00B050',
+        'intavia-brand': '#00B050',
       },
     },
   },
