@@ -8,7 +8,7 @@ import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 export const getStaticProps = withDictionaries(['common']);
 
 export default function InfoPage(): JSX.Element {
-  const { t } = useI18n<'common'>();
+  // const { t } = useI18n<'common'>();
   const titleTemplate = usePageTitleTemplate();
 
   // t(['common', 'info', 'metadata', 'title'])

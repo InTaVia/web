@@ -8,7 +8,7 @@ import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 export const getStaticProps = withDictionaries(['common']);
 
 export default function VisualAnalyticsStudioPage(): JSX.Element {
-  const { t } = useI18n<'common'>();
+  // const { t } = useI18n<'common'>();
   const titleTemplate = usePageTitleTemplate();
 
   // t(['common', 'visual-analytics-studio', 'metadata', 'title'])
