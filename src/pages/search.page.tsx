@@ -27,7 +27,7 @@ export default function SearchPage(): JSX.Element {
         <Allotment.Pane minSize={600} snap>
           <SearchResultsPanel />
         </Allotment.Pane>
-        <Allotment.Pane minSize={250} maxSize={600} snap>
+        <Allotment.Pane minSize={250} maxSize={600} snap className="grid">
           <CollectionPanel />
         </Allotment.Pane>
       </Allotment>
