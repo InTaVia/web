@@ -71,7 +71,7 @@ export function AppBar(): JSX.Element {
                     item.current ? 'text-intavia-brand' : 'text-black',
                     'hover:text-intavia-brand px-3 text-base',
                   )}
-                  aria-current={item.current ? 'page' : false}
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   {item.label}
                 </a>
@@ -94,7 +94,7 @@ export function AppBar(): JSX.Element {
                   item.current ? 'text-intavia-brand' : 'text-black',
                   'hover:text-intavia-brand',
                 )}
-                aria-current={item.current ? 'page' : false}
+                aria-current={item.current ? 'page' : undefined}
               >
                 {item.label}
               </a>
