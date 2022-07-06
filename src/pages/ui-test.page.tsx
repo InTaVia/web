@@ -55,7 +55,7 @@ export default function UiTestPage(): JSX.Element {
           {buttonData.map(([key, d]) => {
             return (
               <Button key={key} {...d}>
-                Foo bar
+                Button
               </Button>
             );
           })}
