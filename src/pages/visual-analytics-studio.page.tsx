@@ -75,7 +75,7 @@ export default function AnalysePage(): JSX.Element {
             <div disclosureTitle="Placeholder">Placeholder</div>
           </SidePane> */}
           <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
+            {({ width }) => {
               if (width > 200) {
                 return (
                   <SidePane orientation="right" setVisible={setVisibleRightPane}>

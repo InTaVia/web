@@ -1,7 +1,3 @@
-import { Popover, Transition } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/solid';
-import { Fragment, useRef } from 'react';
-
 import type { LayoutButtonProps } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import LayoutPopover from '@/features/ui/analyse-page-toolbar/layout-popover';
 
