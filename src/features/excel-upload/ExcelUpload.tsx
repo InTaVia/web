@@ -7,14 +7,20 @@ import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
 import { addLocalEntity } from '@/features/common/entities.slice';
-import type { Person, Place } from '@/features/common/entity.model';
+import type { Person, Place, StoryEvent } from '@/features/common/entity.model';
 import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 
-import type { StoryEvent } from '../storycreator/storycreator.slice';
+import type { Slide, SlideContent, VisualisationPane } from '../storycreator/storycreator.slice';
+import { setSlidesForStory } from '../storycreator/storycreator.slice';
 
-export function ExcelUpload(): JSX.Element {
+interface ExcelUpload {
+  story: string;
+}
+
+export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const storyID = props.story;
 
   function processData(data: string): void {
     const [firstLine, ...lines] = data.split(/\r\n|\n/);
@@ -62,6 +68,7 @@ export function ExcelUpload(): JSX.Element {
     // });
 
     convertData(list);
+    /* convertDataHofburg(list); */
   }
 
   function convertData(data: Array<any>) {
@@ -106,6 +113,218 @@ export function ExcelUpload(): JSX.Element {
     } as Person;
 
     dispatch(addLocalEntity(person));
+  }
+
+  function convertDataHofburg(data: Array<any>) {
+    const eventsInSlides: Record<string, Array<StoryEvent>> = {};
+    const mediaInSlides: Record<string, Array<string>> = {};
+    const textInSlides: Record<string, string> = {};
+
+    for (const raw of data) {
+      let newPlace = undefined;
+      if (!Number.isNaN(parseFloat(raw['Lat'])) && !Number.isNaN(parseFloat(raw['Lon']))) {
+        // FIXME: Missing id and description for Place
+        newPlace = {
+          id: 'placeholderID',
+          name: raw['Place Name'],
+          lat: parseFloat(raw['Lat']),
+          lng: parseFloat(raw['Lon']),
+          kind: 'place',
+          description: 'Why does a place need a description?',
+        } as Place;
+      }
+
+      const newEvent: StoryEvent = {
+        place: newPlace,
+        date: raw['Event Start'],
+        description: raw['Event Description'],
+        label: String(raw['Event ID']).includes(':')
+          ? raw['Event ID'].split(':')[1]
+          : raw['Event ID'],
+        type: 'was related to',
+      };
+
+      const slideNumber = raw['Slide'];
+
+      if (String(raw['Event ID']).includes(':')) {
+        textInSlides[slideNumber] = raw['Event ID'].split(':')[1];
+      }
+
+      if (eventsInSlides[slideNumber] !== undefined) {
+        eventsInSlides[slideNumber]!.push(newEvent);
+      } else {
+        eventsInSlides[slideNumber] = [newEvent];
+      }
+
+      const media = raw['Media Link'];
+      if (media.trim() !== '') {
+        if (mediaInSlides[slideNumber] !== undefined) {
+          mediaInSlides[slideNumber]!.push(media);
+        } else {
+          mediaInSlides[slideNumber] = [media];
+        }
+      }
+
+      const mediaObject = raw['Media Link Object'];
+      if (mediaObject.trim() !== '') {
+        if (mediaInSlides[slideNumber] !== undefined) {
+          mediaInSlides[slideNumber]!.push(mediaObject);
+        } else {
+          mediaInSlides[slideNumber] = [mediaObject];
+        }
+      }
+
+      const mediaDetail = raw['Media Link Detail'];
+      if (mediaDetail.trim() !== '') {
+        if (mediaInSlides[slideNumber] !== undefined) {
+          mediaInSlides[slideNumber]!.push(mediaDetail);
+        } else {
+          mediaInSlides[slideNumber] = [mediaDetail];
+        }
+      }
+
+      /* const person = {
+      name: 'Pier Paolo Vergerio',
+      kind: 'person',
+      gender: 'Male',
+      history: events,
+      id: 'c1865151-d2c3-49c5-8eb5-d2ce16d86c4f',
+      occupation: [],
+      categories: [],
+      description: '',
+    } as Person; */
+
+      //dispatch(addLocalEntity(newEvent));
+    }
+
+    const slides: Record<Slide['id'], Slide> = {};
+    for (const slideNumber of Object.keys(eventsInSlides)) {
+      const mediaInSlide: Record<SlideContent['id'], SlideContent> = {};
+      for (let i = 0; i < mediaInSlides[slideNumber]?.length; i++) {
+        mediaInSlide[`image${i}`] = {
+          type: 'Image',
+          id: `Image ${i}`,
+          parentPane: 'contentPane0',
+          layout: {
+            x: 0,
+            y: 4,
+            w: 1,
+            h: 8,
+          },
+          properties: {
+            title: {
+              type: 'text',
+              id: 'title',
+              editable: true,
+              label: 'Title',
+              value: '',
+              sort: 1,
+            },
+            text: {
+              type: 'text',
+              id: 'text',
+              editable: true,
+              label: 'Text',
+              value: '',
+              sort: 2,
+            },
+            link: {
+              type: 'text',
+              id: 'link',
+              editable: true,
+              label: 'Link',
+              value: '/hofburg/' + mediaInSlides[slideNumber][i],
+              sort: 0,
+            },
+          },
+        };
+      }
+
+      const textInSlide: Record<SlideContent['id'], SlideContent> = {
+        text0: {
+          type: 'Text',
+          id: 'Text 0',
+          layout: {
+            x: 0,
+            y: 4,
+            w: 1,
+            h: 4,
+          },
+          parentPane: 'contentPane0',
+          properties: {
+            title: {
+              type: 'text',
+              id: 'title',
+              editable: true,
+              label: 'Title',
+              value: textInSlides[slideNumber],
+              sort: 0,
+            },
+            text: {
+              type: 'textarea',
+              id: 'text',
+              editable: true,
+              label: 'Text',
+              value: '',
+              sort: 1,
+            },
+          },
+        },
+      };
+
+      const slide: Slide = {
+        id: `slide${slideNumber}`,
+        sort: parseInt(slideNumber),
+        story: storyID,
+        visualizationPanes: {
+          vis0: {
+            id: 'vis0',
+            type: 'Map',
+            events: eventsInSlides[slideNumber],
+            contents: {
+              content1: {
+                slide: slideNumber,
+                parentPane: 'vis0',
+                layout: {
+                  x: 0,
+                  y: 0,
+                  w: 48,
+                  h: 18,
+                },
+                type: 'Map',
+                key: 'Map',
+                id: 'content1',
+                bounds: [
+                  [-2.55778853125031, 42.43247642956132],
+                  [17.70100053124949, 56.9276657842382],
+                ],
+              } as SlideContent,
+            },
+          } as VisualisationPane,
+          vis1: {
+            id: 'vis1',
+            events: [],
+            contents: {},
+          },
+        },
+        contentPanes: {
+          contentPane0: {
+            id: 'contentPane0',
+            contents: { ...textInSlide, ...mediaInSlide },
+          },
+          contentPane1: {
+            id: 'contentPane1',
+            contents: {},
+          },
+        },
+        layout: 'singleviscontent',
+      };
+
+      slides[`slide${slideNumber}`] = slide;
+    }
+
+    dispatch(setSlidesForStory({ story: storyID, slides: slides }));
+    /* events.push(newEvent); */
   }
 
   function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {

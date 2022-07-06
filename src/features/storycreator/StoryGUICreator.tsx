@@ -13,6 +13,7 @@ import type { Place } from '@/features/common/entity.model';
 import { useAppDispatch, useAppSelector } from '@/features/common/store';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
+import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
   createSlide,
@@ -362,7 +363,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
         <Allotment.Pane preferredSize="70%">
           <Allotment>
             <Allotment.Pane preferredSize="20%">
-              <div style={{ height: '100%', overflow: 'hidden', overflowY: 'scroll' }}>
+              <div className={styles['story-editor-pane']}>
                 {persons.length > 1
                   ? persons.map((person: any) => {
                       return createDrops({ ...person, type: 'Person' });
@@ -401,12 +402,14 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
               </ReactResizeDetector>
             </Allotment.Pane>
             <Allotment.Pane preferredSize="20%">
-              {[
-                createDrops({ type: 'Map' }),
-                createDrops({ type: 'Text' }),
-                createDrops({ type: 'Image' }),
-                createDrops({ type: 'Quiz' }),
-              ]}
+              <div className={styles['story-editor-pane']}>
+                {[
+                  createDrops({ type: 'Map' }),
+                  createDrops({ type: 'Text' }),
+                  createDrops({ type: 'Image' }),
+                  createDrops({ type: 'Quiz' }),
+                ]}
+              </div>
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>

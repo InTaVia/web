@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import type { EntityEvent } from '@/features/common/entity.model';
+import type { StoryEvent } from '@/features/common/entity.model';
 import type { RootState } from '@/features/common/store';
 
 type DataUrlString = string;
@@ -40,7 +40,7 @@ export interface Slide {
   id: string;
   sort: number;
   selected?: boolean;
-  image: DataUrlString | null;
+  image?: DataUrlString | null;
   contentPanes: Record<ContentPane['id'], ContentPane>;
   visualizationPanes: Record<VisualisationPane['id'], VisualisationPane>;
   story: Story['id'];
@@ -95,11 +95,6 @@ export interface StoryQuiz extends SlideContent {
 
 export interface StoryCreatorState {
   stories: Record<Story['id'], Story>;
-}
-
-export interface StoryEvent extends EntityEvent {
-  description?: string;
-  label?: string;
 }
 
 export class StoryQuizObject implements StoryQuiz {
@@ -443,6 +438,12 @@ export const storyCreatorSlice = createSlice({
           ]!.contents[content.id];
       }
     },
+    setSlidesForStory: (state, action) => {
+      const story = action.payload.story;
+      const slides = action.payload.slides;
+
+      state.stories[story]!.slides = slides;
+    },
     addVisualization: (state, action) => {
       const content = action.payload;
 
@@ -610,6 +611,7 @@ export const {
   addEventsToVisPane,
   addEventToVisPane,
   setLayoutForSlide,
+  setSlidesForStory,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

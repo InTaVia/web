@@ -15,6 +15,14 @@ export interface EntityEvent {
   place?: Place;
 }
 
+export interface StoryEvent {
+  type: string;
+  date?: IsoDateString;
+  place?: Place;
+  label?: string;
+  description?: string;
+}
+
 // FIXME: remove
 export type Relation = Omit<EntityEvent, 'type'> & { type: string };
 

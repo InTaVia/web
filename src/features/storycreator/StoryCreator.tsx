@@ -30,7 +30,7 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-          <ExcelUpload />
+          <ExcelUpload story={story.id} />
           <div className={styles['button-row-button']}>
             <IconButton color="primary" onClick={toggleTextMode} component="span">
               <IntegrationInstructionsOutlinedIcon />

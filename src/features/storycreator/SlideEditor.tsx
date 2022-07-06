@@ -121,6 +121,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
     const contentPanesInSlide = Object.values(slide.contentPanes);
     const contents = [];
+
     for (let i = 0; i < numberOfContentPanes; i++) {
       contents.push(contentPanesInSlide[i]);
     }
