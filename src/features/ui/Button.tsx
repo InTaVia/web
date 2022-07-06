@@ -1,3 +1,6 @@
+import type React from 'react';
+import type { DOMAttributes } from 'react';
+
 const buttonSizes = {
   'extra-small': 'text-xs px-2 py-1 font-extralight',
   small: 'text-sm px-3 py-1.5 font-light',
@@ -38,7 +41,7 @@ const buttonRoundness = {
 
 export interface FullButtonProperties {
   // component properties
-  children: Array<JSX.Element> | JSX.Element | string;
+  children: React.ReactNode;
   className: string;
 
   // own properties
@@ -48,7 +51,8 @@ export interface FullButtonProperties {
   disabled: boolean;
 }
 
-export type ButtonProperties = Partial<FullButtonProperties> &
+export type ButtonProperties = Partial<DOMAttributes<HTMLButtonElement>> &
+  Partial<FullButtonProperties> &
   Pick<FullButtonProperties, 'children'>;
 
 const defaultButtonProperties: Omit<FullButtonProperties, 'children'> = {
@@ -61,24 +65,21 @@ const defaultButtonProperties: Omit<FullButtonProperties, 'children'> = {
 
 const extraButtonClasses = 'disabled:cursor-not-allowed';
 
-export default function Button(extraProps: ButtonProperties): JSX.Element {
-  const props = { ...defaultButtonProperties, ...extraProps };
+export default function Button(passedProps: ButtonProperties): JSX.Element {
+  const allProps = { ...defaultButtonProperties, ...passedProps };
+  const { children, size, disabled, color, className, round, ...extraProps } = allProps;
 
-  const sizeClasses = buttonSizes[props.size];
-  const colorClasses = buttonColors[props.color];
-  const roundClasses = buttonRoundness[props.round];
+  const sizeClasses = buttonSizes[size];
+  const colorClasses = buttonColors[color];
+  const roundClasses = buttonRoundness[round];
 
-  const className = [
-    sizeClasses,
-    colorClasses,
-    roundClasses,
-    extraButtonClasses,
-    props.className,
-  ].join(' ');
+  const classNames = [sizeClasses, colorClasses, roundClasses, extraButtonClasses, className].join(
+    ' ',
+  );
 
   return (
-    <button className={className} disabled={props.disabled}>
-      foo
+    <button className={classNames} disabled={disabled} {...extraProps}>
+      {children}
     </button>
   );
 }
