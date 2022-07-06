@@ -9,16 +9,21 @@ function classNames(...classes: Array<string>) {
 
 export function AppBar(): JSX.Element {
   const linksLeft = [
-    { id: 'home', href: { pathname: '/' }, label: 'Data Curation Lab', current: true },
     {
-      id: 'search',
+      id: 'data-curation-lab',
       href: { pathname: '/search' },
+      label: 'Data Curation Lab',
+      current: true,
+    },
+    {
+      id: 'visual-analytics-studio',
+      href: { pathname: '/visual-analytics-studio' },
       label: 'Visual Analytics Studio',
       current: false,
     },
     {
-      id: 'visual-query',
-      href: { pathname: '/visual-querying' },
+      id: 'storytelling-creator',
+      href: { pathname: '/storycreator' },
       label: 'Storytelling Creator',
       current: false,
     },
@@ -53,7 +58,7 @@ export function AppBar(): JSX.Element {
             <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
             Data Import
           </button>
-          <a href="/">
+          <a href="/info">
             <InformationCircleIcon
               strokeWidth="1.25"
               className="h-8 w-8 hover:text-intavia-green"
