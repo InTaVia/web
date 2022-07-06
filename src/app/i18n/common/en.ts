@@ -45,6 +45,9 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Search',
     },
+    search: 'Search',
+    'search-history': 'Search history',
+    'search-term': 'Search term',
   },
   stories: {
     metadata: {

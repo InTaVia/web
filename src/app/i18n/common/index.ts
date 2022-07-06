@@ -45,6 +45,9 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    search: string;
+    'search-term': string;
+    'search-history': string;
   };
   stories: {
     metadata: {
