@@ -11,7 +11,8 @@ export default function VisualAnalyticsStudioPage(): JSX.Element {
   const { t } = useI18n<'common'>();
   const titleTemplate = usePageTitleTemplate();
 
-  const metadata = { title: t(['common', 'visual-analytics-studio', 'metadata', 'title']) };
+  // t(['common', 'visual-analytics-studio', 'metadata', 'title'])
+  const metadata = { title: 'visual-analytics-studio' };
 
   return (
     <Fragment>

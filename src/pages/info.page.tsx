@@ -11,7 +11,8 @@ export default function InfoPage(): JSX.Element {
   const { t } = useI18n<'common'>();
   const titleTemplate = usePageTitleTemplate();
 
-  const metadata = { title: t(['common', 'info', 'metadata', 'title']) };
+  // t(['common', 'info', 'metadata', 'title'])
+  const metadata = { title: 'info' };
 
   return (
     <Fragment>
