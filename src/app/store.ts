@@ -20,6 +20,7 @@ import errorMiddleware from '@/app/error.middleware';
 import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import entitiesReducer from '@/features/common/entities.slice';
 import intaviaApiService from '@/features/common/intavia-api.service';
+import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
@@ -44,6 +45,7 @@ export function configureAppStore() {
       entities: persistedEntitiesReducer,
       [intaviaApiService.reducerPath]: intaviaApiService.reducer,
       notifications: notificationsReducer,
+      searchResultsSelection: searchResultsSelectionReducer,
       storycreator: storycreatorReducer,
       timeline: timelineReducer,
       ui: uiReducer,
