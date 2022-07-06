@@ -43,7 +43,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                   </span>
                 </div>
 
-                <div className={`${open ? '' : `contrast-[.2] line-clamp-3`} text-justify`}>
+                <div className={`${open ? '' : `contrast-[.2] line-clamp-2`} text-justify`}>
                   <p>{props.entity.description}</p>
                 </div>
               </Disclosure.Button>
