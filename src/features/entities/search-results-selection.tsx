@@ -16,12 +16,14 @@ import { addNotification } from '@/app/notifications/notifications.slice';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { addCollection } from '@/features/common/entities.slice';
 import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
+import { useClearSearchResultsSelection } from '@/features/entities/use-clear-search-results-selection';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 
 export function SearchResultsSelection(): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedEntities = useAppSelector(selectSearchResultsSelection);
   const dialog = useDialogState();
+  useClearSearchResultsSelection();
 
   function onSave(name: string) {
     const collection = {
