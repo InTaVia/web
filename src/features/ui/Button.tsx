@@ -37,6 +37,15 @@ const buttonRoundness = {
   none: '',
   round: 'rounded-md',
   pill: 'rounded-full',
+  circle: 'rounded-full aspect-1',
+};
+
+const shadows = {
+  none: '',
+  small:
+    'drop-shadow-md disabled:drop-shadow-sm disabled:translate-y-0 transition-transform hover:drop-shadow-sm hover:translate-y-0 -translate-y-1 isolate',
+  large:
+    'drop-shadow-lg disabled:drop-shadow-sm disabled:translate-y-0 transition-transform hover:drop-shadow-lg hover:translate-y-0 -translate-y-2 isolate',
 };
 
 export interface FullButtonProperties {
@@ -49,6 +58,8 @@ export interface FullButtonProperties {
   color: keyof typeof buttonColors;
   round: keyof typeof buttonRoundness;
   disabled: boolean;
+  border: boolean;
+  shadow: keyof typeof shadows;
 }
 
 export type ButtonProperties = Partial<DOMAttributes<HTMLButtonElement>> &
@@ -61,21 +72,37 @@ const defaultButtonProperties: Omit<FullButtonProperties, 'children'> = {
   color: 'primary',
   className: '',
   round: 'none',
+  border: false,
+  shadow: 'none',
 };
 
-const extraButtonClasses = 'disabled:cursor-not-allowed';
+const extraButtonClasses = 'disabled:cursor-not-allowed box-border';
 
 export default function Button(passedProps: ButtonProperties): JSX.Element {
   const allProps = { ...defaultButtonProperties, ...passedProps };
-  const { children, size, disabled, color, className, round, ...extraProps } = allProps;
+  const { children, size, disabled, color, className, round, border, shadow, ...extraProps } =
+    allProps;
 
   const sizeClasses = buttonSizes[size];
   const colorClasses = buttonColors[color];
   const roundClasses = buttonRoundness[round];
+  const borderClasses = border ? 'border-2 border-solid border-current' : 'border-none';
+  const shadowClasses = shadows[shadow];
 
-  const classNames = [sizeClasses, colorClasses, roundClasses, extraButtonClasses, className].join(
-    ' ',
-  );
+  let classNames = [
+    sizeClasses,
+    colorClasses,
+    roundClasses,
+    borderClasses,
+    shadowClasses,
+    extraButtonClasses,
+    className,
+  ].join(' ');
+
+  if (round === 'circle') {
+    // equalize block and inline padding for circle buttons
+    classNames = classNames.replaceAll(/\bpx-[0-9.]+\b/g, '').replaceAll(/\bpy-/g, 'p-');
+  }
 
   return (
     <button className={classNames} disabled={disabled} {...extraProps}>
