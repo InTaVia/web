@@ -60,6 +60,7 @@
     "@stefanprobst/next-i18n": "1.2.0-legacy",
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
     "@stefanprobst/request": "^0.1.10",
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@turf/turf": "^6.5.0",
     "allotment": "^1.14.2",
     "clsx": "^1.2.0",
