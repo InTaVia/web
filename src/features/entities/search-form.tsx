@@ -30,7 +30,7 @@ export function SearchForm(): JSX.Element {
     >
       <input
         aria-label={t(['common', 'search', 'search'])}
-        className="rounded px-2 py-1"
+        className="rounded bg-white px-2 py-1"
         defaultValue={searchFilters.q}
         key={searchFilters.q}
         name="q"

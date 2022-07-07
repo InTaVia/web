@@ -46,8 +46,10 @@ export const dictionary: Dictionary = {
       title: 'Search',
     },
     search: 'Search',
-    'search-history': 'Search history',
     'search-term': 'Search term',
+    'search-results-count': '{{count}} results',
+    'search-history': 'Search history',
+    'clear-search-history': 'Clear search history',
   },
   stories: {
     metadata: {

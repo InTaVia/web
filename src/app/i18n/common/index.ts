@@ -47,7 +47,9 @@ export interface Dictionary {
     };
     search: string;
     'search-term': string;
+    'search-results-count': string;
     'search-history': string;
+    'clear-search-history': string;
   };
   stories: {
     metadata: {

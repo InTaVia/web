@@ -1,4 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createUrlSearchParams } from '@stefanprobst/request';
 
 import type { RootState } from '@/app/store';
 import intaviaApiService from '@/features/common/intavia-api.service';
@@ -17,24 +18,7 @@ interface SearchHistory {
 }
 
 const initialState: SearchHistory = {
-  queries: [
-    {
-      searchResultCount: 5,
-      label: 'Klimt',
-      kind: 'text',
-      endpoint: '/entities/search',
-      params: { q: 'Klimt' },
-      timestamp: Date.now(),
-    },
-    {
-      searchResultCount: 8,
-      label: 'Klomt',
-      kind: 'visual',
-      endpoint: '/entities/search',
-      params: { q: 'Klomt' },
-      timestamp: Date.now(),
-    },
-  ],
+  queries: [],
 };
 
 const searchHistorySlice = createSlice({
@@ -53,16 +37,20 @@ const searchHistorySlice = createSlice({
       ),
       (state, action) => {
         const count = action.payload.count;
-        const params = action.meta.arg; // TODO: what do we get here
-        console.log({ params });
+
+        if (count === 0) return state;
+
+        const params = action.meta.arg.originalArgs;
+        const label = String(createUrlSearchParams(params));
+        const timestamp = action.meta.fulfilledTimeStamp;
 
         state.queries.push({
           params,
           searchResultCount: count,
-          timestamp: action.meta.fulfilledTimeStamp,
+          timestamp,
           kind: 'text',
           endpoint: '/entities/search',
-          label: String(new URLSearchParams(params)),
+          label,
         });
       },
     );
