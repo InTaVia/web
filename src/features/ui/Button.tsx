@@ -10,26 +10,24 @@ const buttonSizes = {
 };
 
 const buttonColors = {
-  primary: `text-slate-900 dark:text-slate-50
-    bg-slate-200 dark:bg-slate-700
-    hover:bg-slate-50 dark:hover:bg-slate-900
-    active:text-slate-50 active:dark:text-slate-900 active:bg-slate-700 active:dark:bg-slate-200
+  primary: `text-intavia-gray-900
+    bg-intavia-gray-200
+    hover:bg-intavia-gray-50
+    active:text-intavia-gray-50 active:bg-intavia-gray-700
     focus:outline-2 focus:outline-offset-2 outline-current
-    disabled:text-gray-600 disabled:dark:text-gray-300 disabled:bg-gray-300 disabled:dark:bg-gray-600
+    disabled:text-gray-600 disabled:bg-gray-300
     `,
-  warning: `text-gray-900 dark:text-gray-50
-    bg-red-200 dark:bg-red-700
-    hover:bg-red-50 dark:hover:bg-red-900
-    active:text-gray-50 active:dark:text-gray-900 active:bg-red-700 active:dark:bg-red-200
+  warning: `text-intavia-gray-50 bg-intavia-red-700
+    hover:bg-intavia-red-900
+    active:text-intavia-gray-900 active:bg-intavia-red-50
     focus:outline-2 focus:outline-offset-2 outline-current
-    disabled:text-gray-600 disabled:dark:text-gray-300 disabled:bg-gray-300 disabled:dark:bg-gray-600
+    disabled:text-gray-600 disabled:bg-gray-300
     `,
-  accent: `text-gray-900 dark:text-gray-50
-    bg-emerald-200 dark:bg-emerald-700
-    hover:bg-emerald-50 dark:hover:bg-emerald-900
-    active:text-gray-50 active:dark:text-gray-900 active:bg-emerald-700 active:dark:bg-emerald-200
+  accent: `text-intavia-gray-50 bg-intavia-brand-700
+    hover:bg-intavia-brand-900
+    active:text-intavia-gray-900 active:bg-intavia-brand-50
     focus:outline-2 focus:outline-offset-2 outline-current
-    disabled:text-gray-600 disabled:dark:text-gray-300 disabled:bg-gray-300 disabled:dark:bg-gray-600
+    disabled:text-gray-600 disabled:bg-gray-300
     `,
 };
 

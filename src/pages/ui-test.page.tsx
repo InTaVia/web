@@ -1,9 +1,12 @@
 import { DocumentSearchIcon, HomeIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
+
+export const getStaticProps = withDictionaries(['common']);
 
 export default function UiTestPage(): JSX.Element {
   const columnProperties: Array<Partial<FullButtonProperties>> = [
