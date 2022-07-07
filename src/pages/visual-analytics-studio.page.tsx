@@ -3,9 +3,12 @@ import { Allotment } from 'allotment';
 import { useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { CollectionEntitiesList } from '@/features/data-view-panel/data-view-panel';
 import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import SidePane from '@/features/ui/side-pane';
+
+export const getStaticProps = withDictionaries(['common']);
 
 export default function AnalysePage(): JSX.Element {
   const [visibleLeftPane, setVisibleLeftPane] = useState(true);
@@ -52,7 +55,7 @@ export default function AnalysePage(): JSX.Element {
       )}
 
       <Allotment.Pane key="allotmentCenter" preferredSize="70%" minSize={400}>
-        <div className="grid grid-rows-[auto_1fr] bg-blue-500 min-h-full">
+        <div className="grid min-h-full grid-rows-[auto_1fr] bg-blue-500">
           <AnalysePageToolbar
             onLayoutSelected={(key) => {
               return console.log('layout selected:', key);

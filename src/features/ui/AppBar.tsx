@@ -4,11 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
-import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePathname } from '@/app/route/use-pathname';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
-
-export const getStaticProps = withDictionaries(['common']);
 
 interface Link {
   id: string;

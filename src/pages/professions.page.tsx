@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useGetProfessionsQuery } from '@/features/common/intavia-api.service';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
@@ -11,6 +12,8 @@ import { Professions } from '@/features/professions/professions';
 import { ProfessionsPageHeader } from '@/features/professions/professions-page-header';
 import { LeafSizing } from '@/features/professions/professions-svg';
 import { Origin } from '@/features/visual-querying/Origin';
+
+export const getStaticProps = withDictionaries(['common']);
 
 export default function ProfessionsPage(): JSX.Element | null {
   const metadata = { title: 'Profession Hierarchy' };
