@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
 
@@ -13,10 +13,18 @@ export interface UiWindow {
 
 interface UiState {
   windows: Array<UiWindow>;
+  dcl: {
+    leftPaneOpen: boolean;
+    rightPaneOpen: boolean;
+  };
+  leftPaneOpen: boolean;
+  rightPaneOpen: boolean;
 }
 
 const initialState: UiState = {
   windows: [],
+  leftPaneOpen: true,
+  rightPaneOpen: true,
 };
 
 export const uiSlice = createSlice({
@@ -43,13 +51,37 @@ export const uiSlice = createSlice({
         state.windows[index] = window;
       }
     },
+    /* setSidePane: (state, action: PayloadAction<any>) => {}, */
+    toggleLeftPane: (state, action: PayloadAction<{}>) => {
+      state.leftPaneOpen = action.payload;
+    },
+    toggleRightPane: (state, action: PayloadAction<boolean>) => {
+      state.rightPaneOpen = action.payload;
+    },
   },
 });
 
-export const { addWindow, editWindow, removeWindow } = uiSlice.actions;
+export const { addWindow, editWindow, removeWindow, toggleLeftPane, toggleRightPane } =
+  uiSlice.actions;
 
 export function selectWindows(state: RootState): Array<UiWindow> {
   return state.ui.windows;
 }
+
+export const selectPaneOpen = createSelector(
+  (state: RootState) => {
+    return state.ui;
+  },
+  (state: RootState, orientation: string) => {
+    return orientation;
+  },
+  (uiState, orientation) => {
+    if (orientation === 'left') {
+      return uiState.leftPaneOpen;
+    } else {
+      return uiState.rightPaneOpen;
+    }
+  },
+);
 
 export default uiSlice.reducer;
