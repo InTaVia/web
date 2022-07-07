@@ -8,35 +8,48 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  TextareaAutosize,
   TextField,
 } from '@mui/material';
-import type { FormEvent } from 'react';
+import { useState } from 'react';
 
-// FIXME: needs proper types somewhere else
-type StoryElementType = 'Image' | 'Text';
+import type {
+  SlideContent,
+  StoryAnswerList,
+  StoryContentProperty,
+  StoryQuizAnswer,
+} from '@/features/storycreator/storycreator.slice';
+import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 
-const contentTypes = {
-  Image: {
-    link: { label: 'Image Link', type: 'Text', sort: 0 },
-    title: { label: 'Image Title', type: 'Text', sort: 1 },
-    text: { label: 'Caption Text', type: 'Text', sort: 2 },
-  },
-  Text: {
-    text: { label: 'Text', type: 'Text', sort: 0 },
-    title: { label: 'Title', type: 'Text', sort: 1 },
-  },
-};
-
-interface StoryContentDialogProps<T = any> {
+interface StoryContentDialogProps {
   open: boolean;
-  element: T; // FIXME:
+  element: SlideContent;
   onClose: () => void;
-  onSave: (event: FormEvent<HTMLFormElement>, element: T) => void;
+  onSave: (element: SlideContent) => void;
 }
 
 export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element {
   const { open, element, onClose, onSave } = props;
-  const attributes = contentTypes[element.type as StoryElementType];
+
+  const [tmpProperties, setTmpProperties] = useState({ ...element.properties });
+
+  const onChange = (event: any) => {
+    const newVal = { ...tmpProperties[event.target.id], value: event.target.value };
+    setTmpProperties({ ...tmpProperties, [event.target.id]: newVal });
+  };
+
+  const setAnswerListForQuiz = (answers: Array<StoryQuizAnswer>) => {
+    const newVal = { ...tmpProperties.answerlist, answers: answers } as StoryAnswerList;
+    setTmpProperties({ ...tmpProperties, answerlist: newVal });
+  };
+
+  const editableAttributes = Object.values(element.properties as object)
+    .filter((prop: StoryContentProperty) => {
+      return prop.editable;
+    })
+    .sort((a: StoryContentProperty, b: StoryContentProperty) => {
+      return a.sort - b.sort;
+    });
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -44,25 +57,50 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
       <DialogContent>
         <form
           onSubmit={(event) => {
-            onSave(event, element);
+            event.preventDefault();
+            const newElement = { ...element, properties: tmpProperties };
+            onSave(newElement);
           }}
           id="myform"
         >
           <FormControl>
-            {Object.entries(attributes).map(([attributeName, attribute]) => {
-              return (
-                <TextField
-                  margin="dense"
-                  id={attributeName}
-                  key={attributeName}
-                  label={attribute.label}
-                  type={attribute.type}
-                  fullWidth
-                  variant="standard"
-                  defaultValue={element[attributeName]}
-                  sx={{ width: '500px' }}
-                />
-              );
+            {editableAttributes.map((property: StoryContentProperty) => {
+              switch (property.type) {
+                case 'text':
+                  return (
+                    <TextField
+                      margin="dense"
+                      id={property.id}
+                      key={property.label}
+                      label={property.label}
+                      fullWidth
+                      variant="standard"
+                      defaultValue={property.value}
+                      sx={{ width: '500px' }}
+                      onChange={onChange}
+                    />
+                  );
+                case 'textarea':
+                  return (
+                    <TextareaAutosize
+                      id={property.id}
+                      key={property.label}
+                      defaultValue={property.value}
+                      placeholder={property.label}
+                      style={{ width: '100%' }}
+                      minRows={3}
+                      onChange={onChange}
+                    />
+                  );
+                case 'answerlist':
+                  return (
+                    <StoryQuizAnswerList
+                      key={property.label}
+                      setAnswerListForQuiz={setAnswerListForQuiz}
+                      answerList={property as StoryAnswerList}
+                    />
+                  );
+              }
             })}
           </FormControl>
         </form>

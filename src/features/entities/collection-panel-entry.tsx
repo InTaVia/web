@@ -31,7 +31,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                   <span className="font-verythin col-start-3 row-start-1 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                     {props.entity.kind === 'person' ? props.entity.categories.join(', ') : ''}
                   </span>
-                  <span className="font-verythin  col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
+                  <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                     {props.entity.kind === 'person'
                       ? props.entity.gender
                       : props.entity.kind === 'place'

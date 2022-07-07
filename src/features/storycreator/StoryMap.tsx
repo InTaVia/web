@@ -6,14 +6,17 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
+import type { StoryEvent } from '@/features/common/entity.model';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { base as baseMap } from '@/features/geomap/maps.config';
-import type { StoryEvent } from '@/features/storycreator/storycreator.slice';
 import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
 
 interface StoryMapProps {
   events: Array<StoryEvent>;
+  width?: number;
+  height?: number;
+  setMapBounds?: (bounds: Array<Array<number>>) => void;
 }
 
 interface StoryMapMarker {
@@ -39,12 +42,10 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
   return cornersLongLat;
 };
 
-export function StoryMap(props: StoryMapProps): JSX.Element {
-  const { events } = props;
+export function StoryMapComponent(props: StoryMapProps): JSX.Element {
+  const { events, setMapBounds } = props;
 
   const mapRef = useRef<MapRef>(null);
-
-  // TODO: memoize
 
   const markers = events
     .map((event) => {
@@ -76,7 +77,13 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
     if (mapRef.current) {
       mapRef.current.fitBounds(bounds, { padding: 50, duration: 100 });
     }
-  }, [bounds]);
+  }, [events]);
+
+  const onMoveEnd = () => {
+    if (setMapBounds && mapRef.current) {
+      setMapBounds(mapRef.current.getBounds().toArray());
+    }
+  };
 
   const additionalEventColors = scaleOrdinal().domain(eventTypes).range(schemeTableau10);
 
@@ -88,14 +95,13 @@ export function StoryMap(props: StoryMapProps): JSX.Element {
           <Link href="/search">
             <a>search</a>
           </Link>
-          !
         </Typography>
         ;
       </Box>
     );
   }
   return (
-    <GeoMap ref={mapRef} {...baseMap}>
+    <GeoMap ref={mapRef} {...baseMap} onMoveEnd={onMoveEnd}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin

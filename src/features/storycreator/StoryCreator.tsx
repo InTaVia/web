@@ -4,7 +4,6 @@ import 'react-resizable/css/styles.css';
 import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 
 import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
 import { ButtonRow } from '@/features/storycreator/ButtonRow';
@@ -31,7 +30,7 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-          <ExcelUpload />
+          <ExcelUpload story={story.id} />
           <div className={styles['button-row-button']}>
             <IconButton color="primary" onClick={toggleTextMode} component="span">
               <IntegrationInstructionsOutlinedIcon />
@@ -40,22 +39,7 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
         </ButtonRow>
       </div>
       <div className={styles['story-editor-content']}>
-        {textMode ? (
-          <StoryTextCreator story={story} />
-        ) : (
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <StoryGUICreator
-                  targetRef={targetRef}
-                  width={width}
-                  height={height}
-                  story={story}
-                />
-              );
-            }}
-          </ReactResizeDetector>
-        )}
+        {textMode ? <StoryTextCreator story={story} /> : <StoryGUICreator story={story} />}
       </div>
     </div>
   );
