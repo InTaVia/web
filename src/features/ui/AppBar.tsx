@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
@@ -14,25 +15,26 @@ interface Link {
 }
 
 export function AppBar(): JSX.Element {
+  const { t } = useI18n<'common'>();
   const currentPath = usePathname();
 
   const linksLeft: Array<Link> = [
     {
       id: 'data-curation-lab',
       href: { pathname: '/search' },
-      label: 'Data Curation Lab',
+      label: t(['common', 'data-curation-lab']),
       current: false,
     },
     {
       id: 'visual-analytics-studio',
       href: { pathname: '/visual-analytics-studio' },
-      label: 'Visual Analytics Studio',
+      label: t(['common', 'visual-analytics-studio']),
       current: false,
     },
     {
       id: 'storytelling-creator',
       href: { pathname: '/storycreator' },
-      label: 'Storytelling Creator',
+      label: t(['common', 'storytelling-creator']),
       current: false,
     },
   ];
@@ -85,7 +87,7 @@ export function AppBar(): JSX.Element {
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
           <button className="flex items-center gap-2 rounded-lg bg-intavia-brand px-4 py-1 text-base text-white hover:border hover:border-intavia-brand hover:bg-white hover:text-intavia-brand">
             <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
-            Data Import
+            {t(['common', 'data-import'])}
           </button>
 
           {linksRight.map((item) => {

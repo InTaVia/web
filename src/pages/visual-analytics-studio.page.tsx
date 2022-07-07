@@ -3,9 +3,12 @@ import { Allotment } from 'allotment';
 import { useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { CollectionEntitiesList } from '@/features/data-view-panel/data-view-panel';
 import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import SidePane from '@/features/ui/side-pane';
+
+export const getStaticProps = withDictionaries(['common']);
 
 export default function AnalysePage(): JSX.Element {
   const [visibleLeftPane, setVisibleLeftPane] = useState(true);

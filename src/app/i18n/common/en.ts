@@ -21,6 +21,8 @@ export const dictionary: Dictionary = {
       title: 'Coordination',
     },
   },
+  'data-curation-lab': 'Data Curation Lab',
+  'data-import': 'Data Import',
   geomap: {
     metadata: {
       title: 'Map',
@@ -56,11 +58,13 @@ export const dictionary: Dictionary = {
       title: 'Story',
     },
   },
+  'storytelling-creator': 'Storytelling Creator',
   timeline: {
     metadata: {
       title: 'Timeline',
     },
   },
+  'visual-analytics-studio': 'Visual Analytics Studio',
   'visual-query': {
     metadata: {
       title: 'Visual query',
