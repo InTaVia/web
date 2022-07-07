@@ -53,7 +53,7 @@ function createTable<T extends Entity>() {
         case 'date-of-death-constraint':
           return computeDateBins(entities as Array<Person>, property);
         default:
-          return Array<number>();
+          return null;
       }
     },
     clear() {

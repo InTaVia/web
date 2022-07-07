@@ -48,6 +48,30 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   // this is inside the foreignObject: completely new coordinate system
   const histogramOrigin = new Origin(dimensions.marginLeft, dimensions.marginTop);
 
+  function renderContent(): JSX.Element {
+    if (isLoading) {
+      return <Typography>Loading ...</Typography>;
+    }
+
+    if (data) {
+      return (
+        <svg width="100%" height="100%">
+          <g className="data">
+            <Histogram
+              brushedArea={constraint.value}
+              setBrushedArea={setBrushedArea}
+              data={data}
+              dimensions={dimensions}
+              origin={histogramOrigin}
+            />
+          </g>
+        </svg>
+      );
+    }
+
+    return <Typography>No data</Typography>;
+  }
+
   return (
     <foreignObject width={dimensions.width} height={dimensions.height} x={x} y={y}>
       <Paper
@@ -58,21 +82,7 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
           height: dimensions.height - 4,
         }}
       >
-        {isLoading ? (
-          <Typography>Loading ...</Typography>
-        ) : (
-          <svg width="100%" height="100%">
-            <g className="data">
-              <Histogram
-                brushedArea={constraint.value}
-                setBrushedArea={setBrushedArea}
-                data={data!}
-                dimensions={dimensions}
-                origin={histogramOrigin}
-              />
-            </g>
-          </svg>
-        )}
+        {renderContent()}
       </Paper>
     </foreignObject>
   );
