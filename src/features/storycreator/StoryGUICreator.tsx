@@ -274,7 +274,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('singlevis');
           }}
         >
-          <img src="/assets/images/singlevis.png" alt="Single Visualization" height="30px" />
+          <img
+            src="/assets/images/singlevis.png"
+            alt="Single Visualization"
+            height="32px"
+            className="h-8"
+          />
         </IconButton>
         <IconButton
           key={'twovisverticalLayoutButton'}
@@ -288,7 +293,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           <img
             src="/assets/images/twovisvertical.png"
             alt="Two Visualization Vertical"
-            height="30px"
+            height="32px"
+            className="h-8"
           />
         </IconButton>
         <IconButton
@@ -303,7 +309,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           <img
             src="/assets/images/twovishorizontal.png"
             alt="Two Visualization Horizontal"
-            height="30px"
+            height="32px"
+            className="h-8"
           />
         </IconButton>
         <IconButton
@@ -315,7 +322,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('singleviscontent');
           }}
         >
-          <img src="/assets/images/singleviscontent.png" alt="Single Content" height="30px" />
+          <img
+            src="/assets/images/singleviscontent.png"
+            alt="Single Content"
+            height="32px"
+            className="h-8"
+          />
         </IconButton>
         <IconButton
           key={'twoviscontenthorizontalLayoutButton'}
@@ -329,7 +341,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           <img
             src="/assets/images/twoviscontenthorizontal.png"
             alt="Two Visualization With Content"
-            height="30px"
+            height="32px"
+            className="h-8"
           />
         </IconButton>
         <IconButton
@@ -344,7 +357,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           <img
             src="/assets/images/twoviscontentvertical.png"
             alt="Two Visualization With Content Vertical"
-            height="30px"
+            height="32px"
+            className="h-8"
           />
         </IconButton>
         <IconButton
@@ -356,7 +370,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             switchLayout('twocontents');
           }}
         >
-          <img src="/assets/images/twocontents.png" alt="Two Content Panes" height="30px" />
+          <img
+            src="/assets/images/twocontents.png"
+            alt="Two Content Panes"
+            height="32px"
+            className="h-8"
+          />
         </IconButton>
       </div>
       <Allotment vertical={true}>
