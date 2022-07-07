@@ -72,8 +72,8 @@ export function AppBar(): JSX.Element {
                 <Link key={item.id} href={item.href.pathname}>
                   <a
                     className={clsx(
-                      item.current ? 'text-intavia-brand' : 'text-black',
-                      'px-3 text-base hover:text-intavia-brand',
+                      item.current ? 'text-intavia-brand-900' : 'text-black',
+                      'px-3 text-base hover:text-intavia-brand-900',
                     )}
                     aria-current={item.current ? 'page' : undefined}
                   >
@@ -85,7 +85,7 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          <button className="flex items-center gap-2 rounded-lg bg-intavia-brand px-4 py-1 text-base text-white hover:border hover:border-intavia-brand hover:bg-white hover:text-intavia-brand">
+          <button className="flex items-center gap-2 rounded-lg bg-intavia-brand-900 px-4 py-1 text-base text-white hover:border hover:border-intavia-brand-900 hover:bg-white hover:text-intavia-brand-900">
             <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
             {t(['common', 'data-import'])}
           </button>
@@ -95,8 +95,8 @@ export function AppBar(): JSX.Element {
               <Link key={item.id} href={item.href.pathname}>
                 <a
                   className={clsx(
-                    item.current ? 'text-intavia-brand' : 'text-black',
-                    'hover:text-intavia-brand',
+                    item.current ? 'text-intavia-brand-900' : 'text-black',
+                    'hover:text-intavia-brand-900',
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
