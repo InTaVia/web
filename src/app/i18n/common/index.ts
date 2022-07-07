@@ -47,6 +47,11 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    search: string;
+    'search-term': string;
+    'search-results-count': string;
+    'search-history': string;
+    'clear-search-history': string;
   };
   stories: {
     metadata: {
