@@ -1,6 +1,7 @@
 import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { usePathname } from '@/app/route/use-pathname';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
@@ -53,51 +54,53 @@ export function AppBar(): JSX.Element {
   }
 
   return (
-    <div className="w-full h-16 bg-white">
+    <div className="h-16 w-full bg-white">
       <div className="flex flex-row flex-nowrap justify-between">
         <div className="flex flex-row items-center gap-2">
-          <div className="h-14 w-40 relative">
-            <a href="/">
-              <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
-            </a>
+          <div className="relative h-14 w-32">
+            <Link href="/">
+              <a>
+                <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
+              </a>
+            </Link>
           </div>
-          <div className="flex flex-row h-16 gap-3 items-center">
+          <div className="flex h-16 flex-row items-center gap-3">
             {linksLeft.map((item) => {
               return (
-                <a
-                  key={item.id}
-                  href={item.href.pathname}
-                  className={clsx(
-                    item.current ? 'text-intavia-brand' : 'text-black',
-                    'hover:text-intavia-brand px-3 text-base',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
+                <Link key={item.id} href={item.href.pathname}>
+                  <a
+                    className={clsx(
+                      item.current ? 'text-intavia-brand' : 'text-black',
+                      'px-3 text-base hover:text-intavia-brand',
+                    )}
+                    aria-current={item.current ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </Link>
               );
             })}
           </div>
         </div>
-        <div className="flex flex-row h-16 gap-6 items-center pr-6">
-          <button className="bg-intavia-brand px-4 py-1 text-white rounded-lg flex items-center gap-2 text-base hover:text-intavia-brand hover:bg-white hover:border hover:border-intavia-brand">
+        <div className="flex h-16 flex-row items-center gap-6 pr-6">
+          <button className="flex items-center gap-2 rounded-lg bg-intavia-brand px-4 py-1 text-base text-white hover:border hover:border-intavia-brand hover:bg-white hover:text-intavia-brand">
             <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
             Data Import
           </button>
 
           {linksRight.map((item) => {
             return (
-              <a
-                key={item.id}
-                href={item.href.pathname}
-                className={clsx(
-                  item.current ? 'text-intavia-brand' : 'text-black',
-                  'hover:text-intavia-brand',
-                )}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
+              <Link key={item.id} href={item.href.pathname}>
+                <a
+                  className={clsx(
+                    item.current ? 'text-intavia-brand' : 'text-black',
+                    'hover:text-intavia-brand',
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </Link>
             );
           })}
         </div>
