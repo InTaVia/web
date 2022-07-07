@@ -1,8 +1,9 @@
-import { DocumentSearchIcon } from '@heroicons/react/solid';
+import { DocumentSearchIcon, HomeIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
+import ButtonLink from '@/features/ui/ButtonLink';
 
 export default function UiTestPage(): JSX.Element {
   const columnProperties: Array<Partial<FullButtonProperties>> = [
@@ -105,6 +106,21 @@ export default function UiTestPage(): JSX.Element {
             </div>
           );
         })}
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">ButtonLink</h2>
+        <p>Links that look like buttons.</p>
+
+        <div className="my-10 flex place-items-center justify-center gap-5">
+          <ButtonLink href="#">Click me</ButtonLink>
+          <ButtonLink href="#" size="extra-large" round="round" color="accent">
+            Click me
+          </ButtonLink>
+          <ButtonLink href="#" size="large" round="circle" color="warning" shadow="large">
+            <HomeIcon className="h-10 w-10" />
+          </ButtonLink>
+        </div>
       </section>
     </Fragment>
   );

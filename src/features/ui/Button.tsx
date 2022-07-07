@@ -78,7 +78,13 @@ const defaultButtonProperties: Omit<FullButtonProperties, 'children'> = {
 
 const extraButtonClasses = 'disabled:cursor-not-allowed box-border';
 
-export default function Button(passedProps: ButtonProperties): JSX.Element {
+export function getButtonClasses(passedProps: ButtonProperties): Pick<
+  FullButtonProperties,
+  'children' | 'disabled'
+> & {
+  className: string;
+  extraProps: Omit<ButtonProperties, 'children'>;
+} {
   const allProps = { ...defaultButtonProperties, ...passedProps };
   const { children, size, disabled, color, className, round, border, shadow, ...extraProps } =
     allProps;
@@ -104,8 +110,19 @@ export default function Button(passedProps: ButtonProperties): JSX.Element {
     classNames = classNames.replaceAll(/\bpx-[0-9.]+\b/g, '').replaceAll(/\bpy-/g, 'p-');
   }
 
+  return {
+    className: classNames,
+    disabled,
+    children,
+    extraProps,
+  };
+}
+
+export default function Button(passedProps: ButtonProperties): JSX.Element {
+  const { className, children, disabled, extraProps } = getButtonClasses(passedProps);
+
   return (
-    <button className={classNames} disabled={disabled} {...extraProps}>
+    <button className={className} disabled={disabled} {...extraProps}>
       {children}
     </button>
   );
