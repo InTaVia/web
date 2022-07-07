@@ -1,25 +1,27 @@
 import { Button, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch } from '@/app/store';
+import type { Origin } from '@/features/visual-querying/Origin';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateText } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
-interface TextConstraintProps {
+interface TextConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
   width: number;
   height: number;
   constraint: TextConstraint;
+  origin: Origin;
 }
 
-export function TextConstraintView(props: TextConstraintProps): JSX.Element {
+export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
   const dispatch = useAppDispatch();
 
-  const [text, setText] = useState(constraint.text);
+  const [text, setText] = useState(constraint.value);
 
   const dimensions = {
     x: x,
@@ -34,36 +36,34 @@ export function TextConstraintView(props: TextConstraintProps): JSX.Element {
 
   function handleClick() {
     dispatch(
-      updateText({
+      updateConstraintValue({
         id: constraint.id,
-        text: text,
+        value: text,
       }),
     );
   }
 
   return (
-    <g transform={`translate(${x}, ${y})`}>
-      <foreignObject width={dimensions.width} height={dimensions.height}>
-        <Paper
-          elevation={3}
-          sx={{
-            margin: '2px',
-            width: dimensions.width - 4,
-            height: dimensions.height - 4,
-            padding: '8px',
+    <foreignObject width={dimensions.width} height={dimensions.height} x={x} y={y}>
+      <Paper
+        elevation={3}
+        sx={{
+          margin: '2px',
+          width: dimensions.width - 4,
+          height: dimensions.height - 4,
+          padding: '8px',
+        }}
+      >
+        <TextField
+          label={constraint.type}
+          variant="standard"
+          value={text}
+          onChange={(evt) => {
+            return setText(evt.target.value);
           }}
-        >
-          <TextField
-            label={constraint.type}
-            variant="standard"
-            value={text}
-            onChange={(evt) => {
-              return setText(evt.target.value);
-            }}
-          />
-          <Button onClick={handleClick}>Add</Button>
-        </Paper>
-      </foreignObject>
-    </g>
+        />
+        <Button onClick={handleClick}>Add</Button>
+      </Paper>
+    </foreignObject>
   );
 }

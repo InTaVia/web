@@ -1,12 +1,15 @@
+import { I18nProvider } from '@stefanprobst/next-i18n';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import type { NextRouter } from 'next/router';
 import type { FC } from 'react';
 import { Provider } from 'react-redux';
 
+import { dictionary as common } from '@/app/i18n/common/en';
+import type { Dictionaries } from '@/app/i18n/dictionaries';
+import { Notifications } from '@/app/notifications/notifications';
+import type { AppStore } from '@/app/store';
+import { configureAppStore } from '@/app/store';
 import intaviaApisService from '@/features/common/intavia-api.service';
-import type { AppStore } from '@/features/common/store';
-import { configureAppStore } from '@/features/common/store';
-import { Notifications } from '@/features/notifications/Notifications';
 import { createMockRouter } from '@/mocks/create-mock-router';
 
 interface WrapperProps {
@@ -14,24 +17,26 @@ interface WrapperProps {
 }
 
 export interface CreateWrapperArgs {
+  dictionaries?: Partial<Dictionaries>;
   router?: Partial<NextRouter>;
   store?: AppStore;
 }
 
 export function createWrapper(args: CreateWrapperArgs): FC<WrapperProps> {
-  const { router, store } = args;
+  const { dictionaries = { common }, router, store = configureAppStore() } = args;
 
   const mockRouter = createMockRouter(router);
-  const mockStore = store ?? configureAppStore();
 
   function Wrapper(props: WrapperProps): JSX.Element {
     const { children } = props;
 
     return (
       <RouterContext.Provider value={mockRouter}>
-        <Provider store={mockStore}>
-          {children}
-          <Notifications />
+        <Provider store={store}>
+          <I18nProvider dictionaries={dictionaries}>
+            {children}
+            <Notifications />
+          </I18nProvider>
         </Provider>
       </RouterContext.Provider>
     );

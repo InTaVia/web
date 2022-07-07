@@ -17,9 +17,10 @@
     "storybook-build": true
   },
   "jest.autoRun": {
-    "onSave": "test-file",
+    "onSave": "test-only",
     "watch": false
   },
+  "jest.jestCommandLine": "npm run test",
   "less.validate": false,
   "scss.validate": false,
   "search.exclude": {

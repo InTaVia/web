@@ -16,11 +16,17 @@ function createTable<T extends Entity>() {
   const table = new Map<T['id'], T>();
 
   const methods = {
-    findMany(q?: string | undefined, start?: [number, number], end?: [number, number]) {
+    findMany(
+      q?: string | undefined,
+      start?: [number, number],
+      end?: [number, number],
+      professions?: Array<string>,
+    ) {
       const entities = Array.from(table.values());
       let matches = q != null ? matchSorter(entities, q, { keys: ['name'] }) : entities;
       matches = start != null ? filterByEventDateRange(matches, 'beginning', start) : matches;
       matches = end != null ? filterByEventDateRange(matches, 'end', end) : matches;
+      matches = professions != null ? filterByProfession(matches, professions) : matches;
       return matches;
     },
     findById(id: T['id']) {
@@ -43,11 +49,11 @@ function createTable<T extends Entity>() {
     getDistribution(property: string) {
       const entities = Array.from(table.values());
       switch (property) {
-        case 'Date of Birth':
-        case 'Date of Death':
+        case 'date-of-birth-constraint':
+        case 'date-of-death-constraint':
           return computeDateBins(entities as Array<Person>, property);
         default:
-          return Array<number>();
+          return null;
       }
     },
     clear() {
@@ -251,7 +257,7 @@ function computeDateBins(
 } {
   let bins: Array<Bin<number, number>> = [];
   const years: Array<number> = [];
-  const eventType = property === 'Date of Birth' ? 'beginning' : 'end';
+  const eventType = property === 'date-of-birth-constraint' ? 'beginning' : 'end';
 
   // Create an array with all birthdates
   entities.forEach((entity) => {
@@ -296,5 +302,21 @@ function filterByEventDateRange<T extends Entity>(
     }
 
     return false;
+  });
+}
+
+function filterByProfession<T extends Entity>(
+  entities: Array<T>,
+  professions: Array<string>,
+): Array<T> {
+  if (professions.length === 0) return entities;
+
+  return entities.filter((entity) => {
+    return (
+      'occupation' in entity &&
+      entity.occupation.some((d) => {
+        return professions.includes(d);
+      })
+    );
   });
 }

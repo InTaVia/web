@@ -2,9 +2,9 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 
+import type { RootState } from '@/app/store';
 import type { Entity, EntityKind } from '@/features/common/entity.model';
 import intaviaApiService from '@/features/common/intavia-api.service';
-import type { RootState } from '@/features/common/store';
 
 export interface QueryMetadata {
   endpoint: string;

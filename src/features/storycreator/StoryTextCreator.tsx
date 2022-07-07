@@ -5,7 +5,7 @@ import { Button, FormControl, TextareaAutosize } from '@mui/material';
 import type { FormEvent } from 'react';
 import { createRef } from 'react';
 
-import { useAppDispatch } from '@/features/common/store';
+import { useAppDispatch } from '@/app/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import { editStory } from '@/features/storycreator/storycreator.slice';

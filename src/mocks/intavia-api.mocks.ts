@@ -1,7 +1,7 @@
 import type { Bin } from 'd3-array';
 import { rest } from 'msw';
 
-import type { Person, Place } from '@/features/common/entity.model';
+import type { Person, Place, Profession } from '@/features/common/entity.model';
 import type { PaginatedEntitiesResponse } from '@/features/common/intavia-api.service';
 import { clamp } from '@/lib/clamp';
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
@@ -24,7 +24,11 @@ export const handlers = [
         dateOfDeathStart != null && dateOfDeathEnd != null
           ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
           : undefined;
-      const persons = db.person.findMany(q, start, end);
+      const professionsStr = getSearchParam(request.url, 'professions');
+      const professions =
+        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
+
+      const persons = db.person.findMany(q, start, end, professions);
 
       const limit = 10;
       const pages = Math.ceil(persons.length / limit);
@@ -61,15 +65,15 @@ export const handlers = [
       const property = request.url.searchParams.get('property')?.trim();
 
       if (property != null) {
-        const data = db.person.getDistribution(property) as {
-          minYear: number;
-          maxYear: number;
-          thresholds: Array<number>;
-          bins: Array<Bin<number, number>>;
-        };
+        const data = db.person.getDistribution(property);
 
-        return response(context.status(200), context.delay(), context.json(data));
+        if (data != null) {
+          return response(context.status(200), context.delay(), context.json(data));
+        }
+
+        return response(context.status(404), context.delay());
       }
+      return response(context.status(400), context.delay());
     },
   ),
   rest.get<never, { id: Person['id'] }, Person>(
@@ -123,6 +127,70 @@ export const handlers = [
       }
 
       return response(context.status(200), context.delay(), context.json(place));
+    },
+  ),
+  rest.get<never, never, Array<Profession & { count: number }>>(
+    String(createIntaviaApiUrl({ pathname: '/api/professions/statistics' })),
+    (request, response, context) => {
+      const q = getSearchParam(request.url, 'q');
+      const dateOfBirthStart = getSearchParam(request.url, 'dateOfBirthStart');
+      const dateOfBirthEnd = getSearchParam(request.url, 'dateOfBirthEnd');
+      const dateOfDeathStart = getSearchParam(request.url, 'dateOfDeathStart');
+      const dateOfDeathEnd = getSearchParam(request.url, 'dateOfBirthEnd');
+      const start =
+        dateOfBirthStart != null && dateOfBirthEnd != null
+          ? ([Number(dateOfBirthStart), Number(dateOfBirthEnd)] as [number, number])
+          : undefined;
+      const end =
+        dateOfDeathStart != null && dateOfDeathEnd != null
+          ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
+          : undefined;
+      const professionsStr = getSearchParam(request.url, 'professions');
+      const professions =
+        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
+
+      const persons = db.person.findMany(q, start, end, professions);
+
+      // TODO: not feasible for the real data, a list of possible professions would be necessary here
+      const allPersons = db.person.findMany();
+      const allProfessions = Array.from(
+        new Set<string>(
+          allPersons.flatMap((d) => {
+            return d.occupation;
+          }),
+        ),
+      );
+
+      // group alphabetically
+      const alphabeticalGroups: Array<[string, RegExp]> = [
+        ['A-I', /^[a-i]/i],
+        ['J-P', /^[j-p]/i],
+        ['Q-Z', /^[q-z]/i],
+        ['other', /./],
+      ];
+
+      const professionsArray: Array<Profession & { count: number }> = [];
+
+      alphabeticalGroups.forEach(([name, regex]) => {
+        const count = persons.filter((d) => {
+          return d.occupation.some((occupation) => {
+            return regex.exec(occupation);
+          });
+        }).length;
+
+        professionsArray.push({ parent: null, name, count });
+      });
+
+      allProfessions.forEach((profession) => {
+        const [parent] = alphabeticalGroups.find(([_, regex]) => {
+          return regex.exec(profession);
+        })!;
+        const count = persons.filter((d) => {
+          return d.occupation.includes(profession);
+        }).length;
+        professionsArray.push({ parent, name: profession, count });
+      });
+      return response(context.status(200), context.delay(), context.json(professionsArray));
     },
   ),
 ];

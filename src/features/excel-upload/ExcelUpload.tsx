@@ -6,15 +6,15 @@ import { IconButton, Input } from '@mui/material';
 import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
+import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/features/common/entities.slice';
 import type { Person, Place, StoryEvent } from '@/features/common/entity.model';
-import { useAppDispatch } from '@/features/common/store';
 import styles from '@/features/storycreator/storycreator.module.css';
 
 import type { Slide, SlideContent, VisualisationPane } from '../storycreator/storycreator.slice';
 import { setSlidesForStory } from '../storycreator/storycreator.slice';
 
-interface ExcelUpload {
+interface ExcelUploadProps {
   story: string;
 }
 
@@ -115,6 +115,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
     dispatch(addLocalEntity(person));
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function convertDataHofburg(data: Array<any>) {
     const eventsInSlides: Record<string, Array<StoryEvent>> = {};
     const mediaInSlides: Record<string, Array<string>> = {};

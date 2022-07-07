@@ -2,12 +2,12 @@ import type { RefObject } from 'react';
 import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { Person, StoryEvent } from '@/features/common/entity.model';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
   Slide,
   SlideContent,
-  StoryEvent,
   StoryMap,
   VisualisationPane,
 } from '@/features/storycreator/storycreator.slice';
@@ -23,8 +23,6 @@ import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { Window } from '@/features/ui/Window';
-
-import type { Person } from '../common/entity.model';
 
 interface DropProps {
   type: string;

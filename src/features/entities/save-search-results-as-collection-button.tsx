@@ -7,14 +7,14 @@ import { nanoid } from '@reduxjs/toolkit';
 import type { FormEvent } from 'react';
 import { Fragment } from 'react';
 
+import { addNotification } from '@/app/notifications/notifications.slice';
+import { useAppDispatch } from '@/app/store';
 import type { QueryMetadata } from '@/features/common/entities.slice';
 import { addCollection } from '@/features/common/entities.slice';
 import type { Entity } from '@/features/common/entity.model';
 import intaviaService from '@/features/common/intavia-api.service';
-import { useAppDispatch } from '@/features/common/store';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
-import { addNotification } from '@/features/notifications/notifications.slice';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 
 export function SaveSearchResultsAsCollectionButton(): JSX.Element {
@@ -90,11 +90,11 @@ export function SaveSearchResultsAsCollectionButton(): JSX.Element {
           Save collection
         </DialogTitle>
         <form onSubmit={onSubmit}>
-          <DialogContent dividers>
+          <DialogContent dividers sx={{ display: 'grid', gap: 1.5 }}>
             {searchResults.data != null ? (
               <Typography>Save {searchResults.data.count} entities to new collection.</Typography>
             ) : null}
-            <TextField autoComplete="off" fullWidth label="Name" name="name" required />
+            <TextField autoComplete="off" label="Name" name="name" required />
           </DialogContent>
           <DialogActions>
             <Button onClick={dialog.close}>Cancel</Button>

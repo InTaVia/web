@@ -3,7 +3,7 @@ import type { RefObject } from 'react';
 import { useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
 import styles from '@/features/storycreator/storycreator.module.css';

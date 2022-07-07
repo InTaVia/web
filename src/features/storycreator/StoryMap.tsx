@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
-import { MapLibre } from '@/features/geomap/MaplibreMap';
+import type { StoryEvent } from '@/features/common/entity.model';
+import { GeoMap } from '@/features/geomap/geo-map';
+import { base as baseMap } from '@/features/geomap/maps.config';
+import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
-
-import type { StoryEvent } from './storycreator.slice';
-import { StoryMapPin } from './StoryMapPin';
 
 interface StoryMapProps {
   events: Array<StoryEvent>;
@@ -81,7 +81,7 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
 
   const onMoveEnd = () => {
     if (setMapBounds && mapRef.current) {
-      setMapBounds(mapRef!.current.getBounds().toArray());
+      setMapBounds(mapRef.current.getBounds().toArray());
     }
   };
 
@@ -101,7 +101,7 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
     );
   }
   return (
-    <MapLibre onMoveEnd={onMoveEnd} mapRef={mapRef}>
+    <GeoMap ref={mapRef} {...baseMap} onMoveEnd={onMoveEnd}>
       {markers.map((marker, index) => {
         return (
           <StoryMapPin
@@ -113,6 +113,6 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
           />
         );
       })}
-    </MapLibre>
+    </GeoMap>
   );
 }

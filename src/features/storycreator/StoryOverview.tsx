@@ -3,7 +3,7 @@ import { Button, List, ListItem, Paper } from '@mui/material';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/features/common/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
   createStory,

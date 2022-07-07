@@ -1,10 +1,13 @@
-import { format, max } from 'd3';
 import type { Bin } from 'd3-array';
+import { max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
+import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { useEffect, useRef } from 'react';
+
+import type { Origin } from '@/features/visual-querying/Origin';
 
 interface HistogramProps {
   data: {
@@ -25,10 +28,11 @@ interface HistogramProps {
     marginLeft: number;
     marginTop: number;
   };
+  origin: Origin;
 }
 
 export function Histogram(props: HistogramProps) {
-  const { data, dimensions } = props;
+  const { data, dimensions, origin } = props;
 
   const { minYear, maxYear, thresholds, bins } = data;
   const Y = Array.from(bins, (bin) => {
@@ -41,11 +45,11 @@ export function Histogram(props: HistogramProps) {
 
   const xScale = scaleLinear()
     .domain([minYear, maxYear])
-    .range([0, dimensions.width - 100]);
+    .range([origin.x(0), origin.x(dimensions.width - 100)]);
 
   const yScale = scaleLinear()
     .domain([0, max(Y) as number])
-    .range([0, 50 - dimensions.height]);
+    .range([origin.y(0), origin.y(50 - dimensions.height)]);
 
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
@@ -93,8 +97,12 @@ export function Histogram(props: HistogramProps) {
 
   // Add axes
   useEffect(() => {
-    if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
-    if (yAxisRef.current) select(yAxisRef.current).call(yAxis);
+    if (xAxisRef.current)
+      select(xAxisRef.current)
+        .attr('transform', `translate(0, ${yScale(0)})`)
+        .call(xAxis);
+    if (yAxisRef.current)
+      select(yAxisRef.current).attr('transform', `translate(${xScale.range()[0]}, 0)`).call(yAxis);
   });
 
   return (

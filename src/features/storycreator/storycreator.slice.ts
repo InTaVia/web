@@ -1,8 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
+import type { RootState } from '@/app/store';
 import type { StoryEvent } from '@/features/common/entity.model';
-import type { RootState } from '@/features/common/store';
 
 type DataUrlString = string;
 

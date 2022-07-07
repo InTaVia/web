@@ -1,4 +1,4 @@
-import { useSearchParams } from '@/lib/use-search-params';
+import { useSearchParams } from '@/app/route/use-search-params';
 
 export interface PersonsSearchFilters {
   page: number;

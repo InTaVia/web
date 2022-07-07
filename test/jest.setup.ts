@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
+/** Apply built-in polyfills like `fetch`. */
+import 'next';
 
-import fetch, { Blob, Headers, Request, Response } from 'node-fetch';
-
-if (!('fetch' in globalThis)) {
-  Object.assign(globalThis, { fetch, Headers, Request, Response, Blob });
-}
+/** @see https://github.com/jsdom/jsdom/issues/1721 */
+global.URL.createObjectURL = jest.fn();

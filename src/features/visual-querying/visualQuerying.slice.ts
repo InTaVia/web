@@ -1,33 +1,43 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { Feature } from 'geojson';
 
-import type { RootState } from '@/features/common/store';
+import type { RootState } from '@/app/store';
 
 export enum ConstraintType {
+  Places = 'Places',
+  Profession = 'Profession',
   Name = 'Name',
-  DateOfBirth = 'Date of Birth',
-  DateOfDeath = 'Date of Death',
-  // Place = 'Place',
+  Dates = 'Dates',
 }
 
 export type Constraint = {
   id: string;
-  opened: boolean;
   type: ConstraintType;
+  name: string;
+  opened: boolean;
+  value: Array<Feature> | Array<number> | Array<Profession> | string | null;
 };
 
 export interface DateConstraint extends Constraint {
-  type: ConstraintType.DateOfBirth | ConstraintType.DateOfDeath;
-  dateRange: Array<number> | null;
+  type: ConstraintType.Dates;
+  value: Array<number> | null;
 }
 
-// export interface PlaceConstraint extends Constraint {
-//   type: ConstraintType.Place;
-// }
+export interface PlaceConstraint extends Constraint {
+  type: ConstraintType.Places;
+  value: Array<Feature> | null;
+}
 
 export interface TextConstraint extends Constraint {
   type: ConstraintType.Name;
-  text: string | null;
+  value: string;
+}
+
+export type Profession = string; // XXX
+export interface ProfessionConstraint extends Constraint {
+  type: ConstraintType.Profession;
+  value: Array<Profession> | null;
 }
 
 export interface VisualQueryingState {
@@ -35,7 +45,64 @@ export interface VisualQueryingState {
 }
 
 const initialState: VisualQueryingState = {
-  constraints: [],
+  constraints: [
+    {
+      id: 'name-constraint',
+      type: ConstraintType.Name,
+      name: 'Name',
+      opened: false,
+      value: '',
+    } as Constraint,
+    {
+      id: 'date-lived-constraint',
+      type: ConstraintType.Dates,
+      name: 'Lived',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'date-of-birth-constraint',
+      type: ConstraintType.Dates,
+      name: 'Birth',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'date-of-death-constraint',
+      type: ConstraintType.Dates,
+      name: 'Death',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'place-lived-constraint',
+      type: ConstraintType.Places,
+      name: 'Lived',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'place-of-birth-constraint',
+      type: ConstraintType.Places,
+      name: 'Birth',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'place-of-death-constraint',
+      type: ConstraintType.Places,
+      name: 'Death',
+      opened: false,
+      value: null,
+    } as Constraint,
+    {
+      id: 'profession-constraint',
+      type: ConstraintType.Profession,
+      name: 'Profession',
+      opened: false,
+      value: null,
+    } as Constraint,
+  ],
 };
 
 const visualQueryingSlice = createSlice({
@@ -50,41 +117,40 @@ const visualQueryingSlice = createSlice({
         return constraint.id !== action.payload.id;
       });
     },
-    toggleConstraint: (state, action: PayloadAction<number>) => {
-      const constraint = state.constraints[action.payload];
+    toggleConstraintWidget: (state, action: PayloadAction<string>) => {
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload;
+      });
+
       if (constraint) {
+        state.constraints.forEach((con) => {
+          if (con.id !== constraint.id) {
+            // eslint-disable-next-line no-param-reassign
+            con.opened = false;
+          }
+        });
         constraint.opened = !constraint.opened;
       }
     },
-    updateDateRange: (
+    updateConstraintValue: (
       state,
-      action: PayloadAction<{ id: string; dateRange: Array<number> | null }>,
+      action: PayloadAction<{
+        id: string;
+        value: Array<Feature> | Array<number> | Array<Profession> | string | null;
+      }>,
     ) => {
       const constraint = state.constraints.find((constraint) => {
-        return (
-          constraint.id === action.payload.id &&
-          (constraint.type === ConstraintType.DateOfBirth ||
-            constraint.type === ConstraintType.DateOfDeath)
-        );
-      }) as DateConstraint | undefined;
+        return constraint.id === action.payload.id;
+      });
 
       if (constraint) {
-        constraint.dateRange = action.payload.dateRange;
-      }
-    },
-    updateText: (state, action: PayloadAction<{ id: string; text: string | null }>) => {
-      const constraint = state.constraints.find((constraint) => {
-        return constraint.id === action.payload.id && constraint.type === ConstraintType.Name;
-      }) as TextConstraint | undefined;
-
-      if (constraint) {
-        constraint.text = action.payload.text;
+        constraint.value = action.payload.value;
       }
     },
   },
 });
 
-export const { addConstraint, removeConstraint, toggleConstraint, updateDateRange, updateText } =
+export const { addConstraint, removeConstraint, toggleConstraintWidget, updateConstraintValue } =
   visualQueryingSlice.actions;
 export default visualQueryingSlice.reducer;
 
