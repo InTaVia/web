@@ -1,6 +1,7 @@
 import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
@@ -61,25 +62,27 @@ export function AppBar(): JSX.Element {
     <div className="h-16 w-full bg-white">
       <div className="flex flex-row flex-nowrap justify-between">
         <div className="flex flex-row items-center gap-2">
-          <div className="relative h-14 w-40">
-            <a href="/">
-              <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
-            </a>
+          <div className="relative h-14 w-32">
+            <Link href="/">
+              <a>
+                <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
+              </a>
+            </Link>
           </div>
           <div className="flex h-16 flex-row items-center gap-3">
             {linksLeft.map((item) => {
               return (
-                <a
-                  key={item.id}
-                  href={item.href.pathname}
-                  className={clsx(
-                    item.current ? 'text-intavia-brand' : 'text-black',
-                    'px-3 text-base hover:text-intavia-brand',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
+                <Link key={item.id} href={item.href.pathname}>
+                  <a
+                    className={clsx(
+                      item.current ? 'text-intavia-brand' : 'text-black',
+                      'px-3 text-base hover:text-intavia-brand',
+                    )}
+                    aria-current={item.current ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </Link>
               );
             })}
           </div>
@@ -92,17 +95,17 @@ export function AppBar(): JSX.Element {
 
           {linksRight.map((item) => {
             return (
-              <a
-                key={item.id}
-                href={item.href.pathname}
-                className={clsx(
-                  item.current ? 'text-intavia-brand' : 'text-black',
-                  'hover:text-intavia-brand',
-                )}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
+              <Link key={item.id} href={item.href.pathname}>
+                <a
+                  className={clsx(
+                    item.current ? 'text-intavia-brand' : 'text-black',
+                    'hover:text-intavia-brand',
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </Link>
             );
           })}
         </div>
