@@ -7,7 +7,7 @@ import { LeafSizing } from '@/features/professions/professions-svg';
 import { Origin } from '@/features/visual-querying/Origin';
 import type { ProfessionConstraint } from '@/features/visual-querying/visualQuerying.slice';
 
-interface ProfessionConstraintProps {
+interface ProfessionConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -17,7 +17,7 @@ interface ProfessionConstraintProps {
   origin: Origin;
 }
 
-export function ProfessionConstraintView(props: ProfessionConstraintProps): JSX.Element {
+export function ProfessionConstraintWidget(props: ProfessionConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
   // TODO:mfranke93: This is currently not considering the filters from other

@@ -49,11 +49,11 @@ function createTable<T extends Entity>() {
     getDistribution(property: string) {
       const entities = Array.from(table.values());
       switch (property) {
-        case 'Date of Birth':
-        case 'Date of Death':
+        case 'date-of-birth-constraint':
+        case 'date-of-death-constraint':
           return computeDateBins(entities as Array<Person>, property);
         default:
-          return Array<number>();
+          return null;
       }
     },
     clear() {
@@ -257,7 +257,7 @@ function computeDateBins(
 } {
   let bins: Array<Bin<number, number>> = [];
   const years: Array<number> = [];
-  const eventType = property === 'Date of Birth' ? 'beginning' : 'end';
+  const eventType = property === 'date-of-birth-constraint' ? 'beginning' : 'end';
 
   // Create an array with all birthdates
   entities.forEach((entity) => {

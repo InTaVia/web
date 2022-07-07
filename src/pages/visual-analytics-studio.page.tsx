@@ -52,7 +52,7 @@ export default function AnalysePage(): JSX.Element {
       )}
 
       <Allotment.Pane key="allotmentCenter" preferredSize="70%" minSize={400}>
-        <div className="grid grid-rows-[auto_1fr] bg-blue-500 min-h-full">
+        <div className="grid min-h-full grid-rows-[auto_1fr] bg-blue-500">
           <AnalysePageToolbar
             onLayoutSelected={(key) => {
               return console.log('layout selected:', key);

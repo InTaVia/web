@@ -65,15 +65,15 @@ export const handlers = [
       const property = request.url.searchParams.get('property')?.trim();
 
       if (property != null) {
-        const data = db.person.getDistribution(property) as {
-          minYear: number;
-          maxYear: number;
-          thresholds: Array<number>;
-          bins: Array<Bin<number, number>>;
-        };
+        const data = db.person.getDistribution(property);
 
-        return response(context.status(200), context.delay(), context.json(data));
+        if (data != null) {
+          return response(context.status(200), context.delay(), context.json(data));
+        }
+
+        return response(context.status(404), context.delay());
       }
+      return response(context.status(400), context.delay());
     },
   ),
   rest.get<never, { id: Person['id'] }, Person>(
