@@ -13,15 +13,17 @@ import type { FormEvent } from 'react';
 import { Fragment } from 'react';
 
 import { addNotification } from '@/app/notifications/notifications.slice';
-import { useAppDispatch } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { addCollection } from '@/features/common/entities.slice';
-import { useSearchResultsSelection } from '@/features/entities/search-results-selection.context';
+import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
+import { useClearSearchResultsSelection } from '@/features/entities/use-clear-search-results-selection';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 
 export function SearchResultsSelection(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { selectedEntities } = useSearchResultsSelection();
+  const selectedEntities = useAppSelector(selectSearchResultsSelection);
   const dialog = useDialogState();
+  useClearSearchResultsSelection();
 
   function onSave(name: string) {
     const collection = {
@@ -60,8 +62,8 @@ export function SearchResultsSelection(): JSX.Element {
           borderTopColor: '#eee',
         }}
       >
-        <Typography>Selected: {selectedEntities.size}</Typography>
-        <Button disabled={selectedEntities.size === 0} onClick={dialog.open} variant="outlined">
+        <Typography>Selected: {selectedEntities.length}</Typography>
+        <Button disabled={selectedEntities.length === 0} onClick={dialog.open} variant="outlined">
           Save selection as collection
         </Button>
       </Box>
@@ -71,7 +73,7 @@ export function SearchResultsSelection(): JSX.Element {
         </DialogTitle>
         <form onSubmit={onSubmit}>
           <DialogContent dividers sx={{ display: 'grid', gap: 1.5 }}>
-            <Typography>Save {selectedEntities.size} entities to new collection.</Typography>
+            <Typography>Save {selectedEntities.length} entities to new collection.</Typography>
             <TextField autoComplete="off" fullWidth label="Name" name="name" required />
           </DialogContent>
           <DialogActions>

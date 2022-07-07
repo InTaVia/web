@@ -1,3 +1,5 @@
+import 'tailwindcss/tailwind.css';
+import 'allotment/dist/style.css';
 import '@/styles/index.css';
 
 import type { EmotionCache } from '@emotion/cache';
@@ -21,7 +23,7 @@ import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-url
 import { useCanonicalUrl } from '@/app/route/use-canonical-url';
 import { useLocale } from '@/app/route/use-locale';
 import { persistor, store } from '@/app/store';
-import { PageLayout } from '@/features/layouts/PageLayout';
+import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
 import { log } from '@/lib/log';
