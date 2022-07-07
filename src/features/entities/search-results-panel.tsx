@@ -8,7 +8,7 @@ import { SearchResultsSelection } from '@/features/entities/search-results-selec
 
 export function SearchResultsPanel(): JSX.Element {
   const [split, setSplit] = useState(false);
-  const [selectedEntities, setSelectedEntities] = useState([]);
+  const [selectedEntities, setSelectedEntities] = useState<Array<string>>([]);
 
   const onSplit = () => {
     setSplit(!split);
