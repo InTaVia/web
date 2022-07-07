@@ -5,6 +5,7 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
+import TextField from '@/features/ui/TextField';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -123,6 +124,29 @@ export default function UiTestPage(): JSX.Element {
           <ButtonLink href="#" size="large" round="circle" color="warning" shadow="large">
             <HomeIcon className="h-10 w-10" />
           </ButtonLink>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">TextField</h2>
+
+        <div className="my-10 grid grid-cols-[auto_auto] justify-center gap-5">
+          <label htmlFor="textfield1">Regular</label>
+          <TextField id="textfield1" />
+          <label htmlFor="textfield2" className="text-lg">
+            Larger
+          </label>
+          <TextField id="textfield2" className="text-lg" />
+          <label htmlFor="textfield3">Disabled</label>
+          <TextField id="textfield3" disabled />
+          <label htmlFor="textfield4">With placeholder</label>
+          <TextField id="textfield4" placeholder="Enter some text, please" />
+          <label htmlFor="textfield5">With placeholder, disabled</label>
+          <TextField id="textfield5" placeholder="Enter some text, please" disabled />
+          <label htmlFor="textfield6">Required</label>
+          <TextField id="textfield6" placeholder="Enter some text, please" required />
+          <label htmlFor="textfield7">Validate: three numbers</label>
+          <TextField id="textfield7" pattern="^[0-9]{3}$" />
         </div>
       </section>
     </Fragment>
