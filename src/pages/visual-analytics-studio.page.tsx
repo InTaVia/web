@@ -1,6 +1,4 @@
 import { Allotment } from 'allotment';
-import { useRef, useState } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { useAppSelector } from '@/app/store';
@@ -9,17 +7,17 @@ import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import DisclosureWrapper from '@/features/ui/DisclosureWrapper';
 import { centerPaneProps, leftPaneProps, rightPaneProps } from '@/features/ui/panes.config';
 import { SidePaneHeader } from '@/features/ui/side-pane-header';
-import { selectLeftPaneOpen, selectPaneOpen, selectRightPaneOpen } from '@/features/ui/ui.slice';
+import { selectPaneOpen } from '@/features/ui/ui.slice';
 
 export const getStaticProps = withDictionaries(['common']);
 
 export default function AnalysePage(): JSX.Element {
   const leftPaneOpen = useAppSelector((state) => {
-    return selectPaneOpen(state, 'left');
+    return selectPaneOpen(state, 'vas', 'left');
   });
 
   const rightPaneOpen = useAppSelector((state) => {
-    return selectPaneOpen(state, 'right');
+    return selectPaneOpen(state, 'vas', 'right');
   });
 
   return (

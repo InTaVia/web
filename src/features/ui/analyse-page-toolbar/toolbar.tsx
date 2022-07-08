@@ -10,11 +10,11 @@ export default function AnalysePageToolbar(props: AnalysePageToolbarProps): JSX.
   return (
     <div className="w-100 flex justify-between gap-2 bg-teal-50 p-2">
       <div className="flex gap-3">
-        <PaneToggle orientation="left" />
+        <PaneToggle parentComponent="vas" orientation="left" />
         <LayoutPopover onLayoutSelected={props.onLayoutSelected} />
       </div>
       <div className="flex">
-        <PaneToggle orientation="right" />
+        <PaneToggle parentComponent="vas" orientation="right" />
       </div>
     </div>
   );
