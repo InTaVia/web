@@ -1,4 +1,4 @@
-import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
+import { DownloadIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -87,7 +87,7 @@ export function AppBar(): JSX.Element {
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
           <Button color="accent" round="pill" className="flex items-center gap-2">
-            <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
+            <DownloadIcon className="h-5 w-5" strokeWidth="1.75" />
             {t(['common', 'data-import'])}
           </Button>
           {linksRight.map((item) => {

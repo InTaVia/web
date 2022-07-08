@@ -25,11 +25,7 @@ export function SearchResultsPanel(): JSX.Element {
       <div className="h-full">
         <Allotment>
           <Allotment.Pane key={`allotmentDCL`} preferredSize={'50%'} className="h-full">
-            <div
-              className="h-full overflow-hidden overflow-y-scroll" /* style={{ overflow: 'hidden', overflowY: 'scroll', height: '100%' }} */
-            >
-              <SearchResultsView />
-            </div>
+            <SearchResultsView />
           </Allotment.Pane>
           <Allotment.Pane
             key={`allotmentDCLCllection${split}`}

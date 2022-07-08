@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import { ClipLoader } from 'react-spinners';
 
 import { SearchResult } from '@/features/entities/search-result';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
@@ -29,14 +28,16 @@ export function SearchResultsList(): JSX.Element {
   }
 
   return (
-    <List role="list" sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}>
-      {persons.map((person) => {
-        return (
-          <ListItem key={person.id} sx={{ paddingBlock: 2 }}>
-            <SearchResult displaySelectionCheckBox entity={person} />
-          </ListItem>
-        );
-      })}
-    </List>
+    <div className="h-full overflow-hidden overflow-y-scroll">
+      <List role="list" sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}>
+        {persons.map((person) => {
+          return (
+            <ListItem key={person.id} sx={{ paddingBlock: 2 }}>
+              <SearchResult displaySelectionCheckBox entity={person} />
+            </ListItem>
+          );
+        })}
+      </List>
+    </div>
   );
 }

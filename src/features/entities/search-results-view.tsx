@@ -10,13 +10,13 @@ export function SearchResultsView(): JSX.Element {
   if (isLoading) {
     return (
       <div className="grid h-full w-full items-center justify-center">
-        <ClipLoader loading={isLoading} size="40" color="#94c269" />
+        <ClipLoader loading={isLoading} size="40px" color="#94c269" />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="grid h-full">
       <SearchResultsList />
       <SearchPageFooter />
     </div>

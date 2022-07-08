@@ -54,7 +54,7 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
         </Button>
       </div>
       <div className="flex items-center gap-2">
-        <ClipLoader loading={searchResults.isFetching} size="17" color="#94c269" />
+        <ClipLoader loading={searchResults.isFetching} size="17px" color="#94c269" />
         <Button color="accent" round="round" size="small" onClick={onSplit}>
           {split ? 'Merge' : 'Split'}
         </Button>
