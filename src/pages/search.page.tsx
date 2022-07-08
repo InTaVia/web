@@ -33,7 +33,11 @@ export default function SearchPage(): JSX.Element {
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Allotment>
-        <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
+        <Allotment.Pane
+          className="grid overflow-hidden overflow-y-scroll"
+          visible={leftPaneOpen}
+          {...leftPaneProps}
+        >
           <DisclosureWrapper title="Data" defaultOpen={true}>
             <SearchPanel />
           </DisclosureWrapper>
@@ -42,8 +46,21 @@ export default function SearchPage(): JSX.Element {
         <Allotment.Pane {...centerPaneProps}>
           <SearchResultsPanel />
         </Allotment.Pane>
-        <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
+        <Allotment.Pane
+          className="grid overflow-hidden overflow-y-scroll"
+          visible={rightPaneOpen}
+          {...rightPaneProps}
+        >
           <DisclosureWrapper title="Test" defaultOpen={true}>
+            <CollectionPanel />
+          </DisclosureWrapper>
+          <DisclosureWrapper title="Test 2" defaultOpen={true}>
+            <CollectionPanel />
+          </DisclosureWrapper>
+          <DisclosureWrapper title="Test 2" defaultOpen={true}>
+            <CollectionPanel />
+          </DisclosureWrapper>
+          <DisclosureWrapper title="Test 2" defaultOpen={true}>
             <CollectionPanel />
           </DisclosureWrapper>
         </Allotment.Pane>

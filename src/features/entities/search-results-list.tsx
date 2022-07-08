@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import { GridLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
 import { SearchResult } from '@/features/entities/search-result';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
@@ -10,23 +10,6 @@ import { usePersonsSearchResults } from '@/features/entities/use-persons-search-
 export function SearchResultsList(): JSX.Element {
   const searchResults = usePersonsSearchResults();
   const persons = searchResults.data?.entities ?? [];
-
-  if (searchResults.isLoading) {
-    return (
-      <Box
-        sx={{
-          display: 'grid',
-          placeContent: 'center',
-          borderTopWidth: 1,
-          borderTopStyle: 'solid',
-          borderTopColor: '#eee',
-          padding: 2,
-        }}
-      >
-        <GridLoader loading={searchResults.isLoading} size="5" color="#00B050" />
-      </Box>
-    );
-  }
 
   if (persons.length === 0) {
     return (

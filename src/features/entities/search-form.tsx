@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePersonsSearch } from '@/features/entities/use-persons-search';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import Button from '@/features/ui/Button';
 
 export function SearchForm(): JSX.Element {
   const searchFilters = usePersonsSearchFilters();
@@ -37,12 +38,9 @@ export function SearchForm(): JSX.Element {
         placeholder={t(['common', 'search', 'search-term'])}
         type="search"
       />
-      <button
-        type="submit"
-        className="rounded bg-indigo-600 px-2 py-1 text-white transition hover:bg-indigo-700"
-      >
+      <Button type="submit" round="round" color="accent" size="small">
         {t(['common', 'search', 'search'])}
-      </button>
+      </Button>
     </form>
   );
 }

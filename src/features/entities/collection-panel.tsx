@@ -5,7 +5,7 @@ export function CollectionPanel(): JSX.Element {
   const searchResults = usePersonsSearchResults();
 
   return (
-    <div className="grid grid-flow-row overflow-y-scroll">
+    <div className="grid grid-flow-row">
       {searchResults.data?.entities.map((d) => {
         return <CollectionPanelEntry key={d.id} entity={d} />;
       })}
