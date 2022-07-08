@@ -1,4 +1,4 @@
-import { Popover as HeadlessPopover } from '@headlessui/react';
+import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import type { Placement } from '@popperjs/core';
 import type { DOMAttributes } from 'react';
 import { useState } from 'react';
@@ -67,19 +67,21 @@ export default function Popover(passedProps: PopoverProperties): JSX.Element {
                 ? buttonChild({ open, close, placement: getPlacement(state?.placement) })
                 : buttonChild}
             </HeadlessPopover.Button>
-            {noOverlay ? null : (
-              <HeadlessPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
-            )}
-            <HeadlessPopover.Panel
-              className={`rounded-lg bg-white p-4 drop-shadow-lg ${panelClassName}`}
-              ref={setPopperElement}
-              style={styles.popper}
-              {...attributes.popper}
-            >
-              {typeof contentChild === 'function'
-                ? contentChild({ open, close, placement: getPlacement(state?.placement) })
-                : contentChild}
-            </HeadlessPopover.Panel>
+            <Portal>
+              {noOverlay ? null : (
+                <HeadlessPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
+              )}
+              <HeadlessPopover.Panel
+                className={`rounded-lg bg-white p-4 drop-shadow-lg ${panelClassName}`}
+                ref={setPopperElement}
+                style={styles.popper}
+                {...attributes.popper}
+              >
+                {typeof contentChild === 'function'
+                  ? contentChild({ open, close, placement: getPlacement(state?.placement) })
+                  : contentChild}
+              </HeadlessPopover.Panel>
+            </Portal>
           </>
         );
       }}
