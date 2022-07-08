@@ -5,6 +5,7 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
+import Popover from '@/features/ui/Popover';
 import TextField from '@/features/ui/TextField';
 
 export const getStaticProps = withDictionaries(['common']);
@@ -147,6 +148,20 @@ export default function UiTestPage(): JSX.Element {
           <TextField id="textfield6" placeholder="Enter some text, please" required />
           <label htmlFor="textfield7">Validate: three numbers</label>
           <TextField id="textfield7" pattern="^[0-9]{3}$" />
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Popover</h2>
+
+        <div className="my-10 grid grid-cols-[auto] justify-center gap-5">
+          <Popover>
+            <h2 className="text-lg font-semibold">Foo</h2>
+            <Fragment>
+              <span>Hello World!</span>
+              <span> Hi foo bar!</span>
+            </Fragment>
+          </Popover>
         </div>
       </section>
     </Fragment>
