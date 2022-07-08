@@ -4,7 +4,9 @@ import {
   ChevronUpIcon,
   DocumentSearchIcon,
   HomeIcon,
+  RefreshIcon,
 } from '@heroicons/react/solid';
+import { resolveCaa } from 'dns';
 import { Fragment } from 'react';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
@@ -13,6 +15,7 @@ import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
 import Popover from '@/features/ui/Popover';
 import TextField from '@/features/ui/TextField';
+import { promise, toast } from '@/features/ui/toast';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -226,6 +229,119 @@ export default function UiTestPage(): JSX.Element {
               );
             }}
           </Popover>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Toasts</h2>
+
+        <div className="my-10 flex justify-center gap-5">
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const p = new Promise<void>((resolve) => {
+                setTimeout(() => {
+                  return resolve();
+                }, 2000);
+              });
+              promise(p, {
+                loading: 'Waiting...',
+                success: <b className="font-bold">Success in Promise</b>,
+                error: <b className="font-bold">Error in Promise</b>,
+              });
+            }}
+          >
+            Successful promise (2s)
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const p = new Promise<void>((_, reject) => {
+                setTimeout(() => {
+                  return reject();
+                }, 1000);
+              });
+              promise(p, {
+                loading: 'Waiting...',
+                success: <b className="font-bold">Success in Promise</b>,
+                error: <b className="font-bold">Error in Promise</b>,
+              });
+            }}
+          >
+            Unsuccessful promise (1s)
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <>
+                  This is an&nbsp;<b className="font-extrabold">excellent</b>&nbsp;toast!
+                </>,
+              );
+            }}
+          >
+            Toast with JSX
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <>
+                  <h3 className="text-lg font-semibold">Title of toast</h3>
+                  <p className="max-w-sm">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem nostrum
+                    voluptatibus omnis beatae fuga eum ipsum dolorum quod similique soluta!
+                  </p>
+                </>,
+                { color: 'accent' },
+              );
+            }}
+          >
+            Larger accent toast
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const id = toast('Foo bar');
+              setTimeout(() => {
+                return toast('Foo bar baz', { id });
+              }, 500);
+            }}
+          >
+            Toast with update
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(<>Error!</>, { color: 'warning' });
+            }}
+          >
+            Warning toast
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <span className="flex gap-2">
+                  <RefreshIcon className="h-5 w-5" />
+                  <span>Refresh complete</span>
+                </span>,
+                { color: 'success' },
+              );
+            }}
+          >
+            Toast with icon
+          </Button>
         </div>
       </section>
     </Fragment>
