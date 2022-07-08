@@ -1,4 +1,10 @@
-import { DocumentSearchIcon, HomeIcon } from '@heroicons/react/solid';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  DocumentSearchIcon,
+  HomeIcon,
+} from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
@@ -154,13 +160,71 @@ export default function UiTestPage(): JSX.Element {
       <section>
         <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Popover</h2>
 
-        <div className="my-10 grid grid-cols-[auto] justify-center gap-5">
-          <Popover>
-            <h2 className="text-lg font-semibold">Foo</h2>
+        <div className="my-10 mb-24 flex justify-center gap-5">
+          <Popover buttonClassName="flex gap-1 items-center">
+            {({ open, placement }) => {
+              return (
+                <>
+                  Open popover
+                  {open ? (
+                    placement === 'bottom' ? (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    )
+                  ) : (
+                    <ChevronRightIcon className="h-5 w-5" />
+                  )}
+                </>
+              );
+            }}
             <Fragment>
               <span>Hello World!</span>
-              <span> Hi foo bar!</span>
             </Fragment>
+          </Popover>
+
+          <Popover color="accent" size="large" round="pill" shadow="small">
+            <Fragment>Click to open</Fragment>
+            {({ close }) => {
+              return (
+                <Fragment>
+                  <div className="w-80">
+                    <h3 className="text-lg font-semibold text-intavia-gray-800">
+                      This is a larger popover content
+                    </h3>
+
+                    <p className="justify font-thin">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium ipsum
+                      fugit similique qui atque velit vel rem nihil quos sequi sit deserunt nobis
+                      dolores, nam quibusdam modi soluta eligendi libero totam officiis animi magnam
+                      nostrum inventore? Corrupti dolorum quae in quaerat dolores laudantium
+                      voluptate iure placeat veritatis laborum, aspernatur totam alias culpa tempora
+                      iste magnam ad a! Doloribus eveniet dolores, recusandae quibusdam consectetur
+                      iusto quod reiciendis odit nihil animi minus sequi necessitatibus modi facilis
+                      error nobis natus quo fuga adipisci neque pariatur dolorem explicabo! Quas
+                      voluptas tempora asperiores adipisci hic aspernatur cupiditate in sint? Nihil
+                      sed voluptatem velit quibusdam vero cum distinctio corrupti, amet voluptas
+                      accusantium architecto? Itaque, odio, rem eaque maiores omnis sapiente tempore
+                      eius minima veritatis porro id.
+                    </p>
+
+                    <div className="mt-2 flex">
+                      <Button
+                        size="small"
+                        color="warning"
+                        round="round"
+                        onClick={() => {
+                          return close();
+                        }}
+                        className="ml-auto self-end"
+                      >
+                        Close popover
+                      </Button>
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            }}
           </Popover>
         </div>
       </section>
