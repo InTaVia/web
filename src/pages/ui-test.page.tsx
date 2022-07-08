@@ -6,7 +6,6 @@ import {
   HomeIcon,
   RefreshIcon,
 } from '@heroicons/react/solid';
-import { resolveCaa } from 'dns';
 import { Fragment } from 'react';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';

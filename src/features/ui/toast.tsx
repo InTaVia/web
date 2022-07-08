@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import type { Renderable } from 'react-hot-toast';
 import RHT from 'react-hot-toast';
 
