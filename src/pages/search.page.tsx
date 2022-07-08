@@ -22,11 +22,11 @@ export default function SearchPage(): JSX.Element {
   const metadata = { title: t(['common', 'search', 'metadata', 'title']) };
 
   const leftPaneOpen = useAppSelector((state) => {
-    return selectPaneOpen(state, 'vas', 'left');
+    return selectPaneOpen(state, 'dcl', 'left');
   });
 
   const rightPaneOpen = useAppSelector((state) => {
-    return selectPaneOpen(state, 'vas', 'right');
+    return selectPaneOpen(state, 'dcl', 'right');
   });
 
   return (

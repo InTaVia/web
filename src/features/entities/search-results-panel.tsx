@@ -27,7 +27,7 @@ export function SearchResultsPanel(): JSX.Element {
       <Allotment>
         <Allotment.Pane key={`allotmentDCL`} preferredSize={'50%'}>
           <div style={{ overflow: 'hidden', overflowY: 'scroll', height: '100%' }}>
-            <SearchResultsList style={{ overflow: 'hidden', overflowY: 'scroll', height: '80%' }} />
+            <SearchResultsList />
             <SearchResultsSelection />
             <SearchPageFooter />
           </div>

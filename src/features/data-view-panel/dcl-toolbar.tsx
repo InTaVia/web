@@ -4,6 +4,7 @@ import { useAppSelector } from '@/app/store';
 import type { EntityBase } from '@/features/common/entity.model';
 import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { PaneToggle } from '@/features/ui/analyse-page-toolbar/PaneToggle';
 
 interface DCLToolbarProps {
   split?: boolean;
@@ -21,8 +22,9 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
   return (
     <div className="flex w-full justify-between gap-2 p-2">
       <div className="flex gap-2">
+        <PaneToggle parentComponent="dcl" orientation="left" />
         <button
-          className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white"
+          className="bg-intavia-brand flex gap-1 rounded-lg p-2 text-white"
           onClick={() => {
             onSave(selectedEntities);
           }}
@@ -30,7 +32,7 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
           Save {selectedEntities.length} as Collection
         </button>
         <button
-          className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white"
+          className="bg-intavia-brand flex gap-1 rounded-lg p-2 text-white"
           onClick={() => {
             const entities = searchResults.data?.entities;
 
@@ -48,9 +50,10 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
       </div>
       <div className="flex items-center gap-2">
         <GridLoader loading={searchResults.isFetching} size="2" color="#00B050" />
-        <button className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white" onClick={onSplit}>
+        <button className="bg-intavia-brand flex gap-1 rounded-lg p-2 text-white" onClick={onSplit}>
           {split ? 'Merge' : 'Split'}
         </button>
+        <PaneToggle parentComponent="dcl" orientation="right" />
       </div>
     </div>
   );
