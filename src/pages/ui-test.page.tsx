@@ -138,6 +138,11 @@ export default function UiTestPage(): JSX.Element {
       </section>
 
       <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Disclosure</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
         <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">TextField</h2>
 
         <div className="my-10 grid grid-cols-[auto_auto] justify-center gap-5">
@@ -158,6 +163,11 @@ export default function UiTestPage(): JSX.Element {
           <label htmlFor="textfield7">Validate: three numbers</label>
           <TextField id="textfield7" pattern="^[0-9]{3}$" />
         </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">TreeView</h2>
+        <p className="mx-4 text-intavia-red-900">To be discussed!</p>
       </section>
 
       <section>
@@ -230,6 +240,37 @@ export default function UiTestPage(): JSX.Element {
             }}
           </Popover>
         </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Modal Dialog</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Combobox</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Select</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Multiselect</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Radiobutton</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Checkbox</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Tabs</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
       </section>
 
       <section>
@@ -343,6 +384,15 @@ export default function UiTestPage(): JSX.Element {
             Toast with icon
           </Button>
         </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Splitter (Allotment)</h2>
+        <p className="mx-4 text-intavia-red-900">To be added! Probably not here.</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Label</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
       </section>
     </Fragment>
   );
