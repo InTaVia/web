@@ -6,7 +6,6 @@ import { CollectionEntitiesList } from '@/features/data-view-panel/data-view-pan
 import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import DisclosureWrapper from '@/features/ui/DisclosureWrapper';
 import { centerPaneProps, leftPaneProps, rightPaneProps } from '@/features/ui/panes.config';
-import { SidePaneHeader } from '@/features/ui/side-pane-header';
 import { selectPaneOpen } from '@/features/ui/ui.slice';
 
 export const getStaticProps = withDictionaries(['common']);
@@ -23,7 +22,6 @@ export default function AnalysePage(): JSX.Element {
   return (
     <Allotment>
       <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
-        <SidePaneHeader orientation="left" />
         <DisclosureWrapper title="Data" defaultOpen={true}>
           <CollectionEntitiesList />
         </DisclosureWrapper>
@@ -37,7 +35,6 @@ export default function AnalysePage(): JSX.Element {
         />
       </Allotment.Pane>
       <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
-        <SidePaneHeader orientation="right" />
         <DisclosureWrapper title="Test" defaultOpen={true}>
           <div>Placeholder</div>
         </DisclosureWrapper>
