@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { ButtonHTMLAttributes, DOMAttributes } from 'react';
+import type { ButtonHTMLAttributes, DOMAttributes, ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 
 const buttonSizes = {
@@ -118,7 +118,10 @@ export function getButtonClasses(passedProps: ButtonProperties): Pick<
   };
 }
 
-const Button = forwardRef(function Button(passedProps: ButtonProperties, ref): JSX.Element {
+const Button = forwardRef(function Button(
+  passedProps: ButtonProperties,
+  ref: ForwardedRef<HTMLButtonElement>,
+): JSX.Element {
   const { className, children, disabled, extraProps } = getButtonClasses(passedProps);
 
   return (
