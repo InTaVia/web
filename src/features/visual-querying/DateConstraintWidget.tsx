@@ -5,9 +5,9 @@ import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intav
 import { Histogram } from '@/features/visual-querying/Histogram';
 import { Origin } from '@/features/visual-querying/Origin';
 import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateDateRange } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
-interface DateConstraintProps {
+interface DateConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -17,12 +17,12 @@ interface DateConstraintProps {
   origin: Origin;
 }
 
-export function DateConstraintView(props: DateConstraintProps): JSX.Element {
+export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
-    property: constraint.type,
+    property: constraint.id,
   });
 
   const dimensions = {
@@ -38,15 +38,39 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
 
   function setBrushedArea(area: Array<number>) {
     dispatch(
-      updateDateRange({
+      updateConstraintValue({
         id: constraint.id,
-        dateRange: area,
+        value: area,
       }),
     );
   }
 
   // this is inside the foreignObject: completely new coordinate system
   const histogramOrigin = new Origin(dimensions.marginLeft, dimensions.marginTop);
+
+  function renderContent(): JSX.Element {
+    if (isLoading) {
+      return <Typography>Loading ...</Typography>;
+    }
+
+    if (data) {
+      return (
+        <svg width="100%" height="100%">
+          <g className="data">
+            <Histogram
+              brushedArea={constraint.value}
+              setBrushedArea={setBrushedArea}
+              data={data}
+              dimensions={dimensions}
+              origin={histogramOrigin}
+            />
+          </g>
+        </svg>
+      );
+    }
+
+    return <Typography>No data</Typography>;
+  }
 
   return (
     <foreignObject width={dimensions.width} height={dimensions.height} x={x} y={y}>
@@ -58,21 +82,7 @@ export function DateConstraintView(props: DateConstraintProps): JSX.Element {
           height: dimensions.height - 4,
         }}
       >
-        {isLoading ? (
-          <Typography>Loading ...</Typography>
-        ) : (
-          <svg width="100%" height="100%">
-            <g className="data">
-              <Histogram
-                brushedArea={constraint.dateRange}
-                setBrushedArea={setBrushedArea}
-                data={data!}
-                dimensions={dimensions}
-                origin={histogramOrigin}
-              />
-            </g>
-          </svg>
-        )}
+        {renderContent()}
       </Paper>
     </foreignObject>
   );

@@ -10,7 +10,7 @@ import type {
   Profession,
   ProfessionConstraint,
 } from '@/features/visual-querying/visualQuerying.slice';
-import { updateProfessions } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ProfessionsProps {
   professions: Array<ProfessionEntity & { count: number }>;
@@ -42,7 +42,7 @@ export function Professions({
 
     const numContained = professions
       .map((d) => {
-        return constraint.selection?.includes(d);
+        return constraint.value?.includes(d);
       })
       .filter((d) => {
         return d;
@@ -50,7 +50,7 @@ export function Professions({
     const totalNumber = professions.length;
     const mostOn = numContained >= totalNumber / 2;
 
-    const newSelection = new Set<typeof professions[0]>(constraint.selection ?? []);
+    const newSelection = new Set<typeof professions[0]>(constraint.value ?? []);
     if (mostOn) {
       // remove contained
       professions.forEach((v) => {
@@ -63,7 +63,7 @@ export function Professions({
       });
     }
 
-    dispatch(updateProfessions({ id: constraint.id, selection: Array.from(newSelection) }));
+    dispatch(updateConstraintValue({ id: constraint.id, value: Array.from(newSelection) }));
   }
 
   return (

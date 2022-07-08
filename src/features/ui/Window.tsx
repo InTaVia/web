@@ -9,7 +9,6 @@ export interface WindowProps {
   children?: ReactNode;
   className?: string;
   id: string;
-  isDraggable?: boolean; // FIXME: unused currently
   onClick?: () => void;
   onCopyWindow?: (id: string) => void;
   onRemoveWindow?: (id: string) => void;

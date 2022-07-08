@@ -21,6 +21,8 @@ export interface Dictionary {
       title: string;
     };
   };
+  'data-curation-lab': string;
+  'data-import': string;
   geomap: {
     metadata: {
       title: string;
@@ -45,6 +47,11 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    search: string;
+    'search-term': string;
+    'search-results-count': string;
+    'search-history': string;
+    'clear-search-history': string;
   };
   stories: {
     metadata: {
@@ -56,11 +63,13 @@ export interface Dictionary {
       title: string;
     };
   };
+  'storytelling-creator': string;
   timeline: {
     metadata: {
       title: string;
     };
   };
+  'visual-analytics-studio': string;
   'visual-query': {
     metadata: {
       title: string;

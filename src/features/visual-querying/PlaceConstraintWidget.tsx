@@ -5,9 +5,9 @@ import { GeoMap } from '@/features/geomap/geo-map';
 import { GeoMapDrawControls } from '@/features/geomap/geo-map-draw-controls';
 import { base as baseMap } from '@/features/geomap/maps.config';
 import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updatePlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
+import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
-interface PlaceConstraintProps {
+interface PlaceConstraintWidgetProps {
   idx: number;
   x: number;
   y: number;
@@ -16,21 +16,21 @@ interface PlaceConstraintProps {
   constraint: PlaceConstraint;
 }
 
-export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
+export function PlaceConstraintWidget(props: PlaceConstraintWidgetProps): JSX.Element {
   const { x, y, width, height, constraint } = props;
 
   const dispatch = useAppDispatch();
 
   function onCreate({ features }: { features: Array<Feature> }) {
-    dispatch(updatePlaceConstraint({ id: constraint.id, features }));
+    dispatch(updateConstraintValue({ id: constraint.id, value: features }));
   }
 
   function onDelete() {
-    dispatch(updatePlaceConstraint({ id: constraint.id, features: null }));
+    dispatch(updateConstraintValue({ id: constraint.id, value: null }));
   }
 
   function onUpdate({ features }: { features: Array<Feature> }) {
-    dispatch(updatePlaceConstraint({ id: constraint.id, features }));
+    dispatch(updateConstraintValue({ id: constraint.id, value: features }));
   }
 
   const dimensions = {
@@ -62,7 +62,7 @@ export function PlaceConstraintView(props: PlaceConstraintProps): JSX.Element {
             }}
             displayControlsDefault={false}
             defaultMode="draw_polygon"
-            initialFeatures={constraint.features}
+            initialFeatures={constraint.value}
             onCreate={onCreate}
             onDelete={onDelete}
             onUpdate={onUpdate}

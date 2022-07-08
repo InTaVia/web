@@ -23,27 +23,34 @@ export function VisualQuerying(): JSX.Element {
     const nameConstraint = constraints.find((constraint) => {
       return constraint.type === ConstraintType.Name;
     });
-    const name = nameConstraint ? (nameConstraint as TextConstraint).text : null;
+    const name = nameConstraint ? (nameConstraint as TextConstraint).value : null;
 
+    // TODO (samuelbeck): add date-lived-constraint
     const dateOfBirthConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.DateOfBirth;
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-birth-constraint'
+      );
     });
     const dateOfBirth = dateOfBirthConstraint
-      ? (dateOfBirthConstraint as DateConstraint).dateRange
+      ? (dateOfBirthConstraint as DateConstraint).value
       : null;
 
     const dateOfDeathConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.DateOfDeath;
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-death-constraint'
+      );
     });
     const dateOfDeath = dateOfDeathConstraint
-      ? (dateOfDeathConstraint as DateConstraint).dateRange
+      ? (dateOfDeathConstraint as DateConstraint).value
       : null;
 
     const professionsConstraint = constraints.find((constraint) => {
       return constraint.type === ConstraintType.Profession;
     });
     const professions =
-      (professionsConstraint as ProfessionConstraint | undefined)?.selection ?? undefined;
+      (professionsConstraint as ProfessionConstraint | undefined)?.value ?? undefined;
+
+    // TODO (samuelbeck): add place constraints
 
     // Send the query
     void trigger(

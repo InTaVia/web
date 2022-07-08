@@ -1,6 +1,5 @@
 /* eslint-disable testing-library/no-container */
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { clear as clearDatabase, seed as seedDatabase } from '@/mocks/db';
 import { server } from '@/mocks/mocks.server';
@@ -49,26 +48,5 @@ describe('VisualQueryingPage', () => {
 
     const button = screen.getByRole('button', { name: /Search/i });
     expect(button).toBeInTheDocument();
-  });
-
-  it('shows constraint list', async () => {
-    const router = { pathname: '/visual-querying' };
-    const { container } = render(<VisualQueryingPage />, { wrapper: createWrapper({ router }) });
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const circle = container.querySelector('svg g circle');
-    if (circle !== null) {
-      await userEvent.click(circle);
-    }
-    const list = screen.getByRole('list');
-    expect(list).toBeInTheDocument();
-
-    const listItems = screen.getAllByRole('listitem');
-    expect(listItems).toHaveLength(5);
-
-    const constraints = listItems.map((item) => {
-      return item.textContent;
-    });
-    expect(constraints).toEqual(['Name', 'Date of Birth', 'Date of Death', 'Place', 'Profession']);
   });
 });

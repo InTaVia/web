@@ -20,6 +20,10 @@
 
 .story-editor-pane {
   background: rgb(255 255 255) !important;
+  padding: 5px;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .slide-editor-wrapper {
