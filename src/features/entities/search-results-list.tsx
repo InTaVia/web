@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import { GridLoader } from 'react-spinners';
 
 import { SearchResult } from '@/features/entities/search-result';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
@@ -22,7 +23,7 @@ export function SearchResultsList(): JSX.Element {
           padding: 2,
         }}
       >
-        <Typography role="status">Loading...</Typography>
+        <GridLoader loading={searchResults.isLoading} size="5" color="#00B050" />
       </Box>
     );
   }
