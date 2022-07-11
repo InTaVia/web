@@ -6,12 +6,13 @@ import {
   HomeIcon,
   RefreshIcon,
 } from '@heroicons/react/solid';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
+import Dialog from '@/features/ui/Dialog';
 import Popover from '@/features/ui/Popover';
 import TextField from '@/features/ui/TextField';
 import { promise, toast } from '@/features/ui/toast';
@@ -243,7 +244,12 @@ export default function UiTestPage(): JSX.Element {
 
       <section>
         <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Modal Dialog</h2>
-        <p className="mx-4 text-intavia-red-900">To be added!</p>
+
+        <div className="my-10 flex justify-center gap-5">
+          <AddDialog color="primary" />
+          <AddDialog color="accent" />
+          <AddDialog color="warning" />
+        </div>
       </section>
 
       <section>
@@ -394,5 +400,51 @@ export default function UiTestPage(): JSX.Element {
         <p className="mx-4 text-intavia-red-900">To be added!</p>
       </section>
     </Fragment>
+  );
+}
+
+function AddDialog({ color }: { color: 'accent' | 'primary' | 'warning' }): JSX.Element {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button
+        size="large"
+        color={color}
+        round="round"
+        onClick={() => {
+          return setOpen(true);
+        }}
+      >
+        Dialog ({color})
+      </Button>
+
+      <Dialog
+        open={open}
+        close={() => {
+          return setOpen(false);
+        }}
+        title="This is a title"
+        color={color}
+      >
+        <div className="w-72">
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident modi molestias
+            dolore, repudiandae deleniti hic assumenda! Distinctio quisquam commodi maiores.
+          </p>
+
+          <div className="mt-2 flex justify-end">
+            <Button
+              color="warning"
+              round="round"
+              onClick={() => {
+                return setOpen(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Dialog>
+    </>
   );
 }
