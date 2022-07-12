@@ -1,8 +1,8 @@
+import 'tailwindcss/tailwind.css';
 import '@/styles/index.css';
 import '~/stories/preview.css';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
+import { I18nProvider } from '@stefanprobst/next-i18n';
 import { action } from '@storybook/addon-actions';
 import type { DecoratorFn, Parameters } from '@storybook/react';
 import {
@@ -12,22 +12,30 @@ import {
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { Fragment } from 'react';
 
+import { dictionary as common } from '@/app/i18n/common/en';
+import type { Dictionaries } from '@/app/i18n/dictionaries';
 import { Notifications } from '@/app/notifications/notifications';
 import { createMockRouter } from '@/mocks/create-mock-router';
-import { theme } from '@/styles/theme';
 
 initializeMockServiceWorker({ onUnhandledRequest: 'bypass' });
 
-const withNotifications: DecoratorFn = function withNotifications(Story, context) {
+const withNotifications: DecoratorFn = function withNotifications(story, context) {
   return (
     <Fragment>
-      <Story {...context} />
+      {story(context)}
       <Notifications />
     </Fragment>
   );
 };
 
-const withRouter: DecoratorFn = function withRouter(Story, context) {
+const withProviders: DecoratorFn = function withProviders(story, context) {
+  const partial = context.parameters['router'] as Partial<Dictionaries>;
+  const dictionaries = { common, ...partial };
+
+  return <I18nProvider dictionaries={dictionaries}>{story(context)}</I18nProvider>;
+};
+
+const withRouter: DecoratorFn = function withRouter(story, context) {
   const partial = context.parameters['router'];
   const mockRouter = createMockRouter({
     push: action('router.push'),
@@ -35,25 +43,12 @@ const withRouter: DecoratorFn = function withRouter(Story, context) {
     ...partial,
   });
 
-  return (
-    <RouterContext.Provider value={mockRouter}>
-      <Story {...context} />
-    </RouterContext.Provider>
-  );
-};
-
-const withThemeProvider: DecoratorFn = function withThemeProvider(Story, context) {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Story {...context} />
-    </ThemeProvider>
-  );
+  return <RouterContext.Provider value={mockRouter}>{story(context)}</RouterContext.Provider>;
 };
 
 export const decorators: Array<DecoratorFn> = [
   withNotifications,
-  withThemeProvider,
+  withProviders,
   withRouter,
   withMockServiceWorker as DecoratorFn,
 ];
