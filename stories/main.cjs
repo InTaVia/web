@@ -30,7 +30,7 @@ const config = {
     strictMode: true,
   },
   staticDirs: ['../public'],
-  stories: ['../**/*.stories.tsx'],
+  stories: ['../(src|stories)/**/*.stories.tsx'],
   webpackFinal(config) {
     // eslint-disable-next-line no-param-reassign
     config.resolve = config.resolve ?? {};
