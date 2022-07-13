@@ -1,11 +1,20 @@
-import { DocumentSearchIcon, HomeIcon } from '@heroicons/react/solid';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  DocumentSearchIcon,
+  HomeIcon,
+  RefreshIcon,
+} from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import ButtonLink from '@/features/ui/ButtonLink';
+import Popover from '@/features/ui/Popover';
 import TextField from '@/features/ui/TextField';
+import { promise, toast } from '@/features/ui/toast';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -128,6 +137,11 @@ export default function UiTestPage(): JSX.Element {
       </section>
 
       <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Disclosure</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
         <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">TextField</h2>
 
         <div className="my-10 grid grid-cols-[auto_auto] justify-center gap-5">
@@ -148,6 +162,236 @@ export default function UiTestPage(): JSX.Element {
           <label htmlFor="textfield7">Validate: three numbers</label>
           <TextField id="textfield7" pattern="^[0-9]{3}$" />
         </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">TreeView</h2>
+        <p className="mx-4 text-intavia-red-900">To be discussed!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Popover</h2>
+
+        <div className="my-10 mb-24 flex justify-center gap-5">
+          <Popover buttonClassName="flex gap-1 items-center">
+            {({ open, placement }) => {
+              return (
+                <>
+                  Open popover
+                  {open ? (
+                    placement === 'bottom' ? (
+                      <ChevronDownIcon className="h-5 w-5" />
+                    ) : (
+                      <ChevronUpIcon className="h-5 w-5" />
+                    )
+                  ) : (
+                    <ChevronRightIcon className="h-5 w-5" />
+                  )}
+                </>
+              );
+            }}
+            <Fragment>
+              <span>Hello World!</span>
+            </Fragment>
+          </Popover>
+
+          <Popover color="accent" size="large" round="pill" shadow="small">
+            <Fragment>Click to open</Fragment>
+            {({ close }) => {
+              return (
+                <Fragment>
+                  <div className="w-80">
+                    <h3 className="text-lg font-semibold text-intavia-gray-800">
+                      This is a larger popover content
+                    </h3>
+
+                    <p className="justify font-thin">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium ipsum
+                      fugit similique qui atque velit vel rem nihil quos sequi sit deserunt nobis
+                      dolores, nam quibusdam modi soluta eligendi libero totam officiis animi magnam
+                      nostrum inventore? Corrupti dolorum quae in quaerat dolores laudantium
+                      voluptate iure placeat veritatis laborum, aspernatur totam alias culpa tempora
+                      iste magnam ad a! Doloribus eveniet dolores, recusandae quibusdam consectetur
+                      iusto quod reiciendis odit nihil animi minus sequi necessitatibus modi facilis
+                      error nobis natus quo fuga adipisci neque pariatur dolorem explicabo! Quas
+                      voluptas tempora asperiores adipisci hic aspernatur cupiditate in sint? Nihil
+                      sed voluptatem velit quibusdam vero cum distinctio corrupti, amet voluptas
+                      accusantium architecto? Itaque, odio, rem eaque maiores omnis sapiente tempore
+                      eius minima veritatis porro id.
+                    </p>
+
+                    <div className="mt-2 flex">
+                      <Button
+                        size="small"
+                        color="warning"
+                        round="round"
+                        onClick={() => {
+                          return close();
+                        }}
+                        className="ml-auto self-end"
+                      >
+                        Close popover
+                      </Button>
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            }}
+          </Popover>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Modal Dialog</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Combobox</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Select</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Multiselect</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Radiobutton</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Checkbox</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Tabs</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Toasts</h2>
+
+        <div className="my-10 flex justify-center gap-5">
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const p = new Promise<void>((resolve) => {
+                setTimeout(() => {
+                  return resolve();
+                }, 2000);
+              });
+              promise(p, {
+                loading: 'Waiting...',
+                success: <b className="font-bold">Success in Promise</b>,
+                error: <b className="font-bold">Error in Promise</b>,
+              });
+            }}
+          >
+            Successful promise (2s)
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const p = new Promise<void>((_, reject) => {
+                setTimeout(() => {
+                  return reject();
+                }, 1000);
+              });
+              promise(p, {
+                loading: 'Waiting...',
+                success: <b className="font-bold">Success in Promise</b>,
+                error: <b className="font-bold">Error in Promise</b>,
+              });
+            }}
+          >
+            Unsuccessful promise (1s)
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <>
+                  This is an&nbsp;<b className="font-extrabold">excellent</b>&nbsp;toast!
+                </>,
+              );
+            }}
+          >
+            Toast with JSX
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <>
+                  <h3 className="text-lg font-semibold">Title of toast</h3>
+                  <p className="max-w-sm">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem nostrum
+                    voluptatibus omnis beatae fuga eum ipsum dolorum quod similique soluta!
+                  </p>
+                </>,
+                { color: 'accent' },
+              );
+            }}
+          >
+            Larger accent toast
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              const id = toast('Foo bar');
+              setTimeout(() => {
+                return toast('Foo bar baz', { id });
+              }, 500);
+            }}
+          >
+            Toast with update
+          </Button>
+
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(<>Error!</>, { color: 'warning' });
+            }}
+          >
+            Warning toast
+          </Button>
+          <Button
+            size="small"
+            round="round"
+            onClick={() => {
+              toast(
+                <span className="flex gap-2">
+                  <RefreshIcon className="h-5 w-5" />
+                  <span>Refresh complete</span>
+                </span>,
+                { color: 'success' },
+              );
+            }}
+          >
+            Toast with icon
+          </Button>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Splitter (Allotment)</h2>
+        <p className="mx-4 text-intavia-red-900">To be added! Probably not here.</p>
+      </section>
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Label</h2>
+        <p className="mx-4 text-intavia-red-900">To be added!</p>
       </section>
     </Fragment>
   );
