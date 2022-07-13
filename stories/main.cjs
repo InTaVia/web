@@ -41,6 +41,25 @@ const config = {
       '~': process.cwd(),
     };
 
+    /**
+     * We add the postcss loader manually instead of using `@storybook/addon-postcss`,
+     * so it correctly handles tsconfig paths via `resolve.alias`.
+     */
+    const cssRule = config.module?.rules?.find((rule) => {
+      if (typeof rule === 'string') return false;
+      if (!(rule.test instanceof RegExp)) return false;
+      return rule.test.test('filename.css');
+    });
+
+    if (cssRule != null && typeof cssRule !== 'string' && Array.isArray(cssRule.use)) {
+      cssRule.use.push({
+        loader: 'postcss-loader',
+        options: {
+          implementation: require('postcss'),
+        },
+      });
+    }
+
     return config;
   },
 };
