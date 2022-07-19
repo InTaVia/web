@@ -107,11 +107,6 @@ export function Histogram(props: HistogramProps) {
 
   return (
     <g ref={ref}>
-      <g>
-        <g ref={xAxisRef} />
-        <g ref={yAxisRef} />
-      </g>
-
       {bins.map((bin, idx) => {
         const x = xScale(thresholds[idx]!);
         const w = xScale(thresholds[idx]! + binSize) - x;
@@ -120,6 +115,10 @@ export function Histogram(props: HistogramProps) {
 
         return <rect key={idx} width={w} height={h} x={x} y={y} fill="lightGray" />;
       })}
+      <g>
+        <g ref={xAxisRef} />
+        <g ref={yAxisRef} />
+      </g>
     </g>
   );
 }

@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { useAppDispatch } from '@/app/store';
 import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intavia-api.service';
@@ -8,17 +8,13 @@ import type { DateConstraint } from '@/features/visual-querying/visualQuerying.s
 import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface DateConstraintWidgetProps {
-  idx: number;
-  x: number;
-  y: number;
   width: number;
   height: number;
   constraint: DateConstraint;
-  origin: Origin;
 }
 
 export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
-  const { x, y, width, height, constraint } = props;
+  const { width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
@@ -26,8 +22,8 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   });
 
   const dimensions = {
-    x: x,
-    y: y,
+    x: 0,
+    y: 0,
     marginTop: height - 32,
     marginLeft: 50,
     width: width,
@@ -73,17 +69,6 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   }
 
   return (
-    <foreignObject width={dimensions.width} height={dimensions.height} x={x} y={y}>
-      <Paper
-        elevation={3}
-        sx={{
-          margin: '2px',
-          width: dimensions.width - 4,
-          height: dimensions.height - 4,
-        }}
-      >
-        {renderContent()}
-      </Paper>
-    </foreignObject>
+    <div style={{ width: dimensions.width, height: dimensions.height }}>{renderContent()}</div>
   );
 }

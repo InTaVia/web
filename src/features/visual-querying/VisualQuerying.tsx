@@ -3,6 +3,7 @@ import { useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
+import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
 import styles from '@/features/visual-querying/visual-querying.module.css';
 import type {
   DateConstraint,
@@ -73,6 +74,14 @@ export function VisualQuerying(): JSX.Element {
       </Button>
       <div className={styles['visual-querying-inner-wrapper']} ref={parent}>
         <VisualQueryingSvg parentRef={parent} />
+
+        {constraints
+          .filter((constraint) => {
+            return constraint.opened;
+          })
+          .map((constraint, idx) => {
+            return <ConstraintContainer key={idx} constraint={constraint} />;
+          })}
       </div>
     </div>
   );

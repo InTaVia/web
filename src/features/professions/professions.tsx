@@ -13,6 +13,8 @@ import type {
 import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ProfessionsProps {
+  width?: number;
+  height?: number;
   professions: Array<ProfessionEntity & { count: number }>;
   origin: Origin;
   leafSizing: LeafSizing;
@@ -22,6 +24,8 @@ interface ProfessionsProps {
 export type ToggleProfessionFn = (professions: Array<Profession>) => void;
 
 export function Professions({
+  width,
+  height,
   constraint,
   leafSizing,
   origin,
@@ -67,7 +71,11 @@ export function Professions({
   }
 
   return (
-    <div className={styles['professions-wrapper']} ref={parent}>
+    <div
+      className={styles['professions-wrapper']}
+      style={{ width: width ?? '100%', height: height ?? '100%' }}
+      ref={parent}
+    >
       <ProfessionsSvg
         parentRef={parent}
         professions={professions}

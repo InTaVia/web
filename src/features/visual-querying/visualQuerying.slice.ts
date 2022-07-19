@@ -113,9 +113,13 @@ const visualQueryingSlice = createSlice({
       state.constraints.push(action.payload);
     },
     removeConstraint: (state, action: PayloadAction<Constraint>) => {
-      state.constraints = state.constraints.filter((constraint) => {
-        return constraint.id !== action.payload.id;
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload.id;
       });
+
+      if (constraint) {
+        constraint.value = null;
+      }
     },
     toggleConstraintWidget: (state, action: PayloadAction<string>) => {
       const constraint = state.constraints.find((constraint) => {
