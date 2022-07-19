@@ -23,7 +23,6 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
 
   const slideOutput = Object.values(story.slides).map((s) => {
     const ret = { ...s };
-    // @ts-expect-error Ignore
     delete ret.image;
     return ret;
   });
