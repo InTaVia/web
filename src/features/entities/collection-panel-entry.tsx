@@ -14,12 +14,26 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
   //const isPerson = props.entity.kind === 'person';
   const isPerson = parseInt(props.entity.id) % 2 === 0;
   const [fgColor, bgColor, symbol] = isPerson
-    ? ['text-pink-900', 'bg-pink-100', <UserCircleIcon />]
-    : ['text-blue-900', 'bg-blue-100', <LocationMarkerIcon />];
+    ? // eslint-disable-next-line react/jsx-key
+      ['text-pink-900', 'bg-pink-100', <UserCircleIcon />]
+    : // eslint-disable-next-line react/jsx-key
+      ['text-blue-900', 'bg-blue-100', <LocationMarkerIcon />];
   return (
     <div className={`my-2 mx-1 rounded border-2 border-current p-2 ${fgColor} ${bgColor}`}>
       <Disclosure>
         {({ open }) => {
+          let content = '';
+          switch (props.entity.kind) {
+            case 'person':
+              content = props.entity.gender;
+              break;
+            case 'place':
+              content = `${props.entity.lat} ${props.entity.lng}`;
+              break;
+            default:
+              break;
+          }
+
           return (
             <Fragment>
               <Disclosure.Button className="display-block py-2">
@@ -32,11 +46,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                     {props.entity.kind === 'person' ? props.entity.categories.join(', ') : ''}
                   </span>
                   <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
-                    {props.entity.kind === 'person'
-                      ? props.entity.gender
-                      : props.entity.kind === 'place'
-                      ? `${props.entity.lat} ${props.entity.lng}`
-                      : ``}
+                    {content}
                   </span>
                   <span className="font-verythin col-start-3 row-start-3 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                     {props.entity.kind === 'person' ? props.entity.occupation.join(', ') : ''}

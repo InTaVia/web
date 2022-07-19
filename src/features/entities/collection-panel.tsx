@@ -3,10 +3,9 @@ import { usePersonsSearchResults } from '@/features/entities/use-persons-search-
 
 export function CollectionPanel(): JSX.Element {
   const searchResults = usePersonsSearchResults();
-  console.log(searchResults);
 
   return (
-    <div className="grid grid-flow-row overflow-y-scroll">
+    <div className="grid grid-flow-row">
       {searchResults.data?.entities.map((d) => {
         return <CollectionPanelEntry key={d.id} entity={d} />;
       })}

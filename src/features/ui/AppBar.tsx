@@ -1,10 +1,11 @@
-import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
+import { DownloadIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
+import Button from '@/features/ui/Button';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
@@ -85,11 +86,10 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          <button className="flex items-center gap-2 rounded-lg bg-intavia-brand-900 px-4 py-1 text-base text-white hover:border hover:border-intavia-brand-900 hover:bg-white hover:text-intavia-brand-900">
-            <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
+          <Button color="accent" round="pill" className="flex items-center gap-2">
+            <DownloadIcon className="h-5 w-5" strokeWidth="1.75" />
             {t(['common', 'data-import'])}
-          </button>
-
+          </Button>
           {linksRight.map((item) => {
             return (
               <Link key={item.id} href={item.href.pathname}>
