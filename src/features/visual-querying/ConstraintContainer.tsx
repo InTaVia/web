@@ -48,6 +48,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
         className="mr-3"
         color="warning"
         onClick={confirmDeleteConstraint}
+        disabled={constraint.value === null || constraint.value === ''}
       >
         <TrashIcon className="h-5 w-5" />
       </Button>
