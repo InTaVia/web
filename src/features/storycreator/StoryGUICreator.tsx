@@ -102,7 +102,7 @@ const createDrops = (props: DropProps) => {
 
       key = key + JSON.stringify(props);
       if (props.place != null) {
-        subline = `in ${props.place.name}`;
+        subline = `in ${props.place.label.default}`;
       }
       if (props.date !== undefined && props.date !== '') {
         subline += ` in ${props.date.substring(0, 4)}`;

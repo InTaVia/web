@@ -49,7 +49,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
         component="header"
         sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 2 }}
       >
-        <PageTitle>{person.name}</PageTitle>
+        <PageTitle>{person.label}</PageTitle>
         <EntityEditButton entity={person} onSave={onEdit} />
       </Box>
       <Paper sx={{ padding: 4, maxWidth: '100%', overflow: 'auto', display: 'grid', gap: 4 }}>
@@ -75,7 +75,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
                     Place of birth
                   </Typography>
                   <Typography component="dd" color="text.secondary">
-                    {birth.place.name}
+                    {birth.place.label}
                   </Typography>
                 </Fragment>
               ) : null}
@@ -99,7 +99,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
                     Place of death
                   </Typography>
                   <Typography component="dd" color="text.secondary">
-                    {death.place.name}
+                    {death.place.label}
                   </Typography>
                 </Fragment>
               ) : null}
@@ -115,7 +115,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
               </Typography>
             </Fragment>
           ) : null}
-          {Array.isArray(person.categories) && person.categories.length > 0 ? (
+          {/* {Array.isArray(person.categories) && person.categories.length > 0 ? (
             <Fragment>
               <Typography component="dt" fontWeight={500}>
                 Categories
@@ -124,7 +124,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
                 {person.categories.join(', ')}
               </Typography>
             </Fragment>
-          ) : null}
+          ) : null} */}
         </Box>
         <Typography variant="body1" lineHeight={1.75}>
           {person.description}
@@ -154,7 +154,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
                         {event.date != null ? (
                           <span>{formatDate(new Date(event.date))}</span>
                         ) : null}{' '}
-                        {event.place != null ? <span>in {event.place.name}</span> : null}
+                        {event.place != null ? <span>in {event.place.label}</span> : null}
                       </Typography>
                     </Box>
                   </ListItem>

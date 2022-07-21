@@ -25,7 +25,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
           let content = '';
           switch (props.entity.kind) {
             case 'person':
-              content = props.entity.gender;
+              content = props.entity.gender !== undefined ? props.entity.gender : '';
               break;
             case 'place':
               content = `${props.entity.lat} ${props.entity.lng}`;
@@ -40,11 +40,11 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                 <div className="mb-3 grid grid-cols-[3.6rem_1fr_minmax(50px,max-content)] grid-rows-3 gap-1">
                   <div className={`col-start-1 row-span-3 row-start-1 ${fgColor}`}>{symbol}</div>
                   <h2 className="col-start-2 row-span-3 row-start-1 my-1 place-self-center text-lg font-semibold">
-                    {props.entity.name}
+                    {props.entity.label}
                   </h2>
-                  <span className="font-verythin col-start-3 row-start-1 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
+                  {/* <span className="font-verythin col-start-3 row-start-1 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                     {props.entity.kind === 'person' ? props.entity.categories.join(', ') : ''}
-                  </span>
+                  </span> */}
                   <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                     {content}
                   </span>
@@ -72,7 +72,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                               {event.date != null ? (
                                 <span>{formatDate(new Date(event.date))}</span>
                               ) : null}{' '}
-                              {event.place != null ? <span>in {event.place.name}</span> : null}
+                              {event.place != null ? <span>in {event.place.label}</span> : null}
                             </span>
                           </Fragment>
                         );

@@ -45,6 +45,9 @@ const initialState: EntitiesState = {
       byKind: {
         person: {},
         place: {},
+        'cultural-heritage-object': {},
+        'historical-event': {},
+        group: {},
       },
     },
     local: {
@@ -52,6 +55,9 @@ const initialState: EntitiesState = {
       byKind: {
         person: {},
         place: {},
+        'cultural-heritage-object': {},
+        'historical-event': {},
+        group: {},
       },
     },
   },

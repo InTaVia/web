@@ -38,8 +38,8 @@ export const handlers = [
       const entities = persons.slice(offset, offset + limit).map((person) => {
         return {
           ...person,
-          history: person.history?.map((relation) => {
-            return { ...relation, place: db.place.findById(relation.placeId!) };
+          history: person.history.map((event) => {
+            return { ...event, place: db.place.findById(event.placeId!) };
           }),
         };
       });
@@ -87,8 +87,8 @@ export const handlers = [
       }
       const person = {
         ..._person,
-        history: _person.history?.map((relation) => {
-          return { ...relation, place: db.place.findById(relation.placeId!) };
+        history: _person.history.map((event) => {
+          return { ...event, place: db.place.findById(event.placeId!) };
         }),
       };
 

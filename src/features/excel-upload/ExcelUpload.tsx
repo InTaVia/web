@@ -8,7 +8,14 @@ import * as XLSX from 'xlsx';
 
 import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/features/common/entities.slice';
-import type { Person, Place, StoryEvent } from '@/features/common/entity.model';
+import type {
+  EntityEvent,
+  InternationalizedLabel,
+  Person,
+  Place,
+  Source,
+  StoryEvent,
+} from '@/features/common/entity.model';
 import styles from '@/features/storycreator/storycreator.module.css';
 
 import type { Slide, SlideContent, VisualisationPane } from '../storycreator/storycreator.slice';
@@ -72,7 +79,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
   }
 
   function convertData(data: Array<any>) {
-    const events: Array<StoryEvent> = [];
+    const events: Array<EntityEvent | StoryEvent> = [];
 
     for (const raw of data) {
       let newPlace = undefined;
@@ -80,7 +87,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
         // FIXME: Missing id and description for Place
         newPlace = {
           id: 'placeholderID',
-          name: raw['Place Name'],
+          label: raw['Place Name'],
           lat: parseFloat(raw['Lat']),
           lng: parseFloat(raw['Lon']),
           kind: 'place',
@@ -102,14 +109,13 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
     }
 
     const person = {
-      name: 'Pier Paolo Vergerio',
+      label: { default: 'Pier Paolo Vergerio' } as InternationalizedLabel,
       kind: 'person',
       gender: 'Male',
       history: events,
       id: 'c1865151-d2c3-49c5-8eb5-d2ce16d86c4f',
-      occupation: [],
-      categories: [],
       description: '',
+      source: { citation: 'Excel Import' } as Source,
     } as Person;
 
     dispatch(addLocalEntity(person));
@@ -127,7 +133,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
         // FIXME: Missing id and description for Place
         newPlace = {
           id: 'placeholderID',
-          name: raw['Place Name'],
+          label: raw['Place Name'],
           lat: parseFloat(raw['Lat']),
           lng: parseFloat(raw['Lon']),
           kind: 'place',

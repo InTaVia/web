@@ -26,7 +26,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
     <Box component="article" sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
       <NextLink href={{ pathname: `/${entity.kind}/${entity.id}` }} passHref>
         <Link style={{ display: 'flex', justifyContent: 'space-between', flex: 1 }}>
-          <Typography>{entity.name}</Typography>
+          <Typography>{entity.label}</Typography>
           {hasLocalEntity ? <span> (edited locally)</span> : null}
         </Link>
       </NextLink>

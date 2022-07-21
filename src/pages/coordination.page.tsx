@@ -226,7 +226,7 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.name}`} />
+              <ListItemText id={labelId} primary={`${value.label}`} />
             </ListItemButton>
           </ListItem>
         );
