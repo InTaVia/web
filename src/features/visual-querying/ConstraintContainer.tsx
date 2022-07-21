@@ -40,7 +40,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
   }
 
   return (
-    <div className="flex h-12 w-full flex-row items-center justify-between bg-green-200">
+    <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
       <p className="ml-3 text-lg">{constraint.name}</p>
       <Button
         round="circle"
@@ -70,9 +70,7 @@ export function ConstraintContainer(props: ConstraintContainerProps): JSX.Elemen
           />
         );
       case ConstraintType.Name:
-        return (
-          <TextConstraintWidget width={300} height={80} constraint={constraint as TextConstraint} />
-        );
+        return <TextConstraintWidget constraint={constraint as TextConstraint} />;
       case ConstraintType.Places:
         return (
           <PlaceConstraintWidget

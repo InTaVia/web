@@ -72,7 +72,7 @@ export function VisualQuerying(): JSX.Element {
       <Button variant="contained" onClick={sendQuery} className={styles['search-button']}>
         Search
       </Button>
-      <div className={styles['visual-querying-inner-wrapper']} ref={parent}>
+      <div className={'grid bg-white'} ref={parent}>
         <VisualQueryingSvg parentRef={parent} />
 
         {constraints

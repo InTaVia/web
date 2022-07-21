@@ -14,10 +14,6 @@
   grid-template-rows: max-content 1fr;
 }
 
-.visual-querying-inner-wrapper {
-  display: grid;
-}
-
 .search-button {
   justify-self: start;
 }

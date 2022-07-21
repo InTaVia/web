@@ -1,19 +1,18 @@
-import { TextField } from '@mui/material';
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
+import TextField from '@/features/ui/TextField';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
 import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintWidgetProps {
-  width: number;
-  height: number;
   constraint: TextConstraint;
 }
 
 export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Element {
-  const { width, height, constraint } = props;
+  const { constraint } = props;
 
   const dispatch = useAppDispatch();
 
@@ -29,16 +28,17 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
   }
 
   return (
-    <div style={{ width: width, height: height }} className="p-3">
+    <div className="flex justify-center gap-2 p-2">
       <TextField
-        label={constraint.type}
-        variant="standard"
+        placeholder="Please enter a name"
         value={text}
-        onChange={(evt) => {
-          return setText(evt.target.value);
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          return setText(e.target.value);
         }}
       />
-      <Button onClick={handleClick}>Add</Button>
+      <Button round="round" color="accent" disabled={text === ''} onClick={handleClick}>
+        Add
+      </Button>
     </div>
   );
 }
