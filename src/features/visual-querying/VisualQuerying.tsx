@@ -12,9 +12,11 @@ import type {
 } from '@/features/visual-querying/visualQuerying.slice';
 import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
+import { useResizeObserver } from '@/lib/useResizeObserver';
 
 export function VisualQuerying(): JSX.Element {
   const parent = useRef<HTMLDivElement>(null);
+  const [width, height] = useResizeObserver(parent);
 
   const constraints = useAppSelector(selectConstraints);
   const [trigger] = useLazyGetPersonsQuery();
@@ -74,48 +76,50 @@ export function VisualQuerying(): JSX.Element {
   }
 
   function getContainerPosition(type: ConstraintType): { x: number; y: number } {
+    const center: [number, number] = [width / 2, height / 2];
+
     switch (type) {
       case ConstraintType.Dates:
-        return { x: 1500, y: 300 };
+        return { x: center[0] + 200, y: center[1] - 300 };
       case ConstraintType.Places:
-        return { x: 1500, y: 700 };
+        return { x: center[0] + 200, y: center[1] + 0 };
       case ConstraintType.Profession:
-        return { x: 700, y: 700 };
+        return { x: center[0] - 550, y: center[1] + 0 };
       case ConstraintType.Name:
-        return { x: 700, y: 300 };
+        return { x: center[0] - 550, y: center[1] - 150 };
       default:
         return { x: 0, y: 0 };
     }
   }
 
   return (
-    <div className={styles['visual-querying-outer-wrapper']}>
-      <Button
-        round="round"
-        onClick={sendQuery}
-        className="h-10 w-24 justify-self-center"
-        color="accent"
-        disabled={isButtonDisabled()}
-      >
-        Search
-      </Button>
-      <div className={'relative grid bg-white'} ref={parent}>
-        <VisualQueryingSvg parentRef={parent} />
+    // <div id="vq-outer-wrapper" className={styles['visual-querying-outer-wrapper']}>
+    //   <Button
+    //     round="round"
+    //     onClick={sendQuery}
+    //     className="h-10 w-24 justify-self-center"
+    //     color="accent"
+    //     disabled={isButtonDisabled()}
+    //   >
+    //     Search
+    //   </Button>
+    <div id="vq-inner-wrapper" className={styles['visual-querying-outer-wrapper']} ref={parent}>
+      <VisualQueryingSvg parentWidth={width} parentHeight={height} />
 
-        {constraints
-          .filter((constraint) => {
-            return constraint.opened;
-          })
-          .map((constraint, idx) => {
-            return (
-              <ConstraintContainer
-                key={idx}
-                position={getContainerPosition(constraint.type)}
-                constraint={constraint}
-              />
-            );
-          })}
-      </div>
+      {constraints
+        .filter((constraint) => {
+          return constraint.opened;
+        })
+        .map((constraint, idx) => {
+          return (
+            <ConstraintContainer
+              key={idx}
+              position={getContainerPosition(constraint.type)}
+              constraint={constraint}
+            />
+          );
+        })}
     </div>
+    // </div>
   );
 }

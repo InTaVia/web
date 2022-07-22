@@ -93,7 +93,7 @@ export function ConstraintContainer(props: ConstraintContainerProps): JSX.Elemen
 
   return (
     <div
-      className="absolute overflow-clip rounded-md border"
+      className="absolute overflow-clip rounded-md border bg-white"
       style={{ left: position.x, top: position.y }}
     >
       <ConstraintContainerHeader constraint={constraint} />

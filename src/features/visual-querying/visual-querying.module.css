@@ -9,7 +9,9 @@
    *
    */
   height: calc(100vh - 5rem);
+  width: 100vw;
   padding: 0;
   display: grid;
   grid-template-rows: max-content 1fr;
+  background-color: white;
 }
