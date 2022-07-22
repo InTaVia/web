@@ -24,6 +24,7 @@ interface ConstraintContainerHeaderProps {
 }
 
 interface ConstraintContainerProps {
+  position: { x: number; y: number };
   constraint: Constraint;
 }
 
@@ -57,7 +58,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
 }
 
 export function ConstraintContainer(props: ConstraintContainerProps): JSX.Element {
-  const { constraint } = props;
+  const { constraint, position } = props;
 
   function renderWidget(): JSX.Element {
     switch (constraint.type) {
@@ -91,9 +92,11 @@ export function ConstraintContainer(props: ConstraintContainerProps): JSX.Elemen
   }
 
   return (
-    <div className="absolute overflow-clip rounded-md border">
+    <div
+      className="absolute overflow-clip rounded-md border"
+      style={{ left: position.x, top: position.y }}
+    >
       <ConstraintContainerHeader constraint={constraint} />
-
       {renderWidget()}
     </div>
   );

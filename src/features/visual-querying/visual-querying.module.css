@@ -13,7 +13,3 @@
   display: grid;
   grid-template-rows: max-content 1fr;
 }
-
-.search-button {
-  justify-self: start;
-}
