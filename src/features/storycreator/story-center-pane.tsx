@@ -3,6 +3,7 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
+import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
@@ -129,7 +130,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   return (
-    <div className="grid grid-rows-[max-content_1fr]">
+    <div className="grid  h-full w-full grid-rows-[max-content_1fr]">
       <StroyCreatorToolbar
         onLayoutSelected={onLayoutSelected}
         desktop={desktop}
@@ -137,8 +138,40 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         timescale={timescale}
         onTimescaleChange={onTimescaleChange}
       />
-      <div className="grid h-full w-full grid-cols-1 justify-items-center">
-        <div className={`h-full ${desktop ? 'w-full' : 'w-1/3'} border border-black`}>
+      <ReactResizeDetector key="test" handleWidth handleHeight>
+        {({ width, height }) => {
+          const aspectRatio = 3 / 4;
+          let newWidth;
+          if (height !== undefined) {
+            newWidth = desktop ? width : aspectRatio * height;
+          } else {
+            newWidth = 'unset';
+          }
+          return (
+            <div className="grid h-full w-full grid-cols-1 justify-items-center">
+              <div className="h-full border border-intavia-gray-300" style={{ width: newWidth }}>
+                <SlideEditor
+                  slide={selectedSlide as Slide}
+                  //imageRef={ref}
+                  takeScreenshot={takeScreenshot}
+                  numberOfVisPanes={numberOfVis}
+                  numberOfContentPanes={numberOfContentPanes}
+                  vertical={vertical}
+                  desktop={desktop}
+                  timescale={timescale}
+                  increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                />
+              </div>
+            </div>
+          );
+        }}
+      </ReactResizeDetector>
+    </div>
+  );
+}
+
+{
+  /* <div className={`h-full ${desktop ? 'w-full' : 'w-1/3'} border border-black`}>
           <SlideEditor
             slide={selectedSlide as Slide}
             //imageRef={ref}
@@ -150,8 +183,5 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
             timescale={timescale}
             increaseNumberOfContentPanes={increaseNumberOfContentPanes}
           />
-        </div>
-      </div>
-    </div>
-  );
+        </div> */
 }

@@ -75,7 +75,7 @@ function StoryScreen(): JSX.Element | null {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      <Allotment proportionalLayout={false}>
+      <Allotment>
         <Allotment.Pane
           priority={'LOW' as LayoutPriority}
           className="grid overflow-hidden overflow-y-scroll"
@@ -98,7 +98,6 @@ function StoryScreen(): JSX.Element | null {
           className="grid overflow-hidden overflow-y-scroll"
           visible={rightPaneOpen}
           {...rightPaneProps}
-          preferredSize={'15%'}
         >
           <Allotment vertical={true}>
             <Allotment.Pane

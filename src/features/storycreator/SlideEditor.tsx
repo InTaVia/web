@@ -24,10 +24,10 @@ interface SlideEditorProps {
   takeScreenshot?: () => void;
   numberOfVisPanes: number;
   numberOfContentPanes: number;
-  vertical: boolean;
+  vertical?: boolean;
   increaseNumberOfContentPanes: () => void;
-  desktop: boolean;
-  timescale: boolean;
+  desktop?: boolean;
+  timescale?: boolean;
 }
 
 interface DropProps {
@@ -43,10 +43,10 @@ export function SlideEditor(props: SlideEditorProps) {
     /* imageRef, */
     numberOfContentPanes,
     numberOfVisPanes,
-    vertical,
+    vertical = false,
     increaseNumberOfContentPanes,
-    //desktop,
-    timescale,
+    //desktop = false,
+    timescale = false,
   } = props;
   const [openDialog, setOpenDialog] = useState(false);
 
