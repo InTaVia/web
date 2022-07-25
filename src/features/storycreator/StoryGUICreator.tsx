@@ -414,6 +414,8 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
                       numberOfVisPanes={numberOfVis}
                       numberOfContentPanes={numberOfContentPanes}
                       vertical={vertical}
+                      timescale={false}
+                      desktop={true}
                       increaseNumberOfContentPanes={increaseNumberOfContentPanes}
                     />
                   );
