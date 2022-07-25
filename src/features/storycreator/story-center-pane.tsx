@@ -1,38 +1,27 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import { Button, IconButton } from '@mui/material';
-import { Allotment } from 'allotment';
 import { toPng } from 'html-to-image';
-import type { RefObject } from 'react';
 import { useRef } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
-import type { Place } from '@/features/common/entity.model';
-import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
-import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
-  createSlide,
-  createSlidesInBulk,
   selectSlidesByStoryID,
   setImage,
   setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
-import { StoryFlow } from '@/features/storycreator/StoryFlow';
 
-interface DropProps {
+/* interface DropProps {
   name?: string | null;
   title?: string | null;
   label?: string | null;
   type: string;
   place?: Place | null;
   date?: IsoDateString;
-}
+} */
 
 export interface SlideLayout {
   numberOfVis: 0 | 1 | 2;
@@ -80,10 +69,14 @@ export const SlideLayouts: Record<string, SlideLayout> = {
 
 interface StoryCenterPaneProps {
   story: Story;
+  desktop: boolean;
+  onDesktopChange: (desktop: boolean) => void;
+  timescale: boolean;
+  onTimescaleChange: (timescale: boolean) => void;
 }
 
 export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
-  const { story } = props;
+  const { story, desktop, onDesktopChange, timescale, onTimescaleChange } = props;
 
   const dispatch = useAppDispatch();
 
@@ -129,16 +122,36 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           layout!.vertical === vertical &&
           layout!.numberOfVis === numberOfVis
         ) {
-          switchLayout(key);
+          dispatch(setLayoutForSlide({ slide: selectedSlide, layout: key }));
         }
       }
     }
   };
 
   return (
-    <div style={{ position: 'relative', height: `100%`, width: `100%` }}>
-      <StroyCreatorToolbar onLayoutSelected={onLayoutSelected} />
-      {selectedSlide?.layout}
+    <div className="grid grid-rows-[max-content_1fr]">
+      <StroyCreatorToolbar
+        onLayoutSelected={onLayoutSelected}
+        desktop={desktop}
+        onDesktopChange={onDesktopChange}
+        timescale={timescale}
+        onTimescaleChange={onTimescaleChange}
+      />
+      <div className="grid h-full w-full grid-cols-1 justify-items-center">
+        <div className={`h-full ${desktop ? 'w-full' : 'w-1/3'} border border-black`}>
+          <SlideEditor
+            slide={selectedSlide as Slide}
+            //imageRef={ref}
+            takeScreenshot={takeScreenshot}
+            numberOfVisPanes={numberOfVis}
+            numberOfContentPanes={numberOfContentPanes}
+            vertical={vertical}
+            desktop={desktop}
+            timescale={timescale}
+            increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+          />
+        </div>
+      </div>
     </div>
   );
 }

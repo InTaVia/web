@@ -7,17 +7,17 @@ import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import { copySlide, removeSlide, selectSlide } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
-
 // FIXME: height unused
 interface StoryFlowProps {
   width: number | undefined;
   height: number | undefined;
   targetRef: RefObject<HTMLElement> | undefined;
   story: Story;
+  vertical?: boolean;
 }
 
 export function StoryFlow(props: StoryFlowProps) {
-  const { width: myWidth, targetRef, story } = props;
+  const { story, vertical = false, width, height, targetRef } = props;
 
   const dispatch = useAppDispatch();
 
@@ -36,11 +36,15 @@ export function StoryFlow(props: StoryFlowProps) {
     for (const i in newSlides) {
       const s = newSlides[parseInt(i)]!;
       newLayout.push({ i: 'slide' + s.id, x: x, y: y, w: 1, h: 1 });
-      x = x + 1;
 
-      if ((parseInt(i) + 1) % 8 === 0) {
-        x = 0;
+      if (vertical) {
         y = y + 1;
+      } else {
+        x = x + 1;
+        if ((parseInt(i) + 1) % 8 === 0) {
+          x = 0;
+          y = y + 1;
+        }
       }
     }
 
@@ -58,22 +62,24 @@ export function StoryFlow(props: StoryFlowProps) {
   function onCopy(slideID: Slide['id']) {
     dispatch(copySlide({ story: story.id, slide: slideID }));
   }
+  console.log('height', height);
 
   return (
     <div
-      ref={targetRef as RefObject<HTMLDivElement>}
-      className={styles['slide-editor-wrapper']}
-      style={{ overflow: 'hidden', overflowY: 'scroll' }}
+    /* className={styles['slide-editor-wrapper']} */
+    /* ref={targetRef as RefObject<HTMLDivElement>} */
     >
       <ReactGridLayout
+        innerRef={targetRef as RefObject<HTMLDivElement>}
         className="layout"
         layout={layout}
         rowHeight={120}
-        cols={8}
-        width={myWidth}
-        compactType="horizontal"
+        width={width}
+        cols={vertical ? 1 : 8}
+        compactType={vertical ? 'vertical' : 'horizontal'}
         isResizable={false}
         useCSSTransforms={true}
+        style={{ height: `${height}px`, maxHeight: `${height}px` }}
       >
         {slides.map((slide: Slide) => {
           return (

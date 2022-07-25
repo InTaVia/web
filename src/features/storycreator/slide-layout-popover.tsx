@@ -1,7 +1,6 @@
-import { Popover, Transition } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/solid';
-
 import type { SlideLayout } from '@/features/storycreator/story-center-pane';
+import Button from '@/features/ui/Button';
+import Popover from '@/features/ui/Popover';
 
 interface LayoutOptionData {
   key: string;
@@ -112,66 +111,64 @@ export interface SlideLayoutButtonProps {
 
 export default function SlideLayoutButton(props: SlideLayoutButtonProps): JSX.Element {
   return (
-    <Popover className="relative">
-      {({ open, close }) => {
+    <Popover color="accent" size="small" round="pill">
+      Slide Layout
+      {({ close }) => {
         return (
-          <>
-            <Popover.Button className="flex gap-1 rounded-lg bg-intavia-brand-700 p-2 text-white hover:bg-intavia-brand-900">
-              <ChevronRightIcon className={`${open ? 'rotate-90 transform' : ''} h-5 w-5`} />
-              <span>Layouts</span>
-            </Popover.Button>
+          <div className="w-90">
+            <h3 className="text-lg font-semibold text-intavia-gray-800">Set Your Slide Layout</h3>
+            <div className="max-h-54 grid grid-cols-2 gap-1 overflow-y-auto rounded-md p-1 text-gray-800 drop-shadow-2xl">
+              {layoutOptions.map((option) => {
+                return (
+                  <button
+                    key={option.key}
+                    className="grid grid-cols-[3.6rem_1fr] grid-rows-[1.2rem_2.4rem] gap-1 rounded bg-white p-1 hover:bg-slate-100 active:bg-slate-300"
+                    onClick={() => {
+                      props.onLayoutSelected(option.key);
+                      close();
+                    }}
+                  >
+                    <svg className="col-1 row-span-full" viewBox="-0.3 -0.3 1.6 1.6">
+                      {option.symbol !== undefined && (
+                        <path
+                          d={option.symbol}
+                          strokeWidth={0.02}
+                          shapeRendering="crispEdges"
+                          fill="none"
+                          stroke="currentColor"
+                        />
+                      )}
+                      {option.contentSymbol !== undefined && (
+                        <path
+                          d={option.contentSymbol}
+                          strokeWidth={0.02}
+                          shapeRendering="crispEdges"
+                          fill="rgb(165, 223, 252)"
+                          stroke="currentColor"
+                        />
+                      )}
+                    </svg>
+                    <span className="col-2 row-1 text-left font-semibold">{option.title}</span>
+                    <p className="col-2 row-1 text-left font-light">{option.description ?? ''}</p>
+                  </button>
+                );
+              })}
+            </div>
 
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Popover.Panel className="absolute z-10 mt-4 w-[32rem]">
-                <div className="max-h-54 grid grid-cols-2 gap-4 overflow-y-auto rounded-md bg-white p-4 text-gray-800 drop-shadow-2xl">
-                  {layoutOptions.map((option) => {
-                    return (
-                      <button
-                        key={option.key}
-                        className="grid grid-cols-[3.6rem_1fr] grid-rows-[1.2rem_2.4rem] gap-1 rounded bg-white p-1 hover:bg-slate-100 active:bg-slate-300"
-                        onClick={() => {
-                          props.onLayoutSelected(option.key);
-                          close();
-                        }}
-                      >
-                        <svg className="col-1 row-span-full" viewBox="-0.3 -0.3 1.6 1.6">
-                          {option.symbol !== undefined && (
-                            <path
-                              d={option.symbol}
-                              strokeWidth={0.02}
-                              shapeRendering="crispEdges"
-                              fill="none"
-                              stroke="currentColor"
-                            />
-                          )}
-                          {option.contentSymbol !== undefined && (
-                            <path
-                              d={option.contentSymbol}
-                              strokeWidth={0.02}
-                              shapeRendering="crispEdges"
-                              fill="rgb(180 203 230)"
-                              stroke="currentColor"
-                            />
-                          )}
-                        </svg>
-                        <span className="col-2 row-1 text-left font-semibold">{option.title}</span>
-                        <p className="col-2 row-1 text-left font-light">
-                          {option.description ?? ''}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </>
+            <div className="mt-2 flex">
+              <Button
+                size="small"
+                color="warning"
+                round="round"
+                onClick={() => {
+                  return close();
+                }}
+                className="ml-auto self-end"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
         );
       }}
     </Popover>

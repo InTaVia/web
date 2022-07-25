@@ -6,7 +6,6 @@ import ReactResizeDetector from 'react-resize-detector';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
-import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   addContentToContentPane,
@@ -17,16 +16,18 @@ import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 
 interface SlideEditorProps {
-  width: number | undefined;
-  height: number | undefined; // FIXME: unused
-  targetRef: RefObject<HTMLDivElement>;
+  width?: number | undefined;
+  height?: number | undefined; // FIXME: unused
+  targetRef?: RefObject<HTMLDivElement>;
   /* imageRef: RefObject<HTMLDivElement>; */
   slide: Slide;
-  takeScreenshot: () => void;
+  takeScreenshot?: () => void;
   numberOfVisPanes: number;
   numberOfContentPanes: number;
   vertical: boolean;
   increaseNumberOfContentPanes: () => void;
+  desktop: boolean;
+  timescale: boolean;
 }
 
 interface DropProps {
@@ -44,6 +45,8 @@ export function SlideEditor(props: SlideEditorProps) {
     numberOfVisPanes,
     vertical,
     increaseNumberOfContentPanes,
+    //desktop,
+    timescale,
   } = props;
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -172,26 +175,33 @@ export function SlideEditor(props: SlideEditorProps) {
     });
 
     return (
-      <Allotment>
-        <Allotment.Pane visible={visPanes.length > 0 ? true : false}>
-          <Allotment
-            key={`alottmentForVis${vertical}`}
-            /* Force the layout to repaint */ vertical={vertical ? false : true}
-          >
-            {visPanes.map((vis, index) => {
-              return <Allotment.Pane key={index}>{vis}</Allotment.Pane>;
-            })}
+      <Allotment vertical={true}>
+        <Allotment.Pane>
+          <Allotment>
+            <Allotment.Pane visible={visPanes.length > 0 ? true : false}>
+              <Allotment
+                key={`alottmentForVis${vertical}`}
+                /* Force the layout to repaint */ vertical={vertical ? false : true}
+              >
+                {visPanes.map((vis, index) => {
+                  return <Allotment.Pane key={index}>{vis}</Allotment.Pane>;
+                })}
+              </Allotment>
+            </Allotment.Pane>
+            <Allotment.Pane preferredSize={'33%'} visible={contentPanes.length > 0 ? true : false}>
+              <Allotment
+                key={`alottmentForContent${vertical}`} //Force the layout to repaint
+                vertical={vertical ? false : true}
+              >
+                {contentPanes.map((content, index) => {
+                  return <Allotment.Pane key={index}>{content}</Allotment.Pane>;
+                })}
+              </Allotment>
+            </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
-        <Allotment.Pane visible={contentPanes.length > 0 ? true : false}>
-          <Allotment
-            key={`alottmentForContent${vertical}`} //Force the layout to repaint
-            vertical={vertical ? false : true}
-          >
-            {contentPanes.map((content, index) => {
-              return <Allotment.Pane key={index}>{content}</Allotment.Pane>;
-            })}
-          </Allotment>
+        <Allotment.Pane maxSize={50} key={`${timescale}`} visible={timescale}>
+          <div className="h-full w-full bg-intavia-red-200" />
         </Allotment.Pane>
       </Allotment>
     );
@@ -199,7 +209,8 @@ export function SlideEditor(props: SlideEditorProps) {
 
   return (
     /* innerref={imageRef} */
-    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
+    // className={styles['slide-editor-wrapper']}
+    <div ref={targetRef} className="h-full">
       {createSplitterLayout()}
       {editElement != null && (
         <StoryContentDialog
