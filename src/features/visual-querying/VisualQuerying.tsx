@@ -93,33 +93,33 @@ export function VisualQuerying(): JSX.Element {
   }
 
   return (
-    // <div id="vq-outer-wrapper" className={styles['visual-querying-outer-wrapper']}>
-    //   <Button
-    //     round="round"
-    //     onClick={sendQuery}
-    //     className="h-10 w-24 justify-self-center"
-    //     color="accent"
-    //     disabled={isButtonDisabled()}
-    //   >
-    //     Search
-    //   </Button>
-    <div id="vq-inner-wrapper" className={styles['visual-querying-outer-wrapper']} ref={parent}>
-      <VisualQueryingSvg parentWidth={width} parentHeight={height} />
+    <div id="vq-outer-wrapper" className={styles['visual-querying-outer-wrapper']}>
+      <Button
+        round="round"
+        onClick={sendQuery}
+        className="h-10 w-24 justify-self-center"
+        color="accent"
+        disabled={isButtonDisabled()}
+      >
+        Search
+      </Button>
+      <div id="vq-inner-wrapper" className="h-full w-full" ref={parent}>
+        <VisualQueryingSvg parentWidth={width} parentHeight={height} />
 
-      {constraints
-        .filter((constraint) => {
-          return constraint.opened;
-        })
-        .map((constraint, idx) => {
-          return (
-            <ConstraintContainer
-              key={idx}
-              position={getContainerPosition(constraint.type)}
-              constraint={constraint}
-            />
-          );
-        })}
+        {constraints
+          .filter((constraint) => {
+            return constraint.opened;
+          })
+          .map((constraint, idx) => {
+            return (
+              <ConstraintContainer
+                key={idx}
+                position={getContainerPosition(constraint.type)}
+                constraint={constraint}
+              />
+            );
+          })}
+      </div>
     </div>
-    // </div>
   );
 }

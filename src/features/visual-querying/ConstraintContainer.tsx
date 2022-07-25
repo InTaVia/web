@@ -40,9 +40,32 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
     }
   }
 
+  function renderTypeSpecificHeader(): JSX.Element {
+    switch (constraint.type) {
+      case ConstraintType.Dates:
+        // eslint-disable-next-line no-case-declarations
+        if (constraint.value !== null) {
+          return (
+            <>
+              <p className="text-base text-intavia-brand-700">{constraint.value[0] as number}</p>
+              <p className="text-base text-intavia-gray-700">-</p>
+              <p className="text-base text-intavia-brand-700">{constraint.value[1] as number}</p>
+            </>
+          );
+        }
+      // eslint-disable-next-line no-fallthrough
+      default:
+        return <></>;
+    }
+  }
+
   return (
     <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
-      <p className="ml-3 text-lg">{constraint.name}</p>
+      <div className="h-content justify-left flex flex-row items-center gap-2">
+        <p className="ml-3 mr-4 text-lg">{constraint.name}</p>
+        {renderTypeSpecificHeader()}
+      </div>
+
       <Button
         round="circle"
         size="small"
