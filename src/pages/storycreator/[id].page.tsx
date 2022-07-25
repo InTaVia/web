@@ -1,5 +1,4 @@
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
-import type { LayoutPriority } from 'allotment';
 import { Allotment } from 'allotment';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
@@ -10,6 +9,7 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { CollectionPanel } from '@/features/entities/collection-panel';
 import { StoryCenterPane } from '@/features/storycreator/story-center-pane';
 import { createSlide, selectStories } from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
@@ -56,6 +56,10 @@ function StoryScreen(): JSX.Element | null {
 
   const [openUpperPanel, setOpenUpperPanel] = useState(true);
   const [openBottomPanel, setOpenBottomPanel] = useState(false);
+
+  const [openLeftUpperPanel, setOpenLeftUpperPanel] = useState(true);
+  //const [openLeftBottomPanel, setOpenLeftBottomPanel] = useState(false);
+
   const [desktop, setDesktop] = useState(true);
   const [timescale, setTimescale] = useState(false);
 
@@ -77,14 +81,33 @@ function StoryScreen(): JSX.Element | null {
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Allotment>
         <Allotment.Pane
-          priority={'LOW' as LayoutPriority}
           className="grid overflow-hidden overflow-y-scroll"
           visible={leftPaneOpen}
           {...leftPaneProps}
+          preferredSize="20%"
         >
-          LEFT
+          <Allotment vertical={true}>
+            <Allotment.Pane
+              key={`leftUpperPanel${openLeftUpperPanel}`}
+              minSize={24}
+              preferredSize={openLeftUpperPanel ? '50%' : 24}
+            >
+              <div className="grid h-full grid-cols-1 grid-rows-[max-content_1fr]">
+                <AllotmentHeader
+                  title="Collections"
+                  open={true}
+                  onClick={() => {
+                    setOpenLeftUpperPanel(!openLeftUpperPanel);
+                  }}
+                />
+                <div className="overflow-hidden overflow-y-scroll">
+                  <CollectionPanel />
+                </div>
+              </div>
+            </Allotment.Pane>
+          </Allotment>
         </Allotment.Pane>
-        <Allotment.Pane {...centerPaneProps} priority={'HIGH' as LayoutPriority}>
+        <Allotment.Pane {...centerPaneProps}>
           <StoryCenterPane
             story={story}
             desktop={desktop}
@@ -94,7 +117,6 @@ function StoryScreen(): JSX.Element | null {
           />
         </Allotment.Pane>
         <Allotment.Pane
-          priority={'Visualizations' as LayoutPriority}
           className="grid overflow-hidden overflow-y-scroll"
           visible={rightPaneOpen}
           {...rightPaneProps}
@@ -162,68 +184,4 @@ function StoryScreen(): JSX.Element | null {
       </Allotment>
     </Fragment>
   );
-
-  /* return (
-    <Container maxWidth={false} sx={{ height: '95vh', display: 'grid', gap: 4, padding: 4 }}>
-      <StoryCreator story={story} />
-    </Container>
-  ); */
-}
-
-{
-  /* <div
-                className="grid h-full grid-rows-[max-content_1fr] overflow-hidden overflow-y-scroll bg-teal-400"
-                style={{ position: 'relative' }}
-              >
-                <ReactResizeDetector handleWidth handleHeight>
-                  {({ width, height, targetRef }) => {
-                    return (
-                      <StoryFlow
-                        story={story}
-                        vertical={true}
-                        width={width}
-                        height={height}
-                        targetRef={targetRef}
-                      />
-                    );
-                  }}
-                </ReactResizeDetector>
-                <div
-                  className="h-28 max-h-28 w-full bg-green-900"
-                  style={{ position: 'absolute', bottom: 0 }}
-                >
-                  <Button
-                    onClick={() => {
-                      dispatch(createSlide(story.id));
-                    }}
-                  >
-                    Add Slide
-                  </Button>
-                </div>
-              </div> */
-}
-
-{
-  /* <ReactResizeDetector handleWidth handleHeight>
-                {({ width, height, targetRef }) => {
-                  return (
-                    <div
-                      className="grid grid-flow-row auto-rows-max"
-                      //ref={targetRef}
-                      //style={{ height, width }}
-                    >
-                      <AllotmentHeader
-                        title="Story Flow"
-                        open={openUpperPanel}
-                        onClick={() => {
-                          setOpenUpperPanel(!openUpperPanel);
-                        }}
-                      />
-
-                      <div className="height-11 bg-teal-400">{width}</div>
-                      <div className="height-11 bg-teal-200">{height}</div>
-                    </div>
-                  );
-                }}
-              </ReactResizeDetector> */
 }
