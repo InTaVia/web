@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 const buttonSizes = {
   'extra-small': 'text-xs p-1 px-2 py-1 font-extralight',
-  small: 'text-sm p-1.5 px-3 py-1.5 font-light',
+  small: 'text-sm p-1.5 px-3 py-1.5 font-normal',
   regular: 'text-base p-2 px-4 py-2 font-normal',
   large: 'text-lg p-2.5 px-5 py-2.5 font-semibold',
   'extra-large': 'text-xl p-4 px-8 py-4 font-bold',
