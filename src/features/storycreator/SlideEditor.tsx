@@ -66,6 +66,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
+
     const layoutItem = i_layoutItem;
 
     let targetPane = i_targetPane;

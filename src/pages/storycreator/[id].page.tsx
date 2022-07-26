@@ -13,6 +13,7 @@ import { CollectionPanel } from '@/features/entities/collection-panel';
 import { StoryCenterPane } from '@/features/storycreator/story-center-pane';
 import { createSlide, selectStories } from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
+import { VisualizationDragger } from '@/features/storycreator/visualization-dragger';
 import AllotmentHeader from '@/features/ui/AllotmentHeader';
 import Button from '@/features/ui/Button';
 import { centerPaneProps, leftPaneProps, rightPaneProps } from '@/features/ui/panes.config';
@@ -55,7 +56,7 @@ function StoryScreen(): JSX.Element | null {
   const dispatch = useAppDispatch();
 
   const [openUpperPanel, setOpenUpperPanel] = useState(true);
-  const [openBottomPanel, setOpenBottomPanel] = useState(false);
+  const [openBottomPanel, setOpenBottomPanel] = useState(true);
 
   const [openLeftUpperPanel, setOpenLeftUpperPanel] = useState(true);
   //const [openLeftBottomPanel, setOpenLeftBottomPanel] = useState(false);
@@ -101,7 +102,7 @@ function StoryScreen(): JSX.Element | null {
                   }}
                 />
                 <div className="overflow-hidden overflow-y-scroll">
-                  <CollectionPanel />
+                  <CollectionPanel draggable mini />
                 </div>
               </div>
             </Allotment.Pane>
@@ -168,16 +169,16 @@ function StoryScreen(): JSX.Element | null {
             <Allotment.Pane
               key={`bottomPanel${openBottomPanel}`}
               minSize={24}
-              preferredSize={openBottomPanel ? '50%' : 24}
+              preferredSize={openBottomPanel ? '35%' : 24}
             >
               <AllotmentHeader
-                title="BLA"
+                title="Visualizations"
                 open={openBottomPanel}
                 onClick={() => {
                   setOpenBottomPanel(!openBottomPanel);
                 }}
               />
-              BLA
+              <VisualizationDragger />
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
