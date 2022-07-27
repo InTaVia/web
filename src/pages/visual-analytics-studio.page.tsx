@@ -1,16 +1,20 @@
 import { Allotment } from 'allotment';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { CollectionEntitiesList } from '@/features/data-view-panel/data-view-panel';
+import type { LayoutOptionData } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import DisclosureWrapper from '@/features/ui/DisclosureWrapper';
 import { centerPaneProps, leftPaneProps, rightPaneProps } from '@/features/ui/panes.config';
 import { selectPaneOpen } from '@/features/ui/ui.slice';
+import Workspaces from '@/features/visualization-layouts/workspaces';
+import { setLayoutForCurrentWorkspace } from '@/features/visualization-layouts/workspaces.slice';
 
 export const getStaticProps = withDictionaries(['common']);
 
 export default function AnalysePage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const leftPaneOpen = useAppSelector((state) => {
     return selectPaneOpen(state, 'vas', 'left');
   });
@@ -18,6 +22,10 @@ export default function AnalysePage(): JSX.Element {
   const rightPaneOpen = useAppSelector((state) => {
     return selectPaneOpen(state, 'vas', 'right');
   });
+
+  const onLayoutSelected = (key: LayoutOptionData['key']) => {
+    dispatch(setLayoutForCurrentWorkspace(key));
+  };
 
   return (
     <Allotment>
@@ -28,11 +36,10 @@ export default function AnalysePage(): JSX.Element {
         <DisclosureWrapper title="Search History" defaultOpen={true}></DisclosureWrapper>
       </Allotment.Pane>
       <Allotment.Pane {...centerPaneProps}>
-        <AnalysePageToolbar
-          onLayoutSelected={() => {
-            console.log('Yay, you selected a layout, good job!');
-          }}
-        />
+        <div className="flex h-full w-full flex-col bg-red-100">
+          <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
+          <Workspaces />
+        </div>
       </Allotment.Pane>
       <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
         <DisclosureWrapper title="Test" defaultOpen={true}>

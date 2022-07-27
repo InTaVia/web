@@ -60,7 +60,6 @@
     "@stefanprobst/next-i18n": "1.2.0-legacy",
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
     "@stefanprobst/request": "^0.1.10",
-    "@tailwindcss/line-clamp": "^0.4.0",
     "@turf/turf": "^6.5.0",
     "allotment": "^1.14.2",
     "clsx": "^1.2.0",
@@ -96,6 +95,7 @@
     "redux-persist": "^6.0.0",
     "sharp": "^0.30.4",
     "tailwindcss": "^3.1.4",
+    "uuid": "^8.3.2",
     "xlsx": "^0.18.5",
     "zod": "^3.15.1"
   },
@@ -117,6 +117,7 @@
     "@storybook/manager-webpack5": "^6.4.19",
     "@storybook/react": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
