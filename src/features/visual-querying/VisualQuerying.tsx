@@ -103,7 +103,11 @@ export function VisualQuerying(): JSX.Element {
       >
         Search
       </Button>
-      <div id="vq-inner-wrapper" className="h-full w-full" ref={parent}>
+      <div
+        id="vq-inner-wrapper"
+        className="relative h-full w-full overflow-hidden vq-min:overflow-scroll"
+        ref={parent}
+      >
         <VisualQueryingSvg parentWidth={width} parentHeight={height} />
 
         {constraints
