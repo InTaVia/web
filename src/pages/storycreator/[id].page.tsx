@@ -59,7 +59,7 @@ function StoryScreen(): JSX.Element | null {
   const [openBottomPanel, setOpenBottomPanel] = useState(true);
 
   const [openLeftUpperPanel, setOpenLeftUpperPanel] = useState(true);
-  //const [openLeftBottomPanel, setOpenLeftBottomPanel] = useState(false);
+  const [openLeftBottomPanel, setOpenLeftBottomPanel] = useState(true);
 
   const [desktop, setDesktop] = useState(true);
   const [timescale, setTimescale] = useState(false);
@@ -87,24 +87,36 @@ function StoryScreen(): JSX.Element | null {
           {...leftPaneProps}
           preferredSize="20%"
         >
-          <Allotment vertical={true}>
+          <Allotment vertical={true} proportionalLayout={false}>
             <Allotment.Pane
               key={`leftUpperPanel${openLeftUpperPanel}`}
               minSize={24}
-              preferredSize={openLeftUpperPanel ? '50%' : 24}
+              preferredSize={openLeftUpperPanel ? '35%' : 24}
             >
               <div className="grid h-full grid-cols-1 grid-rows-[max-content_1fr]">
                 <AllotmentHeader
                   title="Collections"
-                  open={true}
+                  open={openLeftUpperPanel}
                   onClick={() => {
                     setOpenLeftUpperPanel(!openLeftUpperPanel);
                   }}
                 />
-                <div className="overflow-hidden overflow-y-scroll">
-                  <CollectionPanel draggable mini />
-                </div>
+                <div className="overflow-hidden overflow-y-scroll">Collections</div>
               </div>
+            </Allotment.Pane>
+            <Allotment.Pane
+              key={`leftBottomPanel${openLeftBottomPanel}`}
+              minSize={24}
+              preferredSize={openLeftBottomPanel ? '65%' : 24}
+            >
+              <AllotmentHeader
+                title="Entities & Events"
+                open={openLeftBottomPanel}
+                onClick={() => {
+                  setOpenLeftBottomPanel(!openLeftBottomPanel);
+                }}
+              />
+              <CollectionPanel draggable mini />
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
@@ -122,9 +134,9 @@ function StoryScreen(): JSX.Element | null {
           visible={rightPaneOpen}
           {...rightPaneProps}
         >
-          <Allotment vertical={true}>
+          <Allotment vertical={true} proportionalLayout={false}>
             <Allotment.Pane
-              key={`$upperPanel{openUpperPanel}`}
+              key={`upperPanel${openUpperPanel}`}
               minSize={24}
               preferredSize={openUpperPanel ? '50%' : 24}
             >

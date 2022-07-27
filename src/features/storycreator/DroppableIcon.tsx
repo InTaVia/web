@@ -1,6 +1,11 @@
-import { ChatIcon, DocumentTextIcon, MapIcon, PhotographIcon } from '@heroicons/react/outline';
+import {
+  ChartBarIcon,
+  ChatIcon,
+  DocumentTextIcon,
+  MapIcon,
+  PhotographIcon,
+} from '@heroicons/react/outline';
 import AdjustIcon from '@mui/icons-material/Adjust';
-import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 import styles from '@/features/ui/ui.module.css';
@@ -12,14 +17,7 @@ export interface DroppableIconProps {
 const getIcon: any = (type: string) => {
   switch (type) {
     case 'Timeline':
-      return (
-        <LinearScaleOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="timelineIcon"
-        />
-      );
+      return <ChartBarIcon className="h-6 w-6 -rotate-90 text-intavia-brand-800" />;
     case 'Map':
       return <MapIcon className="h-6 w-6 text-intavia-brand-800" />;
     case 'Text':

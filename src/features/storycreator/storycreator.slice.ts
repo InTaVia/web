@@ -447,6 +447,8 @@ export const storyCreatorSlice = createSlice({
     addVisualization: (state, action) => {
       const content = action.payload;
 
+      console.log(content);
+
       const visPaneId = content.parentPane;
       const contentId = `content1`;
       content.id = contentId;

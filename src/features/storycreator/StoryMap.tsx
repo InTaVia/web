@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
-import type { StoryEvent } from '@/features/common/entity.model';
+import type { EntityEvent, StoryEvent } from '@/features/common/entity.model';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { base as baseMap } from '@/features/geomap/maps.config';
 import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
 
 interface StoryMapProps {
-  events: Array<StoryEvent>;
+  events: Array<EntityEvent | StoryEvent>;
   width?: number;
   height?: number;
   setMapBounds?: (bounds: Array<Array<number>>) => void;

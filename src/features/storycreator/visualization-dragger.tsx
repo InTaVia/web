@@ -101,6 +101,7 @@ export function VisualizationDragger(): JSX.Element {
     <div className="grid w-full p-2">
       {[
         createDrops({ type: 'Map' }),
+        createDrops({ type: 'Timeline' }),
         createDrops({ type: 'Text' }),
         createDrops({ type: 'Image' }),
         createDrops({ type: 'Quiz' }),

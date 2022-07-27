@@ -17,6 +17,7 @@ export interface EntityEvent {
 
 export interface StoryEvent {
   type: string;
+  targetId?: Entity['id'];
   date?: IsoDateString;
   place?: Place;
   label?: string;
