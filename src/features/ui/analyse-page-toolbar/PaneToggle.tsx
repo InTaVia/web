@@ -30,7 +30,9 @@ export function PaneToggle(props: PaneToggleProps): JSX.Element {
           );
         }}
       >
-        <LoginIcon className={`${!isOpen ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`} />
+        <LoginIcon
+          className={`${!isOpen ? 'rotate-180 transform' : ''} h-5 w-5 text-intavia-brand-800`}
+        />
       </button>
     );
   } else {
@@ -46,7 +48,9 @@ export function PaneToggle(props: PaneToggleProps): JSX.Element {
           );
         }}
       >
-        <LoginIcon className={`${isOpen ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`} />
+        <LoginIcon
+          className={`${isOpen ? 'rotate-180 transform' : ''} h-5 w-5 text-intavia-brand-800`}
+        />
       </button>
     );
   }

@@ -72,7 +72,7 @@ export default function Popover(passedProps: PopoverProperties): JSX.Element {
                 <HeadlessPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
               )}
               <HeadlessPopover.Panel
-                className={`rounded-lg bg-white p-4 drop-shadow-lg ${panelClassName}`}
+                className={`z-50 rounded-lg bg-white p-4 drop-shadow-lg ${panelClassName}`}
                 ref={setPopperElement}
                 style={styles.popper}
                 {...attributes.popper}

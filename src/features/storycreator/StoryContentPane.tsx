@@ -227,8 +227,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   return (
     <div
       ref={targetRef as RefObject<HTMLDivElement>}
-      className={styles['slide-editor-wrapper']}
-      style={{ backgroundColor: 'lightblue' }}
+      className={`${styles['slide-editor-wrapper']} bg-intavia-blue-200`}
     >
       <ReactGridLayout
         className="layout"

@@ -44,7 +44,9 @@ function createTable<T extends Entity>() {
       if (entity.history == null) {
         entity.history = [];
       }
-      entity.history.push(relation);
+      const newRelation = { ...relation, targetId: id.toString() } as EntityEvent;
+
+      entity.history.push(newRelation);
     },
     getDistribution(property: string) {
       const entities = Array.from(table.values());

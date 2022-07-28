@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import type { Person, StoryEvent } from '@/features/common/entity.model';
+import type { EntityEvent, Person, StoryEvent } from '@/features/common/entity.model';
+import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
   Slide,
@@ -72,7 +73,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   }
 
   useEffect(() => {
-    console.log('vis changed');
+    console.log('Updated Visualization');
   }, [visualization]);
 
   const removeWindowHandler = (element: SlideContent) => {
@@ -89,7 +90,10 @@ export function StoryVisPane(props: StoryVisPaneProps) {
     } else if (dropProps.type === 'Person') {
       const person = dropProps.props as Person;
       if (person.history !== undefined) {
-        dispatch(addEventsToVisPane({ slide: slide, visPane: id, events: [...person.history] }));
+        const newHistory = person.history.map((historyEvent: EntityEvent) => {
+          return { ...historyEvent, targetId: person.id.toString() } as EntityEvent;
+        });
+        dispatch(addEventsToVisPane({ slide: slide, visPane: id, events: [...newHistory] }));
       }
     } else {
       const ids = windows.map((window: UiWindow) => {
@@ -108,9 +112,6 @@ export function StoryVisPane(props: StoryVisPaneProps) {
 
       switch (dropProps.type) {
         case 'Timeline':
-          layoutItem['h'] = 12;
-          layoutItem['w'] = 3;
-          break;
         case 'Map':
           layoutItem['h'] = myHeight;
           layoutItem['w'] = 48;
@@ -159,8 +160,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   const createWindowContent = (element: SlideContent) => {
     switch (element.type) {
       case 'Timeline':
-        //return <TimelineExample data={[]} />;
-        return [];
+        return <StoryTimeline events={events} />;
       case 'Map':
         return (
           <StoryMapComponent
@@ -181,6 +181,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
 
   const createLayoutPane = (element: any) => {
     switch (element.type) {
+      case 'Timeline':
       case 'Map':
         return (
           <div key={element.id} className={styles.elevated}>
