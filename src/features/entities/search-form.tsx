@@ -4,12 +4,13 @@ import type { FormEvent } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePersonsSearch } from '@/features/entities/use-persons-search';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 
 interface SearchFormProps {
-  round?: string;
-  color?: string;
-  size?: string;
+  round?: FullButtonProperties['round'];
+  color?: FullButtonProperties['color'];
+  size?: FullButtonProperties['size'];
 }
 
 export function SearchForm(props: SearchFormProps): JSX.Element {
