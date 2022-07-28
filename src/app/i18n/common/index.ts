@@ -32,12 +32,25 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    'card-dcl': {
+      title: string;
+      text: string;
+    };
+    'card-vas': {
+      title: string;
+      text: string;
+    };
+    'card-stc': {
+      title: string;
+      text: string;
+    };
   };
   imprint: {
     metadata: {
       title: string;
     };
   };
+  'learn-more': string;
   person: {
     metadata: {
       title: string;
