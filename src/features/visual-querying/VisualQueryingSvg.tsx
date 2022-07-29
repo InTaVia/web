@@ -29,8 +29,6 @@ export function VisualQueryingSvg(props: SvgProps): JSX.Element {
   const constraints = useAppSelector(selectConstraints);
 
   useEffect(() => {
-    console.log(`ParentWidth: ${parentWidth}, ParentHeight: ${parentHeight}`);
-
     const w = Math.max(svgMinWidth, parentWidth);
     const h = Math.max(svgMinHeight, parentHeight);
 

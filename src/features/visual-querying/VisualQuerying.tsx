@@ -77,16 +77,15 @@ export function VisualQuerying(): JSX.Element {
 
   function getContainerPosition(type: ConstraintType): { x: number; y: number } {
     const center: [number, number] = [width / 2, height / 2];
-
     switch (type) {
       case ConstraintType.Dates:
-        return { x: center[0] + 200, y: center[1] - 300 };
+        return { x: center[0] + 200, y: Math.max(0, center[1] - 300) };
       case ConstraintType.Places:
         return { x: center[0] + 200, y: center[1] + 0 };
       case ConstraintType.Profession:
-        return { x: center[0] - 550, y: center[1] + 0 };
+        return { x: Math.max(0, center[0] - 550), y: center[1] + 0 };
       case ConstraintType.Name:
-        return { x: center[0] - 550, y: center[1] - 150 };
+        return { x: Math.max(0, center[0] - 550), y: Math.max(0, center[1] - 150) };
       default:
         return { x: 0, y: 0 };
     }
