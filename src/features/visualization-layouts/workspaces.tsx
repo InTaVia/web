@@ -58,10 +58,12 @@ export default function Workspaces(): JSX.Element {
         {workspaces.workspaces.map((workspace, idx) => {
           return (
             <Tab
+              as="div"
               key={workspace.id}
               className={({ selected }) => {
                 return clsx({
-                  ['rounded-sm py-1 px-2 text-sm font-medium leading-5 text-blue-700']: true, //always applies
+                  ['flex cursor-pointer rounded-sm px-2 text-sm font-medium leading-5 text-blue-700']:
+                    true, //always applies
                   ['bg-white shadow']: selected, //only when open === true
                   ['text-blue-100 hover:bg-white/[0.12] hover:text-white']: !selected,
                 });
@@ -69,8 +71,8 @@ export default function Workspaces(): JSX.Element {
             >
               {({ selected }) => {
                 return selected ? (
-                  <div className="flex gap-2">
-                    {workspace.label}
+                  <div className="flex items-center gap-2">
+                    <p>{workspace.label}</p>
                     <Button
                       shadow="none"
                       size="extra-small"
@@ -83,7 +85,9 @@ export default function Workspaces(): JSX.Element {
                     </Button>
                   </div>
                 ) : (
-                  workspace.label
+                  <div className="flex items-center gap-2">
+                    <p className="cursor-pointer">{workspace.label}</p>
+                  </div>
                 );
               }}
             </Tab>
