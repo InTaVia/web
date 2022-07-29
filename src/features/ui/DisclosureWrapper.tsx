@@ -13,7 +13,7 @@ export default function DisclosureWrapper(props: DisclosureWrapperProps): JSX.El
   return (
     <Disclosure
       as="div"
-      className="grid h-full grid-rows-[max-content_1fr] overflow-hidden overflow-y-scroll"
+      className="grid h-full grid-rows-[max-content_1fr] overflow-auto"
       key={`disclosure${title}`}
       defaultOpen={defaultOpen}
     >
@@ -26,7 +26,7 @@ export default function DisclosureWrapper(props: DisclosureWrapperProps): JSX.El
                 className={`${!open ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`}
               />
             </Disclosure.Button>
-            <Disclosure.Panel className="h-full overflow-hidden overflow-y-scroll px-4 pt-4 pb-2 text-sm text-gray-500">
+            <Disclosure.Panel className="h-full overflow-auto px-4 pt-4 pb-2 text-sm text-gray-500">
               {children}
             </Disclosure.Panel>
           </>

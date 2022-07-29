@@ -1,4 +1,5 @@
 import { Allotment } from 'allotment';
+import type { LayoutPriority } from 'allotment/dist/types/src/split-view';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -15,6 +16,7 @@ export const getStaticProps = withDictionaries(['common']);
 
 export default function AnalysePage(): JSX.Element {
   const dispatch = useAppDispatch();
+
   const leftPaneOpen = useAppSelector((state) => {
     return selectPaneOpen(state, 'vas', 'left');
   });
@@ -29,7 +31,12 @@ export default function AnalysePage(): JSX.Element {
 
   return (
     <Allotment>
-      <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
+      <Allotment.Pane
+        priority={'LOW' as LayoutPriority}
+        className="grid overflow-auto"
+        visible={leftPaneOpen}
+        {...leftPaneProps}
+      >
         <DisclosureWrapper title="Data" defaultOpen={true}>
           <CollectionEntitiesList />
         </DisclosureWrapper>
@@ -41,9 +48,17 @@ export default function AnalysePage(): JSX.Element {
           <Workspaces />
         </div>
       </Allotment.Pane>
-      <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
-        <DisclosureWrapper title="Test" defaultOpen={true}>
-          <div>Placeholder</div>
+      <Allotment.Pane
+        priority={'LOW' as LayoutPriority}
+        className="grid overflow-auto"
+        visible={rightPaneOpen}
+        {...rightPaneProps}
+      >
+        <DisclosureWrapper title="Details" defaultOpen={true}>
+          <div>DetailPanel</div>
+        </DisclosureWrapper>
+        <DisclosureWrapper title="Settings" defaultOpen={true}>
+          <div>SettingsPanel</div>
         </DisclosureWrapper>
       </Allotment.Pane>
     </Allotment>
