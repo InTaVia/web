@@ -1,4 +1,4 @@
-import type { RefObject } from 'react';
+/* import type { RefObject } from 'react';
 import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
@@ -12,14 +12,7 @@ import type {
   StoryMap,
   VisualisationPane,
 } from '@/features/storycreator/storycreator.slice';
-import {
-  addEventsToVisPane,
-  addEventToVisPane,
-  addVisualization,
-  editSlideContent,
-  removeSlideContent,
-  resizeMoveContent,
-} from '@/features/storycreator/storycreator.slice';
+import { addVisualization } from '@/features/storycreator/storycreator.slice';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
@@ -77,7 +70,6 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   }, [visualization]);
 
   const removeWindowHandler = (element: SlideContent) => {
-    //dispatch(removeContent({ id: id, story: slide.story, slide: slide.id }));
     dispatch(removeSlideContent({ slide: slide, parentPane: id, content: element }));
   };
 
@@ -160,7 +152,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   const createWindowContent = (element: SlideContent) => {
     switch (element.type) {
       case 'Timeline':
-        return <StoryTimeline events={events} />;
+        return <StoryTimeline events={events} persons={[]} />;
       case 'Map':
         return (
           <StoryMapComponent
@@ -263,4 +255,9 @@ export function StoryVisPane(props: StoryVisPaneProps) {
       </ReactGridLayout>
     </div>
   );
+}
+ */
+
+export function StoryVisPane() {
+  return <></>;
 }

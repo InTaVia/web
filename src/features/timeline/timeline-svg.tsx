@@ -30,6 +30,7 @@ export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
     hoveredEntityId,
     setHoveredEntityId,
   } = props;
+
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);

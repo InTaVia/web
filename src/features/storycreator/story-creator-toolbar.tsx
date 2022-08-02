@@ -1,9 +1,10 @@
 import SlideLayoutButton from '@/features/storycreator/slide-layout-popover';
+import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import { PaneToggle } from '@/features/ui/analyse-page-toolbar/PaneToggle';
 import Button from '@/features/ui/Button';
 
 interface StroyCreatorToolbarProps {
-  onLayoutSelected: (layout: string) => void;
+  onLayoutSelected: (layout: PanelLayout) => void;
   desktop: boolean;
   onDesktopChange: (desktop: boolean) => void;
   timescale: boolean;

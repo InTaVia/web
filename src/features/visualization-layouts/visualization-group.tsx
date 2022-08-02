@@ -1,76 +1,219 @@
 import { Allotment } from 'allotment';
 import { Fragment } from 'react';
 
+import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
+import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import VisualizationContainer from '@/features/visualization-layouts/visualization-container';
-import type { SlotId, Workspace } from '@/features/visualization-layouts/workspaces.slice';
+import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 import VisualizationWizard from '@/features/visualization-wizard/visualization-wizard';
 
 interface VisualisationGroupProps {
-  workspace: Workspace;
+  visualizationSlots: Record<SlotId, string | null>;
+  contentPaneSlots?: Record<ContentSlotId, string | null>;
+  layout?: PanelLayout;
+  onAddVisualization: (visSlot: string, visId: string) => void;
+  onReleaseVisualization: (visSlot: string, visId: string) => void;
+  onSwitchVisualization: (
+    targetSlot: string,
+    targetVis: string | null,
+    soruceSlot: string,
+    sourceVis: string | null,
+  ) => void;
+  onAddContentPane?: (slotId: string) => void;
+  onDropContentPane?: (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => void;
+  setOpenDialog: (openDialog: boolean) => void;
+  setEditElement?: (editElement: any) => void;
+  setEditVisualizationElement?: (editElement: any) => void;
 }
 
-interface LayoutPaneContent {
-  content: string;
+export interface LayoutPaneContent {
+  type: 'contentPane' | 'visualization';
+  id: string;
+  preferredSize?: string;
 }
 
-interface LayoutRow {
+export interface LayoutRow {
   rows: Array<LayoutCol | LayoutPaneContent>;
 }
 
-interface LayoutCol {
+export interface LayoutCol {
   cols: Array<LayoutPaneContent | LayoutRow>;
 }
 
-type LayoutTemplateItem = LayoutCol | LayoutPaneContent | LayoutRow;
+export type LayoutTemplateItem = LayoutCol | LayoutPaneContent | LayoutRow;
+export class LayoutPaneContent {}
 
-const layoutTemplates: Record<string, LayoutTemplateItem> = {
-  'single-pane': { rows: [{ content: 'vis-1' }] },
-  'two-rows': { rows: [{ content: 'vis-1' }, { content: 'vis-2' }] },
-  'two-cols': { cols: [{ content: 'vis-1' }, { content: 'vis-2' }] },
-  'three-rows': { rows: [{ content: 'vis-1' }, { content: 'vis-2' }, { content: 'vis-3' }] },
-  'three-cols': { cols: [{ content: 'vis-1' }, { content: 'vis-2' }, { content: 'vis-3' }] },
+export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
+  'single-vis': { rows: [{ type: 'visualization', id: 'vis-1' }] },
+  'single-vis-content': {
+    cols: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'contentPane', id: 'cont-1', preferredSize: '30%' },
+    ],
+  },
+  'two-rows': {
+    rows: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'visualization', id: 'vis-2' },
+    ],
+  },
+  'two-cols': {
+    cols: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'visualization', id: 'vis-2' },
+    ],
+  },
+  'two-contents': {
+    cols: [
+      { type: 'contentPane', id: 'cont-1' },
+      { type: 'contentPane', id: 'cont-2' },
+    ],
+  },
+  'two-cols-content': {
+    cols: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'visualization', id: 'vis-2' },
+      { type: 'contentPane', id: 'cont-1', preferredSize: '20%' },
+    ],
+  },
+  'three-rows': {
+    rows: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'visualization', id: 'vis-2' },
+      { type: 'visualization', id: 'vis-3' },
+    ],
+  },
+  'three-cols': {
+    cols: [
+      { type: 'visualization', id: 'vis-1' },
+      { type: 'visualization', id: 'vis-2' },
+      { type: 'visualization', id: 'vis-3' },
+    ],
+  },
   'two-rows-one-right': {
-    cols: [{ rows: [{ content: 'vis-1' }, { content: 'vis-2' }] }, { content: 'vis-3' }],
+    cols: [
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      { type: 'visualization', id: 'vis-3' },
+    ],
+  },
+  'two-rows-content': {
+    cols: [
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      { type: 'contentPane', id: 'cont-1', preferredSize: '30%' },
+    ],
   },
   'two-rows-one-left': {
-    cols: [{ content: 'vis-1' }, { rows: [{ content: 'vis-2' }, { content: 'vis-3' }] }],
+    cols: [
+      { type: 'visualization', id: 'vis-1' },
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-2' },
+          { type: 'visualization', id: 'vis-3' },
+        ],
+      },
+    ],
   },
-  'two-cols-one-bottom': {
-    rows: [{ cols: [{ content: 'vis-1' }, { content: 'vis-2' }] }, { content: 'vis-3' }],
-  },
-  'two-cols-one-top': {
-    rows: [{ content: 'vis-1' }, { cols: [{ content: 'vis-2' }, { content: 'vis-3' }] }],
-  },
+  /* 'two-cols-one-bottom': {
+    rows: [
+      {
+        cols: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      { type: 'visualization', id: 'vis-3' },
+    ],
+  }, */
+  /*  'two-cols-one-top': {
+    rows: [
+      { type: 'visualization', id: 'vis-1' },
+      {
+        cols: [
+          { type: 'visualization', id: 'vis-2' },
+          { type: 'visualization', id: 'vis-3' },
+        ],
+      },
+    ],
+  }, */
   // FIXME: remove grid-2x2; equals grid-2x2-cols
   'grid-2x2': {
     cols: [
-      { rows: [{ content: 'vis-1' }, { content: 'vis-2' }] },
-      { rows: [{ content: 'vis-3' }, { content: 'vis-4' }] },
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-3' },
+          { type: 'visualization', id: 'vis-4' },
+        ],
+      },
     ],
   },
-  'grid-2x2-cols': {
+  /* 'grid-2x2-cols': {
     cols: [
-      { rows: [{ content: 'vis-1' }, { content: 'vis-2' }] },
-      { rows: [{ content: 'vis-3' }, { content: 'vis-4' }] },
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      {
+        rows: [
+          { type: 'visualization', id: 'vis-3' },
+          { type: 'visualization', id: 'vis-4' },
+        ],
+      },
     ],
-  },
-  'grid-2x2-rows': {
+  }, */
+  /* 'grid-2x2-rows': {
     rows: [
-      { cols: [{ content: 'vis-1' }, { content: 'vis-2' }] },
-      { cols: [{ content: 'vis-3' }, { content: 'vis-4' }] },
+      {
+        cols: [
+          { type: 'visualization', id: 'vis-1' },
+          { type: 'visualization', id: 'vis-2' },
+        ],
+      },
+      {
+        cols: [
+          { type: 'visualization', id: 'vis-3' },
+          { type: 'visualization', id: 'vis-4' },
+        ],
+      },
     ],
-  },
+  }, */
 };
 
 export default function VisualisationGroup(props: VisualisationGroupProps): JSX.Element {
-  const { workspace } = props;
-  const layout = workspace.layoutOption;
-  console.log(layout, layoutTemplates[layout]);
+  const {
+    visualizationSlots,
+    contentPaneSlots,
+    onAddVisualization,
+    onReleaseVisualization,
+    onSwitchVisualization,
+    onDropContentPane,
+    setOpenDialog,
+    setEditElement,
+    setEditVisualizationElement,
+    layout = 'single-vis',
+  } = props;
   const selectedLayout = layoutTemplates[layout] as LayoutTemplateItem;
 
   const generateLayout = (layoutTemplate: LayoutTemplateItem) => {
     for (const [key, value] of Object.entries(layoutTemplate)) {
-      console.log(`${key}: ${value}`);
       if (key === 'cols' || key === 'rows') {
         return (
           <Allotment
@@ -78,21 +221,60 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
             vertical={key === 'cols' ? false : true}
           >
             {value.map((item: LayoutTemplateItem, index: number) => {
-              return <Allotment.Pane key={`${index}`}>{generateLayout(item)}</Allotment.Pane>;
+              return (
+                <Allotment.Pane
+                  preferredSize={
+                    item instanceof LayoutPaneContent && item.preferredSize !== undefined
+                      ? item.preferredSize
+                      : ''
+                  }
+                  key={`${index}`}
+                >
+                  {generateLayout(item)}
+                </Allotment.Pane>
+              );
             })}
           </Allotment>
         );
-      } else if (key === 'content') {
-        if (workspace.visualizationSlots[value as SlotId] !== null) {
-          return (
-            <VisualizationContainer
-              workspaceId={workspace.id}
-              visualizationSlot={value}
-              id={workspace.visualizationSlots[value as SlotId]}
-            />
-          );
-        } else {
-          return <VisualizationWizard visualizationSlot={value} />;
+      } else {
+        const content = layoutTemplate as LayoutPaneContent;
+        switch (content.type) {
+          case 'visualization':
+            if (visualizationSlots[content.id as SlotId] !== null) {
+              return (
+                <VisualizationContainer
+                  visualizationSlot={content.id as SlotId}
+                  id={visualizationSlots[content.id as SlotId]}
+                  onReleaseVisualization={onReleaseVisualization}
+                  onSwitchVisualization={onSwitchVisualization}
+                  setEditElement={setEditVisualizationElement}
+                  setOpenDialog={setOpenDialog}
+                />
+              );
+            } else {
+              return (
+                <VisualizationWizard
+                  visualizationSlot={content.id as SlotId}
+                  onAddVisualization={onAddVisualization}
+                />
+              );
+            }
+          case 'contentPane':
+            if (contentPaneSlots !== undefined) {
+              if (contentPaneSlots[content.id as ContentSlotId] !== null) {
+                return (
+                  <StoryContentPane
+                    id={contentPaneSlots[content.id as ContentSlotId] as string}
+                    setEditElement={setEditElement}
+                    setOpenDialog={setOpenDialog}
+                    onDrop={onDropContentPane}
+                  />
+                );
+              }
+            }
+            break;
+          default:
+            return <div>Something in the pane configuration went wrong ...</div>;
         }
       }
     }

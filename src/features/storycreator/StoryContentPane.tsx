@@ -1,53 +1,43 @@
 import { CardContent, CardMedia, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
-import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
+import ReactResizeDetector from 'react-resize-detector';
 
-import { useAppDispatch } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import {
+  removeSlideContent,
+  resizeMoveContent,
+  selectContentPaneByID,
+} from '@/features/storycreator/contentPane.slice';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
-  ContentPane,
-  Slide,
   SlideContent,
   StoryAnswerList,
   StoryImage,
   StoryQuizAnswer,
 } from '@/features/storycreator/storycreator.slice';
-import { removeSlideContent, resizeMoveContent } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
 
-const rowHeight = 30;
 const margin: [number, number] = [0, 0];
 
 interface StoryContentPaneProps {
   id: string;
-  width: number | undefined;
-  height: number | undefined;
-  targetRef: RefObject<HTMLElement>;
-  slide: Slide;
-  setEditElement: (arg0: any) => void;
+  setEditElement?: (arg0: any) => void;
   setOpenDialog: (arg0: boolean) => void;
-  contentPane: ContentPane | undefined;
-  onDrop: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
+  onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const {
-    id,
-    width: myWidth,
-    /* height, */
-    targetRef,
-    contentPane,
-    slide,
-    setEditElement,
-    setOpenDialog,
-    onDrop,
-  } = props;
+  const { id, setEditElement, setOpenDialog, onDrop } = props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
 
   const dispatch = useAppDispatch();
+
+  const contentPane = useAppSelector((state) => {
+    return selectContentPaneByID(state, id);
+  });
 
   let contents: Array<SlideContent>;
   if (contentPane !== undefined) {
@@ -59,7 +49,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   }
 
   const removeWindowHandler = (element: SlideContent) => {
-    dispatch(removeSlideContent({ slide: slide, parentPane: id, content: element }));
+    dispatch(removeSlideContent({ parentPane: id, content: element }));
   };
 
   const createWindowContent = (element: SlideContent) => {
@@ -188,7 +178,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   };
 
   const myDrop = (i_layout: any, i_layoutItem: any, event: any) => {
-    onDrop(i_layout, i_layoutItem, event, id);
+    if (onDrop !== undefined) onDrop(i_layout, i_layoutItem, event, id);
   };
 
   const createLayoutPane = (element: any) => {
@@ -206,8 +196,10 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 removeWindowHandler(element);
               }}
               onEditContent={() => {
-                setEditElement(element);
-                setOpenDialog(true);
+                if (setEditElement !== undefined) {
+                  setEditElement(element);
+                  setOpenDialog(true);
+                }
               }}
               static={true}
             >
@@ -225,57 +217,56 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   });
 
   return (
-    <div
-      ref={targetRef as RefObject<HTMLDivElement>}
-      className={`${styles['slide-editor-wrapper']} bg-intavia-blue-200`}
-    >
-      <ReactGridLayout
-        className="layout"
-        layout={layout}
-        rowHeight={rowHeight}
-        margin={margin}
-        cols={1}
-        width={myWidth}
-        isDroppable={true}
-        compactType={'vertical'}
-        useCSSTransforms={true}
-        isDraggable={true}
-        style={{
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          overflowY: 'scroll',
-        }}
-        onDrop={myDrop}
-        onResizeStop={(iLayout, element, resized) => {
-          dispatch(
-            resizeMoveContent({
-              layout: resized,
-              slide: slide.id,
-              story: slide.story,
-              parentPane: id,
-              content: element.i,
-              parentType: 'Content',
-            }),
+    <div className="grid h-full w-full">
+      <ReactResizeDetector handleWidth handleHeight>
+        {({ width, height }) => {
+          return (
+            <ReactGridLayout
+              className="layout"
+              layout={layout}
+              rowHeight={height !== undefined ? height / 8 : 60}
+              margin={margin}
+              cols={1}
+              width={width}
+              isDroppable={true}
+              compactType={'vertical'}
+              useCSSTransforms={true}
+              isDraggable={true}
+              style={{
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                overflowY: 'scroll',
+              }}
+              onDrop={myDrop}
+              onResizeStop={(iLayout, element, resized) => {
+                dispatch(
+                  resizeMoveContent({
+                    layout: resized,
+                    parentPane: id,
+                    content: element.i,
+                    parentType: 'Content',
+                  }),
+                );
+              }}
+              onDragStop={(iLayout, element, dragged) => {
+                dispatch(
+                  resizeMoveContent({
+                    layout: dragged,
+                    parentPane: id,
+                    content: element.i,
+                    parentType: 'Content',
+                  }),
+                );
+              }}
+            >
+              {contents.map((content) => {
+                return createLayoutPane(content);
+              })}
+            </ReactGridLayout>
           );
         }}
-        onDragStop={(iLayout, element, dragged) => {
-          dispatch(
-            resizeMoveContent({
-              layout: dragged,
-              slide: slide.id,
-              story: slide.story,
-              parentPane: id,
-              content: element.i,
-              parentType: 'Content',
-            }),
-          );
-        }}
-      >
-        {contents.map((content) => {
-          return createLayoutPane(content);
-        })}
-      </ReactGridLayout>
+      </ReactResizeDetector>
     </div>
   );
 }

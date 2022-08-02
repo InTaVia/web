@@ -43,68 +43,79 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
     setTmpProperties({ ...tmpProperties, answerlist: newVal });
   };
 
-  const editableAttributes = Object.values(element.properties as object)
-    .filter((prop: StoryContentProperty) => {
-      return prop.editable;
-    })
-    .sort((a: StoryContentProperty, b: StoryContentProperty) => {
-      return a.sort - b.sort;
-    });
+  let editableAttributes = [];
+
+  if (element.properties !== undefined) {
+    editableAttributes = Object.values(element.properties as object)
+      .filter((prop: StoryContentProperty) => {
+        return prop.editable;
+      })
+      .sort((a: StoryContentProperty, b: StoryContentProperty) => {
+        return a.sort - b.sort;
+      });
+  } else {
+    //TODO use real properties of visualization to show values and make them editable
+    editableAttributes = [];
+  }
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{`Edit ${element.type}`}</DialogTitle>
-      <DialogContent>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            const newElement = { ...element, properties: tmpProperties };
-            onSave(newElement);
-          }}
-          id="myform"
-        >
-          <FormControl>
-            {editableAttributes.map((property: StoryContentProperty) => {
-              switch (property.type) {
-                case 'text':
-                  return (
-                    <TextField
-                      margin="dense"
-                      id={property.id}
-                      key={property.label}
-                      label={property.label}
-                      fullWidth
-                      variant="standard"
-                      defaultValue={property.value}
-                      sx={{ width: '500px' }}
-                      onChange={onChange}
-                    />
-                  );
-                case 'textarea':
-                  return (
-                    <TextareaAutosize
-                      id={property.id}
-                      key={property.label}
-                      defaultValue={property.value}
-                      placeholder={property.label}
-                      style={{ width: '100%' }}
-                      minRows={3}
-                      onChange={onChange}
-                    />
-                  );
-                case 'answerlist':
-                  return (
-                    <StoryQuizAnswerList
-                      key={property.label}
-                      setAnswerListForQuiz={setAnswerListForQuiz}
-                      answerList={property as StoryAnswerList}
-                    />
-                  );
-              }
-            })}
-          </FormControl>
-        </form>
-      </DialogContent>
+      {editableAttributes.length > 0 ? (
+        <DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              const newElement = { ...element, properties: tmpProperties };
+              onSave(newElement);
+            }}
+            id="myform"
+          >
+            <FormControl>
+              {editableAttributes.map((property: StoryContentProperty) => {
+                switch (property.type) {
+                  case 'text':
+                    return (
+                      <TextField
+                        margin="dense"
+                        id={property.id}
+                        key={property.label}
+                        label={property.label}
+                        fullWidth
+                        variant="standard"
+                        defaultValue={property.value}
+                        sx={{ width: '500px' }}
+                        onChange={onChange}
+                      />
+                    );
+                  case 'textarea':
+                    return (
+                      <TextareaAutosize
+                        id={property.id}
+                        key={property.label}
+                        defaultValue={property.value}
+                        placeholder={property.label}
+                        style={{ width: '100%' }}
+                        minRows={3}
+                        onChange={onChange}
+                      />
+                    );
+                  case 'answerlist':
+                    return (
+                      <StoryQuizAnswerList
+                        key={property.label}
+                        setAnswerListForQuiz={setAnswerListForQuiz}
+                        answerList={property as StoryAnswerList}
+                      />
+                    );
+                }
+              })}
+            </FormControl>
+          </form>
+        </DialogContent>
+      ) : (
+        'Please add properties to the visualization to edit them!'
+      )}
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button type="submit" form="myform" onClick={onClose}>

@@ -184,7 +184,7 @@ function StoryScreen(): JSX.Element | null {
               preferredSize={openBottomPanel ? '35%' : 24}
             >
               <AllotmentHeader
-                title="Visualizations"
+                title="Contents"
                 open={openBottomPanel}
                 onClick={() => {
                   setOpenBottomPanel(!openBottomPanel);

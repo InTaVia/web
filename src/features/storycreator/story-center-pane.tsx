@@ -6,14 +6,23 @@ import { useRef } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import { createContentPane } from '@/features/storycreator/contentPane.slice';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
   selectSlidesByStoryID,
+  setContentPaneToSlot,
   setImage,
   setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
+import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
+import type {
+  LayoutPaneContent,
+  LayoutTemplateItem,
+} from '@/features/visualization-layouts/visualization-group';
+import { layoutTemplates } from '@/features/visualization-layouts/visualization-group';
 
 /* interface DropProps {
   name?: string | null;
@@ -106,27 +115,49 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       });
   };
 
-  const onLayoutSelected = (i_layout: string | null) => {
+  const addContentPane = (slotId: string) => {
+    const contId = `contentPane-${Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '')
+      .substring(0, 4)}`;
+
+    dispatch(setContentPaneToSlot({ id: contId, slotId: slotId, slide: selectedSlide }));
+    dispatch(createContentPane({ id: contId }));
+  };
+
+  const checkForEmptyContentPaneSlots = (layoutTemplate: any) => {
+    for (const [key, value] of Object.entries(layoutTemplate)) {
+      if (key !== 'cols' && key !== 'rows') {
+        if (layoutTemplate.type === 'contentPane') {
+          const contentPaneSlots = selectedSlide!.contentPaneSlots;
+          const slotId = layoutTemplate.id as ContentSlotId;
+          if (contentPaneSlots[slotId] === null) {
+            addContentPane(layoutTemplate.id);
+          }
+        }
+      } else {
+        (value as Array<LayoutTemplateItem>).map((item: LayoutTemplateItem) => {
+          checkForEmptyContentPaneSlots(item);
+        });
+      }
+    }
+  };
+
+  const onLayoutSelected = (i_layout: PanelLayout) => {
+    checkForEmptyContentPaneSlots(layoutTemplates[i_layout] as LayoutPaneContent);
     dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
   };
 
-  const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[
-    selectedSlide!.layout
-  ] as SlideLayout;
-
   const increaseNumberOfContentPanes = () => {
-    if (numberOfContentPanes === 0) {
+    /* if (numberOfContentPanes === 0) {
       for (const key of Object.keys(SlideLayouts)) {
         const layout = SlideLayouts[key];
-        if (
-          layout!.numberOfContentPanes === 1 &&
-          layout!.vertical === vertical &&
-          layout!.numberOfVis === numberOfVis
-        ) {
+        if (layout!.numberOfContentPanes === 1) {
           dispatch(setLayoutForSlide({ slide: selectedSlide, layout: key }));
         }
       }
     }
+ */
   };
 
   return (
@@ -154,9 +185,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                   slide={selectedSlide as Slide}
                   //imageRef={ref}
                   takeScreenshot={takeScreenshot}
-                  numberOfVisPanes={numberOfVis}
-                  numberOfContentPanes={numberOfContentPanes}
-                  vertical={vertical}
+                  layout={selectedSlide!.layout}
                   desktop={desktop}
                   timescale={timescale}
                   increaseNumberOfContentPanes={increaseNumberOfContentPanes}
@@ -168,20 +197,4 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       </ReactResizeDetector>
     </div>
   );
-}
-
-{
-  /* <div className={`h-full ${desktop ? 'w-full' : 'w-1/3'} border border-black`}>
-          <SlideEditor
-            slide={selectedSlide as Slide}
-            //imageRef={ref}
-            takeScreenshot={takeScreenshot}
-            numberOfVisPanes={numberOfVis}
-            numberOfContentPanes={numberOfContentPanes}
-            vertical={vertical}
-            desktop={desktop}
-            timescale={timescale}
-            increaseNumberOfContentPanes={increaseNumberOfContentPanes}
-          />
-        </div> */
 }

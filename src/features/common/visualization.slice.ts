@@ -2,16 +2,26 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { Entity, EntityEvent, StoryEvent } from '@/features/common/entity.model';
+import type { Entity, Person } from '@/features/common/entity.model';
 
 export interface Visualization {
   id: string;
-  type: 'map' | 'timeline';
+  type: 'map' | 'story-map' | 'story-timeline' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
-  eventIds: Array<EntityEvent | StoryEvent>;
+  eventIds: Array<string>;
   props: Record<string, unknown>;
 }
+
+//TODO Add real properties to the visualization and the module dialog to edit them
+/* export interface VisualisationProperty {
+  type: 'select' | 'text' | 'textarea';
+  id: string;
+  label: string;
+  value: string;
+  editable: boolean | false;
+  sort: number | 0;
+} */
 
 const initialState: Record<Visualization['id'], Visualization> = {
   'vis-1': {
@@ -58,10 +68,31 @@ const visualizationSlice = createSlice({
       const vis = action.payload;
       state[vis['id']] = vis;
     },
+    addPersonToVisualization: (state, action) => {
+      const person = action.payload.person as Person;
+      const visId = action.payload.visId;
+
+      if (!state[visId]!.entityIds.includes(person.id)) {
+        state[visId]!.entityIds.push(person.id);
+      }
+    },
+    addEventToVisualization: (state, action) => {
+      const event = action.payload.event;
+      const visId = action.payload.visId;
+
+      if (!state[visId]!.eventIds.includes(event.id)) {
+        state[visId]!.eventIds.push(event.id);
+      }
+    },
   },
 });
 
-export const { removeVisualization, createVisualization } = visualizationSlice.actions;
+export const {
+  removeVisualization,
+  createVisualization,
+  addEventToVisualization,
+  addPersonToVisualization,
+} = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(
   (state: RootState) => {

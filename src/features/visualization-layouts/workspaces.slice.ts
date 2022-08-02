@@ -25,7 +25,7 @@ const initialState: Workspaces = {
     {
       id: 'workspace-1',
       label: 'Visualisierung 1',
-      layoutOption: 'single-pane',
+      layoutOption: 'single-vis',
       visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
     },
   ],
@@ -76,6 +76,11 @@ const workspacesSlice = createSlice({
       const visualizationSlot = action.payload as SlotId;
       state.workspaces[state.currentWorkspace]!.visualizationSlots[visualizationSlot] = null;
     },
+    switchVisualizationsInWorkspace: (state, action) => {
+      const { targetSlot, targetVis, sourceSlot, sourceVis, workspace } = action.payload;
+      state.workspaces[workspace]!.visualizationSlots[targetSlot as SlotId] = targetVis;
+      state.workspaces[workspace]!.visualizationSlots[sourceSlot as SlotId] = sourceVis;
+    },
   },
 });
 
@@ -86,6 +91,7 @@ export const {
   setLayoutForCurrentWorkspace,
   setVisualizationForVisualizationSlotForCurrentWorkspace,
   releaseVisualizationForVisualizationSlotForCurrentWorkspace,
+  switchVisualizationsInWorkspace,
 } = workspacesSlice.actions;
 
 export const selectAllWorkspaces = (state: RootState) => {

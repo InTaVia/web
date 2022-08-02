@@ -44,7 +44,11 @@ function createTable<T extends Entity>() {
       if (entity.history == null) {
         entity.history = [];
       }
-      const newRelation = { ...relation, targetId: id.toString() } as EntityEvent;
+      const newRelation = {
+        ...relation,
+        targetId: id.toString(),
+        id: faker.datatype.uuid(),
+      } as EntityEvent;
 
       entity.history.push(newRelation);
     },
@@ -66,7 +70,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(): [EntityEvent, EntityEvent] {
+function createLifeSpanRelations(id: string): [EntityEvent, EntityEvent] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -78,11 +82,15 @@ function createLifeSpanRelations(): [EntityEvent, EntityEvent] {
       type: 'beginning',
       date: dateOfBirth.toISOString(),
       placeId: faker.helpers.arrayElement(db.place.getIds()),
+      id: faker.datatype.uuid(),
+      targetId: id,
     },
     {
       type: 'end',
       date: dateOfDeath.toISOString(),
       placeId: faker.helpers.arrayElement(db.place.getIds()),
+      id: faker.datatype.uuid(),
+      targetId: id,
     },
   ];
 }
@@ -93,6 +101,7 @@ function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date)
       type,
       targetId,
       placeId: faker.helpers.arrayElement(db.place.getIds()),
+      id: faker.datatype.uuid(),
     };
   } else {
     return {
@@ -100,6 +109,7 @@ function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date)
       targetId,
       placeId: faker.helpers.arrayElement(db.place.getIds()),
       date: date.toISOString(),
+      id: faker.datatype.uuid(),
     };
   }
 }
@@ -122,6 +132,7 @@ function createExtraRelations(birth: Date, death: Date): Array<EntityEvent> {
       date: faker.date.between(birth, death).toISOString(),
       type: faker.helpers.arrayElement(lifetimeEventTypes),
       placeId: faker.helpers.arrayElement(db.place.getIds()),
+      id: faker.datatype.uuid(),
     });
   }
   for (let i = 0; i < numAfterDeath; ++i) {
@@ -129,6 +140,7 @@ function createExtraRelations(birth: Date, death: Date): Array<EntityEvent> {
       date: faker.date.future(60, death).toISOString(),
       type: faker.helpers.arrayElement(afterDeathEventTypes),
       placeId: faker.helpers.arrayElement(db.place.getIds()),
+      id: faker.datatype.uuid(),
     });
   }
 
@@ -153,12 +165,13 @@ export function seed() {
   });
 
   times(100).forEach(() => {
+    const id = faker.datatype.uuid();
     db.person.create({
-      id: faker.datatype.uuid(),
+      id: id,
       kind: 'person',
       name: faker.name.findName(),
       description: faker.lorem.paragraph(6),
-      history: createLifeSpanRelations(),
+      history: createLifeSpanRelations(id),
       gender: faker.name.gender(true),
       categories: faker.helpers.uniqueArray(categories, faker.datatype.number({ min: 1, max: 4 })),
       occupation: faker.helpers.uniqueArray(occupations, faker.datatype.number({ min: 1, max: 3 })),

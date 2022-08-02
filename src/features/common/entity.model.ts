@@ -8,6 +8,7 @@ export interface EntityBase {
 }
 
 export interface EntityEvent {
+  id: string;
   type: EventType;
   targetId?: Entity['id'];
   date?: IsoDateString;
