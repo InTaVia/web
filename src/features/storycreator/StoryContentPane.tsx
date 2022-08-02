@@ -1,3 +1,5 @@
+import { AdjustmentsIcon } from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/solid';
 import { CardContent, CardMedia, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import ReactGridLayout from 'react-grid-layout';
@@ -16,7 +18,7 @@ import type {
   StoryImage,
   StoryQuizAnswer,
 } from '@/features/storycreator/storycreator.slice';
-import { Window } from '@/features/ui/Window';
+import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
 
@@ -188,23 +190,37 @@ export function StoryContentPane(props: StoryContentPaneProps) {
       case 'Quiz':
         return (
           <div key={element.id} className={styles.elevated}>
-            <Window
-              className={styles['annotation-window']}
-              title={element.type}
-              id={element.id}
-              onRemoveWindow={() => {
-                removeWindowHandler(element);
-              }}
-              onEditContent={() => {
-                if (setEditElement !== undefined) {
-                  setEditElement(element);
-                  setOpenDialog(true);
-                }
-              }}
-              static={true}
-            >
-              {createWindowContent(element)}
-            </Window>
+            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-indigo-800 px-2 py-1 text-white">
+              <div className="truncate">{element.type}</div>
+              <div className="sticky right-0 flex flex-nowrap gap-1">
+                <Button
+                  className="ml-auto grow-0"
+                  shadow="none"
+                  size="extra-small"
+                  round="circle"
+                  onClick={() => {
+                    if (setEditElement !== undefined) {
+                      setEditElement(element);
+                      setOpenDialog(true);
+                    }
+                  }}
+                >
+                  <AdjustmentsIcon className="h-3 w-3" />
+                </Button>
+                <Button
+                  className="ml-auto grow-0"
+                  shadow="none"
+                  size="extra-small"
+                  round="circle"
+                  onClick={() => {
+                    removeWindowHandler(element);
+                  }}
+                >
+                  <XIcon className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+            {createWindowContent(element)}
           </div>
         );
       default:

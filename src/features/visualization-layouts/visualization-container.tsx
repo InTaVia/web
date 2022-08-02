@@ -126,7 +126,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         </div>
       </div>
       {visualization !== undefined && (
-        <div className="bg-red-100">{<VisualisationComponent visualization={visualization} />}</div>
+        <div>{<VisualisationComponent visualization={visualization} />}</div>
       )}
     </div>
   );
