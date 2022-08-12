@@ -1,12 +1,16 @@
 import type { FormEvent } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
+import { useAppDispatch } from '@/app/store';
 import { usePersonsSearch } from '@/features/entities/use-persons-search';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import Button from '@/features/ui/Button';
+import { setModal } from '@/features/ui/ui.slice';
 
 export function SearchForm(): JSX.Element {
   const searchFilters = usePersonsSearchFilters();
   const { search } = usePersonsSearch();
+  const dispatch = useAppDispatch();
 
   const { t } = useI18n<'common'>();
 
@@ -19,9 +23,13 @@ export function SearchForm(): JSX.Element {
     event.preventDefault();
   }
 
+  function openVisualQueryingModal() {
+    dispatch(setModal({ modal: 'visualQueryModal', isOpen: true }));
+  }
+
   return (
     <form
-      className="grid grid-cols-[1fr_auto] gap-1 p-2"
+      className="grid grid-cols-[1fr_auto] gap-x-1 gap-y-3 p-2"
       autoComplete="off"
       name="search"
       noValidate
@@ -43,6 +51,17 @@ export function SearchForm(): JSX.Element {
       >
         {t(['common', 'search', 'search'])}
       </button>
+
+      <Button
+        type="button"
+        round="round"
+        color="accent"
+        size="regular"
+        className="col-span-2"
+        onClick={openVisualQueryingModal}
+      >
+        Create visual query
+      </Button>
     </form>
   );
 }
