@@ -45,12 +45,9 @@ export function SearchForm(): JSX.Element {
         placeholder={t(['common', 'search', 'search-term'])}
         type="search"
       />
-      <button
-        type="submit"
-        className="rounded bg-indigo-600 px-2 py-1 text-white transition hover:bg-indigo-700"
-      >
+      <Button type="submit" round="round" color="accent" size="small">
         {t(['common', 'search', 'search'])}
-      </button>
+      </Button>
 
       <Button
         type="button"

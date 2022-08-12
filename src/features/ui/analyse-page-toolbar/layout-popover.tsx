@@ -68,7 +68,7 @@ export default function LayoutButton(props: LayoutButtonProps): JSX.Element {
       {({ open, close }) => {
         return (
           <>
-            <Popover.Button className="flex gap-1 rounded-lg bg-teal-500 p-2 text-white">
+            <Popover.Button className="flex gap-1 rounded-lg bg-intavia-brand-700 p-2 text-white hover:bg-intavia-brand-900">
               <ChevronRightIcon className={`${open ? 'rotate-90 transform' : ''} h-5 w-5`} />
               <span>Layouts</span>
             </Popover.Button>

@@ -201,10 +201,12 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
     const slides: Record<Slide['id'], Slide> = {};
     for (const slideNumber of Object.keys(eventsInSlides)) {
       const mediaInSlide: Record<SlideContent['id'], SlideContent> = {};
-      for (let i = 0; i < mediaInSlides[slideNumber]?.length; i++) {
-        mediaInSlide[`image${i}`] = {
+      const medias = mediaInSlides[slideNumber];
+      let index = 0;
+      for (const media of medias as Array<string>) {
+        mediaInSlide[`image${index}`] = {
           type: 'Image',
-          id: `Image ${i}`,
+          id: `Image ${index}`,
           parentPane: 'contentPane0',
           layout: {
             x: 0,
@@ -234,13 +236,15 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
               id: 'link',
               editable: true,
               label: 'Link',
-              value: '/hofburg/' + mediaInSlides[slideNumber][i],
+              value: '/hofburg/' + media,
               sort: 0,
             },
           },
         };
+        index = index + 1;
       }
 
+      const text = textInSlides[slideNumber] as string;
       const textInSlide: Record<SlideContent['id'], SlideContent> = {
         text0: {
           type: 'Text',
@@ -258,7 +262,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
               id: 'title',
               editable: true,
               label: 'Title',
-              value: textInSlides[slideNumber],
+              value: text,
               sort: 0,
             },
             text: {

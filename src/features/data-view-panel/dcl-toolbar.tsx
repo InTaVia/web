@@ -1,9 +1,11 @@
-import { GridLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
 import { useAppSelector } from '@/app/store';
 import type { EntityBase } from '@/features/common/entity.model';
 import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { PaneToggle } from '@/features/ui/analyse-page-toolbar/PaneToggle';
+import Button from '@/features/ui/Button';
 
 interface DCLToolbarProps {
   split?: boolean;
@@ -19,18 +21,23 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
   const selectedEntities = useAppSelector(selectSearchResultsSelection);
 
   return (
-    <div className="flex w-full justify-between gap-2 p-2">
+    <div className="flex h-fit w-full justify-between gap-2 p-2">
       <div className="flex gap-2">
-        <button
-          className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white"
+        <PaneToggle parentComponent="dcl" orientation="left" />
+        <Button
+          color="accent"
+          round="round"
+          size="small"
           onClick={() => {
             onSave(selectedEntities);
           }}
         >
           Save {selectedEntities.length} as Collection
-        </button>
-        <button
-          className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white"
+        </Button>
+        <Button
+          color="accent"
+          size="small"
+          round="round"
           onClick={() => {
             const entities = searchResults.data?.entities;
 
@@ -44,13 +51,14 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
           }}
         >
           Save Whole Query
-        </button>
+        </Button>
       </div>
       <div className="flex items-center gap-2">
-        <GridLoader loading={searchResults.isFetching} size="2" color="#00B050" />
-        <button className="flex gap-1 rounded-lg bg-intavia-brand p-2 text-white" onClick={onSplit}>
+        <ClipLoader loading={searchResults.isFetching} size="17px" color="#94c269" />
+        <Button color="accent" round="round" size="small" onClick={onSplit}>
           {split ? 'Merge' : 'Split'}
-        </button>
+        </Button>
+        <PaneToggle parentComponent="dcl" orientation="right" />
       </div>
     </div>
   );

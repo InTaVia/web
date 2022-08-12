@@ -1,3 +1,14 @@
-export const leftPaneProps = { minSize: 200, maxSize: 600, preferredSize: '20%' };
-export const centerPaneProps = { minSize: 200, preferredSize: '60%' };
-export const rightPaneProps = { minSize: 200, maxSize: 600, preferredSize: '20%' };
+export const leftPaneProps = {
+  minSize: 250,
+  maxSize: 600,
+  preferredSize: '25%',
+  /* className: 'grid', */
+};
+export const centerPaneProps = { minSize: 250, preferredSize: '50%', className: 'grid' };
+export const disclosurePaneProps = { minSize: 28 };
+export const rightPaneProps = {
+  minSize: 250,
+  maxSize: 600,
+  preferredSize: '25%',
+  /* className: 'grid', */
+};
