@@ -109,14 +109,18 @@ function StoryScreen(): JSX.Element | null {
               minSize={24}
               preferredSize={openLeftBottomPanel ? '65%' : 24}
             >
-              <AllotmentHeader
-                title="Entities & Events"
-                open={openLeftBottomPanel}
-                onClick={() => {
-                  setOpenLeftBottomPanel(!openLeftBottomPanel);
-                }}
-              />
-              <CollectionPanel draggable mini />
+              <div className="grid h-full grid-cols-1 grid-rows-[max-content_1fr]">
+                <AllotmentHeader
+                  title="Entities & Events"
+                  open={openLeftBottomPanel}
+                  onClick={() => {
+                    setOpenLeftBottomPanel(!openLeftBottomPanel);
+                  }}
+                />
+                <div className="overflow-hidden overflow-y-scroll">
+                  <CollectionPanel draggable mini />
+                </div>
+              </div>
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
