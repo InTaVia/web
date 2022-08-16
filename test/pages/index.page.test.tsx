@@ -1,15 +1,14 @@
-// import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import HomePage from '@/pages/index.page';
-// import { createWrapper } from '~/test/test-utils';
+import { createWrapper } from '~/test/test-utils';
 
 describe('HomePage', () => {
-  test.todo('please pass');
   <HomePage />;
-  // it('should display welcome message', () => {
-  // const router = { pathname: '/' };
-  // render(<HomePage />, { wrapper: createWrapper({ router }) });
-  // const heading = screen.getByRole('heading', { name: /welcome to intavia!/i });
-  // expect(heading).toBeInTheDocument();
-  // });
+  it('should display page title', () => {
+    const router = { pathname: '/' };
+    render(<HomePage />, { wrapper: createWrapper({ router }) });
+    const heading = screen.getByRole('heading', { name: 'In/Tangible European Heritage' });
+    expect(heading).toBeInTheDocument();
+  });
 });
