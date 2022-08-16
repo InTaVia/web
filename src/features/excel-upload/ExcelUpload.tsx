@@ -1,14 +1,17 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
+import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import { IconButton, Input } from '@mui/material';
 import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
+import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
 import type { Place, StoryEvent } from '@/features/common/entity.model';
 import styles from '@/features/storycreator/storycreator.module.css';
+import Button from '@/features/ui/Button';
 
 import type { Slide, SlideContent } from '../storycreator/storycreator.slice';
 import { setSlidesForStory } from '../storycreator/storycreator.slice';
@@ -18,6 +21,7 @@ interface ExcelUploadProps {
 }
 
 export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
+  const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
   const storyID = props.story;
 
@@ -56,6 +60,8 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
           list.push(obj);
         }
       }
+
+      return list;
     });
 
     /** Prepare columns list from headers */
@@ -345,37 +351,112 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
       const bstr = evt.target?.result;
       const workbook = XLSX.read(bstr, { type: 'binary' });
 
+      console.log(workbook.SheetNames);
+
+      /**
+       * 1. load entities: person
+       * 2. load events + relations
+       */
+
       /** Get first worksheet. */
-      const [worksheetName] = workbook.SheetNames;
-      if (worksheetName == null) return;
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const ws = workbook.Sheets[worksheetName]!;
-      /** Convert array of arrays. */
-      // @ts-expect-error FIXME: `header` is either missing from types, or not a valid option
-      const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+      const worksheetNames = workbook.SheetNames;
 
-      processData(data);
+      if (worksheetNames.includes('person')) {
+        const ws = workbook.Sheets['person'];
+        if (ws !== undefined) {
+          loadPersons(ws);
+        }
+      }
     };
 
     reader.readAsBinaryString(file);
   }
 
+  const loadPersons = (personsSheet: XLSX.WorkSheet) => {
+    // @ts-expect-error FIXME: `header` is either missing from types, or not a valid option
+    /* const data = XLSX.utils.sheet_to_csv(personsSheet, { header: 1 });
+    const processedData = processData(data); */
+
+    const persons = XLSX.utils.sheet_to_json(personsSheet) as Array<Record<string, unknown>>;
+
+    console.log(persons);
+
+    for (const person of persons.values()) {
+      // TODO: newPerson of EntityType Person
+      const newPerson = {
+        id: person['id'] as string,
+        label: { default: person['label'] } as InternationalizedLabel,
+        source: { citation: person['source-citation'] } as Source,
+        // create array of LinkedId:object with id:string and provdier:LinkedIdProvider > has label: string and baseUr: uri
+        linkedIds: person['linkedIds'].split(';') as Array<string>,
+        alternativeLabels: person['alternativeLabels'].split(';') as Array<string>,
+        descripton: person['description'] as string,
+        media: person['media'].split(';') as Array<string>,
+        gender: person['gender'] as string, //TODO GenderType as enum
+        occupations: person['occupation'].split(';') as Array<string>,
+        kind: 'person',
+      };
+
+      if (person['dateOfBirth'] !== undefined) {
+        const birthEvent = {
+          id: generateId(),
+          label: { default: `Birth of ${newPerson['label'].default}` } as InternationalizedLabel,
+          source: newPerson['source'] as Source,
+          kind: 'birth',
+          startDate: handleDateString(person['dateOfBirth'], 'start'),
+          endDate: handleDateString(person['dateOfBirth'], 'end'),
+        };
+
+        if (person['placeOfBirth'] !== undefined) {
+          const placeId = person['placeOfBirth'];
+        }
+      }
+    }
+  };
+
+  /*id*	string
+  label	InternationalizedLabel{...}
+  source	Source{...}
+  kind	EntityEventKind{...}
+  startDate	string
+  endDate	string
+  place	Place{...}
+  relations	Relations[...]
+*/
+
+  /*
+  Person{
+    id*	string
+    label	InternationalizedLabel{...}
+    source	Source{...}
+    linkedIds	Linkedids[...]
+    alternativeLabels	Alternativelabels[
+    InternationalizedLabel{...}]
+    description	string
+    media	Media[...]
+    gender	GenderType{...}
+    occupations	Occupations[...]
+    kind	string
+    }
+
+    */
+
   return (
-    <div className={styles['button-row-button']}>
-      <label htmlFor="icon-button-file">
-        <Input
-          // @ts-expect-error FIXME: check why this is missing in material ui types
-          accept=".csv,.xlsx,.xls"
-          id="icon-button-file"
-          type="file"
-          onChange={handleFileUpload}
-          style={{ visibility: 'hidden', width: 0, height: 0 }}
-        />
-        <IconButton color="primary" aria-label="upload csv" component="span">
-          <UploadFileOutlinedIcon />
-        </IconButton>
+    <>
+      {/* TODO: create Upload-UI-Component/Button */}
+      <input id="icon-button-file" type="file" onChange={handleFileUpload} className="invisible" />
+      <label
+        htmlFor="icon-button-file"
+        className="flex cursor-pointer flex-row gap-2 rounded-full bg-intavia-brand-700 py-2 px-5 text-intavia-gray-50
+        outline-current
+        hover:bg-intavia-brand-900 focus:outline-2
+        focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-gray-900
+        disabled:bg-gray-300 disabled:text-gray-600"
+      >
+        <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
+        {t(['common', 'data-import'])}
       </label>
-    </div>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
+import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
 import Button from '@/features/ui/Button';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
@@ -86,10 +87,7 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          <Button color="accent" round="pill" className="flex items-center gap-2">
-            <UploadIcon className="h-5 w-5" strokeWidth="1.75" />
-            {t(['common', 'data-import'])}
-          </Button>
+          <ExcelUpload story="blub" />
           {linksRight.map((item) => {
             return (
               <Link key={item.id} href={item.href.pathname}>
