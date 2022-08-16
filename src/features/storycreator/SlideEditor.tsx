@@ -1,32 +1,39 @@
-import { Allotment } from 'allotment';
 import type { RefObject } from 'react';
 import { useState } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
-import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
-import styles from '@/features/storycreator/storycreator.module.css';
-import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   addContentToContentPane,
+  createContentPane,
   editSlideContent,
+} from '@/features/storycreator/contentPane.slice';
+import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
+import type { Slide } from '@/features/storycreator/storycreator.slice';
+import {
+  releaseVisualizationForVisualizationSlotForSlide,
+  setContentPaneToSlot,
+  setVisualizationForVisualizationSlotForStorySlide,
+  switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
-import { StoryVisPane } from '@/features/storycreator/StoryVisPane';
+import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
+import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
 
 interface SlideEditorProps {
-  width: number | undefined;
-  height: number | undefined; // FIXME: unused
-  targetRef: RefObject<HTMLDivElement>;
-  /* imageRef: RefObject<HTMLDivElement>; */
+  width?: number | undefined;
+  height?: number | undefined; // FIXME: unused
+  targetRef?: RefObject<HTMLDivElement>;
+  imageRef: RefObject<HTMLDivElement>;
   slide: Slide;
-  takeScreenshot: () => void;
-  numberOfVisPanes: number;
-  numberOfContentPanes: number;
-  vertical: boolean;
+  takeScreenshot?: () => void;
+  numberOfVisPanes?: number;
+  numberOfContentPanes?: number;
+  vertical?: boolean;
   increaseNumberOfContentPanes: () => void;
+  desktop?: boolean;
+  timescale?: boolean;
+  layout: PanelLayout;
 }
 
 interface DropProps {
@@ -37,13 +44,10 @@ interface DropProps {
 
 export function SlideEditor(props: SlideEditorProps) {
   const {
-    targetRef,
     slide,
-    /* imageRef, */
-    numberOfContentPanes,
-    numberOfVisPanes,
-    vertical,
-    increaseNumberOfContentPanes,
+    imageRef,
+    layout,
+    //desktop = false,
   } = props;
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -61,8 +65,28 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const windows = useAppSelector(selectWindows);
 
+  const onSwitchVisualization = (
+    targetSlot: string,
+    targetVis: string | null,
+    sourceSlot: string,
+    sourceVis: string | null,
+  ) => {
+    dispatch(switchVisualizations({ targetSlot, targetVis, sourceSlot, sourceVis, slide }));
+  };
+
+  const onAddContentPane = (slotId: string) => {
+    const contId = `contentPane-${Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '')
+      .substring(0, 4)}`;
+
+    dispatch(setContentPaneToSlot({ id: contId, slotId: slotId, slide }));
+    dispatch(createContentPane({ id: contId }));
+  };
+
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
+
     const layoutItem = i_layoutItem;
 
     let targetPane = i_targetPane;
@@ -90,7 +114,7 @@ export function SlideEditor(props: SlideEditorProps) {
         layoutItem['w'] = 1;
         break;
       default:
-        layoutItem['h'] = 4;
+        layoutItem['h'] = 1;
         layoutItem['w'] = 1;
         break;
     }
@@ -112,95 +136,38 @@ export function SlideEditor(props: SlideEditorProps) {
     );
   };
 
-  const createSplitterLayout = () => {
-    const visKeys = Object.keys(slide.visualizationPanes) as Array<string>;
-    const visualizations = [];
-    for (let i = 0; i < numberOfVisPanes; i++) {
-      visualizations.push(slide.visualizationPanes[visKeys[i] as string]);
-    }
-
-    const contentPanesInSlide = Object.values(slide.contentPanes);
-    const contents = [];
-
-    for (let i = 0; i < numberOfContentPanes; i++) {
-      contents.push(contentPanesInSlide[i]);
-    }
-
-    const visPanes = visualizations.map((vis: any, index: number) => {
-      return (
-        <ReactResizeDetector key={`vis${index}`} handleWidth handleHeight>
-          {({ width, height, targetRef }) => {
-            return (
-              <StoryVisPane
-                id={vis !== undefined ? vis.id : `vis${index}`}
-                targetRef={targetRef as RefObject<HTMLDivElement>}
-                width={width}
-                height={height}
-                setEditElement={setEditElement}
-                setOpenDialog={setOpenDialog}
-                slide={slide}
-                visualization={vis}
-                increaseNumberOfContentPane={increaseNumberOfContentPanes}
-                dropContent={onDropContentPane}
-              />
-            );
-          }}
-        </ReactResizeDetector>
-      );
-    });
-
-    const contentPanes = contents.map((pane: any, index: number) => {
-      return (
-        <ReactResizeDetector key={`contentPane${index}`} handleWidth handleHeight>
-          {({ width, height, targetRef }) => {
-            return (
-              <StoryContentPane
-                id={pane !== undefined ? pane.id : `contentPane${index}`}
-                contentPane={pane}
-                targetRef={targetRef as RefObject<HTMLDivElement>}
-                width={width}
-                height={height}
-                setEditElement={setEditElement}
-                setOpenDialog={setOpenDialog}
-                slide={slide}
-                onDrop={onDropContentPane}
-              />
-            );
-          }}
-        </ReactResizeDetector>
-      );
-    });
-
-    return (
-      <Allotment>
-        <Allotment.Pane visible={visPanes.length > 0 ? true : false}>
-          <Allotment
-            key={`alottmentForVis${vertical}`}
-            /* Force the layout to repaint */ vertical={vertical ? false : true}
-          >
-            {visPanes.map((vis, index) => {
-              return <Allotment.Pane key={index}>{vis}</Allotment.Pane>;
-            })}
-          </Allotment>
-        </Allotment.Pane>
-        <Allotment.Pane visible={contentPanes.length > 0 ? true : false}>
-          <Allotment
-            key={`alottmentForContent${vertical}`} //Force the layout to repaint
-            vertical={vertical ? false : true}
-          >
-            {contentPanes.map((content, index) => {
-              return <Allotment.Pane key={index}>{content}</Allotment.Pane>;
-            })}
-          </Allotment>
-        </Allotment.Pane>
-      </Allotment>
-    );
-  };
-
   return (
     /* innerref={imageRef} */
-    <div ref={targetRef} className={styles['slide-editor-wrapper']}>
-      {createSplitterLayout()}
+    // className={styles['slide-editor-wrapper']}
+    <div ref={imageRef} className="h-full">
+      {/* {createSplitterLayout()} */}
+      <VisualizationGroup
+        layout={layout}
+        visualizationSlots={slide.visualizationSlots}
+        contentPaneSlots={slide.contentPaneSlots}
+        onAddVisualization={(visSlot: string, visId: string) => {
+          dispatch(
+            setVisualizationForVisualizationSlotForStorySlide({
+              slide: slide,
+              visualizationSlot: visSlot,
+              visualizationId: visId,
+            }),
+          );
+        }}
+        onReleaseVisualization={(visSlot: string) => {
+          dispatch(
+            releaseVisualizationForVisualizationSlotForSlide({
+              slide: slide,
+              visSlot: visSlot,
+            }),
+          );
+        }}
+        onSwitchVisualization={onSwitchVisualization}
+        onAddContentPane={onAddContentPane}
+        onDropContentPane={onDropContentPane}
+        setEditElement={setEditElement}
+        setOpenDialog={setOpenDialog}
+      />
       {editElement != null && (
         <StoryContentDialog
           open={openDialog}

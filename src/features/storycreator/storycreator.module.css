@@ -29,7 +29,8 @@
 .slide-editor-wrapper {
   width: 100%;
   height: 100%;
-  border: solid 1px rgb(0 0 0);
+
+  /* border: solid 1px rgb(0 0 0); */
 }
 
 .elevated {
@@ -63,7 +64,7 @@
 }
 
 .story-flow-card.selected {
-  border: 3px solid var(--light-blue) !important;
+  border: 2px solid var(--light-blue) !important;
 }
 
 .button-row {

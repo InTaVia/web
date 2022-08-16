@@ -1,10 +1,12 @@
+import {
+  ChartBarIcon,
+  ChatIcon,
+  DocumentTextIcon,
+  MapIcon,
+  PhotographIcon,
+} from '@heroicons/react/outline';
 import AdjustIcon from '@mui/icons-material/Adjust';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import LinearScaleOutlinedIcon from '@mui/icons-material/LinearScaleOutlined';
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
 
 import styles from '@/features/ui/ui.module.css';
 
@@ -15,41 +17,13 @@ export interface DroppableIconProps {
 const getIcon: any = (type: string) => {
   switch (type) {
     case 'Timeline':
-      return (
-        <LinearScaleOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="timelineIcon"
-        />
-      );
+      return <ChartBarIcon className="h-6 w-6 -rotate-90 text-intavia-brand-800" />;
     case 'Map':
-      return (
-        <MapOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="mapIcon"
-        />
-      );
+      return <MapIcon className="h-6 w-6 text-intavia-brand-800" />;
     case 'Text':
-      return (
-        <NoteAltOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="annotationIcon"
-        />
-      );
+      return <DocumentTextIcon className="h-6 w-6 text-intavia-brand-800" />;
     case 'Image':
-      return (
-        <ImageOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="imageIcon"
-        />
-      );
+      return <PhotographIcon className="h-6 w-6 text-intavia-brand-800" />;
     case 'Person':
       return (
         <PersonOutlineOutlinedIcon
@@ -59,14 +33,7 @@ const getIcon: any = (type: string) => {
         />
       );
     case 'Quiz':
-      return (
-        <QuizOutlinedIcon
-          className={styles['droppable-icon']}
-          fontSize="large"
-          color="primary"
-          key="EventIcon"
-        />
-      );
+      return <ChatIcon className="h-6 w-6 text-intavia-brand-800" />;
     case 'Event':
       return <AdjustIcon className={styles['droppable-icon']} color="primary" key="EventIcon" />;
     default:

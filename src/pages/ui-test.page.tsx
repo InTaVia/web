@@ -7,6 +7,7 @@ import {
   RefreshIcon,
 } from '@heroicons/react/solid';
 import { Fragment } from 'react';
+import { theme } from 'tailwind.config.cjs';
 
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import type { FullButtonProperties } from '@/features/ui/Button';
@@ -48,6 +49,8 @@ export default function UiTestPage(): JSX.Element {
     { title: 'No border, large shadow', border: false, shadow: 'large' },
     { title: 'Border, large shadow', border: true, shadow: 'large' },
   ];
+
+  const colors = theme?.extend?.colors as Record<string, Record<string, string>>;
 
   const buttonData: Array<[string, Partial<FullButtonProperties>]> = [];
   rowProperties.forEach((row, i) => {
@@ -133,6 +136,36 @@ export default function UiTestPage(): JSX.Element {
           <ButtonLink href="#" size="large" round="circle" color="warning" shadow="large">
             <HomeIcon className="h-10 w-10" />
           </ButtonLink>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="m-2 mx-4 text-xl font-semibold text-gray-700">Colors</h2>
+
+        <div className="my-10 flex w-full">
+          <div className="m-2 grid w-full grid-cols-6 grid-rows-1 place-items-center gap-4">
+            {Object.keys(colors).map((color: string) => {
+              const colorObject = (colors[color] ? colors[color] : {}) as Record<string, string>;
+              return (
+                <div key={`${color}`} className="w-full">
+                  <div className={`text-center font-semibold`}>{color}</div>
+                  {Object.keys(colorObject).map((value) => {
+                    const colorCode = colorObject[value];
+                    return (
+                      <div key={`${color}${value}wrapper`} className="m-1 table">
+                        <div className="m-2 table-cell p-1">{value}</div>
+                        <div
+                          style={{ backgroundColor: colorCode }}
+                          key={`${color}${value}`}
+                          className="table-cell w-full"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

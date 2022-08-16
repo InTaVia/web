@@ -1,9 +1,10 @@
-import type { RefObject } from 'react';
+/* import type { RefObject } from 'react';
 import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import type { Person, StoryEvent } from '@/features/common/entity.model';
+import type { EntityEvent, Person, StoryEvent } from '@/features/common/entity.model';
+import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {
   Slide,
@@ -11,14 +12,7 @@ import type {
   StoryMap,
   VisualisationPane,
 } from '@/features/storycreator/storycreator.slice';
-import {
-  addEventsToVisPane,
-  addEventToVisPane,
-  addVisualization,
-  editSlideContent,
-  removeSlideContent,
-  resizeMoveContent,
-} from '@/features/storycreator/storycreator.slice';
+import { addVisualization } from '@/features/storycreator/storycreator.slice';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
@@ -72,11 +66,10 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   }
 
   useEffect(() => {
-    console.log('vis changed');
+    console.log('Updated Visualization');
   }, [visualization]);
 
   const removeWindowHandler = (element: SlideContent) => {
-    //dispatch(removeContent({ id: id, story: slide.story, slide: slide.id }));
     dispatch(removeSlideContent({ slide: slide, parentPane: id, content: element }));
   };
 
@@ -89,7 +82,10 @@ export function StoryVisPane(props: StoryVisPaneProps) {
     } else if (dropProps.type === 'Person') {
       const person = dropProps.props as Person;
       if (person.history !== undefined) {
-        dispatch(addEventsToVisPane({ slide: slide, visPane: id, events: [...person.history] }));
+        const newHistory = person.history.map((historyEvent: EntityEvent) => {
+          return { ...historyEvent, targetId: person.id.toString() } as EntityEvent;
+        });
+        dispatch(addEventsToVisPane({ slide: slide, visPane: id, events: [...newHistory] }));
       }
     } else {
       const ids = windows.map((window: UiWindow) => {
@@ -108,9 +104,6 @@ export function StoryVisPane(props: StoryVisPaneProps) {
 
       switch (dropProps.type) {
         case 'Timeline':
-          layoutItem['h'] = 12;
-          layoutItem['w'] = 3;
-          break;
         case 'Map':
           layoutItem['h'] = myHeight;
           layoutItem['w'] = 48;
@@ -159,8 +152,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
   const createWindowContent = (element: SlideContent) => {
     switch (element.type) {
       case 'Timeline':
-        //return <TimelineExample data={[]} />;
-        return [];
+        return <StoryTimeline events={events} persons={[]} />;
       case 'Map':
         return (
           <StoryMapComponent
@@ -181,6 +173,7 @@ export function StoryVisPane(props: StoryVisPaneProps) {
 
   const createLayoutPane = (element: any) => {
     switch (element.type) {
+      case 'Timeline':
       case 'Map':
         return (
           <div key={element.id} className={styles.elevated}>
@@ -262,4 +255,9 @@ export function StoryVisPane(props: StoryVisPaneProps) {
       </ReactGridLayout>
     </div>
   );
+}
+ */
+
+export function StoryVisPane() {
+  return <></>;
 }
