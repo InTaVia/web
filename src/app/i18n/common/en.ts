@@ -32,6 +32,18 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Home',
     },
+    'card-dcl': {
+      title: 'find, create & curate',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+    },
+    'card-vas': {
+      title: 'visualize, analyze & explore',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+    },
+    'card-stc': {
+      title: 'communicate, show & tell',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+    },
   },
   imprint: {
     metadata: {
@@ -43,6 +55,7 @@ export const dictionary: Dictionary = {
       title: 'Person',
     },
   },
+  'learn-more': 'Learn more about InTaVia',
   search: {
     metadata: {
       title: 'Search',
