@@ -78,6 +78,9 @@ module.exports = {
           900: '#7741a3',
         },
       },
+      screens: {
+        'vq-min': [{ raw: '(max-width: 1550px)' }, { raw: '(max-height: 980px)' }],
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

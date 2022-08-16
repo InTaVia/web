@@ -16,12 +16,12 @@ export type Constraint = {
   type: ConstraintType;
   name: string;
   opened: boolean;
-  value: Array<Feature> | Array<number> | Array<Profession> | string | null;
+  value: Array<Feature> | Array<Profession> | string | [number, number] | null;
 };
 
 export interface DateConstraint extends Constraint {
   type: ConstraintType.Dates;
-  value: Array<number> | null;
+  value: [number, number] | null;
 }
 
 export interface PlaceConstraint extends Constraint {
@@ -113,9 +113,13 @@ const visualQueryingSlice = createSlice({
       state.constraints.push(action.payload);
     },
     removeConstraint: (state, action: PayloadAction<Constraint>) => {
-      state.constraints = state.constraints.filter((constraint) => {
-        return constraint.id !== action.payload.id;
+      const constraint = state.constraints.find((constraint) => {
+        return constraint.id === action.payload.id;
       });
+
+      if (constraint) {
+        constraint.value = null;
+      }
     },
     toggleConstraintWidget: (state, action: PayloadAction<string>) => {
       const constraint = state.constraints.find((constraint) => {
@@ -136,7 +140,7 @@ const visualQueryingSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
-        value: Array<Feature> | Array<number> | Array<Profession> | string | null;
+        value: Array<Feature> | Array<Profession> | string | [number, number] | null;
       }>,
     ) => {
       const constraint = state.constraints.find((constraint) => {

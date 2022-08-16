@@ -1,4 +1,4 @@
-import type { MouseEvent, MutableRefObject } from 'react';
+import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -10,14 +10,15 @@ import {
 } from '@/features/visual-querying/visualQuerying.slice';
 
 interface SvgProps {
-  parentRef: MutableRefObject<HTMLDivElement | null>;
+  parentWidth: number;
+  parentHeight: number;
 }
 
 const svgMinWidth = 300;
 const svgMinHeight = 150;
 
 export function VisualQueryingSvg(props: SvgProps): JSX.Element {
-  const { parentRef } = props;
+  const { parentWidth, parentHeight } = props;
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
@@ -28,14 +29,14 @@ export function VisualQueryingSvg(props: SvgProps): JSX.Element {
   const constraints = useAppSelector(selectConstraints);
 
   useEffect(() => {
-    const w = Math.max(svgMinWidth, parentRef.current?.clientWidth ?? 0);
-    const h = Math.max(svgMinHeight, parentRef.current?.clientHeight ?? 0);
+    const w = Math.max(svgMinWidth, parentWidth);
+    const h = Math.max(svgMinHeight, parentHeight);
 
     setSvgWidth(w);
     setSvgHeight(h);
     setSvgViewBox(`0 0 ${w} ${h}`);
     setOrigin(new Origin(w / 2, h / 2));
-  }, [parentRef]);
+  }, [parentWidth, parentHeight]);
 
   function dismissConstraintViews(e: MouseEvent<SVGSVGElement>) {
     if (e.target === svgRef.current) {

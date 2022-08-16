@@ -87,7 +87,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
       </defs>
 
       <g>
-        <path d={path.toString()} fill={fillColor} style={{ cursor: 'pointer' }} />
+        <path d={path.toString()} fill={fillColor} />
 
         <text pointerEvents="none" fill={textColor} fontSize="17px">
           <textPath xlinkHref={`#textPath-${idx}`} textAnchor="middle" startOffset="50%">

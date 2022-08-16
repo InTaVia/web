@@ -19,6 +19,7 @@ import {
   rightPaneProps,
 } from '@/features/ui/panes.config';
 import { selectPaneOpen } from '@/features/ui/ui.slice';
+import { VisualQueryingModal } from '@/features/visual-querying/VisualQueryingModal';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -91,6 +92,8 @@ export default function SearchPage(): JSX.Element {
           </DisclosureWrapper> */}
         </Allotment.Pane>
       </Allotment>
+
+      <VisualQueryingModal />
     </Fragment>
   );
 }

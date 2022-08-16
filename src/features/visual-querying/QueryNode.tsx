@@ -1,20 +1,9 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useState } from 'react';
 
-import { useAppSelector } from '@/app/store';
-import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
 import { InnerRingSegment } from '@/features/visual-querying/InnerRingSegment';
 import type { Origin } from '@/features/visual-querying/Origin';
-import { PlaceConstraintWidget } from '@/features/visual-querying/PlaceConstraintWidget';
-import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
-import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintView';
-import type {
-  DateConstraint,
-  PlaceConstraint,
-  ProfessionConstraint,
-  TextConstraint,
-} from '@/features/visual-querying/visualQuerying.slice';
-import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import { ConstraintType } from '@/features/visual-querying/visualQuerying.slice';
 
 interface QueryNodeProps {
   origin: Origin;
@@ -22,8 +11,6 @@ interface QueryNodeProps {
 
 export function QueryNode(props: QueryNodeProps): JSX.Element {
   const { origin } = props;
-
-  const constraints = useAppSelector(selectConstraints);
 
   const circleRadius = 100;
   const innerRingWidth = 40;
@@ -79,74 +66,6 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
           />
         );
       })}
-      {constraints
-        .filter((constraint) => {
-          return constraint.opened;
-        })
-        .map((constraint, idx) => {
-          const x = origin.x(250);
-          const y = origin.y(0);
-
-          switch (constraint.type) {
-            case ConstraintType.Dates:
-              return (
-                <DateConstraintWidget
-                  key={idx}
-                  idx={idx}
-                  constraint={constraint as DateConstraint}
-                  x={x}
-                  y={y}
-                  width={500}
-                  height={250}
-                  origin={origin.clone()}
-                />
-              );
-            case ConstraintType.Name:
-              return (
-                <TextConstraintWidget
-                  key={idx}
-                  idx={idx}
-                  constraint={constraint as TextConstraint}
-                  x={x}
-                  y={y}
-                  width={300}
-                  height={80}
-                  origin={origin.clone()}
-                />
-              );
-            case ConstraintType.Places:
-              return (
-                <PlaceConstraintWidget
-                  key={idx}
-                  idx={idx}
-                  constraint={constraint as PlaceConstraint}
-                  x={x}
-                  y={y}
-                  width={550}
-                  height={350}
-                />
-              );
-            case ConstraintType.Profession:
-              return (
-                <ProfessionConstraintWidget
-                  key={idx}
-                  idx={idx}
-                  constraint={constraint as ProfessionConstraint}
-                  x={x}
-                  y={y}
-                  width={300}
-                  height={400}
-                  origin={origin.clone()}
-                />
-              );
-            default:
-              return (
-                <text key={idx} x={x} y={y} fill="red">
-                  Unknown constraint type: {constraint.type}
-                </text>
-              );
-          }
-        })}
     </g>
   );
 }
