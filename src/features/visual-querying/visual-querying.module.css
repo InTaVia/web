@@ -13,5 +13,5 @@
   padding: 0;
   display: grid;
   grid-template-rows: max-content 1fr;
-  background-color: white;
+  background-color: hsl(0deg 0% 100%);
 }

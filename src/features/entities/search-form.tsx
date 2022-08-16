@@ -1,16 +1,13 @@
 import type { FormEvent } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
-import { useAppDispatch } from '@/app/store';
 import { usePersonsSearch } from '@/features/entities/use-persons-search';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import Button from '@/features/ui/Button';
-import { setModal } from '@/features/ui/ui.slice';
 
 export function SearchForm(): JSX.Element {
   const searchFilters = usePersonsSearchFilters();
   const { search } = usePersonsSearch();
-  const dispatch = useAppDispatch();
 
   const { t } = useI18n<'common'>();
 

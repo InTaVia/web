@@ -16,8 +16,8 @@ interface HistogramProps {
     thresholds: Array<number>;
     bins: Array<Bin<number, number>>;
   };
-  brushedArea: Array<number> | null;
-  setBrushedArea: (area: Array<number>) => void;
+  brushedArea: [number, number] | null;
+  setBrushedArea: (area: [number, number]) => void;
   dimensions: {
     x: number;
     y: number;
