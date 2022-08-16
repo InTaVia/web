@@ -7,11 +7,10 @@ import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/features/common/entities.slice';
-import type { Person, Place, StoryEvent } from '@/features/common/entity.model';
+import type { Place, StoryEvent } from '@/features/common/entity.model';
 import styles from '@/features/storycreator/storycreator.module.css';
 
-import type { Slide, SlideContent, VisualisationPane } from '../storycreator/storycreator.slice';
+import type { Slide, SlideContent } from '../storycreator/storycreator.slice';
 import { setSlidesForStory } from '../storycreator/storycreator.slice';
 
 interface ExcelUploadProps {
@@ -67,11 +66,11 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
     //   };
     // });
 
-    convertData(list);
+    //convertData(list);
     /* convertDataHofburg(list); */
   }
 
-  function convertData(data: Array<any>) {
+  /* function convertData(data: Array<any>) {
     const events: Array<StoryEvent> = [];
 
     for (const raw of data) {
@@ -113,7 +112,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
     } as Person;
 
     dispatch(addLocalEntity(person));
-  }
+  } */
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function convertDataHofburg(data: Array<any>) {
@@ -244,7 +243,7 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
         index = index + 1;
       }
 
-      const text = textInSlides[slideNumber] as string;
+      /* const text = textInSlides[slideNumber] as string;
       const textInSlide: Record<SlideContent['id'], SlideContent> = {
         text0: {
           type: 'Text',
@@ -275,13 +274,13 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
             },
           },
         },
-      };
+      }; */
 
       const slide: Slide = {
         id: `slide${slideNumber}`,
         sort: parseInt(slideNumber),
         story: storyID,
-        visualizationPanes: {
+        /* visualizationPanes: {
           vis0: {
             id: 'vis0',
             type: 'Map',
@@ -321,8 +320,10 @@ export function ExcelUpload(props: ExcelUploadProps): JSX.Element {
             id: 'contentPane1',
             contents: {},
           },
-        },
-        layout: 'singleviscontent',
+        }, */
+        visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
+        contentPaneSlots: { 'cont-1': null, 'cont-2': null },
+        layout: 'single-vis-content',
       };
 
       slides[`slide${slideNumber}`] = slide;

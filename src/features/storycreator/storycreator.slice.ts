@@ -3,8 +3,12 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
 import type { StoryEvent } from '@/features/common/entity.model';
+import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
+import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 
 type DataUrlString = string;
+
+export type ContentSlotId = 'cont-1' | 'cont-2';
 
 export interface StoryMapMarker {
   position: [number, number];
@@ -24,11 +28,6 @@ export interface SlideContent {
   properties?: Record<StoryContentProperty['id'], StoryContentProperty>;
 }
 
-export interface ContentPane {
-  id: string;
-  contents: Record<SlideContent['id'], SlideContent>;
-}
-
 export interface VisualisationPane {
   id: string;
   events: Array<StoryEvent>;
@@ -41,10 +40,12 @@ export interface Slide {
   sort: number;
   selected?: boolean;
   image?: DataUrlString | null;
-  contentPanes: Record<ContentPane['id'], ContentPane>;
-  visualizationPanes: Record<VisualisationPane['id'], VisualisationPane>;
+  /* contentPanes: Record<ContentPane['id'], ContentPane>;
+  visualizationPanes: Record<VisualisationPane['id'], VisualisationPane>; */
   story: Story['id'];
-  layout: string;
+  layout: PanelLayout;
+  visualizationSlots: Record<SlotId, string | null>;
+  contentPaneSlots: Record<ContentSlotId, string | null>;
 }
 
 export interface Story {
@@ -222,17 +223,11 @@ const initialState: StoryCreatorState = {
           id: '0',
           sort: 0,
           story: 'story0',
-          visualizationPanes: {
-            vis0: { id: 'vis0', events: [], contents: {} },
-            vis1: { id: 'vis1', events: [], contents: {} },
-          },
-          contentPanes: {
-            contentPane0: { id: 'contentPane0', contents: {} },
-            contentPane1: { id: 'contentPane1', contents: {} },
-          },
+          visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
+          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
           selected: true,
           image: null,
-          layout: 'singlevis',
+          layout: 'single-vis',
         },
       },
     },
@@ -245,16 +240,10 @@ const initialState: StoryCreatorState = {
           sort: 0,
           story: 'story2',
           selected: true,
-          visualizationPanes: {
-            vis0: { id: 'vis0', events: [], contents: {} },
-            vis1: { id: 'vis1', events: [], contents: {} },
-          },
-          contentPanes: {
-            contentPane0: { id: 'contentPane0', contents: {} },
-            contentPane1: { id: 'contentPane1', contents: {} },
-          },
+          visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
+          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
           image: null,
-          layout: 'singlevis',
+          layout: 'single-vis',
         },
       },
     },
@@ -285,15 +274,9 @@ export const storyCreatorSlice = createSlice({
           story: story.id,
           selected: true,
           image: null,
-          visualizationPanes: {
-            vis0: { id: 'vis0', events: [], contents: {} },
-            vis1: { id: 'vis1', events: [], contents: {} },
-          },
-          contentPanes: {
-            contentPane0: { id: 'contentPane0', contents: {} },
-            contentPane1: { id: 'contentPane1', contents: {} },
-          },
-          layout: 'singlevis',
+          visualizationSlots: { 'vis-1': null, 'vis-2': null },
+          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
+          layout: 'single-vis',
         } as Slide,
       };
       newStories[story.id] = story;
@@ -325,15 +308,9 @@ export const storyCreatorSlice = createSlice({
         id: newID,
         image: null,
         //FIXME: Define default contentPanes and visualizationPanes
-        visualizationPanes: {
-          vis0: { id: 'vis0', events: [], contents: {} },
-          vis1: { id: 'vis1', events: [], contents: {} },
-        },
-        layout: 'singlevis',
-        contentPanes: {
-          contentPane0: { id: 'contentPane0', contents: {} },
-          contentPane1: { id: 'contentPane1', contents: {} },
-        },
+        visualizationSlots: { 'vis-1': null, 'vis-2': null },
+        contentPaneSlots: { 'cont-1': null, 'cont-2': null },
+        layout: 'single-vis',
         sort: counter,
         selected: false,
       } as Slide;
@@ -418,176 +395,52 @@ export const storyCreatorSlice = createSlice({
 
       state.stories = newStories;
     },
-    removeSlideContent: (state, action) => {
-      const content = action.payload.content;
-      const slide = action.payload.slide;
-
-      console.log(JSON.stringify(content));
-
-      switch (content.type) {
-        case 'Text':
-        case 'Image':
-        case 'Quiz':
-          delete state.stories[slide.story]!.slides[slide.id]!.contentPanes[content.parentPane]!
-            .contents[content.id];
-          break;
-        case 'Map':
-        case 'Timeline':
-          delete state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[
-            content.parentPane
-          ]!.contents[content.id];
-      }
-    },
     setSlidesForStory: (state, action) => {
       const story = action.payload.story;
       const slides = action.payload.slides;
 
       state.stories[story]!.slides = slides;
     },
-    addVisualization: (state, action) => {
-      const content = action.payload;
-
-      const visPaneId = content.parentPane;
-      const contentId = `content1`;
-      content.id = contentId;
-
-      const newContents = {} as Record<SlideContent['id'], SlideContent>;
-      newContents[contentId] = content as SlideContent;
-
-      state.stories[content.story]!.slides[content.slide]!.visualizationPanes[visPaneId] = {
-        id: visPaneId,
-        type: content.type,
-        events: [],
-        contents: newContents,
-      } as VisualisationPane;
+    setContentPaneToSlot: (state, action) => {
+      const { id, slotId, slide } = action.payload;
+      state.stories[slide.story]!.slides[slide.id]!.contentPaneSlots[slotId as ContentSlotId] = id;
     },
-    editSlideContent: (state, action) => {
-      const content = action.payload.content;
+    setVisualizationForVisualizationSlotForStorySlide: (state, action) => {
       const slide = action.payload.slide;
+      const visualizationSlot = action.payload.visualizationSlot;
+      const visualizationId = action.payload.visualizationId;
 
-      switch (content.type) {
-        case 'Text':
-        case 'Image':
-        case 'Quiz':
-          state.stories[slide.story]!.slides[slide.id]!.contentPanes[content.parentPane]!.contents[
-            content.id
-          ] = content;
-          break;
-        case 'Map':
-        case 'Timeline':
-          state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[
-            content.parentPane
-          ]!.contents[content.id] = content;
-      }
+      state.stories[slide.story]!.slides[slide.id]!.visualizationSlots[
+        visualizationSlot as SlotId
+      ] = visualizationId;
+
+      /* console.log(slide, visualizationSlot, visualizationId); */
     },
-    addContentToContentPane: (state, action) => {
-      const content = action.payload;
-
-      const contentPaneID = content.contentPane;
-      const contentPane =
-        state.stories[content.story]!.slides[content.slide]!.contentPanes[contentPaneID];
-      //const contentId = `content${Object.keys(contentPane?.contents).length}`;
-
-      const contents = contentPane?.contents;
-      const oldIDs = Object.keys(contents as object);
-
-      let counter = 0;
-      let newID;
-      do {
-        counter = counter + 1;
-        newID = `${content.slide}(${counter})`;
-      } while (oldIDs.includes(newID));
-
-      content.id = newID;
-
-      let contentObject;
-      switch (content.type) {
-        case 'Image':
-          contentObject = new StoryImageObject(content.id, content.contentPane, content.layout);
-          break;
-        case 'Text':
-          contentObject = new StoryTextObject(content.id, content.contentPane, content.layout);
-          break;
-        case 'Quiz':
-          contentObject = new StoryQuizObject(content.id, content.contentPane, content.layout);
-          break;
-        default:
-          break;
-      }
-
-      if (contentObject !== undefined) {
-        state.stories[content.story]!.slides[content.slide]!.contentPanes[contentPaneID]!.contents[
-          newID
-        ] = contentObject;
-      }
-    },
-    resizeMoveContent: (state, action) => {
-      const layout = action.payload.layout;
+    releaseVisualizationForVisualizationSlotForSlide: (state, action) => {
       const slide = action.payload.slide;
-      const story = action.payload.story;
-      const content = action.payload.content;
-      const parentPane = action.payload.parentPane;
-      const type = action.payload.parentType;
-      let objectToChange;
+      const visSlot = action.payload.visSlot;
 
-      switch (type) {
-        case 'Content':
-          objectToChange =
-            state.stories[story]!.slides[slide]!.contentPanes[parentPane]!.contents[content];
-          if (objectToChange !== undefined) {
-            objectToChange.layout = {
-              x: layout.x,
-              y: layout.y,
-              w: layout.w,
-              h: layout.h,
-            };
-          }
-          break;
-        case 'Visualization':
-          objectToChange =
-            state.stories[story]!.slides[slide]!.visualizationPanes[parentPane]!.contents[content];
-          if (objectToChange !== undefined) {
-            objectToChange.layout = {
-              x: layout.x,
-              y: layout.y,
-              w: layout.w,
-              h: layout.h,
-            };
-          }
-          break;
-        default:
-          break;
-      }
+      state.stories[slide.story]!.slides[slide.id]!.visualizationSlots[visSlot as SlotId] = null;
     },
-    editContentOfContentPane: (state, action) => {
+    switchVisualizations(state, action) {
+      const { targetSlot, targetVis, sourceSlot, sourceVis, slide } = action.payload;
+
+      state.stories[slide.story]!.slides[slide.id]!.visualizationSlots[targetSlot as SlotId] =
+        targetVis;
+      state.stories[slide.story]!.slides[slide.id]!.visualizationSlots[sourceSlot as SlotId] =
+        sourceVis;
+    },
+    /* editContentOfContentPane: (state, action) => {
       const content = action.payload;
 
       console.log(JSON.stringify(content));
 
       state.stories[content.story]!.slides[content.slide]!.contentPanes[content.id] = content;
-    },
+    }, */
     setImage: (state, action) => {
       const slide = action.payload.slide;
       const image = action.payload.image;
       state.stories[slide.story]!.slides[slide.id]!.image = image;
-    },
-    addEventsToVisPane: (state, action) => {
-      const slide: Slide = action.payload.slide;
-      const visPaneId: string = action.payload.visPane;
-      const events: Array<StoryEvent> = action.payload.events;
-
-      state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[visPaneId]?.events.push(
-        ...events,
-      );
-    },
-    addEventToVisPane: (state, action) => {
-      const slide: Slide = action.payload.slide;
-      const visPaneId: string = action.payload.visPane;
-      const event: StoryEvent = action.payload.event;
-
-      state.stories[slide.story]!.slides[slide.id]!.visualizationPanes[visPaneId]?.events.push(
-        event,
-      );
     },
   },
 });
@@ -597,21 +450,17 @@ export const {
   editStory,
   removeStory,
   removeSlide,
-  removeSlideContent,
   createSlide,
   selectSlide,
-  addVisualization,
-  addContentToContentPane,
-  resizeMoveContent,
-  editSlideContent,
-  editContentOfContentPane,
   setImage,
   copySlide,
   createSlidesInBulk,
-  addEventsToVisPane,
-  addEventToVisPane,
   setLayoutForSlide,
   setSlidesForStory,
+  setVisualizationForVisualizationSlotForStorySlide,
+  releaseVisualizationForVisualizationSlotForSlide,
+  setContentPaneToSlot,
+  switchVisualizations,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

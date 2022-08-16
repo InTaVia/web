@@ -20,12 +20,15 @@ import errorMiddleware from '@/app/error.middleware';
 import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import entitiesReducer from '@/features/common/entities.slice';
 import intaviaApiService from '@/features/common/intavia-api.service';
+import visualizationReducer from '@/features/common/visualization.slice';
 import searchHistoryReducer from '@/features/entities/search-history.slice';
 import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
+import contentPaneReducer from '@/features/storycreator/contentPane.slice';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
 import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
+import workspacesReducer from '@/features/visualization-layouts/workspaces.slice';
 
 const persistConfig = {
   key: 'entities',
@@ -52,6 +55,9 @@ export function configureAppStore() {
       timeline: timelineReducer,
       ui: uiReducer,
       visualQuerying: visualQueryingReducer,
+      visualization: visualizationReducer,
+      contentPane: contentPaneReducer,
+      workspaces: workspacesReducer,
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({

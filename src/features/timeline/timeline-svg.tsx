@@ -3,13 +3,14 @@ import { scaleBand, scaleTime } from 'd3-scale';
 import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 
-import type { Entity, Person } from '@/features/common/entity.model';
+import type { Entity, EntityEvent, Person, StoryEvent } from '@/features/common/entity.model';
 import { TimelineElement } from '@/features/timeline/timeline-element';
 import { TimelineElementTooltip } from '@/features/timeline/timeline-element-tooltip';
 import { TimelineYearAxis } from '@/features/timeline/timeline-year-axis';
 
 interface TimelineSvgProps {
   persons: Array<Person>;
+  events?: Array<EntityEvent | StoryEvent>;
   parentRef: RefObject<HTMLDivElement>;
   zoomToData: boolean;
   renderLabel: boolean;
@@ -21,11 +22,27 @@ const svgMinWidth = 300;
 const svgMinHeight = 150;
 
 export function TimelineSvg(props: TimelineSvgProps): JSX.Element {
-  const { parentRef, persons, zoomToData, renderLabel, hoveredEntityId, setHoveredEntityId } =
-    props;
+  const {
+    parentRef,
+    events = [],
+    zoomToData,
+    renderLabel,
+    hoveredEntityId,
+    setHoveredEntityId,
+  } = props;
+
   const [svgViewBox, setSvgViewBox] = useState(`0 0 ${svgMinWidth} ${svgMinHeight}`);
   const [svgWidth, setSvgWidth] = useState(svgMinWidth);
   const [svgHeight, setSvgHeight] = useState(svgMinHeight);
+
+  const persons = props.persons.map((person) => {
+    return {
+      ...person,
+      history: events.filter((event) => {
+        return event.targetId === person.id;
+      }),
+    } as Person;
+  });
 
   // FIXME:
   useEffect(() => {

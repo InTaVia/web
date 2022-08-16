@@ -56,3 +56,4 @@ public/site.webmanifest
 
 # package-lock.json (for now)
 /package-lock.json
+public/hofburg/*

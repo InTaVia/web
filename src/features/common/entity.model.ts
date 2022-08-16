@@ -8,6 +8,7 @@ export interface EntityBase {
 }
 
 export interface EntityEvent {
+  id: string;
   type: EventType;
   targetId?: Entity['id'];
   date?: IsoDateString;
@@ -17,6 +18,7 @@ export interface EntityEvent {
 
 export interface StoryEvent {
   type: string;
+  targetId?: Entity['id'];
   date?: IsoDateString;
   place?: Place;
   label?: string;

@@ -2,7 +2,6 @@
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 /** @typedef {import('~/config/i18n.config').Locale} Locale */
 
-// @ts-expect-error Missing module declaration.
 import createBundleAnalyzer from '@next/bundle-analyzer';
 import { log } from '@stefanprobst/log';
 
@@ -14,9 +13,6 @@ const config = {
   eslint: {
     dirs: [process.cwd()],
     ignoreDuringBuilds: true,
-  },
-  experimental: {
-    outputStandalone: true,
   },
   headers() {
     const headers = [
@@ -60,6 +56,7 @@ const config = {
   },
   pageExtensions: ['page.tsx', 'api.ts'],
   reactStrictMode: true,
+  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },

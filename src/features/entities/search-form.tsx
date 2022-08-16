@@ -59,6 +59,17 @@ export function SearchForm(): JSX.Element {
       >
         Create visual query
       </Button>
+
+      <Button
+        type="button"
+        round="round"
+        color="accent"
+        size="regular"
+        className="col-span-2"
+        onClick={openVisualQueryingModal}
+      >
+        Create visual query
+      </Button>
     </form>
   );
 }

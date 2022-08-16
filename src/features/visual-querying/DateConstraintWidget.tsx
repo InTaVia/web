@@ -32,7 +32,7 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
     boundedHeight: height - 100,
   };
 
-  function setBrushedArea(area: Array<number>) {
+  function setBrushedArea(area: [number, number]) {
     dispatch(
       updateConstraintValue({
         id: constraint.id,

@@ -67,19 +67,4 @@ export function VisualQueryingModal(): JSX.Element {
       </Transition>
     </>
   );
-
-  // return (
-  //   <Dialog className="relative z-10 h-3/4 w-3/4" open={isOpen} onClose={closeModal}>
-  //     <Dialog.Panel className="">
-  //       <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-  //         Visual Query
-  //       </Dialog.Title>
-
-  //       <VisualQuerying />
-
-  //       <Button onClick={closeModal}>Search</Button>
-  //       <Button onClick={closeModal}>Cancel</Button>
-  //     </Dialog.Panel>
-  //   </Dialog>
-  // );
 }
