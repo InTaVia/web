@@ -2,9 +2,7 @@ import { useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
-import Button from '@/features/ui/Button';
 import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
-import styles from '@/features/visual-querying/visual-querying.module.css';
 import type {
   DateConstraint,
   ProfessionConstraint,
@@ -92,8 +90,12 @@ export function VisualQuerying(): JSX.Element {
   }
 
   return (
-    <div id="vq-outer-wrapper" className={styles['visual-querying-outer-wrapper']}>
-      <Button
+    <div
+      id="vq-outer-wrapper"
+      className="b-white relative h-[80vh] w-full overflow-hidden vq-min:overflow-scroll"
+      ref={parent}
+    >
+      {/* <Button
         round="round"
         onClick={sendQuery}
         className="h-10 w-24 justify-self-center"
@@ -101,28 +103,27 @@ export function VisualQuerying(): JSX.Element {
         disabled={isButtonDisabled()}
       >
         Search
-      </Button>
-      <div
+      </Button> */}
+      {/* <div
         id="vq-inner-wrapper"
         className="relative h-full w-full overflow-hidden vq-min:overflow-scroll"
         ref={parent}
-      >
-        <VisualQueryingSvg parentWidth={width} parentHeight={height} />
+      > */}
+      <VisualQueryingSvg parentWidth={width} parentHeight={height} />
 
-        {constraints
-          .filter((constraint) => {
-            return constraint.opened;
-          })
-          .map((constraint, idx) => {
-            return (
-              <ConstraintContainer
-                key={idx}
-                position={getContainerPosition(constraint.type)}
-                constraint={constraint}
-              />
-            );
-          })}
-      </div>
+      {constraints
+        .filter((constraint) => {
+          return constraint.opened;
+        })
+        .map((constraint, idx) => {
+          return (
+            <ConstraintContainer
+              key={idx}
+              position={getContainerPosition(constraint.type)}
+              constraint={constraint}
+            />
+          );
+        })}
     </div>
   );
 }
