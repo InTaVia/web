@@ -24,7 +24,7 @@ export function SearchForm(): JSX.Element {
   }
 
   function openVisualQueryingModal() {
-    dispatch(setModal({ modal: 'visualQueryModal', isOpen: true }));
+    //dispatch(setModal({ modal: 'visualQueryModal', isOpen: true }));
   }
 
   return (
