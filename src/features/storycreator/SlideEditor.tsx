@@ -24,7 +24,7 @@ interface SlideEditorProps {
   width?: number | undefined;
   height?: number | undefined; // FIXME: unused
   targetRef?: RefObject<HTMLDivElement>;
-  /* imageRef: RefObject<HTMLDivElement>; */
+  imageRef: RefObject<HTMLDivElement>;
   slide: Slide;
   takeScreenshot?: () => void;
   numberOfVisPanes?: number;
@@ -44,12 +44,8 @@ interface DropProps {
 
 export function SlideEditor(props: SlideEditorProps) {
   const {
-    targetRef,
     slide,
-    /* imageRef, */
-    /*  numberOfContentPanes,
-    numberOfVisPanes,
-    vertical = false, */
+    imageRef,
     layout,
     //desktop = false,
   } = props;
@@ -143,7 +139,7 @@ export function SlideEditor(props: SlideEditorProps) {
   return (
     /* innerref={imageRef} */
     // className={styles['slide-editor-wrapper']}
-    <div ref={targetRef} className="h-full">
+    <div ref={imageRef} className="h-full">
       {/* {createSplitterLayout()} */}
       <VisualizationGroup
         layout={layout}

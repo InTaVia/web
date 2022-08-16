@@ -62,7 +62,6 @@ export function StoryFlow(props: StoryFlowProps) {
   function onCopy(slideID: Slide['id']) {
     dispatch(copySlide({ story: story.id, slide: slideID }));
   }
-  console.log('height', height);
 
   return (
     <div

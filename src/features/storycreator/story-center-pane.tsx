@@ -101,7 +101,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const takeScreenshot = function () {
+  const setSlideThumbnail = function () {
     if (ref.current === null) {
       return;
     }
@@ -160,6 +160,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
  */
   };
 
+  setSlideThumbnail();
+
   return (
     <div className="grid  h-full w-full grid-rows-[max-content_1fr]">
       <StroyCreatorToolbar
@@ -183,8 +185,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               <div className="h-full border border-intavia-gray-300" style={{ width: newWidth }}>
                 <SlideEditor
                   slide={selectedSlide as Slide}
-                  //imageRef={ref}
-                  takeScreenshot={takeScreenshot}
+                  imageRef={ref}
                   layout={selectedSlide!.layout}
                   desktop={desktop}
                   timescale={timescale}
