@@ -2,7 +2,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
+import { usePersonsSearch } from '@/features/entities/use-persons-search';
+import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import Button from '@/features/ui/Button';
 import { selectModalOpen, setModal } from '@/features/ui/ui.slice';
 import { VisualQuerying } from '@/features/visual-querying/VisualQuerying';
@@ -16,7 +17,9 @@ import { ConstraintType, selectConstraints } from '@/features/visual-querying/vi
 export function VisualQueryingModal(): JSX.Element {
   const dispatch = useAppDispatch();
   const constraints = useAppSelector(selectConstraints);
-  const [trigger] = useLazyGetPersonsQuery();
+
+  const searchFilters = usePersonsSearchFilters();
+  const { search } = usePersonsSearch();
 
   const isOpen = useAppSelector((state) => {
     return selectModalOpen(state, 'visualQueryModal');
@@ -31,7 +34,7 @@ export function VisualQueryingModal(): JSX.Element {
     const nameConstraint = constraints.find((constraint) => {
       return constraint.type === ConstraintType.Name;
     });
-    const name = nameConstraint ? (nameConstraint as TextConstraint).value : null;
+    const name = nameConstraint ? (nameConstraint as TextConstraint).value : undefined;
 
     // TODO (samuelbeck): add date-lived-constraint
     const dateOfBirthConstraint = constraints.find((constraint) => {
@@ -41,7 +44,7 @@ export function VisualQueryingModal(): JSX.Element {
     });
     const dateOfBirth = dateOfBirthConstraint
       ? (dateOfBirthConstraint as DateConstraint).value
-      : null;
+      : undefined;
 
     const dateOfDeathConstraint = constraints.find((constraint) => {
       return (
@@ -50,7 +53,7 @@ export function VisualQueryingModal(): JSX.Element {
     });
     const dateOfDeath = dateOfDeathConstraint
       ? (dateOfDeathConstraint as DateConstraint).value
-      : null;
+      : undefined;
 
     const professionsConstraint = constraints.find((constraint) => {
       return constraint.type === ConstraintType.Profession;
@@ -60,18 +63,33 @@ export function VisualQueryingModal(): JSX.Element {
 
     // TODO (samuelbeck): add place constraints
 
-    // Send the query
-    void trigger(
-      {
-        q: name ?? undefined,
-        dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
-        dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
-        dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
-        dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
-        professions: JSON.stringify(professions),
-      },
-      true,
-    );
+    // // Clear entities from state
+    // dispatch(clearEntities());
+
+    // // Send the query
+    // void trigger(
+    //   {
+    //     q: name ?? undefined,
+    //     dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
+    //     dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
+    //     dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
+    //     dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+    //     professions: JSON.stringify(professions),
+    //   },
+    //   true,
+    // );
+
+    // Write search params in url
+    search({
+      ...searchFilters,
+      page: 1,
+      q: name,
+      dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
+      dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
+      dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
+      dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+      professions: professions,
+    });
 
     closeModal();
   }
