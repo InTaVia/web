@@ -2,12 +2,21 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useLazyGetPersonsQuery } from '@/features/common/intavia-api.service';
 import Button from '@/features/ui/Button';
 import { selectModalOpen, setModal } from '@/features/ui/ui.slice';
 import { VisualQuerying } from '@/features/visual-querying/VisualQuerying';
+import type {
+  DateConstraint,
+  ProfessionConstraint,
+  TextConstraint,
+} from '@/features/visual-querying/visualQuerying.slice';
+import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 
 export function VisualQueryingModal(): JSX.Element {
   const dispatch = useAppDispatch();
+  const constraints = useAppSelector(selectConstraints);
+  const [trigger] = useLazyGetPersonsQuery();
 
   const isOpen = useAppSelector((state) => {
     return selectModalOpen(state, 'visualQueryModal');
@@ -15,6 +24,62 @@ export function VisualQueryingModal(): JSX.Element {
 
   function closeModal() {
     dispatch(setModal({ modal: 'visualQueryModal', isOpen: false }));
+  }
+
+  function sendQuery() {
+    // Get parameters from constraints
+    const nameConstraint = constraints.find((constraint) => {
+      return constraint.type === ConstraintType.Name;
+    });
+    const name = nameConstraint ? (nameConstraint as TextConstraint).value : null;
+
+    // TODO (samuelbeck): add date-lived-constraint
+    const dateOfBirthConstraint = constraints.find((constraint) => {
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-birth-constraint'
+      );
+    });
+    const dateOfBirth = dateOfBirthConstraint
+      ? (dateOfBirthConstraint as DateConstraint).value
+      : null;
+
+    const dateOfDeathConstraint = constraints.find((constraint) => {
+      return (
+        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-death-constraint'
+      );
+    });
+    const dateOfDeath = dateOfDeathConstraint
+      ? (dateOfDeathConstraint as DateConstraint).value
+      : null;
+
+    const professionsConstraint = constraints.find((constraint) => {
+      return constraint.type === ConstraintType.Profession;
+    });
+    const professions =
+      (professionsConstraint as ProfessionConstraint | undefined)?.value ?? undefined;
+
+    // TODO (samuelbeck): add place constraints
+
+    // Send the query
+    void trigger(
+      {
+        q: name ?? undefined,
+        dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
+        dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
+        dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
+        dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
+        professions: JSON.stringify(professions),
+      },
+      true,
+    );
+
+    closeModal();
+  }
+
+  function isButtonDisabled(): boolean {
+    return !constraints.some((constraint) => {
+      return constraint.value !== null && constraint.value !== '';
+    });
   }
 
   return (
@@ -55,7 +120,12 @@ export function VisualQueryingModal(): JSX.Element {
                     <Button round="round" onClick={closeModal}>
                       Cancel
                     </Button>
-                    <Button round="round" color="accent" onClick={closeModal}>
+                    <Button
+                      round="round"
+                      color="accent"
+                      onClick={sendQuery}
+                      disabled={isButtonDisabled()}
+                    >
                       Search
                     </Button>
                   </div>
