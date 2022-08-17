@@ -1,11 +1,14 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
 import TextField from '@/features/ui/TextField';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
+import {
+  toggleConstraintWidget,
+  updateConstraintValue,
+} from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintWidgetProps {
   constraint: TextConstraint;
@@ -18,13 +21,25 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   const [text, setText] = useState(constraint.value);
 
-  function handleClick() {
+  function updateConstraint() {
     dispatch(
       updateConstraintValue({
         id: constraint.id,
         value: text,
       }),
     );
+
+    dispatch(toggleConstraintWidget(constraint.id));
+  }
+
+  function handleKeyDown(e: KeyboardEvent) {
+    switch (e.key) {
+      case 'Enter':
+        updateConstraint();
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -35,8 +50,10 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           return setText(e.target.value);
         }}
+        onKeyDown={handleKeyDown}
+        autoFocus={true}
       />
-      <Button round="round" color="accent" disabled={text === ''} onClick={handleClick}>
+      <Button round="round" color="accent" disabled={text === ''} onClick={updateConstraint}>
         Add
       </Button>
     </div>
