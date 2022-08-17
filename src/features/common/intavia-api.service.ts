@@ -34,7 +34,7 @@ const service = createApi({
           dateOfBirthEnd?: number;
           dateOfDeathStart?: number;
           dateOfDeathEnd?: number;
-          professions?: string;
+          professions?: Array<string>;
         }
       >({
         query(params) {
