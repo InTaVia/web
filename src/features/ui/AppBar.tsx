@@ -1,4 +1,4 @@
-import { InformationCircleIcon, UploadIcon } from '@heroicons/react/outline';
+import { InformationCircleIcon } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
 import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
-import Button from '@/features/ui/Button';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
@@ -87,7 +86,7 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          <ExcelUpload story="blub" />
+          <ExcelUpload />
           {linksRight.map((item) => {
             return (
               <Link key={item.id} href={item.href.pathname}>
