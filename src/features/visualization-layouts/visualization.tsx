@@ -22,8 +22,6 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const events = visualization.eventIds;
   const persons = visualization.entityIds;
 
-  console.log(events, persons);
-
   const filteredPersons =
     persons.length > 0
       ? allPersons.filter((person) => {
@@ -31,18 +29,12 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
-  console.log('filteredPersons', filteredPersons);
-
   const personEvents = filteredPersons.flatMap((person) => {
     return person.history as Array<EntityEvent>;
   });
   const allPersonEvents = allPersons.flatMap((person) => {
     return person.history as Array<EntityEvent>;
   });
-
-  console.log('allPersonEvents', allPersonEvents);
-  console.log('personEvents', personEvents);
-  console.log('events', events);
 
   const filteredEvents =
     events.length > 0
@@ -53,20 +45,15 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const visEvents = [...personEvents, ...filteredEvents];
 
-  console.log('filteredEvents', filteredEvents);
   const targetIds = filteredEvents.map((event) => {
     return event.targetId;
   });
-
-  console.log('targetIds', targetIds);
 
   const twiceFilteredPersons = allPersons.filter((person) => {
     return targetIds.includes(person.id);
   });
 
   const visPersons = [...filteredPersons, ...twiceFilteredPersons];
-
-  console.log('twiceFilteredPersons', twiceFilteredPersons);
 
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {

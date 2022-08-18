@@ -41,6 +41,7 @@ export const contentPaneSlice = createSlice({
   reducers: {
     createContentPane: (state, action) => {
       const id = action.payload.id;
+
       state[id] = { id: id, contents: {} } as ContentPane;
     },
     addContentToContentPane: (state, action) => {
@@ -50,7 +51,22 @@ export const contentPaneSlice = createSlice({
       const contentPane = state[contentPaneID];
       //const contentId = `content${Object.keys(contentPane?.contents).length}`;
 
-      const contents = contentPane?.contents;
+      const contents = contentPane!.contents;
+
+      if (contentPane !== undefined) {
+        const maxLayoutY = Math.max(
+          ...Object.values(contents).map((content: SlideContent) => {
+            return content.layout.x + content.layout.h;
+          }),
+        );
+        if (content.layout.y === undefined) {
+          content.layout.y = maxLayoutY;
+        }
+        if (content.layout.x === undefined) {
+          content.layout.x = 1;
+        }
+      }
+
       const oldIDs = Object.keys(contents as object);
 
       let counter = 0;

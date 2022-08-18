@@ -1,12 +1,8 @@
-import type { RefObject } from 'react';
+import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import {
-  addContentToContentPane,
-  createContentPane,
-  editSlideContent,
-} from '@/features/storycreator/contentPane.slice';
+import { useAppDispatch } from '@/app/store';
+import { createContentPane, editSlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
@@ -16,8 +12,6 @@ import {
   switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import type { UiWindow } from '@/features/ui/ui.slice';
-import { selectWindows } from '@/features/ui/ui.slice';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
 
 interface SlideEditorProps {
@@ -30,10 +24,11 @@ interface SlideEditorProps {
   numberOfVisPanes?: number;
   numberOfContentPanes?: number;
   vertical?: boolean;
-  increaseNumberOfContentPanes: () => void;
+  increaseNumberOfContentPanes: (contentType: string | undefined) => void;
   desktop?: boolean;
   timescale?: boolean;
   layout: PanelLayout;
+  addContent: (type: string, i_layoutItem: any, i_targetPane: string | undefined) => void;
 }
 
 interface DropProps {
@@ -48,6 +43,8 @@ export function SlideEditor(props: SlideEditorProps) {
     imageRef,
     layout,
     //desktop = false,
+    increaseNumberOfContentPanes,
+    addContent,
   } = props;
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -62,8 +59,6 @@ export function SlideEditor(props: SlideEditorProps) {
   const handleSave = (element: any) => {
     dispatch(editSlideContent({ slide: slide, content: element }));
   };
-
-  const windows = useAppSelector(selectWindows);
 
   const onSwitchVisualization = (
     targetSlot: string,
@@ -94,61 +89,20 @@ export function SlideEditor(props: SlideEditorProps) {
     addContent(type, i_layout, i_targetPane);
   };
 
-  const addContent = (type: string, i_layoutItem: any, i_targetPane: string | undefined) => {
-    const layoutItem = i_layoutItem;
+  const allowDrop = (event: DragEvent) => {
+    event.preventDefault();
+  };
 
-    let targetPane = i_targetPane;
-    if (targetPane === undefined) {
-      targetPane = 'contentPane0';
+  const drop = (event: DragEvent) => {
+    event.preventDefault();
+    const data = JSON.parse(event.dataTransfer.getData('Text'));
+    if (['Text', 'Image', 'Quiz'].includes(data.type)) {
+      increaseNumberOfContentPanes(data.type);
     }
-
-    const ids = windows.map((window: UiWindow) => {
-      return window.i;
-    });
-
-    let counter = 1;
-    const text = type;
-    let newText = text;
-    while (ids.includes(newText)) {
-      newText = text + ' (' + counter + ')';
-      counter++;
-    }
-    layoutItem['i'] = newText;
-    layoutItem['type'] = type;
-
-    switch (type) {
-      case 'Image':
-        layoutItem['h'] = 4;
-        layoutItem['w'] = 1;
-        break;
-      default:
-        layoutItem['h'] = 1;
-        layoutItem['w'] = 1;
-        break;
-    }
-
-    dispatch(
-      addContentToContentPane({
-        story: slide.story,
-        slide: slide.id,
-        contentPane: targetPane,
-        layout: {
-          x: layoutItem['x'],
-          y: layoutItem['y'],
-          w: layoutItem['w'],
-          h: layoutItem['h'],
-        },
-        type: layoutItem['type'],
-        key: newText,
-      }),
-    );
   };
 
   return (
-    /* innerref={imageRef} */
-    // className={styles['slide-editor-wrapper']}
-    <div ref={imageRef} className="h-full">
-      {/* {createSplitterLayout()} */}
+    <div ref={imageRef} onDrop={drop} onDragOver={allowDrop} className="h-full">
       <VisualizationGroup
         layout={layout}
         visualizationSlots={slide.visualizationSlots}
