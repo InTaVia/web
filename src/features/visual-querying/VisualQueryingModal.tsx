@@ -63,23 +63,6 @@ export function VisualQueryingModal(): JSX.Element {
 
     // TODO (samuelbeck): add place constraints
 
-    // // Clear entities from state
-    // dispatch(clearEntities());
-
-    // // Send the query
-    // void trigger(
-    //   {
-    //     q: name ?? undefined,
-    //     dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
-    //     dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
-    //     dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
-    //     dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
-    //     professions: JSON.stringify(professions),
-    //   },
-    //   true,
-    // );
-
-    // Write search params in url
     search({
       ...searchFilters,
       page: 1,
