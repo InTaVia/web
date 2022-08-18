@@ -87,6 +87,14 @@ export function SlideEditor(props: SlideEditorProps) {
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
 
+    addContent(dropProps.type, i_layoutItem, i_targetPane);
+  };
+
+  const onContentPaneWizard = (i_layout: any, type: string, i_targetPane: any) => {
+    addContent(type, i_layout, i_targetPane);
+  };
+
+  const addContent = (type: string, i_layoutItem: any, i_targetPane: string | undefined) => {
     const layoutItem = i_layoutItem;
 
     let targetPane = i_targetPane;
@@ -99,16 +107,16 @@ export function SlideEditor(props: SlideEditorProps) {
     });
 
     let counter = 1;
-    const text = dropProps.type;
+    const text = type;
     let newText = text;
     while (ids.includes(newText)) {
       newText = text + ' (' + counter + ')';
       counter++;
     }
     layoutItem['i'] = newText;
-    layoutItem['type'] = dropProps.type;
+    layoutItem['type'] = type;
 
-    switch (dropProps.type) {
+    switch (type) {
       case 'Image':
         layoutItem['h'] = 4;
         layoutItem['w'] = 1;
@@ -165,6 +173,7 @@ export function SlideEditor(props: SlideEditorProps) {
         onSwitchVisualization={onSwitchVisualization}
         onAddContentPane={onAddContentPane}
         onDropContentPane={onDropContentPane}
+        onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
         setOpenDialog={setOpenDialog}
       />

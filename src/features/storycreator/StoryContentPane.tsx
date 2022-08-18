@@ -6,6 +6,7 @@ import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
 import {
   removeSlideContent,
   resizeMoveContent,
@@ -27,10 +28,11 @@ interface StoryContentPaneProps {
   setEditElement?: (arg0: any) => void;
   setOpenDialog: (arg0: boolean) => void;
   onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
+  onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const { id, setEditElement, setOpenDialog, onDrop } = props;
+  const { id, setEditElement, setOpenDialog, onDrop, onContentPaneWizard } = props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
@@ -228,12 +230,15 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     }
   };
 
-  const layout = contents.map((content) => {
-    return { i: content.id, ...content.layout };
-  });
+  const layout = [
+    ...contents.map((content) => {
+      return { i: content.id, ...content.layout };
+    }),
+    { i: 'contentPaneWizard', x: 0, y: 999, h: 1, w: 1, isResizable: false },
+  ];
 
   return (
-    <div className="grid h-full w-full">
+    <div className="grid h-full w-full bg-intavia-blue-200">
       <ReactResizeDetector handleWidth handleHeight>
         {({ width, height }) => {
           return (
@@ -279,6 +284,21 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               {contents.map((content) => {
                 return createLayoutPane(content);
               })}
+              <div key={'contentPaneWizard'}>
+                <ContentPaneWizard
+                  mini={contents.length > 0 ? true : false}
+                  onContentAddPerClick={(type: string) => {
+                    if (onContentPaneWizard !== undefined) {
+                      const maxLayoutY = Math.max(
+                        ...contents.map((content) => {
+                          return content.layout.y + content.layout.h;
+                        }),
+                      );
+                      onContentPaneWizard({ y: maxLayoutY > 0 ? maxLayoutY : 1, x: 1 }, type, id);
+                    }
+                  }}
+                />
+              </div>
             </ReactGridLayout>
           );
         }}

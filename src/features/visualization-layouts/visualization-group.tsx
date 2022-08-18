@@ -22,6 +22,7 @@ interface VisualisationGroupProps {
   ) => void;
   onAddContentPane?: (slotId: string) => void;
   onDropContentPane?: (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => void;
+  onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
   setOpenDialog: (openDialog: boolean) => void;
   setEditElement?: (editElement: any) => void;
   setEditVisualizationElement?: (editElement: any) => void;
@@ -205,6 +206,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
     onReleaseVisualization,
     onSwitchVisualization,
     onDropContentPane,
+    onContentPaneWizard,
     setOpenDialog,
     setEditElement,
     setEditVisualizationElement,
@@ -268,6 +270,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
                     setEditElement={setEditElement}
                     setOpenDialog={setOpenDialog}
                     onDrop={onDropContentPane}
+                    onContentPaneWizard={onContentPaneWizard}
                   />
                 );
               }
