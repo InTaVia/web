@@ -59,14 +59,6 @@
   box-shadow: none !important;
 }
 
-.story-flow-card {
-  cursor: pointer;
-}
-
-.story-flow-card.selected {
-  border: 2px solid var(--light-blue) !important;
-}
-
 .button-row {
   display: inline-block;
 }

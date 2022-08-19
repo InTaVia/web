@@ -167,7 +167,7 @@ function StoryScreen(): JSX.Element | null {
                     }}
                   </ReactResizeDetector>
                 </div>
-                <div className="flex justify-center border-t border-intavia-gray-200 p-1">
+                <div className="flex justify-center border-t border-intavia-gray-200 p-2">
                   <Button
                     border={false}
                     round="pill"

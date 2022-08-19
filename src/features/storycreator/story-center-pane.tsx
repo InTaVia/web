@@ -134,8 +134,11 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
     switch (type) {
       case 'Image':
-      case 'Quiz':
         layoutItem['h'] = 4;
+        layoutItem['w'] = 1;
+        break;
+      case 'Quiz':
+        layoutItem['h'] = 2;
         layoutItem['w'] = 1;
         break;
       default:
@@ -177,7 +180,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   setSlideThumbnail();
 
   return (
-    <div className="grid  h-full w-full grid-rows-[max-content_1fr]">
+    <div className="grid h-full w-full grid-rows-[max-content_1fr]">
       <StroyCreatorToolbar
         onLayoutSelected={onLayoutSelected}
         desktop={desktop}

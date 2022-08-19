@@ -1,9 +1,8 @@
-import { Card } from '@mui/material';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch } from '@/app/store';
-import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import { copySlide, removeSlide, selectSlide } from '@/features/storycreator/storycreator.slice';
 import { Window } from '@/features/ui/Window';
@@ -82,14 +81,19 @@ export function StoryFlow(props: StoryFlowProps) {
       >
         {slides.map((slide: Slide) => {
           return (
-            <Card
+            <div
               key={'slide' + slide.id}
               onClick={() => {
                 onClick(slide.id);
               }}
-              className={`${styles['story-flow-card']} ${
-                slide.selected ?? true ? styles['selected'] : ''
+              className={`cursor-pointer overflow-hidden rounded-md border ${
+                slide.selected ?? true
+                  ? 'border-[3px] border-intavia-green-900'
+                  : 'border-intavia-gray-400'
               }`}
+              onKeyUp={() => {
+                onClick(slide.id);
+              }}
             >
               <Window
                 id={`slide-window-${slide.id}`}
@@ -102,10 +106,10 @@ export function StoryFlow(props: StoryFlowProps) {
                 }}
               >
                 {slide.image !== null && (
-                  <img style={{ height: '100%' }} src={slide.image} alt={'ScreenShot'} />
+                  <img className="h-full w-full" src={slide.image} alt={'ScreenShot'} />
                 )}
               </Window>
-            </Card>
+            </div>
           );
         })}
       </ReactGridLayout>

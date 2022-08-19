@@ -20,7 +20,6 @@ export function VisualizationDragger(): JSX.Element {
     const content = [<DroppableIcon key={`${type}Icon`} type={type} />];
     let text = '';
     let subline = '';
-    let padding = 0;
     let key = `${type}Drop`;
     switch (type) {
       case 'Person':
@@ -28,7 +27,6 @@ export function VisualizationDragger(): JSX.Element {
           text = props.name;
         }
         key = key + props.name;
-        padding = 5;
         break;
       case 'Event':
         if (props.label != null) {
@@ -44,11 +42,9 @@ export function VisualizationDragger(): JSX.Element {
         if (props.date !== undefined && props.date !== '') {
           subline += ` in ${props.date.substring(0, 4)}`;
         }
-        padding = 5;
         break;
       default:
         text = type;
-        padding = 5;
         break;
     }
 
@@ -70,7 +66,7 @@ export function VisualizationDragger(): JSX.Element {
     return (
       <div
         key={key}
-        className="droppable-element"
+        className="droppable-element mb-1 w-full cursor-pointer rounded-md border-2 border-intavia-blue-500 p-2"
         draggable={true}
         unselectable="on"
         onDragStart={(e) => {
@@ -83,14 +79,14 @@ export function VisualizationDragger(): JSX.Element {
             }),
           );
         }}
-        style={{
+        /*  style={{
           border: 'solid 1px black',
           padding: padding,
           marginBottom: 10,
           cursor: 'pointer',
           display: 'table',
           width: '100%',
-        }}
+        }} */
       >
         <div style={{ display: 'table-row', width: '100%' }}>{content}</div>
       </div>

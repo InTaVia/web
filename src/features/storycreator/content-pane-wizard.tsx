@@ -35,7 +35,7 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
     );
   } else {
     content = (
-      <div className="grid grid-cols-2 gap-2 rounded-lg bg-white p-4">
+      <div className="grid w-full grid-cols-3 gap-2 rounded-lg bg-white p-4">
         <Button
           round="round"
           color="accent"
@@ -67,5 +67,5 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
     );
   }
 
-  return <div className="flex items-center justify-center p-5">{content}</div>;
+  return <div className="flex w-full items-center justify-center p-5">{content}</div>;
 }

@@ -15,15 +15,16 @@ export interface DroppableIconProps {
 }
 
 const getIcon: any = (type: string) => {
+  const classStr = 'h-6 w-6 text-intavia-blue-800';
   switch (type) {
     case 'Timeline':
-      return <ChartBarIcon className="h-6 w-6 -rotate-90 text-intavia-brand-800" />;
+      return <ChartBarIcon className={classStr} />;
     case 'Map':
-      return <MapIcon className="h-6 w-6 text-intavia-brand-800" />;
+      return <MapIcon className={classStr} />;
     case 'Text':
-      return <DocumentTextIcon className="h-6 w-6 text-intavia-brand-800" />;
+      return <DocumentTextIcon className={classStr} />;
     case 'Image':
-      return <PhotographIcon className="h-6 w-6 text-intavia-brand-800" />;
+      return <PhotographIcon className={classStr} />;
     case 'Person':
       return (
         <PersonOutlineOutlinedIcon
@@ -33,7 +34,7 @@ const getIcon: any = (type: string) => {
         />
       );
     case 'Quiz':
-      return <ChatIcon className="h-6 w-6 text-intavia-brand-800" />;
+      return <ChatIcon className={classStr} />;
     case 'Event':
       return <AdjustIcon className={styles['droppable-icon']} color="primary" key="EventIcon" />;
     default:

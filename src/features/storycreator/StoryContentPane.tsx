@@ -191,8 +191,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
       case 'Image':
       case 'Quiz':
         return (
-          <div key={element.id} className={styles.elevated}>
-            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-indigo-800 px-2 py-1 text-white">
+          <div key={element.id} className={'overflow-hidden'}>
+            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
               <div className="truncate">{element.type}</div>
               <div className="sticky right-0 flex flex-nowrap gap-1">
                 <Button

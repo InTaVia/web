@@ -80,7 +80,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       onDragOver={allowDrop}
     >
       <div
-        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-indigo-800 px-2 py-1 text-white"
+        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
           return event.dataTransfer.setData(
