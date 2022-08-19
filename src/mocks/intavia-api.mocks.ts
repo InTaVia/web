@@ -24,9 +24,7 @@ export const handlers = [
         dateOfDeathStart != null && dateOfDeathEnd != null
           ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
           : undefined;
-      const professionsStr = getSearchParam(request.url, 'professions');
-      const professions =
-        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
+      const professions = getSearchParams(request.url, 'professions');
 
       const persons = db.person.findMany(q, start, end, professions);
 
@@ -145,9 +143,7 @@ export const handlers = [
         dateOfDeathStart != null && dateOfDeathEnd != null
           ? ([Number(dateOfDeathStart), Number(dateOfDeathEnd)] as [number, number])
           : undefined;
-      const professionsStr = getSearchParam(request.url, 'professions');
-      const professions =
-        professionsStr !== undefined ? (JSON.parse(professionsStr) as Array<string>) : undefined;
+      const professions = getSearchParams(request.url, 'professions');
 
       const persons = db.person.findMany(q, start, end, professions);
 
@@ -198,4 +194,10 @@ export const handlers = [
 function getSearchParam(url: URL, key: string): string | undefined {
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   return url.searchParams.get(key)?.trim() || undefined;
+}
+
+function getSearchParams(url: URL, key: string): Array<string> | undefined {
+  return url.searchParams.getAll(key).map((param) => {
+    return param.trim();
+  });
 }

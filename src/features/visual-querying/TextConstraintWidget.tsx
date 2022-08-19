@@ -1,11 +1,14 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
 import TextField from '@/features/ui/TextField';
 import type { TextConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
+import {
+  toggleConstraintWidget,
+  updateConstraintValue,
+} from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintWidgetProps {
   constraint: TextConstraint;
@@ -18,27 +21,32 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   const [text, setText] = useState(constraint.value);
 
-  function handleClick() {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     dispatch(
       updateConstraintValue({
         id: constraint.id,
         value: text,
       }),
     );
+
+    dispatch(toggleConstraintWidget(constraint.id));
+
+    event.preventDefault();
   }
 
   return (
-    <div className="flex justify-center gap-2 p-2">
+    <form onSubmit={onSubmit} className="flex justify-center gap-2 p-2">
       <TextField
         placeholder="Please enter a name"
         value={text}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           return setText(e.target.value);
         }}
+        autoFocus={true}
       />
-      <Button round="round" color="accent" disabled={text === ''} onClick={handleClick}>
+      <Button round="round" color="accent" disabled={text === ''}>
         Add
       </Button>
-    </div>
+    </form>
   );
 }

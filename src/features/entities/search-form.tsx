@@ -2,10 +2,12 @@ import { useRouter } from 'next/router';
 import type { FormEvent } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
+import { useAppDispatch } from '@/app/store';
 import { usePersonsSearch } from '@/features/entities/use-persons-search';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
+import { setModal } from '@/features/ui/ui.slice';
 
 interface SearchFormProps {
   round?: FullButtonProperties['round'];
@@ -17,6 +19,7 @@ export function SearchForm(props: SearchFormProps): JSX.Element {
   const { round = 'round', color = 'accent', size = 'small' } = props;
   const searchFilters = usePersonsSearchFilters();
   const { search } = usePersonsSearch();
+  const dispatch = useAppDispatch();
 
   const { t } = useI18n<'common'>();
   const router = useRouter();
@@ -42,7 +45,7 @@ export function SearchForm(props: SearchFormProps): JSX.Element {
   }
 
   function openVisualQueryingModal() {
-    //dispatch(setModal({ modal: 'visualQueryModal', isOpen: true }));
+    dispatch(setModal({ modal: 'visualQueryModal', isOpen: true }));
   }
 
   return (
