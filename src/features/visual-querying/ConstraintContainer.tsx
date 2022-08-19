@@ -5,7 +5,7 @@ import Button from '@/features/ui/Button';
 import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
 import { PlaceConstraintWidget } from '@/features/visual-querying/PlaceConstraintWidget';
 import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
-import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintView';
+import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
 import type {
   Constraint,
   DateConstraint,
@@ -43,7 +43,6 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
   function renderTypeSpecificHeader(): JSX.Element {
     switch (constraint.type) {
       case ConstraintType.Dates:
-        // eslint-disable-next-line no-case-declarations
         if (constraint.value !== null) {
           return (
             <>
@@ -53,7 +52,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
             </>
           );
         }
-      // eslint-disable-next-line no-fallthrough
+        return <></>;
       default:
         return <></>;
     }

@@ -1,4 +1,4 @@
-import type { ChangeEvent, KeyboardEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
@@ -21,7 +21,7 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   const [text, setText] = useState(constraint.value);
 
-  function updateConstraint() {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     dispatch(
       updateConstraintValue({
         id: constraint.id,
@@ -30,32 +30,23 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
     );
 
     dispatch(toggleConstraintWidget(constraint.id));
-  }
 
-  function handleKeyDown(e: KeyboardEvent) {
-    switch (e.key) {
-      case 'Enter':
-        updateConstraint();
-        break;
-      default:
-        break;
-    }
+    event.preventDefault();
   }
 
   return (
-    <div className="flex justify-center gap-2 p-2">
+    <form onSubmit={onSubmit} className="flex justify-center gap-2 p-2">
       <TextField
         placeholder="Please enter a name"
         value={text}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           return setText(e.target.value);
         }}
-        onKeyDown={handleKeyDown}
         autoFocus={true}
       />
-      <Button round="round" color="accent" disabled={text === ''} onClick={updateConstraint}>
+      <Button round="round" color="accent" disabled={text === ''}>
         Add
       </Button>
-    </div>
+    </form>
   );
 }
