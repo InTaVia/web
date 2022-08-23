@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { SearchForm } from '@/features/entities/search-form';
 
@@ -9,6 +9,6 @@ const meta: Meta = {
 
 export default meta;
 
-export const Default = {
+export const Default: StoryObj = {
   args: {},
 };

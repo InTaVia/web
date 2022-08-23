@@ -370,6 +370,7 @@
         ],
         "rules": {
           "@typescript-eslint/explicit-module-boundary-types": "off",
+          "react/function-component-definition": "off",
           "storybook/await-interactions": "error",
           "storybook/context-in-play-function": "error",
           "storybook/default-exports": "error",
