@@ -4,11 +4,8 @@ import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Snackbar from '@mui/material/Snackbar';
 import { Fragment, useState } from 'react';
 
-import {
-  Notification,
-  removeNotification,
-  selectNotifications,
-} from '@/app/notifications/notifications.slice';
+import type { Notification as NotificationType } from '@/app/notifications/notifications.slice';
+import { removeNotification, selectNotifications } from '@/app/notifications/notifications.slice';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 
 const autoHideDuration = 7500;
@@ -17,7 +14,7 @@ export function Notifications(): JSX.Element {
   const dispatch = useAppDispatch();
   const notifications = useAppSelector(selectNotifications);
 
-  function onDismiss(id: Notification['id']) {
+  function onDismiss(id: NotificationType['id']) {
     dispatch(removeNotification(id));
   }
 
@@ -33,8 +30,8 @@ export function Notifications(): JSX.Element {
 }
 
 interface NotificationProps {
-  notification: Notification;
-  onDismiss: (id: Notification['id']) => void;
+  notification: NotificationType;
+  onDismiss: (id: NotificationType['id']) => void;
 }
 
 function Notification(props: NotificationProps): JSX.Element {
@@ -75,7 +72,7 @@ function Notification(props: NotificationProps): JSX.Element {
   );
 }
 
-function getSeverity(type: Notification['type']): AlertColor {
+function getSeverity(type: NotificationType['type']): AlertColor {
   switch (type) {
     case 'informative':
       return 'info';

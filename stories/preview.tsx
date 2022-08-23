@@ -11,10 +11,12 @@ import {
 } from 'msw-storybook-addon';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { Fragment } from 'react';
+import { Provider } from 'react-redux';
 
 import { dictionary as common } from '@/app/i18n/common/en';
 import type { Dictionaries } from '@/app/i18n/dictionaries';
 import { Notifications } from '@/app/notifications/notifications';
+import { configureAppStore } from '@/app/store';
 import { createMockRouter } from '@/mocks/create-mock-router';
 
 initializeMockServiceWorker({ onUnhandledRequest: 'bypass' });
@@ -31,8 +33,13 @@ const withNotifications: DecoratorFn = function withNotifications(story, context
 const withProviders: DecoratorFn = function withProviders(story, context) {
   const partial = context.parameters['router'] as Partial<Dictionaries>;
   const dictionaries = { common, ...partial };
+  const store = configureAppStore();
 
-  return <I18nProvider dictionaries={dictionaries}>{story(context)}</I18nProvider>;
+  return (
+    <Provider store={store}>
+      <I18nProvider dictionaries={dictionaries}>{story(context)}</I18nProvider>
+    </Provider>
+  );
 };
 
 const withRouter: DecoratorFn = function withRouter(story, context) {
