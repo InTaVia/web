@@ -1,18 +1,20 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import { CardContent, CardMedia, Typography } from '@mui/material';
-import Card from '@mui/material/Card';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
+import type {
+  StoryAnswerList,
+  StoryImage,
+  StoryQuizAnswer,
+} from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
-import styles from '@/features/storycreator/storycreator.module.css';
 import type { SlideContent } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 
@@ -55,7 +57,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
       case 'Text':
         return (
           <div style={{ height: '100%' }}>
-            <Card
+            <div
               style={{
                 height: '100%',
                 maxHeight: '100%',
@@ -66,20 +68,16 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             >
               {(Boolean(element!.properties!.title!.value) ||
                 Boolean(element!.properties!.text!.value)) && (
-                <CardContent className={styles['card-content']}>
+                <div className="p-2">
                   {Boolean(element!.properties!.title!.value) && (
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {element!.properties!.title!.value}
-                    </Typography>
+                    <p className="mb-1 text-xl">{element!.properties!.title!.value}</p>
                   )}
                   {Boolean(element!.properties!.text!.value) && (
-                    <Typography variant="subtitle1" color="subtitle1" component="p">
-                      {element!.properties!.text!.value}
-                    </Typography>
+                    <p>{element!.properties!.text!.value}</p>
                   )}
-                </CardContent>
+                </div>
               )}
-            </Card>
+            </div>
           </div>
         );
       case 'Quiz': {
@@ -87,20 +85,20 @@ export function StoryContentPane(props: StoryContentPaneProps) {
         if (element.properties && element.properties.question) {
           if (element.properties.question.value) {
             quizContent.push(
-              <Typography variant="subtitle1" color="subtitle1" component="p">
+              <div className="grid grid-cols-[auto] gap-1">
                 {(element.properties.answerlist as StoryAnswerList).answers.map(
                   (answer: StoryQuizAnswer, index: number) => {
                     return (
                       <div
                         key={`answer${index}`}
-                        style={{
-                          backgroundColor: answer.correct === true ? '#f0fff0' : '#ff000047',
-                        }}
+                        className={`p-1 ${
+                          answer.correct === true ? 'bg-intavia-green-200' : 'bg-intavia-red-200'
+                        }`}
                       >{`${answer.text}`}</div>
                     );
                   },
                 )}
-              </Typography>,
+              </div>,
             );
           } else {
             quizContent.push('Please state a question for the quiz!');
@@ -109,7 +107,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
 
         return (
           <div style={{ height: '100%' }}>
-            <Card
+            <div
               style={{
                 height: '100%',
                 maxHeight: '100%',
@@ -118,57 +116,47 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 padding: 0,
               }}
             >
-              <CardContent className={styles['card-content']}>
+              <div className="p-2">
                 {Boolean(element.properties!.question!.value) && (
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties!.question!.value}
-                  </Typography>
+                  <p className="mb-1 text-lg">{element.properties!.question!.value}</p>
                 )}
                 {quizContent}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         );
       }
       case 'Image':
         return (
-          <Card
+          <div
             style={{
               height: '100%',
               maxHeight: '100%',
-              position: 'relative',
               backgroundColor: 'white',
               padding: 0,
             }}
           >
             <div style={{ height: '100%' }}>
-              <CardMedia
-                component="img"
-                image={
+              <img
+                src={
                   (element as StoryImage).properties.link?.value !== ''
                     ? (element as StoryImage).properties.link?.value
                     : 'https://via.placeholder.com/300'
                 }
-                alt="card image"
-                height="100%"
+                alt="card"
+                className="h-full w-full object-cover"
               />
             </div>
             {(element.properties!.title!.value !== '' ||
               element.properties!.text!.value !== '') && (
-              <CardContent className={styles['card-content']}>
+              <div className="absolute bottom-0 w-full bg-white p-2">
                 {element.properties!.title!.value !== '' && (
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties!.title!.value}
-                  </Typography>
+                  <p className="mb-1 text-xl">{element.properties!.title!.value}</p>
                 )}
-                {element.properties!.text!.value !== '' && (
-                  <Typography variant="subtitle1" color="textSecondary" component="p">
-                    {element.properties!.text!.value}
-                  </Typography>
-                )}
-              </CardContent>
+                {element.properties!.text!.value !== '' && <p>{element.properties!.text!.value}</p>}
+              </div>
             )}
-          </Card>
+          </div>
         );
       default:
         return [];

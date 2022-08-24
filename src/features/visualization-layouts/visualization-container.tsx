@@ -44,6 +44,20 @@ export default function VisualisationContainer(props: VisualisationContainerProp
     return vis.id === id;
   })[0];
 
+  let name = id;
+
+  if (visualization !== undefined) {
+    name = visualization.name;
+    if (visualization.properties !== undefined) {
+      if (
+        visualization.properties.name !== undefined &&
+        visualization.properties.name.value !== ''
+      ) {
+        name = visualization.properties.name.value;
+      }
+    }
+  }
+
   const allowDrop = (event: DragEvent) => {
     event.preventDefault();
   };
@@ -92,7 +106,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
           );
         }}
       >
-        <div className="truncate">Visualization Container for: {id}</div>
+        <div className="truncate">{name}</div>
         <div className="sticky right-0 flex flex-nowrap gap-1">
           <Button
             className="ml-auto grow-0"

@@ -1,5 +1,3 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
 import Link from 'next/link';
@@ -90,19 +88,18 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
 
   if (length(markers) === 0) {
     return (
-      <Box sx={{ display: 'grid', placeItems: 'center', height: '800px' }}>
-        <Typography paragraph>
+      <div className="align-items-center h-70 grid">
+        <>
           Nothing to see - Please do a{' '}
           <Link href="/search">
             <a>search</a>
           </Link>
-        </Typography>
-        ;
-      </Box>
+        </>
+      </div>
     );
   }
 
-  const mapStyle = properties?.mapStyle.value?.value;
+  const mapStyle = properties !== undefined ? properties.mapStyle?.value?.value : '';
 
   const initialViewState = {
     longitude: 7.571606,

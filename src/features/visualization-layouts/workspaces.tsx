@@ -7,10 +7,12 @@ import { clsx } from 'clsx';
 import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
+import type { Visualization } from '@/features/common/visualization.slice';
+import { editVisualization } from '@/features/common/visualization.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import Button from '@/features/ui/Button';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
+import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 import {
   addWorkspace,
   releaseVisualizationForVisualizationSlotForCurrentWorkspace,
@@ -62,18 +64,15 @@ export default function Workspaces(): JSX.Element {
     );
   };
 
-  const handleClose = () => {
-    setOpenDialog(false);
+  const handleSaveVisualization = (element: Visualization) => {
+    dispatch(editVisualization(element));
   };
 
-  const handleSave = (element: any) => {
-    /* dispatch(editSlideContent({ slide: slide, content: element })); */
-    console.log('SAVED!', element);
+  const handleCloseVisualizationDialog = () => {
+    setVisualizationEditElement(null);
   };
 
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const [editElement, setEditElement] = useState<any | null>(null);
+  const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
   return (
     <>
@@ -101,8 +100,7 @@ export default function Workspaces(): JSX.Element {
                     dispatch(releaseVisualizationForVisualizationSlotForCurrentWorkspace(visSlot));
                   }}
                   onSwitchVisualization={onSwitchVisualization}
-                  setEditVisualizationElement={setEditElement}
-                  setOpenDialog={setOpenDialog}
+                  setVisualizationEditElement={setVisualizationEditElement}
                 />
               </Tab.Panel>
             );
@@ -156,12 +154,11 @@ export default function Workspaces(): JSX.Element {
           </Button>
         </Tab.List>
       </Tab.Group>
-      {editElement != null && (
-        <StoryContentDialog
-          open={openDialog}
-          onClose={handleClose}
-          element={editElement}
-          onSave={handleSave}
+      {visualizationEditElement != null && (
+        <VisualizationPropertiesDialog
+          onClose={handleCloseVisualizationDialog}
+          element={visualizationEditElement}
+          onSave={handleSaveVisualization}
         />
       )}
     </>

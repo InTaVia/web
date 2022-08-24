@@ -1,11 +1,12 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Button, Checkbox, IconButton, TextField } from '@mui/material';
+import { TrashIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 
-import type { StoryAnswerList } from '@/features/storycreator/storycreator.slice';
+import type { StoryAnswerList, StoryQuizAnswer } from '@/features/storycreator/contentPane.slice';
+import Button from '@/features/ui/Button';
+import TextField from '@/features/ui/TextField';
 
 interface StoryQuizAnswerListProps {
   answerList: StoryAnswerList;
@@ -18,24 +19,23 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
   const [answers, setAnswers] = useState([...answerList.answers]);
 
   const onChange = (event: any) => {
-    console.log(event.target.id, event.target, event.target.value);
-    // eslint-disable-next-line prefer-const
-    let newAnswers = [...answers];
+    const newAnswers = [...answers];
     const index = parseInt(event.target.name);
+
+    const newAnswer = { ...newAnswers[index] } as StoryQuizAnswer;
 
     switch (event.target.type) {
       case 'checkbox':
-        if (newAnswers[index]) {
-          newAnswers[index]!.correct = event.target.checked;
-        }
+        newAnswer.correct = event.target.checked;
         break;
       case 'text':
-        newAnswers[index]!.text = event.target.value;
+        newAnswer.text = event.target.value;
         break;
       default:
         break;
     }
 
+    newAnswers[index] = newAnswer;
     setAnswers(newAnswers);
     setAnswerListForQuiz(newAnswers);
   };
@@ -57,41 +57,50 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
   };
 
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-2">
       {answers.map((answer, index: number) => {
         return (
-          <div style={{ display: 'flex' }} className="storyAnswerListOption" key={`option${index}`}>
-            <Checkbox
+          <div
+            style={{ display: 'flex' }}
+            className="grid grid-cols-[10px,auto,auto] gap-2"
+            key={`option${index}`}
+          >
+            <input
+              type="checkbox"
               key={`answer${index + 1}Checkbox`}
               id={`answer${index + 1}Checkbox`}
               name={`${index}`}
               checked={answer.correct}
               onChange={onChange}
             />
-            <IconButton
-              key={`answer${index + 1}Delete`}
-              onClick={() => {
-                deleteAnswer(index);
-              }}
-            >
-              <DeleteForeverIcon />
-            </IconButton>
             <TextField
-              margin="dense"
-              label={`Answer ${index + 1}`}
               key={`answer${index + 1}`}
               id={`answer${index + 1}`}
               name={`${index}`}
-              fullWidth
-              variant="standard"
-              defaultValue={answer.text}
-              sx={{ width: '400px' }}
+              value={answer.text}
               onChange={onChange}
+              className="w-full"
             />
+            <div className="flex items-center">
+              <Button
+                key={`answer${index + 1}Delete`}
+                onClick={() => {
+                  deleteAnswer(index);
+                }}
+                size="extra-small"
+                round="circle"
+              >
+                <TrashIcon className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         );
       })}
-      <Button onClick={addAnswer}>Add Answer</Button>
+      <div className="flex justify-center">
+        <Button round="round" color="accent" size="small" onClick={addAnswer}>
+          Add Answer
+        </Button>
+      </div>
     </div>
   );
 }
