@@ -7,8 +7,8 @@ import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
 import type { EntityEvent, StoryEvent } from '@/features/common/entity.model';
+import type { VisualizationProperty } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/geomap/geo-map';
-import { base as baseMap } from '@/features/geomap/maps.config';
 import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
 
@@ -16,6 +16,7 @@ interface StoryMapProps {
   events: Array<EntityEvent | StoryEvent>;
   width?: number;
   height?: number;
+  properties?: Record<string, VisualizationProperty>;
   setMapBounds?: (bounds: Array<Array<number>>) => void;
 }
 
@@ -43,7 +44,7 @@ const getBoundsForPoints = (points: Array<[number, number]>): Array<number> => {
 };
 
 export function StoryMapComponent(props: StoryMapProps): JSX.Element {
-  const { events, setMapBounds } = props;
+  const { events, setMapBounds, properties } = props;
 
   const mapRef = useRef<MapRef>(null);
 
@@ -100,8 +101,22 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
       </Box>
     );
   }
+
+  const mapStyle = properties?.mapStyle.value?.value;
+
+  const initialViewState = {
+    longitude: 7.571606,
+    latitude: 50.226913,
+    zoom: 4,
+  };
+
   return (
-    <GeoMap ref={mapRef} {...baseMap} onMoveEnd={onMoveEnd}>
+    <GeoMap
+      ref={mapRef}
+      mapStyle={mapStyle}
+      initialViewState={initialViewState}
+      onMoveEnd={onMoveEnd}
+    >
       {markers.map((marker, index) => {
         return (
           <StoryMapPin

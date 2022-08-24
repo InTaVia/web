@@ -24,8 +24,7 @@ interface VisualisationContainerProps {
     soruceSlot: string,
     sourceVis: string | null,
   ) => void;
-  setEditElement?: (editElement: any) => void;
-  setOpenDialog: (openDialog: boolean) => void;
+  setVisualizationEditElement?: (editElement: Visualization) => void;
 }
 
 export default function VisualisationContainer(props: VisualisationContainerProps): JSX.Element {
@@ -34,8 +33,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
     id,
     onReleaseVisualization,
     onSwitchVisualization,
-    setOpenDialog,
-    setEditElement,
+    setVisualizationEditElement,
   } = props;
 
   const dispatch = useAppDispatch();
@@ -102,9 +100,8 @@ export default function VisualisationContainer(props: VisualisationContainerProp
             size="extra-small"
             round="circle"
             onClick={() => {
-              if (setEditElement !== undefined) {
-                setEditElement(visualization);
-                setOpenDialog(true);
+              if (setVisualizationEditElement !== undefined) {
+                setVisualizationEditElement(visualization as Visualization);
               }
             }}
           >

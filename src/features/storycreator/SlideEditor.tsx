@@ -2,6 +2,9 @@ import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
+import type { Visualization } from '@/features/common/visualization.slice';
+import { editVisualization } from '@/features/common/visualization.slice';
+import type { SlideContent } from '@/features/storycreator/contentPane.slice';
 import { createContentPane, editSlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
@@ -13,6 +16,7 @@ import {
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
+import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 
 interface SlideEditorProps {
   width?: number | undefined;
@@ -46,18 +50,26 @@ export function SlideEditor(props: SlideEditorProps) {
     increaseNumberOfContentPanes,
     addContent,
   } = props;
-  const [openDialog, setOpenDialog] = useState(false);
 
   const [editElement, setEditElement] = useState<any | null>(null);
+  const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    setOpenDialog(false);
+    setEditElement(null);
   };
 
-  const handleSave = (element: any) => {
+  const handleCloseVisualizationDialog = () => {
+    setVisualizationEditElement(null);
+  };
+
+  const handleSave = (element: SlideContent) => {
     dispatch(editSlideContent({ slide: slide, content: element }));
+  };
+
+  const handleSaveVisualization = (element: Visualization) => {
+    dispatch(editVisualization(element));
   };
 
   const onSwitchVisualization = (
@@ -129,14 +141,16 @@ export function SlideEditor(props: SlideEditorProps) {
         onDropContentPane={onDropContentPane}
         onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
-        setOpenDialog={setOpenDialog}
+        setVisualizationEditElement={setVisualizationEditElement}
       />
-      {editElement != null && (
-        <StoryContentDialog
-          open={openDialog}
-          onClose={handleClose}
-          element={editElement}
-          onSave={handleSave}
+      {editElement !== null && (
+        <StoryContentDialog onClose={handleClose} element={editElement} onSave={handleSave} />
+      )}
+      {visualizationEditElement !== null && (
+        <VisualizationPropertiesDialog
+          onClose={handleCloseVisualizationDialog}
+          element={visualizationEditElement}
+          onSave={handleSaveVisualization}
         />
       )}
     </div>

@@ -13,26 +13,20 @@ import {
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
 import styles from '@/features/storycreator/storycreator.module.css';
-import type {
-  SlideContent,
-  StoryAnswerList,
-  StoryImage,
-  StoryQuizAnswer,
-} from '@/features/storycreator/storycreator.slice';
+import type { SlideContent } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
 
 interface StoryContentPaneProps {
   id: string;
-  setEditElement?: (arg0: any) => void;
-  setOpenDialog: (arg0: boolean) => void;
+  setEditElement?: (element: SlideContent) => void;
   onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
   onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const { id, setEditElement, setOpenDialog, onDrop, onContentPaneWizard } = props;
+  const { id, setEditElement, onDrop, onContentPaneWizard } = props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
@@ -203,7 +197,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   onClick={() => {
                     if (setEditElement !== undefined) {
                       setEditElement(element);
-                      setOpenDialog(true);
                     }
                   }}
                 >

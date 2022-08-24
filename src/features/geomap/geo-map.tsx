@@ -10,6 +10,8 @@ type GeoMapProps = Omit<MapProps, 'mapLib'>;
 export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref): JSX.Element {
   const { children } = props;
 
+  console.log('map props', props);
+
   return (
     // @ts-expect-error Type mismatch between `maplibre-gl` and `mapbox-gl`.
     <Map ref={ref} {...props} mapLib={maplibregl}>

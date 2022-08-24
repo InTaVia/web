@@ -18,18 +18,17 @@ import type {
   StoryAnswerList,
   StoryContentProperty,
   StoryQuizAnswer,
-} from '@/features/storycreator/storycreator.slice';
+} from '@/features/storycreator/contentPane.slice';
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 
 interface StoryContentDialogProps {
-  open: boolean;
   element: SlideContent;
   onClose: () => void;
   onSave: (element: SlideContent) => void;
 }
 
 export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element {
-  const { open, element, onClose, onSave } = props;
+  const { element, onClose, onSave } = props;
 
   const [tmpProperties, setTmpProperties] = useState({ ...element.properties });
 
@@ -59,18 +58,11 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={true} onClose={onClose}>
       <DialogTitle>{`Edit ${element.type}`}</DialogTitle>
       {editableAttributes.length > 0 ? (
         <DialogContent>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              const newElement = { ...element, properties: tmpProperties };
-              onSave(newElement);
-            }}
-            id="myform"
-          >
+          <form>
             <FormControl>
               {editableAttributes.map((property: StoryContentProperty) => {
                 switch (property.type) {
@@ -114,11 +106,20 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
           </form>
         </DialogContent>
       ) : (
-        'Please add properties to the visualization to edit them!'
+        'Please add properties to the element to edit them!'
       )}
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button type="submit" form="myform" onClick={onClose}>
+        <Button
+          type="submit"
+          form="myStoryForm"
+          onClick={(event) => {
+            event.preventDefault();
+            const newElement = { ...element, properties: tmpProperties };
+            onSave(newElement);
+            onClose();
+          }}
+        >
           Save
         </Button>
       </DialogActions>

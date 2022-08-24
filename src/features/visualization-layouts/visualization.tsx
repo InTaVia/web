@@ -25,7 +25,14 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const filteredPersons =
     persons.length > 0
       ? allPersons.filter((person) => {
-          return persons.includes(person.id);
+          let visible = true;
+          if (visualization.visibilities !== undefined) {
+            visible =
+              visualization.visibilities[person.id] !== undefined
+                ? (visualization.visibilities[person.id] as boolean)
+                : true;
+          }
+          return persons.includes(person.id) && visible;
         })
       : [];
 
@@ -43,7 +50,17 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
-  const visEvents = [...personEvents, ...filteredEvents];
+  const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
+    let visible = true;
+    console.log(visualization.visibilities);
+    if (visualization.visibilities !== undefined) {
+      visible =
+        visualization.visibilities[event.id] !== undefined
+          ? (visualization.visibilities[event.id] as boolean)
+          : true;
+    }
+    return visible;
+  });
 
   const targetIds = filteredEvents.map((event) => {
     return event.targetId;
@@ -60,7 +77,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
       case 'map':
         return <GeoMap />;
       case 'story-map':
-        return <StoryMapComponent events={visEvents} />;
+        return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
       case 'timeline':
         return <Timeline />;
       case 'story-timeline':
