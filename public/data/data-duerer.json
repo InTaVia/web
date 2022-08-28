@@ -1119,7 +1119,7 @@
       ],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.45421, 11.07752] },
+      "geometry": { "type": "Point", "coordinates": [11.07752, 49.45421] },
       "events": [
         "macro/ev-001",
         "macro/ev-002",
@@ -1146,7 +1146,7 @@
       "label": { "default": "Oberrhein" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.69025, 8.34915] },
+      "geometry": { "type": "Point", "coordinates": [8.34915, 49.69025] },
       "events": ["macro/ev-003"]
     },
     {
@@ -1154,7 +1154,7 @@
       "label": { "default": "Colmar" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [48.16863472, 7.377460585] },
+      "geometry": { "type": "Point", "coordinates": [7.377460585, 48.16863472] },
       "events": ["macro/ev-004"]
     },
     {
@@ -1162,7 +1162,7 @@
       "label": { "default": "Tirol" },
       "kind": "place",
       "type": { "id": "state", "label": { "default": "state" } },
-      "geometry": { "type": "Point", "coordinates": [46.690182, 11.15441] },
+      "geometry": { "type": "Point", "coordinates": [11.15441, 46.690182] },
       "events": ["macro/ev-006"]
     },
     {
@@ -1170,7 +1170,7 @@
       "label": { "default": "Südtirol" },
       "kind": "place",
       "type": { "id": "state", "label": { "default": "state" } },
-      "geometry": { "type": "Point", "coordinates": [46.382648, 11.43126] },
+      "geometry": { "type": "Point", "coordinates": [11.43126, 46.382648] },
       "events": ["macro/ev-007"]
     },
     {
@@ -1178,7 +1178,7 @@
       "label": { "default": "Trentino" },
       "kind": "place",
       "type": { "id": "state", "label": { "default": "state" } },
-      "geometry": { "type": "Point", "coordinates": [46.10114108, 11.14166686] },
+      "geometry": { "type": "Point", "coordinates": [11.14166686, 46.10114108] },
       "events": ["macro/ev-008"]
     },
     {
@@ -1186,7 +1186,7 @@
       "label": { "default": "Venedig" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.434341, 12.33878] },
+      "geometry": { "type": "Point", "coordinates": [12.33878, 45.434341] },
       "events": ["macro/ev-009", "macro/ev-014"]
     },
     {
@@ -1194,7 +1194,7 @@
       "label": { "default": "Bologna" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [44.49392625, 11.34163535] },
+      "geometry": { "type": "Point", "coordinates": [11.34163535, 44.49392625] },
       "events": ["macro/ev-015"]
     },
     {
@@ -1202,7 +1202,7 @@
       "label": { "default": "Augsburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [48.41017875, 10.98959125] },
+      "geometry": { "type": "Point", "coordinates": [10.98959125, 48.41017875] },
       "events": ["macro/ev-021"]
     },
     {
@@ -1211,7 +1211,7 @@
       "alternativeLabels": [{ "default": "Cologne" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.97340752, 6.951517268] },
+      "geometry": { "type": "Point", "coordinates": [6.951517268, 50.97340752] },
       "events": ["macro/ev-024", "macro/ev-030", "nl/EID061", "nl/EID092", "nl/EID156"]
     },
     {
@@ -1219,7 +1219,7 @@
       "label": { "default": "Aachen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.77997052, 6.258080332] },
+      "geometry": { "type": "Point", "coordinates": [6.258080332, 50.77997052] },
       "events": ["macro/ev-025", "nl/EID088", "nl/EID090", "nl/EID152"]
     },
     {
@@ -1228,7 +1228,7 @@
       "alternativeLabels": [{ "default": "Antwerp" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.30232385, 4.344625773] },
+      "geometry": { "type": "Point", "coordinates": [4.344625773, 51.30232385] },
       "events": [
         "macro/ev-026",
         "macro/ev-029",
@@ -1249,7 +1249,7 @@
       "alternativeLabels": [{ "default": "Mechelen" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.02651151, 4.479117295] },
+      "geometry": { "type": "Point", "coordinates": [4.479117295, 51.02651151] },
       "events": ["macro/ev-027", "macro/ev-035", "nl/EID078", "nl/EID081", "nl/EID144"]
     },
     {
@@ -1258,7 +1258,7 @@
       "alternativeLabels": [{ "default": "Brussels" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.95522847, 4.319246516] },
+      "geometry": { "type": "Point", "coordinates": [4.319246516, 50.95522847] },
       "events": ["macro/ev-028", "macro/ev-037", "nl/EID080", "nl/EID083", "nl/EID146"]
     },
     {
@@ -1267,7 +1267,7 @@
       "alternativeLabels": [{ "default": "Bruges" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.28033424, 3.210779284] },
+      "geometry": { "type": "Point", "coordinates": [3.210779284, 51.28033424] },
       "events": ["macro/ev-032", "nl/EID139"]
     },
     {
@@ -1276,7 +1276,7 @@
       "alternativeLabels": [{ "default": "Ghent" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.14322955, 3.765888767] },
+      "geometry": { "type": "Point", "coordinates": [3.765888767, 51.14322955] },
       "events": ["macro/ev-033", "nl/EID141"]
     },
     {
@@ -1284,7 +1284,7 @@
       "label": { "default": "Erlangen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.5896744, 11.0119611] },
+      "geometry": { "type": "Point", "coordinates": [11.0119611, 49.5896744] },
       "events": ["nl/EID002"]
     },
     {
@@ -1292,7 +1292,7 @@
       "label": { "default": "Baiersdorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.661089, 11.0345826] },
+      "geometry": { "type": "Point", "coordinates": [11.0345826, 49.661089] },
       "events": ["nl/EID003"]
     },
     {
@@ -1300,7 +1300,7 @@
       "label": { "default": "Forchheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7188374, 11.0679502] },
+      "geometry": { "type": "Point", "coordinates": [11.0679502, 49.7188374] },
       "events": ["nl/EID004"]
     },
     {
@@ -1308,7 +1308,7 @@
       "label": { "default": "Bamberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8988135, 10.9027636] },
+      "geometry": { "type": "Point", "coordinates": [10.9027636, 49.8988135] },
       "events": ["nl/EID005"]
     },
     {
@@ -1316,7 +1316,7 @@
       "label": { "default": "Eltmann" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9673521, 10.6635056] },
+      "geometry": { "type": "Point", "coordinates": [10.6635056, 49.9673521] },
       "events": ["nl/EID006"]
     },
     {
@@ -1324,7 +1324,7 @@
       "label": { "default": "Zeil" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.011546, 10.5922117] },
+      "geometry": { "type": "Point", "coordinates": [10.5922117, 50.011546] },
       "events": ["nl/EID007"]
     },
     {
@@ -1332,7 +1332,7 @@
       "label": { "default": "Hassfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0371575, 10.5151523] },
+      "geometry": { "type": "Point", "coordinates": [10.5151523, 50.0371575] },
       "events": ["nl/EID008"]
     },
     {
@@ -1340,7 +1340,7 @@
       "label": { "default": "Obertheres" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0232513, 10.4478964] },
+      "geometry": { "type": "Point", "coordinates": [10.4478964, 50.0232513] },
       "events": ["nl/EID009"]
     },
     {
@@ -1348,7 +1348,7 @@
       "label": { "default": "Unter-Euerheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0127319, 10.3562007] },
+      "geometry": { "type": "Point", "coordinates": [10.3562007, 50.0127319] },
       "events": ["nl/EID010"]
     },
     {
@@ -1356,7 +1356,7 @@
       "label": { "default": "Mainberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0588956, 10.2898428] },
+      "geometry": { "type": "Point", "coordinates": [10.2898428, 50.0588956] },
       "events": ["nl/EID011"]
     },
     {
@@ -1364,7 +1364,7 @@
       "label": { "default": "Schweinfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0492047, 10.2194228] },
+      "geometry": { "type": "Point", "coordinates": [10.2194228, 50.0492047] },
       "events": ["nl/EID012"]
     },
     {
@@ -1372,7 +1372,7 @@
       "label": { "default": "Volkach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8639895, 10.2309327] },
+      "geometry": { "type": "Point", "coordinates": [10.2309327, 49.8639895] },
       "events": ["nl/EID013"]
     },
     {
@@ -1380,7 +1380,7 @@
       "label": { "default": "Schwarzach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8065839, 10.2292557] },
+      "geometry": { "type": "Point", "coordinates": [10.2292557, 49.8065839] },
       "events": ["nl/EID014"]
     },
     {
@@ -1388,7 +1388,7 @@
       "label": { "default": "Dettelbach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8037832, 10.165725] },
+      "geometry": { "type": "Point", "coordinates": [10.165725, 49.8037832] },
       "events": ["nl/EID015"]
     },
     {
@@ -1396,7 +1396,7 @@
       "label": { "default": "Kitzingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7340805, 10.1473777] },
+      "geometry": { "type": "Point", "coordinates": [10.1473777, 49.7340805] },
       "events": ["nl/EID016"]
     },
     {
@@ -1404,7 +1404,7 @@
       "label": { "default": "Sulzfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7074086, 10.1300955] },
+      "geometry": { "type": "Point", "coordinates": [10.1300955, 49.7074086] },
       "events": ["nl/EID017"]
     },
     {
@@ -1412,7 +1412,7 @@
       "label": { "default": "Marktbreit" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6664618, 10.142098] },
+      "geometry": { "type": "Point", "coordinates": [10.142098, 49.6664618] },
       "events": ["nl/EID018"]
     },
     {
@@ -1420,7 +1420,7 @@
       "label": { "default": "Frickenhausen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6710163, 10.0862845] },
+      "geometry": { "type": "Point", "coordinates": [10.0862845, 49.6710163] },
       "events": ["nl/EID019"]
     },
     {
@@ -1428,7 +1428,7 @@
       "label": { "default": "Ochsenfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6640025, 10.0709014] },
+      "geometry": { "type": "Point", "coordinates": [10.0709014, 49.6640025] },
       "events": ["nl/EID020"]
     },
     {
@@ -1436,7 +1436,7 @@
       "label": { "default": "Eibelstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7255609, 10.0014362] },
+      "geometry": { "type": "Point", "coordinates": [10.0014362, 49.7255609] },
       "events": ["nl/EID021"]
     },
     {
@@ -1444,7 +1444,7 @@
       "label": { "default": "Heidingsfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7626094, 9.943696] },
+      "geometry": { "type": "Point", "coordinates": [9.943696, 49.7626094] },
       "events": ["nl/EID022"]
     },
     {
@@ -1452,7 +1452,7 @@
       "label": { "default": "Würzburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7913044, 9.9533548] },
+      "geometry": { "type": "Point", "coordinates": [9.9533548, 49.7913044] },
       "events": ["nl/EID023"]
     },
     {
@@ -1460,7 +1460,7 @@
       "label": { "default": "Erlenbrunn" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8580258, 9.8435268] },
+      "geometry": { "type": "Point", "coordinates": [9.8435268, 49.8580258] },
       "events": ["nl/EID024"]
     },
     {
@@ -1468,7 +1468,7 @@
       "label": { "default": "Retzbach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9047223, 9.8217594] },
+      "geometry": { "type": "Point", "coordinates": [9.8217594, 49.9047223] },
       "events": ["nl/EID025"]
     },
     {
@@ -1476,7 +1476,7 @@
       "label": { "default": "Zellingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8974807, 9.816277] },
+      "geometry": { "type": "Point", "coordinates": [9.816277, 49.8974807] },
       "events": ["nl/EID026"]
     },
     {
@@ -1484,7 +1484,7 @@
       "label": { "default": "Karlstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9604785, 9.7734603] },
+      "geometry": { "type": "Point", "coordinates": [9.7734603, 49.9604785] },
       "events": ["nl/EID027"]
     },
     {
@@ -1499,7 +1499,7 @@
       "label": { "default": "Lohr" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9892207, 9.5722309] },
+      "geometry": { "type": "Point", "coordinates": [9.5722309, 49.9892207] },
       "events": ["nl/EID029"]
     },
     {
@@ -1507,7 +1507,7 @@
       "label": { "default": "Neuenstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.930843, 9.5706809] },
+      "geometry": { "type": "Point", "coordinates": [9.5706809, 49.930843] },
       "events": ["nl/EID030"]
     },
     {
@@ -1515,7 +1515,7 @@
       "label": { "default": "Rothenfels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8929338, 9.5859552] },
+      "geometry": { "type": "Point", "coordinates": [9.5859552, 49.8929338] },
       "events": ["nl/EID031"]
     },
     {
@@ -1523,7 +1523,7 @@
       "label": { "default": "Heidenfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8454938, 9.6088146] },
+      "geometry": { "type": "Point", "coordinates": [9.6088146, 49.8454938] },
       "events": ["nl/EID032"]
     },
     {
@@ -1531,7 +1531,7 @@
       "label": { "default": "Triffenstein" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8000272, 9.58533] },
+      "geometry": { "type": "Point", "coordinates": [9.58533, 49.8000272] },
       "events": ["nl/EID033"]
     },
     {
@@ -1539,7 +1539,7 @@
       "label": { "default": "Homburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.793323, 9.625462] },
+      "geometry": { "type": "Point", "coordinates": [9.625462, 49.793323] },
       "events": ["nl/EID034"]
     },
     {
@@ -1547,7 +1547,7 @@
       "label": { "default": "Wertheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7586035, 9.5128511] },
+      "geometry": { "type": "Point", "coordinates": [9.5128511, 49.7586035] },
       "events": ["nl/EID035"]
     },
     {
@@ -1555,7 +1555,7 @@
       "label": { "default": "Protzelten" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7802347, 9.3820446] },
+      "geometry": { "type": "Point", "coordinates": [9.3820446, 49.7802347] },
       "events": ["nl/EID036"]
     },
     {
@@ -1563,7 +1563,7 @@
       "label": { "default": "Freudenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7540767, 9.3266483] },
+      "geometry": { "type": "Point", "coordinates": [9.3266483, 49.7540767] },
       "events": ["nl/EID037"]
     },
     {
@@ -1571,7 +1571,7 @@
       "label": { "default": "Miltenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7019294, 9.2559213] },
+      "geometry": { "type": "Point", "coordinates": [9.2559213, 49.7019294] },
       "events": ["nl/EID038"]
     },
     {
@@ -1579,7 +1579,7 @@
       "label": { "default": "Klingenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7805714, 9.1830957] },
+      "geometry": { "type": "Point", "coordinates": [9.1830957, 49.7805714] },
       "events": ["nl/EID039"]
     },
     {
@@ -1587,7 +1587,7 @@
       "label": { "default": "Wördt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.795558, 9.1547301] },
+      "geometry": { "type": "Point", "coordinates": [9.1547301, 49.795558] },
       "events": ["nl/EID040"]
     },
     {
@@ -1595,7 +1595,7 @@
       "label": { "default": "Obernburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8381779, 9.1323585] },
+      "geometry": { "type": "Point", "coordinates": [9.1323585, 49.8381779] },
       "events": ["nl/EID041"]
     },
     {
@@ -1603,7 +1603,7 @@
       "label": { "default": "Aschaffenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9806625, 9.1355554] },
+      "geometry": { "type": "Point", "coordinates": [9.1355554, 49.9806625] },
       "events": ["nl/EID042"]
     },
     {
@@ -1611,7 +1611,7 @@
       "label": { "default": "Seligenstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0437013, 8.9711343] },
+      "geometry": { "type": "Point", "coordinates": [8.9711343, 50.0437013] },
       "events": ["nl/EID043"]
     },
     {
@@ -1619,7 +1619,7 @@
       "label": { "default": "Steinheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1138783, 8.9080929] },
+      "geometry": { "type": "Point", "coordinates": [8.9080929, 50.1138783] },
       "events": ["nl/EID044"]
     },
     {
@@ -1627,7 +1627,7 @@
       "label": { "default": "Kesselstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.130114, 8.883417] },
+      "geometry": { "type": "Point", "coordinates": [8.883417, 50.130114] },
       "events": ["nl/EID045"]
     },
     {
@@ -1635,7 +1635,7 @@
       "label": { "default": "Frankfurt/Main" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1109221, 8.6821267] },
+      "geometry": { "type": "Point", "coordinates": [8.6821267, 50.1109221] },
       "events": ["nl/EID046"]
     },
     {
@@ -1643,7 +1643,7 @@
       "label": { "default": "Höchst" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.102482, 8.5474571] },
+      "geometry": { "type": "Point", "coordinates": [8.5474571, 50.102482] },
       "events": ["nl/EID047"]
     },
     {
@@ -1651,7 +1651,7 @@
       "label": { "default": "Mainz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9928617, 8.2472526] },
+      "geometry": { "type": "Point", "coordinates": [8.2472526, 49.9928617] },
       "events": ["nl/EID048"]
     },
     {
@@ -1659,7 +1659,7 @@
       "label": { "default": "Eltville" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0289744, 8.119173] },
+      "geometry": { "type": "Point", "coordinates": [8.119173, 50.0289744] },
       "events": ["nl/EID049"]
     },
     {
@@ -1667,7 +1667,7 @@
       "label": { "default": "Rüdesheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9821443, 7.9301124] },
+      "geometry": { "type": "Point", "coordinates": [7.9301124, 49.9821443] },
       "events": ["nl/EID050"]
     },
     {
@@ -1675,7 +1675,7 @@
       "label": { "default": "Ehrenfels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9755016, 7.8802046] },
+      "geometry": { "type": "Point", "coordinates": [7.8802046, 49.9755016] },
       "events": ["nl/EID051"]
     },
     {
@@ -1683,7 +1683,7 @@
       "label": { "default": "Bacharach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0604184, 7.7681136] },
+      "geometry": { "type": "Point", "coordinates": [7.7681136, 50.0604184] },
       "events": ["nl/EID052"]
     },
     {
@@ -1691,7 +1691,7 @@
       "label": { "default": "Kaub" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0880609, 7.7621116] },
+      "geometry": { "type": "Point", "coordinates": [7.7621116, 50.0880609] },
       "events": ["nl/EID053"]
     },
     {
@@ -1699,7 +1699,7 @@
       "label": { "default": "St. Goar" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1481961, 7.7060771] },
+      "geometry": { "type": "Point", "coordinates": [7.7060771, 50.1481961] },
       "events": ["nl/EID054"]
     },
     {
@@ -1707,7 +1707,7 @@
       "label": { "default": "Boppard" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.2311996, 7.58853] },
+      "geometry": { "type": "Point", "coordinates": [7.58853, 50.2311996] },
       "events": ["nl/EID055"]
     },
     {
@@ -1715,7 +1715,7 @@
       "label": { "default": "Lahnstein" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.3078274, 7.6093633] },
+      "geometry": { "type": "Point", "coordinates": [7.6093633, 50.3078274] },
       "events": ["nl/EID056"]
     },
     {
@@ -1723,7 +1723,7 @@
       "label": { "default": "Engers" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.4258407, 7.5450198] },
+      "geometry": { "type": "Point", "coordinates": [7.5450198, 50.4258407] },
       "events": ["nl/EID057"]
     },
     {
@@ -1731,7 +1731,7 @@
       "label": { "default": "Andernach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.426057, 7.4086636] },
+      "geometry": { "type": "Point", "coordinates": [7.4086636, 50.426057] },
       "events": ["nl/EID058"]
     },
     {
@@ -1739,7 +1739,7 @@
       "label": { "default": "Linz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.568141, 7.284787] },
+      "geometry": { "type": "Point", "coordinates": [7.284787, 50.568141] },
       "events": ["nl/EID059"]
     },
     {
@@ -1747,7 +1747,7 @@
       "label": { "default": "Bonn" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.73743, 7.0982068] },
+      "geometry": { "type": "Point", "coordinates": [7.0982068, 50.73743] },
       "events": ["nl/EID060"]
     },
     {
@@ -1755,7 +1755,7 @@
       "label": { "default": "Büsdorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9909824, 6.7085696] },
+      "geometry": { "type": "Point", "coordinates": [6.7085696, 50.9909824] },
       "events": ["nl/EID062"]
     },
     {
@@ -1763,7 +1763,7 @@
       "label": { "default": "Rödingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.96099, 6.463264] },
+      "geometry": { "type": "Point", "coordinates": [6.463264, 50.96099] },
       "events": ["nl/EID063"]
     },
     {
@@ -1771,7 +1771,7 @@
       "label": { "default": "Freialdenhoven" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9281185, 6.2505591] },
+      "geometry": { "type": "Point", "coordinates": [6.2505591, 50.9281185] },
       "events": ["nl/EID064"]
     },
     {
@@ -1779,7 +1779,7 @@
       "label": { "default": "Frelenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9401626, 6.1096025] },
+      "geometry": { "type": "Point", "coordinates": [6.1096025, 50.9401626] },
       "events": ["nl/EID065"]
     },
     {
@@ -1787,7 +1787,7 @@
       "label": { "default": "Gangelt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9927163, 5.997431] },
+      "geometry": { "type": "Point", "coordinates": [5.997431, 50.9927163] },
       "events": ["nl/EID066"]
     },
     {
@@ -1795,7 +1795,7 @@
       "label": { "default": "Süsterseel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9987391, 5.9375637] },
+      "geometry": { "type": "Point", "coordinates": [5.9375637, 50.9987391] },
       "events": ["nl/EID067"]
     },
     {
@@ -1803,7 +1803,7 @@
       "label": { "default": "Sittard" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.0006238, 5.8864788] },
+      "geometry": { "type": "Point", "coordinates": [5.8864788, 51.0006238] },
       "events": ["nl/EID068"]
     },
     {
@@ -1811,7 +1811,7 @@
       "label": { "default": "Stokkem" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.02364, 5.74418] },
+      "geometry": { "type": "Point", "coordinates": [5.74418, 51.02364] },
       "events": ["nl/EID069"]
     },
     {
@@ -1854,7 +1854,7 @@
       "label": { "default": "Uylenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.13171, 4.76123] },
+      "geometry": { "type": "Point", "coordinates": [4.76123, 51.13171] },
       "events": ["nl/EID075"]
     },
     {
@@ -1862,7 +1862,7 @@
       "label": { "default": "Creutz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.12922, 4.70835] },
+      "geometry": { "type": "Point", "coordinates": [4.70835, 51.12922] },
       "events": ["nl/EID076"]
     },
     {
@@ -1870,7 +1870,7 @@
       "label": { "default": "Vilvoorde" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.926454, 4.4258375] },
+      "geometry": { "type": "Point", "coordinates": [4.4258375, 50.926454] },
       "events": ["nl/EID079"]
     },
     {
@@ -1878,7 +1878,7 @@
       "label": { "default": "Maastricht" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8513682, 5.6909725] },
+      "geometry": { "type": "Point", "coordinates": [5.6909725, 50.8513682] },
       "events": ["nl/EID086", "nl/EID151"]
     },
     {
@@ -1886,7 +1886,7 @@
       "label": { "default": "Gulpe" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8155841, 5.8914093] },
+      "geometry": { "type": "Point", "coordinates": [5.8914093, 50.8155841] },
       "events": ["nl/EID087"]
     },
     {
@@ -1894,7 +1894,7 @@
       "label": { "default": "Jülich" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9224226, 6.3639119] },
+      "geometry": { "type": "Point", "coordinates": [6.3639119, 50.9224226] },
       "events": ["nl/EID089", "nl/EID154"]
     },
     {
@@ -1902,7 +1902,7 @@
       "label": { "default": "Düren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8037183, 6.4793683] },
+      "geometry": { "type": "Point", "coordinates": [6.4793683, 50.8037183] },
       "events": ["nl/EID091"]
     },
     {
@@ -1910,7 +1910,7 @@
       "label": { "default": "Zons" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.123171, 6.848458] },
+      "geometry": { "type": "Point", "coordinates": [6.848458, 51.123171] },
       "events": ["nl/EID093"]
     },
     {
@@ -1918,7 +1918,7 @@
       "label": { "default": "Neuss" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2041968, 6.6879511] },
+      "geometry": { "type": "Point", "coordinates": [6.6879511, 51.2041968] },
       "events": ["nl/EID094"]
     },
     {
@@ -1933,7 +1933,7 @@
       "label": { "default": "Düsseldorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2277411, 6.7734556] },
+      "geometry": { "type": "Point", "coordinates": [6.7734556, 51.2277411] },
       "events": ["nl/EID096"]
     },
     {
@@ -1941,7 +1941,7 @@
       "label": { "default": "Kaiserswerth" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2977265, 6.7380299] },
+      "geometry": { "type": "Point", "coordinates": [6.7380299, 51.2977265] },
       "events": ["nl/EID097"]
     },
     {
@@ -1949,7 +1949,7 @@
       "label": { "default": "Duisburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4344079, 6.7623293] },
+      "geometry": { "type": "Point", "coordinates": [6.7623293, 51.4344079] },
       "events": ["nl/EID098"]
     },
     {
@@ -1957,7 +1957,7 @@
       "label": { "default": "Angerort" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.3791309, 6.7269134] },
+      "geometry": { "type": "Point", "coordinates": [6.7269134, 51.3791309] },
       "events": ["nl/EID099"]
     },
     {
@@ -1965,7 +1965,7 @@
       "label": { "default": "Ruhrort" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4499282, 6.7483238] },
+      "geometry": { "type": "Point", "coordinates": [6.7483238, 51.4499282] },
       "events": ["nl/EID100"]
     },
     {
@@ -1973,7 +1973,7 @@
       "label": { "default": "Orsoy" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5233389, 6.6876663] },
+      "geometry": { "type": "Point", "coordinates": [6.6876663, 51.5233389] },
       "events": ["nl/EID101"]
     },
     {
@@ -1981,7 +1981,7 @@
       "label": { "default": "Rheinberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5460798, 6.5899097] },
+      "geometry": { "type": "Point", "coordinates": [6.5899097, 51.5460798] },
       "events": ["nl/EID102"]
     },
     {
@@ -1989,7 +1989,7 @@
       "label": { "default": "Wesel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6643079, 6.6295679] },
+      "geometry": { "type": "Point", "coordinates": [6.6295679, 51.6643079] },
       "events": ["nl/EID103"]
     },
     {
@@ -1997,7 +1997,7 @@
       "label": { "default": "Rees" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.7670727, 6.4015065] },
+      "geometry": { "type": "Point", "coordinates": [6.4015065, 51.7670727] },
       "events": ["nl/EID103a"]
     },
     {
@@ -2005,7 +2005,7 @@
       "label": { "default": "Emmerich" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8395929, 6.2517303] },
+      "geometry": { "type": "Point", "coordinates": [6.2517303, 51.8395929] },
       "events": ["nl/EID104"]
     },
     {
@@ -2013,7 +2013,7 @@
       "label": { "default": "Tholhus" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.852073, 6.1032046] },
+      "geometry": { "type": "Point", "coordinates": [6.1032046, 51.852073] },
       "events": ["nl/EID105"]
     },
     {
@@ -2021,7 +2021,7 @@
       "label": { "default": "Nijmegen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8448837, 5.8428281] },
+      "geometry": { "type": "Point", "coordinates": [5.8428281, 51.8448837] },
       "events": ["nl/EID106"]
     },
     {
@@ -2029,7 +2029,7 @@
       "label": { "default": "Tiel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8876176, 5.4278765] },
+      "geometry": { "type": "Point", "coordinates": [5.4278765, 51.8876176] },
       "events": ["nl/EID107"]
     },
     {
@@ -2037,7 +2037,7 @@
       "label": { "default": "Heerewaarden" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8173181, 5.3930495] },
+      "geometry": { "type": "Point", "coordinates": [5.3930495, 51.8173181] },
       "events": ["nl/EID108"]
     },
     {
@@ -2045,7 +2045,7 @@
       "label": { "default": "(Zalt-)Bommel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8135539, 5.2507733] },
+      "geometry": { "type": "Point", "coordinates": [5.2507733, 51.8135539] },
       "events": ["nl/EID109"]
     },
     {
@@ -2053,7 +2053,7 @@
       "label": { "default": "s'Hertogenbosch" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6978162, 5.3036748] },
+      "geometry": { "type": "Point", "coordinates": [5.3036748, 51.6978162] },
       "events": ["nl/EID110"]
     },
     {
@@ -2061,7 +2061,7 @@
       "label": { "default": "Oisterwijk" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5654243, 5.2030282] },
+      "geometry": { "type": "Point", "coordinates": [5.2030282, 51.5654243] },
       "events": ["nl/EID111"]
     },
     {
@@ -2069,7 +2069,7 @@
       "label": { "default": "Tilburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.560596, 5.0919143] },
+      "geometry": { "type": "Point", "coordinates": [5.0919143, 51.560596] },
       "events": ["nl/EID112"]
     },
     {
@@ -2077,7 +2077,7 @@
       "label": { "default": "Baarle" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4451366, 4.9295231] },
+      "geometry": { "type": "Point", "coordinates": [4.9295231, 51.4451366] },
       "events": ["nl/EID113"]
     },
     {
@@ -2085,7 +2085,7 @@
       "label": { "default": "Hoogstraten" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4015935, 4.7615606] },
+      "geometry": { "type": "Point", "coordinates": [4.7615606, 51.4015935] },
       "events": ["nl/EID114"]
     },
     {
@@ -2093,7 +2093,7 @@
       "label": { "default": "Harscht" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.3497216, 4.6380512] },
+      "geometry": { "type": "Point", "coordinates": [4.6380512, 51.3497216] },
       "events": ["nl/EID115"]
     },
     {
@@ -2101,7 +2101,7 @@
       "label": { "default": "Bergen op Zoom" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] },
+      "geometry": { "type": "Point", "coordinates": [4.2871622, 51.4945758] },
       "events": ["nl/EID117", "nl/EID128"]
     },
     {
@@ -2109,7 +2109,7 @@
       "label": { "default": "Sea between Bergen op Zoom and Goes" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] },
+      "geometry": { "type": "Point", "coordinates": [4.2871622, 51.4945758] },
       "events": ["nl/EID118"]
     },
     {
@@ -2117,7 +2117,7 @@
       "label": { "default": "Goes" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5046455, 3.8911304] },
+      "geometry": { "type": "Point", "coordinates": [3.8911304, 51.5046455] },
       "events": ["nl/EID119"]
     },
     {
@@ -2125,7 +2125,7 @@
       "label": { "default": "Arnemuiden" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5011231, 3.6759015] },
+      "geometry": { "type": "Point", "coordinates": [3.6759015, 51.5011231] },
       "events": ["nl/EID120", "nl/EID124"]
     },
     {
@@ -2133,7 +2133,7 @@
       "label": { "default": "Wolfersdijk" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5299685, 3.8218161] },
+      "geometry": { "type": "Point", "coordinates": [3.8218161, 51.5299685] },
       "events": ["nl/EID122"]
     },
     {
@@ -2141,7 +2141,7 @@
       "label": { "default": "Kortgene" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5578335, 3.8031359] },
+      "geometry": { "type": "Point", "coordinates": [3.8031359, 51.5578335] },
       "events": ["nl/EID123"]
     },
     {
@@ -2149,7 +2149,7 @@
       "label": { "default": "Middelburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4987962, 3.610998] },
+      "geometry": { "type": "Point", "coordinates": [3.610998, 51.4987962] },
       "events": ["nl/EID125"]
     },
     {
@@ -2157,7 +2157,7 @@
       "label": { "default": "Veere" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5482937, 3.6660061] },
+      "geometry": { "type": "Point", "coordinates": [3.6660061, 51.5482937] },
       "events": ["nl/EID126"]
     },
     {
@@ -2165,7 +2165,7 @@
       "label": { "default": "Zierkzee" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6501218, 3.9184977] },
+      "geometry": { "type": "Point", "coordinates": [3.9184977, 51.6501218] },
       "events": ["nl/EID127"]
     },
     {
@@ -2173,7 +2173,7 @@
       "label": { "default": "Beveren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2133887, 4.2579607] },
+      "geometry": { "type": "Point", "coordinates": [4.2579607, 51.2133887] },
       "events": ["nl/EID130"]
     },
     {
@@ -2188,7 +2188,7 @@
       "label": { "default": "Sint-Pauwels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.193303, 4.0977458] },
+      "geometry": { "type": "Point", "coordinates": [4.0977458, 51.193303] },
       "events": ["nl/EID133"]
     },
     {
@@ -2196,7 +2196,7 @@
       "label": { "default": "Caudenborm" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.17627, 3.97467] },
+      "geometry": { "type": "Point", "coordinates": [3.97467, 51.17627] },
       "events": ["nl/EID134"]
     },
     {
@@ -2204,7 +2204,7 @@
       "label": { "default": "Kalve (Calve)" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.17285, 3.87799] },
+      "geometry": { "type": "Point", "coordinates": [3.87799, 51.17285] },
       "events": ["nl/EID135"]
     },
     {
@@ -2212,7 +2212,7 @@
       "label": { "default": "Ertvelde" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1787632, 3.7466865] },
+      "geometry": { "type": "Point", "coordinates": [3.7466865, 51.1787632] },
       "events": ["nl/EID136"]
     },
     {
@@ -2220,7 +2220,7 @@
       "label": { "default": "Eeklo" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1851666, 3.564071] },
+      "geometry": { "type": "Point", "coordinates": [3.564071, 51.1851666] },
       "events": ["nl/EID137"]
     },
     {
@@ -2228,7 +2228,7 @@
       "label": { "default": "Maldegem" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2090352, 3.4487502] },
+      "geometry": { "type": "Point", "coordinates": [3.4487502, 51.2090352] },
       "events": ["nl/EID138"]
     },
     {
@@ -2236,7 +2236,7 @@
       "label": { "default": "Ursel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1294092, 3.4856153] },
+      "geometry": { "type": "Point", "coordinates": [3.4856153, 51.1294092] },
       "events": ["nl/EID140"]
     },
     {
@@ -2244,7 +2244,7 @@
       "label": { "default": "Leuven" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8822871, 4.7137645] },
+      "geometry": { "type": "Point", "coordinates": [4.7137645, 50.8822871] },
       "events": ["nl/EID147"]
     },
     {
@@ -2252,7 +2252,7 @@
       "label": { "default": "Thienen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8096628, 4.9371045] },
+      "geometry": { "type": "Point", "coordinates": [4.9371045, 50.8096628] },
       "events": ["nl/EID148"]
     },
     {
@@ -2260,7 +2260,7 @@
       "label": { "default": "St. Truyen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.818835, 5.1819977] },
+      "geometry": { "type": "Point", "coordinates": [5.1819977, 50.818835] },
       "events": ["nl/EID149"]
     },
     {
@@ -2268,7 +2268,7 @@
       "label": { "default": "Tongeren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.7799815, 5.4601943] },
+      "geometry": { "type": "Point", "coordinates": [5.4601943, 50.7799815] },
       "events": ["nl/EID150"]
     },
     {
@@ -2276,7 +2276,7 @@
       "label": { "default": "Atenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8948824, 6.2871221] },
+      "geometry": { "type": "Point", "coordinates": [6.2871221, 50.8948824] },
       "events": ["nl/EID153"]
     },
     {
@@ -2284,7 +2284,7 @@
       "label": { "default": "Bergheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9451945, 6.6555022] },
+      "geometry": { "type": "Point", "coordinates": [6.6555022, 50.9451945] },
       "events": ["nl/EID155"]
     }
   ],

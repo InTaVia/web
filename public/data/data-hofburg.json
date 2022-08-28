@@ -3082,7 +3082,7 @@
       "id": "pl-001",
       "label": { "default": "Reichskanzleitrakt" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2078531, 16.3654652] },
+      "geometry": { "type": "Point", "coordinates": [16.3654652, 48.2078531] },
       "events": [
         "cho-buildings/ev-001",
         "cho-buildings/ev-002",
@@ -3104,7 +3104,7 @@
       "id": "pl-002",
       "label": { "default": "Michaelertrakt" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2077192, 16.3660426] },
+      "geometry": { "type": "Point", "coordinates": [16.3660426, 48.2077192] },
       "events": [
         "cho-buildings/ev-003",
         "cho-buildings/ev-007",
@@ -3132,7 +3132,7 @@
       "label": { "default": "Winterreitschule" },
       "alternativeLabels": [{ "default": "Winter Riding School" }],
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2072767, 16.3668204] },
+      "geometry": { "type": "Point", "coordinates": [16.3668204, 48.2072767] },
       "events": [
         "cho-buildings/ev-005",
         "cho-buildings/ev-016",
@@ -3148,35 +3148,35 @@
       "id": "pl-004",
       "label": { "default": "Hofburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2069228, 16.3658106] },
+      "geometry": { "type": "Point", "coordinates": [16.3658106, 48.2069228] },
       "events": ["cho-buildings/ev-006", "cho-buildings/ev-021", "cho-buildings/ev-022"]
     },
     {
       "id": "pl-005",
       "label": { "default": "Burgtheater" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2077216, 16.3664889] },
+      "geometry": { "type": "Point", "coordinates": [16.3664889, 48.2077216] },
       "events": ["cho-buildings/ev-020", "cho-buildings/ev-028", "cho-buildings/ev-029"]
     },
     {
       "id": "pl-006",
       "label": { "default": "\"Kaiserforum\"" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2059441, 16.3631672] },
+      "geometry": { "type": "Point", "coordinates": [16.3631672, 48.2059441] },
       "events": ["cho-buildings/ev-023"]
     },
     {
       "id": "pl-007",
       "label": { "default": "Florenz" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [43.7695604, 11.2558136] },
+      "geometry": { "type": "Point", "coordinates": [11.2558136, 43.7695604] },
       "events": ["ev-001"]
     },
     {
       "id": "pl-008",
       "label": { "default": "Wien" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2081743, 16.3738189] },
+      "geometry": { "type": "Point", "coordinates": [16.3738189, 48.2081743] },
       "events": [
         "ev-002",
         "ev-008",
@@ -3208,329 +3208,329 @@
       "id": "pl-009",
       "label": { "default": "Brüssel" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [50.8476424, 4.3571696] },
+      "geometry": { "type": "Point", "coordinates": [4.3571696, 50.8476424] },
       "events": ["ev-003", "ev-039"]
     },
     {
       "id": "pl-010",
       "label": { "default": "Genua" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [44.4056499, 8.946256] },
+      "geometry": { "type": "Point", "coordinates": [8.946256, 44.4056499] },
       "events": ["ev-218"]
     },
     {
       "id": "pl-011",
       "label": { "default": "Italien" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [41.87194, 12.56738] },
+      "geometry": { "type": "Point", "coordinates": [12.56738, 41.87194] },
       "events": ["ev-013", "ev-037", "ev-062", "ev-069", "ev-104", "ev-175"]
     },
     {
       "id": "pl-012",
       "label": { "default": "England" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [52.3555177, -1.1743197] },
+      "geometry": { "type": "Point", "coordinates": [-1.1743197, 52.3555177] },
       "events": ["ev-014"]
     },
     {
       "id": "pl-013",
       "label": { "default": "Schemnitz" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.449576, 18.9086908] },
+      "geometry": { "type": "Point", "coordinates": [18.9086908, 48.449576] },
       "events": ["ev-016"]
     },
     {
       "id": "pl-014",
       "label": { "default": "Reichshofen" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.933541, 7.667646] },
+      "geometry": { "type": "Point", "coordinates": [7.667646, 48.933541] },
       "events": ["ev-211"]
     },
     {
       "id": "pl-015",
       "label": { "default": "Esztergom" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.7883949, 18.7434452] },
+      "geometry": { "type": "Point", "coordinates": [18.7434452, 47.7883949] },
       "events": ["ev-026"]
     },
     {
       "id": "pl-016",
       "label": { "default": "Sankt Blasien im Schwarzwald" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.760114, 8.1280721] },
+      "geometry": { "type": "Point", "coordinates": [8.1280721, 47.760114] },
       "events": ["ev-208"]
     },
     {
       "id": "pl-017",
       "label": { "default": "Mariemont" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [50.4551692, 4.2425225] },
+      "geometry": { "type": "Point", "coordinates": [4.2425225, 50.4551692] },
       "events": ["ev-214"]
     },
     {
       "id": "pl-018",
       "label": { "default": "Holesov" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [49.3333095, 17.5783297] },
+      "geometry": { "type": "Point", "coordinates": [17.5783297, 49.3333095] },
       "events": ["ev-215"]
     },
     {
       "id": "pl-019",
       "label": { "default": "Kaunertal" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.033352, 10.7479919] },
+      "geometry": { "type": "Point", "coordinates": [10.7479919, 47.033352] },
       "events": ["ev-216"]
     },
     {
       "id": "pl-020",
       "label": { "default": "Paris" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.856614, 2.3522219] },
+      "geometry": { "type": "Point", "coordinates": [2.3522219, 48.856614] },
       "events": ["ev-057", "ev-177", "ev-179"]
     },
     {
       "id": "pl-021",
       "label": { "default": "Deutschland" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [51.165691, 10.451526] },
+      "geometry": { "type": "Point", "coordinates": [10.451526, 51.165691] },
       "events": ["ev-060", "ev-072", "ev-106"]
     },
     {
       "id": "pl-022",
       "label": { "default": "Frankreich" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [46.227638, 2.213749] },
+      "geometry": { "type": "Point", "coordinates": [2.213749, 46.227638] },
       "events": ["ev-061", "ev-099"]
     },
     {
       "id": "pl-023",
       "label": { "default": "Bruck an der Leitha" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.02375, 16.77534] },
+      "geometry": { "type": "Point", "coordinates": [16.77534, 48.02375] },
       "events": ["ev-063"]
     },
     {
       "id": "pl-024",
       "label": { "default": "Rötz" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [49.3440364, 12.5288776] },
+      "geometry": { "type": "Point", "coordinates": [12.5288776, 49.3440364] },
       "events": ["ev-064"]
     },
     {
       "id": "pl-025",
       "label": { "default": "Bratislava" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.1485965, 17.1077477] },
+      "geometry": { "type": "Point", "coordinates": [17.1077477, 48.1485965] },
       "events": ["ev-065"]
     },
     {
       "id": "pl-026",
       "label": { "default": "Hernals" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2311313, 16.2946893] },
+      "geometry": { "type": "Point", "coordinates": [16.2946893, 48.2311313] },
       "events": ["ev-066"]
     },
     {
       "id": "pl-027",
       "label": { "default": "Fürstenzell" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.5226292, 13.317774] },
+      "geometry": { "type": "Point", "coordinates": [13.317774, 48.5226292] },
       "events": ["ev-067"]
     },
     {
       "id": "pl-028",
       "label": { "default": "Viktring" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [46.59187, 14.2755] },
+      "geometry": { "type": "Point", "coordinates": [14.2755, 46.59187] },
       "events": ["ev-068"]
     },
     {
       "id": "pl-029",
       "label": { "default": "Schweiz" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [46.818188, 8.227512] },
+      "geometry": { "type": "Point", "coordinates": [8.227512, 46.818188] },
       "events": ["ev-070"]
     },
     {
       "id": "pl-030",
       "label": { "default": "Königreich Belgien" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [50.503887, 4.469936] },
+      "geometry": { "type": "Point", "coordinates": [4.469936, 50.503887] },
       "events": ["ev-071", "ev-103"]
     },
     {
       "id": "pl-031",
       "label": { "default": "Dresden" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [51.0504088, 13.7372621] },
+      "geometry": { "type": "Point", "coordinates": [13.7372621, 51.0504088] },
       "events": ["ev-100", "ev-174", "ev-178", "ev-199", "ev-260"]
     },
     {
       "id": "pl-032",
       "label": { "default": "Vereinigtes Königreich" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [55.378051, -3.435973] },
+      "geometry": { "type": "Point", "coordinates": [-3.435973, 55.378051] },
       "events": ["ev-101"]
     },
     {
       "id": "pl-033",
       "label": { "default": "Oppenheim" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [49.8519223, 8.3602742] },
+      "geometry": { "type": "Point", "coordinates": [8.3602742, 49.8519223] },
       "events": ["ev-144"]
     },
     {
       "id": "pl-034",
       "label": { "default": "Karlštejn" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [49.9395043, 14.1880461] },
+      "geometry": { "type": "Point", "coordinates": [14.1880461, 49.9395043] },
       "events": ["ev-145"]
     },
     {
       "id": "pl-035",
       "label": { "default": "Zagreb" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [45.8150108, 15.981919] },
+      "geometry": { "type": "Point", "coordinates": [15.981919, 45.8150108] },
       "events": ["ev-146"]
     },
     {
       "id": "pl-036",
       "label": { "default": "Madrid" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [40.4167754, -3.7037902] },
+      "geometry": { "type": "Point", "coordinates": [-3.7037902, 40.4167754] },
       "events": ["ev-147"]
     },
     {
       "id": "pl-037",
       "label": { "default": "Fünfkirchen" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [46.0727345, 18.232266] },
+      "geometry": { "type": "Point", "coordinates": [18.232266, 46.0727345] },
       "events": ["ev-148"]
     },
     {
       "id": "pl-038",
       "label": { "default": "Bukarest" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [44.4267674, 26.1025384] },
+      "geometry": { "type": "Point", "coordinates": [26.1025384, 44.4267674] },
       "events": ["ev-150"]
     },
     {
       "id": "pl-039",
       "label": { "default": "Basel" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.5595986, 7.5885761] },
+      "geometry": { "type": "Point", "coordinates": [7.5885761, 47.5595986] },
       "events": ["ev-151"]
     },
     {
       "id": "pl-040",
       "label": { "default": "Meran" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [46.6618499, 11.1605112] },
+      "geometry": { "type": "Point", "coordinates": [11.1605112, 46.6618499] },
       "events": ["ev-152"]
     },
     {
       "id": "pl-041",
       "label": { "default": "Innsbruck" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.2692124, 11.4041024] },
+      "geometry": { "type": "Point", "coordinates": [11.4041024, 47.2692124] },
       "events": ["ev-153"]
     },
     {
       "id": "pl-042",
       "label": { "default": "Venedig" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [45.4408474, 12.3155151] },
+      "geometry": { "type": "Point", "coordinates": [12.3155151, 45.4408474] },
       "events": ["ev-154"]
     },
     {
       "id": "pl-043",
       "label": { "default": "Salzburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.80949, 13.05501] },
+      "geometry": { "type": "Point", "coordinates": [13.05501, 47.80949] },
       "events": ["ev-155"]
     },
     {
       "id": "pl-044",
       "label": { "default": "Steyr" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.05009, 14.41827] },
+      "geometry": { "type": "Point", "coordinates": [14.41827, 48.05009] },
       "events": ["ev-156"]
     },
     {
       "id": "pl-045",
       "label": { "default": "Gschwend" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.9339998, 9.7435847] },
+      "geometry": { "type": "Point", "coordinates": [9.7435847, 48.9339998] },
       "events": ["ev-221"]
     },
     {
       "id": "pl-046",
       "label": { "default": "Augsburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.3705449, 10.89779] },
+      "geometry": { "type": "Point", "coordinates": [10.89779, 48.3705449] },
       "events": ["ev-222"]
     },
     {
       "id": "pl-047",
       "label": { "default": "Wesermünde" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [53.5395845, 8.5809424] },
+      "geometry": { "type": "Point", "coordinates": [8.5809424, 53.5395845] },
       "events": ["ev-172"]
     },
     {
       "id": "pl-048",
       "label": { "default": "Regensburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [49.0134297, 12.1016236] },
+      "geometry": { "type": "Point", "coordinates": [12.1016236, 49.0134297] },
       "events": ["ev-176"]
     },
     {
       "id": "pl-049",
       "label": { "default": "London" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [51.5072178, -0.1275862] },
+      "geometry": { "type": "Point", "coordinates": [-0.1275862, 51.5072178] },
       "events": ["ev-180", "ev-183"]
     },
     {
       "id": "pl-050",
       "label": { "default": "Hamburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [53.5510846, 9.9936818] },
+      "geometry": { "type": "Point", "coordinates": [9.9936818, 53.5510846] },
       "events": ["ev-181", "ev-223"]
     },
     {
       "id": "pl-051",
       "label": { "default": "Winterthur" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [47.4988196, 8.7236889] },
+      "geometry": { "type": "Point", "coordinates": [8.7236889, 47.4988196] },
       "events": ["ev-182"]
     },
     {
       "id": "pl-052",
       "label": { "default": "Rom" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [41.9027835, 12.4963655] },
+      "geometry": { "type": "Point", "coordinates": [12.4963655, 41.9027835] },
       "events": ["ev-250"]
     },
     {
       "id": "pl-053",
       "label": { "default": "Vicenza" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [45.5454787, 11.5354214] },
+      "geometry": { "type": "Point", "coordinates": [11.5354214, 45.5454787] },
       "events": ["ev-233"]
     },
     {
       "id": "pl-054",
       "label": { "default": "Schweizerhof" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2068851, 16.3657772] },
+      "geometry": { "type": "Point", "coordinates": [16.3657772, 48.2068851] },
       "events": ["conhist/ev-001"]
     },
     {
       "id": "pl-055",
       "label": { "default": "Schweizerhof (Alte Burg)" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2068851, 16.3657772] },
+      "geometry": { "type": "Point", "coordinates": [16.3657772, 48.2068851] },
       "events": [
         "conhist/ev-002",
         "conhist/ev-007",
@@ -3545,21 +3545,21 @@
       "id": "pl-056",
       "label": { "default": "Spanier bastion" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2067387, 16.3649459] },
+      "geometry": { "type": "Point", "coordinates": [16.3649459, 48.2067387] },
       "events": ["conhist/ev-003", "conhist/ev-008", "conhist/ev-015", "conhist/ev-023"]
     },
     {
       "id": "pl-057",
       "label": { "default": "Kindertrakt" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2069684, 16.3651791] },
+      "geometry": { "type": "Point", "coordinates": [16.3651791, 48.2069684] },
       "events": ["conhist/ev-004"]
     },
     {
       "id": "pl-058",
       "label": { "default": "Amalienburg (Neue Burg)" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2081373, 16.3644052] },
+      "geometry": { "type": "Point", "coordinates": [16.3644052, 48.2081373] },
       "events": [
         "conhist/ev-005",
         "conhist/ev-009",
@@ -3574,7 +3574,7 @@
       "id": "pl-059",
       "label": { "default": "Stallburg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2072094, 16.3676494] },
+      "geometry": { "type": "Point", "coordinates": [16.3676494, 48.2072094] },
       "events": [
         "conhist/ev-006",
         "conhist/ev-010",
@@ -3589,28 +3589,28 @@
       "id": "pl-060",
       "label": { "default": "great bastion" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2061843, 16.3642682] },
+      "geometry": { "type": "Point", "coordinates": [16.3642682, 48.2061843] },
       "events": ["conhist/ev-011", "conhist/ev-018", "conhist/ev-026"]
     },
     {
       "id": "pl-061",
       "label": { "default": "former chancellery builiding" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.207831, 16.3654562] },
+      "geometry": { "type": "Point", "coordinates": [16.3654562, 48.207831] },
       "events": ["conhist/ev-012", "conhist/ev-019"]
     },
     {
       "id": "pl-062",
       "label": { "default": "former dance and theatre hall" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2068459, 16.3669576] },
+      "geometry": { "type": "Point", "coordinates": [16.3669576, 48.2068459] },
       "events": ["conhist/ev-013", "conhist/ev-020"]
     },
     {
       "id": "pl-063",
       "label": { "default": "Leopoldinian Wing" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2073862, 16.3645162] },
+      "geometry": { "type": "Point", "coordinates": [16.3645162, 48.2073862] },
       "events": [
         "conhist/ev-021",
         "conhist/ev-028",
@@ -3623,77 +3623,77 @@
       "id": "pl-064",
       "label": { "default": "former dance and theatre hall (Redoutensaal)" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2068459, 16.3669576] },
+      "geometry": { "type": "Point", "coordinates": [16.3669576, 48.2068459] },
       "events": ["conhist/ev-027", "conhist/ev-037", "conhist/ev-049", "conhist/ev-062"]
     },
     {
       "id": "pl-065",
       "label": { "default": "Austrian Court Chancellery" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2085097, 16.36376] },
+      "geometry": { "type": "Point", "coordinates": [16.36376, 48.2085097] },
       "events": ["conhist/ev-029", "conhist/ev-039", "conhist/ev-051", "conhist/ev-064"]
     },
     {
       "id": "pl-066",
       "label": { "default": "Court Stables" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2033258, 16.3586097] },
+      "geometry": { "type": "Point", "coordinates": [16.3586097, 48.2033258] },
       "events": ["conhist/ev-030", "conhist/ev-040", "conhist/ev-052", "conhist/ev-065"]
     },
     {
       "id": "pl-067",
       "label": { "default": "Court Library" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2062008, 16.3666854] },
+      "geometry": { "type": "Point", "coordinates": [16.3666854, 48.2062008] },
       "events": ["conhist/ev-031", "conhist/ev-041", "conhist/ev-053", "conhist/ev-066"]
     },
     {
       "id": "pl-068",
       "label": { "default": "Zeremoniensaal" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2067862, 16.3649788] },
+      "geometry": { "type": "Point", "coordinates": [16.3649788, 48.2067862] },
       "events": ["conhist/ev-044", "conhist/ev-056", "conhist/ev-069"]
     },
     {
       "id": "pl-069",
       "label": { "default": "Outer Hofburg suqare with flanking gardens" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2061617, 16.3635515] },
+      "geometry": { "type": "Point", "coordinates": [16.3635515, 48.2061617] },
       "events": ["conhist/ev-045", "conhist/ev-057", "conhist/ev-070"]
     },
     {
       "id": "pl-070",
       "label": { "default": "enlargement project of the Hofburg (\"Kaiserforum\")" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2055897, 16.3623821] },
+      "geometry": { "type": "Point", "coordinates": [16.3623821, 48.2055897] },
       "events": ["conhist/ev-058", "conhist/ev-071"]
     },
     {
       "id": "pl-071",
       "label": { "default": "court museums (NHM)" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2053133, 16.3597763] },
+      "geometry": { "type": "Point", "coordinates": [16.3597763, 48.2053133] },
       "events": ["conhist/ev-072"]
     },
     {
       "id": "pl-072",
       "label": { "default": "court museums (KHM)" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2037844, 16.3618266] },
+      "geometry": { "type": "Point", "coordinates": [16.3618266, 48.2037844] },
       "events": ["conhist/ev-073"]
     },
     {
       "id": "pl-073",
       "label": { "default": "Hofburgtheater" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2103742, 16.3614443] },
+      "geometry": { "type": "Point", "coordinates": [16.3614443, 48.2103742] },
       "events": ["conhist/ev-074"]
     },
     {
       "id": "pl-074",
       "label": { "default": "Neue Burg" },
       "kind": "place",
-      "geometry": { "type": "Point", "coordinates": [48.2054248, 16.3650095] },
+      "geometry": { "type": "Point", "coordinates": [16.3650095, 48.2054248] },
       "events": ["conhist/ev-075"]
     }
   ],

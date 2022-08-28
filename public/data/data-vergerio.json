@@ -105,7 +105,7 @@
       "alternativeLabels": [{ "default": "Koper" }, { "default": "Capodistria" }],
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.54694, 13.72944] },
+      "geometry": { "type": "Point", "coordinates": [13.72944, 45.54694] },
       "events": ["E1", "E12", "E15", "E16", "E27"]
     },
     {
@@ -113,7 +113,7 @@
       "label": { "default": "Tubingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [48.521637, 9.057645] },
+      "geometry": { "type": "Point", "coordinates": [9.057645, 48.521637] },
       "events": ["E2", "E22", "E23", "E24"]
     },
     {
@@ -121,7 +121,7 @@
       "label": { "default": "Padua" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.416668, 11.866667] },
+      "geometry": { "type": "Point", "coordinates": [11.866667, 45.416668] },
       "events": ["E3", "E4"]
     },
     {
@@ -129,7 +129,7 @@
       "label": { "default": "Verona" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.438618, 10.993313] },
+      "geometry": { "type": "Point", "coordinates": [10.993313, 45.438618] },
       "events": ["E4"]
     },
     {
@@ -137,7 +137,7 @@
       "label": { "default": "Venice" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.440845, 12.315515] },
+      "geometry": { "type": "Point", "coordinates": [12.315515, 45.440845] },
       "events": ["E4", "E5", "E17"]
     },
     {
@@ -145,7 +145,7 @@
       "label": { "default": "Rome" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [41.902782, 12.496365] },
+      "geometry": { "type": "Point", "coordinates": [12.496365, 41.902782] },
       "events": ["E6", "E10", "E20"]
     },
     {
@@ -153,7 +153,7 @@
       "label": { "default": "Vienna, impeial court" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [48.19231, 16.37136] },
+      "geometry": { "type": "Point", "coordinates": [16.37136, 48.19231] },
       "events": ["E7"]
     },
     {
@@ -161,7 +161,7 @@
       "label": { "default": "Wittenberg" },
       "kind": "place",
       "type": { "id": "ciyt", "label": { "default": "ciyt" } },
-      "geometry": { "type": "Point", "coordinates": [51.873983, 12.627966] },
+      "geometry": { "type": "Point", "coordinates": [12.627966, 51.873983] },
       "events": ["E9"]
     },
     {
@@ -169,7 +169,7 @@
       "label": { "default": "Modruš, Croatia" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.128929, 15.24153] },
+      "geometry": { "type": "Point", "coordinates": [15.24153, 45.128929] },
       "events": ["E11"]
     },
     {
@@ -177,7 +177,7 @@
       "label": { "default": "Paris" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [48.8571, 2.3414] },
+      "geometry": { "type": "Point", "coordinates": [2.3414, 48.8571] },
       "events": ["E13"]
     },
     {
@@ -185,7 +185,7 @@
       "label": { "default": "Worms" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.63718, 8.33731] },
+      "geometry": { "type": "Point", "coordinates": [8.33731, 49.63718] },
       "events": ["E14"]
     },
     {
@@ -193,7 +193,7 @@
       "label": { "default": "Mantua" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [45.15862, 10.78327] },
+      "geometry": { "type": "Point", "coordinates": [10.78327, 45.15862] },
       "events": ["E18"]
     },
     {
@@ -201,7 +201,7 @@
       "label": { "default": "Vicosoprano" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [46.3655, 9.62971] },
+      "geometry": { "type": "Point", "coordinates": [9.62971, 46.3655] },
       "events": ["E19", "E21"]
     },
     {
@@ -209,7 +209,7 @@
       "label": { "default": "Poland" },
       "kind": "place",
       "type": { "id": "country", "label": { "default": "country" } },
-      "geometry": { "type": "Point", "coordinates": [52.21891, 21.23401] },
+      "geometry": { "type": "Point", "coordinates": [21.23401, 52.21891] },
       "events": ["E25"]
     }
   ],
