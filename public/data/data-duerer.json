@@ -1,0 +1,5799 @@
+{
+  "entities": [
+    {
+      "id": "pr-001",
+      "label": { "default": "Albrecht Dürer" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "events": [
+        "cho/ev-001",
+        "cho/ev-002",
+        "cho/ev-003",
+        "cho/ev-004",
+        "cho/ev-005",
+        "cho/ev-006",
+        "cho/ev-007",
+        "cho/ev-008",
+        "cho/ev-009",
+        "cho/ev-010",
+        "cho/ev-011",
+        "cho/ev-012",
+        "cho/ev-013",
+        "cho/ev-014",
+        "cho/ev-015",
+        "cho/ev-016",
+        "cho/ev-017",
+        "cho/ev-018",
+        "cho/ev-019",
+        "cho/ev-020",
+        "cho/ev-021",
+        "cho/ev-022",
+        "cho/ev-023",
+        "cho/ev-024",
+        "cho/ev-025",
+        "cho/ev-026",
+        "cho/ev-027",
+        "cho/ev-028",
+        "cho/ev-029",
+        "cho/ev-030",
+        "cho/ev-031",
+        "cho/ev-032",
+        "cho/ev-033",
+        "cho/ev-034",
+        "cho/ev-035",
+        "cho/ev-036",
+        "cho/ev-037",
+        "cho/ev-038",
+        "cho/ev-039",
+        "cho/ev-040",
+        "cho/ev-041",
+        "cho/ev-042",
+        "cho/ev-043",
+        "cho/ev-044",
+        "cho/ev-045",
+        "cho/ev-046",
+        "cho/ev-047",
+        "cho/ev-048",
+        "cho/ev-049",
+        "cho/ev-050",
+        "cho/ev-051",
+        "cho/ev-052",
+        "cho/ev-053",
+        "cho/ev-054",
+        "cho/ev-055",
+        "cho/ev-056",
+        "cho/ev-057",
+        "cho/ev-058",
+        "cho/ev-059",
+        "cho/ev-060",
+        "cho/ev-061",
+        "cho/ev-062",
+        "cho/ev-063",
+        "cho/ev-064",
+        "cho/ev-065",
+        "cho/ev-066",
+        "cho/ev-067",
+        "cho/ev-068",
+        "cho/ev-069",
+        "cho/ev-070",
+        "cho/ev-071",
+        "cho/ev-072",
+        "cho/ev-073",
+        "cho/ev-074",
+        "cho/ev-075",
+        "cho/ev-076",
+        "cho/ev-077",
+        "cho/ev-078",
+        "cho/ev-079",
+        "cho/ev-080",
+        "macro/ev-001",
+        "macro/ev-002",
+        "macro/ev-003",
+        "macro/ev-004",
+        "macro/ev-005",
+        "macro/ev-006",
+        "macro/ev-007",
+        "macro/ev-008",
+        "macro/ev-009",
+        "macro/ev-010",
+        "macro/ev-011",
+        "macro/ev-012",
+        "macro/ev-013",
+        "macro/ev-014",
+        "macro/ev-015",
+        "macro/ev-016",
+        "macro/ev-017",
+        "macro/ev-018",
+        "macro/ev-019",
+        "macro/ev-020",
+        "macro/ev-021",
+        "macro/ev-022",
+        "macro/ev-023",
+        "macro/ev-024",
+        "macro/ev-025",
+        "macro/ev-026",
+        "macro/ev-027",
+        "macro/ev-028",
+        "macro/ev-029",
+        "macro/ev-030",
+        "macro/ev-031",
+        "macro/ev-032",
+        "macro/ev-033",
+        "macro/ev-034",
+        "macro/ev-035",
+        "macro/ev-036",
+        "macro/ev-037",
+        "macro/ev-038",
+        "macro/ev-039",
+        "macro/ev-040"
+      ]
+    },
+    {
+      "id": "pr-002",
+      "label": { "default": "Anton Koberger" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "events": ["macro/ev-001"]
+    },
+    {
+      "id": "pr-003",
+      "label": { "default": "Michael Wolgemut" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "events": ["macro/ev-002"]
+    },
+    {
+      "id": "pr-004",
+      "label": { "default": "Martin Schongauer" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "events": ["macro/ev-004"]
+    },
+    {
+      "id": "pr-005",
+      "label": { "default": "Agnes Dürer" },
+      "alternativeLabels": [{ "default": "Agnes Frey" }],
+      "kind": "person",
+      "gender": { "id": "female", "label": { "default": "female" } },
+      "events": ["macro/ev-005"]
+    },
+    {
+      "id": "pr-006",
+      "label": { "default": "Konrat Meit" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "occupations": [{ "id": "Bildhauer", "label": { "default": "Bildhauer" } }],
+      "events": ["macro/ev-027"]
+    },
+    {
+      "id": "pr-007",
+      "label": { "default": "Karl V" },
+      "alternativeLabels": [{ "default": "Charles V." }],
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } },
+      "events": ["macro/ev-030"]
+    },
+    {
+      "id": "pr-008",
+      "label": { "default": "Margarete von Österreich" },
+      "kind": "person",
+      "gender": { "id": "female", "label": { "default": "female" } },
+      "events": ["macro/ev-035"]
+    },
+    {
+      "id": "pr-009",
+      "label": { "default": "Bishop of Bamberg George III Schenk von Limpurg" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } }
+    },
+    {
+      "id": "pr-010",
+      "label": { "default": "Niclas Unger" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } }
+    },
+    {
+      "id": "pr-011",
+      "label": { "default": "Jan Provost" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } }
+    },
+    {
+      "id": "pr-012",
+      "label": { "default": "Christian II, King of Denmark" },
+      "kind": "person",
+      "gender": { "id": "male", "label": { "default": "male" } }
+    },
+    {
+      "id": "ob-001",
+      "label": { "default": "Apokalypse" },
+      "source": { "citation": "Kolophon" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-011"]
+    },
+    {
+      "id": "ob-002",
+      "label": { "default": "Selbstbildnis im Pelzrock" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-012"]
+    },
+    {
+      "id": "ob-003",
+      "label": { "default": "Der Hase" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-013"]
+    },
+    {
+      "id": "ob-004",
+      "label": { "default": "Ritter, Tod und Teufel" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-018"]
+    },
+    {
+      "id": "ob-005",
+      "label": { "default": "Hieronymus im Gehäus" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-019"]
+    },
+    {
+      "id": "ob-006",
+      "label": { "default": "Melancholie" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-020"]
+    },
+    {
+      "id": "ob-007",
+      "label": { "default": "Dürer-Haus" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-017"]
+    },
+    {
+      "id": "ob-008",
+      "label": {
+        "default": "Theoretische Schriften zur Perspektive, menschlichen Proportion und dem Festungsbau in deutscher Sprache"
+      },
+      "source": { "citation": "Kolophone" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-039"]
+    },
+    {
+      "id": "ob-009",
+      "label": { "default": "Portrait von Kaiser Maximilian" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-021"]
+    },
+    {
+      "id": "ob-010",
+      "label": { "default": "Ehrenpforte für Kaiser Maximilian I. (Riesenholzschnitt)" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-022"]
+    },
+    {
+      "id": "ob-011",
+      "label": { "default": "Porträtauftrag des dänischen Königs Christian II. (1521)" },
+      "kind": "cultural-heritage-object",
+      "events": ["macro/ev-037"]
+    },
+    {
+      "id": "OID001",
+      "label": { "default": "Arnold von Seligenstadt" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-001"]
+    },
+    {
+      "id": "OID002",
+      "label": { "default": "Man with an oar" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-002"]
+    },
+    {
+      "id": "OID003",
+      "label": { "default": "Tower of the Hof van Liere in Antwerp" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-003", "cho/ev-004"]
+    },
+    {
+      "id": "OID004",
+      "label": { "default": "Portrait drawing of Lazarus Ravensburger" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-003", "cho/ev-004"]
+    },
+    {
+      "id": "OID005",
+      "label": { "default": "portrait drawing of Jobst Planckfeldt" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-005"]
+    },
+    {
+      "id": "OID006",
+      "label": { "default": "portrait drawing of Felix Hungersperg" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-006"]
+    },
+    {
+      "id": "OID007",
+      "label": { "default": "A goldsmith from Mechelen" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-007"]
+    },
+    {
+      "id": "OID008",
+      "label": { "default": "A woman in Brussels" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-008"]
+    },
+    {
+      "id": "OID009",
+      "label": { "default": "Portrait of Hans Pfaffroth von Danzig" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-009"]
+    },
+    {
+      "id": "OID010",
+      "label": { "default": "Double portrait of Paul Topler and Martin Pfinzing" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-010"]
+    },
+    {
+      "id": "OID011",
+      "label": { "default": "Aachen Cathedral" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-011"]
+    },
+    {
+      "id": "OID012",
+      "label": { "default": "Town Hall in Aachen" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-012"]
+    },
+    {
+      "id": "OID013",
+      "label": { "default": "Portrait of Caspar Sturm" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-013", "cho/ev-014"]
+    },
+    {
+      "id": "OID014",
+      "label": { "default": "Riverbank (Lower Rhine Valley?)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-013", "cho/ev-014"]
+    },
+    {
+      "id": "OID015",
+      "label": { "default": "Study of Floor Tiles and Head of Dog" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-015"]
+    },
+    {
+      "id": "OID016",
+      "label": { "default": "A girl from Cologne" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-016"]
+    },
+    {
+      "id": "OID017",
+      "label": { "default": "Agnes Dürer, near Boppard on the Rhine" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-017"]
+    },
+    {
+      "id": "OID018",
+      "label": { "default": "Bergen op Zoom" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-017", "cho/ev-018"]
+    },
+    {
+      "id": "OID019",
+      "label": { "default": "Two Women from Bergen and from Goes" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-016", "cho/ev-019"]
+    },
+    {
+      "id": "OID020",
+      "label": { "default": "Busts of a young and an old woman" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-020"]
+    },
+    {
+      "id": "OID021",
+      "label": { "default": "Choir of the Groote Kerk in Bergen op Zoom" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-021"]
+    },
+    {
+      "id": "OID022",
+      "label": { "default": "Parade Horse" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-022"]
+    },
+    {
+      "id": "OID023",
+      "label": { "default": "Table and two jars" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-023"]
+    },
+    {
+      "id": "OID024",
+      "label": { "default": "A suitcase and a stand" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-024"]
+    },
+    {
+      "id": "OID025",
+      "label": { "default": "A woman's head" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-025"]
+    },
+    {
+      "id": "OID026",
+      "label": { "default": "A crowned young woman" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-026"]
+    },
+    {
+      "id": "OID027",
+      "label": { "default": "Two Girls in a Netherlandish dress" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-026", "cho/ev-027"]
+    },
+    {
+      "id": "OID028",
+      "label": { "default": "Two women in festive attire" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-025", "cho/ev-028"]
+    },
+    {
+      "id": "OID029",
+      "label": { "default": "Lying dog" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-029"]
+    },
+    {
+      "id": "OID030",
+      "label": { "default": "A 24 year old Man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-030", "cho/ev-031"]
+    },
+    {
+      "id": "OID031",
+      "label": { "default": "St. Michael Monastery Antwerp" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-030", "cho/ev-031"]
+    },
+    {
+      "id": "OID032",
+      "label": { "default": "Bishop enthroned" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-032", "cho/ev-033"]
+    },
+    {
+      "id": "OID033",
+      "label": { "default": "Man with fur hat" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-032", "cho/ev-033"]
+    },
+    {
+      "id": "OID034",
+      "label": { "default": "lying dog and study of dog head" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-034"]
+    },
+    {
+      "id": "OID035",
+      "label": { "default": "Small canon" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-035"]
+    },
+    {
+      "id": "OID036",
+      "label": { "default": "Lion with head upright" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-036"]
+    },
+    {
+      "id": "OID037",
+      "label": { "default": "Two lions" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-037"]
+    },
+    {
+      "id": "OID038",
+      "label": { "default": "Rheinfels Castle" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-038", "cho/ev-039"]
+    },
+    {
+      "id": "OID039",
+      "label": { "default": "Castle (Frankonian?)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-038", "cho/ev-039"]
+    },
+    {
+      "id": "OID040",
+      "label": { "default": "Portrait of Max Ulstat" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-040", "cho/ev-041"]
+    },
+    {
+      "id": "OID041",
+      "label": { "default": "Pretty young woman from Antwerp" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-040", "cho/ev-041"]
+    },
+    {
+      "id": "OID042",
+      "label": { "default": "Middle aged man (from Antwerp?)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-042", "cho/ev-043"]
+    },
+    {
+      "id": "OID043",
+      "label": { "default": "Krahnenberg near Andernach" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-042", "cho/ev-043"]
+    },
+    {
+      "id": "OID044",
+      "label": { "default": "93 year old man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-044"]
+    },
+    {
+      "id": "OID045",
+      "label": { "default": "Study of Left Arm" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-045"]
+    },
+    {
+      "id": "OID046",
+      "label": { "default": "Bookrest with Books and Box" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-046"]
+    },
+    {
+      "id": "OID047",
+      "label": { "default": "Skull" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-047"]
+    },
+    {
+      "id": "OID048",
+      "label": { "default": "Christ praying in the Garden Getsemane" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-048"]
+    },
+    {
+      "id": "OID049",
+      "label": { "default": "Burial of Christ" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-049"]
+    },
+    {
+      "id": "OID050",
+      "label": { "default": "Burial of Christ" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-050"]
+    },
+    {
+      "id": "OID051",
+      "label": { "default": "Study sheet with 9 figures of St. Christopher" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-051"]
+    },
+    {
+      "id": "OID052",
+      "label": { "default": "Christ praying alone in the Garden Getsemane" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-052"]
+    },
+    {
+      "id": "OID053",
+      "label": { "default": "Portrait of a young man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-053"]
+    },
+    {
+      "id": "OID054",
+      "label": { "default": "Portrait of Erasmus of Rotterdam" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-054"]
+    },
+    {
+      "id": "OID055",
+      "label": { "default": "Portrait of a young man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-055"]
+    },
+    {
+      "id": "OID056",
+      "label": { "default": "Portrait of a young man (formerly Bernard van Orley?)." },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-056"]
+    },
+    {
+      "id": "OID057",
+      "label": { "default": "Portrait of a man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-057"]
+    },
+    {
+      "id": "OID058",
+      "label": { "default": "Portrait of a man (formerly Lucas van Leyden)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-058"]
+    },
+    {
+      "id": "OID059",
+      "label": { "default": "Portrait of a young man (Barent van Orley?)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-059"]
+    },
+    {
+      "id": "OID060",
+      "label": { "default": "portrait of a man (formerly Joachim Patinir)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-060"]
+    },
+    {
+      "id": "OID061",
+      "label": { "default": "Portrait of a man" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-061"]
+    },
+    {
+      "id": "OID062",
+      "label": { "default": "Portrait Rodrigo d'Almada" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-062"]
+    },
+    {
+      "id": "OID063",
+      "label": { "default": "portrait of Agnes Dürer in a Netherlandish costume" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-063"]
+    },
+    {
+      "id": "OID064",
+      "label": { "default": "Christian II of Denmark" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-064"]
+    },
+    {
+      "id": "OID065",
+      "label": { "default": "Lukas van Leyden" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-065"]
+    },
+    {
+      "id": "OID066",
+      "label": { "default": "Portrait of a man (Sebastian Brant?)" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-066"]
+    },
+    {
+      "id": "OID067",
+      "label": { "default": "Portrait of the Slave Katherina" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-067"]
+    },
+    {
+      "id": "OID068",
+      "label": { "default": "Portrait of Felix Hungersperg kneeling" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-068"]
+    },
+    {
+      "id": "OID069",
+      "label": { "default": "Woman in a Netherlandish dress" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-069"]
+    },
+    {
+      "id": "OID070",
+      "label": { "default": "Port of Antwerp" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-070"]
+    },
+    {
+      "id": "OID071",
+      "label": { "default": "Park of Royal Palace in Brussels" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-071"]
+    },
+    {
+      "id": "OID072",
+      "label": { "default": "Head of a walrus" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-072"]
+    },
+    {
+      "id": "OID073",
+      "label": { "default": "Lion" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-073"]
+    },
+    {
+      "id": "OID074",
+      "label": { "default": "Irish warriors and peasants" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-074"]
+    },
+    {
+      "id": "OID075",
+      "label": { "default": "Woman in a Livland dress" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-075"]
+    },
+    {
+      "id": "OID076",
+      "label": { "default": "Three Women in Livland dresses" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-076"]
+    },
+    {
+      "id": "OID077",
+      "label": { "default": "Two Women in Livland dresses" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-077"]
+    },
+    {
+      "id": "OID078",
+      "label": { "default": "Sketches for coat of arms and lamp" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-078"]
+    },
+    {
+      "id": "OID079",
+      "label": { "default": "Study of dress" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-079"]
+    },
+    {
+      "id": "OID080",
+      "label": { "default": "Saint Jerome" },
+      "kind": "cultural-heritage-object",
+      "events": ["cho/ev-080"]
+    },
+    {
+      "id": "gr-001",
+      "label": { "default": "Maler- und Graphikwerkstatt" },
+      "source": { "citation": "Arbeitsverträge, frühe Kopien der Druckgraphiken vor 1500" },
+      "kind": "group",
+      "type": { "id": "workspace", "label": { "default": "workspace" } },
+      "events": ["macro/ev-010"]
+    },
+    {
+      "id": "gr-002",
+      "label": { "default": "München, Alte Pinakothek" },
+      "kind": "group",
+      "type": { "id": "museum", "label": { "default": "museum" } },
+      "events": ["macro/ev-012"]
+    },
+    {
+      "id": "gr-003",
+      "label": { "default": "Bayonne, Musée Bonnat" },
+      "kind": "group",
+      "type": { "id": "museum", "label": { "default": "museum" } },
+      "events": ["cho/ev-001"]
+    },
+    {
+      "id": "gr-004",
+      "label": { "default": "Birmingham, Barber Institute" },
+      "kind": "group",
+      "events": ["cho/ev-002"]
+    },
+    {
+      "id": "gr-005",
+      "label": { "default": "Berlin, Kupferstichkabinett" },
+      "kind": "group",
+      "events": [
+        "cho/ev-003",
+        "cho/ev-004",
+        "cho/ev-007",
+        "cho/ev-010",
+        "cho/ev-027",
+        "cho/ev-032",
+        "cho/ev-033",
+        "cho/ev-034",
+        "cho/ev-037",
+        "cho/ev-042",
+        "cho/ev-043",
+        "cho/ev-051",
+        "cho/ev-052",
+        "cho/ev-053",
+        "cho/ev-062",
+        "cho/ev-063",
+        "cho/ev-066",
+        "cho/ev-074"
+      ]
+    },
+    {
+      "id": "gr-006",
+      "label": { "default": "Frankfurt, Städel" },
+      "kind": "group",
+      "events": ["cho/ev-005", "cho/ev-021", "cho/ev-040", "cho/ev-041", "cho/ev-048", "cho/ev-078"]
+    },
+    {
+      "id": "gr-007",
+      "label": { "default": "Vienna, Albertina" },
+      "kind": "group",
+      "events": [
+        "cho/ev-006",
+        "cho/ev-008",
+        "cho/ev-016",
+        "cho/ev-017",
+        "cho/ev-036",
+        "cho/ev-044",
+        "cho/ev-045",
+        "cho/ev-046",
+        "cho/ev-047",
+        "cho/ev-068",
+        "cho/ev-070",
+        "cho/ev-073",
+        "cho/ev-079"
+      ]
+    },
+    {
+      "id": "gr-008",
+      "label": { "default": "Paris, Louvre" },
+      "kind": "group",
+      "events": [
+        "cho/ev-009",
+        "cho/ev-054",
+        "cho/ev-055",
+        "cho/ev-057",
+        "cho/ev-059",
+        "cho/ev-075",
+        "cho/ev-076",
+        "cho/ev-077"
+      ]
+    },
+    {
+      "id": "gr-009",
+      "label": { "default": "London, British Museum" },
+      "kind": "group",
+      "events": [
+        "cho/ev-011",
+        "cho/ev-023",
+        "cho/ev-024",
+        "cho/ev-028",
+        "cho/ev-029",
+        "cho/ev-056",
+        "cho/ev-058",
+        "cho/ev-064",
+        "cho/ev-072"
+      ]
+    },
+    {
+      "id": "gr-010",
+      "label": { "default": "Chantilly, Musée Condé" },
+      "kind": "group",
+      "events": [
+        "cho/ev-012",
+        "cho/ev-013",
+        "cho/ev-014",
+        "cho/ev-018",
+        "cho/ev-019",
+        "cho/ev-020",
+        "cho/ev-030",
+        "cho/ev-031"
+      ]
+    },
+    {
+      "id": "gr-011",
+      "label": { "default": "Nuremberg, German National Museum" },
+      "kind": "group",
+      "events": ["cho/ev-015", "cho/ev-022", "cho/ev-038", "cho/ev-039", "cho/ev-049"]
+    },
+    {
+      "id": "gr-012",
+      "label": { "default": "Bremen, Kunsthalle" },
+      "kind": "group",
+      "events": ["cho/ev-025", "cho/ev-026", "cho/ev-035"]
+    },
+    {
+      "id": "gr-013",
+      "label": { "default": "Florence, Uffizi" },
+      "kind": "group",
+      "events": ["cho/ev-050", "cho/ev-067"]
+    },
+    {
+      "id": "gr-014",
+      "label": { "default": "Private collection" },
+      "kind": "group",
+      "events": ["cho/ev-060"]
+    },
+    {
+      "id": "gr-015",
+      "label": { "default": "Amsterdam, Rijksmuseum" },
+      "kind": "group",
+      "events": ["cho/ev-061"]
+    },
+    {
+      "id": "gr-016",
+      "label": { "default": "Lille, Palais des Beaux-Arts" },
+      "kind": "group",
+      "events": ["cho/ev-065"]
+    },
+    {
+      "id": "gr-017",
+      "label": { "default": "Lynnewood Hall, Elkins Park, JB. Widener collection" },
+      "kind": "group",
+      "events": ["cho/ev-069"]
+    },
+    {
+      "id": "gr-018",
+      "label": { "default": "Vienna, Art Academy" },
+      "kind": "group",
+      "events": ["cho/ev-071"]
+    },
+    {
+      "id": "gr-019",
+      "label": { "default": "Lisbon, Museu de Arte Antiga" },
+      "kind": "group",
+      "events": ["cho/ev-080"]
+    },
+    {
+      "id": "gr-020",
+      "label": { "default": "Johannisfriedhof" },
+      "kind": "group",
+      "type": { "id": "cemitery", "label": { "default": "cemitery" } }
+    },
+    {
+      "id": "he-001",
+      "label": { "default": "Krönung Karl V" },
+      "kind": "historical-event",
+      "type": { "id": "coronation", "label": { "default": "coronation" } },
+      "events": ["macro/ev-025"]
+    },
+    {
+      "id": "pl-001",
+      "label": { "default": "Nürnberg" },
+      "alternativeLabels": [{ "default": "Nuremberg" }],
+      "linkedIds": [
+        {
+          "id": "2861650",
+          "provider": { "label": "Geonames", "baseUrl": "https://www.geonames.org/2861650" }
+        }
+      ],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.45421, 11.07752] },
+      "events": [
+        "macro/ev-001",
+        "macro/ev-002",
+        "macro/ev-005",
+        "macro/ev-010",
+        "macro/ev-011",
+        "macro/ev-012",
+        "macro/ev-013",
+        "macro/ev-016",
+        "macro/ev-017",
+        "macro/ev-018",
+        "macro/ev-019",
+        "macro/ev-020",
+        "macro/ev-022",
+        "macro/ev-023",
+        "macro/ev-038",
+        "macro/ev-039",
+        "macro/ev-040"
+      ]
+    },
+    {
+      "id": "pl-002",
+      "label": { "default": "Oberrhein" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.69025, 8.34915] },
+      "events": ["macro/ev-003"]
+    },
+    {
+      "id": "pl-003",
+      "label": { "default": "Colmar" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [48.16863472, 7.377460585] },
+      "events": ["macro/ev-004"]
+    },
+    {
+      "id": "pl-004",
+      "label": { "default": "Tirol" },
+      "kind": "place",
+      "type": { "id": "state", "label": { "default": "state" } },
+      "geometry": { "type": "Point", "coordinates": [46.690182, 11.15441] },
+      "events": ["macro/ev-006"]
+    },
+    {
+      "id": "pl-005",
+      "label": { "default": "Südtirol" },
+      "kind": "place",
+      "type": { "id": "state", "label": { "default": "state" } },
+      "geometry": { "type": "Point", "coordinates": [46.382648, 11.43126] },
+      "events": ["macro/ev-007"]
+    },
+    {
+      "id": "pl-006",
+      "label": { "default": "Trentino" },
+      "kind": "place",
+      "type": { "id": "state", "label": { "default": "state" } },
+      "geometry": { "type": "Point", "coordinates": [46.10114108, 11.14166686] },
+      "events": ["macro/ev-008"]
+    },
+    {
+      "id": "pl-007",
+      "label": { "default": "Venedig" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [45.434341, 12.33878] },
+      "events": ["macro/ev-009", "macro/ev-014"]
+    },
+    {
+      "id": "pl-008",
+      "label": { "default": "Bologna" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [44.49392625, 11.34163535] },
+      "events": ["macro/ev-015"]
+    },
+    {
+      "id": "pl-009",
+      "label": { "default": "Augsburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [48.41017875, 10.98959125] },
+      "events": ["macro/ev-021"]
+    },
+    {
+      "id": "pl-010",
+      "label": { "default": "Köln" },
+      "alternativeLabels": [{ "default": "Cologne" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.97340752, 6.951517268] },
+      "events": ["macro/ev-024", "macro/ev-030"]
+    },
+    {
+      "id": "pl-011",
+      "label": { "default": "Aachen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.77997052, 6.258080332] },
+      "events": ["macro/ev-025"]
+    },
+    {
+      "id": "pl-012",
+      "label": { "default": "Antwerpen" },
+      "alternativeLabels": [{ "default": "Antwerp" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.30232385, 4.344625773] },
+      "events": ["macro/ev-026", "macro/ev-029", "macro/ev-031", "macro/ev-034", "macro/ev-036"]
+    },
+    {
+      "id": "pl-013",
+      "label": { "default": "Mecheln" },
+      "alternativeLabels": [{ "default": "Mechelen" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.02651151, 4.479117295] },
+      "events": ["macro/ev-027", "macro/ev-035"]
+    },
+    {
+      "id": "pl-014",
+      "label": { "default": "Brüssel" },
+      "alternativeLabels": [{ "default": "Brussels" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.95522847, 4.319246516] },
+      "events": ["macro/ev-028", "macro/ev-037"]
+    },
+    {
+      "id": "pl-015",
+      "label": { "default": "Brügge" },
+      "alternativeLabels": [{ "default": "Bruges" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.28033424, 3.210779284] },
+      "events": ["macro/ev-032"]
+    },
+    {
+      "id": "pl-016",
+      "label": { "default": "Gent" },
+      "alternativeLabels": [{ "default": "Ghent" }],
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.14322955, 3.765888767] },
+      "events": ["macro/ev-033"]
+    },
+    {
+      "id": "pl-018",
+      "label": { "default": "Erlangen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.5896744, 11.0119611] }
+    },
+    {
+      "id": "pl-019",
+      "label": { "default": "Baiersdorf" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.661089, 11.0345826] }
+    },
+    {
+      "id": "pl-020",
+      "label": { "default": "Forchheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7188374, 11.0679502] }
+    },
+    {
+      "id": "pl-021",
+      "label": { "default": "Bamberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8988135, 10.9027636] }
+    },
+    {
+      "id": "pl-022",
+      "label": { "default": "Eltmann" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9673521, 10.6635056] }
+    },
+    {
+      "id": "pl-023",
+      "label": { "default": "Zeil" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.011546, 10.5922117] }
+    },
+    {
+      "id": "pl-024",
+      "label": { "default": "Hassfurt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0371575, 10.5151523] }
+    },
+    {
+      "id": "pl-025",
+      "label": { "default": "Obertheres" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0232513, 10.4478964] }
+    },
+    {
+      "id": "pl-026",
+      "label": { "default": "Unter-Euerheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0127319, 10.3562007] }
+    },
+    {
+      "id": "pl-027",
+      "label": { "default": "Mainberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0588956, 10.2898428] }
+    },
+    {
+      "id": "pl-028",
+      "label": { "default": "Schweinfurt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0492047, 10.2194228] }
+    },
+    {
+      "id": "pl-029",
+      "label": { "default": "Volkach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8639895, 10.2309327] }
+    },
+    {
+      "id": "pl-030",
+      "label": { "default": "Schwarzach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8065839, 10.2292557] }
+    },
+    {
+      "id": "pl-031",
+      "label": { "default": "Dettelbach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8037832, 10.165725] }
+    },
+    {
+      "id": "pl-032",
+      "label": { "default": "Kitzingen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7340805, 10.1473777] }
+    },
+    {
+      "id": "pl-033",
+      "label": { "default": "Sulzfeld" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7074086, 10.1300955] }
+    },
+    {
+      "id": "pl-034",
+      "label": { "default": "Marktbreit" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.6664618, 10.142098] }
+    },
+    {
+      "id": "pl-035",
+      "label": { "default": "Frickenhausen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.6710163, 10.0862845] }
+    },
+    {
+      "id": "pl-036",
+      "label": { "default": "Ochsenfurt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.6640025, 10.0709014] }
+    },
+    {
+      "id": "pl-037",
+      "label": { "default": "Eibelstadt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7255609, 10.0014362] }
+    },
+    {
+      "id": "pl-038",
+      "label": { "default": "Heidingsfeld" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7626094, 9.943696] }
+    },
+    {
+      "id": "pl-039",
+      "label": { "default": "Würzburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7913044, 9.9533548] }
+    },
+    {
+      "id": "pl-040",
+      "label": { "default": "Erlenbrunn" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8580258, 9.8435268] }
+    },
+    {
+      "id": "pl-041",
+      "label": { "default": "Retzbach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9047223, 9.8217594] }
+    },
+    {
+      "id": "pl-042",
+      "label": { "default": "Zellingen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8974807, 9.816277] }
+    },
+    {
+      "id": "pl-043",
+      "label": { "default": "Karlstadt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9604785, 9.7734603] }
+    },
+    {
+      "id": "pl-044",
+      "label": { "default": "Höchstätt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-045",
+      "label": { "default": "Lohr" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9892207, 9.5722309] }
+    },
+    {
+      "id": "pl-046",
+      "label": { "default": "Neuenstadt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.930843, 9.5706809] }
+    },
+    {
+      "id": "pl-047",
+      "label": { "default": "Rothenfels" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8929338, 9.5859552] }
+    },
+    {
+      "id": "pl-048",
+      "label": { "default": "Heidenfeld" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8454938, 9.6088146] }
+    },
+    {
+      "id": "pl-049",
+      "label": { "default": "Triffenstein" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8000272, 9.58533] }
+    },
+    {
+      "id": "pl-050",
+      "label": { "default": "Homburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.793323, 9.625462] }
+    },
+    {
+      "id": "pl-051",
+      "label": { "default": "Wertheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7586035, 9.5128511] }
+    },
+    {
+      "id": "pl-052",
+      "label": { "default": "Protzelten" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7802347, 9.3820446] }
+    },
+    {
+      "id": "pl-053",
+      "label": { "default": "Freudenberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7540767, 9.3266483] }
+    },
+    {
+      "id": "pl-054",
+      "label": { "default": "Miltenberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7019294, 9.2559213] }
+    },
+    {
+      "id": "pl-055",
+      "label": { "default": "Klingenberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.7805714, 9.1830957] }
+    },
+    {
+      "id": "pl-056",
+      "label": { "default": "Wördt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.795558, 9.1547301] }
+    },
+    {
+      "id": "pl-057",
+      "label": { "default": "Obernburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.8381779, 9.1323585] }
+    },
+    {
+      "id": "pl-058",
+      "label": { "default": "Aschaffenburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9806625, 9.1355554] }
+    },
+    {
+      "id": "pl-059",
+      "label": { "default": "Seligenstadt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0437013, 8.9711343] }
+    },
+    {
+      "id": "pl-060",
+      "label": { "default": "Steinheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.1138783, 8.9080929] }
+    },
+    {
+      "id": "pl-061",
+      "label": { "default": "Kesselstadt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.130114, 8.883417] }
+    },
+    {
+      "id": "pl-062",
+      "label": { "default": "Frankfurt/Main" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.1109221, 8.6821267] }
+    },
+    {
+      "id": "pl-063",
+      "label": { "default": "Höchst" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.102482, 8.5474571] }
+    },
+    {
+      "id": "pl-064",
+      "label": { "default": "Mainz" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9928617, 8.2472526] }
+    },
+    {
+      "id": "pl-065",
+      "label": { "default": "Eltville" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0289744, 8.119173] }
+    },
+    {
+      "id": "pl-066",
+      "label": { "default": "Rüdesheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9821443, 7.9301124] }
+    },
+    {
+      "id": "pl-067",
+      "label": { "default": "Ehrenfels" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [49.9755016, 7.8802046] }
+    },
+    {
+      "id": "pl-068",
+      "label": { "default": "Bacharach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0604184, 7.7681136] }
+    },
+    {
+      "id": "pl-069",
+      "label": { "default": "Kaub" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.0880609, 7.7621116] }
+    },
+    {
+      "id": "pl-070",
+      "label": { "default": "St. Goar" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.1481961, 7.7060771] }
+    },
+    {
+      "id": "pl-071",
+      "label": { "default": "Boppard" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.2311996, 7.58853] }
+    },
+    {
+      "id": "pl-072",
+      "label": { "default": "Lahnstein" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.3078274, 7.6093633] }
+    },
+    {
+      "id": "pl-073",
+      "label": { "default": "Engers" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.4258407, 7.5450198] }
+    },
+    {
+      "id": "pl-074",
+      "label": { "default": "Andernach" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.426057, 7.4086636] }
+    },
+    {
+      "id": "pl-075",
+      "label": { "default": "Linz" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.568141, 7.284787] }
+    },
+    {
+      "id": "pl-076",
+      "label": { "default": "Bonn" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.73743, 7.0982068] }
+    },
+    {
+      "id": "pl-078",
+      "label": { "default": "Büsdorf" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9909824, 6.7085696] }
+    },
+    {
+      "id": "pl-079",
+      "label": { "default": "Rödingen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.96099, 6.463264] }
+    },
+    {
+      "id": "pl-080",
+      "label": { "default": "Freialdenhoven" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9281185, 6.2505591] }
+    },
+    {
+      "id": "pl-081",
+      "label": { "default": "Frelenberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9401626, 6.1096025] }
+    },
+    {
+      "id": "pl-082",
+      "label": { "default": "Gangelt" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9927163, 5.997431] }
+    },
+    {
+      "id": "pl-083",
+      "label": { "default": "Süsterseel" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9987391, 5.9375637] }
+    },
+    {
+      "id": "pl-084",
+      "label": { "default": "Sittard" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.0006238, 5.8864788] }
+    },
+    {
+      "id": "pl-085",
+      "label": { "default": "Stokkem" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.02364, 5.74418] }
+    },
+    {
+      "id": "pl-086",
+      "label": { "default": "Martenslinde" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-087",
+      "label": { "default": "Heide" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-088",
+      "label": { "default": "Stosser" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-089",
+      "label": { "default": "Merpeck" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-090",
+      "label": { "default": "Brantenmühl" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-091",
+      "label": { "default": "Uylenburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.13171, 4.76123] }
+    },
+    {
+      "id": "pl-092",
+      "label": { "default": "Creutz" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.12922, 4.70835] }
+    },
+    {
+      "id": "pl-095",
+      "label": { "default": "Vilvoorde" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.926454, 4.4258375] }
+    },
+    {
+      "id": "pl-097",
+      "label": { "default": "Maastricht" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8513682, 5.6909725] }
+    },
+    {
+      "id": "pl-098",
+      "label": { "default": "Gulpe" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8155841, 5.8914093] }
+    },
+    {
+      "id": "pl-100",
+      "label": { "default": "Jülich" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9224226, 6.3639119] }
+    },
+    {
+      "id": "pl-101",
+      "label": { "default": "Düren" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8037183, 6.4793683] }
+    },
+    {
+      "id": "pl-102",
+      "label": { "default": "Zons" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.123171, 6.848458] }
+    },
+    {
+      "id": "pl-103",
+      "label": { "default": "Neuss" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.2041968, 6.6879511] }
+    },
+    {
+      "id": "pl-104",
+      "label": { "default": "Stain" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-105",
+      "label": { "default": "Düsseldorf" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.2277411, 6.7734556] }
+    },
+    {
+      "id": "pl-106",
+      "label": { "default": "Kaiserswerth" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.2977265, 6.7380299] }
+    },
+    {
+      "id": "pl-107",
+      "label": { "default": "Duisburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4344079, 6.7623293] }
+    },
+    {
+      "id": "pl-108",
+      "label": { "default": "Angerort" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.3791309, 6.7269134] }
+    },
+    {
+      "id": "pl-109",
+      "label": { "default": "Ruhrort" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4499282, 6.7483238] }
+    },
+    {
+      "id": "pl-110",
+      "label": { "default": "Orsoy" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5233389, 6.6876663] }
+    },
+    {
+      "id": "pl-111",
+      "label": { "default": "Rheinberg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5460798, 6.5899097] }
+    },
+    {
+      "id": "pl-112",
+      "label": { "default": "Wesel" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.6643079, 6.6295679] }
+    },
+    {
+      "id": "pl-113",
+      "label": { "default": "Rees" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.7670727, 6.4015065] }
+    },
+    {
+      "id": "pl-114",
+      "label": { "default": "Emmerich" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.8395929, 6.2517303] }
+    },
+    {
+      "id": "pl-115",
+      "label": { "default": "Tholhus" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.852073, 6.1032046] }
+    },
+    {
+      "id": "pl-116",
+      "label": { "default": "Nijmegen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.8448837, 5.8428281] }
+    },
+    {
+      "id": "pl-117",
+      "label": { "default": "Tiel" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.8876176, 5.4278765] }
+    },
+    {
+      "id": "pl-118",
+      "label": { "default": "Heerewaarden" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.8173181, 5.3930495] }
+    },
+    {
+      "id": "pl-119",
+      "label": { "default": "(Zalt-)Bommel" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.8135539, 5.2507733] }
+    },
+    {
+      "id": "pl-120",
+      "label": { "default": "s'Hertogenbosch" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.6978162, 5.3036748] }
+    },
+    {
+      "id": "pl-121",
+      "label": { "default": "Oisterwijk" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5654243, 5.2030282] }
+    },
+    {
+      "id": "pl-122",
+      "label": { "default": "Tilburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.560596, 5.0919143] }
+    },
+    {
+      "id": "pl-123",
+      "label": { "default": "Baarle" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4451366, 4.9295231] }
+    },
+    {
+      "id": "pl-124",
+      "label": { "default": "Hoogstraten" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4015935, 4.7615606] }
+    },
+    {
+      "id": "pl-125",
+      "label": { "default": "Harscht" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.3497216, 4.6380512] }
+    },
+    {
+      "id": "pl-126",
+      "label": { "default": "Bergen op Zoom" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] }
+    },
+    {
+      "id": "pl-127",
+      "label": { "default": "Sea between Bergen op Zoom and Goes" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] }
+    },
+    {
+      "id": "pl-128",
+      "label": { "default": "Goes" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5046455, 3.8911304] }
+    },
+    {
+      "id": "pl-129",
+      "label": { "default": "Arnemuiden" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5011231, 3.6759015] }
+    },
+    {
+      "id": "pl-131",
+      "label": { "default": "Wolfersdijk" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5299685, 3.8218161] }
+    },
+    {
+      "id": "pl-132",
+      "label": { "default": "Kortgene" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5578335, 3.8031359] }
+    },
+    {
+      "id": "pl-133",
+      "label": { "default": "Middelburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.4987962, 3.610998] }
+    },
+    {
+      "id": "pl-134",
+      "label": { "default": "Veere" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.5482937, 3.6660061] }
+    },
+    {
+      "id": "pl-135",
+      "label": { "default": "Zierkzee" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.6501218, 3.9184977] }
+    },
+    {
+      "id": "pl-136",
+      "label": { "default": "Beveren" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.2133887, 4.2579607] }
+    },
+    {
+      "id": "pl-137",
+      "label": { "default": "Prasten" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } }
+    },
+    {
+      "id": "pl-139",
+      "label": { "default": "Sint-Pauwels" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.193303, 4.0977458] }
+    },
+    {
+      "id": "pl-140",
+      "label": { "default": "Caudenborm" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.17627, 3.97467] }
+    },
+    {
+      "id": "pl-141",
+      "label": { "default": "Kalve (Calve)" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.17285, 3.87799] }
+    },
+    {
+      "id": "pl-142",
+      "label": { "default": "Ertvelde" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.1787632, 3.7466865] }
+    },
+    {
+      "id": "pl-143",
+      "label": { "default": "Eeklo" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.1851666, 3.564071] }
+    },
+    {
+      "id": "pl-144",
+      "label": { "default": "Maldegem" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.2090352, 3.4487502] }
+    },
+    {
+      "id": "pl-146",
+      "label": { "default": "Ursel" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [51.1294092, 3.4856153] }
+    },
+    {
+      "id": "pl-149",
+      "label": { "default": "Leuven" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8822871, 4.7137645] }
+    },
+    {
+      "id": "pl-150",
+      "label": { "default": "Thienen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8096628, 4.9371045] }
+    },
+    {
+      "id": "pl-151",
+      "label": { "default": "St. Truyen" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.818835, 5.1819977] }
+    },
+    {
+      "id": "pl-152",
+      "label": { "default": "Tongeren" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.7799815, 5.4601943] }
+    },
+    {
+      "id": "pl-153",
+      "label": { "default": "Atenburg" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.8948824, 6.2871221] }
+    },
+    {
+      "id": "pl-154",
+      "label": { "default": "Bergheim" },
+      "kind": "place",
+      "type": { "id": "city", "label": { "default": "city" } },
+      "geometry": { "type": "Point", "coordinates": [50.9451945, 6.6555022] }
+    }
+  ],
+  "entityEvents": [
+    {
+      "id": "cho/ev-001",
+      "label": { "default": "Arnold von Seligenstadt" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID001",
+          "label": "OID001 object_created",
+          "entity": "OID001",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-003",
+          "label": "gr-003 current location",
+          "entity": "gr-003",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-002",
+      "label": { "default": "Man with an oar" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID002",
+          "label": "OID002 object_created",
+          "entity": "OID002",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-004",
+          "label": "gr-004 current location",
+          "entity": "gr-004",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-003",
+      "label": { "default": "Tower of the Hof van Liere in Antwerp" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID003",
+          "label": "OID003 object_created",
+          "entity": "OID003",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID004",
+          "label": "OID004 is left side",
+          "entity": "OID004",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-004",
+      "label": { "default": "Portrait drawing of Lazarus Ravensburger" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID004",
+          "label": "OID004 object_created",
+          "entity": "OID004",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID003",
+          "label": "OID003 is right side",
+          "entity": "OID003",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-005",
+      "label": { "default": "portrait drawing of Jobst Planckfeldt" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID005",
+          "label": "OID005 object_created",
+          "entity": "OID005",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-006",
+      "label": { "default": "portrait drawing of Felix Hungersperg" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID006",
+          "label": "OID006 object_created",
+          "entity": "OID006",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-007",
+      "label": { "default": "A goldsmith from Mechelen" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID007",
+          "label": "OID007 object_created",
+          "entity": "OID007",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-008",
+      "label": { "default": "A woman in Brussels" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID008",
+          "label": "OID008 object_created",
+          "entity": "OID008",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-009",
+      "label": { "default": "Portrait of Hans Pfaffroth von Danzig" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID009",
+          "label": "OID009 object_created",
+          "entity": "OID009",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-010",
+      "label": { "default": "Double portrait of Paul Topler and Martin Pfinzing" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID010",
+          "label": "OID010 object_created",
+          "entity": "OID010",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-011",
+      "label": { "default": "Aachen Cathedral" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID011",
+          "label": "OID011 object_created",
+          "entity": "OID011",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-012",
+      "label": { "default": "Town Hall in Aachen" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID012",
+          "label": "OID012 object_created",
+          "entity": "OID012",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-013",
+      "label": { "default": "Portrait of Caspar Sturm" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID013",
+          "label": "OID013 object_created",
+          "entity": "OID013",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID014",
+          "label": "OID014 is right side",
+          "entity": "OID014",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-014",
+      "label": { "default": "Riverbank (Lower Rhine Valley?)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID014",
+          "label": "OID014 object_created",
+          "entity": "OID014",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID013",
+          "label": "OID013 is left side",
+          "entity": "OID013",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-015",
+      "label": { "default": "Study of Floor Tiles and Head of Dog" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID015",
+          "label": "OID015 object_created",
+          "entity": "OID015",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-011",
+          "label": "gr-011 current location",
+          "entity": "gr-011",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-016",
+      "label": { "default": "A girl from Cologne" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID016",
+          "label": "OID016 object_created",
+          "entity": "OID016",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID019",
+          "label": "OID019 is right side",
+          "entity": "OID019",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-017",
+      "label": { "default": "Agnes Dürer, near Boppard on the Rhine" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID017",
+          "label": "OID017 object_created",
+          "entity": "OID017",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID018",
+          "label": "OID018 is left side",
+          "entity": "OID018",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-018",
+      "label": { "default": "Bergen op Zoom" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID018",
+          "label": "OID018 object_created",
+          "entity": "OID018",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-019",
+      "label": { "default": "Two Women from Bergen and from Goes" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID019",
+          "label": "OID019 object_created",
+          "entity": "OID019",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-020",
+      "label": { "default": "Busts of a young and an old woman" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID020",
+          "label": "OID020 object_created",
+          "entity": "OID020",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-021",
+      "label": { "default": "Choir of the Groote Kerk in Bergen op Zoom" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID021",
+          "label": "OID021 object_created",
+          "entity": "OID021",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-022",
+      "label": { "default": "Parade Horse" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID022",
+          "label": "OID022 object_created",
+          "entity": "OID022",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-011",
+          "label": "gr-011 current location",
+          "entity": "gr-011",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-023",
+      "label": { "default": "Table and two jars" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID023",
+          "label": "OID023 object_created",
+          "entity": "OID023",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-024",
+      "label": { "default": "A suitcase and a stand" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID024",
+          "label": "OID024 object_created",
+          "entity": "OID024",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-025",
+      "label": { "default": "A woman's head" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID025",
+          "label": "OID025 object_created",
+          "entity": "OID025",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-012",
+          "label": "gr-012 current location",
+          "entity": "gr-012",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID028",
+          "label": "OID028 is right side",
+          "entity": "OID028",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-026",
+      "label": { "default": "A crowned young woman" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID026",
+          "label": "OID026 object_created",
+          "entity": "OID026",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-012",
+          "label": "gr-012 current location",
+          "entity": "gr-012",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID027",
+          "label": "OID027 is left side",
+          "entity": "OID027",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-027",
+      "label": { "default": "Two Girls in a Netherlandish dress" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID027",
+          "label": "OID027 object_created",
+          "entity": "OID027",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-028",
+      "label": { "default": "Two women in festive attire" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID028",
+          "label": "OID028 object_created",
+          "entity": "OID028",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-029",
+      "label": { "default": "Lying dog" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID029",
+          "label": "OID029 object_created",
+          "entity": "OID029",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-030",
+      "label": { "default": "A 24 year old Man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID030",
+          "label": "OID030 object_created",
+          "entity": "OID030",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID031",
+          "label": "OID031 is right side",
+          "entity": "OID031",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-031",
+      "label": { "default": "St. Michael Monastery Antwerp" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID031",
+          "label": "OID031 object_created",
+          "entity": "OID031",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-010",
+          "label": "gr-010 current location",
+          "entity": "gr-010",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID030",
+          "label": "OID030 is left side",
+          "entity": "OID030",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-032",
+      "label": { "default": "Bishop enthroned" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID032",
+          "label": "OID032 object_created",
+          "entity": "OID032",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID033",
+          "label": "OID033 is right side",
+          "entity": "OID033",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-033",
+      "label": { "default": "Man with fur hat" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID033",
+          "label": "OID033 object_created",
+          "entity": "OID033",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID032",
+          "label": "OID032 is left side",
+          "entity": "OID032",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-034",
+      "label": { "default": "lying dog and study of dog head" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID034",
+          "label": "OID034 object_created",
+          "entity": "OID034",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-035",
+      "label": { "default": "Small canon" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID035",
+          "label": "OID035 object_created",
+          "entity": "OID035",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-012",
+          "label": "gr-012 current location",
+          "entity": "gr-012",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-036",
+      "label": { "default": "Lion with head upright" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID036",
+          "label": "OID036 object_created",
+          "entity": "OID036",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-037",
+      "label": { "default": "Two lions" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID037",
+          "label": "OID037 object_created",
+          "entity": "OID037",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-038",
+      "label": { "default": "Rheinfels Castle" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID038",
+          "label": "OID038 object_created",
+          "entity": "OID038",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-011",
+          "label": "gr-011 current location",
+          "entity": "gr-011",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID039",
+          "label": "OID039 is right side",
+          "entity": "OID039",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-039",
+      "label": { "default": "Castle (Frankonian?)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID039",
+          "label": "OID039 object_created",
+          "entity": "OID039",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-011",
+          "label": "gr-011 current location",
+          "entity": "gr-011",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID038",
+          "label": "OID038 is left side",
+          "entity": "OID038",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-040",
+      "label": { "default": "Portrait of Max Ulstat" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID040",
+          "label": "OID040 object_created",
+          "entity": "OID040",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID041",
+          "label": "OID041 is right side",
+          "entity": "OID041",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-041",
+      "label": { "default": "Pretty young woman from Antwerp" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID041",
+          "label": "OID041 object_created",
+          "entity": "OID041",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID040",
+          "label": "OID040 is left side",
+          "entity": "OID040",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-042",
+      "label": { "default": "Middle aged man (from Antwerp?)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID042",
+          "label": "OID042 object_created",
+          "entity": "OID042",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID043",
+          "label": "OID043 is right side",
+          "entity": "OID043",
+          "role": {
+            "id": "event/relationrole/is+right+side",
+            "label": { "default": "is right side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-043",
+      "label": { "default": "Krahnenberg near Andernach" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID043",
+          "label": "OID043 object_created",
+          "entity": "OID043",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        },
+        {
+          "id": "event/relation/OID042",
+          "label": "OID042 is left side",
+          "entity": "OID042",
+          "role": {
+            "id": "event/relationrole/is+left+side",
+            "label": { "default": "is left side" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-044",
+      "label": { "default": "93 year old man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID044",
+          "label": "OID044 object_created",
+          "entity": "OID044",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-045",
+      "label": { "default": "Study of Left Arm" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID045",
+          "label": "OID045 object_created",
+          "entity": "OID045",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-046",
+      "label": { "default": "Bookrest with Books and Box" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID046",
+          "label": "OID046 object_created",
+          "entity": "OID046",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-047",
+      "label": { "default": "Skull" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID047",
+          "label": "OID047 object_created",
+          "entity": "OID047",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-048",
+      "label": { "default": "Christ praying in the Garden Getsemane" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID048",
+          "label": "OID048 object_created",
+          "entity": "OID048",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-049",
+      "label": { "default": "Burial of Christ" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID049",
+          "label": "OID049 object_created",
+          "entity": "OID049",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-011",
+          "label": "gr-011 current location",
+          "entity": "gr-011",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-050",
+      "label": { "default": "Burial of Christ" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID050",
+          "label": "OID050 object_created",
+          "entity": "OID050",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-013",
+          "label": "gr-013 current location",
+          "entity": "gr-013",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-051",
+      "label": { "default": "Study sheet with 9 figures of St. Christopher" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID051",
+          "label": "OID051 object_created",
+          "entity": "OID051",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-052",
+      "label": { "default": "Christ praying alone in the Garden Getsemane" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID052",
+          "label": "OID052 object_created",
+          "entity": "OID052",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-053",
+      "label": { "default": "Portrait of a young man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID053",
+          "label": "OID053 object_created",
+          "entity": "OID053",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-054",
+      "label": { "default": "Portrait of Erasmus of Rotterdam" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID054",
+          "label": "OID054 object_created",
+          "entity": "OID054",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-055",
+      "label": { "default": "Portrait of a young man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID055",
+          "label": "OID055 object_created",
+          "entity": "OID055",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-056",
+      "label": { "default": "Portrait of a young man (formerly Bernard van Orley?)." },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID056",
+          "label": "OID056 object_created",
+          "entity": "OID056",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-057",
+      "label": { "default": "Portrait of a man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID057",
+          "label": "OID057 object_created",
+          "entity": "OID057",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-058",
+      "label": { "default": "Portrait of a man (formerly Lucas van Leyden)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID058",
+          "label": "OID058 object_created",
+          "entity": "OID058",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-059",
+      "label": { "default": "Portrait of a young man (Barent van Orley?)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID059",
+          "label": "OID059 object_created",
+          "entity": "OID059",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-060",
+      "label": { "default": "portrait of a man (formerly Joachim Patinir)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID060",
+          "label": "OID060 object_created",
+          "entity": "OID060",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-014",
+          "label": "gr-014 current location",
+          "entity": "gr-014",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-061",
+      "label": { "default": "Portrait of a man" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID061",
+          "label": "OID061 object_created",
+          "entity": "OID061",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-015",
+          "label": "gr-015 current location",
+          "entity": "gr-015",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-062",
+      "label": { "default": "Portrait Rodrigo d'Almada" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID062",
+          "label": "OID062 object_created",
+          "entity": "OID062",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-063",
+      "label": { "default": "portrait of Agnes Dürer in a Netherlandish costume" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID063",
+          "label": "OID063 object_created",
+          "entity": "OID063",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-064",
+      "label": { "default": "Christian II of Denmark" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID064",
+          "label": "OID064 object_created",
+          "entity": "OID064",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-065",
+      "label": { "default": "Lukas van Leyden" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID065",
+          "label": "OID065 object_created",
+          "entity": "OID065",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-016",
+          "label": "gr-016 current location",
+          "entity": "gr-016",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-066",
+      "label": { "default": "Portrait of a man (Sebastian Brant?)" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID066",
+          "label": "OID066 object_created",
+          "entity": "OID066",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-067",
+      "label": { "default": "Portrait of the Slave Katherina" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID067",
+          "label": "OID067 object_created",
+          "entity": "OID067",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-013",
+          "label": "gr-013 current location",
+          "entity": "gr-013",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-068",
+      "label": { "default": "Portrait of Felix Hungersperg kneeling" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID068",
+          "label": "OID068 object_created",
+          "entity": "OID068",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-069",
+      "label": { "default": "Woman in a Netherlandish dress" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID069",
+          "label": "OID069 object_created",
+          "entity": "OID069",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-017",
+          "label": "gr-017 current location",
+          "entity": "gr-017",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-070",
+      "label": { "default": "Port of Antwerp" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID070",
+          "label": "OID070 object_created",
+          "entity": "OID070",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-071",
+      "label": { "default": "Park of Royal Palace in Brussels" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID071",
+          "label": "OID071 object_created",
+          "entity": "OID071",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-018",
+          "label": "gr-018 current location",
+          "entity": "gr-018",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-072",
+      "label": { "default": "Head of a walrus" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID072",
+          "label": "OID072 object_created",
+          "entity": "OID072",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-009",
+          "label": "gr-009 current location",
+          "entity": "gr-009",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-073",
+      "label": { "default": "Lion" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID073",
+          "label": "OID073 object_created",
+          "entity": "OID073",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-074",
+      "label": { "default": "Irish warriors and peasants" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID074",
+          "label": "OID074 object_created",
+          "entity": "OID074",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-005",
+          "label": "gr-005 current location",
+          "entity": "gr-005",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-075",
+      "label": { "default": "Woman in a Livland dress" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID075",
+          "label": "OID075 object_created",
+          "entity": "OID075",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-076",
+      "label": { "default": "Three Women in Livland dresses" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID076",
+          "label": "OID076 object_created",
+          "entity": "OID076",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-077",
+      "label": { "default": "Two Women in Livland dresses" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID077",
+          "label": "OID077 object_created",
+          "entity": "OID077",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-008",
+          "label": "gr-008 current location",
+          "entity": "gr-008",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-078",
+      "label": { "default": "Sketches for coat of arms and lamp" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID078",
+          "label": "OID078 object_created",
+          "entity": "OID078",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-006",
+          "label": "gr-006 current location",
+          "entity": "gr-006",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-079",
+      "label": { "default": "Study of dress" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID079",
+          "label": "OID079 object_created",
+          "entity": "OID079",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-007",
+          "label": "gr-007 current location",
+          "entity": "gr-007",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cho/ev-080",
+      "label": { "default": "Saint Jerome" },
+      "kind": "creation",
+      "relations": [
+        {
+          "id": "event/relation/OID080",
+          "label": "OID080 object_created",
+          "entity": "OID080",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-019",
+          "label": "gr-019 current location",
+          "entity": "gr-019",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-001",
+      "label": { "default": "Geburt von Albrecht Dürer" },
+      "source": { "citation": "Dürers Familienchronik" },
+      "kind": "birth",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 person_born",
+          "entity": "pr-001",
+          "role": { "id": "event/relationrole/person_born", "label": { "default": "person_born" } },
+          "source": { "citation": "Dürers Familienchronik" }
+        },
+        {
+          "id": "event/relation/pr-002",
+          "label": "pr-002 was godfather",
+          "entity": "pr-002",
+          "role": {
+            "id": "event/relationrole/was+godfather",
+            "label": { "default": "was godfather" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-002",
+      "label": { "default": "Malerlehre bei Michael Wolgemut" },
+      "source": { "citation": "Dürers Familienchronik" },
+      "kind": "education",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was student",
+          "entity": "pr-001",
+          "role": { "id": "event/relationrole/was+student", "label": { "default": "was student" } },
+          "source": { "citation": "Dürers Familienchronik" }
+        },
+        {
+          "id": "event/relation/pr-003",
+          "label": "pr-003 was teacher",
+          "entity": "pr-003",
+          "role": { "id": "event/relationrole/was+teacher", "label": { "default": "was teacher" } }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-003",
+      "label": { "default": "Gesellenwanderschaft an den Oberrhein" },
+      "source": { "citation": "Christoph Scheurl 1515 nach Selbstaussage Dürers" },
+      "kind": "professional",
+      "place": "pl-002",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          },
+          "source": { "citation": "Christoph Scheurl 1515 nach Selbstaussage Dürers" }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-004",
+      "label": { "default": "Arbeitsaufenthalt bei Martin Schongauer" },
+      "kind": "professional",
+      "place": "pl-003",
+      "relations": [
+        {
+          "id": "event/relation/pr-004",
+          "label": "pr-004 was employer",
+          "entity": "pr-004",
+          "role": {
+            "id": "event/relationrole/was+employer",
+            "label": { "default": "was employer" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was employee",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+employee",
+            "label": { "default": "was employee" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-005",
+      "label": { "default": "Heirat mit Agnes Frey" },
+      "kind": "family",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-005",
+          "label": "pr-005 war wife",
+          "entity": "pr-005",
+          "role": { "id": "event/relationrole/war+wife", "label": { "default": "war wife" } }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was husband",
+          "entity": "pr-001",
+          "role": { "id": "event/relationrole/was+husband", "label": { "default": "was husband" } }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-006",
+      "label": { "default": "Erste Italienreise: Tirol" },
+      "source": {
+        "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+      },
+      "kind": "travel",
+      "place": "pl-004",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-007",
+      "label": { "default": "Erste Italienreise: Südtirol" },
+      "source": {
+        "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+      },
+      "kind": "travel",
+      "place": "pl-005",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-008",
+      "label": { "default": "Erste Italienreise: Trentino" },
+      "source": {
+        "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+      },
+      "kind": "travel",
+      "place": "pl-006",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-009",
+      "label": { "default": "Erste Italienreise: Venedig" },
+      "source": {
+        "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+      },
+      "kind": "travel",
+      "place": "pl-007",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-010",
+      "label": { "default": "Aufbau einer Maler- und Graphikwerkstatt" },
+      "source": { "citation": "Arbeitsverträge, frühe Kopien der Druckgraphiken vor 1500" },
+      "kind": "founding",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/gr-001",
+          "label": "gr-001 was founded",
+          "entity": "gr-001",
+          "role": { "id": "event/relationrole/was+founded", "label": { "default": "was founded" } },
+          "source": { "citation": "Arbeitsverträge, frühe Kopien der Druckgraphiken vor 1500" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was founded by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+founded+by",
+            "label": { "default": "was founded by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-011",
+      "label": { "default": "Apokalypse erscheint" },
+      "source": { "citation": "Kolophon" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-001",
+          "label": "ob-001 object_created",
+          "entity": "ob-001",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Kolophon" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-012",
+      "label": { "default": "Selbstbildnis im Pelzrock erstellt" },
+      "source": { "citation": "Datierung auf Bild, Physiognomie" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-002",
+          "label": "ob-002 object_created",
+          "entity": "ob-002",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Datierung auf Bild, Physiognomie" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        },
+        {
+          "id": "event/relation/gr-002",
+          "label": "gr-002 current location",
+          "entity": "gr-002",
+          "role": {
+            "id": "event/relationrole/current+location",
+            "label": { "default": "current location" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-013",
+      "label": { "default": "„Der Hase“ erstellt" },
+      "source": { "citation": "Datierung auf Bild, ähnliche zeitnahe Studien" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-003",
+          "label": "ob-003 object_created",
+          "entity": "ob-003",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Datierung auf Bild, ähnliche zeitnahe Studien" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-014",
+      "label": { "default": "Zweite Italienreise: Venedig" },
+      "source": {
+        "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+      },
+      "kind": "travel",
+      "place": "pl-007",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-015",
+      "label": { "default": "Zweite Italienreise: Bologna" },
+      "source": {
+        "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+      },
+      "kind": "travel",
+      "place": "pl-008",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-016",
+      "label": { "default": "Zweite Italienreise: Rückkehr nach Nürnberg" },
+      "source": {
+        "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+      },
+      "kind": "travel",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": {
+            "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-017",
+      "label": { "default": "Kauf des „Dürer-Hauses“" },
+      "source": { "citation": "Urkunde" },
+      "kind": "bussines",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-007",
+          "label": "ob-007 object_bought",
+          "entity": "ob-007",
+          "role": {
+            "id": "event/relationrole/object_bought",
+            "label": { "default": "object_bought" }
+          },
+          "source": { "citation": "Urkunde" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was bought by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+bought+by",
+            "label": { "default": "was bought by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-018",
+      "label": { "default": "Drei Meisterstiche: „Ritter, Tod und Teufel“" },
+      "source": { "citation": "Datierung auf Kupferstichen" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-004",
+          "label": "ob-004 object_created",
+          "entity": "ob-004",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Datierung auf Kupferstichen" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-019",
+      "label": { "default": "Drei Meisterstiche: „Hieronymus im Gehäus“" },
+      "source": { "citation": "Datierung auf Kupferstichen" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-005",
+          "label": "ob-005 object_created",
+          "entity": "ob-005",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Datierung auf Kupferstichen" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-020",
+      "label": { "default": "Drei Meisterstiche: „Melancholie“" },
+      "source": { "citation": "Datierung auf Kupferstichen" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-006",
+          "label": "ob-006 object_created",
+          "entity": "ob-006",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Datierung auf Kupferstichen" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-021",
+      "label": { "default": "Portrait von Kaiser Maximilian" },
+      "kind": "creation",
+      "place": "pl-009",
+      "relations": [
+        {
+          "id": "event/relation/ob-009",
+          "label": "ob-009 object_created",
+          "entity": "ob-009",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-022",
+      "label": { "default": "Ehrenpforte für Kaiser Maximilian I." },
+      "source": { "citation": "Korrespondenz, Datierung auf Holzschnitt" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-010",
+          "label": "ob-010 object_created",
+          "entity": "ob-010",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Korrespondenz, Datierung auf Holzschnitt" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-023",
+      "label": { "default": "Beginn der Niederländische Reise" },
+      "source": { "citation": "„Tagebuch“ der NL Reise, Werke" },
+      "kind": "travel",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          },
+          "source": { "citation": "„Tagebuch“ der NL Reise, Werke" }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-024",
+      "label": { "default": "Station auf der Hinreise mit Besuch seines Vetters" },
+      "kind": "travel",
+      "place": "pl-010",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-025",
+      "label": { "default": "Krönung Karl V" },
+      "kind": "event",
+      "place": "pl-011",
+      "relations": [
+        {
+          "id": "event/relation/he-001",
+          "label": "he-001 participated in",
+          "entity": "he-001",
+          "role": {
+            "id": "event/relationrole/participated+in",
+            "label": { "default": "participated in" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-026",
+      "label": { "default": "Hauptstandort: Südtirol" },
+      "kind": "travel",
+      "place": "pl-012",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-027",
+      "label": { "default": "Besuch des Bildhauers Konrat Meit" },
+      "kind": "meeting",
+      "place": "pl-013",
+      "relations": [
+        {
+          "id": "event/relation/pr-006",
+          "label": "pr-006 participated",
+          "entity": "pr-006",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-028",
+      "label": { "default": "Kontakte zu Hofkreisen (1520)" },
+      "kind": "meeting",
+      "place": "pl-014",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-029",
+      "label": { "default": "Hauptstandort" },
+      "kind": "travel",
+      "place": "pl-012",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-030",
+      "label": { "default": "Station auf der Rückreise mit Teilnahme an Empfang Karls V" },
+      "kind": "event",
+      "place": "pl-010",
+      "relations": [
+        {
+          "id": "event/relation/pr-007",
+          "label": "pr-007 participated",
+          "entity": "pr-007",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-031",
+      "label": { "default": "Hauptstandort" },
+      "kind": "travel",
+      "place": "pl-012",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-032",
+      "label": { "default": "Besuch von Bau- und Kunstwerken" },
+      "kind": "travel",
+      "place": "pl-015",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-033",
+      "label": { "default": "Besuch von Bau- und Kunstwerken" },
+      "kind": "travel",
+      "place": "pl-016",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-034",
+      "label": { "default": "Hauptstandort" },
+      "kind": "travel",
+      "place": "pl-012",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-035",
+      "label": { "default": "Besuch Margaretes von Österreich (1521): Südtirol" },
+      "kind": "meeting",
+      "place": "pl-013",
+      "relations": [
+        {
+          "id": "event/relation/pr-008",
+          "label": "pr-008 participated",
+          "entity": "pr-008",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 participated",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/participated",
+            "label": { "default": "participated" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-036",
+      "label": { "default": "Hauptstandort" },
+      "kind": "travel",
+      "place": "pl-012",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-037",
+      "label": { "default": "Porträtauftrag des dänischen Königs Christian II." },
+      "kind": "creation",
+      "place": "pl-014",
+      "relations": [
+        {
+          "id": "event/relation/ob-011",
+          "label": "ob-011 object_created",
+          "entity": "ob-011",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-038",
+      "label": { "default": "Rückkehr nach Nürnberg" },
+      "kind": "travel",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was travelling",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+travelling",
+            "label": { "default": "was travelling" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-039",
+      "label": {
+        "default": "Theoretische Schriften zur Perspektive, menschlichen Proportion und dem Festungsbau in deutscher Sprache: Südtirol"
+      },
+      "source": { "citation": "Kolophone" },
+      "kind": "creation",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/ob-008",
+          "label": "ob-008 object_created",
+          "entity": "ob-008",
+          "role": {
+            "id": "event/relationrole/object_created",
+            "label": { "default": "object_created" }
+          },
+          "source": { "citation": "Kolophone" }
+        },
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 was created by",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/was+created+by",
+            "label": { "default": "was created by" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "macro/ev-040",
+      "label": { "default": "Dürer stirbt in Nürnberg und wird auf dem Johannisfriedhof begraben" },
+      "source": { "citation": "Nachrufe bedeutender Humanisten, Grabplatte" },
+      "kind": "death",
+      "place": "pl-001",
+      "relations": [
+        {
+          "id": "event/relation/pr-001",
+          "label": "pr-001 person_deceased",
+          "entity": "pr-001",
+          "role": {
+            "id": "event/relationrole/person_deceased",
+            "label": { "default": "person_deceased" }
+          },
+          "source": { "citation": "Nachrufe bedeutender Humanisten, Grabplatte" }
+        }
+      ]
+    }
+  ]
+}
