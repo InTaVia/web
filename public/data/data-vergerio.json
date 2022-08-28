@@ -217,7 +217,10 @@
     {
       "id": "E1",
       "label": { "default": "Birth" },
+      "description": "He was born at Capodistria (Koper), Istria, then part of the Venetian Republic IMG[Image of him]",
       "kind": "birth",
+      "startDate": "1498-01-01",
+      "endDate": "1498-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -231,7 +234,10 @@
     {
       "id": "E2",
       "label": { "default": "Death" },
+      "description": "Despite their previous fallout, Trubar is present at Vergerio's deathbed",
       "kind": "death",
+      "startDate": "1565-04-10",
+      "endDate": "1565-04-10",
       "place": "pl-002",
       "relations": [
         {
@@ -254,7 +260,10 @@
     {
       "id": "E3",
       "label": { "default": "Studies" },
+      "description": "He studied jurisprudence in Padua; was awarded the title dr. iuris and poeta laureatus",
       "kind": "educational",
+      "startDate": "1520-01-01",
+      "endDate": "1523",
       "place": "pl-003",
       "relations": [
         {
@@ -268,7 +277,10 @@
     {
       "id": "E4",
       "label": { "default": "Work" },
+      "description": "Worked as a lawyer, the longest period in Venice (5 years)",
       "kind": "professional",
+      "startDate": "1521-01-01",
+      "endDate": "1530",
       "place": "pl-004",
       "relations": [
         {
@@ -309,7 +321,10 @@
     {
       "id": "E5",
       "label": { "default": "Marriage" },
+      "description": "In Venice he met and married Diana Contarini; she died a year later",
       "kind": "family",
+      "startDate": "1526-01-01",
+      "endDate": "1527",
       "place": "pl-005",
       "relations": [
         {
@@ -329,7 +344,10 @@
     {
       "id": "E6",
       "label": { "default": "Papal secretary" },
+      "description": "In 1530 he came to Rome, where he won the trust of Pope Clemens VII",
       "kind": "professional",
+      "startDate": "1532-01-01",
+      "endDate": "1532-01-01",
       "place": "pl-006",
       "relations": [
         {
@@ -352,7 +370,10 @@
     {
       "id": "E7",
       "label": { "default": "Papal nuntio first time" },
+      "description": "Papal nuntio for Pope Clemens VII",
       "kind": "professional",
+      "startDate": "1533-01-01",
+      "endDate": "1534",
       "place": "pl-007",
       "relations": [
         {
@@ -381,7 +402,10 @@
     {
       "id": "E8",
       "label": { "default": "Papal nuntio second time" },
+      "description": "Travelled extensively to German towns in preparations for the ecumenical council under Pope Paul III",
       "kind": "professional",
+      "startDate": "1535-01-01",
+      "endDate": "1535",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -403,7 +427,10 @@
     {
       "id": "E9",
       "label": { "default": "Met Luther" },
+      "description": "He met Martin Luther personally and disliked him",
       "kind": "meeting",
+      "startDate": "1535-01-01",
+      "endDate": "1535",
       "place": "pl-008",
       "relations": [
         {
@@ -429,7 +456,10 @@
     {
       "id": "E10",
       "label": { "default": "Papal committee" },
+      "description": "Participated in the committee for the drafting of the Papal decree on the convening of the ecumenical council (led by Gasparo Contarini) titled Ad dominici gregis curam",
       "kind": "professional",
+      "startDate": "1536-01-01",
+      "endDate": "1536-05",
       "place": "pl-006",
       "relations": [
         {
@@ -452,7 +482,10 @@
     {
       "id": "E11",
       "label": { "default": "Pope in Modruš" },
+      "description": "Was awarded the bishopric in Modruš and Senj for his services as papal nuntio",
       "kind": "award",
+      "startDate": "1536-05-01",
+      "endDate": "1536-09",
       "place": "pl-009",
       "relations": [
         {
@@ -469,7 +502,10 @@
     {
       "id": "E12",
       "label": { "default": "Pope in Iustinopolis" },
+      "description": "Was awarded the bishopric in his hometown of Iustinopolis (Koper) at behest of Emperor Ferdinand; travels extensively to Istria Dalmatia and the East; fallout and legal process against Antonio Elio, secretary to Alessandro Farnese",
       "kind": "award",
+      "startDate": "1536-09-01",
+      "endDate": "1549",
       "place": "pl-001",
       "relations": [
         {
@@ -495,7 +531,10 @@
     {
       "id": "E13",
       "label": { "default": "Travel to French Court" },
+      "description": "Together with Hipolito d'Este travels to French court, has ties to the sister of Francis I, Marguerite of Navarre",
       "kind": "travel",
+      "startDate": "1539-01-01",
+      "endDate": "1539",
       "place": "pl-010",
       "relations": [
         {
@@ -530,7 +569,10 @@
     {
       "id": "E14",
       "label": { "default": "Travel to Worms" },
+      "description": "Travels to Worms (and Haguenau?) to take part in the conference",
       "kind": "travel",
+      "startDate": "1540-01-01",
+      "endDate": "1541",
       "place": "pl-011",
       "relations": [
         {
@@ -547,7 +589,10 @@
     {
       "id": "E15",
       "label": { "default": "Under suspicion" },
+      "description": "Active reformist in his bishopric of Iustinopolis, but also suspected to be introducing Lutheranism to Istria",
       "kind": "event",
+      "startDate": "1541-01-01",
+      "endDate": "1544",
       "place": "pl-001",
       "relations": [
         {
@@ -564,7 +609,10 @@
     {
       "id": "E16",
       "label": { "default": "First charges" },
+      "description": "Officially charged by the Franciscan pater-guardian of Lutheranism and recalled to Rome; moves to Mantua to Cardinal Gonzaga in order to avoid inquisition",
       "kind": "event",
+      "startDate": "1544-01-01",
+      "endDate": "1547",
       "place": "pl-001",
       "relations": [
         {
@@ -590,7 +638,10 @@
     {
       "id": "E17",
       "label": { "default": "Charges dropped" },
+      "description": "Charges dropped; Vergerio wrote his famous Otto difesioni",
       "kind": "event",
+      "startDate": "1547-01-01",
+      "endDate": "1547",
       "place": "pl-005",
       "relations": [
         {
@@ -607,7 +658,10 @@
     {
       "id": "E18",
       "label": { "default": "Charges renewed" },
+      "description": "Charges against Vergerio were renewed in 1548",
       "kind": "event",
+      "startDate": "1548-01-01",
+      "endDate": "1549",
       "place": "pl-012",
       "relations": [
         {
@@ -621,7 +675,10 @@
     {
       "id": "E19",
       "label": { "default": "Move to Switzerland" },
+      "description": "Moves to Vicosoprano",
       "kind": "moving",
+      "startDate": "1548-10-01",
+      "endDate": "1548-10-01",
       "place": "pl-013",
       "relations": [
         {
@@ -635,7 +692,10 @@
     {
       "id": "E20",
       "label": { "default": "Excomunication" },
+      "description": "Pope officially excommunicated Vergerio in absentia",
       "kind": "event",
+      "startDate": "1549-07-03",
+      "endDate": "1549-07-03",
       "place": "pl-006",
       "relations": [
         {
@@ -652,7 +712,10 @@
     {
       "id": "E21",
       "label": { "default": "Protestant priest" },
+      "description": "Protestant priest in Vicosoprano",
       "kind": "professional",
+      "startDate": "1550-01-01",
+      "endDate": "1553",
       "place": "pl-013",
       "relations": [
         {
@@ -666,7 +729,10 @@
     {
       "id": "E22",
       "label": { "default": "Move to Tubingen" },
+      "description": "Moves to Tubingen to become adviser to Christoph, Duke of Württemberg",
       "kind": "moving",
+      "startDate": "1553-11-01",
+      "endDate": "1565",
       "place": "pl-002",
       "relations": [
         {
@@ -695,7 +761,10 @@
     {
       "id": "E23",
       "label": { "default": "Active protestant author and activist" },
+      "description": "Wrote more than 170 works (mostly anti-papal pamphlets); worked closely with P. Trubar who translated the Bible into Slovene; V. also actively promoted the translation of the Bible into Croatian (with little success)",
       "kind": "professional",
+      "startDate": "1555-01-01",
+      "endDate": "1555-01-01",
       "place": "pl-002",
       "relations": [
         {
@@ -718,7 +787,10 @@
     {
       "id": "E24",
       "label": { "default": "Fallout with Trubar" },
+      "description": "An overly ambitious man, V. credited himself with too big a role in the translations of the Bible into vernacular languages",
       "kind": "event",
+      "startDate": "1555-01-01",
+      "endDate": "1555-01-01",
       "place": "pl-002",
       "relations": [
         {
@@ -744,7 +816,10 @@
     {
       "id": "E25",
       "label": { "default": "Christoph's envoy" },
+      "description": "Diplomatic missions to Poland on behalf of Christoph, Duke of Württemberg",
       "kind": "travel",
+      "startDate": "1556-01-01",
+      "endDate": "1556-01-01",
       "place": "pl-014",
       "relations": [
         {
@@ -770,7 +845,10 @@
     {
       "id": "E27",
       "label": { "default": "Damnatio memoriae" },
+      "description": "The inscription in the Cathedral of the Assumption in Koper is partially demolished, probably at behest of the then bishop Antonio Elio",
       "kind": "event",
+      "startDate": "1572-01-01",
+      "endDate": "1572-01-01",
       "place": "pl-001",
       "relations": [
         {

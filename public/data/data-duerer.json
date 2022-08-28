@@ -1137,7 +1137,8 @@
         "macro/ev-023",
         "macro/ev-038",
         "macro/ev-039",
-        "macro/ev-040"
+        "macro/ev-040",
+        "nl/EID001"
       ]
     },
     {
@@ -1211,7 +1212,7 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [50.97340752, 6.951517268] },
-      "events": ["macro/ev-024", "macro/ev-030"]
+      "events": ["macro/ev-024", "macro/ev-030", "nl/EID061", "nl/EID092", "nl/EID156"]
     },
     {
       "id": "pl-011",
@@ -1219,7 +1220,7 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [50.77997052, 6.258080332] },
-      "events": ["macro/ev-025"]
+      "events": ["macro/ev-025", "nl/EID088", "nl/EID090", "nl/EID152"]
     },
     {
       "id": "pl-012",
@@ -1228,7 +1229,19 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [51.30232385, 4.344625773] },
-      "events": ["macro/ev-026", "macro/ev-029", "macro/ev-031", "macro/ev-034", "macro/ev-036"]
+      "events": [
+        "macro/ev-026",
+        "macro/ev-029",
+        "macro/ev-031",
+        "macro/ev-034",
+        "macro/ev-036",
+        "nl/EID077",
+        "nl/EID082",
+        "nl/EID116",
+        "nl/EID129",
+        "nl/EID143",
+        "nl/EID145"
+      ]
     },
     {
       "id": "pl-013",
@@ -1237,7 +1250,7 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [51.02651151, 4.479117295] },
-      "events": ["macro/ev-027", "macro/ev-035"]
+      "events": ["macro/ev-027", "macro/ev-035", "nl/EID078", "nl/EID081", "nl/EID144"]
     },
     {
       "id": "pl-014",
@@ -1246,7 +1259,7 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [50.95522847, 4.319246516] },
-      "events": ["macro/ev-028", "macro/ev-037"]
+      "events": ["macro/ev-028", "macro/ev-037", "nl/EID080", "nl/EID083", "nl/EID146"]
     },
     {
       "id": "pl-015",
@@ -1255,7 +1268,7 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [51.28033424, 3.210779284] },
-      "events": ["macro/ev-032"]
+      "events": ["macro/ev-032", "nl/EID139"]
     },
     {
       "id": "pl-016",
@@ -1264,888 +1277,1015 @@
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
       "geometry": { "type": "Point", "coordinates": [51.14322955, 3.765888767] },
-      "events": ["macro/ev-033"]
+      "events": ["macro/ev-033", "nl/EID141"]
     },
     {
       "id": "pl-018",
       "label": { "default": "Erlangen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.5896744, 11.0119611] }
+      "geometry": { "type": "Point", "coordinates": [49.5896744, 11.0119611] },
+      "events": ["nl/EID002"]
     },
     {
       "id": "pl-019",
       "label": { "default": "Baiersdorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.661089, 11.0345826] }
+      "geometry": { "type": "Point", "coordinates": [49.661089, 11.0345826] },
+      "events": ["nl/EID003"]
     },
     {
       "id": "pl-020",
       "label": { "default": "Forchheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7188374, 11.0679502] }
+      "geometry": { "type": "Point", "coordinates": [49.7188374, 11.0679502] },
+      "events": ["nl/EID004"]
     },
     {
       "id": "pl-021",
       "label": { "default": "Bamberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8988135, 10.9027636] }
+      "geometry": { "type": "Point", "coordinates": [49.8988135, 10.9027636] },
+      "events": ["nl/EID005"]
     },
     {
       "id": "pl-022",
       "label": { "default": "Eltmann" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9673521, 10.6635056] }
+      "geometry": { "type": "Point", "coordinates": [49.9673521, 10.6635056] },
+      "events": ["nl/EID006"]
     },
     {
       "id": "pl-023",
       "label": { "default": "Zeil" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.011546, 10.5922117] }
+      "geometry": { "type": "Point", "coordinates": [50.011546, 10.5922117] },
+      "events": ["nl/EID007"]
     },
     {
       "id": "pl-024",
       "label": { "default": "Hassfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0371575, 10.5151523] }
+      "geometry": { "type": "Point", "coordinates": [50.0371575, 10.5151523] },
+      "events": ["nl/EID008"]
     },
     {
       "id": "pl-025",
       "label": { "default": "Obertheres" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0232513, 10.4478964] }
+      "geometry": { "type": "Point", "coordinates": [50.0232513, 10.4478964] },
+      "events": ["nl/EID009"]
     },
     {
       "id": "pl-026",
       "label": { "default": "Unter-Euerheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0127319, 10.3562007] }
+      "geometry": { "type": "Point", "coordinates": [50.0127319, 10.3562007] },
+      "events": ["nl/EID010"]
     },
     {
       "id": "pl-027",
       "label": { "default": "Mainberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0588956, 10.2898428] }
+      "geometry": { "type": "Point", "coordinates": [50.0588956, 10.2898428] },
+      "events": ["nl/EID011"]
     },
     {
       "id": "pl-028",
       "label": { "default": "Schweinfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0492047, 10.2194228] }
+      "geometry": { "type": "Point", "coordinates": [50.0492047, 10.2194228] },
+      "events": ["nl/EID012"]
     },
     {
       "id": "pl-029",
       "label": { "default": "Volkach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8639895, 10.2309327] }
+      "geometry": { "type": "Point", "coordinates": [49.8639895, 10.2309327] },
+      "events": ["nl/EID013"]
     },
     {
       "id": "pl-030",
       "label": { "default": "Schwarzach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8065839, 10.2292557] }
+      "geometry": { "type": "Point", "coordinates": [49.8065839, 10.2292557] },
+      "events": ["nl/EID014"]
     },
     {
       "id": "pl-031",
       "label": { "default": "Dettelbach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8037832, 10.165725] }
+      "geometry": { "type": "Point", "coordinates": [49.8037832, 10.165725] },
+      "events": ["nl/EID015"]
     },
     {
       "id": "pl-032",
       "label": { "default": "Kitzingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7340805, 10.1473777] }
+      "geometry": { "type": "Point", "coordinates": [49.7340805, 10.1473777] },
+      "events": ["nl/EID016"]
     },
     {
       "id": "pl-033",
       "label": { "default": "Sulzfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7074086, 10.1300955] }
+      "geometry": { "type": "Point", "coordinates": [49.7074086, 10.1300955] },
+      "events": ["nl/EID017"]
     },
     {
       "id": "pl-034",
       "label": { "default": "Marktbreit" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6664618, 10.142098] }
+      "geometry": { "type": "Point", "coordinates": [49.6664618, 10.142098] },
+      "events": ["nl/EID018"]
     },
     {
       "id": "pl-035",
       "label": { "default": "Frickenhausen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6710163, 10.0862845] }
+      "geometry": { "type": "Point", "coordinates": [49.6710163, 10.0862845] },
+      "events": ["nl/EID019"]
     },
     {
       "id": "pl-036",
       "label": { "default": "Ochsenfurt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.6640025, 10.0709014] }
+      "geometry": { "type": "Point", "coordinates": [49.6640025, 10.0709014] },
+      "events": ["nl/EID020"]
     },
     {
       "id": "pl-037",
       "label": { "default": "Eibelstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7255609, 10.0014362] }
+      "geometry": { "type": "Point", "coordinates": [49.7255609, 10.0014362] },
+      "events": ["nl/EID021"]
     },
     {
       "id": "pl-038",
       "label": { "default": "Heidingsfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7626094, 9.943696] }
+      "geometry": { "type": "Point", "coordinates": [49.7626094, 9.943696] },
+      "events": ["nl/EID022"]
     },
     {
       "id": "pl-039",
       "label": { "default": "Würzburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7913044, 9.9533548] }
+      "geometry": { "type": "Point", "coordinates": [49.7913044, 9.9533548] },
+      "events": ["nl/EID023"]
     },
     {
       "id": "pl-040",
       "label": { "default": "Erlenbrunn" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8580258, 9.8435268] }
+      "geometry": { "type": "Point", "coordinates": [49.8580258, 9.8435268] },
+      "events": ["nl/EID024"]
     },
     {
       "id": "pl-041",
       "label": { "default": "Retzbach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9047223, 9.8217594] }
+      "geometry": { "type": "Point", "coordinates": [49.9047223, 9.8217594] },
+      "events": ["nl/EID025"]
     },
     {
       "id": "pl-042",
       "label": { "default": "Zellingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8974807, 9.816277] }
+      "geometry": { "type": "Point", "coordinates": [49.8974807, 9.816277] },
+      "events": ["nl/EID026"]
     },
     {
       "id": "pl-043",
       "label": { "default": "Karlstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9604785, 9.7734603] }
+      "geometry": { "type": "Point", "coordinates": [49.9604785, 9.7734603] },
+      "events": ["nl/EID027"]
     },
     {
       "id": "pl-044",
       "label": { "default": "Höchstätt" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID028"]
     },
     {
       "id": "pl-045",
       "label": { "default": "Lohr" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9892207, 9.5722309] }
+      "geometry": { "type": "Point", "coordinates": [49.9892207, 9.5722309] },
+      "events": ["nl/EID029"]
     },
     {
       "id": "pl-046",
       "label": { "default": "Neuenstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.930843, 9.5706809] }
+      "geometry": { "type": "Point", "coordinates": [49.930843, 9.5706809] },
+      "events": ["nl/EID030"]
     },
     {
       "id": "pl-047",
       "label": { "default": "Rothenfels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8929338, 9.5859552] }
+      "geometry": { "type": "Point", "coordinates": [49.8929338, 9.5859552] },
+      "events": ["nl/EID031"]
     },
     {
       "id": "pl-048",
       "label": { "default": "Heidenfeld" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8454938, 9.6088146] }
+      "geometry": { "type": "Point", "coordinates": [49.8454938, 9.6088146] },
+      "events": ["nl/EID032"]
     },
     {
       "id": "pl-049",
       "label": { "default": "Triffenstein" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8000272, 9.58533] }
+      "geometry": { "type": "Point", "coordinates": [49.8000272, 9.58533] },
+      "events": ["nl/EID033"]
     },
     {
       "id": "pl-050",
       "label": { "default": "Homburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.793323, 9.625462] }
+      "geometry": { "type": "Point", "coordinates": [49.793323, 9.625462] },
+      "events": ["nl/EID034"]
     },
     {
       "id": "pl-051",
       "label": { "default": "Wertheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7586035, 9.5128511] }
+      "geometry": { "type": "Point", "coordinates": [49.7586035, 9.5128511] },
+      "events": ["nl/EID035"]
     },
     {
       "id": "pl-052",
       "label": { "default": "Protzelten" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7802347, 9.3820446] }
+      "geometry": { "type": "Point", "coordinates": [49.7802347, 9.3820446] },
+      "events": ["nl/EID036"]
     },
     {
       "id": "pl-053",
       "label": { "default": "Freudenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7540767, 9.3266483] }
+      "geometry": { "type": "Point", "coordinates": [49.7540767, 9.3266483] },
+      "events": ["nl/EID037"]
     },
     {
       "id": "pl-054",
       "label": { "default": "Miltenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7019294, 9.2559213] }
+      "geometry": { "type": "Point", "coordinates": [49.7019294, 9.2559213] },
+      "events": ["nl/EID038"]
     },
     {
       "id": "pl-055",
       "label": { "default": "Klingenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.7805714, 9.1830957] }
+      "geometry": { "type": "Point", "coordinates": [49.7805714, 9.1830957] },
+      "events": ["nl/EID039"]
     },
     {
       "id": "pl-056",
       "label": { "default": "Wördt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.795558, 9.1547301] }
+      "geometry": { "type": "Point", "coordinates": [49.795558, 9.1547301] },
+      "events": ["nl/EID040"]
     },
     {
       "id": "pl-057",
       "label": { "default": "Obernburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.8381779, 9.1323585] }
+      "geometry": { "type": "Point", "coordinates": [49.8381779, 9.1323585] },
+      "events": ["nl/EID041"]
     },
     {
       "id": "pl-058",
       "label": { "default": "Aschaffenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9806625, 9.1355554] }
+      "geometry": { "type": "Point", "coordinates": [49.9806625, 9.1355554] },
+      "events": ["nl/EID042"]
     },
     {
       "id": "pl-059",
       "label": { "default": "Seligenstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0437013, 8.9711343] }
+      "geometry": { "type": "Point", "coordinates": [50.0437013, 8.9711343] },
+      "events": ["nl/EID043"]
     },
     {
       "id": "pl-060",
       "label": { "default": "Steinheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1138783, 8.9080929] }
+      "geometry": { "type": "Point", "coordinates": [50.1138783, 8.9080929] },
+      "events": ["nl/EID044"]
     },
     {
       "id": "pl-061",
       "label": { "default": "Kesselstadt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.130114, 8.883417] }
+      "geometry": { "type": "Point", "coordinates": [50.130114, 8.883417] },
+      "events": ["nl/EID045"]
     },
     {
       "id": "pl-062",
       "label": { "default": "Frankfurt/Main" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1109221, 8.6821267] }
+      "geometry": { "type": "Point", "coordinates": [50.1109221, 8.6821267] },
+      "events": ["nl/EID046"]
     },
     {
       "id": "pl-063",
       "label": { "default": "Höchst" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.102482, 8.5474571] }
+      "geometry": { "type": "Point", "coordinates": [50.102482, 8.5474571] },
+      "events": ["nl/EID047"]
     },
     {
       "id": "pl-064",
       "label": { "default": "Mainz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9928617, 8.2472526] }
+      "geometry": { "type": "Point", "coordinates": [49.9928617, 8.2472526] },
+      "events": ["nl/EID048"]
     },
     {
       "id": "pl-065",
       "label": { "default": "Eltville" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0289744, 8.119173] }
+      "geometry": { "type": "Point", "coordinates": [50.0289744, 8.119173] },
+      "events": ["nl/EID049"]
     },
     {
       "id": "pl-066",
       "label": { "default": "Rüdesheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9821443, 7.9301124] }
+      "geometry": { "type": "Point", "coordinates": [49.9821443, 7.9301124] },
+      "events": ["nl/EID050"]
     },
     {
       "id": "pl-067",
       "label": { "default": "Ehrenfels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [49.9755016, 7.8802046] }
+      "geometry": { "type": "Point", "coordinates": [49.9755016, 7.8802046] },
+      "events": ["nl/EID051"]
     },
     {
       "id": "pl-068",
       "label": { "default": "Bacharach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0604184, 7.7681136] }
+      "geometry": { "type": "Point", "coordinates": [50.0604184, 7.7681136] },
+      "events": ["nl/EID052"]
     },
     {
       "id": "pl-069",
       "label": { "default": "Kaub" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.0880609, 7.7621116] }
+      "geometry": { "type": "Point", "coordinates": [50.0880609, 7.7621116] },
+      "events": ["nl/EID053"]
     },
     {
       "id": "pl-070",
       "label": { "default": "St. Goar" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.1481961, 7.7060771] }
+      "geometry": { "type": "Point", "coordinates": [50.1481961, 7.7060771] },
+      "events": ["nl/EID054"]
     },
     {
       "id": "pl-071",
       "label": { "default": "Boppard" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.2311996, 7.58853] }
+      "geometry": { "type": "Point", "coordinates": [50.2311996, 7.58853] },
+      "events": ["nl/EID055"]
     },
     {
       "id": "pl-072",
       "label": { "default": "Lahnstein" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.3078274, 7.6093633] }
+      "geometry": { "type": "Point", "coordinates": [50.3078274, 7.6093633] },
+      "events": ["nl/EID056"]
     },
     {
       "id": "pl-073",
       "label": { "default": "Engers" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.4258407, 7.5450198] }
+      "geometry": { "type": "Point", "coordinates": [50.4258407, 7.5450198] },
+      "events": ["nl/EID057"]
     },
     {
       "id": "pl-074",
       "label": { "default": "Andernach" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.426057, 7.4086636] }
+      "geometry": { "type": "Point", "coordinates": [50.426057, 7.4086636] },
+      "events": ["nl/EID058"]
     },
     {
       "id": "pl-075",
       "label": { "default": "Linz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.568141, 7.284787] }
+      "geometry": { "type": "Point", "coordinates": [50.568141, 7.284787] },
+      "events": ["nl/EID059"]
     },
     {
       "id": "pl-076",
       "label": { "default": "Bonn" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.73743, 7.0982068] }
+      "geometry": { "type": "Point", "coordinates": [50.73743, 7.0982068] },
+      "events": ["nl/EID060"]
     },
     {
       "id": "pl-078",
       "label": { "default": "Büsdorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9909824, 6.7085696] }
+      "geometry": { "type": "Point", "coordinates": [50.9909824, 6.7085696] },
+      "events": ["nl/EID062"]
     },
     {
       "id": "pl-079",
       "label": { "default": "Rödingen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.96099, 6.463264] }
+      "geometry": { "type": "Point", "coordinates": [50.96099, 6.463264] },
+      "events": ["nl/EID063"]
     },
     {
       "id": "pl-080",
       "label": { "default": "Freialdenhoven" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9281185, 6.2505591] }
+      "geometry": { "type": "Point", "coordinates": [50.9281185, 6.2505591] },
+      "events": ["nl/EID064"]
     },
     {
       "id": "pl-081",
       "label": { "default": "Frelenberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9401626, 6.1096025] }
+      "geometry": { "type": "Point", "coordinates": [50.9401626, 6.1096025] },
+      "events": ["nl/EID065"]
     },
     {
       "id": "pl-082",
       "label": { "default": "Gangelt" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9927163, 5.997431] }
+      "geometry": { "type": "Point", "coordinates": [50.9927163, 5.997431] },
+      "events": ["nl/EID066"]
     },
     {
       "id": "pl-083",
       "label": { "default": "Süsterseel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9987391, 5.9375637] }
+      "geometry": { "type": "Point", "coordinates": [50.9987391, 5.9375637] },
+      "events": ["nl/EID067"]
     },
     {
       "id": "pl-084",
       "label": { "default": "Sittard" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.0006238, 5.8864788] }
+      "geometry": { "type": "Point", "coordinates": [51.0006238, 5.8864788] },
+      "events": ["nl/EID068"]
     },
     {
       "id": "pl-085",
       "label": { "default": "Stokkem" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.02364, 5.74418] }
+      "geometry": { "type": "Point", "coordinates": [51.02364, 5.74418] },
+      "events": ["nl/EID069"]
     },
     {
       "id": "pl-086",
       "label": { "default": "Martenslinde" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID070"]
     },
     {
       "id": "pl-087",
       "label": { "default": "Heide" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID071"]
     },
     {
       "id": "pl-088",
       "label": { "default": "Stosser" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID072"]
     },
     {
       "id": "pl-089",
       "label": { "default": "Merpeck" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID073"]
     },
     {
       "id": "pl-090",
       "label": { "default": "Brantenmühl" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID074"]
     },
     {
       "id": "pl-091",
       "label": { "default": "Uylenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.13171, 4.76123] }
+      "geometry": { "type": "Point", "coordinates": [51.13171, 4.76123] },
+      "events": ["nl/EID075"]
     },
     {
       "id": "pl-092",
       "label": { "default": "Creutz" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.12922, 4.70835] }
+      "geometry": { "type": "Point", "coordinates": [51.12922, 4.70835] },
+      "events": ["nl/EID076"]
     },
     {
       "id": "pl-095",
       "label": { "default": "Vilvoorde" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.926454, 4.4258375] }
+      "geometry": { "type": "Point", "coordinates": [50.926454, 4.4258375] },
+      "events": ["nl/EID079"]
     },
     {
       "id": "pl-097",
       "label": { "default": "Maastricht" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8513682, 5.6909725] }
+      "geometry": { "type": "Point", "coordinates": [50.8513682, 5.6909725] },
+      "events": ["nl/EID086", "nl/EID151"]
     },
     {
       "id": "pl-098",
       "label": { "default": "Gulpe" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8155841, 5.8914093] }
+      "geometry": { "type": "Point", "coordinates": [50.8155841, 5.8914093] },
+      "events": ["nl/EID087"]
     },
     {
       "id": "pl-100",
       "label": { "default": "Jülich" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9224226, 6.3639119] }
+      "geometry": { "type": "Point", "coordinates": [50.9224226, 6.3639119] },
+      "events": ["nl/EID089", "nl/EID154"]
     },
     {
       "id": "pl-101",
       "label": { "default": "Düren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8037183, 6.4793683] }
+      "geometry": { "type": "Point", "coordinates": [50.8037183, 6.4793683] },
+      "events": ["nl/EID091"]
     },
     {
       "id": "pl-102",
       "label": { "default": "Zons" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.123171, 6.848458] }
+      "geometry": { "type": "Point", "coordinates": [51.123171, 6.848458] },
+      "events": ["nl/EID093"]
     },
     {
       "id": "pl-103",
       "label": { "default": "Neuss" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2041968, 6.6879511] }
+      "geometry": { "type": "Point", "coordinates": [51.2041968, 6.6879511] },
+      "events": ["nl/EID094"]
     },
     {
       "id": "pl-104",
       "label": { "default": "Stain" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID095"]
     },
     {
       "id": "pl-105",
       "label": { "default": "Düsseldorf" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2277411, 6.7734556] }
+      "geometry": { "type": "Point", "coordinates": [51.2277411, 6.7734556] },
+      "events": ["nl/EID096"]
     },
     {
       "id": "pl-106",
       "label": { "default": "Kaiserswerth" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2977265, 6.7380299] }
+      "geometry": { "type": "Point", "coordinates": [51.2977265, 6.7380299] },
+      "events": ["nl/EID097"]
     },
     {
       "id": "pl-107",
       "label": { "default": "Duisburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4344079, 6.7623293] }
+      "geometry": { "type": "Point", "coordinates": [51.4344079, 6.7623293] },
+      "events": ["nl/EID098"]
     },
     {
       "id": "pl-108",
       "label": { "default": "Angerort" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.3791309, 6.7269134] }
+      "geometry": { "type": "Point", "coordinates": [51.3791309, 6.7269134] },
+      "events": ["nl/EID099"]
     },
     {
       "id": "pl-109",
       "label": { "default": "Ruhrort" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4499282, 6.7483238] }
+      "geometry": { "type": "Point", "coordinates": [51.4499282, 6.7483238] },
+      "events": ["nl/EID100"]
     },
     {
       "id": "pl-110",
       "label": { "default": "Orsoy" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5233389, 6.6876663] }
+      "geometry": { "type": "Point", "coordinates": [51.5233389, 6.6876663] },
+      "events": ["nl/EID101"]
     },
     {
       "id": "pl-111",
       "label": { "default": "Rheinberg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5460798, 6.5899097] }
+      "geometry": { "type": "Point", "coordinates": [51.5460798, 6.5899097] },
+      "events": ["nl/EID102"]
     },
     {
       "id": "pl-112",
       "label": { "default": "Wesel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6643079, 6.6295679] }
+      "geometry": { "type": "Point", "coordinates": [51.6643079, 6.6295679] },
+      "events": ["nl/EID103"]
     },
     {
       "id": "pl-113",
       "label": { "default": "Rees" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.7670727, 6.4015065] }
+      "geometry": { "type": "Point", "coordinates": [51.7670727, 6.4015065] },
+      "events": ["nl/EID103a"]
     },
     {
       "id": "pl-114",
       "label": { "default": "Emmerich" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8395929, 6.2517303] }
+      "geometry": { "type": "Point", "coordinates": [51.8395929, 6.2517303] },
+      "events": ["nl/EID104"]
     },
     {
       "id": "pl-115",
       "label": { "default": "Tholhus" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.852073, 6.1032046] }
+      "geometry": { "type": "Point", "coordinates": [51.852073, 6.1032046] },
+      "events": ["nl/EID105"]
     },
     {
       "id": "pl-116",
       "label": { "default": "Nijmegen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8448837, 5.8428281] }
+      "geometry": { "type": "Point", "coordinates": [51.8448837, 5.8428281] },
+      "events": ["nl/EID106"]
     },
     {
       "id": "pl-117",
       "label": { "default": "Tiel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8876176, 5.4278765] }
+      "geometry": { "type": "Point", "coordinates": [51.8876176, 5.4278765] },
+      "events": ["nl/EID107"]
     },
     {
       "id": "pl-118",
       "label": { "default": "Heerewaarden" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8173181, 5.3930495] }
+      "geometry": { "type": "Point", "coordinates": [51.8173181, 5.3930495] },
+      "events": ["nl/EID108"]
     },
     {
       "id": "pl-119",
       "label": { "default": "(Zalt-)Bommel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.8135539, 5.2507733] }
+      "geometry": { "type": "Point", "coordinates": [51.8135539, 5.2507733] },
+      "events": ["nl/EID109"]
     },
     {
       "id": "pl-120",
       "label": { "default": "s'Hertogenbosch" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6978162, 5.3036748] }
+      "geometry": { "type": "Point", "coordinates": [51.6978162, 5.3036748] },
+      "events": ["nl/EID110"]
     },
     {
       "id": "pl-121",
       "label": { "default": "Oisterwijk" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5654243, 5.2030282] }
+      "geometry": { "type": "Point", "coordinates": [51.5654243, 5.2030282] },
+      "events": ["nl/EID111"]
     },
     {
       "id": "pl-122",
       "label": { "default": "Tilburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.560596, 5.0919143] }
+      "geometry": { "type": "Point", "coordinates": [51.560596, 5.0919143] },
+      "events": ["nl/EID112"]
     },
     {
       "id": "pl-123",
       "label": { "default": "Baarle" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4451366, 4.9295231] }
+      "geometry": { "type": "Point", "coordinates": [51.4451366, 4.9295231] },
+      "events": ["nl/EID113"]
     },
     {
       "id": "pl-124",
       "label": { "default": "Hoogstraten" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4015935, 4.7615606] }
+      "geometry": { "type": "Point", "coordinates": [51.4015935, 4.7615606] },
+      "events": ["nl/EID114"]
     },
     {
       "id": "pl-125",
       "label": { "default": "Harscht" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.3497216, 4.6380512] }
+      "geometry": { "type": "Point", "coordinates": [51.3497216, 4.6380512] },
+      "events": ["nl/EID115"]
     },
     {
       "id": "pl-126",
       "label": { "default": "Bergen op Zoom" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] }
+      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] },
+      "events": ["nl/EID117", "nl/EID128"]
     },
     {
       "id": "pl-127",
       "label": { "default": "Sea between Bergen op Zoom and Goes" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] }
+      "geometry": { "type": "Point", "coordinates": [51.4945758, 4.2871622] },
+      "events": ["nl/EID118"]
     },
     {
       "id": "pl-128",
       "label": { "default": "Goes" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5046455, 3.8911304] }
+      "geometry": { "type": "Point", "coordinates": [51.5046455, 3.8911304] },
+      "events": ["nl/EID119"]
     },
     {
       "id": "pl-129",
       "label": { "default": "Arnemuiden" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5011231, 3.6759015] }
+      "geometry": { "type": "Point", "coordinates": [51.5011231, 3.6759015] },
+      "events": ["nl/EID120", "nl/EID124"]
     },
     {
       "id": "pl-131",
       "label": { "default": "Wolfersdijk" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5299685, 3.8218161] }
+      "geometry": { "type": "Point", "coordinates": [51.5299685, 3.8218161] },
+      "events": ["nl/EID122"]
     },
     {
       "id": "pl-132",
       "label": { "default": "Kortgene" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5578335, 3.8031359] }
+      "geometry": { "type": "Point", "coordinates": [51.5578335, 3.8031359] },
+      "events": ["nl/EID123"]
     },
     {
       "id": "pl-133",
       "label": { "default": "Middelburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.4987962, 3.610998] }
+      "geometry": { "type": "Point", "coordinates": [51.4987962, 3.610998] },
+      "events": ["nl/EID125"]
     },
     {
       "id": "pl-134",
       "label": { "default": "Veere" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.5482937, 3.6660061] }
+      "geometry": { "type": "Point", "coordinates": [51.5482937, 3.6660061] },
+      "events": ["nl/EID126"]
     },
     {
       "id": "pl-135",
       "label": { "default": "Zierkzee" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.6501218, 3.9184977] }
+      "geometry": { "type": "Point", "coordinates": [51.6501218, 3.9184977] },
+      "events": ["nl/EID127"]
     },
     {
       "id": "pl-136",
       "label": { "default": "Beveren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2133887, 4.2579607] }
+      "geometry": { "type": "Point", "coordinates": [51.2133887, 4.2579607] },
+      "events": ["nl/EID130"]
     },
     {
       "id": "pl-137",
       "label": { "default": "Prasten" },
       "kind": "place",
-      "type": { "id": "city", "label": { "default": "city" } }
+      "type": { "id": "city", "label": { "default": "city" } },
+      "events": ["nl/EID131"]
     },
     {
       "id": "pl-139",
       "label": { "default": "Sint-Pauwels" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.193303, 4.0977458] }
+      "geometry": { "type": "Point", "coordinates": [51.193303, 4.0977458] },
+      "events": ["nl/EID133"]
     },
     {
       "id": "pl-140",
       "label": { "default": "Caudenborm" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.17627, 3.97467] }
+      "geometry": { "type": "Point", "coordinates": [51.17627, 3.97467] },
+      "events": ["nl/EID134"]
     },
     {
       "id": "pl-141",
       "label": { "default": "Kalve (Calve)" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.17285, 3.87799] }
+      "geometry": { "type": "Point", "coordinates": [51.17285, 3.87799] },
+      "events": ["nl/EID135"]
     },
     {
       "id": "pl-142",
       "label": { "default": "Ertvelde" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1787632, 3.7466865] }
+      "geometry": { "type": "Point", "coordinates": [51.1787632, 3.7466865] },
+      "events": ["nl/EID136"]
     },
     {
       "id": "pl-143",
       "label": { "default": "Eeklo" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1851666, 3.564071] }
+      "geometry": { "type": "Point", "coordinates": [51.1851666, 3.564071] },
+      "events": ["nl/EID137"]
     },
     {
       "id": "pl-144",
       "label": { "default": "Maldegem" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.2090352, 3.4487502] }
+      "geometry": { "type": "Point", "coordinates": [51.2090352, 3.4487502] },
+      "events": ["nl/EID138"]
     },
     {
       "id": "pl-146",
       "label": { "default": "Ursel" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [51.1294092, 3.4856153] }
+      "geometry": { "type": "Point", "coordinates": [51.1294092, 3.4856153] },
+      "events": ["nl/EID140"]
     },
     {
       "id": "pl-149",
       "label": { "default": "Leuven" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8822871, 4.7137645] }
+      "geometry": { "type": "Point", "coordinates": [50.8822871, 4.7137645] },
+      "events": ["nl/EID147"]
     },
     {
       "id": "pl-150",
       "label": { "default": "Thienen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8096628, 4.9371045] }
+      "geometry": { "type": "Point", "coordinates": [50.8096628, 4.9371045] },
+      "events": ["nl/EID148"]
     },
     {
       "id": "pl-151",
       "label": { "default": "St. Truyen" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.818835, 5.1819977] }
+      "geometry": { "type": "Point", "coordinates": [50.818835, 5.1819977] },
+      "events": ["nl/EID149"]
     },
     {
       "id": "pl-152",
       "label": { "default": "Tongeren" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.7799815, 5.4601943] }
+      "geometry": { "type": "Point", "coordinates": [50.7799815, 5.4601943] },
+      "events": ["nl/EID150"]
     },
     {
       "id": "pl-153",
       "label": { "default": "Atenburg" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.8948824, 6.2871221] }
+      "geometry": { "type": "Point", "coordinates": [50.8948824, 6.2871221] },
+      "events": ["nl/EID153"]
     },
     {
       "id": "pl-154",
       "label": { "default": "Bergheim" },
       "kind": "place",
       "type": { "id": "city", "label": { "default": "city" } },
-      "geometry": { "type": "Point", "coordinates": [50.9451945, 6.6555022] }
+      "geometry": { "type": "Point", "coordinates": [50.9451945, 6.6555022] },
+      "events": ["nl/EID155"]
     }
   ],
   "entityEvents": [
@@ -2153,6 +2293,8 @@
       "id": "cho/ev-001",
       "label": { "default": "Arnold von Seligenstadt" },
       "kind": "creation",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
       "relations": [
         {
           "id": "event/relation/OID001",
@@ -2184,6 +2326,8 @@
       "id": "cho/ev-002",
       "label": { "default": "Man with an oar" },
       "kind": "creation",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
       "relations": [
         {
           "id": "event/relation/OID002",
@@ -2215,6 +2359,8 @@
       "id": "cho/ev-003",
       "label": { "default": "Tower of the Hof van Liere in Antwerp" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID003",
@@ -2255,6 +2401,8 @@
       "id": "cho/ev-004",
       "label": { "default": "Portrait drawing of Lazarus Ravensburger" },
       "kind": "creation",
+      "startDate": "1520-12-14",
+      "endDate": "1520-12-14",
       "relations": [
         {
           "id": "event/relation/OID004",
@@ -2295,6 +2443,8 @@
       "id": "cho/ev-005",
       "label": { "default": "portrait drawing of Jobst Planckfeldt" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID005",
@@ -2326,6 +2476,8 @@
       "id": "cho/ev-006",
       "label": { "default": "portrait drawing of Felix Hungersperg" },
       "kind": "creation",
+      "startDate": "1520-08-12",
+      "endDate": "1520-08-12",
       "relations": [
         {
           "id": "event/relation/OID006",
@@ -2357,6 +2509,8 @@
       "id": "cho/ev-007",
       "label": { "default": "A goldsmith from Mechelen" },
       "kind": "creation",
+      "startDate": "1520-08-26",
+      "endDate": "1520-08-26",
       "relations": [
         {
           "id": "event/relation/OID007",
@@ -2388,6 +2542,8 @@
       "id": "cho/ev-008",
       "label": { "default": "A woman in Brussels" },
       "kind": "creation",
+      "startDate": "1520-08-28",
+      "endDate": "1520-08-28",
       "relations": [
         {
           "id": "event/relation/OID008",
@@ -2419,6 +2575,8 @@
       "id": "cho/ev-009",
       "label": { "default": "Portrait of Hans Pfaffroth von Danzig" },
       "kind": "creation",
+      "startDate": "1520-08-18",
+      "endDate": "1520-08-18",
       "relations": [
         {
           "id": "event/relation/OID009",
@@ -2450,6 +2608,8 @@
       "id": "cho/ev-010",
       "label": { "default": "Double portrait of Paul Topler and Martin Pfinzing" },
       "kind": "creation",
+      "startDate": "1520-10-10",
+      "endDate": "1520-10-10",
       "relations": [
         {
           "id": "event/relation/OID010",
@@ -2481,6 +2641,8 @@
       "id": "cho/ev-011",
       "label": { "default": "Aachen Cathedral" },
       "kind": "creation",
+      "startDate": "1520-10-20",
+      "endDate": "1520-10-20",
       "relations": [
         {
           "id": "event/relation/OID011",
@@ -2512,6 +2674,8 @@
       "id": "cho/ev-012",
       "label": { "default": "Town Hall in Aachen" },
       "kind": "creation",
+      "startDate": "1520-10-20",
+      "endDate": "1520-10-20",
       "relations": [
         {
           "id": "event/relation/OID012",
@@ -2543,6 +2707,8 @@
       "id": "cho/ev-013",
       "label": { "default": "Portrait of Caspar Sturm" },
       "kind": "creation",
+      "startDate": "1520-10-20",
+      "endDate": "1520-10-20",
       "relations": [
         {
           "id": "event/relation/OID013",
@@ -2583,6 +2749,8 @@
       "id": "cho/ev-014",
       "label": { "default": "Riverbank (Lower Rhine Valley?)" },
       "kind": "creation",
+      "startDate": "1520-11-18",
+      "endDate": "1520-11-18",
       "relations": [
         {
           "id": "event/relation/OID014",
@@ -2623,6 +2791,8 @@
       "id": "cho/ev-015",
       "label": { "default": "Study of Floor Tiles and Head of Dog" },
       "kind": "creation",
+      "startDate": "1520-10-20",
+      "endDate": "1520-10-20",
       "relations": [
         {
           "id": "event/relation/OID015",
@@ -2654,6 +2824,8 @@
       "id": "cho/ev-016",
       "label": { "default": "A girl from Cologne" },
       "kind": "creation",
+      "startDate": "1520-11-01",
+      "endDate": "1520-11-01",
       "relations": [
         {
           "id": "event/relation/OID016",
@@ -2694,6 +2866,8 @@
       "id": "cho/ev-017",
       "label": { "default": "Agnes Dürer, near Boppard on the Rhine" },
       "kind": "creation",
+      "startDate": "1521-07-20",
+      "endDate": "1521-07-20",
       "relations": [
         {
           "id": "event/relation/OID017",
@@ -2734,6 +2908,8 @@
       "id": "cho/ev-018",
       "label": { "default": "Bergen op Zoom" },
       "kind": "creation",
+      "startDate": "1520-12-15",
+      "endDate": "1520-12-15",
       "relations": [
         {
           "id": "event/relation/OID018",
@@ -2765,6 +2941,8 @@
       "id": "cho/ev-019",
       "label": { "default": "Two Women from Bergen and from Goes" },
       "kind": "creation",
+      "startDate": "1520-12-15",
+      "endDate": "1520-12-15",
       "relations": [
         {
           "id": "event/relation/OID019",
@@ -2796,6 +2974,8 @@
       "id": "cho/ev-020",
       "label": { "default": "Busts of a young and an old woman" },
       "kind": "creation",
+      "startDate": "1520-12-15",
+      "endDate": "1520-12-15",
       "relations": [
         {
           "id": "event/relation/OID020",
@@ -2827,6 +3007,8 @@
       "id": "cho/ev-021",
       "label": { "default": "Choir of the Groote Kerk in Bergen op Zoom" },
       "kind": "creation",
+      "startDate": "1520-12-15",
+      "endDate": "1520-12-15",
       "relations": [
         {
           "id": "event/relation/OID021",
@@ -2858,6 +3040,8 @@
       "id": "cho/ev-022",
       "label": { "default": "Parade Horse" },
       "kind": "creation",
+      "startDate": "1520-08-19",
+      "endDate": "1520-08-19",
       "relations": [
         {
           "id": "event/relation/OID022",
@@ -2889,6 +3073,8 @@
       "id": "cho/ev-023",
       "label": { "default": "Table and two jars" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID023",
@@ -2920,6 +3106,8 @@
       "id": "cho/ev-024",
       "label": { "default": "A suitcase and a stand" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID024",
@@ -2951,6 +3139,8 @@
       "id": "cho/ev-025",
       "label": { "default": "A woman's head" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID025",
@@ -2991,6 +3181,8 @@
       "id": "cho/ev-026",
       "label": { "default": "A crowned young woman" },
       "kind": "creation",
+      "startDate": "1520-08-19",
+      "endDate": "1520-08-19",
       "relations": [
         {
           "id": "event/relation/OID026",
@@ -3031,6 +3223,8 @@
       "id": "cho/ev-027",
       "label": { "default": "Two Girls in a Netherlandish dress" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID027",
@@ -3062,6 +3256,8 @@
       "id": "cho/ev-028",
       "label": { "default": "Two women in festive attire" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID028",
@@ -3093,6 +3289,8 @@
       "id": "cho/ev-029",
       "label": { "default": "Lying dog" },
       "kind": "creation",
+      "startDate": "1520-10-10",
+      "endDate": "1520-10-10",
       "relations": [
         {
           "id": "event/relation/OID029",
@@ -3124,6 +3322,8 @@
       "id": "cho/ev-030",
       "label": { "default": "A 24 year old Man" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID030",
@@ -3164,6 +3364,8 @@
       "id": "cho/ev-031",
       "label": { "default": "St. Michael Monastery Antwerp" },
       "kind": "creation",
+      "startDate": "1520-08-16",
+      "endDate": "1520-08-16",
       "relations": [
         {
           "id": "event/relation/OID031",
@@ -3204,6 +3406,8 @@
       "id": "cho/ev-032",
       "label": { "default": "Bishop enthroned" },
       "kind": "creation",
+      "startDate": "1520-08-16",
+      "endDate": "1520-08-16",
       "relations": [
         {
           "id": "event/relation/OID032",
@@ -3244,6 +3448,8 @@
       "id": "cho/ev-033",
       "label": { "default": "Man with fur hat" },
       "kind": "creation",
+      "startDate": "1520-11-22",
+      "endDate": "1520-11-22",
       "relations": [
         {
           "id": "event/relation/OID033",
@@ -3284,6 +3490,8 @@
       "id": "cho/ev-034",
       "label": { "default": "lying dog and study of dog head" },
       "kind": "creation",
+      "startDate": "1520-08-04",
+      "endDate": "1520-08-04",
       "relations": [
         {
           "id": "event/relation/OID034",
@@ -3315,6 +3523,8 @@
       "id": "cho/ev-035",
       "label": { "default": "Small canon" },
       "kind": "creation",
+      "startDate": "1520-08-19",
+      "endDate": "1520-08-19",
       "relations": [
         {
           "id": "event/relation/OID035",
@@ -3346,6 +3556,8 @@
       "id": "cho/ev-036",
       "label": { "default": "Lion with head upright" },
       "kind": "creation",
+      "startDate": "1521-04-10",
+      "endDate": "1521-04-10",
       "relations": [
         {
           "id": "event/relation/OID036",
@@ -3377,6 +3589,8 @@
       "id": "cho/ev-037",
       "label": { "default": "Two lions" },
       "kind": "creation",
+      "startDate": "1521-04-10",
+      "endDate": "1521-04-10",
       "relations": [
         {
           "id": "event/relation/OID037",
@@ -3408,6 +3622,8 @@
       "id": "cho/ev-038",
       "label": { "default": "Rheinfels Castle" },
       "kind": "creation",
+      "startDate": "1521-07-21",
+      "endDate": "1521-07-21",
       "relations": [
         {
           "id": "event/relation/OID038",
@@ -3448,6 +3664,8 @@
       "id": "cho/ev-039",
       "label": { "default": "Castle (Frankonian?)" },
       "kind": "creation",
+      "startDate": "1521-07-28",
+      "endDate": "1521-07-28",
       "relations": [
         {
           "id": "event/relation/OID039",
@@ -3488,6 +3706,8 @@
       "id": "cho/ev-040",
       "label": { "default": "Portrait of Max Ulstat" },
       "kind": "creation",
+      "startDate": "1520-12-07",
+      "endDate": "1520-12-07",
       "relations": [
         {
           "id": "event/relation/OID040",
@@ -3528,6 +3748,8 @@
       "id": "cho/ev-041",
       "label": { "default": "Pretty young woman from Antwerp" },
       "kind": "creation",
+      "startDate": "1521-03-01",
+      "endDate": "1521-03-01",
       "relations": [
         {
           "id": "event/relation/OID041",
@@ -3568,6 +3790,8 @@
       "id": "cho/ev-042",
       "label": { "default": "Middle aged man (from Antwerp?)" },
       "kind": "creation",
+      "startDate": "1521-03-01",
+      "endDate": "1521-03-01",
       "relations": [
         {
           "id": "event/relation/OID042",
@@ -3608,6 +3832,8 @@
       "id": "cho/ev-043",
       "label": { "default": "Krahnenberg near Andernach" },
       "kind": "creation",
+      "startDate": "1521-07-20",
+      "endDate": "1521-07-20",
       "relations": [
         {
           "id": "event/relation/OID043",
@@ -3648,6 +3874,8 @@
       "id": "cho/ev-044",
       "label": { "default": "93 year old man" },
       "kind": "creation",
+      "startDate": "1521-01-16",
+      "endDate": "1521-01-16",
       "relations": [
         {
           "id": "event/relation/OID044",
@@ -3679,6 +3907,8 @@
       "id": "cho/ev-045",
       "label": { "default": "Study of Left Arm" },
       "kind": "creation",
+      "startDate": "1521-01-16",
+      "endDate": "1521-01-16",
       "relations": [
         {
           "id": "event/relation/OID045",
@@ -3710,6 +3940,8 @@
       "id": "cho/ev-046",
       "label": { "default": "Bookrest with Books and Box" },
       "kind": "creation",
+      "startDate": "1521-01-16",
+      "endDate": "1521-01-16",
       "relations": [
         {
           "id": "event/relation/OID046",
@@ -3741,6 +3973,8 @@
       "id": "cho/ev-047",
       "label": { "default": "Skull" },
       "kind": "creation",
+      "startDate": "1521-01-16",
+      "endDate": "1521-01-16",
       "relations": [
         {
           "id": "event/relation/OID047",
@@ -3772,6 +4006,8 @@
       "id": "cho/ev-048",
       "label": { "default": "Christ praying in the Garden Getsemane" },
       "kind": "creation",
+      "startDate": "1521-05-16",
+      "endDate": "1521-05-16",
       "relations": [
         {
           "id": "event/relation/OID048",
@@ -3803,6 +4039,8 @@
       "id": "cho/ev-049",
       "label": { "default": "Burial of Christ" },
       "kind": "creation",
+      "startDate": "1521-05-16",
+      "endDate": "1521-05-16",
       "relations": [
         {
           "id": "event/relation/OID049",
@@ -3834,6 +4072,8 @@
       "id": "cho/ev-050",
       "label": { "default": "Burial of Christ" },
       "kind": "creation",
+      "startDate": "1521-05-16",
+      "endDate": "1521-05-16",
       "relations": [
         {
           "id": "event/relation/OID050",
@@ -3865,6 +4105,8 @@
       "id": "cho/ev-051",
       "label": { "default": "Study sheet with 9 figures of St. Christopher" },
       "kind": "creation",
+      "startDate": "1521-05-22",
+      "endDate": "1521-05-22",
       "relations": [
         {
           "id": "event/relation/OID051",
@@ -3896,6 +4138,8 @@
       "id": "cho/ev-052",
       "label": { "default": "Christ praying alone in the Garden Getsemane" },
       "kind": "creation",
+      "startDate": "1521-05-16",
+      "endDate": "1521-05-16",
       "relations": [
         {
           "id": "event/relation/OID052",
@@ -3927,6 +4171,8 @@
       "id": "cho/ev-053",
       "label": { "default": "Portrait of a young man" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID053",
@@ -3958,6 +4204,8 @@
       "id": "cho/ev-054",
       "label": { "default": "Portrait of Erasmus of Rotterdam" },
       "kind": "creation",
+      "startDate": "1520-08-27",
+      "endDate": "1520-08-27",
       "relations": [
         {
           "id": "event/relation/OID054",
@@ -3989,6 +4237,8 @@
       "id": "cho/ev-055",
       "label": { "default": "Portrait of a young man" },
       "kind": "creation",
+      "startDate": "1520-08-10",
+      "endDate": "1520-08-10",
       "relations": [
         {
           "id": "event/relation/OID055",
@@ -4020,6 +4270,8 @@
       "id": "cho/ev-056",
       "label": { "default": "Portrait of a young man (formerly Bernard van Orley?)." },
       "kind": "creation",
+      "startDate": "1521-05-01",
+      "endDate": "1521-05-01",
       "relations": [
         {
           "id": "event/relation/OID056",
@@ -4051,6 +4303,8 @@
       "id": "cho/ev-057",
       "label": { "default": "Portrait of a man" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID057",
@@ -4082,6 +4336,8 @@
       "id": "cho/ev-058",
       "label": { "default": "Portrait of a man (formerly Lucas van Leyden)" },
       "kind": "creation",
+      "startDate": "1521-05-01",
+      "endDate": "1521-05-01",
       "relations": [
         {
           "id": "event/relation/OID058",
@@ -4113,6 +4369,8 @@
       "id": "cho/ev-059",
       "label": { "default": "Portrait of a young man (Barent van Orley?)" },
       "kind": "creation",
+      "startDate": "1521-05-01",
+      "endDate": "1521-05-01",
       "relations": [
         {
           "id": "event/relation/OID059",
@@ -4144,6 +4402,8 @@
       "id": "cho/ev-060",
       "label": { "default": "portrait of a man (formerly Joachim Patinir)" },
       "kind": "creation",
+      "startDate": "1521-05-01",
+      "endDate": "1521-05-01",
       "relations": [
         {
           "id": "event/relation/OID060",
@@ -4175,6 +4435,8 @@
       "id": "cho/ev-061",
       "label": { "default": "Portrait of a man" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID061",
@@ -4206,6 +4468,8 @@
       "id": "cho/ev-062",
       "label": { "default": "Portrait Rodrigo d'Almada" },
       "kind": "creation",
+      "startDate": "1521-03-20",
+      "endDate": "1521-03-20",
       "relations": [
         {
           "id": "event/relation/OID062",
@@ -4237,6 +4501,8 @@
       "id": "cho/ev-063",
       "label": { "default": "portrait of Agnes Dürer in a Netherlandish costume" },
       "kind": "creation",
+      "startDate": "1521-04-20",
+      "endDate": "1521-04-20",
       "relations": [
         {
           "id": "event/relation/OID063",
@@ -4268,6 +4534,8 @@
       "id": "cho/ev-064",
       "label": { "default": "Christian II of Denmark" },
       "kind": "creation",
+      "startDate": "1521-07-02",
+      "endDate": "1521-07-02",
       "relations": [
         {
           "id": "event/relation/OID064",
@@ -4299,6 +4567,8 @@
       "id": "cho/ev-065",
       "label": { "default": "Lukas van Leyden" },
       "kind": "creation",
+      "startDate": "1521-06-08",
+      "endDate": "1521-06-08",
       "relations": [
         {
           "id": "event/relation/OID065",
@@ -4330,6 +4600,8 @@
       "id": "cho/ev-066",
       "label": { "default": "Portrait of a man (Sebastian Brant?)" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID066",
@@ -4361,6 +4633,8 @@
       "id": "cho/ev-067",
       "label": { "default": "Portrait of the Slave Katherina" },
       "kind": "creation",
+      "startDate": "1521-03-20",
+      "endDate": "1521-03-20",
       "relations": [
         {
           "id": "event/relation/OID067",
@@ -4392,6 +4666,8 @@
       "id": "cho/ev-068",
       "label": { "default": "Portrait of Felix Hungersperg kneeling" },
       "kind": "creation",
+      "startDate": "1520-08-15",
+      "endDate": "1520-08-15",
       "relations": [
         {
           "id": "event/relation/OID068",
@@ -4423,6 +4699,8 @@
       "id": "cho/ev-069",
       "label": { "default": "Woman in a Netherlandish dress" },
       "kind": "creation",
+      "startDate": "1521-01-05",
+      "endDate": "1521-01-05",
       "relations": [
         {
           "id": "event/relation/OID069",
@@ -4454,6 +4732,8 @@
       "id": "cho/ev-070",
       "label": { "default": "Port of Antwerp" },
       "kind": "creation",
+      "startDate": "1520-08-06",
+      "endDate": "1520-08-06",
       "relations": [
         {
           "id": "event/relation/OID070",
@@ -4485,6 +4765,8 @@
       "id": "cho/ev-071",
       "label": { "default": "Park of Royal Palace in Brussels" },
       "kind": "creation",
+      "startDate": "1520-08-27",
+      "endDate": "1520-08-27",
       "relations": [
         {
           "id": "event/relation/OID071",
@@ -4516,6 +4798,8 @@
       "id": "cho/ev-072",
       "label": { "default": "Head of a walrus" },
       "kind": "creation",
+      "startDate": "1521-01-05",
+      "endDate": "1521-01-05",
       "relations": [
         {
           "id": "event/relation/OID072",
@@ -4547,6 +4831,8 @@
       "id": "cho/ev-073",
       "label": { "default": "Lion" },
       "kind": "creation",
+      "startDate": "1521-04-12",
+      "endDate": "1521-04-12",
       "relations": [
         {
           "id": "event/relation/OID073",
@@ -4578,6 +4864,8 @@
       "id": "cho/ev-074",
       "label": { "default": "Irish warriors and peasants" },
       "kind": "creation",
+      "startDate": "1521-02-01",
+      "endDate": "1521-02-01",
       "relations": [
         {
           "id": "event/relation/OID074",
@@ -4609,6 +4897,8 @@
       "id": "cho/ev-075",
       "label": { "default": "Woman in a Livland dress" },
       "kind": "creation",
+      "startDate": "1521-02-01",
+      "endDate": "1521-02-01",
       "relations": [
         {
           "id": "event/relation/OID075",
@@ -4640,6 +4930,8 @@
       "id": "cho/ev-076",
       "label": { "default": "Three Women in Livland dresses" },
       "kind": "creation",
+      "startDate": "1521-02-01",
+      "endDate": "1521-02-01",
       "relations": [
         {
           "id": "event/relation/OID076",
@@ -4671,6 +4963,8 @@
       "id": "cho/ev-077",
       "label": { "default": "Two Women in Livland dresses" },
       "kind": "creation",
+      "startDate": "1521-02-01",
+      "endDate": "1521-02-01",
       "relations": [
         {
           "id": "event/relation/OID077",
@@ -4702,6 +4996,8 @@
       "id": "cho/ev-078",
       "label": { "default": "Sketches for coat of arms and lamp" },
       "kind": "creation",
+      "startDate": "1520-08-05",
+      "endDate": "1520-08-05",
       "relations": [
         {
           "id": "event/relation/OID078",
@@ -4733,6 +5029,8 @@
       "id": "cho/ev-079",
       "label": { "default": "Study of dress" },
       "kind": "creation",
+      "startDate": "1521-01-01",
+      "endDate": "1521-01-01",
       "relations": [
         {
           "id": "event/relation/OID079",
@@ -4764,6 +5062,8 @@
       "id": "cho/ev-080",
       "label": { "default": "Saint Jerome" },
       "kind": "creation",
+      "startDate": "1521-03-16",
+      "endDate": "1521-03-16",
       "relations": [
         {
           "id": "event/relation/OID080",
@@ -4795,7 +5095,10 @@
       "id": "macro/ev-001",
       "label": { "default": "Geburt von Albrecht Dürer" },
       "source": { "citation": "Dürers Familienchronik" },
+      "description": "Dürer wird in Nürnberg geboren, sein Pate ist der international bekannte Drucker Anton Koberger, Taufdatum: 21.5.1471",
       "kind": "birth",
+      "startDate": "1471-05-21",
+      "endDate": "1471-05-21",
       "place": "pl-001",
       "relations": [
         {
@@ -4820,7 +5123,10 @@
       "id": "macro/ev-002",
       "label": { "default": "Malerlehre bei Michael Wolgemut" },
       "source": { "citation": "Dürers Familienchronik" },
+      "description": "Malerlehre bei Michael Wolgemut in Nürnberg",
       "kind": "education",
+      "startDate": "1486-01-01",
+      "endDate": "1489-12-31",
       "place": "pl-001",
       "relations": [
         {
@@ -4842,7 +5148,10 @@
       "id": "macro/ev-003",
       "label": { "default": "Gesellenwanderschaft an den Oberrhein" },
       "source": { "citation": "Christoph Scheurl 1515 nach Selbstaussage Dürers" },
+      "description": "Gesellenwanderschaft an den Oberrhein",
       "kind": "professional",
+      "startDate": "1490-04-01",
+      "endDate": "1490-04-01",
       "place": "pl-002",
       "relations": [
         {
@@ -4860,7 +5169,10 @@
     {
       "id": "macro/ev-004",
       "label": { "default": "Arbeitsaufenthalt bei Martin Schongauer" },
+      "description": "Aufenthalt in der Werkstatt von Martin Schongauer",
       "kind": "professional",
+      "startDate": "1494-03-31",
+      "endDate": "1494-03-31",
       "place": "pl-003",
       "relations": [
         {
@@ -4886,7 +5198,10 @@
     {
       "id": "macro/ev-005",
       "label": { "default": "Heirat mit Agnes Frey" },
+      "description": "Heirat mit Agnes Frey in Nürnberg",
       "kind": "family",
+      "startDate": "1494-04-01",
+      "endDate": "1494-04-01",
       "place": "pl-001",
       "relations": [
         {
@@ -4909,7 +5224,10 @@
       "source": {
         "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
       },
+      "description": "Erste Italienreise, über Werke rekonstruierbare Aufenthalte in Tirol/Südtirol/Trentino, Venedig",
       "kind": "travel",
+      "startDate": "1494-05-30",
+      "endDate": "1494-05-30",
       "place": "pl-004",
       "relations": [
         {
@@ -4932,7 +5250,10 @@
       "source": {
         "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
       },
+      "description": "Erste Italienreise",
       "kind": "travel",
+      "startDate": "1494-07-31",
+      "endDate": "1494-07-31",
       "place": "pl-005",
       "relations": [
         {
@@ -4955,7 +5276,10 @@
       "source": {
         "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
       },
+      "description": "Erste Italienreise",
       "kind": "travel",
+      "startDate": "1494-09-30",
+      "endDate": "1494-09-30",
       "place": "pl-006",
       "relations": [
         {
@@ -4978,7 +5302,10 @@
       "source": {
         "citation": "Werke = Landschaftsaquarelle und Kostümstudien, Briefstelle von 1506 „was mir vor 11 Jahren so gut gefallen hat“, Christoph Scheurl 1509 = „als er wieder nach Italien kam“"
       },
+      "description": "Erste Italienreise",
       "kind": "travel",
+      "startDate": "1494-12-31",
+      "endDate": "1494-12-31",
       "place": "pl-007",
       "relations": [
         {
@@ -4999,7 +5326,10 @@
       "id": "macro/ev-010",
       "label": { "default": "Aufbau einer Maler- und Graphikwerkstatt" },
       "source": { "citation": "Arbeitsverträge, frühe Kopien der Druckgraphiken vor 1500" },
+      "description": "Aufbau einer Maler- und Graphikwerkstatt in Nürnberg mit internationalem Vertriebsnetz, ab 1497 erste Angestellte",
       "kind": "founding",
+      "startDate": "1495-05-30",
+      "endDate": "1495-05-30",
       "place": "pl-001",
       "relations": [
         {
@@ -5024,7 +5354,10 @@
       "id": "macro/ev-011",
       "label": { "default": "Apokalypse erscheint" },
       "source": { "citation": "Kolophon" },
+      "description": "Mit der „Apokalypse“ erscheint Dürers erstes großes Buch",
       "kind": "creation",
+      "startDate": "1498-01-01",
+      "endDate": "1498-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5052,7 +5385,10 @@
       "id": "macro/ev-012",
       "label": { "default": "Selbstbildnis im Pelzrock erstellt" },
       "source": { "citation": "Datierung auf Bild, Physiognomie" },
+      "description": "Selbstbildnis im Pelzrock (München, Alte Pinakothek)",
       "kind": "creation",
+      "startDate": "1500-01-01",
+      "endDate": "1500-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5089,7 +5425,10 @@
       "id": "macro/ev-013",
       "label": { "default": "„Der Hase“ erstellt" },
       "source": { "citation": "Datierung auf Bild, ähnliche zeitnahe Studien" },
+      "description": "„Der Hase“ als erstes Tieraquarell",
       "kind": "creation",
+      "startDate": "1502-01-01",
+      "endDate": "1502-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5119,7 +5458,10 @@
       "source": {
         "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
       },
+      "description": "Zweite Italienreise, Aufenthalte in Venedig und Bologna",
       "kind": "travel",
+      "startDate": "1505-11-30",
+      "endDate": "1505-11-30",
       "place": "pl-007",
       "relations": [
         {
@@ -5142,7 +5484,10 @@
       "source": {
         "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
       },
+      "description": "Zweite Italienreise, Aufenthalte in Venedig und Bologna",
       "kind": "travel",
+      "startDate": "1506-06-30",
+      "endDate": "1506-06-30",
       "place": "pl-008",
       "relations": [
         {
@@ -5165,7 +5510,10 @@
       "source": {
         "citation": "Briefe aus Venedig, Gemälde, Christoph Scheurl 1509 = diente ihm in Venedig und Bologna als Übersetzer"
       },
+      "description": "Zweite Italienreise, Aufenthalte in Venedig und Bologna",
       "kind": "travel",
+      "startDate": "1507-02-28",
+      "endDate": "1507-02-28",
       "place": "pl-001",
       "relations": [
         {
@@ -5186,7 +5534,10 @@
       "id": "macro/ev-017",
       "label": { "default": "Kauf des „Dürer-Hauses“" },
       "source": { "citation": "Urkunde" },
+      "description": "Kauf des „Dürer-Hauses“ am Tiergärtnertor in Nürnberg",
       "kind": "bussines",
+      "startDate": "1509-01-01",
+      "endDate": "1509-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5214,7 +5565,10 @@
       "id": "macro/ev-018",
       "label": { "default": "Drei Meisterstiche: „Ritter, Tod und Teufel“" },
       "source": { "citation": "Datierung auf Kupferstichen" },
+      "description": "Drei Meisterstiche („Ritter, Tod und Teufel“, „Hieronymus im Gehäus“, „Melancholie“)",
       "kind": "creation",
+      "startDate": "1513-01-01",
+      "endDate": "1513-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5242,7 +5596,10 @@
       "id": "macro/ev-019",
       "label": { "default": "Drei Meisterstiche: „Hieronymus im Gehäus“" },
       "source": { "citation": "Datierung auf Kupferstichen" },
+      "description": "Drei Meisterstiche („Ritter, Tod und Teufel“, „Hieronymus im Gehäus“, „Melancholie“)",
       "kind": "creation",
+      "startDate": "1513-01-01",
+      "endDate": "1513-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5270,7 +5627,10 @@
       "id": "macro/ev-020",
       "label": { "default": "Drei Meisterstiche: „Melancholie“" },
       "source": { "citation": "Datierung auf Kupferstichen" },
+      "description": "Drei Meisterstiche („Ritter, Tod und Teufel“, „Hieronymus im Gehäus“, „Melancholie“)",
       "kind": "creation",
+      "startDate": "1513-01-01",
+      "endDate": "1513-01-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5297,7 +5657,10 @@
     {
       "id": "macro/ev-021",
       "label": { "default": "Portrait von Kaiser Maximilian" },
+      "description": "Reichstag (Portrait von Kaiser Maximilian)",
       "kind": "creation",
+      "startDate": "1517-05-30",
+      "endDate": "1517-05-30",
       "place": "pl-009",
       "relations": [
         {
@@ -5324,7 +5687,10 @@
       "id": "macro/ev-022",
       "label": { "default": "Ehrenpforte für Kaiser Maximilian I." },
       "source": { "citation": "Korrespondenz, Datierung auf Holzschnitt" },
+      "description": "Ehrenpforte für Kaiser Maximilian I. (Riesenholzschnitt)",
       "kind": "creation",
+      "startDate": "1517-07-31",
+      "endDate": "1517-07-31",
       "place": "pl-001",
       "relations": [
         {
@@ -5352,7 +5718,10 @@
       "id": "macro/ev-023",
       "label": { "default": "Beginn der Niederländische Reise" },
       "source": { "citation": "„Tagebuch“ der NL Reise, Werke" },
+      "description": "Beginn der Niederländische Reise, Aufenthalte in Köln, Aachen, Antwerpen, Brüssel, Gent, Brügge, Mecheln, Dürer genießt internationalen Ruhm und verkehrt in Hofkreisen",
       "kind": "travel",
+      "startDate": "1520-07-01",
+      "endDate": "1520-07-01",
       "place": "pl-001",
       "relations": [
         {
@@ -5370,7 +5739,10 @@
     {
       "id": "macro/ev-024",
       "label": { "default": "Station auf der Hinreise mit Besuch seines Vetters" },
+      "description": "Station auf der Hinreise mit Besuch seines Vetters",
       "kind": "travel",
+      "startDate": "1520-07-25",
+      "endDate": "1520-07-28",
       "place": "pl-010",
       "relations": [
         {
@@ -5387,7 +5759,10 @@
     {
       "id": "macro/ev-025",
       "label": { "default": "Krönung Karl V" },
+      "description": "Krönung Karl V",
       "kind": "event",
+      "startDate": "1520-10-07",
+      "endDate": "1520-10-25",
       "place": "pl-011",
       "relations": [
         {
@@ -5422,7 +5797,10 @@
     {
       "id": "macro/ev-026",
       "label": { "default": "Hauptstandort: Südtirol" },
+      "description": "Hauptstandort",
       "kind": "travel",
+      "startDate": "1520-08-02",
+      "endDate": "1520-08-25",
       "place": "pl-012",
       "relations": [
         {
@@ -5439,7 +5817,10 @@
     {
       "id": "macro/ev-027",
       "label": { "default": "Besuch des Bildhauers Konrat Meit" },
+      "description": "Besuch des Bildhauers Konrat Meit",
       "kind": "meeting",
+      "startDate": "1520-08-26",
+      "endDate": "1520-08-26",
       "place": "pl-013",
       "relations": [
         {
@@ -5465,7 +5846,10 @@
     {
       "id": "macro/ev-028",
       "label": { "default": "Kontakte zu Hofkreisen (1520)" },
+      "description": "Kontakte zu Hofkreisen (1520)",
       "kind": "meeting",
+      "startDate": "1520-08-27",
+      "endDate": "1520-09-02",
       "place": "pl-014",
       "relations": [
         {
@@ -5482,7 +5866,10 @@
     {
       "id": "macro/ev-029",
       "label": { "default": "Hauptstandort" },
+      "description": "Hauptstandort",
       "kind": "travel",
+      "startDate": "1520-09-03",
+      "endDate": "1520-10-25",
       "place": "pl-012",
       "relations": [
         {
@@ -5499,7 +5886,10 @@
     {
       "id": "macro/ev-030",
       "label": { "default": "Station auf der Rückreise mit Teilnahme an Empfang Karls V" },
+      "description": "Station auf der Rückreise mit Teilnahme an Empfang Karls V.",
       "kind": "event",
+      "startDate": "1520-10-26",
+      "endDate": "1520-11-13",
       "place": "pl-010",
       "relations": [
         {
@@ -5525,7 +5915,10 @@
     {
       "id": "macro/ev-031",
       "label": { "default": "Hauptstandort" },
+      "description": "Hauptstandort",
       "kind": "travel",
+      "startDate": "1520-11-14",
+      "endDate": "1521-04-06",
       "place": "pl-012",
       "relations": [
         {
@@ -5542,7 +5935,10 @@
     {
       "id": "macro/ev-032",
       "label": { "default": "Besuch von Bau- und Kunstwerken" },
+      "description": "Besuch von Bau- und Kunstwerken",
       "kind": "travel",
+      "startDate": "1521-04-07",
+      "endDate": "1521-04-08",
       "place": "pl-015",
       "relations": [
         {
@@ -5559,7 +5955,10 @@
     {
       "id": "macro/ev-033",
       "label": { "default": "Besuch von Bau- und Kunstwerken" },
+      "description": "Besuch von Bau- und Kunstwerken",
       "kind": "travel",
+      "startDate": "1521-04-09",
+      "endDate": "1521-04-11",
       "place": "pl-016",
       "relations": [
         {
@@ -5576,7 +5975,10 @@
     {
       "id": "macro/ev-034",
       "label": { "default": "Hauptstandort" },
+      "description": "Hauptstandort",
       "kind": "travel",
+      "startDate": "1521-04-12",
+      "endDate": "1521-06-05",
       "place": "pl-012",
       "relations": [
         {
@@ -5593,7 +5995,10 @@
     {
       "id": "macro/ev-035",
       "label": { "default": "Besuch Margaretes von Österreich (1521): Südtirol" },
+      "description": "Besuch Margaretes von Österreich (1521)",
       "kind": "meeting",
+      "startDate": "1521-06-06",
+      "endDate": "1521-06-08",
       "place": "pl-013",
       "relations": [
         {
@@ -5619,7 +6024,10 @@
     {
       "id": "macro/ev-036",
       "label": { "default": "Hauptstandort" },
+      "description": "Hauptstandort",
       "kind": "travel",
+      "startDate": "1521-06-09",
+      "endDate": "1521-07-02",
       "place": "pl-012",
       "relations": [
         {
@@ -5636,7 +6044,10 @@
     {
       "id": "macro/ev-037",
       "label": { "default": "Porträtauftrag des dänischen Königs Christian II." },
+      "description": "Porträtauftrag des dänischen Königs Christian II. (1521)",
       "kind": "creation",
+      "startDate": "1521-07-03",
+      "endDate": "1521-07-11",
       "place": "pl-014",
       "relations": [
         {
@@ -5671,7 +6082,10 @@
     {
       "id": "macro/ev-038",
       "label": { "default": "Rückkehr nach Nürnberg" },
+      "description": "Rückkehr nach Nürnberg",
       "kind": "travel",
+      "startDate": "1521-07-12",
+      "endDate": "1521-07-12",
       "place": "pl-001",
       "relations": [
         {
@@ -5691,7 +6105,10 @@
         "default": "Theoretische Schriften zur Perspektive, menschlichen Proportion und dem Festungsbau in deutscher Sprache: Südtirol"
       },
       "source": { "citation": "Kolophone" },
+      "description": "Theoretische Schriften zur Perspektive, menschlichen Proportion und dem Festungsbau in deutscher Sprache",
       "kind": "creation",
+      "startDate": "1525-01-01",
+      "endDate": "1528-04-05",
       "place": "pl-001",
       "relations": [
         {
@@ -5719,7 +6136,10 @@
       "id": "macro/ev-040",
       "label": { "default": "Dürer stirbt in Nürnberg und wird auf dem Johannisfriedhof begraben" },
       "source": { "citation": "Nachrufe bedeutender Humanisten, Grabplatte" },
+      "description": "Dürer stirbt in Nürnberg und wird auf dem Johannisfriedhof begraben",
       "kind": "death",
+      "startDate": "1528-04-06",
+      "endDate": "1528-04-06",
       "place": "pl-001",
       "relations": [
         {
@@ -5737,8 +6157,11 @@
     {
       "id": "nl/EID001",
       "label": { "default": "Departure from Nuremberg" },
+      "description": "Departure from home by horse carriage with wife Agnes and maid Susanna, Thursday morning",
       "kind": "travel",
-      "place": "Nürnberg",
+      "startDate": "1520-07-12",
+      "endDate": "1520-07-12",
+      "place": "pl-001",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5763,8 +6186,11 @@
     {
       "id": "nl/EID002",
       "label": { "default": "Albrecht Dürer was travelling to Erlangen" },
+      "description": "midday",
       "kind": "travel",
-      "place": "Erlangen",
+      "startDate": "1520-07-12",
+      "endDate": "1520-07-12",
+      "place": "pl-018",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5780,8 +6206,11 @@
     {
       "id": "nl/EID003",
       "label": { "default": "Albrecht Dürer was travelling to Baiersdorf" },
+      "description": "Dinner in Tavern, evening, overnight stay",
       "kind": "travel",
-      "place": "Baiersdorf",
+      "startDate": "1520-07-12",
+      "endDate": "1520-07-13",
+      "place": "pl-019",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5797,8 +6226,11 @@
     {
       "id": "nl/EID004",
       "label": { "default": "Albrecht Dürer was travelling to Forchheim" },
+      "description": "hires escort to Bamberg, Friday morning",
       "kind": "travel",
-      "place": "Forchheim",
+      "startDate": "1520-07-13",
+      "endDate": "1520-07-13",
+      "place": "pl-020",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5814,8 +6246,11 @@
     {
       "id": "nl/EID005",
       "label": { "default": "Meeting with Bishop of Bamberg" },
+      "description": "visits Bishop of Bamberg in his episcopal palace, presents painting of Madonna and prints to Bishop, Bishop gives him letters of recommendation and letter of toll exemption, Bishop pays his inn bill, meets the painter Hans and Master Laux Benedict who give him wine as a present, afternoon, overnight stay",
       "kind": "meeting",
-      "place": "Bamberg",
+      "startDate": "1520-07-13",
+      "endDate": "1520-07-14",
+      "place": "pl-021",
       "relations": [
         {
           "id": "event/relation/pr-009",
@@ -5840,8 +6275,11 @@
     {
       "id": "nl/EID006",
       "label": { "default": "Albrecht Dürer was travelling to Eltmann" },
+      "description": "continues journey by boat (Main river), toll station, Saturday morning",
       "kind": "travel",
-      "place": "Eltmann",
+      "startDate": "1520-07-14",
+      "endDate": "1520-07-14",
+      "place": "pl-022",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5857,8 +6295,11 @@
     {
       "id": "nl/EID007",
       "label": { "default": "Albrecht Dürer was travelling to Zeil" },
+      "description": "morning, Zeil am Reihn",
       "kind": "travel",
-      "place": "Zeil",
+      "startDate": "1520-07-14",
+      "endDate": "1520-07-14",
+      "place": "pl-023",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5874,8 +6315,11 @@
     {
       "id": "nl/EID008",
       "label": { "default": "Albrecht Dürer was travelling to Hassfurt" },
+      "description": "midday",
       "kind": "travel",
-      "place": "Hassfurt",
+      "startDate": "1520-07-14",
+      "endDate": "1520-07-14",
+      "place": "pl-024",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5891,8 +6335,11 @@
     {
       "id": "nl/EID009",
       "label": { "default": "Albrecht Dürer was travelling to Obertheres" },
+      "description": "toll station, afternoon, \"Theres Kloster\"",
       "kind": "travel",
-      "place": "Obertheres",
+      "startDate": "1520-07-14",
+      "endDate": "1520-07-14",
+      "place": "pl-025",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5908,8 +6355,11 @@
     {
       "id": "nl/EID010",
       "label": { "default": "Albrecht Dürer was travelling to Unter-Euerheim" },
+      "description": "evening, overnight stay, \"Rein\"",
       "kind": "travel",
-      "place": "Unter-Euerheim",
+      "startDate": "1520-07-14",
+      "endDate": "1520-07-15",
+      "place": "pl-026",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5925,8 +6375,11 @@
     {
       "id": "nl/EID011",
       "label": { "default": "Albrecht Dürer was travelling to Mainberg" },
+      "description": "toll station, Sunday morning",
       "kind": "travel",
-      "place": "Mainberg",
+      "startDate": "1520-07-15",
+      "endDate": "1520-07-15",
+      "place": "pl-027",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5942,8 +6395,11 @@
     {
       "id": "nl/EID012",
       "label": { "default": "Albrecht Dürer was travelling to Schweinfurt" },
+      "description": "toll station, invited by a Doktor Rebart, who gives him wine to drink in the ship, buys a grilled chicken, midday",
       "kind": "travel",
-      "place": "Schweinfurt",
+      "startDate": "1520-07-15",
+      "endDate": "1520-07-15",
+      "place": "pl-028",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5959,8 +6415,11 @@
     {
       "id": "nl/EID013",
       "label": { "default": "Albrecht Dürer was travelling to Volkach" },
+      "description": "toll station, afternoon",
       "kind": "travel",
-      "place": "Volkach",
+      "startDate": "1520-07-15",
+      "endDate": "1520-07-15",
+      "place": "pl-029",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5976,8 +6435,11 @@
     {
       "id": "nl/EID014",
       "label": { "default": "Albrecht Dürer was travelling to Schwarzach" },
+      "description": "evening overnight stay, Schwarzach am Main",
       "kind": "travel",
-      "place": "Schwarzach",
+      "startDate": "1520-07-15",
+      "endDate": "1520-07-16",
+      "place": "pl-030",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -5993,8 +6455,11 @@
     {
       "id": "nl/EID015",
       "label": { "default": "Albrecht Dürer was travelling to Dettelbach" },
+      "description": "Monday morning",
       "kind": "travel",
-      "place": "Dettelbach",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-031",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6011,7 +6476,9 @@
       "id": "nl/EID016",
       "label": { "default": "Albrecht Dürer was travelling to Kitzingen" },
       "kind": "travel",
-      "place": "Kitzingen",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-032",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6028,7 +6495,9 @@
       "id": "nl/EID017",
       "label": { "default": "Albrecht Dürer was travelling to Sulzfeld" },
       "kind": "travel",
-      "place": "Sulzfeld",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-033",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6044,8 +6513,11 @@
     {
       "id": "nl/EID018",
       "label": { "default": "Albrecht Dürer was travelling to Marktbreit" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Marktbreit",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-034",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6062,7 +6534,9 @@
       "id": "nl/EID019",
       "label": { "default": "Albrecht Dürer was travelling to Frickenhausen" },
       "kind": "travel",
-      "place": "Frickenhausen",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-035",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6078,8 +6552,11 @@
     {
       "id": "nl/EID020",
       "label": { "default": "Albrecht Dürer was travelling to Ochsenfurt" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Ochsenfurt",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-036",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6096,7 +6573,9 @@
       "id": "nl/EID021",
       "label": { "default": "Albrecht Dürer was travelling to Eibelstadt" },
       "kind": "travel",
-      "place": "Eibelstadt",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-037",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6113,7 +6592,9 @@
       "id": "nl/EID022",
       "label": { "default": "Albrecht Dürer was travelling to Heidingsfeld" },
       "kind": "travel",
-      "place": "Heidingsfeld",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-038",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6129,8 +6610,11 @@
     {
       "id": "nl/EID023",
       "label": { "default": "Albrecht Dürer was travelling to Würzburg" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Würzburg",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-16",
+      "place": "pl-039",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6146,8 +6630,11 @@
     {
       "id": "nl/EID024",
       "label": { "default": "Albrecht Dürer was travelling to Erlenbrunn" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Erlenbrunn",
+      "startDate": "1520-07-16",
+      "endDate": "1520-07-17",
+      "place": "pl-040",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6163,8 +6650,11 @@
     {
       "id": "nl/EID025",
       "label": { "default": "Albrecht Dürer was travelling to Retzbach" },
+      "description": "Tuesday",
       "kind": "travel",
-      "place": "Retzbach",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-041",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6181,7 +6671,9 @@
       "id": "nl/EID026",
       "label": { "default": "Albrecht Dürer was travelling to Zellingen" },
       "kind": "travel",
-      "place": "Zellingen",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-042",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6197,8 +6689,11 @@
     {
       "id": "nl/EID027",
       "label": { "default": "Albrecht Dürer was travelling to Karlstadt" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Karlstadt",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-043",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6214,8 +6709,11 @@
     {
       "id": "nl/EID028",
       "label": { "default": "Albrecht Dürer was travelling to Höchstätt" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Höchstätt",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-044",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6231,8 +6729,11 @@
     {
       "id": "nl/EID029",
       "label": { "default": "Albrecht Dürer was travelling to Lohr" },
+      "description": "toll station, Lohr am Main",
       "kind": "travel",
-      "place": "Lohr",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-045",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6248,8 +6749,11 @@
     {
       "id": "nl/EID030",
       "label": { "default": "Albrecht Dürer was travelling to Neuenstadt" },
+      "description": "toll station, Neustadt am Main",
       "kind": "travel",
-      "place": "Neuenstadt",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-17",
+      "place": "pl-046",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6265,8 +6769,11 @@
     {
       "id": "nl/EID031",
       "label": { "default": "Albrecht Dürer was travelling to Rothenfels" },
+      "description": "toll station, overnight stay",
       "kind": "travel",
-      "place": "Rothenfels",
+      "startDate": "1520-07-17",
+      "endDate": "1520-07-18",
+      "place": "pl-047",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6282,8 +6789,11 @@
     {
       "id": "nl/EID032",
       "label": { "default": "Albrecht Dürer was travelling to Heidenfeld" },
+      "description": "Wednesday, Marktheidenfeld",
       "kind": "travel",
-      "place": "Heidenfeld",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-048",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6300,7 +6810,9 @@
       "id": "nl/EID033",
       "label": { "default": "Albrecht Dürer was travelling to Triffenstein" },
       "kind": "travel",
-      "place": "Triffenstein",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-049",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6316,8 +6828,11 @@
     {
       "id": "nl/EID034",
       "label": { "default": "Albrecht Dürer was travelling to Homburg" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Homburg",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-050",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6333,8 +6848,11 @@
     {
       "id": "nl/EID035",
       "label": { "default": "Albrecht Dürer was travelling to Wertheim" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Wertheim",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-051",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6350,8 +6868,11 @@
     {
       "id": "nl/EID036",
       "label": { "default": "Albrecht Dürer was travelling to Protzelten" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Protzelten",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-052",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6367,8 +6888,11 @@
     {
       "id": "nl/EID037",
       "label": { "default": "Albrecht Dürer was travelling to Freudenberg" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Freudenberg",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-18",
+      "place": "pl-053",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6384,8 +6908,11 @@
     {
       "id": "nl/EID038",
       "label": { "default": "Albrecht Dürer was travelling to Miltenberg" },
+      "description": "toll station, overnight stay",
       "kind": "travel",
-      "place": "Miltenberg",
+      "startDate": "1520-07-18",
+      "endDate": "1520-07-19",
+      "place": "pl-054",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6401,8 +6928,11 @@
     {
       "id": "nl/EID039",
       "label": { "default": "Albrecht Dürer was travelling to Klingenberg" },
+      "description": "toll station, Thursday",
       "kind": "travel",
-      "place": "Klingenberg",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
+      "place": "pl-055",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6419,7 +6949,9 @@
       "id": "nl/EID040",
       "label": { "default": "Albrecht Dürer was travelling to Wördt" },
       "kind": "travel",
-      "place": "Wördt",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
+      "place": "pl-056",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6436,7 +6968,9 @@
       "id": "nl/EID041",
       "label": { "default": "Albrecht Dürer was travelling to Obernburg" },
       "kind": "travel",
-      "place": "Obernburg",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
+      "place": "pl-057",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6452,8 +6986,11 @@
     {
       "id": "nl/EID042",
       "label": { "default": "Albrecht Dürer was travelling to Aschaffenburg" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Aschaffenburg",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
+      "place": "pl-058",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6470,7 +7007,9 @@
       "id": "nl/EID043",
       "label": { "default": "Albrecht Dürer was travelling to Seligenstadt" },
       "kind": "travel",
-      "place": "Seligenstadt",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-19",
+      "place": "pl-059",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6486,8 +7025,11 @@
     {
       "id": "nl/EID044",
       "label": { "default": "Albrecht Dürer was travelling to Steinheim" },
+      "description": "toll station, overnight stay",
       "kind": "travel",
-      "place": "Steinheim",
+      "startDate": "1520-07-19",
+      "endDate": "1520-07-20",
+      "place": "pl-060",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6503,8 +7045,11 @@
     {
       "id": "nl/EID045",
       "label": { "default": "Albrecht Dürer was travelling to Kesselstadt" },
+      "description": "toll station, Friday",
       "kind": "travel",
-      "place": "Kesselstadt",
+      "startDate": "1520-07-20",
+      "endDate": "1520-07-20",
+      "place": "pl-061",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6520,8 +7065,11 @@
     {
       "id": "nl/EID046",
       "label": { "default": "Albrecht Dürer was travelling to Frankfurt/Main" },
+      "description": "toll station, has to change ships (regular Main ferry) and uncharge/load his cargo, overnight stay",
       "kind": "travel",
-      "place": "Frankfurt/Main",
+      "startDate": "1520-07-20",
+      "endDate": "1520-07-22",
+      "place": "pl-062",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6537,8 +7085,11 @@
     {
       "id": "nl/EID047",
       "label": { "default": "Albrecht Dürer was travelling to Höchst" },
+      "description": "toll station, Sunday",
       "kind": "travel",
-      "place": "Höchst",
+      "startDate": "1520-07-22",
+      "endDate": "1520-07-22",
+      "place": "pl-063",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6554,8 +7105,11 @@
     {
       "id": "nl/EID048",
       "label": { "default": "Albrecht Dürer was travelling to Mainz" },
+      "description": "has to change ships (to Rhine ferry) and uncharge/load his cargo, overnight stay",
       "kind": "travel",
-      "place": "Mainz",
+      "startDate": "1520-07-22",
+      "endDate": "1520-07-23",
+      "place": "pl-064",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6571,8 +7125,11 @@
     {
       "id": "nl/EID049",
       "label": { "default": "Albrecht Dürer was travelling to Eltville" },
+      "description": "toll station, Monday",
       "kind": "travel",
-      "place": "Eltville",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-065",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6589,7 +7146,9 @@
       "id": "nl/EID050",
       "label": { "default": "Albrecht Dürer was travelling to Rüdesheim" },
       "kind": "travel",
-      "place": "Rüdesheim",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-066",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6605,8 +7164,11 @@
     {
       "id": "nl/EID051",
       "label": { "default": "Albrecht Dürer was travelling to Ehrenfels" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Ehrenfels",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-067",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6622,8 +7184,11 @@
     {
       "id": "nl/EID052",
       "label": { "default": "Albrecht Dürer was travelling to Bacharach" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Bacharach",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-068",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6639,8 +7204,11 @@
     {
       "id": "nl/EID053",
       "label": { "default": "Albrecht Dürer was travelling to Kaub" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Kaub",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-069",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6656,8 +7224,11 @@
     {
       "id": "nl/EID054",
       "label": { "default": "Albrecht Dürer was travelling to St. Goar" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "St. Goar",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-070",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6673,8 +7244,11 @@
     {
       "id": "nl/EID055",
       "label": { "default": "Albrecht Dürer was travelling to Boppard" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Boppard",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-071",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6690,8 +7264,11 @@
     {
       "id": "nl/EID056",
       "label": { "default": "Albrecht Dürer was travelling to Lahnstein" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Lahnstein",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-072",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6707,8 +7284,11 @@
     {
       "id": "nl/EID057",
       "label": { "default": "Albrecht Dürer was travelling to Engers" },
+      "description": "toll station, ?",
       "kind": "travel",
-      "place": "Engers",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-23",
+      "place": "pl-073",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6724,8 +7304,11 @@
     {
       "id": "nl/EID058",
       "label": { "default": "Albrecht Dürer was travelling to Andernach" },
+      "description": "toll station, overnight stay",
       "kind": "travel",
-      "place": "Andernach",
+      "startDate": "1520-07-23",
+      "endDate": "1520-07-24",
+      "place": "pl-074",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6741,8 +7324,11 @@
     {
       "id": "nl/EID059",
       "label": { "default": "Albrecht Dürer was travelling to Linz" },
+      "description": "Tuesday, Linz am Rhein",
       "kind": "travel",
-      "place": "Linz",
+      "startDate": "1520-07-24",
+      "endDate": "1520-07-24",
+      "place": "pl-075",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6758,8 +7344,11 @@
     {
       "id": "nl/EID060",
       "label": { "default": "Albrecht Dürer was travelling to Bonn" },
+      "description": "toll station",
       "kind": "travel",
-      "place": "Bonn",
+      "startDate": "1520-07-24",
+      "endDate": "1520-07-24",
+      "place": "pl-076",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6775,8 +7364,11 @@
     {
       "id": "nl/EID061",
       "label": { "default": "Albrecht Dürer was travelling to Köln staying with Niclas Unger" },
+      "description": "has to uncharge his cargo, lodges at the house of his uncle Niclas Unger the goldsmith, is invited to lunch at Friars Minor monastery, receives presents, overnight stay",
       "kind": "travel",
-      "place": "Köln",
+      "startDate": "1520-07-24",
+      "endDate": "1520-07-28",
+      "place": "pl-010",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6798,8 +7390,11 @@
     {
       "id": "nl/EID062",
       "label": { "default": "Albrecht Dürer was travelling to Büsdorf" },
+      "description": "travels by horse carriage, overnight stay",
       "kind": "travel",
-      "place": "Büsdorf",
+      "startDate": "1520-07-28",
+      "endDate": "1520-07-29",
+      "place": "pl-078",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6815,8 +7410,11 @@
     {
       "id": "nl/EID063",
       "label": { "default": "Albrecht Dürer was travelling to Rödingen" },
+      "description": "lunch, Sunday",
       "kind": "travel",
-      "place": "Rödingen",
+      "startDate": "1520-07-29",
+      "endDate": "1520-07-29",
+      "place": "pl-079",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6832,8 +7430,11 @@
     {
       "id": "nl/EID064",
       "label": { "default": "Albrecht Dürer was travelling to Freialdenhoven" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Freialdenhoven",
+      "startDate": "1520-07-29",
+      "endDate": "1520-07-30",
+      "place": "pl-080",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6849,8 +7450,11 @@
     {
       "id": "nl/EID065",
       "label": { "default": "Albrecht Dürer was travelling to Frelenberg" },
+      "description": "Monday",
       "kind": "travel",
-      "place": "Frelenberg",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-081",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6867,7 +7471,9 @@
       "id": "nl/EID066",
       "label": { "default": "Albrecht Dürer was travelling to Gangelt" },
       "kind": "travel",
-      "place": "Gangelt",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-082",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6883,8 +7489,11 @@
     {
       "id": "nl/EID067",
       "label": { "default": "Albrecht Dürer was travelling to Süsterseel" },
+      "description": "lunch",
       "kind": "travel",
-      "place": "Süsterseel",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-083",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6901,7 +7510,9 @@
       "id": "nl/EID068",
       "label": { "default": "Albrecht Dürer was travelling to Sittard" },
       "kind": "travel",
-      "place": "Sittard",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-084",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6917,8 +7528,11 @@
     {
       "id": "nl/EID069",
       "label": { "default": "Albrecht Dürer was travelling to Stokkem" },
+      "description": "overnight stay, diocese of Liege",
       "kind": "travel",
-      "place": "Stokkem",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-31",
+      "place": "pl-085",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6934,8 +7548,11 @@
     {
       "id": "nl/EID070",
       "label": { "default": "Albrecht Dürer was travelling to Martenslinde" },
+      "description": "lunch, buys a grilled chicken, uncertain location, probably ca. 20 km from Stokkem in direction of Uylenburg",
       "kind": "travel",
-      "place": "Martenslinde",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-086",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6951,8 +7568,11 @@
     {
       "id": "nl/EID071",
       "label": { "default": "Albrecht Dürer was travelling to Heide" },
+      "description": "uncertain location, probably some heathland ca. 30 km from Stokkem in direction of Uylenburg",
       "kind": "travel",
-      "place": "Heide",
+      "startDate": "1520-07-30",
+      "endDate": "1520-07-30",
+      "place": "pl-087",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6968,8 +7588,11 @@
     {
       "id": "nl/EID072",
       "label": { "default": "Albrecht Dürer was travelling to Stosser" },
+      "description": "overnight stay, uncertain location, probably halfway between Stokkem and Uylenburg",
       "kind": "travel",
-      "place": "Stosser",
+      "startDate": "1520-07-30",
+      "endDate": "1520-08-01",
+      "place": "pl-088",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -6985,8 +7608,11 @@
     {
       "id": "nl/EID073",
       "label": { "default": "Albrecht Dürer was travelling to Merpeck" },
+      "description": "buys bread and wine, Wednesday, uncertain location, between Stokkem and Uylenburg",
       "kind": "travel",
-      "place": "Merpeck",
+      "startDate": "1520-08-01",
+      "endDate": "1520-08-01",
+      "place": "pl-089",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7002,8 +7628,11 @@
     {
       "id": "nl/EID074",
       "label": { "default": "Albrecht Dürer was travelling to Brantenmühl" },
+      "description": "lunch, uncertain location (\"mill in Brabant\"?)",
       "kind": "travel",
-      "place": "Brantenmühl",
+      "startDate": "1520-08-01",
+      "endDate": "1520-08-01",
+      "place": "pl-090",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7019,8 +7648,11 @@
     {
       "id": "nl/EID075",
       "label": { "default": "Albrecht Dürer was travelling to Uylenburg" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Uylenburg",
+      "startDate": "1520-08-01",
+      "endDate": "1520-08-02",
+      "place": "pl-091",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7036,8 +7668,11 @@
     {
       "id": "nl/EID076",
       "label": { "default": "Albrecht Dürer was travelling to Creutz" },
+      "description": "lunch, uncertain location, probably ca. 20 km from Uylenburg in direction of Antwerp",
       "kind": "travel",
-      "place": "Creutz",
+      "startDate": "1520-08-02",
+      "endDate": "1520-08-02",
+      "place": "pl-092",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7053,8 +7688,11 @@
     {
       "id": "nl/EID077",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "lodges in an apartment in the house \"Engelenborgh\" of Jobst Planckfeldt in the city center (today Wolstraaat 19), arrival late afternoon",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1520-08-02",
+      "endDate": "1520-08-02",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7070,8 +7708,11 @@
     {
       "id": "nl/EID078",
       "label": { "default": "Albrecht Dürer was travelling to Mecheln" },
+      "description": "travels by horse carriage with the Italian merchant Tommaso Bombelli, dines with the sculptor Conrat Meit, Sunday, overnight stay",
       "kind": "travel",
-      "place": "Mecheln",
+      "startDate": "1520-08-26",
+      "endDate": "1520-08-27",
+      "place": "pl-013",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7087,8 +7728,11 @@
     {
       "id": "nl/EID079",
       "label": { "default": "Albrecht Dürer was travelling to Vilvoorde" },
+      "description": "Monday",
       "kind": "travel",
-      "place": "Vilvoorde",
+      "startDate": "1520-08-27",
+      "endDate": "1520-08-27",
+      "place": "pl-095",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7104,8 +7748,11 @@
     {
       "id": "nl/EID080",
       "label": { "default": "Albrecht Dürer was travelling to Brüssel" },
+      "description": "visits the city, meets merchants, city honoraries and court persons and the Nuremberg delegation to Charles V coronation, arrives at noon, overnight stay",
       "kind": "travel",
-      "place": "Brüssel",
+      "startDate": "1520-08-27",
+      "endDate": "1520-09-02",
+      "place": "pl-014",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7121,8 +7768,11 @@
     {
       "id": "nl/EID081",
       "label": { "default": "Albrecht Dürer was travelling to Mecheln" },
+      "description": "travels by horse carriage with the Italian merchant Tommaso Bombelli, Sunday, overnight stay",
       "kind": "travel",
-      "place": "Mecheln",
+      "startDate": "1520-09-02",
+      "endDate": "1520-09-03",
+      "place": "pl-013",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7138,8 +7788,11 @@
     {
       "id": "nl/EID082",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "back to the house of Planckfeldt, Monday noon",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1520-09-03",
+      "endDate": "1520-09-03",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7155,8 +7808,11 @@
     {
       "id": "nl/EID083",
       "label": { "default": "Albrecht Dürer was travelling to Brüssel" },
+      "description": "travels by horse carriage, Thursday, overnight stay, place not mentioned in diary",
       "kind": "travel",
-      "place": "Brüssel",
+      "startDate": "1520-10-04",
+      "endDate": "1520-10-05",
+      "place": "pl-014",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7172,7 +7828,10 @@
     {
       "id": "nl/EID084",
       "label": { "default": "Albrecht Dürer was travelling" },
+      "description": "Friday, overnight stay, place not mentioned in diary, ca. 50 km from Brussels in direction of Maastricht",
       "kind": "travel",
+      "startDate": "1520-10-05",
+      "endDate": "1520-10-06",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7188,7 +7847,10 @@
     {
       "id": "nl/EID085",
       "label": { "default": "Albrecht Dürer was travelling" },
+      "description": "Saturday, overnight stay, place not mentioned in diary, ca. 100 km from Brussels in direction of Maastricht",
       "kind": "travel",
+      "startDate": "1520-10-06",
+      "endDate": "1520-10-07",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7205,7 +7867,9 @@
       "id": "nl/EID086",
       "label": { "default": "Albrecht Dürer was travelling to Maastricht" },
       "kind": "travel",
-      "place": "Maastricht",
+      "startDate": "1520-10-07",
+      "endDate": "1520-10-07",
+      "place": "pl-097",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7222,7 +7886,9 @@
       "id": "nl/EID087",
       "label": { "default": "Albrecht Dürer was travelling to Gulpe" },
       "kind": "travel",
-      "place": "Gulpe",
+      "startDate": "1520-10-07",
+      "endDate": "1520-10-07",
+      "place": "pl-098",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7238,8 +7904,11 @@
     {
       "id": "nl/EID088",
       "label": { "default": "Coronation of Charles V in Aachen" },
+      "description": "coronation of Charles V in Aachen on 1520-10-23, visits and draws coronation locations, portraits members of official delegations, Sunday, overnight stay",
       "kind": "event",
-      "place": "Aachen",
+      "startDate": "1520-10-07",
+      "endDate": "1520-10-26",
+      "place": "pl-011",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7273,8 +7942,11 @@
     {
       "id": "nl/EID089",
       "label": { "default": "Albrecht Dürer was travelling to Jülich" },
+      "description": "probably day trip from Aachen by horse carriage, duration uncertain, part of sentence with following location missing in diary",
       "kind": "travel",
-      "place": "Jülich",
+      "startDate": "1520-10-24",
+      "endDate": "1520-10-24",
+      "place": "pl-100",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7290,8 +7962,11 @@
     {
       "id": "nl/EID090",
       "label": { "default": "Albrecht Dürer was travelling to Aachen" },
+      "description": "uncertain",
       "kind": "travel",
-      "place": "Aachen",
+      "startDate": "1520-10-24",
+      "endDate": "1520-10-26",
+      "place": "pl-011",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7307,8 +7982,11 @@
     {
       "id": "nl/EID091",
       "label": { "default": "Albrecht Dürer was travelling to Düren" },
+      "description": "travels by horse carriage with members of the Nuremberg delegation, visits reliquiary shrine in church, Friday",
       "kind": "travel",
-      "place": "Düren",
+      "startDate": "1520-10-26",
+      "endDate": "1520-10-26",
+      "place": "pl-101",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7324,8 +8002,11 @@
     {
       "id": "nl/EID092",
       "label": { "default": "Karl V provided support" },
+      "description": "waits for tax waiver confirmation of Charles V, court contacts, exchange of presents, stays with the Nuremberg delegation, Sunday, route and places of overnight stays uncertain",
       "kind": "travel",
-      "place": "Köln",
+      "startDate": "1520-10-28",
+      "endDate": "1520-11-14",
+      "place": "pl-010",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7350,8 +8031,11 @@
     {
       "id": "nl/EID093",
       "label": { "default": "Albrecht Dürer was travelling to Zons" },
+      "description": "travels by ship, Wednesday",
       "kind": "travel",
-      "place": "Zons",
+      "startDate": "1520-11-14",
+      "endDate": "1520-11-14",
+      "place": "pl-102",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7368,7 +8052,9 @@
       "id": "nl/EID094",
       "label": { "default": "Albrecht Dürer was travelling to Neuss" },
       "kind": "travel",
-      "place": "Neuss",
+      "startDate": "1520-11-14",
+      "endDate": "1520-11-14",
+      "place": "pl-103",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7384,8 +8070,11 @@
     {
       "id": "nl/EID095",
       "label": { "default": "Albrecht Dürer was travelling to Stain" },
+      "description": "overnight stay, location uncertain, probably near Neuss",
       "kind": "travel",
-      "place": "Stain",
+      "startDate": "1520-11-14",
+      "endDate": "1520-11-15",
+      "place": "pl-104",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7401,8 +8090,11 @@
     {
       "id": "nl/EID096",
       "label": { "default": "Albrecht Dürer was travelling to Düsseldorf" },
+      "description": "breakfast or lunch",
       "kind": "travel",
-      "place": "Düsseldorf",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-105",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7419,7 +8111,9 @@
       "id": "nl/EID097",
       "label": { "default": "Albrecht Dürer was travelling to Kaiserswerth" },
       "kind": "travel",
-      "place": "Kaiserswerth",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-106",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7436,7 +8130,9 @@
       "id": "nl/EID098",
       "label": { "default": "Albrecht Dürer was travelling to Duisburg" },
       "kind": "travel",
-      "place": "Duisburg",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-107",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7452,8 +8148,11 @@
     {
       "id": "nl/EID099",
       "label": { "default": "Albrecht Dürer was travelling to Angerort" },
+      "description": "near Duisburg",
       "kind": "travel",
-      "place": "Angerort",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-108",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7469,8 +8168,11 @@
     {
       "id": "nl/EID100",
       "label": { "default": "Albrecht Dürer was travelling to Ruhrort" },
+      "description": "near Duisburg",
       "kind": "travel",
-      "place": "Ruhrort",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-109",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7486,8 +8188,11 @@
     {
       "id": "nl/EID101",
       "label": { "default": "Albrecht Dürer was travelling to Orsoy" },
+      "description": "course of river Rhine different from today",
       "kind": "travel",
-      "place": "Orsoy",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-15",
+      "place": "pl-110",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7503,8 +8208,11 @@
     {
       "id": "nl/EID102",
       "label": { "default": "Albrecht Dürer was travelling to Rheinberg" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Rheinberg",
+      "startDate": "1520-11-15",
+      "endDate": "1520-11-16",
+      "place": "pl-111",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7521,7 +8229,9 @@
       "id": "nl/EID103",
       "label": { "default": "Albrecht Dürer was travelling to Wesel" },
       "kind": "travel",
-      "place": "Wesel",
+      "startDate": "1520-11-16",
+      "endDate": "1520-11-16",
+      "place": "pl-112",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7538,7 +8248,9 @@
       "id": "nl/EID103a",
       "label": { "default": "Albrecht Dürer was travelling to Rees" },
       "kind": "travel",
-      "place": "Rees",
+      "startDate": "1520-11-16",
+      "endDate": "1520-11-16",
+      "place": "pl-113",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7554,8 +8266,11 @@
     {
       "id": "nl/EID104",
       "label": { "default": "Albrecht Dürer was travelling to Emmerich" },
+      "description": "unplanned overnight stay due to a storm, overnight stay",
       "kind": "travel",
-      "place": "Emmerich",
+      "startDate": "1520-11-16",
+      "endDate": "1520-11-17",
+      "place": "pl-114",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7571,8 +8286,11 @@
     {
       "id": "nl/EID105",
       "label": { "default": "Albrecht Dürer was travelling to Tholhus" },
+      "description": "unidentified, probably Tolkammer near Lobith (JL: Zollhaus?)",
       "kind": "travel",
-      "place": "Tholhus",
+      "startDate": "1520-11-17",
+      "endDate": "1520-11-17",
+      "place": "pl-115",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7588,8 +8306,11 @@
     {
       "id": "nl/EID106",
       "label": { "default": "Albrecht Dürer was travelling to Nijmegen" },
+      "description": "Sunday, overnight stay",
       "kind": "travel",
-      "place": "Nijmegen",
+      "startDate": "1520-11-17",
+      "endDate": "1520-11-18",
+      "place": "pl-116",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7606,7 +8327,9 @@
       "id": "nl/EID107",
       "label": { "default": "Albrecht Dürer was travelling to Tiel" },
       "kind": "travel",
-      "place": "Tiel",
+      "startDate": "1520-11-18",
+      "endDate": "1520-11-18",
+      "place": "pl-117",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7622,8 +8345,11 @@
     {
       "id": "nl/EID108",
       "label": { "default": "Albrecht Dürer was travelling to Heerewaarden" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Heerewaarden",
+      "startDate": "1520-11-18",
+      "endDate": "1520-11-19",
+      "place": "pl-118",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7639,8 +8365,11 @@
     {
       "id": "nl/EID109",
       "label": { "default": "Albrecht Dürer was travelling to (Zalt-)Bommel" },
+      "description": "due to a storm, he continues journey by horse, Tuesday",
       "kind": "travel",
-      "place": "(Zalt-)Bommel",
+      "startDate": "1520-11-19",
+      "endDate": "1520-11-19",
+      "place": "pl-119",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7656,8 +8385,11 @@
     {
       "id": "nl/EID110",
       "label": { "default": "Albrecht Dürer was travelling to s'Hertogenbosch" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "s'Hertogenbosch",
+      "startDate": "1520-11-19",
+      "endDate": "1520-11-20",
+      "place": "pl-120",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7673,8 +8405,11 @@
     {
       "id": "nl/EID111",
       "label": { "default": "Albrecht Dürer was travelling to Oisterwijk" },
+      "description": "travels by horse carriage",
       "kind": "travel",
-      "place": "Oisterwijk",
+      "startDate": "1520-11-20",
+      "endDate": "1520-11-20",
+      "place": "pl-121",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7690,8 +8425,11 @@
     {
       "id": "nl/EID112",
       "label": { "default": "Albrecht Dürer was travelling to Tilburg" },
+      "description": "lunch, noon",
       "kind": "travel",
-      "place": "Tilburg",
+      "startDate": "1520-11-20",
+      "endDate": "1520-11-20",
+      "place": "pl-122",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7707,8 +8445,11 @@
     {
       "id": "nl/EID113",
       "label": { "default": "Albrecht Dürer was travelling to Baarle" },
+      "description": "has to leave in the middle of the night, overnight stay",
       "kind": "travel",
-      "place": "Baarle",
+      "startDate": "1520-11-20",
+      "endDate": "1520-11-21",
+      "place": "pl-123",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7724,8 +8465,11 @@
     {
       "id": "nl/EID114",
       "label": { "default": "Albrecht Dürer was travelling to Hoogstraten" },
+      "description": "Wednesday, early morning",
       "kind": "travel",
-      "place": "Hoogstraten",
+      "startDate": "1520-11-21",
+      "endDate": "1520-11-21",
+      "place": "pl-124",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7741,8 +8485,11 @@
     {
       "id": "nl/EID115",
       "label": { "default": "Albrecht Dürer was travelling to Harscht" },
+      "description": "lunch, noon, unidentified location, probably Brecht",
       "kind": "travel",
-      "place": "Harscht",
+      "startDate": "1520-11-21",
+      "endDate": "1520-11-21",
+      "place": "pl-125",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7758,8 +8505,11 @@
     {
       "id": "nl/EID116",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "back to the house of Planckfeldt",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1520-11-22",
+      "endDate": "1520-11-22",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7775,8 +8525,11 @@
     {
       "id": "nl/EID117",
       "label": { "default": "Albrecht Dürer was travelling to Bergen op Zoom" },
+      "description": "travels by horse with a group of merchant friends to see a standed whale in Zeeland",
       "kind": "travel",
-      "place": "Bergen op Zoom",
+      "startDate": "1520-12-03",
+      "endDate": "1520-12-07",
+      "place": "pl-126",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7794,8 +8547,11 @@
       "label": {
         "default": "Albrecht Dürer was travelling to Sea between Bergen op Zoom and Goes"
       },
+      "description": "travels by ship, overnight stay in ship",
       "kind": "travel",
-      "place": "Sea between Bergen op Zoom and Goes",
+      "startDate": "1520-12-07",
+      "endDate": "1520-12-08",
+      "place": "pl-127",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7811,8 +8567,9 @@
     {
       "id": "nl/EID119",
       "label": { "default": "Albrecht Dürer was travelling to Goes" },
+      "description": "Saturday",
       "kind": "travel",
-      "place": "Goes",
+      "place": "pl-128",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7828,8 +8585,11 @@
     {
       "id": "nl/EID120",
       "label": { "default": "Albrecht Dürer was travelling to Arnemuiden" },
+      "description": "lunch or dinner, overnight stay?",
       "kind": "travel",
-      "place": "Arnemuiden",
+      "startDate": "1520-12-08",
+      "endDate": "1520-12-09",
+      "place": "pl-129",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7845,7 +8605,10 @@
     {
       "id": "nl/EID121",
       "label": { "default": "Albrecht Dürer was travelling" },
+      "description": "unidentified location in Zeeland",
       "kind": "travel",
+      "startDate": "1520-12-09",
+      "endDate": "1520-12-09",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7861,8 +8624,11 @@
     {
       "id": "nl/EID122",
       "label": { "default": "Albrecht Dürer was travelling to Wolfersdijk" },
+      "description": "then an island",
       "kind": "travel",
-      "place": "Wolfersdijk",
+      "startDate": "1520-12-09",
+      "endDate": "1520-12-09",
+      "place": "pl-131",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7878,8 +8644,11 @@
     {
       "id": "nl/EID123",
       "label": { "default": "Albrecht Dürer was travelling to Kortgene" },
+      "description": "then an island",
       "kind": "travel",
-      "place": "Kortgene",
+      "startDate": "1520-12-09",
+      "endDate": "1520-12-09",
+      "place": "pl-132",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7895,8 +8664,11 @@
     {
       "id": "nl/EID124",
       "label": { "default": "Albrecht Dürer was travelling to Arnemuiden" },
+      "description": "boat accident, overnight stay (probably as above)",
       "kind": "travel",
-      "place": "Arnemuiden",
+      "startDate": "1520-12-09",
+      "endDate": "1520-12-10",
+      "place": "pl-129",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7913,7 +8685,9 @@
       "id": "nl/EID125",
       "label": { "default": "Albrecht Dürer was travelling to Middelburg" },
       "kind": "travel",
-      "place": "Middelburg",
+      "startDate": "1520-12-10",
+      "endDate": "1520-12-10",
+      "place": "pl-133",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7929,8 +8703,11 @@
     {
       "id": "nl/EID126",
       "label": { "default": "Albrecht Dürer was travelling to Veere" },
+      "description": "on Walcheren island",
       "kind": "travel",
-      "place": "Veere",
+      "startDate": "1520-12-10",
+      "endDate": "1520-12-10",
+      "place": "pl-134",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7946,8 +8723,11 @@
     {
       "id": "nl/EID127",
       "label": { "default": "Albrecht Dürer was travelling to Zierkzee" },
+      "description": "whale is already gone, Monday",
       "kind": "travel",
-      "place": "Zierkzee",
+      "startDate": "1520-12-10",
+      "endDate": "1520-12-10",
+      "place": "pl-135",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7963,8 +8743,11 @@
     {
       "id": "nl/EID128",
       "label": { "default": "Albrecht Dürer was travelling to Bergen op Zoom" },
+      "description": "portrait drawings",
       "kind": "travel",
-      "place": "Bergen op Zoom",
+      "startDate": "1520-12-10",
+      "endDate": "1520-12-14",
+      "place": "pl-126",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7980,8 +8763,11 @@
     {
       "id": "nl/EID129",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "travels by horse carriage, back to the house of Planckfeldt, Friday",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1520-12-14",
+      "endDate": "1520-12-14",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -7997,8 +8783,11 @@
     {
       "id": "nl/EID130",
       "label": { "default": "Albrecht Dürer was travelling to Beveren" },
+      "description": "travels by horse carriage with the painter Jan Provost, Saturday after Easter, crosses the river Schelde",
       "kind": "travel",
-      "place": "Beveren",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
+      "place": "pl-136",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8014,8 +8803,11 @@
     {
       "id": "nl/EID131",
       "label": { "default": "Albrecht Dürer was travelling to Prasten" },
+      "description": "probably Vrasene",
       "kind": "travel",
-      "place": "Prasten",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
+      "place": "pl-137",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8031,7 +8823,10 @@
     {
       "id": "nl/EID132",
       "label": { "default": "Albrecht Dürer was travelling" },
+      "description": "lunch, ca. 30 km from Antwerp in direction of Ertvelde",
       "kind": "travel",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8047,8 +8842,11 @@
     {
       "id": "nl/EID133",
       "label": { "default": "Albrecht Dürer was travelling to Sint-Pauwels" },
+      "description": "monastery, today part of Sint-Gillis-Waas",
       "kind": "travel",
-      "place": "Sint-Pauwels",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
+      "place": "pl-139",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8065,7 +8863,9 @@
       "id": "nl/EID134",
       "label": { "default": "Albrecht Dürer was travelling to Caudenborm" },
       "kind": "travel",
-      "place": "Caudenborm",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
+      "place": "pl-140",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8081,8 +8881,11 @@
     {
       "id": "nl/EID135",
       "label": { "default": "Albrecht Dürer was travelling to Kalve (Calve)" },
+      "description": "near Wachtbeke",
       "kind": "travel",
-      "place": "Kalve (Calve)",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-06",
+      "place": "pl-141",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8098,8 +8901,11 @@
     {
       "id": "nl/EID136",
       "label": { "default": "Albrecht Dürer was travelling to Ertvelde" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Ertvelde",
+      "startDate": "1521-04-06",
+      "endDate": "1521-04-07",
+      "place": "pl-142",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8115,8 +8921,11 @@
     {
       "id": "nl/EID137",
       "label": { "default": "Albrecht Dürer was travelling to Eeklo" },
+      "description": "late breakfast, Sunday",
       "kind": "travel",
-      "place": "Eeklo",
+      "startDate": "1521-04-07",
+      "endDate": "1521-04-07",
+      "place": "pl-143",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8133,7 +8942,9 @@
       "id": "nl/EID138",
       "label": { "default": "Albrecht Dürer was travelling to Maldegem" },
       "kind": "travel",
-      "place": "Maldegem",
+      "startDate": "1521-04-07",
+      "endDate": "1521-04-07",
+      "place": "pl-144",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8149,8 +8960,11 @@
     {
       "id": "nl/EID139",
       "label": { "default": "Albrecht Dürer stayed with Jan Provost " },
+      "description": "lodges at the house of the painterJan Provost, visits the cathedral with Michelangelo's Madonna and other churches",
       "kind": "travel",
-      "place": "Brügge",
+      "startDate": "1521-04-07",
+      "endDate": "1521-04-09",
+      "place": "pl-015",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8172,8 +8986,11 @@
     {
       "id": "nl/EID140",
       "label": { "default": "Albrecht Dürer was travelling to Ursel" },
+      "description": "lunch, Tuesday",
       "kind": "travel",
-      "place": "Ursel",
+      "startDate": "1521-04-09",
+      "endDate": "1521-04-09",
+      "place": "pl-146",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8189,8 +9006,11 @@
     {
       "id": "nl/EID141",
       "label": { "default": "Albrecht Dürer was travelling to Gent" },
+      "description": "visits the Ghent altarpiece by Jan van Eyck and other sites",
       "kind": "travel",
-      "place": "Gent",
+      "startDate": "1521-04-09",
+      "endDate": "1521-04-11",
+      "place": "pl-016",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8206,7 +9026,10 @@
     {
       "id": "nl/EID142",
       "label": { "default": "Albrecht Dürer was travelling" },
+      "description": "lunch, Thursday, unknown location, ca. 25 km north of Ghent",
       "kind": "travel",
+      "startDate": "1521-04-11",
+      "endDate": "1521-04-11",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8222,8 +9045,11 @@
     {
       "id": "nl/EID143",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "back to the house of Planckfeldt",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1521-04-11",
+      "endDate": "1521-04-11",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8239,8 +9065,11 @@
     {
       "id": "nl/EID144",
       "label": { "default": "Albrecht Dürer was travelling to Mecheln" },
+      "description": "travels by horse carriage with his wife, visits palace of Margaret of Austria, stays at the house \"Gulden haupt\" of the painter Heinrich, Thursday",
       "kind": "travel",
-      "place": "Mecheln",
+      "startDate": "1521-06-06",
+      "endDate": "1521-06-08",
+      "place": "pl-013",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8265,8 +9094,11 @@
     {
       "id": "nl/EID145",
       "label": { "default": "Albrecht Dürer was travelling to Antwerpen" },
+      "description": "back to the house of Planckfeldt, Saturday",
       "kind": "travel",
-      "place": "Antwerpen",
+      "startDate": "1521-06-08",
+      "endDate": "1521-06-08",
+      "place": "pl-012",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8284,8 +9116,11 @@
       "label": {
         "default": "Albrecht Dürer received commision from Christian II, King of Denmark"
       },
+      "description": "travels by horse carriage, commission by Danish king Christian II to paint his portrait, court visits",
       "kind": "travel",
-      "place": "Brüssel",
+      "startDate": "1521-07-03",
+      "endDate": "1521-07-12",
+      "place": "pl-014",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8328,8 +9163,11 @@
     {
       "id": "nl/EID147",
       "label": { "default": "Albrecht Dürer was travelling to Leuven" },
+      "description": "travels by horse carriage, lunch, Friday",
       "kind": "travel",
-      "place": "Leuven",
+      "startDate": "1521-07-12",
+      "endDate": "1521-07-12",
+      "place": "pl-149",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8345,8 +9183,11 @@
     {
       "id": "nl/EID148",
       "label": { "default": "Albrecht Dürer was travelling to Thienen" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Thienen",
+      "startDate": "1521-07-12",
+      "endDate": "1521-07-13",
+      "place": "pl-150",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8363,7 +9204,9 @@
       "id": "nl/EID149",
       "label": { "default": "Albrecht Dürer was travelling to St. Truyen" },
       "kind": "travel",
-      "place": "St. Truyen",
+      "startDate": "1521-07-13",
+      "endDate": "1521-07-13",
+      "place": "pl-151",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8379,8 +9222,11 @@
     {
       "id": "nl/EID150",
       "label": { "default": "Albrecht Dürer was travelling to Tongeren" },
+      "description": "lunch",
       "kind": "travel",
-      "place": "Tongeren",
+      "startDate": "1521-07-13",
+      "endDate": "1521-07-13",
+      "place": "pl-152",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8396,8 +9242,11 @@
     {
       "id": "nl/EID151",
       "label": { "default": "Albrecht Dürer was travelling to Maastricht" },
+      "description": "overnight stay",
       "kind": "travel",
-      "place": "Maastricht",
+      "startDate": "1521-07-13",
+      "endDate": "1521-07-14",
+      "place": "pl-097",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8413,8 +9262,11 @@
     {
       "id": "nl/EID152",
       "label": { "default": "Albrecht Dürer was travelling to Aachen" },
+      "description": "lunch",
       "kind": "travel",
-      "place": "Aachen",
+      "startDate": "1521-07-14",
+      "endDate": "1521-07-14",
+      "place": "pl-011",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8430,8 +9282,11 @@
     {
       "id": "nl/EID153",
       "label": { "default": "Albrecht Dürer was travelling to Atenburg" },
+      "description": "unplanned stay due to error of coachman, overnight stay, probably Aldenhoven",
       "kind": "travel",
-      "place": "Atenburg",
+      "startDate": "1521-07-14",
+      "endDate": "1521-07-15",
+      "place": "pl-153",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8448,7 +9303,9 @@
       "id": "nl/EID154",
       "label": { "default": "Albrecht Dürer was travelling to Jülich" },
       "kind": "travel",
-      "place": "Jülich",
+      "startDate": "1521-07-15",
+      "endDate": "1521-07-15",
+      "place": "pl-100",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8464,8 +9321,11 @@
     {
       "id": "nl/EID155",
       "label": { "default": "Albrecht Dürer was travelling to Bergheim" },
+      "description": "lunch",
       "kind": "travel",
-      "place": "Bergheim",
+      "startDate": "1521-07-15",
+      "endDate": "1521-07-15",
+      "place": "pl-154",
       "relations": [
         {
           "id": "event/relation/pr-001",
@@ -8481,8 +9341,11 @@
     {
       "id": "nl/EID156",
       "label": { "default": "Albrecht Dürer was travelling to Köln" },
+      "description": "end of copy of diary, the way back would have taken ca. 3 weeks",
       "kind": "travel",
-      "place": "Köln",
+      "startDate": "1521-07-15",
+      "endDate": "1521-07-15",
+      "place": "pl-010",
       "relations": [
         {
           "id": "event/relation/pr-001",

@@ -3704,7 +3704,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von"
       },
+      "description": "Jadot, Jean Nicolas (wirkte in) Florenz",
       "kind": "professional",
+      "startDate": 1739,
+      "endDate": 1739,
       "place": "pl-007",
       "relations": [
         {
@@ -3724,7 +3727,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von"
       },
+      "description": "Jadot, Jean Nicolas (wirkte in) Wien",
       "kind": "professional",
+      "startDate": 1750,
+      "endDate": 1750,
       "place": "pl-008",
       "relations": [
         {
@@ -3744,7 +3750,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von"
       },
+      "description": "Jadot, Jean Nicolas (wirkte in) Brüssel",
       "kind": "professional",
+      "startDate": 1753,
+      "endDate": 1753,
       "place": "pl-009",
       "relations": [
         {
@@ -3766,7 +3775,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von;https://d-nb.info/gnd/118692925"
       },
+      "description": "Jadot, Jean Nicolas (war im Dienst von) Franz I. Stephan, K. von Österreich",
       "kind": "professional",
+      "startDate": 1739,
+      "endDate": 1739,
       "relations": [
         {
           "id": "event/relation/pr-010",
@@ -3799,7 +3811,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von;https://d-nb.info/gnd/118577867"
       },
+      "description": "Jadot, Jean Nicolas (war im Dienst von) Maria Theresia, Kn. von Österreich",
       "kind": "professional",
+      "startDate": 1750,
+      "endDate": 1750,
       "relations": [
         {
           "id": "event/relation/pr-010",
@@ -3830,6 +3845,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von;https://d-nb.info/gnd/108758486"
       },
+      "description": "Jadot, Jean Nicolas (stand in Kontakt) Trautson, Johann Joseph Gf.",
       "kind": "relation",
       "relations": [
         {
@@ -3863,7 +3879,10 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Jadot_Baron_de_Ville-Issey,_Johann_Niklas_von"
       },
+      "description": "Jadot, Jean Nicolas (Hofbauinspektor) Wiener Hof Kn. Maria Theresias",
       "kind": "professional",
+      "startDate": 1750,
+      "endDate": 1750,
       "relations": [
         {
           "id": "event/relation/pr-010",
@@ -3891,6 +3910,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Hildebrand,_Johann_Lucas_von"
       },
+      "description": "Hildebrandt, Johann Lucas von (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -3913,6 +3933,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Hildebrand,_Johann_Lucas_von;https://d-nb.info/gnd/118560107"
       },
+      "description": "Hildebrandt, Johann Lucas von (war im Dienst von) Karl VI., Ks. von Österreich",
       "kind": "professional",
       "relations": [
         {
@@ -3973,6 +3994,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Hildebrand,_Johann_Lucas_von;https://d-nb.info/gnd/118721313"
       },
+      "description": "Hildebrandt, Johann Lucas von (war im Dienst von) Kaunitz-Rietberg, Wenzel Anton Fürst",
       "kind": "professional",
       "relations": [
         {
@@ -4006,6 +4028,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Fischer_von_Erlach,_Joseph_Emanuel_Freiherr"
       },
+      "description": "Fischer von Erlach, Joseph Emanuel (war Schüler von) Fischer von Erlach, Johann Bernhard",
       "kind": "educational",
       "relations": [
         {
@@ -4031,6 +4054,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Fischer_von_Erlach,_Joseph_Emanuel_Freiherr"
       },
+      "description": "Fischer von Erlach, Joseph Emanuel (reiste nach) Italien",
       "kind": "travel",
       "place": "pl-011",
       "relations": [
@@ -4054,6 +4078,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Fischer_von_Erlach,_Joseph_Emanuel_Freiherr"
       },
+      "description": "Fischer von Erlach, Joseph Emanuel (reiste nach) England",
       "kind": "travel",
       "place": "pl-012",
       "relations": [
@@ -4077,6 +4102,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Fischer_von_Erlach,_Joseph_Emanuel_Freiherr"
       },
+      "description": "Fischer von Erlach, Joseph Emanuel (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -4097,6 +4123,7 @@
       "source": {
         "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Fischer_von_Erlach,_Joseph_Emanuel_Freiherr"
       },
+      "description": "Fischer von Erlach, Joseph Emanuel (wirkte in) Schemnitz",
       "kind": "professional",
       "place": "pl-013",
       "relations": [
@@ -4297,7 +4324,10 @@
         "default": "Remy, Ludwig Gabriel von (Sekretär) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/46185" },
+      "description": "Remy, Ludwig Gabriel von (Sekretär) Akademie der bildenden Künste Wien",
       "kind": "professional",
+      "startDate": 1833,
+      "endDate": 1848,
       "relations": [
         {
           "id": "event/relation/pr-004",
@@ -4349,6 +4379,7 @@
       "id": "ev-026",
       "label": { "default": "Remy, Ludwig Gabriel von (wirkte in) Esztergom" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/46185" },
+      "description": "Remy, Ludwig Gabriel von (wirkte in) Esztergom",
       "kind": "professional",
       "place": "pl-015",
       "relations": [
@@ -4365,6 +4396,7 @@
       "id": "ev-027",
       "label": { "default": "Remy, Ludwig Gabriel von (wirkte in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/46185" },
+      "description": "Remy, Ludwig Gabriel von (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -4383,7 +4415,10 @@
         "default": "Hetzendorf von Hohenberg, Johann Ferdinand (war Professor) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/77983" },
+      "description": "Hetzendorf von Hohenberg, Johann Ferdinand (war Professor) Akademie der bildenden Künste Wien",
       "kind": "professional",
+      "startDate": 1770,
+      "endDate": 1770,
       "relations": [
         {
           "id": "event/relation/pr-006",
@@ -4412,7 +4447,10 @@
         "default": "Hetzendorf von Hohenberg, Johann Ferdinand (Hofarchitekt) Wiener Hof Ksin. Maria Theresias"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/77983" },
+      "description": "Hetzendorf von Hohenberg, Johann Ferdinand (Hofarchitekt) Wiener Hof Ksin. Maria Theresias",
       "kind": "professional",
+      "startDate": 1775,
+      "endDate": 1775,
       "relations": [
         {
           "id": "event/relation/pr-006",
@@ -4576,6 +4614,7 @@
       "source": {
         "citation": "https://apis.acdh.oeaw.ac.at/person/90455;https://d-nb.info/gnd/65372-X"
       },
+      "description": "Amann, Johann (Bauinspektor) Benedektinerabtei Sankt Blasien",
       "kind": "professional",
       "relations": [
         {
@@ -4602,6 +4641,7 @@
       "id": "ev-037",
       "label": { "default": "Amann, Johann (reiste nach) Italien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/90455" },
+      "description": "Amann, Johann (reiste nach) Italien",
       "kind": "travel",
       "place": "pl-011",
       "relations": [
@@ -4621,7 +4661,10 @@
       "id": "ev-038",
       "label": { "default": "Amann, Johann (wirkte in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/90455" },
+      "description": "Amann, Johann (wirkte in) Wien",
       "kind": "professional",
+      "startDate": 1796,
+      "endDate": 1796,
       "place": "pl-008",
       "relations": [
         {
@@ -4637,7 +4680,10 @@
       "id": "ev-039",
       "label": { "default": "Montoyer, Louis de (wirkte in) Brüssel" },
       "source": { "citation": "https://www.architektenlexikon.at/de/1185.htm" },
+      "description": "Montoyer, Louis de (wirkte in) Brüssel",
       "kind": "professional",
+      "startDate": 1778,
+      "endDate": 1794,
       "place": "pl-009",
       "relations": [
         {
@@ -4678,7 +4724,10 @@
       "id": "ev-041",
       "label": { "default": "Montoyer, Louis de (wirkte in) Wien" },
       "source": { "citation": "https://www.architektenlexikon.at/de/1185.htm" },
+      "description": "Montoyer, Louis de (wirkte in) Wien",
       "kind": "professional",
+      "startDate": 1795,
+      "endDate": 1795,
       "place": "pl-008",
       "relations": [
         {
@@ -4765,7 +4814,10 @@
       "source": {
         "citation": "https://alex.onb.ac.at/cgi-content/alex?aid=shb&datum=1848&page=312&size=45"
       },
+      "description": "Höhenrieder Johann (Hofarchitekt) Wiener Hof Ks. Ferdinand I.",
       "kind": "professional",
+      "startDate": 1848,
+      "endDate": 1848,
       "relations": [
         {
           "id": "event/relation/pr-005",
@@ -4837,7 +4889,10 @@
         "default": "Ortner, Anton (Hoftheateringenieur und -architekt) Wiener Hof Ks. Franz II./I."
       },
       "source": { "citation": "https://www.architektenlexikon.at/de/1201.htm" },
+      "description": "Ortner, Anton (Hoftheateringenieur und -architekt) Wiener Hof Ks. Franz II./I.",
       "kind": "professional",
+      "startDate": 1803,
+      "endDate": 1821,
       "relations": [
         {
           "id": "event/relation/pr-008",
@@ -4885,7 +4940,10 @@
         "default": "Ortner, Anton (Amtszeichner im Hofbaurat) Wiener Hof Ks. Franz II./I."
       },
       "source": { "citation": "https://www.architektenlexikon.at/de/1201.htm" },
+      "description": "Ortner, Anton (Amtszeichner im Hofbaurat) Wiener Hof Ks. Franz II./I.",
       "kind": "professional",
+      "startDate": 1829,
+      "endDate": 1835,
       "relations": [
         {
           "id": "event/relation/pr-008",
@@ -5041,6 +5099,7 @@
       "id": "ev-057",
       "label": { "default": "Gfall, Johann (ausgebildet in) Paris" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (ausgebildet in) Paris",
       "kind": "educational",
       "place": "pl-020",
       "relations": [
@@ -5098,6 +5157,7 @@
       "id": "ev-060",
       "label": { "default": "Gfall, Johann (reiste nach) Deutschland" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (reiste nach) Deutschland",
       "kind": "travel",
       "place": "pl-021",
       "relations": [
@@ -5117,6 +5177,7 @@
       "id": "ev-061",
       "label": { "default": "Gfall, Johann (reiste nach) Frankreich" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (reiste nach) Frankreich",
       "kind": "travel",
       "place": "pl-022",
       "relations": [
@@ -5136,6 +5197,7 @@
       "id": "ev-062",
       "label": { "default": "Gfall, Johann (reiste nach) Italien" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (reiste nach) Italien",
       "kind": "travel",
       "place": "pl-011",
       "relations": [
@@ -5155,6 +5217,7 @@
       "id": "ev-063",
       "label": { "default": "Gfall, Johann (wirkte in) Bruck an der Leitha" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Bruck an der Leitha",
       "kind": "professional",
       "place": "pl-023",
       "relations": [
@@ -5171,6 +5234,7 @@
       "id": "ev-064",
       "label": { "default": "Gfall, Johann (wirkte in) Rötz" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Rötz",
       "kind": "professional",
       "place": "pl-024",
       "relations": [
@@ -5187,6 +5251,7 @@
       "id": "ev-065",
       "label": { "default": "Gfall, Johann (wirkte in) Bratislava" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Bratislava",
       "kind": "professional",
       "place": "pl-025",
       "relations": [
@@ -5203,6 +5268,7 @@
       "id": "ev-066",
       "label": { "default": "Gfall, Johann (wirkte in) Hernals" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Hernals",
       "kind": "professional",
       "place": "pl-026",
       "relations": [
@@ -5219,6 +5285,7 @@
       "id": "ev-067",
       "label": { "default": "Gfall, Johann (wirkte in) Fürstenzell" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Fürstenzell",
       "kind": "professional",
       "place": "pl-027",
       "relations": [
@@ -5235,6 +5302,7 @@
       "id": "ev-068",
       "label": { "default": "Gfall, Johann (wirkte in) Viktring" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Gfall,_Anton" },
+      "description": "Gfall, Johann (wirkte in) Viktring",
       "kind": "professional",
       "place": "pl-028",
       "relations": [
@@ -5251,7 +5319,10 @@
       "id": "ev-069",
       "label": { "default": "Kirschner, Ferdinand Ritter von (reiste nach) Italien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (reiste nach) Italien",
       "kind": "travel",
+      "startDate": 1846,
+      "endDate": 1847,
       "place": "pl-011",
       "relations": [
         {
@@ -5270,6 +5341,7 @@
       "id": "ev-070",
       "label": { "default": "Kirschner, Ferdinand Ritter von (reiste nach) Schweiz" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (reiste nach) Schweiz",
       "kind": "travel",
       "place": "pl-029",
       "relations": [
@@ -5289,6 +5361,7 @@
       "id": "ev-071",
       "label": { "default": "Kirschner, Ferdinand Ritter von (reiste nach) Königreich Belgien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (reiste nach) Königreich Belgien",
       "kind": "travel",
       "place": "pl-030",
       "relations": [
@@ -5308,6 +5381,7 @@
       "id": "ev-072",
       "label": { "default": "Kirschner, Ferdinand Ritter von (reiste nach) Deutschland" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (reiste nach) Deutschland",
       "kind": "travel",
       "place": "pl-021",
       "relations": [
@@ -5371,6 +5445,7 @@
       "id": "ev-075",
       "label": { "default": "Kirschner, Ferdinand Ritter von (war Schüler von) Roesner, Karl" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Schüler von) Roesner, Karl",
       "kind": "educational",
       "relations": [
         {
@@ -5413,6 +5488,7 @@
         "default": "Kirschner, Ferdinand Ritter von (war Schüler von) Nüll, Eduard van der"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Schüler von) Nüll, Eduard van der",
       "kind": "educational",
       "relations": [
         {
@@ -5436,6 +5512,7 @@
         "default": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Loehr, Moritz von"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Loehr, Moritz von",
       "kind": "relation",
       "relations": [
         {
@@ -5490,6 +5567,7 @@
         "default": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Sophie, Friederike Erzhgn. von Österreich, Prinzessin von Bayern"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Sophie, Friederike Erzhgn. von Österreich, Prinzessin von Bayern",
       "kind": "relation",
       "relations": [
         {
@@ -5519,6 +5597,7 @@
         "default": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Karoline Auguste, Kn. von Österr."
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Karoline Auguste, Kn. von Österr.",
       "kind": "relation",
       "relations": [
         {
@@ -5548,6 +5627,7 @@
         "default": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Rudolf, Franz Karl Josef Erzhg. von Österr., Kronprinz"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (stand in Kontakt) Rudolf, Franz Karl Josef Erzhg. von Österr., Kronprinz",
       "kind": "relation",
       "relations": [
         {
@@ -5624,7 +5704,10 @@
         "default": "Kirschner, Ferdinand Ritter von (war Student) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Student) Akademie der bildenden Künste Wien",
       "kind": "educational",
+      "startDate": 1834,
+      "endDate": 1844,
       "relations": [
         {
           "id": "event/relation/pr-012",
@@ -5829,7 +5912,10 @@
         "default": "Kirschner, Ferdinand Ritter von (war Mitglied) russischer kaiserlich-königlicher St. Stanislaus-Orden"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Mitglied) russischer kaiserlich-königlicher St. Stanislaus-Orden",
       "kind": "membership",
+      "startDate": 1876,
+      "endDate": 1876,
       "relations": [
         {
           "id": "event/relation/pr-012",
@@ -5855,7 +5941,10 @@
         "default": "Kirschner, Ferdinand Ritter von (war Mitglied) montenegrinischer Danilo-Orden"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Mitglied) montenegrinischer Danilo-Orden",
       "kind": "membership",
+      "startDate": 1879,
+      "endDate": 1879,
       "relations": [
         {
           "id": "event/relation/pr-012",
@@ -5881,7 +5970,10 @@
         "default": "Kirschner, Ferdinand Ritter von (war Mitglied) königlich italienischen St. Mauritius- und Lazarus-Ordens"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Mitglied) königlich italienischen St. Mauritius- und Lazarus-Ordens",
       "kind": "membership",
+      "startDate": 1882,
+      "endDate": 1882,
       "relations": [
         {
           "id": "event/relation/pr-012",
@@ -5929,7 +6021,10 @@
         "default": "Kirschner, Ferdinand Ritter von (war Mitarbeiter von) Architekturbüro Franz Beer"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92264" },
+      "description": "Kirschner, Ferdinand Ritter von (war Mitarbeiter von) Architekturbüro Franz Beer",
       "kind": "professional",
+      "startDate": 1840,
+      "endDate": 1843,
       "relations": [
         {
           "id": "event/relation/pr-012",
@@ -5956,7 +6051,10 @@
       "id": "ev-099",
       "label": { "default": "Hasenauer, Carl Freiherr von (reiste nach) Frankreich" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (reiste nach) Frankreich",
       "kind": "travel",
+      "startDate": 1850,
+      "endDate": 1850,
       "place": "pl-022",
       "relations": [
         {
@@ -5975,7 +6073,10 @@
       "id": "ev-100",
       "label": { "default": "Hasenauer, Carl Freiherr von (ausgebildet in) Dresden" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (ausgebildet in) Dresden",
       "kind": "educational",
+      "startDate": 1843,
+      "endDate": 1848,
       "place": "pl-031",
       "relations": [
         {
@@ -5991,7 +6092,10 @@
       "id": "ev-101",
       "label": { "default": "Hasenauer, Carl Freiherr von (reiste nach) Vereinigtes Königreich" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (reiste nach) Vereinigtes Königreich",
       "kind": "travel",
+      "startDate": 1850,
+      "endDate": 1850,
       "place": "pl-032",
       "relations": [
         {
@@ -6010,6 +6114,7 @@
       "id": "ev-102",
       "label": { "default": "Hasenauer, Carl Freiherr von (wirkte in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -6026,7 +6131,10 @@
       "id": "ev-103",
       "label": { "default": "Hasenauer, Carl Freiherr von (reiste nach) Königreich Belgien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (reiste nach) Königreich Belgien",
       "kind": "travel",
+      "startDate": 1850,
+      "endDate": 1850,
       "place": "pl-030",
       "relations": [
         {
@@ -6045,7 +6153,10 @@
       "id": "ev-104",
       "label": { "default": "Hasenauer, Carl Freiherr von (reiste nach) Italien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (reiste nach) Italien",
       "kind": "travel",
+      "startDate": 1850,
+      "endDate": 1850,
       "place": "pl-011",
       "relations": [
         {
@@ -6064,7 +6175,10 @@
       "id": "ev-105",
       "label": { "default": "Hasenauer, Carl Freiherr von (ausgebildet in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (ausgebildet in) Wien",
       "kind": "educational",
+      "startDate": 1843,
+      "endDate": 1848,
       "place": "pl-008",
       "relations": [
         {
@@ -6080,7 +6194,10 @@
       "id": "ev-106",
       "label": { "default": "Hasenauer, Carl Freiherr von (reiste nach) Deutschland" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (reiste nach) Deutschland",
       "kind": "travel",
+      "startDate": 1850,
+      "endDate": 1850,
       "place": "pl-021",
       "relations": [
         {
@@ -6187,6 +6304,7 @@
       "id": "ev-111",
       "label": { "default": "Hasenauer, Carl Freiherr von (wurde beauftragt) Ranzoni, Gustav" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (wurde beauftragt) Ranzoni, Gustav",
       "kind": "professional",
       "relations": [
         {
@@ -6239,6 +6357,7 @@
       "id": "ev-113",
       "label": { "default": "Hasenauer, Carl Freiherr von (wurde beauftragt) Gerold, Moriz von" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (wurde beauftragt) Gerold, Moriz von",
       "kind": "professional",
       "relations": [
         {
@@ -6285,6 +6404,7 @@
       "id": "ev-115",
       "label": { "default": "Hasenauer, Carl Freiherr von (war Schüler von) Nüll, Eduard van der" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Schüler von) Nüll, Eduard van der",
       "kind": "educational",
       "relations": [
         {
@@ -6308,6 +6428,7 @@
         "default": "Hasenauer, Carl Freiherr von (war Schüler von) Sicard von Sicardsburg, August"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Schüler von) Sicard von Sicardsburg, August",
       "kind": "educational",
       "relations": [
         {
@@ -6331,7 +6452,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichisch-Kaiserlicher Orden der Eisernen Krone"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichisch-Kaiserlicher Orden der Eisernen Krone",
       "kind": "membership",
+      "startDate": 1891,
+      "endDate": 1891,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6357,7 +6481,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Légion d'Honneur (Ehrenlegion)"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Légion d'Honneur (Ehrenlegion)",
       "kind": "membership",
+      "startDate": 1879,
+      "endDate": 1879,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6405,7 +6532,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichisch-Kaiserlicher Leopolds-Orden"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichisch-Kaiserlicher Leopolds-Orden",
       "kind": "membership",
+      "startDate": 1886,
+      "endDate": 1886,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6431,7 +6561,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Student) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Student) Akademie der bildenden Künste Wien",
       "kind": "educational",
+      "startDate": 1850,
+      "endDate": 1854,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6480,6 +6613,7 @@
       "id": "ev-123",
       "label": { "default": "Hasenauer, Carl Freiherr von (war Mitglied) Gemeinderat Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Gemeinderat Wien",
       "kind": "membership",
       "relations": [
         {
@@ -6506,7 +6640,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichischer Ingenieur- und Architektenverein"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Österreichischer Ingenieur- und Architektenverein",
       "kind": "membership",
+      "startDate": 1864,
+      "endDate": 1864,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6532,6 +6669,7 @@
         "default": "Hasenauer, Carl Freiherr von (war Vizepräsident) Wiener Bau-Gesellschaft"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Vizepräsident) Wiener Bau-Gesellschaft",
       "kind": "professional",
       "relations": [
         {
@@ -6561,7 +6699,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Royal Institute of British Architects"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Royal Institute of British Architects",
       "kind": "membership",
+      "startDate": 1867,
+      "endDate": 1867,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6587,7 +6728,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Accademia Nazionale di San Luca (Rom)"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Accademia Nazionale di San Luca (Rom)",
       "kind": "membership",
+      "startDate": 1885,
+      "endDate": 1885,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6613,7 +6757,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitglied) Genossenschaft der Bildenden Künstler Wiens (Künstlerhaus)"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitglied) Genossenschaft der Bildenden Künstler Wiens (Künstlerhaus)",
       "kind": "membership",
+      "startDate": 1861,
+      "endDate": 1868,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6639,7 +6786,10 @@
         "default": "Hasenauer, Carl Freiherr von (war w. Mitglied) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war w. Mitglied) Akademie der bildenden Künste Wien",
       "kind": "membership",
+      "startDate": 1866,
+      "endDate": 1866,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6668,7 +6818,10 @@
         "default": "Hasenauer, Carl Freiherr von (war Student) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Student) Akademie der bildenden Künste Wien",
       "kind": "educational",
+      "startDate": 1848,
+      "endDate": 1848,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6694,7 +6847,10 @@
         "default": "Hasenauer, Carl Freiherr von (war o. Professor) Akademie der bildenden Künste Wien"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war o. Professor) Akademie der bildenden Künste Wien",
       "kind": "professional",
+      "startDate": 1884,
+      "endDate": 1884,
       "relations": [
         {
           "id": "event/relation/pr-081",
@@ -6723,6 +6879,7 @@
         "default": "Hasenauer, Carl Freiherr von (war Mitarbeiter von) Atelier Eduard van der Nüll & August Siccardsburg"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/92211" },
+      "description": "Hasenauer, Carl Freiherr von (war Mitarbeiter von) Atelier Eduard van der Nüll & August Siccardsburg",
       "kind": "professional",
       "relations": [
         {
@@ -6896,6 +7053,7 @@
         "default": "Schmidt, Friedrich Frh. von (war leitender Mitarbeiter) Dombauhütte von St. Stephan"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (war leitender Mitarbeiter) Dombauhütte von St. Stephan",
       "kind": "professional",
       "relations": [
         {
@@ -6992,7 +7150,10 @@
       "id": "ev-143",
       "label": { "default": "Schmidt, Friedrich Frh. von (war Abgeordneter) Herrenhaus" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (war Abgeordneter) Herrenhaus",
       "kind": "professional",
+      "startDate": 1888,
+      "endDate": 1888,
       "relations": [
         {
           "id": "event/relation/pr-014",
@@ -7019,7 +7180,10 @@
       "id": "ev-144",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Oppenheim" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Oppenheim",
       "kind": "professional",
+      "startDate": 1877,
+      "endDate": 1889,
       "place": "pl-033",
       "relations": [
         {
@@ -7035,7 +7199,10 @@
       "id": "ev-145",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Karlštejn" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Karlštejn",
       "kind": "professional",
+      "startDate": 1870,
+      "endDate": 1877,
       "place": "pl-034",
       "relations": [
         {
@@ -7051,7 +7218,10 @@
       "id": "ev-146",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Zagreb" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Zagreb",
       "kind": "professional",
+      "startDate": 1874,
+      "endDate": 1885,
       "place": "pl-035",
       "relations": [
         {
@@ -7067,7 +7237,10 @@
       "id": "ev-147",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Madrid" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Madrid",
       "kind": "professional",
+      "startDate": 1859,
+      "endDate": 1859,
       "place": "pl-036",
       "relations": [
         {
@@ -7083,7 +7256,10 @@
       "id": "ev-148",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Fünfkirchen" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Fünfkirchen",
       "kind": "professional",
+      "startDate": 1882,
+      "endDate": 1891,
       "place": "pl-037",
       "relations": [
         {
@@ -7099,6 +7275,7 @@
       "id": "ev-149",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -7115,7 +7292,10 @@
       "id": "ev-150",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Bukarest" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Bukarest",
       "kind": "professional",
+      "startDate": 1872,
+      "endDate": 1886,
       "place": "pl-038",
       "relations": [
         {
@@ -7131,6 +7311,7 @@
       "id": "ev-151",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Basel" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Basel",
       "kind": "professional",
       "place": "pl-039",
       "relations": [
@@ -7147,7 +7328,10 @@
       "id": "ev-152",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Meran" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Meran",
       "kind": "professional",
+      "startDate": 1875,
+      "endDate": 1878,
       "place": "pl-040",
       "relations": [
         {
@@ -7163,7 +7347,10 @@
       "id": "ev-153",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Innsbruck" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Innsbruck",
       "kind": "professional",
+      "startDate": 1874,
+      "endDate": 1884,
       "place": "pl-041",
       "relations": [
         {
@@ -7179,7 +7366,10 @@
       "id": "ev-154",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Venedig" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Venedig",
       "kind": "professional",
+      "startDate": 1858,
+      "endDate": 1858,
       "place": "pl-042",
       "relations": [
         {
@@ -7195,6 +7385,7 @@
       "id": "ev-155",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Salzburg" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Salzburg",
       "kind": "professional",
       "place": "pl-043",
       "relations": [
@@ -7211,7 +7402,10 @@
       "id": "ev-156",
       "label": { "default": "Schmidt, Friedrich Frh. von (wirkte in) Steyr" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/40649" },
+      "description": "Schmidt, Friedrich Frh. von (wirkte in) Steyr",
       "kind": "professional",
+      "startDate": 1877,
+      "endDate": 1889,
       "place": "pl-044",
       "relations": [
         {
@@ -7486,6 +7680,7 @@
       "id": "ev-170",
       "label": { "default": "Kleiner, Salomon (wirkte in) Wien" },
       "source": { "citation": "https://de.wikisource.org/wiki/BLK%C3%96:Kleiner,_Salomon" },
+      "description": "Kleiner, Salomon (wirkte in) Wien",
       "kind": "professional",
       "place": "pl-008",
       "relations": [
@@ -7527,6 +7722,7 @@
       "id": "ev-172",
       "label": { "default": "Semper, Gottfried (wirkte in) Wesermünde" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Wesermünde",
       "kind": "professional",
       "place": "pl-047",
       "relations": [
@@ -7543,7 +7739,10 @@
       "id": "ev-173",
       "label": { "default": "Semper, Gottfried (wirkte in) Wien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Wien",
       "kind": "professional",
+      "startDate": 1871,
+      "endDate": 1876,
       "place": "pl-008",
       "relations": [
         {
@@ -7559,7 +7758,10 @@
       "id": "ev-174",
       "label": { "default": "Semper, Gottfried (wirkte in) Dresden" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Dresden",
       "kind": "professional",
+      "startDate": 1871,
+      "endDate": 1878,
       "place": "pl-031",
       "relations": [
         {
@@ -7575,7 +7777,10 @@
       "id": "ev-175",
       "label": { "default": "Semper, Gottfried (wirkte in) Italien" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Italien",
       "kind": "professional",
+      "startDate": 1877,
+      "endDate": 1877,
       "place": "pl-011",
       "relations": [
         {
@@ -7591,7 +7796,10 @@
       "id": "ev-176",
       "label": { "default": "Semper, Gottfried (ausgebildet in) Regensburg" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (ausgebildet in) Regensburg",
       "kind": "educational",
+      "startDate": 1826,
+      "endDate": 1826,
       "place": "pl-048",
       "relations": [
         {
@@ -7607,7 +7815,10 @@
       "id": "ev-177",
       "label": { "default": "Semper, Gottfried (reiste nach) Paris" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (reiste nach) Paris",
       "kind": "travel",
+      "startDate": 1826,
+      "endDate": 1826,
       "place": "pl-020",
       "relations": [
         {
@@ -7626,7 +7837,10 @@
       "id": "ev-178",
       "label": { "default": "Semper, Gottfried (wirkte in) Dresden" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Dresden",
       "kind": "professional",
+      "startDate": 1834,
+      "endDate": 1834,
       "place": "pl-031",
       "relations": [
         {
@@ -7642,7 +7856,10 @@
       "id": "ev-179",
       "label": { "default": "Semper, Gottfried (ging ins Exil nach) Paris" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (ging ins Exil nach) Paris",
       "kind": "travel",
+      "startDate": 1849,
+      "endDate": 1849,
       "place": "pl-020",
       "relations": [
         {
@@ -7661,7 +7878,10 @@
       "id": "ev-180",
       "label": { "default": "Semper, Gottfried (wirkte in) London" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) London",
       "kind": "professional",
+      "startDate": 1851,
+      "endDate": 1851,
       "place": "pl-049",
       "relations": [
         {
@@ -7677,7 +7897,10 @@
       "id": "ev-181",
       "label": { "default": "Semper, Gottfried (wirkte in) Hamburg" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Hamburg",
       "kind": "professional",
+      "startDate": 1833,
+      "endDate": 1834,
       "place": "pl-050",
       "relations": [
         {
@@ -7693,7 +7916,10 @@
       "id": "ev-182",
       "label": { "default": "Semper, Gottfried (wirkte in) Winterthur" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wirkte in) Winterthur",
       "kind": "professional",
+      "startDate": 1863,
+      "endDate": 1869,
       "place": "pl-051",
       "relations": [
         {
@@ -7709,7 +7935,10 @@
       "id": "ev-183",
       "label": { "default": "Semper, Gottfried (ging ins Exil nach) London" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (ging ins Exil nach) London",
       "kind": "travel",
+      "startDate": 1849,
+      "endDate": 1849,
       "place": "pl-049",
       "relations": [
         {
@@ -7728,7 +7957,10 @@
       "id": "ev-184",
       "label": { "default": "Semper, Gottfried (wurde beauftragt) Oppenheim, Martin Wilhelm" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (wurde beauftragt) Oppenheim, Martin Wilhelm",
       "kind": "professional",
+      "startDate": 1845,
+      "endDate": 1848,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -7755,6 +7987,7 @@
       "id": "ev-185",
       "label": { "default": "Semper, Gottfried (arbeitete zusammen) Semper, Karl" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (arbeitete zusammen) Semper, Karl",
       "kind": "professional",
       "relations": [
         {
@@ -7807,7 +8040,10 @@
       "id": "ev-187",
       "label": { "default": "Semper, Gottfried (arbeitete zusammen) Hasenauer, Carl Freiherr von" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (arbeitete zusammen) Hasenauer, Carl Freiherr von",
       "kind": "professional",
+      "startDate": 1871,
+      "endDate": 1876,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -7858,7 +8094,10 @@
         "default": "Semper, Gottfried (war Schüler) Architekturschule von Franz Christian Gau (Paris)"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (war Schüler) Architekturschule von Franz Christian Gau (Paris)",
       "kind": "educational",
+      "startDate": 1826,
+      "endDate": 1826,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -7951,7 +8190,10 @@
       "id": "ev-193",
       "label": { "default": "Semper, Gottfried (war Professor) Eidgenössisches Polytechnicum" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (war Professor) Eidgenössisches Polytechnicum",
       "kind": "professional",
+      "startDate": 1855,
+      "endDate": 1855,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -7978,7 +8220,10 @@
       "id": "ev-194",
       "label": { "default": "Semper, Gottfried (war Student) Georg-August-Universität Göttingen" },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (war Student) Georg-August-Universität Göttingen",
       "kind": "educational",
+      "startDate": 1823,
+      "endDate": 1824,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -8004,7 +8249,10 @@
         "default": "Semper, Gottfried (war Professor) Department of Practical Art (London)"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (war Professor) Department of Practical Art (London)",
       "kind": "professional",
+      "startDate": 1852,
+      "endDate": 1852,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -8033,7 +8281,10 @@
         "default": "Semper, Gottfried (war Professor) Königlich Sächsische Akademie der Bildenden Künste zu Dresden"
       },
       "source": { "citation": "https://apis.acdh.oeaw.ac.at/person/34921" },
+      "description": "Semper, Gottfried (war Professor) Königlich Sächsische Akademie der Bildenden Künste zu Dresden",
       "kind": "professional",
+      "startDate": 1834,
+      "endDate": 1834,
       "relations": [
         {
           "id": "event/relation/pr-016",
@@ -8062,7 +8313,10 @@
       "source": {
         "citation": "https://www.geschichtewiki.wien.gv.at/index.php?title=Lorenzo_Mattielli&oldid=796772"
       },
+      "description": "Mattielli, Lorenzo (wirkte in) Wien",
       "kind": "professional",
+      "startDate": 1712,
+      "endDate": 1712,
       "place": "pl-008",
       "relations": [
         {
@@ -8106,7 +8360,10 @@
       "source": {
         "citation": "https://www.geschichtewiki.wien.gv.at/index.php?title=Lorenzo_Mattielli&oldid=796772"
       },
+      "description": "Mattielli, Lorenzo (wirkte in) Dresden",
       "kind": "professional",
+      "startDate": 1740,
+      "endDate": 1740,
       "place": "pl-031",
       "relations": [
         {
@@ -8128,7 +8385,10 @@
       "source": {
         "citation": "https://www.geschichtewiki.wien.gv.at/index.php?title=Lorenzo_Mattielli&oldid=796772"
       },
+      "description": "Mattielli, Lorenzo (Hofinspektor) Sammlung von antiken und modernen Statuen (Dresden, Kfst. Friedrich August II. v. Sachsen)",
       "kind": "professional",
+      "startDate": 1744,
+      "endDate": 1744,
       "relations": [
         {
           "id": "event/relation/pr-026",
@@ -8290,6 +8550,8 @@
       "id": "ev-208",
       "label": { "default": "Amann, Johann wurde geboren" },
       "kind": "birth",
+      "startDate": "1765-05-19",
+      "endDate": "1765-05-19",
       "place": "pl-016",
       "relations": [
         {
@@ -8317,6 +8579,8 @@
       "id": "ev-210",
       "label": { "default": "Fischer von Erlach, Joseph Emanuel wurde geboren" },
       "kind": "birth",
+      "startDate": "1693-09-13",
+      "endDate": "1693-09-13",
       "relations": [
         {
           "id": "event/relation/pr-003",
@@ -8336,6 +8600,8 @@
       "id": "ev-211",
       "label": { "default": "Remy, Ludwig Gabriel von wurde geboren" },
       "kind": "birth",
+      "startDate": 1776,
+      "endDate": 1776,
       "place": "pl-014",
       "relations": [
         {
@@ -8363,6 +8629,8 @@
       "id": "ev-213",
       "label": { "default": "Hetzendorf von Hohenberg, Johann Ferdinand wurde geboren" },
       "kind": "birth",
+      "startDate": 1732,
+      "endDate": 1732,
       "place": "pl-008",
       "relations": [
         {
@@ -8383,6 +8651,8 @@
       "id": "ev-214",
       "label": { "default": "Montoyer, Louis de wurde geboren" },
       "kind": "birth",
+      "startDate": 1749,
+      "endDate": 1749,
       "place": "pl-017",
       "relations": [
         {
@@ -8397,6 +8667,8 @@
       "id": "ev-215",
       "label": { "default": "Ortner, Anton wurde geboren" },
       "kind": "birth",
+      "startDate": 1776,
+      "endDate": 1776,
       "place": "pl-018",
       "relations": [
         {
@@ -8411,6 +8683,8 @@
       "id": "ev-216",
       "label": { "default": "Gfall, Johann wurde geboren" },
       "kind": "birth",
+      "startDate": 1725,
+      "endDate": 1725,
       "place": "pl-019",
       "relations": [
         {
@@ -8425,6 +8699,8 @@
       "id": "ev-217",
       "label": { "default": "Jadot, Jean Nicolas wurde geboren" },
       "kind": "birth",
+      "startDate": 1710,
+      "endDate": 1710,
       "relations": [
         {
           "id": "event/relation/pr-010",
@@ -8438,6 +8714,8 @@
       "id": "ev-218",
       "label": { "default": "Hildebrandt, Johann Lucas von wurde geboren" },
       "kind": "birth",
+      "startDate": 1668,
+      "endDate": 1668,
       "place": "pl-010",
       "relations": [
         {
@@ -8452,6 +8730,8 @@
       "id": "ev-219",
       "label": { "default": "Kirschner, Ferdinand Ritter von wurde geboren" },
       "kind": "birth",
+      "startDate": 1821,
+      "endDate": 1821,
       "place": "pl-008",
       "relations": [
         {
@@ -8466,6 +8746,8 @@
       "id": "ev-220",
       "label": { "default": "Hasenauer, Carl von wurde geboren" },
       "kind": "birth",
+      "startDate": 1833,
+      "endDate": 1833,
       "relations": [
         {
           "id": "event/relation/pr-013",
@@ -8479,6 +8761,8 @@
       "id": "ev-221",
       "label": { "default": "Schmidt, Friedrich Frh. von wurde geboren" },
       "kind": "birth",
+      "startDate": 1825,
+      "endDate": 1825,
       "place": "pl-045",
       "relations": [
         {
@@ -8493,6 +8777,8 @@
       "id": "ev-222",
       "label": { "default": "Kleiner, Salomon wurde geboren" },
       "kind": "birth",
+      "startDate": 1700,
+      "endDate": 1700,
       "place": "pl-046",
       "relations": [
         {
@@ -8507,6 +8793,8 @@
       "id": "ev-223",
       "label": { "default": "Semper, Gottfried wurde geboren" },
       "kind": "birth",
+      "startDate": 1803,
+      "endDate": 1803,
       "place": "pl-050",
       "relations": [
         {
@@ -8521,6 +8809,8 @@
       "id": "ev-224",
       "label": { "default": "Habsburg, Karl VI. wurde geboren" },
       "kind": "birth",
+      "startDate": 1685,
+      "endDate": 1685,
       "relations": [
         {
           "id": "event/relation/pr-017",
@@ -8534,6 +8824,8 @@
       "id": "ev-225",
       "label": { "default": "Franz Joseph I., K. von Österr., Kg. von Ungarn wurde geboren" },
       "kind": "birth",
+      "startDate": 1830,
+      "endDate": 1830,
       "relations": [
         {
           "id": "event/relation/pr-018",
@@ -8560,6 +8852,8 @@
       "id": "ev-227",
       "label": { "default": "Schönborn, Conrad Adolph von wurde geboren" },
       "kind": "birth",
+      "startDate": 1681,
+      "endDate": 1681,
       "relations": [
         {
           "id": "event/relation/pr-020",
@@ -8573,6 +8867,8 @@
       "id": "ev-228",
       "label": { "default": "Neumann, Balthasar wurde geboren" },
       "kind": "birth",
+      "startDate": 1687,
+      "endDate": 1687,
       "relations": [
         {
           "id": "event/relation/pr-021",
@@ -8586,6 +8882,8 @@
       "id": "ev-229",
       "label": { "default": "Hohenlohe-Schillingfürst, Konstantin Prinz von wurde geboren" },
       "kind": "birth",
+      "startDate": 1828,
+      "endDate": 1828,
       "relations": [
         {
           "id": "event/relation/pr-022",
@@ -8599,6 +8897,8 @@
       "id": "ev-230",
       "label": { "default": "Lasser von Zollheim, Joseph Baron von wurde geboren" },
       "kind": "birth",
+      "startDate": 1814,
+      "endDate": 1814,
       "relations": [
         {
           "id": "event/relation/pr-023",
@@ -8612,6 +8912,8 @@
       "id": "ev-231",
       "label": { "default": "Koechlin, Karl wurde geboren" },
       "kind": "birth",
+      "startDate": 1828,
+      "endDate": 1828,
       "relations": [
         {
           "id": "event/relation/pr-024",
@@ -8625,6 +8927,8 @@
       "id": "ev-232",
       "label": { "default": "Boffrand, Germina wurde geboren" },
       "kind": "birth",
+      "startDate": 1667,
+      "endDate": 1667,
       "relations": [
         {
           "id": "event/relation/pr-025",
@@ -8638,6 +8942,8 @@
       "id": "ev-233",
       "label": { "default": "Mattielli, Lorenzo wurde geboren" },
       "kind": "birth",
+      "startDate": 1687,
+      "endDate": 1687,
       "place": "pl-053",
       "relations": [
         {
@@ -8652,6 +8958,8 @@
       "id": "ev-234",
       "label": { "default": "Albrecht, Conrad Adolph von wurde geboren" },
       "kind": "birth",
+      "startDate": 1681,
+      "endDate": 1681,
       "relations": [
         {
           "id": "event/relation/pr-027",
@@ -8665,6 +8973,8 @@
       "id": "ev-235",
       "label": { "default": "Amann, Johann starb" },
       "kind": "death",
+      "startDate": "1834-11-28",
+      "endDate": "1834-11-28",
       "place": "pl-008",
       "relations": [
         {
@@ -8698,6 +9008,8 @@
       "id": "ev-237",
       "label": { "default": "Fischer von Erlach, Joseph Emanuel starb" },
       "kind": "death",
+      "startDate": "1742-06-29",
+      "endDate": "1742-06-29",
       "relations": [
         {
           "id": "event/relation/pr-003",
@@ -8714,6 +9026,8 @@
       "id": "ev-238",
       "label": { "default": "Remy, Ludwig Gabriel von starb" },
       "kind": "death",
+      "startDate": 1851,
+      "endDate": 1851,
       "place": "pl-008",
       "relations": [
         {
@@ -8747,6 +9061,8 @@
       "id": "ev-240",
       "label": { "default": "Hetzendorf von Hohenberg, Johann Ferdinand starb" },
       "kind": "death",
+      "startDate": 1816,
+      "endDate": 1816,
       "place": "pl-008",
       "relations": [
         {
@@ -8764,6 +9080,8 @@
       "id": "ev-241",
       "label": { "default": "Montoyer, Louis de starb" },
       "kind": "death",
+      "startDate": 1811,
+      "endDate": 1811,
       "place": "pl-008",
       "relations": [
         {
@@ -8781,6 +9099,8 @@
       "id": "ev-242",
       "label": { "default": "Ortner, Anton starb" },
       "kind": "death",
+      "startDate": 1862,
+      "endDate": 1862,
       "place": "pl-008",
       "relations": [
         {
@@ -8798,6 +9118,8 @@
       "id": "ev-243",
       "label": { "default": "Gfall, Johann starb" },
       "kind": "death",
+      "startDate": 1800,
+      "endDate": 1800,
       "place": "pl-008",
       "relations": [
         {
@@ -8815,6 +9137,8 @@
       "id": "ev-244",
       "label": { "default": "Jadot, Jean Nicolas starb" },
       "kind": "death",
+      "startDate": 1761,
+      "endDate": 1761,
       "relations": [
         {
           "id": "event/relation/pr-010",
@@ -8831,6 +9155,8 @@
       "id": "ev-245",
       "label": { "default": "Hildebrandt, Johann Lucas von starb" },
       "kind": "death",
+      "startDate": 1745,
+      "endDate": 1745,
       "place": "pl-008",
       "relations": [
         {
@@ -8848,6 +9174,8 @@
       "id": "ev-246",
       "label": { "default": "Kirschner, Ferdinand Ritter von starb" },
       "kind": "death",
+      "startDate": 1896,
+      "endDate": 1896,
       "place": "pl-008",
       "relations": [
         {
@@ -8865,6 +9193,8 @@
       "id": "ev-247",
       "label": { "default": "Hasenauer, Carl von starb" },
       "kind": "death",
+      "startDate": 1894,
+      "endDate": 1894,
       "relations": [
         {
           "id": "event/relation/pr-013",
@@ -8881,6 +9211,8 @@
       "id": "ev-248",
       "label": { "default": "Schmidt, Friedrich Frh. von starb" },
       "kind": "death",
+      "startDate": 1891,
+      "endDate": 1891,
       "place": "pl-008",
       "relations": [
         {
@@ -8898,6 +9230,8 @@
       "id": "ev-249",
       "label": { "default": "Kleiner, Salomon starb" },
       "kind": "death",
+      "startDate": 1761,
+      "endDate": 1761,
       "place": "pl-008",
       "relations": [
         {
@@ -8915,6 +9249,8 @@
       "id": "ev-250",
       "label": { "default": "Semper, Gottfried starb" },
       "kind": "death",
+      "startDate": 1879,
+      "endDate": 1879,
       "place": "pl-052",
       "relations": [
         {
@@ -8932,6 +9268,8 @@
       "id": "ev-251",
       "label": { "default": "Habsburg, Karl VI. starb" },
       "kind": "death",
+      "startDate": 1740,
+      "endDate": 1740,
       "relations": [
         {
           "id": "event/relation/pr-017",
@@ -8948,6 +9286,8 @@
       "id": "ev-252",
       "label": { "default": "Franz Joseph I., K. von Österr., Kg. von Ungarn starb" },
       "kind": "death",
+      "startDate": 1916,
+      "endDate": 1916,
       "relations": [
         {
           "id": "event/relation/pr-018",
@@ -8980,6 +9320,8 @@
       "id": "ev-254",
       "label": { "default": "Schönborn, Conrad Adolph von starb" },
       "kind": "death",
+      "startDate": 1751,
+      "endDate": 1751,
       "relations": [
         {
           "id": "event/relation/pr-020",
@@ -8996,6 +9338,8 @@
       "id": "ev-255",
       "label": { "default": "Neumann, Balthasar starb" },
       "kind": "death",
+      "startDate": 1753,
+      "endDate": 1753,
       "relations": [
         {
           "id": "event/relation/pr-021",
@@ -9012,6 +9356,8 @@
       "id": "ev-256",
       "label": { "default": "Hohenlohe-Schillingfürst, Konstantin Prinz von starb" },
       "kind": "death",
+      "startDate": 1896,
+      "endDate": 1896,
       "relations": [
         {
           "id": "event/relation/pr-022",
@@ -9028,6 +9374,8 @@
       "id": "ev-257",
       "label": { "default": "Lasser von Zollheim, Joseph Baron von starb" },
       "kind": "death",
+      "startDate": 1879,
+      "endDate": 1879,
       "relations": [
         {
           "id": "event/relation/pr-023",
@@ -9044,6 +9392,8 @@
       "id": "ev-258",
       "label": { "default": "Koechlin, Karl starb" },
       "kind": "death",
+      "startDate": 1894,
+      "endDate": 1894,
       "relations": [
         {
           "id": "event/relation/pr-024",
@@ -9060,6 +9410,8 @@
       "id": "ev-259",
       "label": { "default": "Boffrand, Germina starb" },
       "kind": "death",
+      "startDate": 1754,
+      "endDate": 1754,
       "relations": [
         {
           "id": "event/relation/pr-025",
@@ -9076,6 +9428,8 @@
       "id": "ev-260",
       "label": { "default": "Mattielli, Lorenzo starb" },
       "kind": "death",
+      "startDate": 1748,
+      "endDate": 1748,
       "place": "pl-031",
       "relations": [
         {
@@ -9093,6 +9447,8 @@
       "id": "ev-261",
       "label": { "default": "Albrecht, Conrad Adolph von starb" },
       "kind": "death",
+      "startDate": 1751,
+      "endDate": 1751,
       "relations": [
         {
           "id": "event/relation/pr-027",
@@ -9110,7 +9466,10 @@
       "label": {
         "default": "Consent of Emperor Charles VI to the new construction or reconstruction of the Reichskanzleitrakt"
       },
+      "description": "Consent of Emperor Charles VI to the new construction or reconstruction of the Reichskanzleitrakt",
       "kind": "construction",
+      "startDate": 1721,
+      "endDate": 1721,
       "place": "pl-001",
       "relations": [
         {
@@ -9136,7 +9495,10 @@
     {
       "id": "cho-buildings/ev-002",
       "label": { "default": "first drafts for the Reichskanzleitrakt by Hildebrandt" },
+      "description": "first drafts for the Reichskanzleitrakt by Hildebrandt",
       "kind": "construction",
+      "startDate": 1722,
+      "endDate": 1722,
       "place": "pl-001",
       "relations": [
         {
@@ -9165,7 +9527,10 @@
       "source": {
         "citation": "https://sammlungenonline.albertina.at/iiif/tms_155178/manifest.json"
       },
+      "description": "draft of project I for the Michaelertrakt",
       "kind": "construction",
+      "startDate": 1722,
+      "endDate": 1722,
       "place": "pl-002",
       "relations": [
         {
@@ -9200,7 +9565,10 @@
     {
       "id": "cho-buildings/ev-004",
       "label": { "default": "start of construction of the Reichskanzleitrakt" },
+      "description": "start of construction of the Reichskanzleitrakt",
       "kind": "construction",
+      "startDate": 1723,
+      "endDate": 1723,
       "place": "pl-001",
       "relations": [
         {
@@ -9235,7 +9603,10 @@
     {
       "id": "cho-buildings/ev-005",
       "label": { "default": "Choice of location for the winter riding school" },
+      "description": "Choice of location for the winter riding school",
       "kind": "construction",
+      "startDate": 1724,
+      "endDate": 1724,
       "place": "pl-003",
       "relations": [
         {
@@ -9264,7 +9635,10 @@
       "source": {
         "citation": "https://sammlungenonline.albertina.at/iiif/tms_151207/manifest.json;https://sammlungenonline.albertina.at/iiif/tms_155244/manifest.json"
       },
+      "description": "draft of Hildebrandt's General Regulation plan for the Hofburg",
       "kind": "construction",
+      "startDate": 1724,
+      "endDate": 1724,
       "place": "pl-004",
       "relations": [
         {
@@ -9308,7 +9682,10 @@
       "source": {
         "citation": "https://sammlungenonline.albertina.at/iiif/tms_155258/manifest.json"
       },
+      "description": "draft of Hildebrandt's facade facing Michaelerplatz",
       "kind": "construction",
+      "startDate": 1725,
+      "endDate": 1725,
       "place": "pl-002",
       "relations": [
         {
@@ -9345,7 +9722,10 @@
       "label": {
         "default": "J.E. Fischer von Erlach takes over the planning for the Reichskanzleitrakt and especially its facade"
       },
+      "description": "J.E. Fischer von Erlach takes over the planning for the Reichskanzleitrakt and especially its facade",
       "kind": "construction",
+      "startDate": 1726,
+      "endDate": 1726,
       "place": "pl-001",
       "relations": [
         {
@@ -9382,7 +9762,10 @@
       "label": {
         "default": "Hildebrandt looses his commission for the facade of the Reichskanzleitrakt"
       },
+      "description": "Hildebrandt looses his commission for the facade of the Reichskanzleitrakt",
       "kind": "construction",
+      "startDate": 1726,
+      "endDate": 1726,
       "place": "pl-001",
       "relations": [
         {
@@ -9411,7 +9794,10 @@
       "source": {
         "citation": "https://sammlungenonline.albertina.at/iiif/tms_155242/manifest.json"
       },
+      "description": "draft of project II for the Michaelertrakt",
       "kind": "construction",
+      "startDate": 1726,
+      "endDate": 1726,
       "place": "pl-002",
       "relations": [
         {
@@ -9455,7 +9841,10 @@
     {
       "id": "cho-buildings/ev-011",
       "label": { "default": "demolition of Hildebrandt's Matthiastor" },
+      "description": "demolition of Hildebrandt's Matthiastor",
       "kind": "construction",
+      "startDate": 1728,
+      "endDate": 1728,
       "place": "pl-001",
       "relations": [
         {
@@ -9483,7 +9872,10 @@
       "label": {
         "default": "Lorenzo Mattielli works on site on his Hercules sculptures for the facade of the Reichskanzleitratrakt"
       },
+      "description": "Lorenzo Mattielli works on site on his Hercules sculptures for the facade of the Reichskanzleitratrakt",
       "kind": "construction",
+      "startDate": 1728,
+      "endDate": 1728,
       "place": "pl-001",
       "relations": [
         {
@@ -9511,7 +9903,10 @@
       "label": {
         "default": "draft for an alternative project for the Michaelertrakt with rectangular facade"
       },
+      "description": "draft for an alternative project for the Michaelertrakt with rectangular facade",
       "kind": "construction",
+      "startDate": 1728,
+      "endDate": 1728,
       "place": "pl-002",
       "relations": [
         {
@@ -9540,7 +9935,10 @@
       "source": {
         "citation": "https://digital.onb.ac.at/RepViewer/viewer.faces?doc=DTL_9249008&order=1&view=SINGLE"
       },
+      "description": "draft of project III for the Michaelertrakt; veduta ÖNB Sammlung von Handschriften und alten Drucken (HAN) Sammlung von Handschriften und alten Drucken Signatur: Cod. Min. 9 / 1 Tafel 7",
       "kind": "construction",
+      "startDate": 1729,
+      "endDate": 1729,
       "place": "pl-002",
       "relations": [
         {
@@ -9578,7 +9976,10 @@
     {
       "id": "cho-buildings/ev-015",
       "label": { "default": "completion of the Reichskanzleitrakt" },
+      "description": "completion of the Reichskanzleitrakt",
       "kind": "construction",
+      "startDate": 1730,
+      "endDate": 1730,
       "place": "pl-001",
       "relations": [
         {
@@ -9604,7 +10005,10 @@
     {
       "id": "cho-buildings/ev-016",
       "label": { "default": "Work on the roofing of the Winter Riding School" },
+      "description": "Work on the roofing of the Winter Riding School",
       "kind": "construction",
+      "startDate": 1733,
+      "endDate": 1733,
       "place": "pl-003",
       "relations": [
         {
@@ -9630,7 +10034,10 @@
     {
       "id": "cho-buildings/ev-017",
       "label": { "default": "First mention of the dome of the Winter Riding School" },
+      "description": "First mention of the dome of the Winter Riding School",
       "kind": "construction",
+      "startDate": 1734,
+      "endDate": 1734,
       "place": "pl-003",
       "relations": [
         {
@@ -9671,7 +10078,10 @@
     {
       "id": "cho-buildings/ev-018",
       "label": { "default": "Completion of the Winter Riding School" },
+      "description": "Completion of the Winter Riding School",
       "kind": "construction",
+      "startDate": 1735,
+      "endDate": 1735,
       "place": "pl-003",
       "relations": [
         {
@@ -9697,7 +10107,10 @@
     {
       "id": "cho-buildings/ev-019",
       "label": { "default": "Cessation of construction work on the Michaelertrakt" },
+      "description": "Cessation of construction work on the Michaelertrakt",
       "kind": "construction",
+      "startDate": 1735,
+      "endDate": 1740,
       "place": "pl-002",
       "relations": [
         {
@@ -9723,7 +10136,10 @@
     {
       "id": "cho-buildings/ev-020",
       "label": { "default": "start of the conversion of the Ballspielhaus into the court theatre" },
+      "description": "start of the conversion of the Ballspielhaus into the court theatre",
       "kind": "construction",
+      "startDate": 1741,
+      "endDate": 1741,
       "place": "pl-005",
       "relations": [
         {
@@ -9740,7 +10156,10 @@
     {
       "id": "cho-buildings/ev-021",
       "label": { "default": "drafts for a general regulation of the Hofburg" },
+      "description": "drafts for a general regulation of the Hofburg",
       "kind": "construction",
+      "startDate": 1745,
+      "endDate": 1747,
       "place": "pl-004",
       "relations": [
         {
@@ -9766,7 +10185,10 @@
     {
       "id": "cho-buildings/ev-022",
       "label": { "default": "drafts for a general regulation of the Hofburg" },
+      "description": "drafts for a general regulation of the Hofburg",
       "kind": "construction",
+      "startDate": 1745,
+      "endDate": 1748,
       "place": "pl-004",
       "relations": [
         {
@@ -9824,7 +10246,10 @@
       "label": {
         "default": "Emperor Francis Joseph I commissions Carl Hasenauer to complete the Michaeler façade in connection with the extension of the Hofburg in the form of the \"Imperial Forum\""
       },
+      "description": "Emperor Francis Joseph I commissions Carl Hasenauer to complete the Michaeler façade in connection with the extension of the Hofburg in the form of the \"Imperial Forum\"",
       "kind": "construction",
+      "startDate": 1869,
+      "endDate": 1869,
       "place": "pl-001",
       "relations": [
         {
@@ -9873,7 +10298,10 @@
       "label": {
         "default": "Obersthofmeister Konstantin Prince Hohenlohe-Schillingsfürst and Minister of the Interior Joseph Baron Lasser von Zollheim recommend the purchase of the houses on Michaelerplatz"
       },
+      "description": "Obersthofmeister Konstantin Prince Hohenlohe-Schillingsfürst and Minister of the Interior Joseph Baron Lasser von Zollheim recommend the purchase of the houses on Michaelerplatz",
       "kind": "construction",
+      "startDate": 1876,
+      "endDate": 1876,
       "place": "pl-002",
       "relations": [
         {
@@ -9899,7 +10327,10 @@
     {
       "id": "cho-buildings/ev-025",
       "label": { "default": "Purchase of the house of Gabriel Baron Gudenus at Michaelerplatz" },
+      "description": "Purchase of the house of Gabriel Baron Gudenus at Michaelerplatz",
       "kind": "construction",
+      "startDate": 1877,
+      "endDate": 1877,
       "place": "pl-002",
       "relations": [
         {
@@ -9927,7 +10358,10 @@
       "label": {
         "default": "Most submissive submission by Hohenlohe and Lasser recommending the purchase of the Gudenus House on Michaelerplatz"
       },
+      "description": "Most submissive submission by Hohenlohe and Lasser recommending the purchase of the Gudenus House on Michaelerplatz",
       "kind": "construction",
+      "startDate": "1877-03-08",
+      "endDate": "1877-03-08",
       "place": "pl-002",
       "relations": [
         {
@@ -9964,7 +10398,10 @@
       "label": {
         "default": "Highest possible acknowledgement of the purchase of the Gudenus House by Francis Joseph I"
       },
+      "description": "Highest possible acknowledgement of the purchase of the Gudenus House by Francis Joseph I",
       "kind": "construction",
+      "startDate": "1877-03-13",
+      "endDate": "1877-03-13",
       "place": "pl-002",
       "relations": [
         {
@@ -10001,7 +10438,10 @@
       "label": {
         "default": "Completion of the relocation of the old Burgtheater to the new house on the Ring"
       },
+      "description": "Completion of the relocation of the old Burgtheater to the new house on the Ring",
       "kind": "construction",
+      "startDate": 1888,
+      "endDate": 1888,
       "place": "pl-005",
       "relations": [
         {
@@ -10021,7 +10461,10 @@
       "source": {
         "citation": "https://sammlungenonline.albertina.at/iiif/tms_250378/manifest.json"
       },
+      "description": "Demolition of the old Burgtheater",
       "kind": "construction",
+      "startDate": 1888,
+      "endDate": 1888,
       "place": "pl-005",
       "relations": [
         {
@@ -10049,7 +10492,10 @@
       "label": {
         "default": "Commission to Carl Hasenauer to produce designs for the completion of the Michaeler façade"
       },
+      "description": "Commission to Carl Hasenauer to produce designs for the completion of the Michaeler façade",
       "kind": "construction",
+      "startDate": 1888,
+      "endDate": 1888,
       "place": "pl-002",
       "relations": [
         {
@@ -10086,7 +10532,10 @@
       "label": {
         "default": "drafts by Ferdinand Kirschner for the completion of the Michaeler façade"
       },
+      "description": "drafts by Ferdinand Kirschner for the completion of the Michaeler façade",
       "kind": "construction",
+      "startDate": 1888,
+      "endDate": 1888,
       "place": "pl-002",
       "relations": [
         {
@@ -10114,7 +10563,10 @@
       "label": {
         "default": "Commission discussion of the plans submitted by Hasenauer and Kirschner"
       },
+      "description": "Commission discussion of the plans submitted by Hasenauer and Kirschner; draft by Hasenauer with 3 domes, draft by Kirschner",
       "kind": "construction",
+      "startDate": "1889-03",
+      "endDate": "1889-03",
       "place": "pl-002",
       "relations": [
         {
@@ -10151,7 +10603,10 @@
       "label": {
         "default": "Francis Joseph I commissions Kirschner to draw up the execution plans based on Hasenauer's façade design and incorporating his own spatial concept, and to carry out the execution"
       },
+      "description": "Francis Joseph I commissions Kirschner to draw up the execution plans based on Hasenauer's façade design and incorporating his own spatial concept, and to carry out the execution",
       "kind": "construction",
+      "startDate": "1889-04",
+      "endDate": "1889-04",
       "place": "pl-002",
       "relations": [
         {
@@ -10179,7 +10634,10 @@
       "label": {
         "default": "Kirschner presents his execution plans to the Court Building Committee"
       },
+      "description": "Kirschner presents his execution plans to the Court Building Committee",
       "kind": "construction",
+      "startDate": "1889-11",
+      "endDate": "1889-11",
       "place": "pl-002",
       "relations": [
         {
@@ -10207,7 +10665,10 @@
       "label": {
         "default": "Wiener Baugesellschaft is awarded the contract for the master builder works as the best bidder"
       },
+      "description": "Wiener Baugesellschaft is awarded the contract for the master builder works as the best bidder",
       "kind": "construction",
+      "startDate": 1890,
+      "endDate": 1890,
       "place": "pl-002",
       "relations": [
         {
@@ -10224,7 +10685,10 @@
     {
       "id": "cho-buildings/ev-036",
       "label": { "default": "the tendering of the roofing work takes place" },
+      "description": "the tendering of the roofing work takes place",
       "kind": "construction",
+      "startDate": 1891,
+      "endDate": 1891,
       "place": "pl-002",
       "relations": [
         {
@@ -10243,7 +10707,10 @@
       "label": {
         "default": "Resolution of the Court Building Committee on the electrification of the Michaelertrakt"
       },
+      "description": "Resolution of the Court Building Committee on the electrification of the Michaelertrakt",
       "kind": "construction",
+      "startDate": 1892,
+      "endDate": 1892,
       "place": "pl-002",
       "relations": [
         {
@@ -10260,7 +10727,10 @@
     {
       "id": "cho-buildings/ev-038",
       "label": { "default": "completion of the Michaelertrakt" },
+      "description": "completion of the Michaelertrakt; see data (photographies) from Europeana",
       "kind": "construction",
+      "startDate": 1895,
+      "endDate": 1895,
       "place": "pl-002",
       "relations": [
         {
@@ -10280,6 +10750,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt (Vorstadtfassade, Michaelertrakt, Burgtheater), Gesamtplan, Grundriss"
       },
       "kind": "creation",
+      "startDate": 1810,
+      "endDate": 1820,
       "relations": [
         {
           "id": "event/relation/ob-007",
@@ -10319,6 +10791,8 @@
         "default": "Wien I, Hofburg, Altes Burgtheater, Bühnenhaus, Fassade zum Michaelerplatz, Aufriss und Grundriss"
       },
       "kind": "creation",
+      "startDate": 1758,
+      "endDate": 1760,
       "relations": [
         {
           "id": "event/relation/ob-008",
@@ -10356,6 +10830,8 @@
       "id": "cho-drawings/ev-003",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Projekt I, Perspektive" },
       "kind": "creation",
+      "startDate": 1722,
+      "endDate": 1722,
       "relations": [
         {
           "id": "event/relation/ob-009",
@@ -10395,6 +10871,8 @@
         "default": "Wien I, Hofburg, Festdekoration, Michaelertrakt, Festdekoration und Illumination anläßlich des Einzugs von Kaiser Franz I. am 16. Juni 1814, Grundriss und Aufriss"
       },
       "kind": "creation",
+      "startDate": 1814,
+      "endDate": 1814,
       "relations": [
         {
           "id": "event/relation/ob-010",
@@ -10434,6 +10912,8 @@
         "default": "Wien I, Hofburg, kaiserlicher Baugrund Michaelerplatz Nr. 6, Lageplan"
       },
       "kind": "creation",
+      "startDate": 1834,
+      "endDate": 1834,
       "relations": [
         {
           "id": "event/relation/ob-011",
@@ -10473,6 +10953,8 @@
         "default": "Wien I, Hofburg, kaiserlicher Baugrund Michaelerplatz Nr. 6, Neubauprojekt, Keller, Grundriß"
       },
       "kind": "creation",
+      "startDate": 1833,
+      "endDate": 1833,
       "relations": [
         {
           "id": "event/relation/ob-012",
@@ -10512,6 +10994,8 @@
         "default": "Wien I, Hofburg, kaiserlicher Baugrund Michaelerplatz Nr. 6, Neubauprojekt, Parterre, Grundriß"
       },
       "kind": "creation",
+      "startDate": 1833,
+      "endDate": 1833,
       "relations": [
         {
           "id": "event/relation/ob-013",
@@ -10551,6 +11035,8 @@
         "default": "Wien I, Hofburg, kaiserlicher Baugrund Michaelerplatz Nr. 6, Neubauprojekt, Querschnitt"
       },
       "kind": "creation",
+      "startDate": 1833,
+      "endDate": 1833,
       "relations": [
         {
           "id": "event/relation/ob-014",
@@ -10588,6 +11074,8 @@
       "id": "cho-drawings/ev-009",
       "label": { "default": "Wien I, Hofburg, Michaelerplatz mit Schauflergasse, Situationsplan" },
       "kind": "creation",
+      "startDate": 1834,
+      "endDate": 1834,
       "relations": [
         {
           "id": "event/relation/ob-015",
@@ -10625,6 +11113,8 @@
       "id": "cho-drawings/ev-010",
       "label": { "default": "Wien I, Hofburg, Michaelerplatz mit Schauflergasse, Situationsplan" },
       "kind": "creation",
+      "startDate": 1833,
+      "endDate": 1833,
       "relations": [
         {
           "id": "event/relation/ob-016",
@@ -10664,6 +11154,8 @@
         "default": "Wien I, Hofburg, Michaelerplatz mit Umgebung und Vermessung neuer Baulinien in der Schauflergasse, Situationsplan"
       },
       "kind": "creation",
+      "startDate": 1835,
+      "endDate": 1835,
       "relations": [
         {
           "id": "event/relation/ob-017",
@@ -10703,6 +11195,8 @@
         "default": "Wien I, Hofburg, Altes Burgtheater, Eingang am Michaelerplatz, Vordach, Grundriss, Schnitt, Aufriss"
       },
       "kind": "creation",
+      "startDate": 1837,
+      "endDate": 1837,
       "relations": [
         {
           "id": "event/relation/ob-018",
@@ -10742,6 +11236,8 @@
         "default": "Wien I, Hofburg, Michaelertrakt, Ausbauprojekt, Parterre, Grundriß (Pause)"
       },
       "kind": "creation",
+      "startDate": 1800,
+      "endDate": 1800,
       "relations": [
         {
           "id": "event/relation/ob-019",
@@ -10781,6 +11277,8 @@
         "default": "Wien I, Hofburg, Leopoldinischer Trakt, Mezzanin, Grundriss mit Planskizze zum Neubau des Zeremoniensaales sowie nachträglicher Skizze zum Ausbau des Michaelertraktes"
       },
       "kind": "creation",
+      "startDate": 1802,
+      "endDate": 1824,
       "relations": [
         {
           "id": "event/relation/ob-020",
@@ -10818,6 +11316,8 @@
       "id": "cho-drawings/ev-015",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Querschnitt durch das Rondell" },
       "kind": "creation",
+      "startDate": 1830,
+      "endDate": 1850,
       "relations": [
         {
           "id": "event/relation/ob-021",
@@ -10857,6 +11357,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Skulpturen für die Michaelerfassade: Tugenden, Skizzen"
       },
       "kind": "creation",
+      "startDate": 1815,
+      "endDate": 1815,
       "relations": [
         {
           "id": "event/relation/ob-022",
@@ -10894,6 +11396,8 @@
       "id": "cho-drawings/ev-017",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Schnitt" },
       "kind": "creation",
+      "startDate": 1814,
+      "endDate": 1814,
       "relations": [
         {
           "id": "event/relation/ob-023",
@@ -10933,6 +11437,8 @@
         "default": "Wien I, Hofburg, Michaelertrakt, Schweizertrakt, Zeremoniensaaltrakt, 1.Stock, Grundriss"
       },
       "kind": "creation",
+      "startDate": 1800,
+      "endDate": 1850,
       "relations": [
         {
           "id": "event/relation/ob-024",
@@ -10970,6 +11476,8 @@
       "id": "cho-drawings/ev-019",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Detailgrundriss" },
       "kind": "creation",
+      "startDate": 1800,
+      "endDate": 1850,
       "relations": [
         {
           "id": "event/relation/ob-025",
@@ -11007,6 +11515,8 @@
       "id": "cho-drawings/ev-020",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Projekt II, Aufriß" },
       "kind": "creation",
+      "startDate": 1726,
+      "endDate": 1726,
       "relations": [
         {
           "id": "event/relation/ob-026",
@@ -11046,6 +11556,8 @@
         "default": "Wien I, Hofburg, Aman-Rekonstruktion, Michaeler-, Augustiner- und Kapuzinerkirche mit der Gruftanlage sowie Schweizertrakt zwischen 1619 und 1637, Parterre, Grundriß"
       },
       "kind": "creation",
+      "startDate": 1823,
+      "endDate": 1823,
       "relations": [
         {
           "id": "event/relation/ob-027",
@@ -11083,6 +11595,8 @@
       "id": "cho-drawings/ev-022",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Vollendungsprojekt, Perspektive" },
       "kind": "creation",
+      "startDate": 1796,
+      "endDate": 1796,
       "relations": [
         {
           "id": "event/relation/ob-028",
@@ -11120,6 +11634,8 @@
       "id": "cho-drawings/ev-023",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Ausbauprojekt, 1.Stock, Grundriß" },
       "kind": "creation",
+      "startDate": 1790,
+      "endDate": 1792,
       "relations": [
         {
           "id": "event/relation/ob-029",
@@ -11159,6 +11675,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Hofbibliothek, Winterreitschule, Stallburg, Michaelertrakt, Grundriss"
       },
       "kind": "creation",
+      "startDate": 1769,
+      "endDate": 1772,
       "relations": [
         {
           "id": "event/relation/ob-030",
@@ -11198,6 +11716,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Hofbibliothek, Winterreitschule, Michaelertrakt, Ansicht"
       },
       "kind": "creation",
+      "startDate": 1769,
+      "endDate": 1772,
       "relations": [
         {
           "id": "event/relation/ob-031",
@@ -11235,6 +11755,8 @@
       "id": "cho-drawings/ev-026",
       "label": { "default": "Wien I, Hofburg, Michaelertrakt, Ausbauprojekt, Aufriss" },
       "kind": "creation",
+      "startDate": 1790,
+      "endDate": 1792,
       "relations": [
         {
           "id": "event/relation/ob-032",
@@ -11274,6 +11796,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Obergeschoß, Detailgrundriß"
       },
       "kind": "creation",
+      "startDate": 1748,
+      "endDate": 1748,
       "relations": [
         {
           "id": "event/relation/ob-033",
@@ -11313,6 +11837,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Innerer Burghof und Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-034",
@@ -11352,6 +11878,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1745,
+      "endDate": 1745,
       "relations": [
         {
           "id": "event/relation/ob-035",
@@ -11391,6 +11919,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Parterre, Detailgrundriß"
       },
       "kind": "creation",
+      "startDate": 1748,
+      "endDate": 1748,
       "relations": [
         {
           "id": "event/relation/ob-036",
@@ -11430,6 +11960,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailskizze"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-037",
@@ -11469,6 +12001,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-038",
@@ -11508,6 +12042,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-039",
@@ -11547,6 +12083,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelerplatz, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-040",
@@ -11586,6 +12124,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelerplatz, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-041",
@@ -11625,6 +12165,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Schweizerhof, Leopoldinischer Trakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-042",
@@ -11664,6 +12206,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Amalienburg, Leopoldinischer Trakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-043",
@@ -11701,6 +12245,8 @@
       "id": "cho-drawings/ev-038",
       "label": { "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt (?), Schnitt" },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-044",
@@ -11740,6 +12286,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-045",
@@ -11779,6 +12327,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Portal, Aufriss"
       },
       "kind": "creation",
+      "startDate": 1748,
+      "endDate": 1748,
       "relations": [
         {
           "id": "event/relation/ob-046",
@@ -11818,6 +12368,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-047",
@@ -11857,6 +12409,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Innerer Burghof, Schweizerhof, Burgbastei, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": 1700,
+      "endDate": 1799,
       "relations": [
         {
           "id": "event/relation/ob-048",
@@ -11896,6 +12450,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Fassade, Aufriß"
       },
       "kind": "creation",
+      "startDate": 1725,
+      "endDate": 1725,
       "relations": [
         {
           "id": "event/relation/ob-049",
@@ -11933,6 +12489,8 @@
       "id": "cho-drawings/ev-044",
       "label": { "default": "Wien Hofburg, Gesamtgrundriss" },
       "kind": "creation",
+      "startDate": 1724,
+      "endDate": 1724,
       "relations": [
         {
           "id": "event/relation/ob-050",
@@ -11972,6 +12530,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Gesamtplan, Hauptgeschoß, Grundriss"
       },
       "kind": "creation",
+      "startDate": 1724,
+      "endDate": 1724,
       "relations": [
         {
           "id": "event/relation/ob-051",
@@ -12011,6 +12571,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Winterreitschule und Stallburg, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": "18. Jh.",
+      "endDate": "18. Jh.",
       "relations": [
         {
           "id": "event/relation/ob-052",
@@ -12050,6 +12612,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Michaelertrakt, Detailgrundriss"
       },
       "kind": "creation",
+      "startDate": "18. Jh.",
+      "endDate": "18. Jh.",
       "relations": [
         {
           "id": "event/relation/ob-053",
@@ -12089,6 +12653,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Gesamtplan, 1.Stock, Grundriss"
       },
       "kind": "creation",
+      "startDate": "18. Jh.",
+      "endDate": "18. Jh.",
       "relations": [
         {
           "id": "event/relation/ob-054",
@@ -12128,6 +12694,8 @@
         "default": "Wien I, Hofburg, Um- und Neubauprojekt, Gesamtplan, Parterre, Grundriss, Teil 1"
       },
       "kind": "creation",
+      "startDate": "18. Jh.",
+      "endDate": "18. Jh.",
       "relations": [
         {
           "id": "event/relation/ob-055",
@@ -12167,6 +12735,8 @@
         "default": "Wien I, Hofburg, Gesamtplan mit Kaiserforum, Entwurf, Situationsplan"
       },
       "kind": "creation",
+      "startDate": 1869,
+      "endDate": 1869,
       "relations": [
         {
           "id": "event/relation/ob-056",
@@ -12216,6 +12786,8 @@
       "id": "cho-drawings/ev-051",
       "label": { "default": "Der Michaelerplatz" },
       "kind": "creation",
+      "startDate": 1890,
+      "endDate": 1890,
       "relations": [
         {
           "id": "event/relation/ob-057",
@@ -12246,6 +12818,8 @@
     {
       "id": "conhist/ev-001",
       "label": { "default": "state around 1300: Schweizerhof" },
+      "startDate": 1230,
+      "endDate": 1250,
       "place": "pl-054",
       "relations": [
         {
@@ -12305,6 +12879,8 @@
     {
       "id": "conhist/ev-003",
       "label": { "default": "state around 1590: Spanier bastion" },
+      "startDate": 1529,
+      "endDate": 1529,
       "place": "pl-056",
       "relations": [
         {
@@ -12355,6 +12931,8 @@
     {
       "id": "conhist/ev-005",
       "label": { "default": "state around 1590: Amalienburg (Neue Burg)" },
+      "startDate": 1554,
+      "endDate": 1554,
       "place": "pl-058",
       "relations": [
         {
@@ -12380,6 +12958,8 @@
     {
       "id": "conhist/ev-006",
       "label": { "default": "state around 1590: Stallburg" },
+      "startDate": 1559,
+      "endDate": 1565,
       "place": "pl-059",
       "relations": [
         {
@@ -12469,6 +13049,8 @@
     {
       "id": "conhist/ev-011",
       "label": { "default": "state around 1650: great bastion" },
+      "startDate": 1620,
+      "endDate": 1620,
       "place": "pl-060",
       "relations": [
         {
@@ -12494,6 +13076,8 @@
     {
       "id": "conhist/ev-012",
       "label": { "default": "state around 1650: former chancellery builiding" },
+      "startDate": 1630,
+      "endDate": 1640,
       "place": "pl-061",
       "relations": [
         {
@@ -12519,6 +13103,8 @@
     {
       "id": "conhist/ev-013",
       "label": { "default": "state around 1650: former dance and theatre hall" },
+      "startDate": 1630,
+      "endDate": 1630,
       "place": "pl-062",
       "relations": [
         {
@@ -12656,6 +13242,8 @@
     {
       "id": "conhist/ev-021",
       "label": { "default": "state around 1705: Leopoldinian Wing" },
+      "startDate": 1660,
+      "endDate": 1683,
       "place": "pl-063",
       "relations": [
         {
@@ -12793,6 +13381,8 @@
     {
       "id": "conhist/ev-029",
       "label": { "default": "state around 1792: Austrian Court Chancellery" },
+      "startDate": 1717,
+      "endDate": 1717,
       "place": "pl-065",
       "relations": [
         {
@@ -12818,6 +13408,8 @@
     {
       "id": "conhist/ev-030",
       "label": { "default": "state around 1792: Court Stables" },
+      "startDate": 1718,
+      "endDate": 1725,
       "place": "pl-066",
       "relations": [
         {
@@ -12843,6 +13435,8 @@
     {
       "id": "conhist/ev-031",
       "label": { "default": "state around 1792: Court Library" },
+      "startDate": 1722,
+      "endDate": 1726,
       "place": "pl-067",
       "relations": [
         {
@@ -12868,6 +13462,8 @@
     {
       "id": "conhist/ev-032",
       "label": { "default": "state around 1792: None" },
+      "startDate": 1722,
+      "endDate": 1730,
       "place": "pl-001",
       "relations": [
         {
@@ -12893,6 +13489,8 @@
     {
       "id": "conhist/ev-033",
       "label": { "default": "state around 1792: None" },
+      "startDate": 1724,
+      "endDate": 1735,
       "place": "pl-003",
       "relations": [
         {
@@ -13078,6 +13676,8 @@
     {
       "id": "conhist/ev-044",
       "label": { "default": "state around 1835: Zeremoniensaal" },
+      "startDate": 1802,
+      "endDate": 1806,
       "place": "pl-068",
       "relations": [
         {
@@ -13103,6 +13703,8 @@
     {
       "id": "conhist/ev-045",
       "label": { "default": "state around 1835: Outer Hofburg suqare with flanking gardens" },
+      "startDate": 1817,
+      "endDate": 1824,
       "place": "pl-069",
       "relations": [
         {
@@ -13326,6 +13928,8 @@
       "label": {
         "default": "planning state around 1873: enlargement project of the Hofburg (\"Kaiserforum\")"
       },
+      "startDate": 1869,
+      "endDate": 1871,
       "place": "pl-070",
       "relations": [
         {
@@ -13561,6 +14165,8 @@
     {
       "id": "conhist/ev-072",
       "label": { "default": "state around 1920: court museums (NHM)" },
+      "startDate": 1871,
+      "endDate": 1889,
       "place": "pl-071",
       "relations": [
         {
@@ -13586,6 +14192,8 @@
     {
       "id": "conhist/ev-073",
       "label": { "default": "state around 1920: court museums (KHM)" },
+      "startDate": 1871,
+      "endDate": 1891,
       "place": "pl-072",
       "relations": [
         {
@@ -13611,6 +14219,8 @@
     {
       "id": "conhist/ev-074",
       "label": { "default": "state around 1920: Hofburgtheater" },
+      "startDate": 1874,
+      "endDate": 1888,
       "place": "pl-073",
       "relations": [
         {
@@ -13636,6 +14246,8 @@
     {
       "id": "conhist/ev-075",
       "label": { "default": "state around 1920: Neue Burg" },
+      "startDate": 1881,
+      "endDate": 1923,
       "place": "pl-074",
       "relations": [
         {
