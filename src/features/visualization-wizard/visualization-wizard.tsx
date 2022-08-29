@@ -25,7 +25,6 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
         name: visId,
         entityIds: [],
         eventIds: [],
-        props: {},
       }),
     );
 

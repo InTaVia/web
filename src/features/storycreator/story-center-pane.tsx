@@ -4,10 +4,14 @@ import '~/node_modules/react-resizable/css/styles.css';
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
+import type { StringLiteral } from 'typescript';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
-import { createContentPane } from '@/features/storycreator/contentPane.slice';
+import {
+  addContentToContentPane,
+  createContentPane,
+} from '@/features/storycreator/contentPane.slice';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
@@ -18,64 +22,13 @@ import {
   setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
+import type { UiWindow } from '@/features/ui/ui.slice';
+import { selectWindows } from '@/features/ui/ui.slice';
 import type {
   LayoutPaneContent,
   LayoutTemplateItem,
 } from '@/features/visualization-layouts/visualization-group';
 import { layoutTemplates } from '@/features/visualization-layouts/visualization-group';
-
-/* interface DropProps {
-  name?: string | null;
-  title?: string | null;
-  label?: string | null;
-  type: string;
-  place?: Place | null;
-  date?: IsoDateString;
-} */
-
-export interface SlideLayout {
-  numberOfVis: 0 | 1 | 2;
-  numberOfContentPanes: 0 | 1 | 2;
-  vertical: boolean;
-}
-
-export const SlideLayouts: Record<string, SlideLayout> = {
-  singlevis: {
-    numberOfVis: 1,
-    numberOfContentPanes: 0,
-    vertical: false,
-  },
-  twovisvertical: {
-    numberOfVis: 2,
-    numberOfContentPanes: 0,
-    vertical: true,
-  },
-  twovishorizontal: {
-    numberOfVis: 2,
-    numberOfContentPanes: 0,
-    vertical: false,
-  },
-  singleviscontent: {
-    numberOfVis: 1,
-    numberOfContentPanes: 1,
-    vertical: false,
-  },
-  twoviscontenthorizontal: {
-    numberOfVis: 2,
-    numberOfContentPanes: 1,
-    vertical: false,
-  },
-  twoviscontentvertical: {
-    numberOfVis: 2,
-    numberOfContentPanes: 1,
-    vertical: true,
-  },
-  twocontents: {
-    numberOfVis: 0,
-    numberOfContentPanes: 2,
-    vertical: true,
-  },
-};
 
 interface StoryCenterPaneProps {
   story: Story;
@@ -115,7 +68,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       });
   };
 
-  const addContentPane = (slotId: string) => {
+  const addContentPane = (slotId: StringLiteral, contentToAddType: string | undefined) => {
     const contId = `contentPane-${Math.random()
       .toString(36)
       .replace(/[^a-z]+/g, '')
@@ -123,21 +76,28 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
     dispatch(setContentPaneToSlot({ id: contId, slotId: slotId, slide: selectedSlide }));
     dispatch(createContentPane({ id: contId }));
+
+    if (contentToAddType !== undefined) {
+      addContent(contentToAddType, {}, contId);
+    }
   };
 
-  const checkForEmptyContentPaneSlots = (layoutTemplate: any) => {
+  const checkForEmptyContentPaneSlots = (
+    layoutTemplate: any,
+    contentToAddType: string | undefined = undefined,
+  ) => {
     for (const [key, value] of Object.entries(layoutTemplate)) {
       if (key !== 'cols' && key !== 'rows') {
         if (layoutTemplate.type === 'contentPane') {
           const contentPaneSlots = selectedSlide!.contentPaneSlots;
           const slotId = layoutTemplate.id as ContentSlotId;
           if (contentPaneSlots[slotId] === null) {
-            addContentPane(layoutTemplate.id);
+            addContentPane(layoutTemplate.id, contentToAddType);
           }
         }
       } else {
         (value as Array<LayoutTemplateItem>).map((item: LayoutTemplateItem) => {
-          checkForEmptyContentPaneSlots(item);
+          checkForEmptyContentPaneSlots(item, contentToAddType);
         });
       }
     }
@@ -148,22 +108,79 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
   };
 
-  const increaseNumberOfContentPanes = () => {
-    /* if (numberOfContentPanes === 0) {
-      for (const key of Object.keys(SlideLayouts)) {
-        const layout = SlideLayouts[key];
-        if (layout!.numberOfContentPanes === 1) {
-          dispatch(setLayoutForSlide({ slide: selectedSlide, layout: key }));
-        }
-      }
+  const windows = useAppSelector(selectWindows);
+
+  const addContent = (type: string, i_layoutItem: any, i_targetPane: string | undefined) => {
+    const layoutItem = i_layoutItem;
+
+    let targetPane = i_targetPane;
+    if (targetPane === undefined) {
+      targetPane = 'contentPane0';
     }
- */
+
+    const ids = windows.map((window: UiWindow) => {
+      return window.i;
+    });
+
+    let counter = 1;
+    const text = type;
+    let newText = text;
+    while (ids.includes(newText)) {
+      newText = text + ' (' + counter + ')';
+      counter++;
+    }
+    layoutItem['i'] = newText;
+    layoutItem['type'] = type;
+
+    switch (type) {
+      case 'Image':
+        layoutItem['h'] = 4;
+        layoutItem['w'] = 1;
+        break;
+      case 'Quiz':
+        layoutItem['h'] = 2;
+        layoutItem['w'] = 1;
+        break;
+      default:
+        layoutItem['h'] = 1;
+        layoutItem['w'] = 1;
+        break;
+    }
+
+    dispatch(
+      addContentToContentPane({
+        story: selectedSlide?.story,
+        slide: selectedSlide?.id,
+        contentPane: targetPane,
+        layout: {
+          x: layoutItem['x'],
+          y: layoutItem['y'],
+          w: layoutItem['w'],
+          h: layoutItem['h'],
+        },
+        type: layoutItem['type'],
+        key: newText,
+      }),
+    );
+  };
+
+  const increaseNumberOfContentPanes = (contentToAddType: string | undefined) => {
+    const layout = selectedSlide!.layout;
+
+    const newLayout = (layout + '-content') as PanelLayout;
+    if (Object.keys(layoutTemplates).includes(newLayout)) {
+      checkForEmptyContentPaneSlots(
+        layoutTemplates[newLayout] as LayoutPaneContent,
+        contentToAddType,
+      );
+      dispatch(setLayoutForSlide({ slide: selectedSlide, layout: newLayout }));
+    }
   };
 
   setSlideThumbnail();
 
   return (
-    <div className="grid  h-full w-full grid-rows-[max-content_1fr]">
+    <div className="grid h-full w-full grid-rows-[max-content_1fr]">
       <StroyCreatorToolbar
         onLayoutSelected={onLayoutSelected}
         desktop={desktop}
@@ -190,6 +207,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                   desktop={desktop}
                   timescale={timescale}
                   increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                  addContent={addContent}
                 />
               </div>
             </div>

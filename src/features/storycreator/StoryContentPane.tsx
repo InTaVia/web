@@ -1,36 +1,34 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import { CardContent, CardMedia, Typography } from '@mui/material';
-import Card from '@mui/material/Card';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
+import type {
+  StoryAnswerList,
+  StoryImage,
+  StoryQuizAnswer,
+} from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
-import styles from '@/features/storycreator/storycreator.module.css';
-import type {
-  SlideContent,
-  StoryAnswerList,
-  StoryImage,
-  StoryQuizAnswer,
-} from '@/features/storycreator/storycreator.slice';
+import type { SlideContent } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
 
 interface StoryContentPaneProps {
   id: string;
-  setEditElement?: (arg0: any) => void;
-  setOpenDialog: (arg0: boolean) => void;
+  setEditElement?: (element: SlideContent) => void;
   onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
+  onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const { id, setEditElement, setOpenDialog, onDrop } = props;
+  const { id, setEditElement, onDrop, onContentPaneWizard } = props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
@@ -59,7 +57,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
       case 'Text':
         return (
           <div style={{ height: '100%' }}>
-            <Card
+            <div
               style={{
                 height: '100%',
                 maxHeight: '100%',
@@ -70,20 +68,16 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             >
               {(Boolean(element!.properties!.title!.value) ||
                 Boolean(element!.properties!.text!.value)) && (
-                <CardContent className={styles['card-content']}>
+                <div className="p-2">
                   {Boolean(element!.properties!.title!.value) && (
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {element!.properties!.title!.value}
-                    </Typography>
+                    <p className="mb-1 text-xl">{element!.properties!.title!.value}</p>
                   )}
                   {Boolean(element!.properties!.text!.value) && (
-                    <Typography variant="subtitle1" color="subtitle1" component="p">
-                      {element!.properties!.text!.value}
-                    </Typography>
+                    <p>{element!.properties!.text!.value}</p>
                   )}
-                </CardContent>
+                </div>
               )}
-            </Card>
+            </div>
           </div>
         );
       case 'Quiz': {
@@ -91,20 +85,20 @@ export function StoryContentPane(props: StoryContentPaneProps) {
         if (element.properties && element.properties.question) {
           if (element.properties.question.value) {
             quizContent.push(
-              <Typography variant="subtitle1" color="subtitle1" component="p">
+              <div className="grid grid-cols-[auto] gap-1">
                 {(element.properties.answerlist as StoryAnswerList).answers.map(
                   (answer: StoryQuizAnswer, index: number) => {
                     return (
                       <div
                         key={`answer${index}`}
-                        style={{
-                          backgroundColor: answer.correct === true ? '#f0fff0' : '#ff000047',
-                        }}
+                        className={`p-1 ${
+                          answer.correct === true ? 'bg-intavia-green-200' : 'bg-intavia-red-200'
+                        }`}
                       >{`${answer.text}`}</div>
                     );
                   },
                 )}
-              </Typography>,
+              </div>,
             );
           } else {
             quizContent.push('Please state a question for the quiz!');
@@ -113,7 +107,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
 
         return (
           <div style={{ height: '100%' }}>
-            <Card
+            <div
               style={{
                 height: '100%',
                 maxHeight: '100%',
@@ -122,57 +116,47 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 padding: 0,
               }}
             >
-              <CardContent className={styles['card-content']}>
+              <div className="p-2">
                 {Boolean(element.properties!.question!.value) && (
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties!.question!.value}
-                  </Typography>
+                  <p className="mb-1 text-lg">{element.properties!.question!.value}</p>
                 )}
                 {quizContent}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         );
       }
       case 'Image':
         return (
-          <Card
+          <div
             style={{
               height: '100%',
               maxHeight: '100%',
-              position: 'relative',
               backgroundColor: 'white',
               padding: 0,
             }}
           >
             <div style={{ height: '100%' }}>
-              <CardMedia
-                component="img"
-                image={
+              <img
+                src={
                   (element as StoryImage).properties.link?.value !== ''
                     ? (element as StoryImage).properties.link?.value
                     : 'https://via.placeholder.com/300'
                 }
-                alt="card image"
-                height="100%"
+                alt="card"
+                className="h-full w-full object-cover"
               />
             </div>
             {(element.properties!.title!.value !== '' ||
               element.properties!.text!.value !== '') && (
-              <CardContent className={styles['card-content']}>
+              <div className="absolute bottom-0 w-full bg-white p-2">
                 {element.properties!.title!.value !== '' && (
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {element.properties!.title!.value}
-                  </Typography>
+                  <p className="mb-1 text-xl">{element.properties!.title!.value}</p>
                 )}
-                {element.properties!.text!.value !== '' && (
-                  <Typography variant="subtitle1" color="textSecondary" component="p">
-                    {element.properties!.text!.value}
-                  </Typography>
-                )}
-              </CardContent>
+                {element.properties!.text!.value !== '' && <p>{element.properties!.text!.value}</p>}
+              </div>
             )}
-          </Card>
+          </div>
         );
       default:
         return [];
@@ -189,8 +173,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
       case 'Image':
       case 'Quiz':
         return (
-          <div key={element.id} className={styles.elevated}>
-            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-indigo-800 px-2 py-1 text-white">
+          <div key={element.id} className={'overflow-hidden'}>
+            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
               <div className="truncate">{element.type}</div>
               <div className="sticky right-0 flex flex-nowrap gap-1">
                 <Button
@@ -201,7 +185,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   onClick={() => {
                     if (setEditElement !== undefined) {
                       setEditElement(element);
-                      setOpenDialog(true);
                     }
                   }}
                 >
@@ -228,12 +211,15 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     }
   };
 
-  const layout = contents.map((content) => {
-    return { i: content.id, ...content.layout };
-  });
+  const layout = [
+    ...contents.map((content) => {
+      return { i: content.id, ...content.layout };
+    }),
+    { i: 'contentPaneWizard', x: 0, y: 999, h: 1, w: 1, isResizable: false },
+  ];
 
   return (
-    <div className="grid h-full w-full">
+    <div className="grid h-full w-full bg-intavia-blue-200">
       <ReactResizeDetector handleWidth handleHeight>
         {({ width, height }) => {
           return (
@@ -279,6 +265,21 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               {contents.map((content) => {
                 return createLayoutPane(content);
               })}
+              <div key={'contentPaneWizard'}>
+                <ContentPaneWizard
+                  mini={contents.length > 0 ? true : false}
+                  onContentAddPerClick={(type: string) => {
+                    if (onContentPaneWizard !== undefined) {
+                      const maxLayoutY = Math.max(
+                        ...contents.map((content) => {
+                          return content.layout.y + content.layout.h;
+                        }),
+                      );
+                      onContentPaneWizard({ y: maxLayoutY > 0 ? maxLayoutY : 1, x: 1 }, type, id);
+                    }
+                  }}
+                />
+              </div>
             </ReactGridLayout>
           );
         }}

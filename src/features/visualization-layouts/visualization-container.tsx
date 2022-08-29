@@ -24,8 +24,7 @@ interface VisualisationContainerProps {
     soruceSlot: string,
     sourceVis: string | null,
   ) => void;
-  setEditElement?: (editElement: any) => void;
-  setOpenDialog: (openDialog: boolean) => void;
+  setVisualizationEditElement?: (editElement: Visualization) => void;
 }
 
 export default function VisualisationContainer(props: VisualisationContainerProps): JSX.Element {
@@ -34,8 +33,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
     id,
     onReleaseVisualization,
     onSwitchVisualization,
-    setOpenDialog,
-    setEditElement,
+    setVisualizationEditElement,
   } = props;
 
   const dispatch = useAppDispatch();
@@ -45,6 +43,20 @@ export default function VisualisationContainer(props: VisualisationContainerProp
   const visualization = Object.values(allVisualizations).filter((vis: Visualization) => {
     return vis.id === id;
   })[0];
+
+  let name = id;
+
+  if (visualization !== undefined) {
+    name = visualization.name;
+    if (visualization.properties !== undefined) {
+      if (
+        visualization.properties.name !== undefined &&
+        visualization.properties.name.value !== ''
+      ) {
+        name = visualization.properties.name.value;
+      }
+    }
+  }
 
   const allowDrop = (event: DragEvent) => {
     event.preventDefault();
@@ -80,7 +92,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       onDragOver={allowDrop}
     >
       <div
-        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-indigo-800 px-2 py-1 text-white"
+        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
           return event.dataTransfer.setData(
@@ -94,7 +106,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
           );
         }}
       >
-        <div className="truncate">Visualization Container for: {id}</div>
+        <div className="truncate">{name}</div>
         <div className="sticky right-0 flex flex-nowrap gap-1">
           <Button
             className="ml-auto grow-0"
@@ -102,9 +114,8 @@ export default function VisualisationContainer(props: VisualisationContainerProp
             size="extra-small"
             round="circle"
             onClick={() => {
-              if (setEditElement !== undefined) {
-                setEditElement(visualization);
-                setOpenDialog(true);
+              if (setVisualizationEditElement !== undefined) {
+                setVisualizationEditElement(visualization as Visualization);
               }
             }}
           >

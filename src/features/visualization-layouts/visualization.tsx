@@ -22,16 +22,19 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const events = visualization.eventIds;
   const persons = visualization.entityIds;
 
-  console.log(events, persons);
-
   const filteredPersons =
     persons.length > 0
       ? allPersons.filter((person) => {
-          return persons.includes(person.id);
+          let visible = true;
+          if (visualization.visibilities !== undefined) {
+            visible =
+              visualization.visibilities[person.id] !== undefined
+                ? (visualization.visibilities[person.id] as boolean)
+                : true;
+          }
+          return persons.includes(person.id) && visible;
         })
       : [];
-
-  console.log('filteredPersons', filteredPersons);
 
   const personEvents = filteredPersons.flatMap((person) => {
     return person.history as Array<EntityEvent>;
@@ -40,10 +43,6 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
     return person.history as Array<EntityEvent>;
   });
 
-  console.log('allPersonEvents', allPersonEvents);
-  console.log('personEvents', personEvents);
-  console.log('events', events);
-
   const filteredEvents =
     events.length > 0
       ? allPersonEvents.filter((historyEvent: EntityEvent) => {
@@ -51,14 +50,21 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
-  const visEvents = [...personEvents, ...filteredEvents];
+  const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
+    let visible = true;
+    console.log(visualization.visibilities);
+    if (visualization.visibilities !== undefined) {
+      visible =
+        visualization.visibilities[event.id] !== undefined
+          ? (visualization.visibilities[event.id] as boolean)
+          : true;
+    }
+    return visible;
+  });
 
-  console.log('filteredEvents', filteredEvents);
   const targetIds = filteredEvents.map((event) => {
     return event.targetId;
   });
-
-  console.log('targetIds', targetIds);
 
   const twiceFilteredPersons = allPersons.filter((person) => {
     return targetIds.includes(person.id);
@@ -66,14 +72,12 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const visPersons = [...filteredPersons, ...twiceFilteredPersons];
 
-  console.log('twiceFilteredPersons', twiceFilteredPersons);
-
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
         return <GeoMap />;
       case 'story-map':
-        return <StoryMapComponent events={visEvents} />;
+        return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
       case 'timeline':
         return <Timeline />;
       case 'story-timeline':

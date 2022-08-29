@@ -1,7 +1,8 @@
 import { Allotment } from 'allotment';
 import { Fragment } from 'react';
 
-import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import type { Visualization } from '@/features/common/visualization.slice';
+import type { ContentSlotId, SlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import VisualizationContainer from '@/features/visualization-layouts/visualization-container';
@@ -22,9 +23,9 @@ interface VisualisationGroupProps {
   ) => void;
   onAddContentPane?: (slotId: string) => void;
   onDropContentPane?: (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => void;
-  setOpenDialog: (openDialog: boolean) => void;
-  setEditElement?: (editElement: any) => void;
-  setEditVisualizationElement?: (editElement: any) => void;
+  onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
+  setEditElement?: (editElement: SlideContent) => void;
+  setVisualizationEditElement?: (editElement: Visualization) => void;
 }
 
 export interface LayoutPaneContent {
@@ -205,9 +206,9 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
     onReleaseVisualization,
     onSwitchVisualization,
     onDropContentPane,
-    setOpenDialog,
+    onContentPaneWizard,
     setEditElement,
-    setEditVisualizationElement,
+    setVisualizationEditElement,
     layout = 'single-vis',
   } = props;
   const selectedLayout = layoutTemplates[layout] as LayoutTemplateItem;
@@ -247,8 +248,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
                   id={visualizationSlots[content.id as SlotId]}
                   onReleaseVisualization={onReleaseVisualization}
                   onSwitchVisualization={onSwitchVisualization}
-                  setEditElement={setEditVisualizationElement}
-                  setOpenDialog={setOpenDialog}
+                  setVisualizationEditElement={setVisualizationEditElement}
                 />
               );
             } else {
@@ -266,8 +266,8 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
                   <StoryContentPane
                     id={contentPaneSlots[content.id as ContentSlotId] as string}
                     setEditElement={setEditElement}
-                    setOpenDialog={setOpenDialog}
                     onDrop={onDropContentPane}
+                    onContentPaneWizard={onContentPaneWizard}
                   />
                 );
               }

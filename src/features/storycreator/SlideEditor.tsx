@@ -1,12 +1,11 @@
-import type { RefObject } from 'react';
+import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import {
-  addContentToContentPane,
-  createContentPane,
-  editSlideContent,
-} from '@/features/storycreator/contentPane.slice';
+import { useAppDispatch } from '@/app/store';
+import type { Visualization } from '@/features/common/visualization.slice';
+import { editVisualization } from '@/features/common/visualization.slice';
+import type { SlideContent } from '@/features/storycreator/contentPane.slice';
+import { createContentPane, editSlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
@@ -16,9 +15,8 @@ import {
   switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import type { UiWindow } from '@/features/ui/ui.slice';
-import { selectWindows } from '@/features/ui/ui.slice';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
+import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 
 interface SlideEditorProps {
   width?: number | undefined;
@@ -30,10 +28,11 @@ interface SlideEditorProps {
   numberOfVisPanes?: number;
   numberOfContentPanes?: number;
   vertical?: boolean;
-  increaseNumberOfContentPanes: () => void;
+  increaseNumberOfContentPanes: (contentType: string | undefined) => void;
   desktop?: boolean;
   timescale?: boolean;
   layout: PanelLayout;
+  addContent: (type: string, i_layoutItem: any, i_targetPane: string | undefined) => void;
 }
 
 interface DropProps {
@@ -48,22 +47,30 @@ export function SlideEditor(props: SlideEditorProps) {
     imageRef,
     layout,
     //desktop = false,
+    increaseNumberOfContentPanes,
+    addContent,
   } = props;
-  const [openDialog, setOpenDialog] = useState(false);
 
   const [editElement, setEditElement] = useState<any | null>(null);
+  const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    setOpenDialog(false);
+    setEditElement(null);
   };
 
-  const handleSave = (element: any) => {
+  const handleCloseVisualizationDialog = () => {
+    setVisualizationEditElement(null);
+  };
+
+  const handleSave = (element: SlideContent) => {
     dispatch(editSlideContent({ slide: slide, content: element }));
   };
 
-  const windows = useAppSelector(selectWindows);
+  const handleSaveVisualization = (element: Visualization) => {
+    dispatch(editVisualization(element));
+  };
 
   const onSwitchVisualization = (
     targetSlot: string,
@@ -87,60 +94,27 @@ export function SlideEditor(props: SlideEditorProps) {
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     const dropProps: DropProps = JSON.parse(event.dataTransfer.getData('text'));
 
-    const layoutItem = i_layoutItem;
+    addContent(dropProps.type, i_layoutItem, i_targetPane);
+  };
 
-    let targetPane = i_targetPane;
-    if (targetPane === undefined) {
-      targetPane = 'contentPane0';
+  const onContentPaneWizard = (i_layout: any, type: string, i_targetPane: any) => {
+    addContent(type, i_layout, i_targetPane);
+  };
+
+  const allowDrop = (event: DragEvent) => {
+    event.preventDefault();
+  };
+
+  const drop = (event: DragEvent) => {
+    event.preventDefault();
+    const data = JSON.parse(event.dataTransfer.getData('Text'));
+    if (['Text', 'Image', 'Quiz'].includes(data.type)) {
+      increaseNumberOfContentPanes(data.type);
     }
-
-    const ids = windows.map((window: UiWindow) => {
-      return window.i;
-    });
-
-    let counter = 1;
-    const text = dropProps.type;
-    let newText = text;
-    while (ids.includes(newText)) {
-      newText = text + ' (' + counter + ')';
-      counter++;
-    }
-    layoutItem['i'] = newText;
-    layoutItem['type'] = dropProps.type;
-
-    switch (dropProps.type) {
-      case 'Image':
-        layoutItem['h'] = 4;
-        layoutItem['w'] = 1;
-        break;
-      default:
-        layoutItem['h'] = 1;
-        layoutItem['w'] = 1;
-        break;
-    }
-
-    dispatch(
-      addContentToContentPane({
-        story: slide.story,
-        slide: slide.id,
-        contentPane: targetPane,
-        layout: {
-          x: layoutItem['x'],
-          y: layoutItem['y'],
-          w: layoutItem['w'],
-          h: layoutItem['h'],
-        },
-        type: layoutItem['type'],
-        key: newText,
-      }),
-    );
   };
 
   return (
-    /* innerref={imageRef} */
-    // className={styles['slide-editor-wrapper']}
-    <div ref={imageRef} className="h-full">
-      {/* {createSplitterLayout()} */}
+    <div ref={imageRef} onDrop={drop} onDragOver={allowDrop} className="h-full">
       <VisualizationGroup
         layout={layout}
         visualizationSlots={slide.visualizationSlots}
@@ -165,15 +139,18 @@ export function SlideEditor(props: SlideEditorProps) {
         onSwitchVisualization={onSwitchVisualization}
         onAddContentPane={onAddContentPane}
         onDropContentPane={onDropContentPane}
+        onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
-        setOpenDialog={setOpenDialog}
+        setVisualizationEditElement={setVisualizationEditElement}
       />
-      {editElement != null && (
-        <StoryContentDialog
-          open={openDialog}
-          onClose={handleClose}
-          element={editElement}
-          onSave={handleSave}
+      {editElement !== null && (
+        <StoryContentDialog onClose={handleClose} element={editElement} onSave={handleSave} />
+      )}
+      {visualizationEditElement !== null && (
+        <VisualizationPropertiesDialog
+          onClose={handleCloseVisualizationDialog}
+          element={visualizationEditElement}
+          onSave={handleSaveVisualization}
         />
       )}
     </div>

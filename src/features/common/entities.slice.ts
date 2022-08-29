@@ -154,6 +154,10 @@ export function selectEntitiesByKind(state: RootState) {
   return entitiesByKind;
 }
 
+export function selectEntitiesByID(state: RootState) {
+  return { ...state.entities.entities.upstream.byId, ...state.entities.entities.local.byId };
+}
+
 export function selectCollections(state: RootState) {
   return state.entities.collections;
 }

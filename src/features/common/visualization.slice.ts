@@ -10,18 +10,19 @@ export interface Visualization {
   name: string;
   entityIds: Array<Entity['id']>;
   eventIds: Array<string>;
-  props: Record<string, unknown>;
+  properties?: Record<string, VisualizationProperty>;
+  visibilities?: Record<string, boolean>;
 }
 
-//TODO Add real properties to the visualization and the module dialog to edit them
-/* export interface VisualisationProperty {
-  type: 'select' | 'text' | 'textarea';
+export interface VisualizationProperty {
+  type: 'entitiesAndEvents' | 'select' | 'text';
   id: string;
   label: string;
-  value: string;
+  value?: any;
+  options?: Array<any>;
   editable: boolean | false;
-  sort: number | 0;
-} */
+  sort?: number | 0;
+}
 
 const initialState: Record<Visualization['id'], Visualization> = {
   'vis-1': {
@@ -30,14 +31,36 @@ const initialState: Record<Visualization['id'], Visualization> = {
     name: "Vegerio's Life",
     entityIds: ['abc', 'def'],
     eventIds: [],
-    props: {
+    properties: {
+      mapStyle: {
+        type: 'select',
+        id: 'mapStyle',
+        label: 'Map Style',
+        value: {
+          name: 'Default',
+          value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+        },
+        options: [
+          {
+            name: 'Default',
+            value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+          },
+          {
+            name: 'Alternative',
+            value: 'https://openmaptiles.github.io/dark-matter-gl-style/style-cdn.json',
+          },
+        ],
+        editable: true,
+      },
+    },
+    /*  props: {
       mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
       initialViewState: {
         longitude: 7.571606,
         latitude: 50.226913,
         zoom: 4,
       },
-    },
+    }, */
   },
   'vis-2': {
     id: 'vis-2',
@@ -45,14 +68,14 @@ const initialState: Record<Visualization['id'], Visualization> = {
     name: 'Dürer',
     entityIds: ['abc', 'def'],
     eventIds: [],
-    props: {
+    /* props: {
       mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
       initialViewState: {
         longitude: 8.571606,
         latitude: 50.226913,
         zoom: 9,
       },
-    },
+    }, */
   },
 };
 
@@ -66,7 +89,56 @@ const visualizationSlice = createSlice({
     },
     createVisualization: (state, action: PayloadAction<Visualization>) => {
       const vis = action.payload;
-      state[vis['id']] = vis;
+
+      switch (vis.type) {
+        case 'story-map':
+          state[vis['id']] = {
+            ...vis,
+            properties: {
+              mapStyle: {
+                type: 'select',
+                id: 'mapStyle',
+                label: 'Map Style',
+                value: {
+                  name: 'Default',
+                  value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+                },
+                options: [
+                  {
+                    name: 'Default',
+                    value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+                  },
+                  {
+                    name: 'Alternative',
+                    value: 'https://demotiles.maplibre.org/style.json',
+                  },
+                ],
+                editable: true,
+                sort: 2,
+              },
+              entities: {
+                type: 'entitiesAndEvents',
+                id: 'entities',
+                label: 'Entities',
+                editable: true,
+                sort: 3,
+              },
+              name: {
+                type: 'text',
+                id: 'name',
+                value: '',
+                label: 'Name',
+                editable: true,
+                sort: 1,
+              },
+            },
+            entityIds: [],
+            eventIds: [],
+          };
+          break;
+        default:
+          break;
+      }
     },
     addPersonToVisualization: (state, action) => {
       const person = action.payload.person as Person;
@@ -84,6 +156,10 @@ const visualizationSlice = createSlice({
         state[visId]!.eventIds.push(event.id);
       }
     },
+    editVisualization: (state, action) => {
+      const vis = action.payload as Visualization;
+      state[vis.id] = vis;
+    },
   },
 });
 
@@ -92,6 +168,7 @@ export const {
   createVisualization,
   addEventToVisualization,
   addPersonToVisualization,
+  editVisualization,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(
