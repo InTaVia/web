@@ -153,7 +153,7 @@ const entityPropertyMappers: Record<string, Mapper> = {
     mapper: (props) => {
       return {
         type: 'Point',
-        coordinates: [Number(props['latitude']), Number(props['longitude'])],
+        coordinates: [Number(props['longitude']), Number(props['latitude'])],
       };
     },
     requiredSourceProps: ['latitude', 'longitude'],
@@ -201,6 +201,7 @@ function createNewEntityForEntry(
   entry: Record<string, unknown>,
   entryKind: string,
   entryId: string,
+  idPrefix: string,
 ) {
   const unmappedProps: Record<string, Array<string>> = {};
   const newEntity: any = {};
@@ -230,19 +231,20 @@ function createNewEntityForEntry(
       .reduce((obj, key) => {
         return {
           ...obj,
-          [key]: entry[key],
+          [key]: key === 'id' ? `${idPrefix}/${entry[key]}` : entry[key],
         };
       }, {});
+
     newEntity[targetProp] = mapper!.mapper(props);
   }
   return newEntity;
 }
 
-function createRelationForEvent(entry: Record<string, unknown>) {
+function createRelationForEvent(entry: Record<string, unknown>, idPrefix: string) {
   const relation: Record<string, unknown> = {};
   relation['id'] = `event/relation/${entry['entity']}`;
   relation['label'] = `${entry['entity']} ${entry['relationRole']}`;
-  relation['entity'] = entry['entity'];
+  relation['entity'] = `${idPrefix}/${entry['entity']}`;
   relation['role'] = {
     id: `event/relationrole/${String(entry['relationRole']).replace(/ /g, '+')}`,
     label: { default: entry['relationRole'] } as InternationalizedLabel,
@@ -253,9 +255,9 @@ function createRelationForEvent(entry: Record<string, unknown>) {
   return relation;
 }
 
-function createNewEntityEventForEntry(entry: Record<string, unknown>) {
+function createNewEntityEventForEntry(entry: Record<string, unknown>, idPrefix: string) {
   const event: Record<string, unknown> = {};
-  event['id'] = entry['id'];
+  event['id'] = `${idPrefix}/${entry['id']}`;
   event['label'] = {
     default:
       entry['label'] !== undefined ? entry['label'] : `${entry['entity']} ${entry['relationRole']}`,
@@ -264,42 +266,50 @@ function createNewEntityEventForEntry(entry: Record<string, unknown>) {
   if (entry['source-citation'] !== undefined) {
     event['source'] = { citation: entry['source-citation'] } as Source;
   }
+
+  if (entry['description'] !== undefined) {
+    event['description'] = entry['description'];
+  }
+
   event['kind'] = entry['type'];
 
   if (entry['startDate'] !== undefined) {
-    event['startDate'] as IsoDateString;
+    event['startDate'] = entry['startDate'] as IsoDateString;
   } else {
     //check if endDate is Set
     if (entry['endDate'] !== undefined) {
-      event['startDate'] as IsoDateString;
+      event['startDate'] = entry['endDate'] as IsoDateString;
     }
   }
 
   if (entry['endDate'] !== undefined) {
-    event['endDate'] as IsoDateString;
+    event['endDate'] = entry['endDate'] as IsoDateString;
   } else {
     //check if endDate is Set
     if (entry['startDate'] !== undefined) {
-      event['endDate'] as IsoDateString;
+      event['endDate'] = entry['startDate'] as IsoDateString;
     }
   }
 
   if (entry['place'] !== undefined) {
-    event['endDate'] as IsoDateString;
+    event['place'] = `${idPrefix}/${entry['place']}` as string;
   }
 
-  event['place'] = entry['place'] as string;
   if (entry['entity'] !== undefined && entry['relationRole'] !== undefined) {
-    const relation = createRelationForEvent(entry);
+    const relation = createRelationForEvent(entry, idPrefix);
     event['relations'] = [relation];
   }
   return event;
 }
 
-export function transformData(input: Array<Record<string, unknown>>): Record<string, unknown> {
+export function transformData(
+  input: Array<Record<string, unknown>>,
+  idPrefix: string,
+): Record<string, unknown> {
   const unmappedEntries = [];
   let entities = [];
   let entityEvents: Array<Record<string, unknown>> = [];
+  const eventCollections: Record<string, Array<string>> = {};
   const eventsToAddToEntities: Record<string, Array<string>> = {};
   for (const entry of input) {
     if (!('kind' in entry)) {
@@ -320,32 +330,47 @@ export function transformData(input: Array<Record<string, unknown>>): Record<str
         unmappedEntries.push({ ...entry, error: 'no label property' });
         continue;
       }
-      const entity = createNewEntityForEntry(entry, entryKind, entryId);
+      const entity = createNewEntityForEntry(entry, entryKind, entryId, idPrefix);
       entities.push(entity);
+
       /** EVENTS */
     } else if (entryKind === 'event') {
       if (
         entityEvents.some((event) => {
-          return event['id'] === entry['id'];
+          // return event['id'] === entry['id'];
+          return event['id'] === `${idPrefix}/${entry['id']}`;
         })
       ) {
         // console.log('event exists', entry['id']);
+        // console.log(
+        //   entityEvents.filter((event) => {
+        //     return event['id'] === entry['id'];
+        //   }),
+        // );
         //get event = EntityEvent where id === entry['id']
+
         entityEvents = entityEvents.map((entityEvent) => {
-          return entityEvent['id'] === entry['id']
+          return entityEvent['id'] === `${idPrefix}/${entry['id']}`
             ? {
                 ...entityEvent,
                 relations: [
                   ...(entityEvent['relations'] as Array<Record<string, unknown>>),
-                  createRelationForEvent(entry),
+                  createRelationForEvent(entry, idPrefix),
                 ],
               }
             : entityEvent;
         });
       } else {
-        // console.log('create event', entry['id']);
-        const event = createNewEntityEventForEntry(entry);
+        // console.log('create event', entry['id'], entry);
+        const event = createNewEntityEventForEntry(entry, idPrefix);
         entityEvents.push(event);
+
+        const entryGroup = entry['group'] as string;
+        if (!(entryGroup in eventCollections)) {
+          eventCollections[entryGroup] = [];
+        }
+        //add event ID to event Collection
+        eventCollections[entryGroup]!.push(event['id'] as string);
       }
 
       /** MEDIA */
@@ -392,5 +417,10 @@ export function transformData(input: Array<Record<string, unknown>>): Record<str
       return entity['id'] === key ? { ...entity, events: eventsToAddToEntities[key] } : entity;
     });
   }
-  return { entities: entities, entityEvents: entityEvents, unmappedEntries: unmappedEntries };
+  return {
+    entities,
+    entityEvents,
+    unmappedEntries,
+    eventCollections,
+  };
 }

@@ -15,8 +15,8 @@ export interface CollectionPanelEntryProps {
 export default function CollectionPanelEntry(props: CollectionPanelEntryProps): JSX.Element {
   const { draggable = false, mini = false } = props;
 
-  //const isPerson = props.entity.kind === 'person';
-  const isPerson = parseInt(props.entity.id) % 2 === 0;
+  const isPerson = props.entity.kind === 'person';
+  // const isPerson = parseInt(props.entity.id) % 2 === 0;
   const [fgColor, bgColor, symbol] = isPerson
     ? // eslint-disable-next-line react/jsx-key
       ['text-pink-900', 'bg-pink-100', <UserCircleIcon />]
@@ -116,7 +116,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                             key={index}
                           >
                             <div className="table-cell w-1/3 font-semibold">
-                              {eventTypes[event.type].label}
+                              {event.label /* {eventTypes[event.type].label} */}
                             </div>
                             <div className="table-cell">
                               {event.date != null ? (
