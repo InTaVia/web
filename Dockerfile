@@ -9,7 +9,7 @@ WORKDIR /app
 USER node
 
 COPY --chown=node:node package.json package-lock.json .npmrc ./
-COPY --chown=node:node next.config.mjs tsconfig.json app.d.ts next-env.d.ts ./
+COPY --chown=node:node next.config.mjs tsconfig.json app.d.ts next-env.d.ts tailwind.config.cjs ./
 COPY --chown=node:node scripts ./scripts
 COPY --chown=node:node config ./config
 COPY --chown=node:node public ./public
