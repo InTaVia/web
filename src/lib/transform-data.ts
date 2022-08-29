@@ -153,7 +153,7 @@ const entityPropertyMappers: Record<string, Mapper> = {
     mapper: (props) => {
       return {
         type: 'Point',
-        coordinates: [Number(props['latitude']), Number(props['longitude'])],
+        coordinates: [Number(props['longitude']), Number(props['latitude'])],
       };
     },
     requiredSourceProps: ['latitude', 'longitude'],
@@ -264,31 +264,35 @@ function createNewEntityEventForEntry(entry: Record<string, unknown>) {
   if (entry['source-citation'] !== undefined) {
     event['source'] = { citation: entry['source-citation'] } as Source;
   }
+
+  if (entry['description'] !== undefined) {
+    event['description'] = entry['description'];
+  }
+
   event['kind'] = entry['type'];
 
   if (entry['startDate'] !== undefined) {
-    event['startDate'] as IsoDateString;
+    event['startDate'] = entry['startDate'] as IsoDateString;
   } else {
     //check if endDate is Set
     if (entry['endDate'] !== undefined) {
-      event['startDate'] as IsoDateString;
+      event['startDate'] = entry['endDate'] as IsoDateString;
     }
   }
 
   if (entry['endDate'] !== undefined) {
-    event['endDate'] as IsoDateString;
+    event['endDate'] = entry['endDate'] as IsoDateString;
   } else {
     //check if endDate is Set
     if (entry['startDate'] !== undefined) {
-      event['endDate'] as IsoDateString;
+      event['endDate'] = entry['startDate'] as IsoDateString;
     }
   }
 
   if (entry['place'] !== undefined) {
-    event['endDate'] as IsoDateString;
+    event['place'] = entry['place'] as string;
   }
 
-  event['place'] = entry['place'] as string;
   if (entry['entity'] !== undefined && entry['relationRole'] !== undefined) {
     const relation = createRelationForEvent(entry);
     event['relations'] = [relation];
@@ -322,6 +326,7 @@ export function transformData(input: Array<Record<string, unknown>>): Record<str
       }
       const entity = createNewEntityForEntry(entry, entryKind, entryId);
       entities.push(entity);
+
       /** EVENTS */
     } else if (entryKind === 'event') {
       if (
@@ -330,6 +335,11 @@ export function transformData(input: Array<Record<string, unknown>>): Record<str
         })
       ) {
         // console.log('event exists', entry['id']);
+        // console.log(
+        //   entityEvents.filter((event) => {
+        //     return event['id'] === entry['id'];
+        //   }),
+        // );
         //get event = EntityEvent where id === entry['id']
         entityEvents = entityEvents.map((entityEvent) => {
           return entityEvent['id'] === entry['id']
@@ -343,7 +353,7 @@ export function transformData(input: Array<Record<string, unknown>>): Record<str
             : entityEvent;
         });
       } else {
-        // console.log('create event', entry['id']);
+        // console.log('create event', entry['id'], entry);
         const event = createNewEntityEventForEntry(entry);
         entityEvents.push(event);
       }
