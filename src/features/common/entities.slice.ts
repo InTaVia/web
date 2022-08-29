@@ -487,6 +487,24 @@ const initialState: EntitiesState = {
               label: "Christoph's envoy",
             },
             {
+              id: 'data-vergerio/bio/E26',
+              type: 'was travelling',
+              targetId: 'data-vergerio/pr-001',
+              date: '1559-01-01',
+              placeId: 'data-vergerio/pl-014',
+              place: {
+                id: 'data-vergerio/pl-014',
+                name: 'Poland',
+                kind: 'place',
+                lat: 52.21891,
+                lng: 21.23401,
+                description: '',
+              },
+              description:
+                'Diplomatic missions to Poland on behalf of Christoph, Duke of Württemberg',
+              label: "Christoph's envoy 2",
+            },
+            {
               id: 'data-vergerio/bio/E27',
               type: 'was partially demolished',
               targetId: 'data-vergerio/ob-001',
@@ -1349,6 +1367,24 @@ const initialState: EntitiesState = {
                 description:
                   'Diplomatic missions to Poland on behalf of Christoph, Duke of Württemberg',
                 label: "Christoph's envoy",
+              },
+              {
+                id: 'data-vergerio/bio/E26',
+                type: 'was travelling',
+                targetId: 'data-vergerio/pr-001',
+                date: '1559-01-01',
+                placeId: 'data-vergerio/pl-014',
+                place: {
+                  id: 'data-vergerio/pl-014',
+                  name: 'Poland',
+                  kind: 'place',
+                  lat: 52.21891,
+                  lng: 21.23401,
+                  description: '',
+                },
+                description:
+                  'Diplomatic missions to Poland on behalf of Christoph, Duke of Württemberg',
+                label: "Christoph's envoy 2",
               },
               {
                 id: 'data-vergerio/bio/E27',
