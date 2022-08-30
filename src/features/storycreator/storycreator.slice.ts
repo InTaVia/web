@@ -77,22 +77,6 @@ const initialState: StoryCreatorState = {
         },
       },
     },
-    story2: {
-      id: 'story2',
-      title: 'Hofburg',
-      slides: {
-        '0': {
-          id: '0',
-          sort: 0,
-          story: 'story2',
-          selected: true,
-          visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
-          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
-          image: null,
-          layout: 'single-vis',
-        },
-      },
-    },
   },
 };
 
@@ -232,6 +216,12 @@ export const storyCreatorSlice = createSlice({
       newStories[oldStory.id!] = oldStory as any;
       state.stories = newStories;
     },
+    moveSlides: (state, action) => {
+      const story = action.payload.story;
+      const slides = action.payload.slides;
+
+      state.stories[story]!.slides = slides;
+    },
     removeSlide: (state, action) => {
       const storyID = action.payload.story;
       const slideID = action.payload.slide;
@@ -307,6 +297,7 @@ export const {
   releaseVisualizationForVisualizationSlotForSlide,
   setContentPaneToSlot,
   switchVisualizations,
+  moveSlides,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

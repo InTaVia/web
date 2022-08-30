@@ -11,7 +11,11 @@ import { useParams } from '@/app/route/use-params';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { CollectionPanel } from '@/features/entities/collection-panel';
 import { StoryCenterPane } from '@/features/storycreator/story-center-pane';
-import { createSlide, selectStories } from '@/features/storycreator/storycreator.slice';
+import {
+  createSlide,
+  selectStories,
+  storyCreatorSlice,
+} from '@/features/storycreator/storycreator.slice';
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
 import { VisualizationDragger } from '@/features/storycreator/visualization-dragger';
 import AllotmentHeader from '@/features/ui/AllotmentHeader';
@@ -58,7 +62,7 @@ function StoryScreen(): JSX.Element | null {
   const [openUpperPanel, setOpenUpperPanel] = useState(true);
   const [openBottomPanel, setOpenBottomPanel] = useState(true);
 
-  const [openLeftUpperPanel, setOpenLeftUpperPanel] = useState(true);
+  const [openLeftUpperPanel, setOpenLeftUpperPanel] = useState(false);
   const [openLeftBottomPanel, setOpenLeftBottomPanel] = useState(true);
 
   const [desktop, setDesktop] = useState(true);
@@ -162,6 +166,7 @@ function StoryScreen(): JSX.Element | null {
                           width={width}
                           height={height}
                           targetRef={targetRef}
+                          slides={story.slides}
                         />
                       );
                     }}

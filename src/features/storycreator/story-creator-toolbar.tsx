@@ -30,7 +30,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
         >
           {desktop ? 'Mobile' : 'Desktop'}
         </Button>
-        <Button
+        {/* <Button
           size="small"
           round="pill"
           color="accent"
@@ -39,7 +39,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           }}
         >
           {timescale ? 'Timescale' : 'No Timescale'}
-        </Button>
+        </Button> */}
       </div>
       <div className="flex">
         <PaneToggle parentComponent="stc" orientation="right" />

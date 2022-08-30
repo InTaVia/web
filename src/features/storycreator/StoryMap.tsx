@@ -74,7 +74,7 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
 
   useEffect(() => {
     if (mapRef.current) {
-      mapRef.current.fitBounds(bounds, { padding: 50, duration: 100 });
+      mapRef.current.fitBounds(bounds, { padding: 200, duration: 100 });
     }
   }, [events]);
 
@@ -88,13 +88,8 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
 
   if (length(markers) === 0) {
     return (
-      <div className="align-items-center h-70 grid">
-        <>
-          Nothing to see - Please do a{' '}
-          <Link href="/search">
-            <a>search</a>
-          </Link>
-        </>
+      <div className="flex justify-center">
+        <div>Nothing to see - Please add some entities or events by Drag & Drop</div>
       </div>
     );
   }

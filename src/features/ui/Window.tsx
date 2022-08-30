@@ -120,7 +120,7 @@ export function Window(props: WindowProps): JSX.Element {
           )}
         </div>
       </div>
-      <div className={styles['content-area']}>{children}</div>
+      <div className="flex h-full w-full justify-center">{children}</div>
     </div>
   );
 }

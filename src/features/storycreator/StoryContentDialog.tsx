@@ -142,7 +142,6 @@ export function StoryContentDialog(props: StoryContentDialogProps): JSX.Element 
                       onClick={(event) => {
                         event.preventDefault();
                         const newElement = { ...element, properties: tmpProperties };
-                        console.log(newElement);
                         onSave(newElement);
                         onClose();
                       }}

@@ -136,6 +136,30 @@ const visualizationSlice = createSlice({
             eventIds: [],
           };
           break;
+        case 'story-timeline':
+          state[vis['id']] = {
+            ...vis,
+            properties: {
+              entities: {
+                type: 'entitiesAndEvents',
+                id: 'entities',
+                label: 'Entities',
+                editable: true,
+                sort: 3,
+              },
+              name: {
+                type: 'text',
+                id: 'name',
+                value: '',
+                label: 'Name',
+                editable: true,
+                sort: 1,
+              },
+            },
+            entityIds: [],
+            eventIds: [],
+          };
+          break;
         default:
           break;
       }

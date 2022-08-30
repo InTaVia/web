@@ -52,7 +52,6 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
     let visible = true;
-    console.log(visualization.visibilities);
     if (visualization.visibilities !== undefined) {
       visible =
         visualization.visibilities[event.id] !== undefined

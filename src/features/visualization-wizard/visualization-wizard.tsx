@@ -52,13 +52,14 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
 
   function onButtonClick(type: Visualization['type']) {
     const visId = createVis(type);
+    console.log(visId);
     onAddVisualization(visualizationSlot, visId);
   }
 
   return (
     <div className="flex h-full w-full items-center justify-center p-5">
       <div className="grid grid-cols-2 gap-2">
-        <Button
+        {/* <Button
           round="round"
           color="accent"
           onClick={() => {
@@ -66,7 +67,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           }}
         >
           Map
-        </Button>
+        </Button> */}
         <Button
           round="round"
           color="accent"
@@ -74,9 +75,9 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
             onButtonClick('story-map');
           }}
         >
-          Story-Map
+          Create Map Visualization
         </Button>
-        <Button
+        {/* <Button
           round="round"
           color="accent"
           onClick={() => {
@@ -84,7 +85,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           }}
         >
           Timeline
-        </Button>
+        </Button> */}
         <Button
           round="round"
           color="accent"
@@ -92,14 +93,14 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
             onButtonClick('story-timeline');
           }}
         >
-          Story-Timeline
+          Create Timeline Visualization
         </Button>
-        <Button round="round" color="accent">
+        {/* <Button round="round" color="accent">
           Set
         </Button>
         <Button round="round" color="accent">
           Hierarchy
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

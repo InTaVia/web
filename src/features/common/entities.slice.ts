@@ -59,7 +59,7 @@ const initialState: EntitiesState = {
           history: [
             {
               id: 'data-vergerio/bio/E1',
-              type: 'person_born',
+              type: 'beginning',
               targetId: 'data-vergerio/pr-001',
               date: '1498-01-01',
               placeId: 'data-vergerio/pl-001',
@@ -77,7 +77,7 @@ const initialState: EntitiesState = {
             },
             {
               id: 'data-vergerio/bio/E2',
-              type: 'person_deceased',
+              type: 'end',
               targetId: 'data-vergerio/pr-001',
               date: '1565-04-10',
               placeId: 'data-vergerio/pl-002',
@@ -940,7 +940,7 @@ const initialState: EntitiesState = {
             history: [
               {
                 id: 'data-vergerio/bio/E1',
-                type: 'person_born',
+                type: 'beginning',
                 targetId: 'data-vergerio/pr-001',
                 date: '1498-01-01',
                 placeId: 'data-vergerio/pl-001',
@@ -958,7 +958,7 @@ const initialState: EntitiesState = {
               },
               {
                 id: 'data-vergerio/bio/E2',
-                type: 'person_deceased',
+                type: 'end',
                 targetId: 'data-vergerio/pr-001',
                 date: '1565-04-10',
                 placeId: 'data-vergerio/pl-002',
@@ -1611,6 +1611,40 @@ const initialState: EntitiesState = {
                 },
                 description: 'He met Martin Luther personally and disliked him',
                 label: 'Met Luther',
+              },
+              {
+                id: 'data-vergerio/bio/EL9',
+                type: 'beginning',
+                targetId: 'data-vergerio/pr-007',
+                date: '1483-11-10',
+                placeId: 'data-vergerio/pl-038',
+                place: {
+                  id: 'data-vergerio/pl-038',
+                  name: 'Eisleben',
+                  kind: 'place',
+                  lat: 51.516667,
+                  lng: 11.55,
+                  description: '',
+                },
+                description: '',
+                label: 'Birth of Martin Luther',
+              },
+              {
+                id: 'data-vergerio/bio/EL10',
+                type: 'end',
+                targetId: 'data-vergerio/pr-007',
+                date: '1546-02-18',
+                placeId: 'data-vergerio/pl-038',
+                place: {
+                  id: 'data-vergerio/pl-038',
+                  name: 'Eisleben',
+                  kind: 'place',
+                  lat: 51.516667,
+                  lng: 11.55,
+                  description: '',
+                },
+                description: '',
+                label: 'Death of Martin Luther',
               },
             ],
           },
