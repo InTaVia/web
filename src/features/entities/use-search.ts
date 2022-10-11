@@ -1,26 +1,28 @@
 import type { UrlSearchParamsInit } from '@stefanprobst/request';
 import { createUrlSearchParams } from '@stefanprobst/request';
+import type { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
-interface UseSearchResult<T extends UrlSearchParamsInit> {
-  getSearchParams: (searchParams: T) => string;
+export interface UseSearchResult<T extends UrlSearchParamsInit> {
+  getSearchUrl: (searchParams: T) => LinkProps['href'];
   search: (searchParams: T) => void;
 }
 
 export function useSearch<T extends UrlSearchParamsInit>(
+  pathname: string,
   sanitizeSearchParams?: (searchParams: T) => T,
 ): UseSearchResult<T> {
   const router = useRouter();
 
-  function getSearchParams(searchParams: T): string {
+  function getSearchUrl(searchParams: T): LinkProps['href'] {
     const sanitizedSearchParams =
       sanitizeSearchParams != null ? sanitizeSearchParams(searchParams) : searchParams;
-    return String(createUrlSearchParams(sanitizedSearchParams));
+    return { pathname, query: String(createUrlSearchParams(sanitizedSearchParams)) };
   }
 
   function search(searchParams: T): void {
-    void router.push({ query: getSearchParams(searchParams) });
+    void router.push(getSearchUrl(searchParams));
   }
 
-  return { getSearchParams, search };
+  return { getSearchUrl, search };
 }

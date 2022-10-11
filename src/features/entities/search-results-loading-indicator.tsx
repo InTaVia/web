@@ -1,11 +1,9 @@
-import Typography from '@mui/material/Typography';
-
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 export function SearchResultsLoadingIndicator(): JSX.Element | null {
-  const searchResults = usePersonsSearchResults();
+  const searchResults = useSearchEntitiesResults();
 
   if (!searchResults.isFetching) return null;
 
-  return <Typography>Loading...</Typography>;
+  return <p>Loading...</p>;
 }

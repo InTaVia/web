@@ -13,8 +13,7 @@ import Typography from '@mui/material/Typography';
 import { Fragment } from 'react';
 import { useFieldArray } from 'react-final-form-arrays';
 
-import type { Entity } from '@/features/common/entity.model';
-import { person } from '@/features/common/entity.validation-schema';
+import type { Entity } from '@/api/entity.model';
 import { eventTypes } from '@/features/common/event-types';
 import { Form } from '@/features/form/form';
 import { FormDateField } from '@/features/form/form-date-field';
@@ -22,7 +21,6 @@ import { FormSelect } from '@/features/form/form-select';
 import { FormSubmitButton } from '@/features/form/form-submit-button';
 import { FormTextArea } from '@/features/form/form-text-area';
 import { FormTextField } from '@/features/form/form-text-field';
-import { validateSchema } from '@/features/form/validate-schema';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 
 interface EntityEditButtonProps<T extends Entity> {
@@ -49,7 +47,7 @@ export function EntityEditButton<T extends Entity>(props: EntityEditButtonProps<
         <DialogTitle component="h2" variant="h4">
           Edit {entity.kind}
         </DialogTitle>
-        <Form<T> initialValues={entity} onSubmit={onSubmit} validate={validateSchema(person)}>
+        <Form<T> initialValues={entity} onSubmit={onSubmit}>
           <DialogContent dividers>
             <Box sx={{ display: 'grid', gap: 3 }}>
               <FormTextField label="Name" name="name" />

@@ -6,7 +6,7 @@ import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/re
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByID } from '@/features/common/entities.slice';
+import { selectEntitiesByID } from '@/app/store/entities.slice';
 import type { EntityEvent } from '@/features/common/entity.model';
 import { eventTypes } from '@/features/common/event-types';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';

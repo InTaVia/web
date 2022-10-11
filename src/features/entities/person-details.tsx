@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Fragment } from 'react';
 
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/features/common/entities.slice';
+import { addLocalEntity } from '@/app/store/entities.slice';
 import type { Person } from '@/features/common/entity.model';
 import { eventTypes } from '@/features/common/event-types';
 import { EntityEditButton } from '@/features/entities/entity-edit-button';

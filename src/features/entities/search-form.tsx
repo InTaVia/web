@@ -3,8 +3,8 @@ import type { FormEvent } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
-import { usePersonsSearch } from '@/features/entities/use-persons-search';
-import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import { useSearchEntities } from '@/features/entities/use-search-entities';
+import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
 import type { FullButtonProperties } from '@/features/ui/Button';
 import Button from '@/features/ui/Button';
 import { setModal } from '@/features/ui/ui.slice';
@@ -17,8 +17,8 @@ interface SearchFormProps {
 
 export function SearchForm(props: SearchFormProps): JSX.Element {
   const { round = 'round', color = 'accent', size = 'small' } = props;
-  const searchFilters = usePersonsSearchFilters();
-  const { search } = usePersonsSearch();
+  const searchFilters = useSearchEntitiesFilters();
+  const { search } = useSearchEntities();
   const dispatch = useAppDispatch();
 
   const { t } = useI18n<'common'>();

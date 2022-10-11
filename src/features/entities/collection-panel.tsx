@@ -1,9 +1,7 @@
 import { useAppSelector } from '@/app/store';
-import { selectLocalEntities } from '@/features/common/entities.slice';
-import type { Person } from '@/features/common/entity.model';
+import { selectLocalEntities } from '@/app/store/entities.slice';
 import CollectionPanelEntry from '@/features/entities/collection-panel-entry';
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
-// import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 interface CollectionPanelProps {
   draggable?: boolean;
@@ -11,19 +9,19 @@ interface CollectionPanelProps {
 }
 
 export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
-  const searchResults = usePersonsSearchResults();
+  const searchResults = useSearchEntitiesResults();
   const localEntities = useAppSelector(selectLocalEntities);
 
   const { draggable = false, mini = false } = props;
 
   return (
     <div className="grid grid-flow-row">
-      {Object.values(localEntities).map((d: Person) => {
+      {Object.values(localEntities).map((d) => {
         return <CollectionPanelEntry key={d.id} entity={d} draggable={draggable} mini={mini} />;
       })}
-      {/*  {searchResults.data?.entities.map((d) => {
+      {searchResults.data?.results.map((d) => {
         return <CollectionPanelEntry key={d.id} entity={d} draggable={draggable} mini={mini} />;
-      })} */}
+      })}
     </div>
   );
 }

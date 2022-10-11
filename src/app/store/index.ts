@@ -1,8 +1,9 @@
-import type { Action, AnyAction, ThunkAction } from '@reduxjs/toolkit';
-import { configureStore } from '@reduxjs/toolkit';
+import type { Action, PreloadedState, ThunkAction } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
+import type { PersistConfig } from 'redux-persist';
 import {
   FLUSH,
   PAUSE,
@@ -13,13 +14,13 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 import storage from 'redux-persist/lib/storage';
 
-import errorMiddleware from '@/app/error.middleware';
+import { service as intaviaApiService } from '@/api/intavia.service';
 import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
-import entitiesReducer from '@/features/common/entities.slice';
-import intaviaApiService from '@/features/common/intavia-api.service';
+import errorMiddleware from '@/app/store/error.middleware';
+import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
+import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
 import visualizationReducer from '@/features/common/visualization.slice';
 import searchHistoryReducer from '@/features/entities/search-history.slice';
 import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
@@ -30,35 +31,38 @@ import uiReducer from '@/features/ui/ui.slice';
 import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
 import workspacesReducer from '@/features/visualization-layouts/workspaces.slice';
 
-const persistConfig = {
-  key: 'entities',
-  version: 1,
+const persistConfig: PersistConfig<RootState> = {
+  key: 'root',
   storage,
-  stateReconciler: hardSet,
-  blacklist: [intaviaApiService.reducerPath],
+  version: 1,
+  whitelist: [
+    intaviaCollectionsSlice.name /** Collections. */,
+    intaviaDataSlice.name /** Entities, events. */,
+  ],
 };
 
-const persistedEntitiesReducer = persistReducer<ReturnType<typeof entitiesReducer>, AnyAction>(
-  persistConfig,
-  entitiesReducer,
-);
+const rootReducer = combineReducers({
+  [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+  [intaviaCollectionsSlice.name]: intaviaCollectionsSlice.reducer,
+  [intaviaDataSlice.name]: intaviaDataSlice.reducer,
+  //
+  notifications: notificationsReducer,
+  searchHistory: searchHistoryReducer,
+  searchResultsSelection: searchResultsSelectionReducer,
+  storycreator: storycreatorReducer,
+  timeline: timelineReducer,
+  ui: uiReducer,
+  visualQuerying: visualQueryingReducer,
+  visualization: visualizationReducer,
+  contentPane: contentPaneReducer,
+  workspaces: workspacesReducer,
+});
 
-export function configureAppStore() {
+const persistedRootReducer = persistReducer(persistConfig, rootReducer);
+
+export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
   const store = configureStore({
-    reducer: {
-      entities: persistedEntitiesReducer,
-      [intaviaApiService.reducerPath]: intaviaApiService.reducer,
-      notifications: notificationsReducer,
-      searchHistory: searchHistoryReducer,
-      searchResultsSelection: searchResultsSelectionReducer,
-      storycreator: storycreatorReducer,
-      timeline: timelineReducer,
-      ui: uiReducer,
-      visualQuerying: visualQueryingReducer,
-      visualization: visualizationReducer,
-      contentPane: contentPaneReducer,
-      workspaces: workspacesReducer,
-    },
+    reducer: persistedRootReducer,
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
         serializableCheck: {
@@ -79,6 +83,7 @@ export function configureAppStore() {
         },
       }).concat(intaviaApiService.middleware, errorMiddleware);
     },
+    preloadedState,
   });
 
   return store;
@@ -89,9 +94,9 @@ export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
 
-export type AppStore = typeof store;
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type AppStore = ReturnType<typeof configureAppStore>;
+export type AppDispatch = AppStore['dispatch'];
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -100,5 +105,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
-
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

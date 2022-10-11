@@ -1,13 +1,10 @@
-import { Box } from '@mui/system';
-
 import { SearchResultsCount } from '@/features/entities/search-results-count';
 import { SearchResultsPagination } from '@/features/entities/search-results-pagination';
 
 export function SearchPageFooter(): JSX.Element {
   return (
-    <Box
-      component="footer"
-      sx={{
+    <footer
+      style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -19,6 +16,6 @@ export function SearchPageFooter(): JSX.Element {
     >
       <SearchResultsCount />
       <SearchResultsPagination />
-    </Box>
+    </footer>
   );
 }

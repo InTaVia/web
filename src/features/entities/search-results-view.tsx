@@ -2,10 +2,10 @@ import { ClipLoader } from 'react-spinners';
 
 import { SearchPageFooter } from '@/features/entities/search-page-footer';
 import { SearchResultsList } from '@/features/entities/search-results-list';
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 export function SearchResultsView(): JSX.Element {
-  const isLoading = usePersonsSearchResults().isLoading;
+  const isLoading = useSearchEntitiesResults().isLoading;
 
   if (isLoading) {
     return (

@@ -1,19 +1,14 @@
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Typography from '@mui/material/Typography';
-
 import { SearchResult } from '@/features/entities/search-result';
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 export function SearchResultsList(): JSX.Element {
-  const searchResults = usePersonsSearchResults();
-  const persons = searchResults.data?.entities ?? [];
+  const searchResults = useSearchEntitiesResults();
+  const entities = searchResults.data?.results ?? [];
 
-  if (persons.length === 0) {
+  if (entities.length === 0) {
     return (
-      <Box
-        sx={{
+      <div
+        style={{
           display: 'grid',
           placeContent: 'center',
           borderTopWidth: 1,
@@ -22,22 +17,25 @@ export function SearchResultsList(): JSX.Element {
           padding: 2,
         }}
       >
-        <Typography>Nothing to see.</Typography>
-      </Box>
+        <p>Nothing to see.</p>
+      </div>
     );
   }
 
   return (
     <div className="h-full overflow-hidden overflow-y-scroll">
-      <List role="list" sx={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}>
-        {persons.map((person) => {
+      <ul
+        role="list"
+        style={{ borderTopWidth: 1, borderTopStyle: 'solid', borderTopColor: '#eee' }}
+      >
+        {entities.map((entity) => {
           return (
-            <ListItem key={person.id} sx={{ paddingBlock: 2 }}>
-              <SearchResult displaySelectionCheckBox entity={person} />
-            </ListItem>
+            <li key={entity.id} style={{ paddingBlock: 2 }}>
+              <SearchResult displaySelectionCheckBox entity={entity} />
+            </li>
           );
         })}
-      </List>
+      </ul>
     </div>
   );
 }

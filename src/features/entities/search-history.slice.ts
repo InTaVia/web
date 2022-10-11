@@ -1,8 +1,8 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { createUrlSearchParams } from '@stefanprobst/request';
 
+import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
-import intaviaApiService from '@/features/common/intavia-api.service';
 
 interface Query {
   searchResultCount: number;
@@ -31,10 +31,7 @@ const searchHistorySlice = createSlice({
   },
   extraReducers(builder) {
     builder.addMatcher(
-      isAnyOf(
-        // FIXME: real search endpoint
-        intaviaApiService.endpoints.getPersons.matchFulfilled,
-      ),
+      isAnyOf(intaviaApiService.endpoints.searchEntities.matchFulfilled),
       (state, action) => {
         const count = action.payload.count;
 

@@ -1,8 +1,8 @@
 import Checkbox from '@mui/material/Checkbox';
 import type { ChangeEvent } from 'react';
 
+import type { Entity } from '@/api/intavia.models';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import type { Entity } from '@/features/common/entity.model';
 import {
   selectEntity,
   selectSearchResultsSelection,

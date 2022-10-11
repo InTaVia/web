@@ -1,14 +1,11 @@
 import { UploadIcon } from '@heroicons/react/outline';
-import { eventNames } from 'process';
 import type { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 
+import type { EntityEvent, Person, Place } from '@/api/entity.model';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/features/common/entities.slice';
-import type { EntityEvent, Person, Place } from '@/features/common/entity.model';
-import { event } from '@/features/common/entity.validation-schema';
-import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
+import { addLocalEntity } from '@/app/store/entities.slice';
 import { transformData } from '@/lib/transform-data';
 
 export function ExcelUpload(): JSX.Element {

@@ -83,5 +83,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    // @ts-expect-error Missing module declaration.
+    require('@tailwindcss/line-clamp'),
+  ],
 };

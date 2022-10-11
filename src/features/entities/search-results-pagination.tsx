@@ -2,14 +2,14 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Link from 'next/link';
 
-import { usePersonsSearch } from '@/features/entities/use-persons-search';
-import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntities } from '@/features/entities/use-search-entities';
+import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 export function SearchResultsPagination(): JSX.Element | null {
-  const searchFilters = usePersonsSearchFilters();
-  const searchResults = usePersonsSearchResults();
-  const { getSearchParams } = usePersonsSearch();
+  const searchFilters = useSearchEntitiesFilters();
+  const searchResults = useSearchEntitiesResults();
+  const { getSearchUrl } = useSearchEntities();
 
   const page = searchFilters.page;
   const pages = searchResults.data?.pages ?? 0;
@@ -23,7 +23,7 @@ export function SearchResultsPagination(): JSX.Element | null {
       renderItem={(item) => {
         return (
           <Link
-            href={{ query: getSearchParams({ ...searchFilters, page: item.page ?? undefined }) }}
+            href={getSearchUrl({ ...searchFilters, page: item.page ?? undefined })}
             passHref
             shallow
           >

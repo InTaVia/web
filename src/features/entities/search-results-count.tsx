@@ -1,13 +1,11 @@
-import Typography from '@mui/material/Typography';
-
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
 export function SearchResultsCount(): JSX.Element {
-  const searchResults = usePersonsSearchResults();
-  const persons = searchResults.data?.entities ?? [];
+  const searchResults = useSearchEntitiesResults();
+  const entities = searchResults.data?.results ?? [];
 
-  if (searchResults.isFetching) return <div></div>;
-  if (persons.length === 0) return <div></div>;
+  if (searchResults.isFetching === true) return <div></div>;
+  if (entities.length === 0) return <div></div>;
 
-  return <Typography>Results: {persons.length}</Typography>;
+  return <p>Results: {entities.length}</p>;
 }

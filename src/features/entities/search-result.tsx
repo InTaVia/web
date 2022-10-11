@@ -1,12 +1,10 @@
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
 
+import type { Entity } from '@/api/intavia.models';
 import { useAppSelector } from '@/app/store';
-import { selectLocalEntities } from '@/features/common/entities.slice';
-import type { Entity } from '@/features/common/entity.model';
+import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { SearchResultSelectionCheckBox } from '@/features/entities/search-result-selection-checkbox';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface SearchResultProps<T extends Entity> {
   /** @default false */
@@ -23,14 +21,14 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const entity = hasLocalEntity ? (localEntities[id] as T) : upstreamEntity;
 
   return (
-    <Box component="article" sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+    <article style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
       <NextLink href={{ pathname: `/${entity.kind}/${entity.id}` }} passHref>
-        <Link style={{ display: 'flex', justifyContent: 'space-between', flex: 1 }}>
-          <Typography>{entity.name}</Typography>
+        <a style={{ display: 'flex', justifyContent: 'space-between', flex: 1 }}>
+          <p>{getTranslatedLabel(entity.label)}</p>
           {hasLocalEntity ? <span> (edited locally)</span> : null}
-        </Link>
+        </a>
       </NextLink>
       {displaySelectionCheckBox ? <SearchResultSelectionCheckBox id={id} /> : null}
-    </Box>
+    </article>
   );
 }

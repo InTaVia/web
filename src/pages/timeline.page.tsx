@@ -8,7 +8,7 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { selectEntitiesByKind } from '@/app/store/entities.slice';
 import { Timeline } from '@/features/timeline/timeline';
 import { TimelinePageHeader } from '@/features/timeline/timeline-page-header';
 import { ZoomRangeToggle } from '@/features/timeline/zoom-range-toggle';

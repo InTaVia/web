@@ -3,10 +3,10 @@ import { XIcon as ClearIcon } from '@heroicons/react/outline';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { clearSearchHistory, selectSearchHistory } from '@/features/entities/search-history.slice';
-import { usePersonsSearch } from '@/features/entities/use-persons-search';
+import { useSearchEntities } from '@/features/entities/use-search-entities';
 
 export function SearchHistoryList(): JSX.Element {
-  const { search } = usePersonsSearch();
+  const { search } = useSearchEntities();
   const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
 

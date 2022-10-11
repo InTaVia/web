@@ -1,9 +1,8 @@
 import { ClipLoader } from 'react-spinners';
 
 import { useAppSelector } from '@/app/store';
-import type { EntityBase } from '@/features/common/entity.model';
 import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
-import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';
+import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 import { PaneToggle } from '@/features/ui/analyse-page-toolbar/PaneToggle';
 import Button from '@/features/ui/Button';
 
@@ -16,7 +15,7 @@ interface DCLToolbarProps {
 
 export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
   const { split = false, onSplit, onSave } = props;
-  const searchResults = usePersonsSearchResults();
+  const searchResults = useSearchEntitiesResults();
 
   const selectedEntities = useAppSelector(selectSearchResultsSelection);
 
@@ -39,11 +38,11 @@ export default function DCLToolbar(props: DCLToolbarProps): JSX.Element {
           size="small"
           round="round"
           onClick={() => {
-            const entities = searchResults.data?.entities;
+            const entities = searchResults.data?.results;
 
             if (entities) {
               onSave(
-                entities.map((entity: EntityBase) => {
+                entities.map((entity) => {
                   return entity.id;
                 }),
               );

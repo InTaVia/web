@@ -2,9 +2,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 
+import type { Entity, EntityKind } from '@/api/entity.model';
+import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
-import type { Entity, EntityKind } from '@/features/common/entity.model';
-import intaviaApiService from '@/features/common/intavia-api.service';
+
+type GetKind<Union, Kind> = Extract<Union, { kind: Kind }>;
 
 export interface QueryMetadata {
   endpoint: string;

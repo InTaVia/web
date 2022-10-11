@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { selectEntitiesByKind } from '@/app/store/entities.slice';
 import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';

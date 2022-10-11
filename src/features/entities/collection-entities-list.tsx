@@ -6,8 +6,8 @@ import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import type { Collection } from '@/features/common/entities.slice';
-import { selectCollections, selectEntities } from '@/features/common/entities.slice';
+import type { Collection } from '@/app/store/entities.slice';
+import { selectCollections, selectEntities } from '@/app/store/entities.slice';
 import { SearchResult } from '@/features/entities/search-result';
 
 export function CollectionEntitiesList(): JSX.Element {

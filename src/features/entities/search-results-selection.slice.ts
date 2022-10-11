@@ -1,8 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
+import type { Entity } from '@/api/intavia.models';
 import type { RootState } from '@/app/store';
-import type { Entity } from '@/features/common/entity.model';
 
 interface SearchResultsSelection {
   entities: Array<Entity['id']>;

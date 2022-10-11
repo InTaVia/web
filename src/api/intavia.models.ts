@@ -64,6 +64,7 @@ export interface EntityEventKind {
 export interface EntityEventRelation {
   id: string;
   label: InternationalizedLabel;
+  description?: string; // FIXME: missing in schema
   entity: Entity;
   role?: EntityRelationRole;
   source?: Source;
@@ -72,6 +73,7 @@ export interface EntityEventRelation {
 export interface EntityEvent {
   id: string;
   label: InternationalizedLabel;
+  description?: string; // FIXME: missing in schema
   kind?: EntityEventKind;
   source?: Source;
   startDate?: IsoDateString;

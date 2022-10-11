@@ -19,7 +19,7 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { selectEntitiesByKind } from '@/app/store/entities.slice';
 import type { Entity, Person } from '@/features/common/entity.model';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';

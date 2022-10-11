@@ -4,13 +4,13 @@ import { skipToken } from '@reduxjs/toolkit/query/react';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
+import { useGetEntitiesByIdQuery } from '@/api/intavia.service';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/features/common/entities.slice';
-import { useGetPersonByIdQuery } from '@/features/common/intavia-api.service';
+import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/app/store/entities.slice';
 import { PersonDetails } from '@/features/entities/person-details';
 
 export const getServerSideProps = withDictionaries(['common']);

@@ -6,7 +6,7 @@ import { Allotment } from 'allotment';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { selectEntitiesByKind } from '@/app/store/entities.slice';
 import type { Place } from '@/features/common/entity.model';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import styles from '@/features/storycreator/storycreator.module.css';

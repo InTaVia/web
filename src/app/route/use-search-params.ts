@@ -2,11 +2,23 @@ import { useRouter } from 'next/router';
 
 import { useRoute } from '@/app/route/use-route';
 
-export function useSearchParams(): URLSearchParams | null {
+export type UseSearchParamsResult =
+  | {
+      searchParams: null;
+      isSearchParamsReady: false;
+    }
+  | {
+      searchParams: URLSearchParams;
+      isSearchParamsReady: true;
+    };
+
+export function useSearchParams(): UseSearchParamsResult {
   const router = useRouter();
-  const route = useRoute();
+  const { searchParams } = useRoute();
 
-  if (!router.isReady) return null;
+  if (!router.isReady) {
+    return { searchParams: null, isSearchParamsReady: router.isReady };
+  }
 
-  return route.searchParams;
+  return { searchParams, isSearchParamsReady: router.isReady };
 }

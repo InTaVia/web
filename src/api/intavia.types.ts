@@ -8,13 +8,12 @@ export interface Bin<T = number> {
 export interface Node<T extends { id: string }> {
   id: T['id'];
   count: number;
+  label: string;
   children: Array<Node<T>>;
 }
 
 export interface RootNode<T extends { id: string }> extends Node<T> {
   id: 'root';
-  count: 0;
-  children: Array<Node<T>>;
 }
 
 export interface InternationalizedLabel {

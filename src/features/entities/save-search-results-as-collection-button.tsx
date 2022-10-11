@@ -9,8 +9,8 @@ import { Fragment } from 'react';
 
 import { addNotification } from '@/app/notifications/notifications.slice';
 import { useAppDispatch } from '@/app/store';
-import type { QueryMetadata } from '@/features/common/entities.slice';
-import { addCollection } from '@/features/common/entities.slice';
+import type { QueryMetadata } from '@/app/store/entities.slice';
+import { addCollection } from '@/app/store/entities.slice';
 import type { Entity } from '@/features/common/entity.model';
 import intaviaService from '@/features/common/intavia-api.service';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';

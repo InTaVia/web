@@ -9,7 +9,7 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/features/common/entities.slice';
+import { selectEntitiesByKind } from '@/app/store/entities.slice';
 import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
 import { EntityEventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
 import { GeoMap } from '@/features/geomap/geo-map';

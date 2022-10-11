@@ -1,12 +1,10 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   TextField,
-  Typography,
 } from '@mui/material';
 import { nanoid } from '@reduxjs/toolkit';
 import type { FormEvent } from 'react';
@@ -14,7 +12,7 @@ import { Fragment } from 'react';
 
 import { addNotification } from '@/app/notifications/notifications.slice';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { addCollection } from '@/features/common/entities.slice';
+import { addCollection } from '@/app/store/intavia-collections.slice';
 import { selectSearchResultsSelection } from '@/features/entities/search-results-selection.slice';
 import { useClearSearchResultsSelection } from '@/features/entities/use-clear-search-results-selection';
 import { useDialogState } from '@/features/ui/use-dialog-state';
@@ -25,11 +23,12 @@ export function SearchResultsSelection(): JSX.Element {
   const dialog = useDialogState();
   useClearSearchResultsSelection();
 
-  function onSave(name: string) {
+  function onSave(label: string) {
     const collection = {
       id: nanoid(),
-      name,
+      label,
       entities: Array.from(selectedEntities),
+      events: [],
       metadata: {},
     };
 
@@ -50,10 +49,10 @@ export function SearchResultsSelection(): JSX.Element {
 
   return (
     <Fragment>
-      <Box
-        sx={{
-          px: 2,
-          py: 1.5,
+      <div
+        style={{
+          paddingInline: 2,
+          paddingBlock: 1.5,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -62,18 +61,18 @@ export function SearchResultsSelection(): JSX.Element {
           borderTopColor: '#eee',
         }}
       >
-        <Typography>Selected: {selectedEntities.length}</Typography>
+        <p>Selected: {selectedEntities.length}</p>
         <Button disabled={selectedEntities.length === 0} onClick={dialog.open} variant="outlined">
           Save selection as collection
         </Button>
-      </Box>
+      </div>
       <Dialog fullWidth maxWidth="sm" open={dialog.isOpen} onClose={dialog.close}>
         <DialogTitle component="h2" variant="h4">
           Save collection
         </DialogTitle>
         <form onSubmit={onSubmit}>
           <DialogContent dividers sx={{ display: 'grid', gap: 1.5 }}>
-            <Typography>Save {selectedEntities.length} entities to new collection.</Typography>
+            <p>Save {selectedEntities.length} entities to new collection.</p>
             <TextField autoComplete="off" fullWidth label="Name" name="name" required />
           </DialogContent>
           <DialogActions>
