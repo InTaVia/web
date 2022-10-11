@@ -22,7 +22,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
   return (
     <article style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-      <NextLink href={{ pathname: `/${entity.kind}/${entity.id}` }} passHref>
+      <NextLink href={{ pathname: `/${entity.kind}/${encodeURIComponent(entity.id)}` }} passHref>
         <a style={{ display: 'flex', justifyContent: 'space-between', flex: 1 }}>
           <p>{getTranslatedLabel(entity.label)}</p>
           {hasLocalEntity ? <span> (edited locally)</span> : null}

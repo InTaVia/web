@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/app/store';
-import { selectLocalEntities } from '@/app/store/entities.slice';
+import { selectLocalEntities } from '@/app/store/intavia.slice';
 import CollectionPanelEntry from '@/features/entities/collection-panel-entry';
 import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
 
@@ -11,7 +11,6 @@ interface CollectionPanelProps {
 export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
   const searchResults = useSearchEntitiesResults();
   const localEntities = useAppSelector(selectLocalEntities);
-
   const { draggable = false, mini = false } = props;
 
   return (

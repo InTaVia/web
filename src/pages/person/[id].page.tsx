@@ -10,7 +10,7 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/app/store/entities.slice';
+import { selectEntitiesByKind, selectLocalEntitiesByKind } from '@/app/store/intavia.slice';
 import { PersonDetails } from '@/features/entities/person-details';
 
 export const getServerSideProps = withDictionaries(['common']);
@@ -29,21 +29,29 @@ export default function PersonPage(): JSX.Element {
   );
 }
 
+//https://intavia-backend.acdh-dev.oeaw.ac.at/api/entities/id?ids=
+//http%3A%2F%2Fdata.biographynet.nl%2Frdf%2FPersonDes-10010273_02
+//http%3A%2F%2Fdata.biographynet.nl%2Frdf%2FPersonDes-10010273_02
+
+//https://intavia-backend.acdh-dev.oeaw.ac.at/api/entities/id?page=1&limit=50&ids=
+
 function PersonScreen(): JSX.Element {
   const params = useParams();
-  const id = params?.get('id');
+  const tempId = params?.get('id');
+  const id = tempId != null ? decodeURIComponent(tempId) : null;
+  console.log('id', id);
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const localEntitiesByKind = useAppSelector(selectLocalEntitiesByKind);
   // TODO: force displaying upstream entity with `upstream` search param
   const entity =
     id != null ? localEntitiesByKind.person[id] ?? entitiesByKind.person[id] : undefined;
   // TODO: check if rtkq has something similar to react query's `initialData`
-  const getPersonByIdQuery = useGetPersonByIdQuery(
-    id != null && entity == null ? { id } : skipToken,
-  );
-  const person = entity ?? getPersonByIdQuery.data;
+  const entityByIdQuery = useGetEntitiesByIdQuery(id != null ? { ids: [id] } : skipToken);
 
-  if (id == null || getPersonByIdQuery.isLoading) {
+  console.log('entityByIdQuery', entityByIdQuery);
+  const person = entity ?? entityByIdQuery.data?.results[0];
+
+  if (id == null || entityByIdQuery.isLoading) {
     return (
       <Container maxWidth="md" sx={{ display: 'grid', gap: 4, padding: 4, placeItems: 'center' }}>
         <Typography>Loading...</Typography>
@@ -57,6 +65,10 @@ function PersonScreen(): JSX.Element {
         <Typography>Not found.</Typography>
       </Container>
     );
+  }
+
+  if (person?.kind !== 'person') {
+    return <></>;
   }
 
   return (

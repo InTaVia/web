@@ -6,8 +6,9 @@ import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import type { Collection } from '@/app/store/entities.slice';
-import { selectCollections, selectEntities } from '@/app/store/entities.slice';
+import { selectEntities } from '@/app/store/intavia.slice';
+import type { Collection } from '@/app/store/intavia-collections.slice';
+import { selectCollections } from '@/app/store/intavia-collections.slice';
 import { SearchResult } from '@/features/entities/search-result';
 
 export function CollectionEntitiesList(): JSX.Element {
@@ -35,7 +36,7 @@ export function CollectionEntitiesList(): JSX.Element {
           {collections.map((collection) => {
             return (
               <MenuItem key={collection.id} value={collection.id}>
-                {collection.name}
+                {collection.label}
               </MenuItem>
             );
           })}

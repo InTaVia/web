@@ -194,8 +194,8 @@ export const slice = createSlice({
       intaviaApiService.endpoints.getEntitiesById.matchFulfilled,
       (state, action) => {
         const data = normalize<GetEntitiesById.Response, NormalizedEntities>(
-          action.payload,
-          entityWithEvents,
+          action.payload.results,
+          [entityWithEvents],
         );
         const { entitiesWithEvents = {}, entities = {}, entityEvents = {} } = data.entities;
 

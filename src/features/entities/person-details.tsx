@@ -5,9 +5,9 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Fragment } from 'react';
 
+import type { Person } from '@/api/intavia.models';
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/app/store/entities.slice';
-import type { Person } from '@/features/common/entity.model';
+import { addLocalEntity } from '@/app/store/intavia.slice';
 import { eventTypes } from '@/features/common/event-types';
 import { EntityEditButton } from '@/features/entities/entity-edit-button';
 import { PageTitle } from '@/features/ui/page-title';
@@ -19,33 +19,18 @@ interface PersonDetailsProps {
 
 export function PersonDetails(props: PersonDetailsProps): JSX.Element {
   const { person } = props;
-
+  /*
   const dispatch = useAppDispatch();
 
   function onEdit(person: Person) {
     dispatch(addLocalEntity(person));
-  }
+  } */
 
-  const birth = person.history?.find((event) => {
-    return event.type === 'beginning';
-  });
-  const death = person.history?.find((event) => {
-    return event.type === 'end';
-  });
-  const history =
-    person.history
-      ?.filter((event) => {
-        return !['beginning', 'end'].includes(event.type);
-      })
-      ?.sort((a, b) => {
-        const _a = a.date == null ? 0 : new Date(a.date).getTime();
-        const _b = b.date == null ? 0 : new Date(b.date).getTime();
-        return _a === _b ? 0 : _a > _b ? 1 : -1;
-      }) ?? [];
+  return <pre>{JSON.stringify(person, null, 2)}</pre>;
+}
 
-  return (
-    <Fragment>
-      <Box
+{
+  /*<Fragment>  <Box
         component="header"
         sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 2 }}
       >
@@ -163,7 +148,5 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
             </List>
           </Box>
         ) : null}
-      </Paper>
-    </Fragment>
-  );
+      </Paper> </Fragment>*/
 }

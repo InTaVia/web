@@ -5,14 +5,13 @@ import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
 import { Fragment, useState } from 'react';
 
+import type { EntityEvent } from '@/api/intavia.models';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByID } from '@/app/store/entities.slice';
-import type { EntityEvent } from '@/features/common/entity.model';
-import { eventTypes } from '@/features/common/event-types';
+import { selectEntities } from '@/app/store/intavia.slice';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import Button from '@/features/ui/Button';
 import TextField from '@/features/ui/TextField';
-import { formatDate } from '@/lib/format-date';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface VisualizationPropertiesDialogProps {
   element: Visualization;
@@ -46,7 +45,7 @@ export function VisualizationPropertiesDialog(
       return (a.sort !== undefined ? a.sort : 0) - (b.sort !== undefined ? b.sort : 0);
     });
 
-  const entitiesByID = useAppSelector(selectEntitiesByID);
+  const entitiesByID = useAppSelector(selectEntities);
 
   let name = tmpElement.name;
   if (tmpElement.properties !== undefined) {
@@ -186,7 +185,11 @@ export function VisualizationPropertiesDialog(
                                   <div className="grid auto-rows-min grid-cols-[10px,auto,auto] gap-2">
                                     {tmpElement.entityIds.map((e) => {
                                       const entity = entitiesByID[e];
-                                      const entityEvents = entity?.history || [];
+                                      if (entity == null) {
+                                        return null;
+                                      }
+                                      const entityEvents =
+                                        /* entity?.history || */ [] as Array<any>;
                                       const newVisibilities = { ...tmpElement.visibilities };
 
                                       if (newVisibilities[e] === undefined) {
@@ -235,7 +238,10 @@ export function VisualizationPropertiesDialog(
                                                 return (
                                                   <>
                                                     <Disclosure.Button className="flex h-7 w-full justify-between rounded-lg bg-blue-100 p-1 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
-                                                      <span>{entity?.name}</span>
+                                                      <span>
+                                                        entity
+                                                        {getTranslatedLabel(entity.label)}
+                                                      </span>
                                                       <ChevronUpIcon
                                                         className={`${
                                                           open ? '' : 'rotate-180 transform'
@@ -281,7 +287,7 @@ export function VisualizationPropertiesDialog(
                                                               className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                                                             />
                                                             <div className="table">
-                                                              <div className="table-cell w-1/3 font-semibold">
+                                                              {/*  <div className="table-cell w-1/3 font-semibold">
                                                                 {eventTypes[event.type].label}
                                                               </div>
                                                               <div className="table-cell">
@@ -295,7 +301,7 @@ export function VisualizationPropertiesDialog(
                                                                 {event.place != null ? (
                                                                   <span>in {event.place.name}</span>
                                                                 ) : null}
-                                                              </div>
+                                                              </div> */}
                                                             </div>
                                                           </div>
                                                         );

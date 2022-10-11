@@ -2,9 +2,8 @@ import { Disclosure } from '@headlessui/react';
 import { LocationMarkerIcon, UserCircleIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
-import type { Entity } from '@/features/common/entity.model';
-import { eventTypes } from '@/features/common/event-types';
-import { formatDate } from '@/lib/format-date';
+import type { Entity } from '@/api/intavia.models';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export interface CollectionPanelEntryProps {
   entity: Entity;
@@ -28,12 +27,17 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
         {({ open }) => {
           let content = '';
           switch (props.entity.kind) {
-            case 'person':
-              content = props.entity.gender;
+            case 'person': {
+              const gender = props.entity.gender;
+              content = gender ? getTranslatedLabel(gender.label) : '';
               break;
-            case 'place':
-              content = `${props.entity.lat} ${props.entity.lng}`;
+            }
+            case 'place': {
+              const geometry = props.entity.geometry;
+              const point = geometry?.type === 'Point' ? geometry : null;
+              content = `${point?.coordinates[1]} ${point?.coordinates[0]}`;
               break;
+            }
             default:
               break;
           }
@@ -69,19 +73,20 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                         mini ? 'text-sm' : 'text-lg'
                       } place-self-center font-semibold`}
                     >
-                      {props.entity.name}
+                      {getTranslatedLabel(props.entity.label)}
                     </h2>
                     <span className="font-verythin col-start-3 row-start-1 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                       {content}
                     </span>
                     <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
-                      {props.entity.kind === 'person' ? props.entity.occupation.join(', ') : ''}
+                      {props.entity.kind === 'person'
+                        ? props.entity.occupations
+                            ?.map((occupation) => {
+                              return getTranslatedLabel(occupation.label);
+                            })
+                            .join(', ')
+                        : ''}
                     </span>
-                    {!mini && (
-                      <span className="font-verythin col-start-3 row-start-3 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
-                        {props.entity.kind === 'person' ? props.entity.categories.join(', ') : ''}
-                      </span>
-                    )}
                   </div>
 
                   {(!mini || open) && (
@@ -96,38 +101,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                   <Fragment>
                     <h3 className="text-lg font-semibold">Events</h3>
 
-                    <div className="table">
-                      {props.entity.history?.map((event, index) => {
-                        // TODO: events should have label and description
-                        return (
-                          <div
-                            draggable={draggable}
-                            onDragStart={(dragEvent) => {
-                              return dragEvent.dataTransfer.setData(
-                                'Text',
-                                JSON.stringify({
-                                  type: 'Event',
-                                  props: event,
-                                  content: '',
-                                }),
-                              );
-                            }}
-                            className="table-row justify-items-start gap-1"
-                            key={index}
-                          >
-                            <div className="table-cell w-1/3 font-semibold">
-                              {event.label /* {eventTypes[event.type].label} */}
-                            </div>
-                            <div className="table-cell">
-                              {event.date != null ? (
-                                <span>{formatDate(new Date(event.date))}</span>
-                              ) : null}{' '}
-                              {event.place != null ? <span>in {event.place.name}</span> : null}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <div className="table">HISTORY</div>
                   </Fragment>
                 ) : null}
               </Disclosure.Panel>

@@ -15,12 +15,12 @@ import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
+import type { Entity, Person } from '@/api/intavia.models';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/app/store/entities.slice';
-import type { Entity, Person } from '@/features/common/entity.model';
+import { selectEntitiesByKind } from '@/app/store/intavia.slice';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';
 import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
@@ -30,6 +30,7 @@ import { base as baseMap } from '@/features/geomap/maps.config';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 import { PageTitle } from '@/features/ui/page-title';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -226,7 +227,7 @@ function EntitySelectionList(props: EntitySelectionListProps): JSX.Element {
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.name}`} />
+              <ListItemText id={labelId} primary={`${getTranslatedLabel(value.label)}`} />
             </ListItemButton>
           </ListItem>
         );

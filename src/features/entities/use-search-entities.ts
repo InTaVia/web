@@ -6,7 +6,7 @@ import { useSearch } from '@/features/entities/use-search';
 
 export function useSearchEntities(): UseSearchResult<SearchEntities.SearchParams> {
   const { getSearchUrl, search } = useSearch(
-    routes.dataCurationLab().pathname,
+    routes.search().pathname,
     sanitizeSearchEntitiesParams,
   );
 

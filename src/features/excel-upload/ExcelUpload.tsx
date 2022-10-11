@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import type { EntityEvent, Person, Place } from '@/api/entity.model';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/app/store/entities.slice';
+import { addLocalEntity } from '@/app/store/intavia.slice';
 import { transformData } from '@/lib/transform-data';
 
 export function ExcelUpload(): JSX.Element {

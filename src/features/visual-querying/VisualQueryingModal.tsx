@@ -2,24 +2,19 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { usePersonsSearch } from '@/features/entities/use-persons-search';
-import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
+import { useSearchEntities } from '@/features/entities/use-search-entities';
+import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
 import Button from '@/features/ui/Button';
 import { selectModalOpen, setModal } from '@/features/ui/ui.slice';
 import { VisualQuerying } from '@/features/visual-querying/VisualQuerying';
-import type {
-  DateConstraint,
-  ProfessionConstraint,
-  TextConstraint,
-} from '@/features/visual-querying/visualQuerying.slice';
-import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 
 export function VisualQueryingModal(): JSX.Element {
   const dispatch = useAppDispatch();
   const constraints = useAppSelector(selectConstraints);
 
-  const searchFilters = usePersonsSearchFilters();
-  const { search } = usePersonsSearch();
+  const searchFilters = useSearchEntitiesFilters();
+  const { search } = useSearchEntities();
 
   const isOpen = useAppSelector((state) => {
     return selectModalOpen(state, 'visualQueryModal');
@@ -30,54 +25,22 @@ export function VisualQueryingModal(): JSX.Element {
   }
 
   function sendQuery() {
-    // Get parameters from constraints
-    const nameConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.Name;
-    });
-    const name = nameConstraint ? (nameConstraint as TextConstraint).value : undefined;
+    const q = constraints['person-name'].value ?? undefined;
+    const [bornAfter, bornBefore] = constraints['person-birth-date'].value?.map((d) => {
+      return new Date(d).toISOString();
+    }) ?? [undefined, undefined];
+    const [diedAfter, diedBefore] = constraints['person-death-date'].value?.map((d) => {
+      return new Date(d).toISOString();
+    }) ?? [undefined, undefined];
+    const occupations_id = constraints['person-occupation'].value ?? undefined;
 
-    // TODO (samuelbeck): add date-lived-constraint
-    const dateOfBirthConstraint = constraints.find((constraint) => {
-      return (
-        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-birth-constraint'
-      );
-    });
-    const dateOfBirth = dateOfBirthConstraint
-      ? (dateOfBirthConstraint as DateConstraint).value
-      : undefined;
-
-    const dateOfDeathConstraint = constraints.find((constraint) => {
-      return (
-        constraint.type === ConstraintType.Dates && constraint.id === 'date-of-death-constraint'
-      );
-    });
-    const dateOfDeath = dateOfDeathConstraint
-      ? (dateOfDeathConstraint as DateConstraint).value
-      : undefined;
-
-    const professionsConstraint = constraints.find((constraint) => {
-      return constraint.type === ConstraintType.Profession;
-    });
-    const professions =
-      (professionsConstraint as ProfessionConstraint | undefined)?.value ?? undefined;
-
-    // TODO (samuelbeck): add place constraints
-    search({
-      ...searchFilters,
-      page: 1,
-      q: name,
-      dateOfBirthStart: dateOfBirth ? dateOfBirth[0] : undefined,
-      dateOfBirthEnd: dateOfBirth ? dateOfBirth[1] : undefined,
-      dateOfDeathStart: dateOfDeath ? dateOfDeath[0] : undefined,
-      dateOfDeathEnd: dateOfDeath ? dateOfDeath[1] : undefined,
-      professions: professions,
-    });
+    search({ ...searchFilters, q, bornAfter, bornBefore, diedAfter, diedBefore, occupations_id });
 
     closeModal();
   }
 
   function isButtonDisabled(): boolean {
-    return !constraints.some((constraint) => {
+    return !Object.values(constraints).some((constraint) => {
       return constraint.value !== null && constraint.value !== '';
     });
   }
