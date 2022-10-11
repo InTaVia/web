@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { useAppDispatch } from '@/app/store';
+import type { Constraint, ConstraintKind } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 import type { RingDims } from '@/features/visual-querying/ringSegmentUtils';
 import {
@@ -7,21 +7,16 @@ import {
   getRingSegmentColors,
   getRingSegmentPath,
 } from '@/features/visual-querying/ringSegmentUtils';
-import type { Constraint, Profession } from '@/features/visual-querying/visualQuerying.slice';
-import {
-  ConstraintType,
-  toggleConstraintWidget,
-} from '@/features/visual-querying/visualQuerying.slice';
 
 interface OuterRingSegmentProps {
   dims: RingDims;
   origin: Origin;
   constraint: Constraint;
+  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
 }
 
 export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  const { dims, origin, constraint } = props;
+  const { dims, origin, constraint, setSelectedConstraint } = props;
 
   const path = getRingSegmentPath(origin, dims);
   const centerTextPath = getArcedTextPath(origin, dims, 'center');
@@ -29,39 +24,38 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
   const bottomTextPath = getArcedTextPath(origin, dims, 'bottom');
   const [fillColor, textColor] = getRingSegmentColors(constraint.id);
 
-  function toggleOpenConstraint() {
-    dispatch(toggleConstraintWidget(constraint.id));
-  }
-
   function createValueDescription(): string {
     if (constraint.value === null) {
       return '';
     }
-    switch (constraint.type) {
-      case ConstraintType.Name:
+    switch (constraint.kind) {
+      case 'label':
         const value = constraint.value as string;
         if (value.length < 30) {
           return value;
         }
         return value.substring(0, 29) + '...';
-      case ConstraintType.Dates:
+      case 'date-range':
         const [start, end] = constraint.value as [number, number];
         return `${start} - ${end}`;
-      case ConstraintType.Places:
+      case 'geometry':
         return 'Polygon';
-      case ConstraintType.Profession:
-        const list = (constraint.value as Array<Profession>).join(', ');
+      case 'vocabulary':
+        const list = constraint.value.join(', ');
         if (list.length < 30) {
           return list;
         }
         return list.substring(0, 29) + '...';
-      default:
-        return constraint.value.toString();
     }
   }
 
   return (
-    <g id={`ring-constraint-${constraint.id}`} onClick={toggleOpenConstraint}>
+    <g
+      id={`ring-constraint-${constraint.id}`}
+      onClick={() => {
+        setSelectedConstraint(constraint);
+      }}
+    >
       <defs>
         <path d={centerTextPath.toString()} id={`centerTextPath-${constraint.id}`} />
         <path d={topTextPath.toString()} id={`topTextPath-${constraint.id}`} />
@@ -77,7 +71,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
             textAnchor="middle"
             startOffset="50%"
           >
-            {constraint.name}
+            {constraint.id}
           </textPath>
         </text>
       ) : (
@@ -88,7 +82,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
               textAnchor="middle"
               startOffset="50%"
             >
-              {constraint.name}
+              {constraint.id}
             </textPath>
           </text>
 

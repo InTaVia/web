@@ -1,46 +1,36 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { useState } from 'react';
 
+import type { ConstraintKind } from '@/features/visual-querying/constraints.types';
+import { constraintKindIds } from '@/features/visual-querying/constraints.types';
 import { InnerRingSegment } from '@/features/visual-querying/InnerRingSegment';
 import type { Origin } from '@/features/visual-querying/Origin';
-import { ConstraintType } from '@/features/visual-querying/visualQuerying.slice';
 
 interface QueryNodeProps {
   origin: Origin;
+  selectedConstraint: ConstraintKind | null;
+  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
 }
 
 export function QueryNode(props: QueryNodeProps): JSX.Element {
-  const { origin } = props;
+  const { origin, selectedConstraint, setSelectedConstraint } = props;
 
   const circleRadius = 100;
   const innerRingWidth = 40;
   const iconSize = 2 * circleRadius * (2 / 3);
 
-  const [isConstListShown, setIsConstListShown] = useState(false);
-
-  function handleClick() {
-    setIsConstListShown(!isConstListShown);
-  }
-
-  const ringDims = Object.keys(ConstraintType).map((type, idx, arr) => {
+  const ringDims = constraintKindIds.map((type, idx, arr) => {
     const delta = 360 / arr.length;
     const padding = 0;
     const startAngle = idx * delta;
     const endAngle = (idx + 1) * delta - padding;
-    const constraintType = ConstraintType[type as keyof typeof ConstraintType];
+    const constraintType = type;
 
     return { delta, padding, idx, constraintType, startAngle, endAngle };
   });
 
   return (
     <g>
-      <circle
-        cx={origin.x(0)}
-        cy={origin.y(0)}
-        r={circleRadius}
-        fill="#EDEDED"
-        onClick={handleClick}
-      />
+      <circle cx={origin.x(0)} cy={origin.y(0)} r={circleRadius} fill="#EDEDED" />
       <PersonOutlineOutlinedIcon
         width={iconSize}
         height={iconSize}
@@ -61,8 +51,10 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
               outerRadius: circleRadius + innerRingWidth,
             }}
             type={constraintType}
-            label={ConstraintType[constraintType]}
+            label={constraintType}
             origin={origin.clone()}
+            selectedConstraint={selectedConstraint}
+            setSelectedConstraint={setSelectedConstraint}
           />
         );
       })}

@@ -62,7 +62,6 @@ export function VisualQueryingModal(): JSX.Element {
       (professionsConstraint as ProfessionConstraint | undefined)?.value ?? undefined;
 
     // TODO (samuelbeck): add place constraints
-
     search({
       ...searchFilters,
       page: 1,

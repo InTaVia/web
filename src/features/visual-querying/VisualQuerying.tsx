@@ -1,26 +1,29 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
-import { ConstraintType, selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import type { Constraint, ConstraintKind } from '@/features/visual-querying/constraints.types';
+import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
-import { useResizeObserver } from '@/lib/useResizeObserver';
+import { useResizeObserverDeprecated } from '@/lib/useResizeObserver';
 
 export function VisualQuerying(): JSX.Element {
   const parent = useRef<HTMLDivElement>(null);
-  const [width, height] = useResizeObserver(parent);
+  const [width, height] = useResizeObserverDeprecated(parent);
   const constraints = useAppSelector(selectConstraints);
 
-  function getContainerPosition(type: ConstraintType): { x: number; y: number } {
+  const [selectedConstraint, setSelectedConstraint] = useState<ConstraintKind | null>(null);
+
+  function getContainerPosition(type: Constraint['kind']): { x: number; y: number } {
     const center: [number, number] = [width / 2, height / 2];
     switch (type) {
-      case ConstraintType.Dates:
+      case 'date-range':
         return { x: center[0] + 200, y: Math.max(0, center[1] - 300) };
-      case ConstraintType.Places:
+      case 'geometry':
         return { x: center[0] + 200, y: center[1] + 0 };
-      case ConstraintType.Profession:
+      case 'vocabulary':
         return { x: Math.max(0, center[0] - 550), y: center[1] + 0 };
-      case ConstraintType.Name:
+      case 'label':
         return { x: Math.max(0, center[0] - 550), y: Math.max(0, center[1] - 150) };
       default:
         return { x: 0, y: 0 };
@@ -33,17 +36,22 @@ export function VisualQuerying(): JSX.Element {
       className="b-white relative h-[80vh] w-full overflow-hidden vq-min:overflow-scroll"
       ref={parent}
     >
-      <VisualQueryingSvg parentWidth={width} parentHeight={height} />
+      <VisualQueryingSvg
+        parentWidth={width}
+        parentHeight={height}
+        selectedConstraint={selectedConstraint}
+        setSelectedConstraint={setSelectedConstraint}
+      />
 
-      {constraints
-        .filter((constraint) => {
-          return constraint.opened;
+      {Object.values(constraints)
+        .filter((constraint: Constraint) => {
+          return constraint.kind === selectedConstraint?.kind;
         })
         .map((constraint, idx) => {
           return (
             <ConstraintContainer
               key={idx}
-              position={getContainerPosition(constraint.type)}
+              position={getContainerPosition(constraint.kind)}
               constraint={constraint}
             />
           );

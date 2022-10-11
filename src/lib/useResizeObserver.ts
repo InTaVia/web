@@ -1,7 +1,8 @@
 import type { RefObject } from 'react';
 import { useCallback, useLayoutEffect, useState } from 'react';
 
-export function useResizeObserver(
+// TODO: remove
+export function useResizeObserverDeprecated(
   ref: RefObject<HTMLElement>,
   callback?: (entry: DOMRectReadOnly) => void,
 ): [number, number] {

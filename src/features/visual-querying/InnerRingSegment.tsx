@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
+import type { ConstraintKind } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 import { OuterRingSegment } from '@/features/visual-querying/OuterRingSegment';
 import type { RingDims } from '@/features/visual-querying/ringSegmentUtils';
@@ -9,26 +10,27 @@ import {
   getRingSegmentColors,
   getRingSegmentPath,
 } from '@/features/visual-querying/ringSegmentUtils';
-import type { ConstraintType } from '@/features/visual-querying/visualQuerying.slice';
 import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 
 interface InnerRingSegmentProps {
   idx: number;
   dims: RingDims;
-  type: ConstraintType;
+  type: ConstraintKind['kind'];
   label: string;
   origin: Origin;
+  selectedConstraint: ConstraintKind | null;
+  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
 }
 
 export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
-  const { idx, dims, type, label, origin } = props;
+  const { idx, dims, type, label, origin, selectedConstraint, setSelectedConstraint } = props;
 
   const [isHovered, setIsHovered] = useState(false);
 
   const outerRingWidth = 55;
 
-  const constraints = useAppSelector(selectConstraints).filter((constraint) => {
-    return constraint.type === type;
+  const constraints = Object.values(useAppSelector(selectConstraints)).filter((constraint) => {
+    return constraint.kind === type;
   });
 
   // Calculate dims of outer ring segments
@@ -50,7 +52,10 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
     if (!isHovered) {
       // Only draw rings that have a value
       visibleOuterRingDims = visibleOuterRingDims.filter(({ constraint }) => {
-        return (constraint.value !== null && constraint.value !== '') || constraint.opened;
+        return (
+          (constraint.value !== null && constraint.value !== '') ||
+          constraint.kind === selectedConstraint?.kind
+        );
       });
     }
 
@@ -66,6 +71,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
           }}
           origin={origin}
           constraint={constraint}
+          setSelectedConstraint={setSelectedConstraint}
         />
       );
     });

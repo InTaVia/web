@@ -1,25 +1,20 @@
-import { Typography } from '@mui/material';
-
+import { useSearchBirthStatisticsQuery } from '@/api/intavia.service';
 import { useAppDispatch } from '@/app/store';
-import { useGetPersonDistributionByPropertyQuery } from '@/features/common/intavia-api.service';
-import { Histogram } from '@/features/visual-querying/Histogram';
-import { Origin } from '@/features/visual-querying/Origin';
-import type { DateConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
+import type { PersonBirthDateConstraint } from '@/features/visual-querying/constraints.types';
+import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
+import { Histogram } from '@/features/visualizations/Histogram';
 
 interface DateConstraintWidgetProps {
   width: number;
   height: number;
-  constraint: DateConstraint;
+  constraint: PersonBirthDateConstraint;
 }
 
 export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
   const { width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
-  const { data, isLoading } = useGetPersonDistributionByPropertyQuery({
-    property: constraint.id,
-  });
+  const { data, isLoading } = useSearchBirthStatisticsQuery({});
 
   const dimensions = {
     x: 0,
@@ -34,19 +29,16 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
 
   function setBrushedArea(area: [number, number]) {
     dispatch(
-      updateConstraintValue({
+      setConstraintValue({
         id: constraint.id,
         value: area,
       }),
     );
   }
 
-  // this is inside the foreignObject: completely new coordinate system
-  const histogramOrigin = new Origin(dimensions.marginLeft, dimensions.marginTop);
-
   function renderContent(): JSX.Element {
     if (isLoading) {
-      return <Typography>Loading ...</Typography>;
+      return <p>Loading ...</p>;
     }
 
     if (data) {
@@ -54,18 +46,16 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
         <svg width="100%" height="100%">
           <g className="data">
             <Histogram
-              brushedArea={constraint.value}
-              setBrushedArea={setBrushedArea}
-              data={data}
-              dimensions={dimensions}
-              origin={histogramOrigin}
+              data={data.bins}
+              initialBrushedArea={constraint.value}
+              onChangeBrushedArea={setBrushedArea}
             />
           </g>
         </svg>
       );
     }
 
-    return <Typography>No data</Typography>;
+    return <p>No data</p>;
   }
 
   return (

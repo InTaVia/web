@@ -28,7 +28,7 @@ import contentPaneReducer from '@/features/storycreator/contentPane.slice';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
-import visualQueryingReducer from '@/features/visual-querying/visualQuerying.slice';
+import { slice as visualQueryingSlice } from '@/features/visual-querying/visualQuerying.slice';
 import workspacesReducer from '@/features/visualization-layouts/workspaces.slice';
 
 const persistConfig: PersistConfig<RootState> = {
@@ -45,6 +45,7 @@ const rootReducer = combineReducers({
   [intaviaApiService.reducerPath]: intaviaApiService.reducer,
   [intaviaCollectionsSlice.name]: intaviaCollectionsSlice.reducer,
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
+  [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
   notifications: notificationsReducer,
   searchHistory: searchHistoryReducer,
@@ -52,7 +53,6 @@ const rootReducer = combineReducers({
   storycreator: storycreatorReducer,
   timeline: timelineReducer,
   ui: uiReducer,
-  visualQuerying: visualQueryingReducer,
   visualization: visualizationReducer,
   contentPane: contentPaneReducer,
   workspaces: workspacesReducer,
