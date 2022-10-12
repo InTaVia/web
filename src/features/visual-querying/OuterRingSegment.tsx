@@ -52,8 +52,9 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
   return (
     <g
       id={`ring-constraint-${constraint.id}`}
-      onClick={() => {
+      onClick={(event) => {
         setSelectedConstraint(constraint);
+        event.stopPropagation();
       }}
     >
       <defs>
