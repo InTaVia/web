@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import type { EntityEvent, Person, StoryEvent } from '@/features/common/entity.model';
+import type { EntityEvent, Person, StoryEvent } from '@/api/intavia.models';
 import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type {

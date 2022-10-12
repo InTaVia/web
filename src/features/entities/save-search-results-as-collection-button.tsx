@@ -11,7 +11,7 @@ import { addNotification } from '@/app/notifications/notifications.slice';
 import { useAppDispatch } from '@/app/store';
 import type { QueryMetadata } from '@/app/store/entities.slice';
 import { addCollection } from '@/app/store/entities.slice';
-import type { Entity } from '@/features/common/entity.model';
+import type { Entity } from '@/api/intavia.models';
 import intaviaService from '@/features/common/intavia-api.service';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';

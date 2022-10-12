@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import type { Person } from '@/features/common/entity.model';
+import type { Person } from '@/api/intavia.models';
 import { PersonEventListItem } from '@/features/timeline/person-event-list-item';
 
 interface PersonTooltipContentsProps {

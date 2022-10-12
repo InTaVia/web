@@ -4,7 +4,7 @@ import { schemeTableau10 } from 'd3-scale-chromatic';
 import { Fragment } from 'react';
 import { Marker } from 'react-map-gl';
 
-import type { EntityEvent, Person as Entity } from '@/features/common/entity.model';
+import type { EntityEvent, Person as Entity } from '@/api/intavia.models';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';
 import { keys } from '@/lib/keys';

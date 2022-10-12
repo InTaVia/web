@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/solid';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import type { EntityEvent, Person } from '@/features/common/entity.model';
+import type { EntityEvent, Person } from '@/api/intavia.models';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
   addEventToVisualization,

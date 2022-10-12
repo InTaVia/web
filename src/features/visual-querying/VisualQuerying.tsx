@@ -53,6 +53,7 @@ export function VisualQuerying(): JSX.Element {
               key={idx}
               position={getContainerPosition(constraint.kind)}
               constraint={constraint}
+              setSelectedConstraint={setSelectedConstraint}
             />
           );
         })}

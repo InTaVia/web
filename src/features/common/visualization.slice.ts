@@ -1,8 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
+import type { Entity, Person } from '@/api/intavia.models';
 import type { RootState } from '@/app/store';
-import type { Entity, Person } from '@/features/common/entity.model';
 
 export interface Visualization {
   id: string;

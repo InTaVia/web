@@ -4,13 +4,16 @@ import { useAppDispatch } from '@/app/store';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { GeoMapDrawControls } from '@/features/geomap/geo-map-draw-controls';
 import { base as baseMap } from '@/features/geomap/maps.config';
-import type { PlaceConstraint } from '@/features/visual-querying/visualQuerying.slice';
-import { updateConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
+import type {
+  PersonBirthPlaceConstraint,
+  PersonDeathPlaceConstraint,
+} from '@/features/visual-querying/constraints.types';
+import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface PlaceConstraintWidgetProps {
   width: number;
   height: number;
-  constraint: PlaceConstraint;
+  constraint: PersonBirthPlaceConstraint | PersonDeathPlaceConstraint;
 }
 
 export function PlaceConstraintWidget(props: PlaceConstraintWidgetProps): JSX.Element {
@@ -19,15 +22,15 @@ export function PlaceConstraintWidget(props: PlaceConstraintWidgetProps): JSX.El
   const dispatch = useAppDispatch();
 
   function onCreate({ features }: { features: Array<Feature> }) {
-    dispatch(updateConstraintValue({ id: constraint.id, value: features }));
+    dispatch(setConstraintValue({ ...constraint, value: features }));
   }
 
   function onDelete() {
-    dispatch(updateConstraintValue({ id: constraint.id, value: null }));
+    dispatch(setConstraintValue({ ...constraint, value: null }));
   }
 
   function onUpdate({ features }: { features: Array<Feature> }) {
-    dispatch(updateConstraintValue({ id: constraint.id, value: features }));
+    dispatch(setConstraintValue({ ...constraint, value: features }));
   }
 
   const dimensions = {

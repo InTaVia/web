@@ -7,7 +7,7 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
-import type { Place } from '@/features/common/entity.model';
+import type { Place } from '@/api/intavia.models';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';

@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/entities.slice';
-import type { EntityEvent } from '@/features/common/entity.model';
+import type { EntityEvent } from '@/api/intavia.models';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { StoryTimeline } from '@/features/storycreator/story-timeline';

@@ -1,5 +1,6 @@
 import { path } from 'd3-path';
 
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 
 export interface RingDims {
@@ -63,31 +64,31 @@ export function getArcedTextPath(origin: Origin, dims: RingDims, position: strin
   return p;
 }
 
-export function getRingSegmentColors(id: string): [string, string] {
+export function getRingSegmentColors(id: Constraint['id'] | Constraint['kind']): [string, string] {
   switch (id) {
-    case 'Dates':
+    case 'date-range':
       return ['#29C24B', '#0A5C1C'];
-    case 'Name':
+    case 'label':
       return ['#EB436B', '#6F001A'];
-    case 'Places':
+    case 'geometry':
       return ['#5184E7', '#0C2E72'];
-    case 'Profession':
+    case 'vocabulary':
       return ['#E9E131', '#565307'];
-    case 'date-lived-constraint':
-      return ['#1E7D33', '#65FA86'];
-    case 'date-of-birth-constraint':
+    // case 'date-lived-constraint':
+    //   return ['#1E7D33', '#65FA86'];
+    case 'person-birth-date':
       return ['#1EC543', '#205F2E'];
-    case 'date-of-death-constraint':
+    case 'person-death-date':
       return ['#5EE97D', '#006717'];
-    case 'place-lived-constraint':
-      return ['#1E4A7D', '#70B2FF'];
-    case 'place-of-birth-constraint':
+    // case 'place-lived-constraint':
+    //   return ['#1E4A7D', '#70B2FF'];
+    case 'person-birth-place':
       return ['#1E89C5', '#0E4462'];
-    case 'place-of-death-constraint':
+    case 'person-death-place':
       return ['#5ED0E9', '#005A6D'];
-    case 'name-constraint':
+    case 'person-name':
       return ['#DC2450', '#FFD0DB'];
-    case 'profession-constraint':
+    case 'person-occupation':
       return ['#D8D027', '#FFFDCF'];
     default:
       return ['lightGray', 'darkGray'];

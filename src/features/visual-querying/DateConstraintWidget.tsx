@@ -1,13 +1,16 @@
 import { useSearchBirthStatisticsQuery } from '@/api/intavia.service';
 import { useAppDispatch } from '@/app/store';
-import type { PersonBirthDateConstraint } from '@/features/visual-querying/constraints.types';
+import type {
+  PersonBirthDateConstraint,
+  PersonDeathDateConstraint,
+} from '@/features/visual-querying/constraints.types';
 import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 import { Histogram } from '@/features/visualizations/Histogram';
 
 interface DateConstraintWidgetProps {
   width: number;
   height: number;
-  constraint: PersonBirthDateConstraint;
+  constraint: PersonBirthDateConstraint | PersonDeathDateConstraint;
 }
 
 export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {

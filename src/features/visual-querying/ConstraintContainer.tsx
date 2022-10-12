@@ -2,47 +2,40 @@ import { TrashIcon } from '@heroicons/react/outline';
 
 import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
 import { PlaceConstraintWidget } from '@/features/visual-querying/PlaceConstraintWidget';
 import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
 import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
-import type {
-  Constraint,
-  DateConstraint,
-  PlaceConstraint,
-  ProfessionConstraint,
-  TextConstraint,
-} from '@/features/visual-querying/visualQuerying.slice';
-import {
-  ConstraintType,
-  removeConstraint,
-  toggleConstraintWidget,
-} from '@/features/visual-querying/visualQuerying.slice';
+import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ConstraintContainerHeaderProps {
   constraint: Constraint;
+  setSelectedConstraint: (constraint: Constraint | null) => void;
 }
 
 interface ConstraintContainerProps {
   position: { x: number; y: number };
   constraint: Constraint;
+  setSelectedConstraint: (constraint: Constraint | null) => void;
 }
 
 function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.Element {
+  const { constraint, setSelectedConstraint } = props;
+
   const dispatch = useAppDispatch();
-  const { constraint } = props;
 
   function confirmDeleteConstraint() {
-    const confirmation = confirm(`Do you want to delete the ${constraint.name} constraint?`);
+    const confirmation = confirm(`Do you want to delete the ${constraint.id} constraint?`);
     if (confirmation) {
-      dispatch(removeConstraint(constraint));
-      dispatch(toggleConstraintWidget(constraint.id));
+      dispatch(setConstraintValue({ ...constraint, value: null }));
+      setSelectedConstraint(null);
     }
   }
 
   function renderTypeSpecificHeader(): JSX.Element {
-    switch (constraint.type) {
-      case ConstraintType.Dates:
+    switch (constraint.kind) {
+      case 'date-range':
         if (constraint.value !== null) {
           return (
             <>
@@ -61,7 +54,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
   return (
     <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
       <div className="h-content justify-left flex flex-row items-center gap-2">
-        <p className="ml-3 mr-4 text-lg">{constraint.name}</p>
+        <p className="ml-3 mr-4 text-lg">{constraint.id}</p>
         {renderTypeSpecificHeader()}
       </div>
 
@@ -80,36 +73,23 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
 }
 
 export function ConstraintContainer(props: ConstraintContainerProps): JSX.Element {
-  const { constraint, position } = props;
+  const { constraint, position, setSelectedConstraint } = props;
 
   function renderWidget(): JSX.Element {
-    switch (constraint.type) {
-      case ConstraintType.Dates:
+    switch (constraint.kind) {
+      case 'date-range':
+        return <DateConstraintWidget width={400} height={200} constraint={constraint} />;
+      case 'label':
         return (
-          <DateConstraintWidget
-            width={400}
-            height={200}
-            constraint={constraint as DateConstraint}
+          <TextConstraintWidget
+            constraint={constraint}
+            setSelectedConstraint={setSelectedConstraint}
           />
         );
-      case ConstraintType.Name:
-        return <TextConstraintWidget constraint={constraint as TextConstraint} />;
-      case ConstraintType.Places:
-        return (
-          <PlaceConstraintWidget
-            width={550}
-            height={350}
-            constraint={constraint as PlaceConstraint}
-          />
-        );
-      case ConstraintType.Profession:
-        return (
-          <ProfessionConstraintWidget
-            width={300}
-            height={400}
-            constraint={constraint as ProfessionConstraint}
-          />
-        );
+      case 'geometry':
+        return <PlaceConstraintWidget width={550} height={350} constraint={constraint} />;
+      case 'vocabulary':
+        return <ProfessionConstraintWidget width={300} height={400} constraint={constraint} />;
     }
   }
 
@@ -118,7 +98,10 @@ export function ConstraintContainer(props: ConstraintContainerProps): JSX.Elemen
       className="absolute overflow-clip rounded-md border bg-white"
       style={{ left: position.x, top: position.y }}
     >
-      <ConstraintContainerHeader constraint={constraint} />
+      <ConstraintContainerHeader
+        constraint={constraint}
+        setSelectedConstraint={setSelectedConstraint}
+      />
       {renderWidget()}
     </div>
   );

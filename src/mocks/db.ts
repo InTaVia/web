@@ -3,7 +3,7 @@ import type { Bin } from 'd3-array';
 import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
-import type { Entity, EntityEvent, Person, Place } from '@/features/common/entity.model';
+import type { Entity, EntityEvent, Person, Place } from '@/api/intavia.models';
 import type { EventType } from '@/features/common/event-types';
 import { times } from '@/lib/times';
 

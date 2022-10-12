@@ -6,7 +6,7 @@ import { schemeTableau10 } from 'd3-scale-chromatic';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 
-import type { Person } from '@/features/common/entity.model';
+import type { Person } from '@/api/intavia.models';
 import { eventTypes } from '@/features/common/event-types';
 
 export interface TimelineElementProps {

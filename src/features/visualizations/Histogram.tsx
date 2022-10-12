@@ -15,7 +15,9 @@ export interface HistogramProps<T extends Date | IsoDateString | number> {
   onChangeBrushedArea?: (area: [number, number]) => void;
 }
 
-export function Histogram<T extends Date | number>(props: HistogramProps<T>): JSX.Element {
+export function Histogram<T extends Date | IsoDateString | number>(
+  props: HistogramProps<T>,
+): JSX.Element {
   const { data, initialBrushedArea, onChangeBrushedArea } = props;
 
   const [containerElement, setContainerElement] = useElementRef();

@@ -1,7 +1,7 @@
 import { color as d3color } from 'd3-color';
 import { Marker } from 'react-map-gl';
 
-import type { Person } from '@/features/common/entity.model';
+import type { Person } from '@/api/intavia.models';
 
 interface StoryMapPinProps {
   id: string;
@@ -53,9 +53,9 @@ export function StoryMapPin(props: StoryMapPinProps): JSX.Element {
   );
 }
 
-/* 
+/*
 {['beginning', 'end'].includes(marker.eventType) ? (
-          
+
         ) : (
           <path
             d={`M ${12} ${12 + size / 2} l ${size / 2} ${-size / 2} ${-size / 2} ${-size / 2} ${

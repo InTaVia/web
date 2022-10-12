@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
-import type { EntityEvent, StoryEvent } from '@/features/common/entity.model';
+import type { EntityEvent, StoryEvent } from '@/api/intavia.models';
 import type { VisualizationProperty } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { StoryMapPin } from '@/features/storycreator/StoryMapPin';

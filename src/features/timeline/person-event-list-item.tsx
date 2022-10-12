@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import { timeFormat } from 'd3-time-format';
 
-import type { EntityEvent } from '@/features/common/entity.model';
+import type { EntityEvent } from '@/api/intavia.models';
 import { useGetPersonByIdQuery, useGetPlaceByIdQuery } from '@/features/common/intavia-api.service';
 
 const dateFmt = timeFormat('%B %_d, %Y');
