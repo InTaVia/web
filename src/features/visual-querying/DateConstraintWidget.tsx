@@ -46,15 +46,11 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
 
     if (data) {
       return (
-        <svg width="100%" height="100%">
-          <g className="data">
-            <Histogram
-              data={data.bins}
-              initialBrushedArea={constraint.value}
-              onChangeBrushedArea={setBrushedArea}
-            />
-          </g>
-        </svg>
+        <Histogram
+          data={data.bins}
+          initialBrushedArea={constraint.value}
+          onChangeBrushedArea={setBrushedArea}
+        />
       );
     }
 
@@ -62,6 +58,8 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   }
 
   return (
-    <div style={{ width: dimensions.width, height: dimensions.height }}>{renderContent()}</div>
+    <div className="grid" style={{ width: dimensions.width, height: dimensions.height }}>
+      {renderContent()}
+    </div>
   );
 }
