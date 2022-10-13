@@ -4,9 +4,9 @@ import type { RequestOptions } from '@stefanprobst/request';
 import { request } from '@stefanprobst/request';
 
 import type {
+  Entity,
   EntityEvent,
   EntityKind,
-  EntityWithEvents,
   Gender,
   Occupation,
   OccupationWithRelations,
@@ -16,16 +16,10 @@ import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';
 
 export namespace GetEntitiesById {
   export type SearchParams = PaginatedRequest<{
-    ids: Array<EntityWithEvents['id']>;
-    /**
-     * Whether to include data on events.
-     *
-     * @default false
-     */
-    includeEvents?: boolean;
+    ids: Array<Entity['id']>;
   }>;
   export type Params = SearchParams;
-  export type Response = PaginatedResponse<EntityWithEvents>;
+  export type Response = PaginatedResponse<Entity>;
 }
 
 export const getEntitiesById = {
@@ -65,12 +59,6 @@ export namespace SearchEntities {
      */
     kind?: Array<EntityKind>;
     /**
-     * Whether to include data on events.
-     *
-     * @default false
-     */
-    includeEvents?: boolean;
-    /**
      * Filter persons by occupation label.
      */
     occupation?: string;
@@ -104,7 +92,7 @@ export namespace SearchEntities {
     diedAfter?: IsoDateString;
   }>;
   export type Params = SearchParams;
-  export type Response = PaginatedResponse<EntityWithEvents>;
+  export type Response = PaginatedResponse<Entity>;
 }
 
 export const searchEntities = {

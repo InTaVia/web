@@ -90,31 +90,22 @@ interface EntityBase {
   linkedIds?: Array<{ id: string; provider: { label: string; baseUrl: UrlString } }>;
   description?: string;
   media?: Array<MediaResource>;
+  events?: Array<EntityEvent['id']>;
 }
-
-type WithEntityEvents<T> = T & {
-  events?: Array<EntityEvent>;
-};
 
 export interface CulturalHeritageObject extends EntityBase {
   kind: 'cultural-heritage-object';
 }
-
-export type CulturalHeritageObjectWithEvents = WithEntityEvents<CulturalHeritageObject>;
 
 export interface Group extends EntityBase {
   kind: 'group';
   type?: GroupType;
 }
 
-export type GroupWithEvents = WithEntityEvents<Group>;
-
 export interface HistoricalEvent extends EntityBase {
   kind: 'historical-event';
   type?: HistoricalEventType;
 }
-
-export type HistoricalEventWithEvents = WithEntityEvents<HistoricalEvent>;
 
 export interface Person extends EntityBase {
   kind: 'person';
@@ -122,29 +113,16 @@ export interface Person extends EntityBase {
   occupations?: Array<Occupation>;
 }
 
-export type PersonWithEvents = WithEntityEvents<Person>;
-
 export interface Place extends EntityBase {
   kind: 'place';
   type?: PlaceType; // FIXME:
   geometry?: Geometry;
 }
 
-export type PlaceWithEvents = WithEntityEvents<Place>;
-
 export type Entity = CulturalHeritageObject | Group | HistoricalEvent | Person | Place;
-export type EntityWithEvents =
-  | CulturalHeritageObjectWithEvents
-  | GroupWithEvents
-  | HistoricalEventWithEvents
-  | PersonWithEvents
-  | PlaceWithEvents;
 export type EntityKind = Entity['kind'];
 export type EntityMap = {
   [Kind in EntityKind]: Extract<Entity, { kind: Kind }>;
-};
-export type EntityWithEventsMap = {
-  [Kind in EntityKind]: Extract<EntityWithEvents, { kind: Kind }>;
 };
 
 export const entityKinds: Array<EntityKind> = [

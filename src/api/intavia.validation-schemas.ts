@@ -96,6 +96,7 @@ const entityBase = z.object({
     .optional(),
   description: z.string().optional(),
   media: z.array(mediaResource).optional(),
+  events: z.array(z.string() /** entityEvent.shape.id */).optional(),
 });
 
 export const culturalHeritageObject = entityBase.extend({
@@ -171,22 +172,6 @@ export const entityEvent = z.object({
   relations: z.array(entityEventRelation).optional(),
 });
 
-const withEntityEvents = z.object({
-  relations: z.array(entityEventRelation),
-});
-
-export const culturalHeritageObjectWithEvents = culturalHeritageObject.merge(withEntityEvents);
-
-export const groupWithEvents = group.merge(withEntityEvents);
-
-export const historicalEventWithEvents = historicalEvent.merge(withEntityEvents);
-
-export const personWithEvents = person.merge(withEntityEvents);
-
-export const placeWithEvents = place.merge(withEntityEvents);
-
-export const entityWithEvents = z.intersection(entity, withEntityEvents);
-
 //
 
 const binBase = z.object({
@@ -249,13 +234,12 @@ const paginatedRequest = z.object({
 export const getEntitiesByIdSearchParams = paginatedRequest.merge(
   z.object({
     ids: z.array(entityBase.shape.id),
-    includeEvents: z.boolean().optional().default(false),
   }),
 );
 
 export const getEntitiesByIdResponse = paginatedResponse.merge(
   z.object({
-    results: z.array(entityWithEvents),
+    results: z.array(entity),
   }),
 );
 
@@ -265,7 +249,6 @@ export const searchEntitiesSearchParams = paginatedRequest.merge(
   z.object({
     q: z.string().optional(),
     kind: z.array(entityKind).optional(),
-    includeEvents: z.boolean().optional().default(false),
     occupation: z.string().optional(),
     occupations_id: z.array(occupation.shape.id).optional(),
     gender: z.string().optional(),
@@ -279,7 +262,7 @@ export const searchEntitiesSearchParams = paginatedRequest.merge(
 
 export const searchEntitiesResponse = paginatedResponse.merge(
   z.object({
-    results: z.array(entityWithEvents),
+    results: z.array(entity),
   }),
 );
 

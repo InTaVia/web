@@ -15,7 +15,6 @@ export function useSearchEntitiesFilters(): SearchEntities.SearchParams {
     const defaults = {
       page: 1,
       limit: defaultPageSize,
-      includeEvents: true,
     };
 
     if (searchParams == null) return defaults;
@@ -25,7 +24,6 @@ export function useSearchEntitiesFilters(): SearchEntities.SearchParams {
       q: getSearchParam(searchParams, 'q'),
       limit: toPositiveInteger(Number(getSearchParam(searchParams, 'limit') ?? defaults.limit)),
       kind: getSearchParams(searchParams, 'kind').filter(isEntityKind),
-      includeEvents: getSearchParam(searchParams, 'includeEvents')?.toLowerCase() !== 'false',
       occupation: getSearchParam(searchParams, 'occupation'),
       occupations_id: getSearchParams(searchParams, 'occupations_id'),
       gender: getSearchParam(searchParams, 'gender'),

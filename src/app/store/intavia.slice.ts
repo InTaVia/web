@@ -1,46 +1,20 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { normalize, schema } from 'normalizr';
 import { PURGE } from 'redux-persist';
 
-import type { GetEntitiesById, SearchEntities } from '@/api/intavia.client';
-import type { EntityEvent, EntityKind, EntityWithEvents } from '@/api/intavia.models';
+import type { Entity, EntityEvent, EntityKind } from '@/api/intavia.models';
 import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
 
-// TODO: normalisation should be done by api
-const entity = new schema.Entity('entities');
-const entityEvent = new schema.Entity('entityEvents', { place: entity, relations: [{ entity }] });
-const entityWithEvents = new schema.Entity('entitiesWithEvents', { events: [entityEvent] });
-
-export type NormalizedEntity = DistributiveOmit<EntityWithEvents, 'events'> & {
-  events?: Array<NormalizedEntityEvent['id']>;
-};
-
-type NormalizedEntityEventRelation = Omit<EntityEvent['relations'], 'entity'> & {
-  entity: NormalizedEntity['id'];
-};
-
-export type NormalizedEntityEvent = DistributiveOmit<EntityEvent, 'place' | 'relations'> & {
-  place?: NormalizedEntity['id'];
-  relations?: Array<NormalizedEntityEventRelation>;
-};
-
-interface NormalizedEntities {
-  entitiesWithEvents?: Record<NormalizedEntity['id'], NormalizedEntity>;
-  entities?: Record<NormalizedEntity['id'], NormalizedEntity>;
-  entityEvents?: Record<NormalizedEntityEvent['id'], NormalizedEntityEvent>;
-}
-
 interface IndexedEntities {
-  byId: Record<NormalizedEntity['id'], NormalizedEntity>;
+  byId: Record<Entity['id'], Entity>;
   byKind: {
-    [Kind in EntityKind]: Record<NormalizedEntity['id'], Extract<NormalizedEntity, { kind: Kind }>>;
+    [Kind in EntityKind]: Record<Entity['id'], Extract<Entity, { kind: Kind }>>;
   };
 }
 
 interface IndexedEntityEvents {
-  byId: Record<NormalizedEntityEvent['id'], NormalizedEntityEvent>;
+  byId: Record<EntityEvent['id'], EntityEvent>;
 }
 
 interface IntaviaState {
@@ -91,19 +65,19 @@ export const slice = createSlice({
   name: 'intavia',
   initialState,
   reducers: {
-    addLocalEntity(state, action: PayloadAction<NormalizedEntity>) {
+    addLocalEntity(state, action: PayloadAction<Entity>) {
       const entity = action.payload;
       state.entities.local.byId[entity.id] = entity;
       state.entities.local.byKind[entity.kind][entity.id] = entity;
     },
-    addLocalEntities(state, action: PayloadAction<Array<NormalizedEntity>>) {
+    addLocalEntities(state, action: PayloadAction<Array<Entity>>) {
       const entities = action.payload;
       entities.forEach((entity) => {
         state.entities.local.byId[entity.id] = entity;
         state.entities.local.byKind[entity.kind][entity.id] = entity;
       });
     },
-    removeLocalEntity(state, action: PayloadAction<NormalizedEntity['id']>) {
+    removeLocalEntity(state, action: PayloadAction<Entity['id']>) {
       const id = action.payload;
       const entity = state.entities.local.byId[id];
       if (entity != null) {
@@ -111,7 +85,7 @@ export const slice = createSlice({
         delete state.entities.local.byKind[entity.kind][entity.id];
       }
     },
-    removeLocalEntities(state, action: PayloadAction<Array<NormalizedEntity['id']>>) {
+    removeLocalEntities(state, action: PayloadAction<Array<Entity['id']>>) {
       const ids = action.payload;
       ids.forEach((id) => {
         const entity = state.entities.local.byId[id];
@@ -121,21 +95,21 @@ export const slice = createSlice({
         }
       });
     },
-    addLocalEntityEvent(state, action: PayloadAction<NormalizedEntityEvent>) {
+    addLocalEntityEvent(state, action: PayloadAction<EntityEvent>) {
       const event = action.payload;
       state.entityEvents.local.byId[event.id] = event;
     },
-    addLocalEntityEvents(state, action: PayloadAction<Array<NormalizedEntityEvent>>) {
+    addLocalEntityEvents(state, action: PayloadAction<Array<EntityEvent>>) {
       const events = action.payload;
       events.forEach((event) => {
         state.entityEvents.local.byId[event.id] = event;
       });
     },
-    removeLocalEntityEvent(state, action: PayloadAction<NormalizedEntityEvent['id']>) {
+    removeLocalEntityEvent(state, action: PayloadAction<EntityEvent['id']>) {
       const id = action.payload;
       delete state.entityEvents.local.byId[id];
     },
-    removeLocalEntityEvents(state, action: PayloadAction<Array<NormalizedEntityEvent['id']>>) {
+    removeLocalEntityEvents(state, action: PayloadAction<Array<EntityEvent['id']>>) {
       const ids = action.payload;
       ids.forEach((id) => {
         const event = state.entityEvents.local.byId[id];
@@ -162,30 +136,11 @@ export const slice = createSlice({
     builder.addMatcher(
       intaviaApiService.endpoints.searchEntities.matchFulfilled,
       (state, action) => {
-        const data = normalize<SearchEntities.Response, NormalizedEntities>(
-          action.payload.results,
-          [entityWithEvents],
-        );
-        const { entitiesWithEvents = {}, entities = {}, entityEvents = {} } = data.entities;
+        const entities = action.payload.results;
 
-        Object.values(entities).forEach((entity) => {
-          const current = state.entities.upstream.byId[entity.id];
-          if (current != null && 'events' in current) {
-            entity.events = current.events;
-          }
+        entities.forEach((entity) => {
           state.entities.upstream.byId[entity.id] = entity;
           state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-        });
-        Object.values(entitiesWithEvents).forEach((entity) => {
-          const current = state.entities.upstream.byId[entity.id];
-          if (current != null && 'events' in current && !('events' in entity)) {
-            entity.events = current.events;
-          }
-          state.entities.upstream.byId[entity.id] = entity;
-          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-        });
-        Object.values(entityEvents).forEach((event) => {
-          state.entityEvents.upstream.byId[event.id] = event;
         });
       },
     );
@@ -193,30 +148,11 @@ export const slice = createSlice({
     builder.addMatcher(
       intaviaApiService.endpoints.getEntitiesById.matchFulfilled,
       (state, action) => {
-        const data = normalize<GetEntitiesById.Response, NormalizedEntities>(
-          action.payload.results,
-          [entityWithEvents],
-        );
-        const { entitiesWithEvents = {}, entities = {}, entityEvents = {} } = data.entities;
+        const entities = action.payload.results;
 
-        Object.values(entities).forEach((entity) => {
-          const current = state.entities.upstream.byId[entity.id];
-          if (current != null && 'events' in current) {
-            entity.events = current.events;
-          }
+        entities.forEach((entity) => {
           state.entities.upstream.byId[entity.id] = entity;
           state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-        });
-        Object.values(entitiesWithEvents).forEach((entity) => {
-          const current = state.entities.upstream.byId[entity.id];
-          if (current != null && 'events' in current && !('events' in entity)) {
-            entity.events = current.events;
-          }
-          state.entities.upstream.byId[entity.id] = entity;
-          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-        });
-        Object.values(entityEvents).forEach((event) => {
-          state.entityEvents.upstream.byId[event.id] = event;
         });
       },
     );
@@ -292,19 +228,19 @@ export function selectEntitiesByKind(state: RootState) {
   return entitiesByKind;
 }
 
-export function selectUpstreamEntityById(state: RootState, id: NormalizedEntity['id']) {
+export function selectUpstreamEntityById(state: RootState, id: Entity['id']) {
   return state.intavia.entities.upstream.byId[id];
 }
 
-export function selectLocalEntityById(state: RootState, id: NormalizedEntity['id']) {
+export function selectLocalEntityById(state: RootState, id: Entity['id']) {
   return state.intavia.entities.local.byId[id];
 }
 
-export function selectEntityById(state: RootState, id: NormalizedEntity['id']) {
+export function selectEntityById(state: RootState, id: Entity['id']) {
   return selectLocalEntityById(state, id) ?? selectUpstreamEntityById(state, id);
 }
 
-export function selectHasLocalEntity(state: RootState, id: NormalizedEntity['id']) {
+export function selectHasLocalEntity(state: RootState, id: Entity['id']) {
   return selectLocalEntityById(state, id) != null;
 }
 
@@ -325,18 +261,18 @@ export function selectEntityEvents(state: RootState) {
   return entityEvents;
 }
 
-export function selectUpstreamEntityEventById(state: RootState, id: NormalizedEntityEvent['id']) {
+export function selectUpstreamEntityEventById(state: RootState, id: EntityEvent['id']) {
   return state.intavia.entityEvents.upstream.byId[id];
 }
 
-export function selectLocalEntityEventById(state: RootState, id: NormalizedEntityEvent['id']) {
+export function selectLocalEntityEventById(state: RootState, id: EntityEvent['id']) {
   return state.intavia.entityEvents.local.byId[id];
 }
 
-export function selectEntityEventById(state: RootState, id: NormalizedEntityEvent['id']) {
+export function selectEntityEventById(state: RootState, id: EntityEvent['id']) {
   return selectLocalEntityEventById(state, id) ?? selectUpstreamEntityEventById(state, id);
 }
 
-export function selectHasLocalEntityEvent(state: RootState, id: NormalizedEntityEvent['id']) {
+export function selectHasLocalEntityEvent(state: RootState, id: EntityEvent['id']) {
   return selectLocalEntityEventById(state, id) != null;
 }

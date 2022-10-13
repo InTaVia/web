@@ -21,9 +21,5 @@ export function sanitizeSearchEntitiesParams(
     delete sanitizedSearchParams.q;
   }
 
-  if (sanitizedSearchParams.includeEvents === false) {
-    delete sanitizedSearchParams.includeEvents;
-  }
-
   return sanitizedSearchParams;
 }

@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 
-import type { EntityEvent } from '@/api/intavia.models';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
@@ -36,34 +35,32 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
-  const personEvents = filteredPersons.flatMap((person) => {
-    return person.history as Array<EntityEvent>;
+  const personEventIds = filteredPersons.flatMap((person) => {
+    return person.events ?? [];
   });
-  const allPersonEvents = allPersons.flatMap((person) => {
-    return person.history as Array<EntityEvent>;
+  const allPersonEventIds = allPersons.flatMap((person) => {
+    return person.events ?? [];
   });
 
-  const filteredEvents =
+  const filteredEventIds =
     events.length > 0
-      ? allPersonEvents.filter((historyEvent: EntityEvent) => {
-          return events.includes(historyEvent.id);
+      ? allPersonEventIds.filter((id) => {
+          return events.includes(id);
         })
       : [];
 
-  const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
+  const visEvents = [...personEventIds, ...filteredEventIds].filter((id) => {
     let visible = true;
     if (visualization.visibilities !== undefined) {
       visible =
-        visualization.visibilities[event.id] !== undefined
-          ? (visualization.visibilities[event.id] as boolean)
+        visualization.visibilities[id] !== undefined
+          ? Boolean(visualization.visibilities[id])
           : true;
     }
     return visible;
   });
 
-  const targetIds = filteredEvents.map((event) => {
-    return event.targetId;
-  });
+  const targetIds: Array<string> = []; // FIXME:
 
   const twiceFilteredPersons = allPersons.filter((person) => {
     return targetIds.includes(person.id);
