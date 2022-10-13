@@ -39,9 +39,13 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
         if (constraint.value !== null) {
           return (
             <>
-              <p className="text-base text-intavia-brand-700">{constraint.value[0] as number}</p>
+              <p className="text-base text-intavia-brand-700">
+                {new Date(constraint.value[0]).getUTCFullYear()}
+              </p>
               <p className="text-base text-intavia-gray-700">-</p>
-              <p className="text-base text-intavia-brand-700">{constraint.value[1] as number}</p>
+              <p className="text-base text-intavia-brand-700">
+                {new Date(constraint.value[1]).getUTCFullYear()}
+              </p>
             </>
           );
         }
