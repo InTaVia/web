@@ -64,7 +64,7 @@ export interface EntityEventKind {
 export interface EntityEventRelation {
   id: string;
   label: InternationalizedLabel;
-  description?: string; // FIXME: missing in schema
+  description?: string;
   entity: Entity;
   role?: EntityRelationRole;
   source?: Source;
@@ -73,13 +73,13 @@ export interface EntityEventRelation {
 export interface EntityEvent {
   id: string;
   label: InternationalizedLabel;
-  description?: string; // FIXME: missing in schema
+  description?: string;
   kind?: EntityEventKind;
   source?: Source;
   startDate?: IsoDateString;
   endDate?: IsoDateString;
   place?: Place;
-  relations?: Array<EntityEventRelation>; // TODO: are relations always included?
+  relations: Array<EntityEventRelation>;
 }
 
 interface EntityBase {
@@ -115,7 +115,7 @@ export interface Person extends EntityBase {
 
 export interface Place extends EntityBase {
   kind: 'place';
-  type?: PlaceType; // FIXME:
+  type?: PlaceType;
   geometry?: Geometry;
 }
 
