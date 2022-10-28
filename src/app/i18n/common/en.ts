@@ -15,6 +15,14 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Collections',
     },
+    'save-query-as-collection': 'Save query as collection',
+    'save-selection-as-collection': 'Save selection as collection',
+    'save-entities-as-collection': {
+      one: 'Save one entity as collection',
+      other: 'Save {{count}} entities as collection',
+    },
+    'save-collection': 'Save collection',
+    'collection-name': 'Collection name',
   },
   coordination: {
     metadata: {
@@ -87,5 +95,9 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Visual query',
     },
+  },
+  form: {
+    save: 'Save',
+    cancel: 'Cancel',
   },
 };

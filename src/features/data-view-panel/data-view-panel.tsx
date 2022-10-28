@@ -9,7 +9,7 @@ import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
-import { SearchResult } from '@/features/entities/search-result';
+import CollectionPanelEntry from '@/features/entities/collection-panel-entry';
 
 export function CollectionEntitiesList(): JSX.Element {
   const _collections = useAppSelector(selectCollections);
@@ -81,7 +81,7 @@ function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
 
           return (
             <ListItem key={entity.id} sx={{ paddingBlock: 2 }}>
-              <SearchResult entity={entity} />
+              <CollectionPanelEntry entity={entity} draggable={false} mini={false} />
             </ListItem>
           );
         })}

@@ -100,7 +100,7 @@ export const searchEntities = {
     return '/api/entities/search';
   },
   searchParams(params: SearchEntities.SearchParams): SearchEntities.SearchParams {
-    return params;
+    return { ...params, includeEvents: 'true' };
   },
   url(params: SearchEntities.Params): URL {
     const url = createIntaviaApiUrl({

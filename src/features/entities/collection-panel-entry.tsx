@@ -2,7 +2,8 @@ import { Disclosure } from '@headlessui/react';
 import { LocationMarkerIcon, UserCircleIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
-import type { Entity } from '@/api/intavia.models';
+import type { Entity, EntityEvent } from '@/api/intavia.models';
+import { useI18n } from '@/app/i18n/use-i18n';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export interface CollectionPanelEntryProps {
@@ -21,6 +22,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
       ['text-pink-900', 'bg-pink-100', <UserCircleIcon />]
     : // eslint-disable-next-line react/jsx-key
       ['text-blue-900', 'bg-blue-100', <LocationMarkerIcon />];
+
   return (
     <div className={`my-1 mx-1 rounded border-2 border-current p-2 ${fgColor} ${bgColor}`}>
       <Disclosure>
@@ -48,6 +50,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                 <div
                   draggable={draggable}
                   onDragStart={(event) => {
+                    // FIXME:
                     return event.dataTransfer.setData(
                       'Text',
                       JSON.stringify({
@@ -101,7 +104,36 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                   <Fragment>
                     <h3 className="text-lg font-semibold">Events</h3>
 
-                    <div className="table">HISTORY</div>
+                    <div className="grid gap-1.5 text-sm">
+                      {props.entity.events?.map((_event) => {
+                        const event = _event as unknown as EntityEvent;
+
+                        // FIXME:
+                        function onDragStart(dragEvent: any) {
+                          return dragEvent.dataTransfer.setData(
+                            'Text',
+                            JSON.stringify({
+                              type: 'Event',
+                              props: event,
+                              content: '',
+                            }),
+                          );
+                        }
+
+                        return (
+                          <div key={event.id} draggable={draggable} onDragStart={onDragStart}>
+                            <h4>{getTranslatedLabel(event.label)}</h4>
+                            {event.place != null && event.place.label != null ? (
+                              <div className="flex gap-1">
+                                <LocationMarkerIcon width="1em" />
+                                {getTranslatedLabel(event.place.label)}{' '}
+                                <EventDateRange start={event.startDate} end={event.endDate} />
+                              </div>
+                            ) : null}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </Fragment>
                 ) : null}
               </Disclosure.Panel>
@@ -110,5 +142,41 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
         }}
       </Disclosure>
     </div>
+  );
+}
+
+interface EventDateRangeProps {
+  start: EntityEvent['startDate'];
+  end: EntityEvent['endDate'];
+}
+
+function EventDateRange(props: EventDateRangeProps): JSX.Element | null {
+  const { start, end } = props;
+
+  const { formatDateTime } = useI18n<'common'>();
+
+  if (start == null && end == null) return null;
+
+  if (end == null && start != null) {
+    return (
+      <span>
+        (<time dateTime={start}>{formatDateTime(new Date(start))}</time>)
+      </span>
+    );
+  }
+
+  if (start == null && end != null) {
+    return (
+      <span>
+        (<time dateTime={end}>{formatDateTime(new Date(end))}</time>)
+      </span>
+    );
+  }
+
+  return (
+    <span>
+      (<time dateTime={start}>{formatDateTime(new Date(start!))}</time> &ndash;{' '}
+      <time dateTime={end}>{formatDateTime(new Date(end!))}</time>)
+    </span>
   );
 }

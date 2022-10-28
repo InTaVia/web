@@ -1,4 +1,4 @@
-import type { Plurals as _Plurals } from '@/app/i18n/dictionaries';
+import type { Plurals } from '@/app/i18n/dictionaries';
 
 export interface Dictionary {
   '404': {
@@ -15,6 +15,11 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    'save-query-as-collection': string;
+    'save-selection-as-collection': string;
+    'save-entities-as-collection': Plurals;
+    'save-collection': string;
+    'collection-name': string;
   };
   coordination: {
     metadata: {
@@ -87,5 +92,9 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+  };
+  form: {
+    save: string;
+    cancel: string;
   };
 }

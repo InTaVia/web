@@ -141,6 +141,12 @@ export const slice = createSlice({
         entities.forEach((entity) => {
           state.entities.upstream.byId[entity.id] = entity;
           state.entities.upstream.byKind[entity.kind][entity.id] = entity;
+
+          // FIXME: events are only present because of `includeEvents` search param, which is deprecated
+          entity.events?.forEach((event) => {
+            state.entityEvents.upstream.byId[event.id] = event;
+          });
+          // entity.events = entity.events?.map(event => event.id)
         });
       },
     );

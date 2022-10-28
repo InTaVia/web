@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.@(css|tsx)', './stories/**/*.@(css|tsx)'],
@@ -77,6 +79,10 @@ module.exports = {
           800: '#844ab3',
           900: '#7741a3',
         },
+        neutral: { 0: colors.white, ...colors.slate, 1000: colors.black },
+      },
+      zIndex: {
+        dialog: 50,
       },
       screens: {
         'vq-min': [{ raw: '(max-width: 1550px)' }, { raw: '(max-height: 980px)' }],
