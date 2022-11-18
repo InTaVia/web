@@ -5,11 +5,14 @@ import TextField from '@mui/material/TextField';
 import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
-import { useAppSelector } from '@/app/store';
+import type { Person } from '@/api/intavia.models';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
+import { addPersonToVisualization } from '@/features/common/visualization.slice';
 import CollectionPanelEntry from '@/features/entities/collection-panel-entry';
+import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
 export function CollectionEntitiesList(): JSX.Element {
   const _collections = useAppSelector(selectCollections);
@@ -64,6 +67,9 @@ interface CollectionEntitiesProps {
 
 function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
   const { collection } = props;
+  const dispatch = useAppDispatch();
+  const workspaces = useAppSelector(selectAllWorkspaces);
+  const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
 
   const limit = 10;
   const [page, setPage] = useState(1);
@@ -73,15 +79,27 @@ function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
   });
   const pages = Math.ceil(collection.entities.length / limit);
 
+  function viewAllData() {
+    const currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
+    for (const visualizationId of currentVisualizationIds) {
+      if (visualizationId != null) {
+        for (const entity of entities) {
+          dispatch(addPersonToVisualization({ visId: visualizationId, person: entity as Person }));
+        }
+      }
+    }
+  }
+
   return (
     <Fragment>
+      <button onClick={viewAllData}>View All Data</button>
       <List role="list">
         {entities.slice((page - 1) * limit, page * limit).map((entity) => {
           if (entity == null) return;
 
           return (
             <ListItem key={entity.id} sx={{ paddingBlock: 2 }}>
-              <CollectionPanelEntry entity={entity} draggable={false} mini={false} />
+              <CollectionPanelEntry entity={entity} draggable mini />
             </ListItem>
           );
         })}

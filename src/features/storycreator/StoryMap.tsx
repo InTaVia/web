@@ -53,7 +53,8 @@ export function StoryMapComponent(props: StoryMapProps): JSX.Element {
       }
       return {
         type: event.type,
-        position: [event.place.lng, event.place.lat],
+        //FIXME: use event.place.geometry.coordinates when valid geojson
+        position: [event.place.geometry.coordinates[1], event.place.geometry.coordinates[0]],
       } as StoryMapMarker;
     })
     .filter(Boolean) as Array<StoryMapMarker>;

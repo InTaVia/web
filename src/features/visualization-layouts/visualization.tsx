@@ -18,11 +18,11 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const allPersons = Object.values(entitiesByKind.person);
 
-  const events = visualization.eventIds;
-  const persons = visualization.entityIds;
+  const eventIds = visualization.eventIds;
+  const personIds = visualization.entityIds;
 
   const filteredPersons =
-    persons.length > 0
+    personIds.length > 0
       ? allPersons.filter((person) => {
           let visible = true;
           if (visualization.visibilities !== undefined) {
@@ -31,30 +31,34 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
                 ? (visualization.visibilities[person.id] as boolean)
                 : true;
           }
-          return persons.includes(person.id) && visible;
+          return personIds.includes(person.id) && visible;
         })
       : [];
 
-  const personEventIds = filteredPersons.flatMap((person) => {
+  const personEvents = filteredPersons.flatMap((person) => {
     return person.events ?? [];
   });
-  const allPersonEventIds = allPersons.flatMap((person) => {
-    return person.events ?? [];
+  const allPersonEvents = allPersons.flatMap((person) => {
+    if ('events' in person) {
+      return person.events;
+    } else {
+      return [];
+    }
   });
 
-  const filteredEventIds =
-    events.length > 0
-      ? allPersonEventIds.filter((id) => {
-          return events.includes(id);
+  const filteredEvents =
+    eventIds.length > 0
+      ? allPersonEvents.filter((event) => {
+          return eventIds.includes(event.id);
         })
       : [];
 
-  const visEvents = [...personEventIds, ...filteredEventIds].filter((id) => {
+  const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
     let visible = true;
     if (visualization.visibilities !== undefined) {
       visible =
-        visualization.visibilities[id] !== undefined
-          ? Boolean(visualization.visibilities[id])
+        visualization.visibilities[event.id] !== undefined
+          ? Boolean(visualization.visibilities[event.id])
           : true;
     }
     return visible;
@@ -71,7 +75,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
-        return <GeoMap />;
+        return <StoryMapComponent properties={visualization.properties} events={visEvents} />; //GeoMap
       case 'story-map':
         return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
       case 'timeline':
