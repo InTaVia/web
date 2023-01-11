@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Fragment } from 'react';
 
-import type { Person } from '@/api/intavia.models';
+import type { Person } from '@intavia/api-client';
 import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/app/store/intavia.slice';
 import { eventTypes } from '@/features/common/event-types';

@@ -2,7 +2,7 @@ import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import type { DragEvent } from 'react';
 
-import type { EntityEvent, Person } from '@/api/intavia.models';
+import type { EntityEvent, Person } from '@intavia/api-client';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {

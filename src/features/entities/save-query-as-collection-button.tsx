@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react';
 
-import type { Entity } from '@/api/intavia.models';
+import type { Entity } from '@intavia/api-client';
 import { useLazySearchEntitiesQuery } from '@/api/intavia.service';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';

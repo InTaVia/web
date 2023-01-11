@@ -2,7 +2,7 @@ import { Disclosure } from '@headlessui/react';
 import { LocationMarkerIcon, UserCircleIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
-import type { Entity, EntityEvent } from '@/api/intavia.models';
+import type { Entity, EntityEvent } from '@intavia/api-client';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 

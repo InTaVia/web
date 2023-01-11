@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import type { EntityEvent, Person, StoryEvent } from '@/api/intavia.models';
+import type { EntityEvent, Person, StoryEvent } from '@intavia/api-client';
 import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';

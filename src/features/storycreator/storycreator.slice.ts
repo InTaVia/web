@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { StoryEvent } from '@/api/intavia.models';
+import type { StoryEvent } from '@intavia/api-client';
 import type { StoryContentProperty } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';

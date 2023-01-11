@@ -1,8 +1,8 @@
+import type { Entity, EntityKind, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 
-import type { Entity, EntityEvent, EntityKind } from '@/api/intavia.models';
 import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
 
@@ -14,7 +14,7 @@ interface IndexedEntities {
 }
 
 interface IndexedEntityEvents {
-  byId: Record<EntityEvent['id'], EntityEvent>;
+  byId: Record<Event['id'], Event>;
 }
 
 interface IntaviaState {
@@ -38,6 +38,10 @@ const initialState: IntaviaState = {
         'historical-event': {},
         person: {},
         place: {},
+        // @ts-expect-error ignore this, only temporary.
+        Group: {},
+        Person: {},
+        Place: {},
       },
     },
     local: {
@@ -48,6 +52,10 @@ const initialState: IntaviaState = {
         'historical-event': {},
         person: {},
         place: {},
+        // @ts-expect-error ignore this, only temporary.
+        Group: {},
+        Person: {},
+        Place: {},
       },
     },
   },
@@ -95,21 +103,21 @@ export const slice = createSlice({
         }
       });
     },
-    addLocalEntityEvent(state, action: PayloadAction<EntityEvent>) {
+    addLocalEntityEvent(state, action: PayloadAction<Event>) {
       const event = action.payload;
       state.entityEvents.local.byId[event.id] = event;
     },
-    addLocalEntityEvents(state, action: PayloadAction<Array<EntityEvent>>) {
+    addLocalEntityEvents(state, action: PayloadAction<Array<Event>>) {
       const events = action.payload;
       events.forEach((event) => {
         state.entityEvents.local.byId[event.id] = event;
       });
     },
-    removeLocalEntityEvent(state, action: PayloadAction<EntityEvent['id']>) {
+    removeLocalEntityEvent(state, action: PayloadAction<Event['id']>) {
       const id = action.payload;
       delete state.entityEvents.local.byId[id];
     },
-    removeLocalEntityEvents(state, action: PayloadAction<Array<EntityEvent['id']>>) {
+    removeLocalEntityEvents(state, action: PayloadAction<Array<Event['id']>>) {
       const ids = action.payload;
       ids.forEach((id) => {
         const event = state.entityEvents.local.byId[id];
@@ -141,25 +149,16 @@ export const slice = createSlice({
         entities.forEach((entity) => {
           state.entities.upstream.byId[entity.id] = entity;
           state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-
-          // FIXME: events are only present because of `includeEvents` search param, which is deprecated
-          entity.events?.forEach((event) => {
-            state.entityEvents.upstream.byId[event.id] = event;
-          });
-          // entity.events = entity.events?.map(event => event.id)
         });
       },
     );
 
     builder.addMatcher(
-      intaviaApiService.endpoints.getEntitiesById.matchFulfilled,
+      intaviaApiService.endpoints.getEntityById.matchFulfilled,
       (state, action) => {
-        const entities = action.payload.results;
-
-        entities.forEach((entity) => {
-          state.entities.upstream.byId[entity.id] = entity;
-          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
-        });
+        const entity = action.payload;
+        state.entities.upstream.byId[entity.id] = entity;
+        state.entities.upstream.byKind[entity.kind][entity.id] = entity;
       },
     );
   },
@@ -267,18 +266,18 @@ export function selectEntityEvents(state: RootState) {
   return entityEvents;
 }
 
-export function selectUpstreamEntityEventById(state: RootState, id: EntityEvent['id']) {
+export function selectUpstreamEntityEventById(state: RootState, id: Event['id']) {
   return state.intavia.entityEvents.upstream.byId[id];
 }
 
-export function selectLocalEntityEventById(state: RootState, id: EntityEvent['id']) {
+export function selectLocalEntityEventById(state: RootState, id: Event['id']) {
   return state.intavia.entityEvents.local.byId[id];
 }
 
-export function selectEntityEventById(state: RootState, id: EntityEvent['id']) {
+export function selectEntityEventById(state: RootState, id: Event['id']) {
   return selectLocalEntityEventById(state, id) ?? selectUpstreamEntityEventById(state, id);
 }
 
-export function selectHasLocalEntityEvent(state: RootState, id: EntityEvent['id']) {
+export function selectHasLocalEntityEvent(state: RootState, id: Event['id']) {
   return selectLocalEntityEventById(state, id) != null;
 }

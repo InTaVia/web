@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
-import type { Person } from '@/api/intavia.models';
+import type { Person } from '@intavia/api-client';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';

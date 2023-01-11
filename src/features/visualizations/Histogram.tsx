@@ -4,7 +4,7 @@ import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { useEffect, useRef } from 'react';
 
-import type { Bin } from '@/api/intavia.types';
+import type { Bin } from '@intavia/api-client';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';
 import { useElementRef } from '@/lib/use-element-ref';

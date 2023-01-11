@@ -1,6 +1,7 @@
-import type { Source } from '@/api/intavia.models';
-import { isEntityKind } from '@/api/intavia.models';
-import type { InternationalizedLabel } from '@/api/intavia.types';
+import type { Source } from '@intavia/api-client';
+import { isEntityKind } from '@intavia/api-client';
+
+import type { InternationalizedLabel } from '@intavia/api-client';
 
 type ProviderId = string;
 type Provider = Record<string, string>;

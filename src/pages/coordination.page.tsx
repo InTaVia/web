@@ -15,7 +15,7 @@ import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
-import type { Entity, Person } from '@/api/intavia.models';
+import type { Entity, Person } from '@intavia/api-client';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';

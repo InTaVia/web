@@ -1,6 +1,6 @@
 import type { Feature } from 'geojson';
 
-import type { EntityKind, Occupation } from '@/api/intavia.models';
+import type { EntityKind, Occupation } from '@intavia/api-client';
 
 // FIXME:  we probably also want constraint groups (i.e. the outer rings, which are *not* constraint types)
 

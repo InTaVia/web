@@ -4,7 +4,7 @@ import { assert } from '@stefanprobst/assert';
 import { nanoid } from 'nanoid';
 import { PURGE } from 'redux-persist';
 
-import type { Entity, EntityEvent } from '@/api/intavia.models';
+import type { Entity, EntityEvent } from '@intavia/api-client';
 import type { RootState } from '@/app/store';
 import { unique } from '@/lib/unique';
 

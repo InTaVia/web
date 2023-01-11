@@ -5,7 +5,7 @@ import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
 import { Fragment, useState } from 'react';
 
-import type { EntityEvent } from '@/api/intavia.models';
+import type { EntityEvent } from '@intavia/api-client';
 import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';

@@ -1,7 +1,7 @@
 import { color as d3color } from 'd3-color';
 import { Marker } from 'react-map-gl';
 
-import type { Person } from '@/api/intavia.models';
+import type { Person } from '@intavia/api-client';
 
 interface StoryMapPinProps {
   id: string;

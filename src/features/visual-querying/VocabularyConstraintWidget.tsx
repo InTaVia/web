@@ -1,6 +1,6 @@
+import type { Node, RootNode } from '@intavia/api-client';
 import { ClipLoader } from 'react-spinners';
 
-import type { Node, RootNode } from '@/api/intavia.types';
 import { useAppDispatch } from '@/app/store';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
 import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';

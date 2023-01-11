@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 
-import type { Entity } from '@/api/intavia.models';
+import type { Entity } from '@intavia/api-client';
 import { useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { SearchResultSelectionCheckBox } from '@/features/entities/search-result-selection-checkbox';

@@ -3,7 +3,7 @@ import { scaleBand, scaleTime } from 'd3-scale';
 import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 
-import type { Entity, EntityEvent, Person, StoryEvent } from '@/api/intavia.models';
+import type { Entity, EntityEvent, Person, StoryEvent } from '@intavia/api-client';
 import { TimelineElement } from '@/features/timeline/timeline-element';
 import { TimelineElementTooltip } from '@/features/timeline/timeline-element-tooltip';
 import { TimelineYearAxis } from '@/features/timeline/timeline-year-axis';

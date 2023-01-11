@@ -1,7 +1,7 @@
 import type { Feature, FeatureCollection } from 'geojson';
 import { Layer, Source } from 'react-map-gl';
 
-import type { EntityEvent, Person as Entity } from '@/api/intavia.models';
+import type { EntityEvent, Person as Entity } from '@intavia/api-client';
 import type { EventType } from '@/features/common/event-types';
 
 interface EntityEventsLineStringLayerProps {

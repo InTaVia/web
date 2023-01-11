@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import type { Person } from '@/api/intavia.models';
+import type { Person } from '@intavia/api-client';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface PersonTooltipContentsProps {

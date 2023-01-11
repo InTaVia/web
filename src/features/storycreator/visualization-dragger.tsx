@@ -1,7 +1,7 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import type { Place } from '@/api/intavia.models';
+import type { Place } from '@intavia/api-client';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 
 interface DropProps {

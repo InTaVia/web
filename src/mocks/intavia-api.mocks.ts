@@ -1,7 +1,7 @@
 import type { Bin } from 'd3-array';
 import { rest } from 'msw';
 
-import type { Person, Place, Profession } from '@/api/intavia.models';
+import type { Person, Place, Profession } from '@intavia/api-client';
 import type { PaginatedEntitiesResponse } from '@/features/common/intavia-api.service';
 import { clamp } from '@/lib/clamp';
 import { createIntaviaApiUrl } from '@/lib/create-intavia-api-url';

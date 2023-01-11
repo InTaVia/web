@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import type { SearchEntities } from '@/api/intavia.client';
-import { isEntityKind } from '@/api/intavia.models';
+import { isEntityKind } from '@intavia/api-client';
 import { useSearchParams } from '@/app/route/use-search-params';
 import { getSearchParam } from '@/lib/get-search-param';
 import { getSearchParams } from '@/lib/get-search-params';
