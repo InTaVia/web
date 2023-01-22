@@ -30,7 +30,12 @@ export const dictionary: Dictionary = {
     },
   },
   'data-curation-lab': 'Data Curation Lab',
-  'data-import': 'Data Import',
+  'data-import': {
+    term: 'Import Data',
+    metadata: {
+      title: 'Data Import',
+    },
+  },
   geomap: {
     metadata: {
       title: 'Map',
@@ -99,5 +104,6 @@ export const dictionary: Dictionary = {
   form: {
     save: 'Save',
     cancel: 'Cancel',
+    submit: 'Submit',
   },
 };

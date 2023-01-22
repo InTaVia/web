@@ -2,7 +2,6 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import {
   ChatAlt2Icon,
   DatabaseIcon,
-  DownloadIcon,
   InformationCircleIcon,
   LightBulbIcon,
 } from '@heroicons/react/solid';

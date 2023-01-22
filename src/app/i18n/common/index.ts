@@ -27,7 +27,12 @@ export interface Dictionary {
     };
   };
   'data-curation-lab': string;
-  'data-import': string;
+  'data-import': {
+    term: string;
+    metadata: {
+      title: string;
+    };
+  };
   geomap: {
     metadata: {
       title: string;
@@ -96,5 +101,6 @@ export interface Dictionary {
   form: {
     save: string;
     cancel: string;
+    submit: string;
   };
 }
