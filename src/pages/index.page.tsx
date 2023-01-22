@@ -73,15 +73,6 @@ export default function HomePage(): JSX.Element {
             <SearchForm round="pill" size="regular" />
           </div>
           <ButtonLink
-            href="/search"
-            color="accent"
-            round="pill"
-            className="inline-flex items-center gap-2"
-          >
-            <DownloadIcon className="h-5 w-5" strokeWidth="1.75" />
-            {t(['common', 'data-import'])}
-          </ButtonLink>
-          <ButtonLink
             href="/info"
             size="regular"
             round="pill"
