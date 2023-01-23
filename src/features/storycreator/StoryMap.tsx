@@ -1,17 +1,17 @@
+import type { Event, StoryEvent } from '@intavia/api-client';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 
-import type { EntityEvent, StoryEvent } from '@intavia/api-client';
 import type { VisualizationProperty } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { StoryMapPin } from '@/features/storycreator/StoryMapPin';
 import { length } from '@/lib/length';
 
 interface StoryMapProps {
-  events: Array<EntityEvent | StoryEvent>;
+  events: Array<Event | StoryEvent>;
   width?: number;
   height?: number;
   properties?: Record<string, VisualizationProperty>;

@@ -3,9 +3,9 @@ import 'react-resizable/css/styles.css';
 
 import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
+import type { Event } from '@intavia/api-client';
 import { Fragment, useState } from 'react';
 
-import type { EntityEvent } from '@intavia/api-client';
 import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
@@ -188,19 +188,18 @@ export function VisualizationPropertiesDialog(
                                       if (entity == null) {
                                         return null;
                                       }
-                                      const entityEvents =
-                                        /* entity?.history || */ [] as Array<any>;
+                                      const events = /* entity?.history || */ [] as Array<any>;
                                       const newVisibilities = { ...tmpElement.visibilities };
 
                                       if (newVisibilities[e] === undefined) {
                                         newVisibilities[e] = true;
-                                        for (const event of entityEvents) {
+                                        for (const event of events) {
                                           newVisibilities[event.id] = true;
                                         }
                                         tmpElement.visibilities = newVisibilities;
                                       } else {
                                         newVisibilities[e] =
-                                          entityEvents.filter((event) => {
+                                          events.filter((event) => {
                                             return newVisibilities[event.id] === true;
                                           }).length > 0;
                                       }
@@ -218,7 +217,7 @@ export function VisualizationPropertiesDialog(
                                                   e
                                                 ] as boolean);
 
-                                                for (const event of entityEvents) {
+                                                for (const event of events) {
                                                   newVisibilities[event.id] = newVisibilities[
                                                     e
                                                   ] as boolean;
@@ -249,7 +248,7 @@ export function VisualizationPropertiesDialog(
                                                       />
                                                     </Disclosure.Button>
                                                     <Disclosure.Panel className="rounded-lg bg-blue-50 p-2 text-sm text-blue-900">
-                                                      {entityEvents.map((event: EntityEvent) => {
+                                                      {events.map((event: Event) => {
                                                         newVisibilities[event.id] !== undefined
                                                           ? newVisibilities[event.id]
                                                           : true;
@@ -322,7 +321,7 @@ export function VisualizationPropertiesDialog(
                                                 );
                                                 const newVis = { ...newVisibilities };
                                                 delete newVis[e];
-                                                for (const event of entityEvents) {
+                                                for (const event of events) {
                                                   delete newVis[event.id];
                                                 }
                                                 setTmpElement({
