@@ -34,7 +34,7 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Data Import',
     },
-    ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' };
+    ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' },
   },
   geomap: {
     metadata: {
