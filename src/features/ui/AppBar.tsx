@@ -43,7 +43,7 @@ export function AppBar(): JSX.Element {
     {
       id: 'data-import',
       href: { pathname: '/data-import' },
-      label: t(['common', 'data-import', 'term']),
+      label: t(['common', 'data-import', 'ui', 'import-data']),
       current: false,
     },
     {

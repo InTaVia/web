@@ -1,5 +1,6 @@
 import type { ImportData } from '@intavia/data-import';
 
+import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
 
 interface ImportDataProps {
@@ -8,6 +9,8 @@ interface ImportDataProps {
 
 export function ImportData(props: ImportDataProps): JSX.Element {
   const { data } = props;
+  const { t } = useI18n<'common'>();
+  const dispatch = useAppDispatch();
 
   const importData = () => {
     console.log(data);
@@ -25,8 +28,7 @@ export function ImportData(props: ImportDataProps): JSX.Element {
     <div className="flex flex-row justify-between">
       {/* TODO: add option/dialog to define collections */}
       <Button type="submit" onClick={importData} disabled={!data}>
-        {/* FIXME: get from dictionary */}
-        Import Data
+        {t(['common', 'data-import', 'ui', 'import-data'])}
       </Button>
     </div>
   );

@@ -28,10 +28,10 @@ export interface Dictionary {
   };
   'data-curation-lab': string;
   'data-import': {
-    term: string;
     metadata: {
       title: string;
     };
+    ui: { 'load-data': string; 'import-data': string };
   };
   geomap: {
     metadata: {

@@ -31,10 +31,10 @@ export const dictionary: Dictionary = {
   },
   'data-curation-lab': 'Data Curation Lab',
   'data-import': {
-    term: 'Import Data',
     metadata: {
       title: 'Data Import',
     },
+    ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' };
   },
   geomap: {
     metadata: {

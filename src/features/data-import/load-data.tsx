@@ -50,8 +50,7 @@ export function LoadData(props: LoadDataProps): JSX.Element {
       <form id={formId} name={formId} noValidate onSubmit={onSubmit}>
         <input accept=".xlsx" name="file" type="file" onChange={handleChange} />
         <Button form={formId} type="submit" disabled={!file}>
-          Load Data
-          {/* {t(['common', 'form', 'submit'])} */}
+          {t(['common', 'data-import', 'ui', 'load-data'])}
         </Button>
       </form>
     </Fragment>
