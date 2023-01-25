@@ -15,7 +15,7 @@ export function DataImport(): JSX.Element {
         <LoadData setImportedData={setImportedData} />
       </div>
 
-      <div className="overflow-hidden overflow-y-scroll">
+      <div className="overflow-hidden">
         <ViewData data={importedData} />
       </div>
 

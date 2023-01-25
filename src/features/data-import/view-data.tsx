@@ -6,5 +6,12 @@ interface ViewDataProps {
 
 export function ViewData(props: ViewDataProps): JSX.Element {
   const { data } = props;
-  return <div className="bg-indigo-300">{data && JSON.stringify(data, null, 2)}</div>;
+  return (
+    <div className="h-full">
+      <textarea
+        className="h-full w-full resize-none font-mono"
+        value={data != null ? JSON.stringify(data, null, 4) : ''}
+      ></textarea>
+    </div>
+  );
 }
