@@ -146,9 +146,17 @@ export const slice = createSlice({
       (state, action) => {
         const entities = action.payload.results;
 
-        entities.forEach((entity) => {
-          state.entities.upstream.byId[entity.id] = entity;
-          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
+        entities.forEach((entity: Entity) => {
+          const newEntity = { ...entity };
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          if (newEntity.kind === 'Person') {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            newEntity.kind = 'person';
+          }
+          state.entities.upstream.byId[newEntity.id] = newEntity;
+          state.entities.upstream.byKind[newEntity.kind][newEntity.id] = newEntity;
         });
       },
     );
@@ -157,8 +165,16 @@ export const slice = createSlice({
       intaviaApiService.endpoints.getEntityById.matchFulfilled,
       (state, action) => {
         const entity = action.payload;
-        state.entities.upstream.byId[entity.id] = entity;
-        state.entities.upstream.byKind[entity.kind][entity.id] = entity;
+        const newEntity = { ...entity };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        if (newEntity.kind === 'Person') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          newEntity.kind = 'person';
+        }
+        state.entities.upstream.byId[newEntity.id] = newEntity;
+        state.entities.upstream.byKind[newEntity.kind][newEntity.id] = newEntity;
       },
     );
   },
