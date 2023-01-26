@@ -5,7 +5,6 @@ import { PURGE } from 'redux-persist';
 
 import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
-import { releaseVisualizationForVisualizationSlotForCurrentWorkspace } from '@/features/visualization-layouts/workspaces.slice';
 
 interface IndexedEntities {
   byId: Record<Entity['id'], Entity>;
@@ -19,8 +18,8 @@ interface IndexedEvents {
 }
 
 interface IndexedVocabularies {
-  byId: Record<VocabularyEntry['id'], VocabularyEntry>;
-  byName: Record<string, Record<VocabularyEntry['id'], VocabularyEntry>>;
+  byVocabularyEntryId: Record<VocabularyEntry['id'], VocabularyEntry>;
+  byVocabularyId: Record<string, Record<VocabularyEntry['id'], VocabularyEntry>>;
 }
 
 interface IntaviaState {
@@ -79,12 +78,12 @@ const initialState: IntaviaState = {
   },
   vocabularies: {
     upstream: {
-      byId: {},
-      byName: {},
+      byVocabularyEntryId: {},
+      byVocabularyId: {},
     },
     local: {
-      byId: {},
-      byName: {},
+      byVocabularyEntryId: {},
+      byVocabularyId: {},
     },
   },
 };
@@ -148,15 +147,15 @@ export const slice = createSlice({
     },
     addLocalVocabulary(
       state,
-      action: PayloadAction<{ name: string; entries: Array<VocabularyEntry> }>,
+      action: PayloadAction<{ id: string; entries: Array<VocabularyEntry> }>,
     ) {
-      const { name, entries } = action.payload;
+      const { id, entries } = action.payload;
       entries.forEach((entry) => {
-        state.vocabularies.local.byId[entry.id] = entry;
-        if (state.vocabularies.local.byName[name] === undefined) {
-          state.vocabularies.local.byName[name] = {};
+        state.vocabularies.local.byVocabularyEntryId[entry.id] = entry;
+        if (state.vocabularies.local.byVocabularyId[id] === undefined) {
+          state.vocabularies.local.byVocabularyId[id] = {};
         }
-        state.vocabularies.local.byName[name]![entry.id] = entry;
+        state.vocabularies.local.byVocabularyId[id]![entry.id] = entry;
       });
     },
     clearEntities(state) {
@@ -321,11 +320,11 @@ export function selectHasLocalEvent(state: RootState, id: Event['id']) {
 }
 
 export function selectUpstreamVocabularyEntries(state: RootState) {
-  return state.intavia.vocabularies.upstream.byId;
+  return state.intavia.vocabularies.upstream.byVocabularyEntryId;
 }
 
 export function selectLocalVocabularyEntries(state: RootState) {
-  return state.intavia.vocabularies.local.byId;
+  return state.intavia.vocabularies.local.byVocabularyEntryId;
 }
 
 export function selectVocabularyEntries(state: RootState) {
@@ -337,10 +336,10 @@ export function selectVocabularyEntries(state: RootState) {
   return vocabularyEntries;
 }
 
-export function selectLocalVocabularyByName(state: RootState, name: string) {
-  return state.intavia.vocabularies.local.byName[name];
+export function selectLocalVocabularyById(state: RootState, id: string) {
+  return state.intavia.vocabularies.local.byVocabularyId[id];
 }
 
 export function selectLocalVocabularyEntryById(state: RootState, id: VocabularyEntry['id']) {
-  return state.intavia.vocabularies.local.byId[id];
+  return state.intavia.vocabularies.local.byVocabularyId[id];
 }

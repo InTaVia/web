@@ -26,9 +26,9 @@ export function ImportData(props: ImportDataProps): JSX.Element {
 
     // add vocabularies
     if (data?.vocabularies != null) {
-      for (const name in data.vocabularies) {
-        if (data.vocabularies[name] != null) {
-          dispatch(addLocalVocabulary({ name, entries: data.vocabularies[name]! }));
+      for (const id in data.vocabularies) {
+        if (data.vocabularies[id] != null) {
+          dispatch(addLocalVocabulary({ id, entries: data.vocabularies[id]! }));
         }
       }
     }

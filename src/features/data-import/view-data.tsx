@@ -11,6 +11,7 @@ export function ViewData(props: ViewDataProps): JSX.Element {
       <textarea
         className="h-full w-full resize-none font-mono"
         value={data != null ? JSON.stringify(data, null, 4) : ''}
+        readOnly
       ></textarea>
     </div>
   );

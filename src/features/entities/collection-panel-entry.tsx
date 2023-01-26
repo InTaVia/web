@@ -4,6 +4,8 @@ import type { Entity, Event } from '@intavia/api-client';
 import { Fragment } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
+import { useAppSelector } from '@/app/store';
+import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export interface CollectionPanelEntryProps {
@@ -14,7 +16,7 @@ export interface CollectionPanelEntryProps {
 
 export default function CollectionPanelEntry(props: CollectionPanelEntryProps): JSX.Element {
   const { draggable = false, mini = false } = props;
-
+  const vocabularyEntriesById = useAppSelector(selectVocabularyEntries);
   const isPerson = props.entity.kind === 'person';
   // const isPerson = parseInt(props.entity.id) % 2 === 0;
   const [fgColor, bgColor, symbol] = isPerson
@@ -84,8 +86,8 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                     <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
                       {props.entity.kind === 'person'
                         ? props.entity.occupations
-                            ?.map((occupation) => {
-                              return getTranslatedLabel(occupation.label);
+                            ?.map((occupationId) => {
+                              return getTranslatedLabel(vocabularyEntriesById[occupationId]!.label);
                             })
                             .join(', ')
                         : ''}
