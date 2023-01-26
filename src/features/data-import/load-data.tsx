@@ -1,10 +1,9 @@
 import { importData } from '@intavia/data-import';
 import type { ImportData } from '@intavia/data-import/dist/import-data';
-import type { ChangeEvent, FormEvent } from 'react';
-import { Fragment, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
-import Button from '@/features/ui/Button';
 
 interface LoadDataProps {
   setImportedData: (data: ImportData | null) => void;

@@ -18,13 +18,13 @@ export function ImportData(props: ImportDataProps): JSX.Element {
   const importData = () => {
     console.log(data);
 
-    // TODO: add entities
+    // add entities
     data?.entities && dispatch(addLocalEntities(data.entities));
 
-    // TODO: add events
+    // add events
     data?.events && dispatch(addLocalEvents(data.events));
 
-    // TODO: add vocabularies
+    // add vocabularies
     if (data?.vocabularies != null) {
       for (const name in data.vocabularies) {
         if (data.vocabularies[name] != null) {
@@ -32,7 +32,7 @@ export function ImportData(props: ImportDataProps): JSX.Element {
         }
       }
     }
-    // TODO: add collections
+    // add collections
     if (data?.collections != null) {
       for (const collectionCandidate in data.collections) {
         if (data.collections[collectionCandidate] != null) {
