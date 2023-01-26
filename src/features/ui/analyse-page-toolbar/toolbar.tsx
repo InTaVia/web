@@ -8,7 +8,7 @@ interface AnalysePageToolbarProps {
 
 export default function AnalysePageToolbar(props: AnalysePageToolbarProps): JSX.Element {
   return (
-    <div className="w-100 flex h-fit justify-between gap-2 bg-teal-50 p-2">
+    <div className="w-100 bg-brand-500 flex h-fit justify-between gap-2 bg-intavia-brand-100 p-2">
       <div className="flex gap-3">
         <PaneToggle parentComponent="vas" orientation="left" />
         <LayoutPopover onLayoutSelected={props.onLayoutSelected} />
