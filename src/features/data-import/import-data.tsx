@@ -46,7 +46,14 @@ export function ImportData(props: ImportDataProps): JSX.Element {
   return (
     <div className="flex flex-row justify-between">
       {/* TODO: add option/dialog to define collections */}
-      <Button type="submit" onClick={importData} disabled={!data}>
+      <Button
+        type="submit"
+        onClick={importData}
+        disabled={!data}
+        color="accent"
+        size="small"
+        round="pill"
+      >
         {t(['common', 'data-import', 'ui', 'import-data'])}
       </Button>
     </div>

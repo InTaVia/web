@@ -10,18 +10,17 @@ export function DataImport(): JSX.Element {
 
   return (
     <div className="grid h-full grid-cols-1 grid-rows-[auto_1fr_auto]">
-      <div className="bg-slate-400 p-2">
+      <div className="flex flex-col gap-4 bg-slate-400 p-2">
         <h1 className="text-2xl">Data Import</h1>
         <LoadData setImportedData={setImportedData} />
+        <ImportData data={importedData} />
       </div>
 
       <div className="overflow-hidden">
         <ViewData data={importedData} />
       </div>
 
-      <div className="bg-slate-300 p-4">
-        <ImportData data={importedData} />
-      </div>
+      {/* <div className="bg-slate-300 p-4"></div> */}
     </div>
   );
 }

@@ -18,16 +18,18 @@ export function LoadData(props: LoadDataProps): JSX.Element {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null && event.target.files.length > 0) {
-      setFile(event.target.files[0] as File);
+      const file = event.target.files[0] as File;
+      setFile(file);
+      loadData(file);
     } else {
       setFile(null);
       setImportedData(null);
     }
   };
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    const formData = new FormData(event.currentTarget);
-    const file = formData.get('file') as File;
+  function loadData(file: File) {
+    // const formData = new FormData(event.currentTarget);
+    // const file = formData.get('file') as File;
 
     function onSuccess(data: ImportData) {
       setImportedData(data);
@@ -40,19 +42,34 @@ export function LoadData(props: LoadDataProps): JSX.Element {
 
     importData({ file, onSuccess, onError });
 
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   const formId = 'import-data';
-
+  const inputId = 'template-file-upload';
   return (
-    <Fragment>
-      <form id={formId} name={formId} noValidate onSubmit={onSubmit}>
-        <input accept=".xlsx" name="file" type="file" onChange={handleChange} />
-        <Button form={formId} type="submit" disabled={!file}>
+    <div className="flex flex-row gap-2">
+      <form id={formId} name={formId} noValidate>
+        <input
+          accept=".xlsx"
+          name="file"
+          type="file"
+          id={inputId}
+          onChange={handleChange}
+          className="hidden"
+        />
+        <label
+          htmlFor={inputId}
+          className="rounded-full bg-intavia-brand-700 p-1.5 px-3 py-1.5 text-sm font-normal text-intavia-gray-50
+          outline-current hover:bg-intavia-brand-900 focus:outline-2
+          focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-gray-900
+          disabled:bg-gray-300 disabled:text-gray-600"
+        >
           {t(['common', 'data-import', 'ui', 'load-data'])}
-        </Button>
+          {/* <Button color="accent" size="small" round="pill"></Button> */}
+        </label>
       </form>
-    </Fragment>
+      <p>{file ? file.name : 'Please select an InTaVia Excel Template'}</p>
+    </div>
   );
 }

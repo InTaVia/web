@@ -320,6 +320,23 @@ export function selectHasLocalEvent(state: RootState, id: Event['id']) {
   return selectLocalEventById(state, id) != null;
 }
 
+export function selectUpstreamVocabularyEntries(state: RootState) {
+  return state.intavia.vocabularies.upstream.byId;
+}
+
+export function selectLocalVocabularyEntries(state: RootState) {
+  return state.intavia.vocabularies.local.byId;
+}
+
+export function selectVocabularyEntries(state: RootState) {
+  const upstreamVocabularyEntries = selectUpstreamVocabularyEntries(state);
+  const localVocabularyEntries = selectLocalVocabularyEntries(state);
+
+  const vocabularyEntries = { ...upstreamVocabularyEntries, ...localVocabularyEntries };
+
+  return vocabularyEntries;
+}
+
 export function selectLocalVocabularyByName(state: RootState, name: string) {
   return state.intavia.vocabularies.local.byName[name];
 }
