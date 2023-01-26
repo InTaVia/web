@@ -1,8 +1,8 @@
 import { Disclosure } from '@headlessui/react';
 import { LocationMarkerIcon, UserCircleIcon } from '@heroicons/react/solid';
+import type { Entity, Event } from '@intavia/api-client';
 import { Fragment } from 'react';
 
-import type { Entity, EntityEvent } from '@intavia/api-client';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -106,7 +106,7 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
 
                     <div className="grid gap-1.5 text-sm">
                       {props.entity.events?.map((_event) => {
-                        const event = _event as unknown as EntityEvent;
+                        const event = _event as unknown as Event;
 
                         // FIXME:
                         function onDragStart(dragEvent: any) {
@@ -146,8 +146,8 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
 }
 
 interface EventDateRangeProps {
-  start: EntityEvent['startDate'];
-  end: EntityEvent['endDate'];
+  start: Event['startDate'];
+  end: Event['endDate'];
 }
 
 function EventDateRange(props: EventDateRangeProps): JSX.Element | null {

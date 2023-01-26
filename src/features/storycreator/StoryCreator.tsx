@@ -5,7 +5,6 @@ import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/Integration
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 
-import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
 import { ButtonRow } from '@/features/storycreator/ButtonRow';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Story } from '@/features/storycreator/storycreator.slice';
@@ -30,7 +29,6 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
       <div className={styles['story-editor-header']}>
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
-          <ExcelUpload />
           <div className={styles['button-row-button']}>
             <IconButton color="primary" onClick={toggleTextMode} component="span">
               <IntegrationInstructionsOutlinedIcon />

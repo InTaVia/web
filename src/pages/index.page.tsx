@@ -2,7 +2,6 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import {
   ChatAlt2Icon,
   DatabaseIcon,
-  DownloadIcon,
   InformationCircleIcon,
   LightBulbIcon,
 } from '@heroicons/react/solid';
@@ -72,15 +71,6 @@ export default function HomePage(): JSX.Element {
           <div className="w-96">
             <SearchForm round="pill" size="regular" />
           </div>
-          <ButtonLink
-            href="/search"
-            color="accent"
-            round="pill"
-            className="inline-flex items-center gap-2"
-          >
-            <DownloadIcon className="h-5 w-5" strokeWidth="1.75" />
-            {t(['common', 'data-import'])}
-          </ButtonLink>
           <ButtonLink
             href="/info"
             size="regular"

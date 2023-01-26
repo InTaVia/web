@@ -10,8 +10,8 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/entities.slice';
-import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
-import { EntityEventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
+import { EventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
+import { EventsLineStringLayer } from '@/features/geomap/events-line-string-layer';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { base as baseMap } from '@/features/geomap/maps.config';
 import { PageTitle } from '@/features/ui/page-title';
@@ -54,8 +54,8 @@ function GeoMapScreen(): JSX.Element {
     <Container maxWidth="xl" sx={{ padding: 4, height: '80vh' }}>
       <PageTitle>Map of Lifespans</PageTitle>
       <GeoMap {...baseMap}>
-        <EntityEventsLineStringLayer entities={persons} eventTypes={['beginning', 'end']} />
-        <EntityEventyPinLayer entities={persons} eventTypes={['beginning', 'end']} />
+        <EventsLineStringLayer entities={persons} eventTypes={['beginning', 'end']} />
+        <EventyPinLayer entities={persons} eventTypes={['beginning', 'end']} />
       </GeoMap>
     </Container>
   );

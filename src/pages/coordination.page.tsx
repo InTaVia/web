@@ -1,3 +1,4 @@
+import type { Entity, Person } from '@intavia/api-client';
 import PersonIcon from '@mui/icons-material/Person';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -15,7 +16,6 @@ import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
-import type { Entity, Person } from '@intavia/api-client';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
@@ -23,8 +23,8 @@ import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';
-import { EntityEventsLineStringLayer } from '@/features/geomap/entity-events-line-string-layer';
-import { EntityEventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
+import { EventyPinLayer } from '@/features/geomap/entity-events-pin-layer';
+import { EventsLineStringLayer } from '@/features/geomap/events-line-string-layer';
 import { GeoMap } from '@/features/geomap/geo-map';
 import { base as baseMap } from '@/features/geomap/maps.config';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
@@ -125,9 +125,9 @@ function CoordinationScreen(): JSX.Element | null {
         <Grid item xs={5}>
           <GeoMap {...baseMap}>
             {eventTypes.length >= 2 ? (
-              <EntityEventsLineStringLayer entities={filteredPersons} eventTypes={eventTypes} />
+              <EventsLineStringLayer entities={filteredPersons} eventTypes={eventTypes} />
             ) : null}
-            <EntityEventyPinLayer
+            <EventyPinLayer
               entities={filteredPersons}
               eventTypes={eventTypes}
               hoveredEntityId={hoveredEntityId}

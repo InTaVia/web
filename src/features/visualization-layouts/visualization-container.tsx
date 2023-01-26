@@ -1,8 +1,8 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
+import type { Event, Person } from '@intavia/api-client';
 import type { DragEvent } from 'react';
 
-import type { EntityEvent, Person } from '@intavia/api-client';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -76,9 +76,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         );
         break;
       case 'Event':
-        dispatch(
-          addEventToVisualization({ visId: visualization!.id, event: data.props as EntityEvent }),
-        );
+        dispatch(addEventToVisualization({ visId: visualization!.id, event: data.props as Event }));
         break;
       default:
         break;

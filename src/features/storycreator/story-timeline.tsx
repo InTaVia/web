@@ -1,13 +1,13 @@
+import type { Event, Person, StoryEvent } from '@intavia/api-client';
 import { useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import type { EntityEvent, Person, StoryEvent } from '@intavia/api-client';
 import styles from '@/features/timeline/timeline.module.css';
 import { selectZoomToTimeRange } from '@/features/timeline/timeline.slice';
 import { TimelineSvg } from '@/features/timeline/timeline-svg';
 
 interface StoryTimelineProps {
-  events: Array<EntityEvent | StoryEvent>;
+  events: Array<Event | StoryEvent>;
   persons: Array<Person>;
 }
 
