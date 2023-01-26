@@ -1,16 +1,16 @@
+import type { Entity, Event, Person, StoryEvent } from '@intavia/api-client';
 import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
 import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 
-import type { Entity, EntityEvent, Person, StoryEvent } from '@intavia/api-client';
 import { TimelineElement } from '@/features/timeline/timeline-element';
 import { TimelineElementTooltip } from '@/features/timeline/timeline-element-tooltip';
 import { TimelineYearAxis } from '@/features/timeline/timeline-year-axis';
 
 interface TimelineSvgProps {
   persons: Array<Person>;
-  events?: Array<EntityEvent | StoryEvent>;
+  events?: Array<Event | StoryEvent>;
   parentRef: RefObject<HTMLDivElement>;
   zoomToData: boolean;
   renderLabel: boolean;

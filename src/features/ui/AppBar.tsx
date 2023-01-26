@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
-import { ExcelUpload } from '@/features/excel-upload/ExcelUpload';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
@@ -41,6 +40,12 @@ export function AppBar(): JSX.Element {
   ];
 
   const linksRight: Array<Link> = [
+    {
+      id: 'data-import',
+      href: { pathname: '/data-import' },
+      label: t(['common', 'data-import', 'ui', 'import-data']),
+      current: false,
+    },
     {
       id: 'info',
       href: { pathname: '/info' },
@@ -86,14 +91,13 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          <ExcelUpload />
           {linksRight.map((item) => {
             return (
               <Link key={item.id} href={item.href.pathname}>
                 <a
                   className={clsx(
                     item.current ? 'text-intavia-brand-900' : 'text-black',
-                    'hover:text-intavia-brand-900',
+                    'px-3 text-base hover:text-intavia-brand-900',
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >

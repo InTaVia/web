@@ -1,15 +1,15 @@
+import type { Event, Person as Entity } from '@intavia/api-client';
 import type { Feature, FeatureCollection } from 'geojson';
 import { Layer, Source } from 'react-map-gl';
 
-import type { EntityEvent, Person as Entity } from '@intavia/api-client';
 import type { EventType } from '@/features/common/event-types';
 
-interface EntityEventsLineStringLayerProps {
+interface EventsLineStringLayerProps {
   entities: Array<Entity>;
   eventTypes: Array<EventType>;
 }
 
-export function EntityEventsLineStringLayer(props: EntityEventsLineStringLayerProps): JSX.Element {
+export function EventsLineStringLayer(props: EventsLineStringLayerProps): JSX.Element {
   const { entities, eventTypes } = props;
 
   const data: FeatureCollection = { type: 'FeatureCollection', features: [] };
@@ -44,7 +44,7 @@ export function EntityEventsLineStringLayer(props: EntityEventsLineStringLayerPr
   );
 }
 
-function createLineStringFeature(id: string, events: Array<EntityEvent>) {
+function createLineStringFeature(id: string, events: Array<Event>) {
   if (events.length <= 1) return null;
 
   const coordinates: Array<[number, number]> = [];

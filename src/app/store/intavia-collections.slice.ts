@@ -1,10 +1,10 @@
+import type { Entity, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { assert } from '@stefanprobst/assert';
 import { nanoid } from 'nanoid';
 import { PURGE } from 'redux-persist';
 
-import type { Entity, EntityEvent } from '@intavia/api-client';
 import type { RootState } from '@/app/store';
 import { unique } from '@/lib/unique';
 
@@ -17,7 +17,7 @@ export interface Collection {
   id: string;
   label: string;
   entities: Array<Entity['id']>;
-  events: Array<EntityEvent['id']>;
+  events: Array<Event['id']>;
   metadata: {
     queries?: Array<QueryMetadata>;
   };
@@ -78,7 +78,7 @@ export const slice = createSlice({
     },
     addEventsToCollection(
       state,
-      action: PayloadAction<{ id: Collection['id']; events: Array<EntityEvent['id']> }>,
+      action: PayloadAction<{ id: Collection['id']; events: Array<Event['id']> }>,
     ) {
       const { id, events } = action.payload;
       const collection = state.collections.byId[id];
@@ -87,7 +87,7 @@ export const slice = createSlice({
     },
     removeEventsFromCollection(
       state,
-      action: PayloadAction<{ id: Collection['id']; events: Array<EntityEvent['id']> }>,
+      action: PayloadAction<{ id: Collection['id']; events: Array<Event['id']> }>,
     ) {
       const { id, events } = action.payload;
       const collection = state.collections.byId[id];

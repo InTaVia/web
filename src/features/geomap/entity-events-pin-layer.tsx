@@ -1,10 +1,10 @@
+import type { Event, Person as Entity } from '@intavia/api-client';
 import { color as d3color } from 'd3-color';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeTableau10 } from 'd3-scale-chromatic';
 import { Fragment } from 'react';
 import { Marker } from 'react-map-gl';
 
-import type { EntityEvent, Person as Entity } from '@intavia/api-client';
 import type { EventType } from '@/features/common/event-types';
 import { eventTypes as allEventTypes } from '@/features/common/event-types';
 import { keys } from '@/lib/keys';
@@ -22,14 +22,14 @@ interface Pin {
   lng: number;
 }
 
-interface EntityEventyPinLayerProps {
+interface EventyPinLayerProps {
   entities: Array<Entity>;
   eventTypes: Array<EventType>;
   hoveredEntityId?: Entity['id'] | null;
   setHoveredEntityId?: (id: Entity['id'] | null) => void;
 }
 
-export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Element {
+export function EventyPinLayer(props: EventyPinLayerProps): JSX.Element {
   const { entities, eventTypes, hoveredEntityId, setHoveredEntityId } = props;
 
   const markers: Array<Pin> = [];
@@ -103,7 +103,7 @@ export function EntityEventyPinLayer(props: EntityEventyPinLayerProps): JSX.Elem
   );
 }
 
-function createMarkers(id: string, events: Array<EntityEvent>): Array<Pin> {
+function createMarkers(id: string, events: Array<Event>): Array<Pin> {
   const markers: Array<Pin> = [];
 
   events.forEach((event) => {

@@ -11,7 +11,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
   const { children } = props;
 
   return (
-    <div className="grid min-h-full grid-rows-[0px_auto_1fr] bg-gray-50">
+    <div className="grid min-h-full grid-rows-[0px_auto_calc(100vh_-_4rem)] bg-gray-50">
       <div>
         <Toaster
           position="top-right"

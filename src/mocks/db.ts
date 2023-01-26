@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
+import type { Entity, Event, Person, Place } from '@intavia/api-client';
 import type { Bin } from 'd3-array';
 import { bin, range } from 'd3-array';
 import { matchSorter } from 'match-sorter';
 
-import type { Entity, EntityEvent, Person, Place } from '@intavia/api-client';
 import type { EventType } from '@/features/common/event-types';
 import { times } from '@/lib/times';
 
@@ -38,7 +38,7 @@ function createTable<T extends Entity>() {
     create(entity: T) {
       table.set(entity.id, entity);
     },
-    addEventToHistory(id: Entity['id'], relation: EntityEvent) {
+    addEventToHistory(id: Entity['id'], relation: Event) {
       const entity = table.get(id);
       if (entity == null) return;
       if (entity.history == null) {
@@ -48,7 +48,7 @@ function createTable<T extends Entity>() {
         ...relation,
         targetId: id.toString(),
         id: faker.datatype.uuid(),
-      } as EntityEvent;
+      } as Event;
 
       entity.history.push(newRelation);
     },
@@ -70,7 +70,7 @@ function createTable<T extends Entity>() {
   return methods;
 }
 
-function createLifeSpanRelations(id: string): [EntityEvent, EntityEvent] {
+function createLifeSpanRelations(id: string): [Event, Event] {
   const dateOfBirth = faker.date.between(
     new Date(Date.UTC(1800, 0, 1)),
     new Date(Date.UTC(1930, 11, 31)),
@@ -95,7 +95,7 @@ function createLifeSpanRelations(id: string): [EntityEvent, EntityEvent] {
   ];
 }
 
-function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date): EntityEvent {
+function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date): Event {
   if (date === undefined) {
     return {
       type,
@@ -114,11 +114,11 @@ function createPersonEvent(type: EventType, targetId: Entity['id'], date?: Date)
   }
 }
 
-function createExtraRelations(birth: Date, death: Date): Array<EntityEvent> {
+function createExtraRelations(birth: Date, death: Date): Array<Event> {
   const lifetimeEventTypes: Array<EventType> = ['stayed', 'lived'];
   const afterDeathEventTypes: Array<EventType> = ['statue erected'];
 
-  const relations: Array<EntityEvent> = [];
+  const relations: Array<Event> = [];
 
   const numRelations = faker.datatype.number(8);
   const numWithinLifetime = faker.datatype.number({
