@@ -1,4 +1,4 @@
-import type { Entity, EntityEventRelation, Person } from '@intavia/api-client';
+import type { Entity, EntityEventRelation, Event, Person } from '@intavia/api-client';
 import { Box, List, ListItem, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
@@ -22,9 +22,9 @@ export function CollectionEntitiesList(): JSX.Element {
   const collection = selected.length !== 0 ? _collections[selected] : null;
   const _entities = useAppSelector(selectEntities);
   const _events = useAppSelector(selectEvents);
-  const [retrieveEventsByIds, { isLoading }] = useRetrieveEventsByIdsMutation();
+  const [retrieveEventsById, { isLoading }] = useRetrieveEventsByIdsMutation();
 
-  function onSelectionChange(event: ChangeEvent<HTMLInputElement>) {
+  async function onSelectionChange(event: ChangeEvent<HTMLInputElement>) {
     const newCollectionID = event.target.value;
 
     const newCollection = _collections[newCollectionID];
@@ -32,14 +32,15 @@ export function CollectionEntitiesList(): JSX.Element {
     if (newCollection != null) {
       const entities = newCollection.entities.map((id) => {
         return _entities[id];
-      });
+      }) as Array<Entity>;
 
       const allEventIds = entities.flatMap((entity: Entity) => {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         return entity.relations !== undefined
           ? entity.relations.map((relation: EntityEventRelation) => {
               return relation.event;
             })
-          : [];
+          : ([] as Array<Event['id']>);
       });
 
       // Filter for just the events for which we still need the event details
@@ -48,9 +49,9 @@ export function CollectionEntitiesList(): JSX.Element {
       });
 
       if (filteredEventIds.length > 0) {
-        const retrievePromise = retrieveEventsByIds({
+        void retrieveEventsById({
           params: { page: 1, limit: 1000 },
-          body: { id: allEventIds },
+          body: { ids: filteredEventIds },
         });
       }
     }

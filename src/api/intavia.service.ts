@@ -173,7 +173,7 @@ export const service = createApi({
       }),
       retrieveEventsByIds: builder.mutation<
         RetrieveEventsByIds.Response,
-        { params: any; body: any }
+        { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
       >({
         query(params) {
           return {
