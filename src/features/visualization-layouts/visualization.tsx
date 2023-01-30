@@ -1,7 +1,8 @@
+import type { Entity, EntityEventRelation } from '@intavia/api-client';
 import { Fragment } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/app/store/intavia.slice';
+import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
@@ -16,6 +17,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const allPersons = Object.values(entitiesByKind.person);
+  const allEvents = useAppSelector(selectEvents);
 
   const eventIds = visualization.eventIds;
   const personIds = visualization.entityIds;
@@ -77,6 +79,40 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
     }),
   );
 
+  const visPersonsEventIds = visPersons.flatMap((entity: Entity) => {
+    return entity.relations !== undefined
+      ? entity.relations.map((rel: EntityEventRelation) => {
+          return rel.event;
+        })
+      : [];
+  });
+
+  /* export const pick = (obj: Record<string, any>, keys: Array<string>) => {
+  return Object.fromEntries(
+    keys
+      .filter((key) => {
+        return key in obj;
+      })
+      .map((key) => {
+        return [key, obj[key]];
+      }),
+  );
+}; */
+
+  console.log('allEvent', allEvents);
+
+  const pickedEvents = Object.fromEntries(
+    visPersonsEventIds
+      .filter((id) => {
+        return id in allEvents;
+      })
+      .map((id) => {
+        return [id, allEvents[id]];
+      }),
+  );
+
+  console.log('pickedEvents', pickedEvents);
+
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
@@ -87,9 +123,9 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         return (
           <Timeline
             entities={visPersonsAsObject}
-            events={{}}
-            width={200}
-            height={200}
+            events={pickedEvents}
+            width={1600}
+            height={500}
             amount={100}
             vertical={false}
             thickness={1}

@@ -1,6 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Entity, Event } from '@intavia/api-client/dist/models';
+import type { Entity, EntityEventRelation, Event } from '@intavia/api-client/dist/models';
 import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
 import { useEffect, useState } from 'react';
@@ -80,39 +80,42 @@ export function Timeline(props: TimelineProps): JSX.Element {
 
   const [filteredData, setFilteredData] = useState({});
   const [unPlottableEntities, setUnPlottableEntities] = useState({});
+  const [plotableEvents, setPlotableEvents] = useState({});
 
   useEffect(() => {
     const tmpUnPlottableEntities = {} as Record<string, Entity>;
     const tmpUnTimeableEvents = {} as Record<string, Event>;
+    const tmpPlotableEvents = {};
     const tmpSlicedData = Object.fromEntries(Object.entries(entities).slice(0, amount));
     const tmpFilteredData = Object.fromEntries(
       Object.entries(tmpSlicedData).filter((keyValue) => {
         const entry = keyValue[1] as Entity;
-        if (!entry.events) {
+        if (entry.relations === undefined) {
           tmpUnPlottableEntities[entry.id] = entry;
           return false;
         } else {
-          for (const eventId of entry.events) {
-            const event = events[eventId];
-            if (event !== undefined) {
-              if (event.startDate === undefined && event.endDate === undefined) {
-                tmpUnTimeableEvents[event.id] = event;
-              } else if (event.startDate !== undefined && event.endDate === undefined) {
-                event.endDate = event.startDate;
-              } else if (event.startDate === undefined && event.endDate !== undefined) {
-                event.startDate = event.endDate;
-              }
+          for (const eventId of entry.relations.map((rel: EntityEventRelation) => {
+            return rel.event;
+          })) {
+            const event = { ...events[eventId] };
+            if (event.startDate === undefined && event.endDate === undefined) {
+              tmpUnTimeableEvents[event.id] = event;
+            } else if (event.startDate !== undefined && event.endDate === undefined) {
+              event.endDate = event.startDate;
+            } else if (event.startDate === undefined && event.endDate !== undefined) {
+              event.startDate = event.endDate;
             }
+
+            tmpPlotableEvents[event.id] = event;
           }
-          if (nameFilter != null && nameFilter.trim() !== '') {
-            return entry!.label!.default.toLowerCase().includes(nameFilter.toLowerCase());
-          }
+
           return true;
         }
       }),
     );
 
     setFilteredData(tmpFilteredData);
+    setPlotableEvents(tmpPlotableEvents);
     setUnPlottableEntities(tmpUnPlottableEntities);
     setUnTimeableEvents(tmpUnTimeableEvents);
   }, [amount, entities, nameFilter, events]);
@@ -125,7 +128,14 @@ export function Timeline(props: TimelineProps): JSX.Element {
         pickedEvents[entry.id] !== undefined
           ? (pickedEvents[entry.id] as Array<Event>)
           : (Object.values(
-              pick(events, entry.events !== undefined ? entry.events : []),
+              pick(
+                plotableEvents,
+                entry.relations !== undefined
+                  ? entry.relations.map((rel: EntityEventRelation) => {
+                      return rel.event;
+                    })
+                  : ([] as Array<string>),
+              ),
             ) as Array<Event>);
 
       const entityExtent = getTemporalExtent([Events as Array<Event>]);
@@ -152,10 +162,24 @@ export function Timeline(props: TimelineProps): JSX.Element {
 
   const sortedData = (Object.values(filteredData) as Array<Entity>).sort((a: Entity, b: Entity) => {
     const entityAEvents = Object.values(
-      pick(events, a.events !== undefined ? a.events : ([] as Array<string>)),
+      pick(
+        plotableEvents,
+        a.relations !== undefined
+          ? a.relations.map((rel: EntityEventRelation) => {
+              return rel.event;
+            })
+          : ([] as Array<string>),
+      ),
     );
     const entityBEvents = Object.values(
-      pick(events, b.events !== undefined ? b.events : ([] as Array<string>)),
+      pick(
+        plotableEvents,
+        b.relations !== undefined
+          ? b.relations.map((rel: EntityEventRelation) => {
+              return rel.event;
+            })
+          : ([] as Array<string>),
+      ),
     );
 
     pickedEvents[a.id] = entityAEvents;
@@ -172,6 +196,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
   });
 
   const timeDomain = getTemporalExtent(Object.values(pickedEvents));
+  console.log('timeDomain', timeDomain);
 
   const padding = 50;
 

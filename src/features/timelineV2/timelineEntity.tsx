@@ -50,6 +50,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   const ref = useRef();
   const [clusterArray, setClusterArray] = useState([] as Array<Set<string>>);
 
+  console.log("events",events);
+
   const tmpInitEventsWithoutCluster = {} as Record<string, Event>;
   for (const event of events) {
     // TODO check how to state the type of event
