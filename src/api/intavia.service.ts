@@ -7,6 +7,7 @@ import type {
   GetOccupationById,
   GetRelationRoleById,
   OccupationStatisticsSearch,
+  RetrieveEventsByIds,
   SearchEntities,
   SearchEventKinds,
   SearchEvents,
@@ -20,6 +21,7 @@ import {
   getEventKindById,
   getOccupationById,
   getRelationRoleById,
+  retrieveEventsByIds,
   searchBirthStatistics,
   searchDeathStatistics,
   searchEntities,
@@ -169,6 +171,17 @@ export const service = createApi({
           };
         },
       }),
+      retrieveEventsByIds: builder.mutation<
+        RetrieveEventsByIds.Response,
+        { params: any; body: any }
+      >({
+        query(params) {
+          return {
+            url: retrieveEventsByIds.url(params.params),
+            options: retrieveEventsByIds.options(params.body),
+          };
+        },
+      }),
     };
   },
 });
@@ -183,4 +196,5 @@ export const {
   useLazySearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchOccupationStatisticsQuery,
+  useRetrieveEventsByIdsMutation,
 } = service;

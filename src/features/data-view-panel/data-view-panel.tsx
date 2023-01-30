@@ -1,3 +1,4 @@
+import type { Entity, EntityEventRelation, Person } from '@intavia/api-client';
 import { Box, List, ListItem, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
@@ -5,9 +6,9 @@ import TextField from '@mui/material/TextField';
 import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
-import type { Person } from '@intavia/api-client';
+import { useRetrieveEventsByIdsMutation } from '@/api/intavia.service';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntities } from '@/app/store/intavia.slice';
+import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
 import { addPersonToVisualization } from '@/features/common/visualization.slice';
@@ -18,10 +19,43 @@ export function CollectionEntitiesList(): JSX.Element {
   const _collections = useAppSelector(selectCollections);
   const collections = Object.values(_collections);
   const [selected, setSelected] = useState<Collection['id']>('');
-  const collection = selected.length === 0 ? null : _collections[selected];
+  const collection = selected.length !== 0 ? _collections[selected] : null;
+  const _entities = useAppSelector(selectEntities);
+  const _events = useAppSelector(selectEvents);
+  const [retrieveEventsByIds, { isLoading }] = useRetrieveEventsByIdsMutation();
 
   function onSelectionChange(event: ChangeEvent<HTMLInputElement>) {
-    setSelected(event.target.value);
+    const newCollectionID = event.target.value;
+
+    const newCollection = _collections[newCollectionID];
+
+    if (newCollection != null) {
+      const entities = newCollection.entities.map((id) => {
+        return _entities[id];
+      });
+
+      const allEventIds = entities.flatMap((entity: Entity) => {
+        return entity.relations !== undefined
+          ? entity.relations.map((relation: EntityEventRelation) => {
+              return relation.event;
+            })
+          : [];
+      });
+
+      // Filter for just the events for which we still need the event details
+      const filteredEventIds = allEventIds.filter((eventId: string) => {
+        return _events[eventId] === undefined;
+      });
+
+      if (filteredEventIds.length > 0) {
+        const retrievePromise = retrieveEventsByIds({
+          params: { page: 1, limit: 1000 },
+          body: { id: allEventIds },
+        });
+      }
+    }
+
+    setSelected(newCollectionID);
   }
 
   if (collections.length === 0) {
@@ -54,7 +88,7 @@ export function CollectionEntitiesList(): JSX.Element {
             borderTopColor: '#eee',
           }}
         >
-          <CollectionEntities collection={collection} />
+          <CollectionEntities collection={collection} isEventsLoading={isLoading} />
         </Box>
       ) : null}
     </Fragment>
@@ -63,10 +97,11 @@ export function CollectionEntitiesList(): JSX.Element {
 
 interface CollectionEntitiesProps {
   collection: Collection;
+  isEventsLoading?: boolean;
 }
 
 function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
-  const { collection } = props;
+  const { collection, isEventsLoading = false } = props;
   const dispatch = useAppDispatch();
   const workspaces = useAppSelector(selectAllWorkspaces);
   const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
@@ -99,7 +134,12 @@ function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
 
           return (
             <ListItem key={entity.id} sx={{ paddingBlock: 2 }}>
-              <CollectionPanelEntry entity={entity} draggable mini />
+              <CollectionPanelEntry
+                entity={entity}
+                isEventsLoading={isEventsLoading}
+                draggable
+                mini
+              />
             </ListItem>
           );
         })}
