@@ -1,10 +1,11 @@
+import type { EntityEventRelation } from '@intavia/api-client';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
-import { useGetEntitiesByIdQuery } from '@/api/intavia.service';
+import { useGetEntityByIdQuery } from '@/api/intavia.service';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
@@ -39,16 +40,14 @@ function PersonScreen(): JSX.Element {
   const params = useParams();
   const tempId = params?.get('id');
   const id = tempId != null ? decodeURIComponent(tempId) : null;
-  console.log('id', id);
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const localEntitiesByKind = useAppSelector(selectLocalEntitiesByKind);
   // TODO: force displaying upstream entity with `upstream` search param
   const entity =
     id != null ? localEntitiesByKind.person[id] ?? entitiesByKind.person[id] : undefined;
   // TODO: check if rtkq has something similar to react query's `initialData`
-  const entityByIdQuery = useGetEntitiesByIdQuery(id != null ? { ids: [id] } : skipToken);
+  const entityByIdQuery = useGetEntityByIdQuery(id != null ? { id } : skipToken);
 
-  console.log('entityByIdQuery', entityByIdQuery);
   const person = entity ?? entityByIdQuery.data?.results[0];
 
   if (id == null || entityByIdQuery.isLoading) {

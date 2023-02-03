@@ -1,6 +1,6 @@
-import 'tailwindcss/tailwind.css';
-import 'allotment/dist/style.css';
 import '@/styles/index.css';
+import 'allotment/dist/style.css';
+import 'tailwindcss/tailwind.css';
 
 import type { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -27,6 +27,7 @@ import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
 import { log } from '@/lib/log';
+import SetupStore from '@/pages/setup-store';
 import { theme } from '@/styles/theme';
 import { manifestFileName, openGraphImageName } from '~/config/metadata.config';
 
@@ -94,6 +95,7 @@ export default function App(props: AppProps): JSX.Element {
                   <PageLayout>
                     <Component {...pageProps} />
                   </PageLayout>
+                  <SetupStore></SetupStore>
                 </ErrorBoundary>
               </PersistGate>
               <Notifications />
