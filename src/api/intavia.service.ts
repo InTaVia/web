@@ -171,7 +171,7 @@ export const service = createApi({
           };
         },
       }),
-      retrieveEventsByIds: builder.mutation<
+      retrieveEventsByIds: builder.query<
         RetrieveEventsByIds.Response,
         { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
       >({
@@ -196,5 +196,5 @@ export const {
   useLazySearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchOccupationStatisticsQuery,
-  useRetrieveEventsByIdsMutation,
+  useRetrieveEventsByIdsQuery,
 } = service;
