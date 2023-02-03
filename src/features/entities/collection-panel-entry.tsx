@@ -29,6 +29,8 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
 
   const entityRelations = props.entity.relations !== undefined ? props.entity.relations : [];
 
+  const vocabulary = useAppSelector(selectVocabularyEntries);
+
   return (
     <div className={`my-1 mx-1 w-full rounded border-2 border-current p-2 ${fgColor} ${bgColor}`}>
       <Disclosure>
@@ -88,13 +90,13 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                       {content}
                     </span>
                     <span className="font-verythin col-start-3 row-start-2 max-w-[20ch] justify-self-end overflow-hidden text-ellipsis whitespace-nowrap text-[0.65rem]">
-                      {props.entity.kind === 'person'
+                      {/*  {props.entity.kind === 'person'
                         ? props.entity.occupations
                             ?.map((occupation) => {
                               return getTranslatedLabel(occupation.label);
                             })
                             .join(', ')
-                        : ''}
+                        : ''} */}
                     </span>
                   </div>
 
@@ -113,16 +115,15 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                     <div className="grid gap-1.5 text-sm">
                       {[
                         ...new Set(
-                          entityRelations
-                            .filter((relation: EntityEventRelation) => {
-                              return allEvents[relation.event] !== undefined;
-                            })
-                            .map((relation: EntityEventRelation) => {
+                          entityRelations.filter((relation: EntityEventRelation) => {
+                            return allEvents[relation.event] !== undefined;
+                          }),
+                          /* .map((relation: EntityEventRelation) => {
                               return relation.event;
-                            }),
+                            }), */
                         ),
-                      ].map((eventId: string) => {
-                        const event = allEvents[eventId] as Event;
+                      ].map((relation: EntityEventRelation) => {
+                        const event = allEvents[relation.event] as Event;
 
                         // FIXME:
                         function onDragStart(dragEvent: any) {
@@ -139,13 +140,15 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                         return (
                           <div key={event.id} draggable={draggable} onDragStart={onDragStart}>
                             <h4>{getTranslatedLabel(event.label)}</h4>
+                            <div>{getTranslatedLabel(vocabulary[event.kind]?.label ?? '')}</div>
+                            <div>{getTranslatedLabel(vocabulary[relation.role]?.label ?? '')}</div>
                             <EventDateRange start={event.startDate} end={event.endDate} />
-                            {event.place != null && event.place.label != null ? (
+                            {/* {event.place != null && event.place.label != null ? (
                               <div className="flex gap-1">
                                 <LocationMarkerIcon width="1em" />
                                 {getTranslatedLabel(event.place.label)}{' '}
                               </div>
-                            ) : null}
+                            ) : null} */}
                           </div>
                         );
                       })}
