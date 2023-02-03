@@ -193,6 +193,7 @@ export const {
   useSearchEntitiesQuery,
   useLazySearchEntitiesQuery,
   useSearchEventsQuery,
+  useSearchEventKindsQuery,
   useLazySearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchOccupationStatisticsQuery,

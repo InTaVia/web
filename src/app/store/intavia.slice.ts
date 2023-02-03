@@ -199,6 +199,20 @@ export const slice = createSlice({
     );
 
     builder.addMatcher(
+      intaviaApiService.endpoints.searchEventKinds.matchFulfilled,
+      (state, action) => {
+        const vocabularies = action.payload.results;
+        for (const vocab of vocabularies) {
+          state.vocabularies.upstream.byVocabularyEntryId[vocab.id] = vocab;
+          if (state.vocabularies.upstream.byVocabularyId[vocab.id] === undefined) {
+            state.vocabularies.upstream.byVocabularyId['event-kind'] = {};
+          }
+          state.vocabularies.upstream.byVocabularyId['event-kind']![vocab.id] = vocab;
+        }
+      },
+    );
+
+    builder.addMatcher(
       intaviaApiService.endpoints.getEntityById.matchFulfilled,
       (state, action) => {
         const entity = action.payload;
