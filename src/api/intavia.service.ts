@@ -198,4 +198,5 @@ export const {
   useSearchOccupationsQuery,
   useSearchOccupationStatisticsQuery,
   useRetrieveEventsByIdsQuery,
+  useSearchRelationRolesQuery,
 } = service;
