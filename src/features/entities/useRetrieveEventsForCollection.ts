@@ -39,13 +39,11 @@ export function useRetrieveEventsForCollection(collectionId: string) {
       }
     }, [collection, _entities, _events]) ?? [];
 
-  const { data, isLoading } = useRetrieveEventsByIdsQuery(
+  return useRetrieveEventsByIdsQuery(
     {
       params: { page: 1, limit: 1000 },
       body: { id: filteredEventIds },
     },
     { skip: filteredEventIds.length === 0 },
   );
-
-  return { data, isLoading };
 }
