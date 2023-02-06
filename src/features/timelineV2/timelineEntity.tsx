@@ -2,7 +2,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event } from '@intavia/api-client/dist/models';
 import type { ScaleBand } from 'd3-scale';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   type TimelineType,
@@ -15,7 +15,7 @@ import TimelineEventCluster from './timelineEventCluster';
 
 interface TimelineEntityProps {
   entity: Entity;
-  events: Array<Event>;
+  events: Record<Event['id'], Event>;
   vertical: boolean;
   timeScale: (data: Date) => number;
   scaleY: ScaleBand<string>;
@@ -46,26 +46,12 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     diameter = 14,
   } = props;
 
-  const itemsRef = useRef([]);
+  // const itemsRef = useRef([]);
   const ref = useRef();
-  const [clusterArray, setClusterArray] = useState([] as Array<Set<string>>);
 
-  console.log("events",events);
+  //const tmpInitEventsWithoutCluster = Object.keys(events);
 
-  const tmpInitEventsWithoutCluster = {} as Record<string, Event>;
-  for (const event of events) {
-    // TODO check how to state the type of event
-    /* event.type =
-      eventTypes.find((e) => {
-        return event.id.includes(e);
-      }) ?? 'default'; */
-    tmpInitEventsWithoutCluster[event.id] = event;
-  }
-
-  const [eventsWithoutCluster, setEventsWithoutCluster] = useState(tmpInitEventsWithoutCluster);
-  const [clusteredEvents, setClusteredEvents] = useState([] as Array<Array<Event>>);
-
-  const entityExtent = getTemporalExtent([events]);
+  const entityExtent = getTemporalExtent([Object.values(events)]);
 
   const height = vertical ? timeScale(entityExtent[1]) - timeScale(entityExtent[0]) : diameter;
 
@@ -90,24 +76,16 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   }
 
-  useEffect(() => {
-    itemsRef.current = itemsRef.current.slice(0, events.length);
+  /*   const clusterArrayCopy = useMemo(() => {
+    return [...clusterArray];
+  }, [clusterArray]); */
 
-    const tmpEventsWithoutCluster = {} as Record<string, Event>;
-    for (const event of events) {
-      tmpEventsWithoutCluster[event.id] = event;
-    }
-    setEventsWithoutCluster(tmpEventsWithoutCluster);
-  }, [entity, events]);
+  /* useEffect(() => {
+    const allTheItems = itemsRef.current;
 
-  useEffect(() => {
-    if (!cluster) {
-      return;
-    }
+    const tmpClusterArray = [] as Array<Set<string>>;
 
     const callback = (entries: any) => {
-      /* if (cluster) { */
-      const tmpClusterArray = [...clusterArray] as Array<Set<string>>;
       entries.forEach((entry: any, index: any) => {
         if (entry.isIntersecting === null || entry.isIntersecting === undefined) {
           return;
@@ -126,10 +104,9 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             domRect1.bottom < domRect2.top ||
             domRect1.left > domRect2.right;
 
+          const id = entry.target.id;
+          const otherId = otherEntry.target.id;
           if (!noOverlap) {
-            const id = entry.target.id;
-            const otherId = otherEntry.target.id;
-
             let hit = false;
             for (const cluster of tmpClusterArray) {
               if (!cluster.has(id)) {
@@ -138,9 +115,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   hit = true;
                 }
               } else {
-                if (!cluster.has(otherId)) {
-                  cluster.add(otherId);
-                }
+                cluster.add(otherId);
                 hit = true;
               }
             }
@@ -151,69 +126,83 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
           }
         });
       });
+
       setClusterArray(tmpClusterArray);
-      /* } */
     };
 
-    /* if (cluster) { */
     const io = new IntersectionObserver(callback, { root: ref.current });
 
-    itemsRef.current.forEach((target: any) => {
+    allTheItems.forEach((target: any) => {
       if (target !== null) io.observe(target);
     });
 
     return () => {
-      itemsRef.current.forEach((target: any) => {
-        if (target !== null) io.unobserve(target);
+      allTheItems.forEach((target: any) => {
+        if (target !== null) {
+          io.unobserve(target);
+        }
       });
     };
-    /* } */
-  }, [cluster, clusterArray]);
+  }, [itemsRef, width, height]); */
 
-  useEffect(() => {
-    const tmpEventsWithoutCluster = {} as Record<string, Event>;
-    const tmpClusteredEvents = [...clusteredEvents] as Array<Array<Event>>;
+  const clusterArray = useMemo(() => {
+    const tmpClusterArray = [];
+    Object.values(events).forEach((entry: any, index: any) => {
+      Object.values(events).forEach((otherEntry: any, otherIndex: any) => {
+        if (otherIndex >= index) {
+          return;
+        }
 
-    for (const event of Object.values(eventsWithoutCluster)) {
-      const id = `${event.id}`;
+        const eventExtent = getTemporalExtent([[entry]]);
+        const otherEventExtent = getTemporalExtent([[otherEntry]]);
 
-      let hit = false;
-      for (const idx in clusterArray) {
-        const cluster = clusterArray[idx];
-        if (cluster !== undefined && cluster.has(id)) {
-          hit = true;
+        const midDate1 = new Date(eventExtent[0].getTime() + eventExtent[1].getTime()) / 2;
+        const midDate2 =
+          new Date(otherEventExtent[0].getTime() + otherEventExtent[1].getTime()) / 2;
 
-          if (tmpClusteredEvents[idx] !== undefined) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
-            tmpClusteredEvents[idx].push(event);
-          } else {
-            tmpClusteredEvents[idx] = [event];
+        const noOverlap =
+          timeScale(midDate1) + diameter / 2 < timeScale(midDate2) - diameter / 2 ||
+          timeScale(midDate1) - diameter / 2 > timeScale(midDate2) + diameter / 2;
+
+        if (!noOverlap) {
+          const id = entry.id;
+          const otherId = otherEntry.id;
+
+          let hit = false;
+          for (const cluster of tmpClusterArray) {
+            if (!cluster.has(id)) {
+              if (cluster.has(otherId)) {
+                cluster.add(id);
+                hit = true;
+              }
+            } else {
+              if (!cluster.has(otherId)) {
+                cluster.add(otherId);
+              }
+              hit = true;
+            }
+          }
+
+          if (!hit) {
+            tmpClusterArray.push(new Set([id, otherId]));
           }
         }
-      }
+      });
+    });
 
-      if (hit === false) {
-        tmpEventsWithoutCluster[event.id] = event;
-      }
-    }
-
-    if (cluster) {
-      setEventsWithoutCluster(tmpEventsWithoutCluster);
-      setClusteredEvents(tmpClusteredEvents);
-    } else {
-      const tmpInitEventsWithoutCluster = {} as Record<string, Event>;
-      for (const event of events) {
-        tmpInitEventsWithoutCluster[event.id] = event;
-      }
-      setEventsWithoutCluster(tmpInitEventsWithoutCluster);
-      setClusteredEvents([]);
-    }
-  }, [clusterArray, cluster, clusteredEvents, events, eventsWithoutCluster]);
+    return tmpClusterArray;
+  }, [diameter, events, timeScale]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const y = scaleY(index) ?? 0;
+
+  const eventsWithoutCluster = Object.keys(events).filter((eventId) => {
+    const test = clusterArray.flatMap((set) => {
+      return [...set];
+    });
+    return !test.includes(eventId);
+  });
 
   return (
     <div
@@ -245,22 +234,23 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
       </div>
       {mode !== 'mass' && (
         <>
-          {Object.values(eventsWithoutCluster)
-            .filter((event) => {
-              return event.startDate != null || event.endDate != null;
+          {eventsWithoutCluster
+            .filter((eventId) => {
+              return events[eventId]!.startDate != null || events[eventId]!.endDate != null;
             })
-            .map((event: Event) => {
+            .map((eventId) => {
+              const event = events[eventId];
               return (
                 <TimelineEvent
                   id={`${event.id}`}
                   key={`${event.id}${JSON.stringify(props)}`}
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   //@ts-ignore
-                  ref={(el) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    return itemsRef.current.push(el);
-                  }}
+                  // ref={(el) => {
+                  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  //   //@ts-ignore
+                  //   return itemsRef.current.push(el);
+                  // }}
                   vertical={vertical}
                   timeScale={timeScale}
                   timeScaleOffset={timeScale(entityExtent[0])}
@@ -276,7 +266,10 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 />
               );
             })}
-          {clusteredEvents.map((clusteredEvents, idx) => {
+          {clusterArray.map((eventIds, idx) => {
+            const clusteredEvents = Object.values(events).filter((event) => {
+              return eventIds.has(event.id);
+            });
             return (
               <TimelineEventCluster
                 key={`${entity.id}${idx}TimelineEventCluster${JSON.stringify(props)}`}

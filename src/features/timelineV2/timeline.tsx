@@ -1,12 +1,18 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Entity, EntityEventRelation, Event } from '@intavia/api-client/dist/models';
+import type {
+  Entity,
+  EntityEventRelation,
+  Event,
+  VocabularyEntry,
+} from '@intavia/api-client/dist/models';
 import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
 import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export const TimelineColors: Record<string, string> = {
   birth: '#3F88C5',
@@ -14,6 +20,21 @@ export const TimelineColors: Record<string, string> = {
   personplace: 'purple',
   default: '#88D18A',
 };
+
+export function translateEventType(i_type: VocabularyEntry | undefined) {
+  if (i_type === undefined) {
+    return i_type;
+  }
+
+  switch (getTranslatedLabel(i_type.label)) {
+    case 'Birth (crm)':
+      return 'birth';
+    case 'Death (crm)':
+      return 'death';
+    default:
+      return undefined;
+  }
+}
 
 /* export const replaceSpecialCharacters = (input: string) => {
   return input.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '_');
@@ -196,7 +217,6 @@ export function Timeline(props: TimelineProps): JSX.Element {
   });
 
   const timeDomain = getTemporalExtent(Object.values(pickedEvents));
-  console.log('timeDomain', timeDomain);
 
   const padding = 50;
 
@@ -243,7 +263,15 @@ export function Timeline(props: TimelineProps): JSX.Element {
           vertical={vertical}
         />
         {lanes.map((entry: LaneEntry) => {
-          const Events = entry.events;
+          const Events = Object.fromEntries(
+            entry.events
+              .map((event: Event) => {
+                return [event.id, event];
+              })
+              .filter((keyValue) => {
+                return !Object.keys(unTimeableEvents).includes(keyValue[0]);
+              }),
+          );
           return (
             <TimelineEntity
               key={`${entry.entity.id}${cluster}${clusterMode}${vertical}${mode}${diameter}${thickness}${showLabels}${sortEntities}${stackEntities}`}
@@ -264,7 +292,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
           );
         })}
       </div>
-      <fieldset style={{ border: '1px solid gray' }}>
+      {/* <fieldset style={{ border: '1px solid gray' }}>
         <legend>Un-Plottable Entities</legend>
         {(Object.values(unPlottableEntities) as Array<Entity>).map((entry: Entity) => {
           return <div key={`${entry.id}unPlottableEntity`}>{entry.label.default}</div>;
@@ -275,10 +303,14 @@ export function Timeline(props: TimelineProps): JSX.Element {
         {(Object.values(unTimeableEvents) as Array<Event>).map((entry: Event) => {
           return <div key={`${entry.id}UnTimeableEvent`}>{entry.label.default}</div>;
         })}
-      </fieldset>
+      </fieldset> */}
     </>
   );
 }
+
+/* Timeline.displayName = 'Timeline';
+
+export default Timeline; */
 
 export function getTemporalExtent(data: Array<Array<Event>>): [Date, Date] {
   const dates: Array<Date> = [];

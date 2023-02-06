@@ -2,19 +2,22 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { forwardRef } from 'react';
 
+import { TimelineColors } from '@/features/timelineV2/timeline';
+
 interface TimelineEventMarkerProps {
   width: number;
   height: number;
-  type: string;
-  color: string;
+  type?: 'birth' | 'death' | 'personplace';
   thickness: number;
 }
 
 const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): JSX.Element => {
-  const { width, height, type, color, thickness } = props;
+  const { width, height, type = '', thickness } = props;
 
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;
+
+  const color = TimelineColors[type] ?? 'teal';
 
   switch (type) {
     case 'birth':

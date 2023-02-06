@@ -1,7 +1,9 @@
 import type { Event } from '@intavia/api-client/dist/models';
 import { forwardRef } from 'react';
 
-import { TimelineColors as colors } from '@/features/timelineV2/timeline';
+import { useAppSelector } from '@/app/store';
+import { selectVocabularyEntries } from '@/app/store/intavia.slice';
+import { TimelineColors as colors, translateEventType } from '@/features/timelineV2/timeline';
 
 interface PatisserieChartProperties {
   events: Array<Event>;
@@ -21,7 +23,9 @@ const groupBy = (items: Array<any>, key: string) => {
 const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.Element => {
   const { events, diameter, patisserieType } = props;
 
-  const groupedEvents = groupBy(events, 'type');
+  const vocabularies = useAppSelector(selectVocabularyEntries);
+
+  const groupedEvents = groupBy(events, 'kind');
 
   const offsets: Array<number> = [];
 
@@ -57,7 +61,7 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             r0 - 1,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
-            colors[item[0].type],
+            colors[translateEventType(vocabularies[item[0].kind])] ?? 'teal',
             patisserieType,
           );
         })}

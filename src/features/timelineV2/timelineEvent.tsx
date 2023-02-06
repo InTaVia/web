@@ -3,10 +3,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import type { Event } from '@intavia/api-client/dist/models';
 import { forwardRef, useState } from 'react';
 
+import { useAppSelector } from '@/app/store';
+import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
   type TimelineType,
   getTemporalExtent,
-  TimelineColors as colors,
+  translateEventType,
 } from '@/features/timelineV2/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
@@ -45,6 +47,8 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     diameter = 16,
   } = props;
 
+  const vocabularies = useAppSelector(selectVocabularyEntries);
+
   const [hover, setHover] = useState(false);
 
   const eventExtent = getTemporalExtent([[event]]);
@@ -55,12 +59,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
   const overlapOffset = overlapIndex >= 0 ? overlapIndex * diameterWithStroke : 0;
 
   let posX: number, posY: number;
-  let color = 'teal';
   let className = 'timeline-event';
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  color = colors[event.type] != null ? colors[event.type] : colors['default'];
 
   if (vertical) {
     posX = midOffset + Math.floor(thickness / 2) - overlapOffset;
@@ -101,10 +100,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     className = className + ' hover-animation';
   }
 
-  // TODO use real kind or type of event
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  const eventType = event.kind;
+  const type = translateEventType(vocabularies[event.kind]);
 
   return (
     <>
@@ -130,15 +126,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         }}
       >
         <svg style={{ width: `${width}px`, height: `${height}px` }} width={width} height={height}>
-          <TimelineEventMarker
-            width={width}
-            height={height}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
-            type={eventType}
-            color={color}
-            thickness={thickness}
-          />
+          <TimelineEventMarker width={width} height={height} type={type} thickness={thickness} />
         </svg>
       </div>
       <TimelineLabel

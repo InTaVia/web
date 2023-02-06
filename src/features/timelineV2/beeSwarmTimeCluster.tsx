@@ -6,7 +6,13 @@ import { beeswarm } from 'd3-beeswarm';
 import { scaleTime } from 'd3-scale';
 import { type LegacyRef, forwardRef } from 'react';
 
-import { getTemporalExtent, TimelineColors as colors } from '@/features/timelineV2/timeline';
+import { useAppSelector } from '@/app/store';
+import { selectVocabularyEntries } from '@/app/store/intavia.slice';
+import {
+  getTemporalExtent,
+  TimelineColors as colors,
+  translateEventType,
+} from '@/features/timelineV2/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
 
@@ -30,6 +36,8 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
   const { events, width, vertical, dotRadius = 5 } = props;
 
   const eventsExtent = getTemporalExtent([events]);
+
+  const vocabularies = useAppSelector(selectVocabularyEntries);
 
   const beeScale = scaleTime().domain(eventsExtent).range([0, width]);
 
@@ -85,8 +93,9 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
             <TimelineEventMarker
               width={dotRadius * 2}
               height={dotRadius * 2}
-              type={dot.datum.type}
-              color={colors[dot.datum.type] as string}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
+              type={translateEventType(vocabularies[dot.datum.kind])}
               thickness={1}
             />
           </g>

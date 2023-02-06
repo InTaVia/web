@@ -1,5 +1,6 @@
 import type { Entity, EntityEventRelation } from '@intavia/api-client';
-import { Fragment } from 'react';
+import type { ElementRef } from 'react';
+import { Fragment, useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
@@ -7,6 +8,9 @@ import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import { Timeline } from '@/features/timelineV2/timeline';
+import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
+import { useElementDimensions } from '@/lib/use-element-dimensions';
+import { useElementRef } from '@/lib/use-element-ref';
 
 interface VisualizationProps {
   visualization: Visualization;
@@ -21,6 +25,8 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const eventIds = visualization.eventIds;
   const personIds = visualization.entityIds;
+
+  const [containerElement, setContainerElement] = useElementRef();
 
   const filteredPersons =
     personIds.length > 0
@@ -99,7 +105,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   );
 }; */
 
-  console.log('allEvent', allEvents);
+  // console.log('allEvent', allEvents);
 
   const pickedEvents = Object.fromEntries(
     visPersonsEventIds
@@ -111,7 +117,10 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
       }),
   );
 
-  console.log('pickedEvents', pickedEvents);
+  const rect = useElementDimensions({ element: containerElement });
+
+  const width = rect != null ? rect.width : 50;
+  const height = rect != null ? rect.height : 50;
 
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
@@ -124,17 +133,17 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
           <Timeline
             entities={visPersonsAsObject}
             events={pickedEvents}
-            width={1600}
-            height={500}
+            width={width}
+            height={height}
             amount={100}
             vertical={false}
             thickness={1}
             showLabels={true}
             overlap={false}
-            cluster={false}
+            cluster={true}
             stackEntities={false}
             sortEntities={false}
-            clusterMode="pie"
+            clusterMode="bee"
           />
         );
       /* case 'story-timeline':
@@ -144,5 +153,16 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
     }
   };
 
-  return <Fragment>{generateVisualization(visualization)}</Fragment>;
+  return (
+    <div ref={setContainerElement} className={'h-full w-full'}>
+      <div
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      >
+        {generateVisualization(visualization)}
+      </div>
+    </div>
+  );
 }
