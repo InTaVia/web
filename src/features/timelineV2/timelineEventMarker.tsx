@@ -53,18 +53,29 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
       );
     default:
       return (
-        <rect
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-          ref={ref}
-          x={thickness / 2}
-          y={thickness / 2}
-          width={width - thickness}
-          height={height - thickness}
-          fill={color}
-          stroke="black"
-          strokeWidth={thickness}
-        />
+        <circle
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        ref={ref}
+        cx={width / 2}
+        cy={height / 2}
+        r={(width - thickness) / 2}
+        fill={color}
+        stroke="black"
+        strokeWidth={thickness}
+      />
+        // <rect
+        //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //   //@ts-ignore
+        //   ref={ref}
+        //   x={thickness / 2}
+        //   y={thickness / 2}
+        //   width={width - thickness}
+        //   height={height - thickness}
+        //   fill={color}
+        //   stroke="black"
+        //   strokeWidth={thickness}
+        // />
       );
   }
 });

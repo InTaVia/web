@@ -1,6 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Event } from '@intavia/api-client/dist/models';
+import type { EntityRelationRole, Event } from '@intavia/api-client/dist/models';
 import { forwardRef, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -17,6 +17,7 @@ import { TimelineLabel } from './timelineLabel';
 interface TimelineEventProps {
   id: string;
   event: Event;
+  roles?: Array<EntityRelationRole['id']>;
   vertical?: boolean;
   timeScale: (toBeScaled: Date) => number;
   midOffset: number;
@@ -34,6 +35,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
   const {
     id,
     event,
+    roles = [],
     vertical = false,
     timeScale,
     midOffset,
@@ -100,7 +102,16 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     className = className + ' hover-animation';
   }
 
-  const type = translateEventType(vocabularies[event.kind]);
+  const type = translateEventType(
+    vocabularies[event.kind],
+    roles
+      .map((roleId) => {
+        return vocabularies[roleId];
+      })
+      .filter((entry) => {
+        return entry !== undefined;
+      }),
+  );
 
   return (
     <>

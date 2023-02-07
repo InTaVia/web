@@ -21,11 +21,7 @@ export const TimelineColors: Record<string, string> = {
   default: '#88D18A',
 };
 
-export function translateEventType(i_type: VocabularyEntry | undefined) {
-  if (i_type === undefined) {
-    return i_type;
-  }
-
+function translateType(i_type: VocabularyEntry) {
   switch (getTranslatedLabel(i_type.label)) {
     case 'Birth (crm)':
       return 'birth';
@@ -34,6 +30,30 @@ export function translateEventType(i_type: VocabularyEntry | undefined) {
     default:
       return undefined;
   }
+}
+
+function considerRole(i_roles: Array<VocabularyEntry> | undefined) {
+  const ids =
+    i_roles != null
+      ? i_roles.map((entry: VocabularyEntry) => {
+          return entry.id;
+        })
+      : [];
+  if (ids.includes('aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1yb2xlLzUzODg=')) return 'personplace';
+  else return undefined;
+}
+
+export function translateEventType(
+  i_type: VocabularyEntry | undefined,
+  i_roles: Array<any> | undefined,
+) {
+  let returnValue = i_type != null ? translateType(i_type) : undefined;
+
+  if (returnValue === undefined) {
+    returnValue = considerRole(i_roles);
+  }
+
+  return returnValue;
 }
 
 /* export const replaceSpecialCharacters = (input: string) => {

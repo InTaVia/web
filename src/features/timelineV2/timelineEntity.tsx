@@ -1,8 +1,8 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Entity, Event } from '@intavia/api-client/dist/models';
+import type { Entity, Event, EventEntityRelation } from '@intavia/api-client/dist/models';
 import type { ScaleBand } from 'd3-scale';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 
 import {
   type TimelineType,
@@ -256,6 +256,13 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   timeScaleOffset={timeScale(entityExtent[0])}
                   midOffset={midOffset}
                   event={event}
+                  roles={event?.relations
+                    .filter((rel: EventEntityRelation) => {
+                      return rel.entity === entity.id;
+                    })
+                    .map((rel: EventEntityRelation) => {
+                      return rel.role;
+                    })}
                   entityIndex={index}
                   thickness={thickness}
                   showLabels={showLabels}
