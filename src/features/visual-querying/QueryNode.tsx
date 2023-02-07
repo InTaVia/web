@@ -1,14 +1,13 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
-import type { ConstraintKind } from '@/features/visual-querying/constraints.types';
 import { constraintKindIds } from '@/features/visual-querying/constraints.types';
 import { InnerRingSegment } from '@/features/visual-querying/InnerRingSegment';
 import type { Origin } from '@/features/visual-querying/Origin';
 
 interface QueryNodeProps {
   origin: Origin;
-  selectedConstraint: ConstraintKind | null;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  selectedConstraint: string | null;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function QueryNode(props: QueryNodeProps): JSX.Element {

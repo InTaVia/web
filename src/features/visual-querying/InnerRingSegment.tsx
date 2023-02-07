@@ -18,8 +18,8 @@ interface InnerRingSegmentProps {
   type: ConstraintKind['kind'];
   label: string;
   origin: Origin;
-  selectedConstraint: ConstraintKind | null;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  selectedConstraint: string | null;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
@@ -54,7 +54,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
       visibleOuterRingDims = visibleOuterRingDims.filter(({ constraint }) => {
         return (
           (constraint.value !== null && constraint.value !== '') ||
-          constraint.kind === selectedConstraint?.kind
+          constraint.id === selectedConstraint
         );
       });
     }

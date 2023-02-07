@@ -11,13 +11,13 @@ import { setConstraintValue } from '@/features/visual-querying/visualQuerying.sl
 
 interface ConstraintContainerHeaderProps {
   constraint: Constraint;
-  setSelectedConstraint: (constraint: Constraint | null) => void;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 interface ConstraintContainerProps {
   position: { x: number; y: number };
   constraint: Constraint;
-  setSelectedConstraint: (constraint: Constraint | null) => void;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.Element {

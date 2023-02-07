@@ -87,7 +87,12 @@ export default function CollectionPanelEntry(props: CollectionPanelEntryProps): 
                       {props.entity.kind === 'person'
                         ? props.entity.occupations
                             ?.map((occupationId) => {
-                              return getTranslatedLabel(vocabularyEntriesById[occupationId]!.label);
+                              if (vocabularyEntriesById[occupationId]) {
+                                return getTranslatedLabel(
+                                  vocabularyEntriesById[occupationId].label,
+                                );
+                              }
+                              return `No vocabulary entry for occupation ${occupationId}`;
                             })
                             .join(', ')
                         : ''}

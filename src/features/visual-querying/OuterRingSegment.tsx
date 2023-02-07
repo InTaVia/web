@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import type { Constraint, ConstraintKind } from '@/features/visual-querying/constraints.types';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 import type { RingDims } from '@/features/visual-querying/ringSegmentUtils';
 import {
@@ -12,7 +12,7 @@ interface OuterRingSegmentProps {
   dims: RingDims;
   origin: Origin;
   constraint: Constraint;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
@@ -53,7 +53,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
     <g
       id={`ring-constraint-${constraint.id}`}
       onClick={(event) => {
-        setSelectedConstraint(constraint);
+        setSelectedConstraint(constraint.id);
         event.stopPropagation();
       }}
     >

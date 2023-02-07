@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
-import type { Constraint, ConstraintKind } from '@/features/visual-querying/constraints.types';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
 import { useResizeObserverDeprecated } from '@/lib/useResizeObserver';
@@ -12,7 +12,7 @@ export function VisualQuerying(): JSX.Element {
   const [width, height] = useResizeObserverDeprecated(parent);
   const constraints = useAppSelector(selectConstraints);
 
-  const [selectedConstraint, setSelectedConstraint] = useState<ConstraintKind | null>(null);
+  const [selectedConstraint, setSelectedConstraint] = useState<string | null>(null);
 
   function getContainerPosition(type: Constraint['kind']): { x: number; y: number } {
     const center: [number, number] = [width / 2, height / 2];
@@ -45,7 +45,7 @@ export function VisualQuerying(): JSX.Element {
 
       {Object.values(constraints)
         .filter((constraint: Constraint) => {
-          return constraint.kind === selectedConstraint?.kind;
+          return constraint.id === selectedConstraint;
         })
         .map((constraint, idx) => {
           return (
