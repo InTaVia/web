@@ -1,10 +1,10 @@
+import type { Bin } from '@intavia/api-client';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { useEffect, useRef } from 'react';
 
-import type { Bin } from '@intavia/api-client';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';
 import { useElementRef } from '@/lib/use-element-ref';
@@ -85,7 +85,11 @@ export function Histogram<T extends Date | IsoDateString | number>(
           : extent.map((d: number) => {
               return Math.trunc(xScale.invert(d));
             });
-      onChangeBrushedArea?.(years);
+      onChangeBrushedArea?.(
+        years.map((date: number) => {
+          return new Date(date).getFullYear();
+        }),
+      );
     });
   }, [initialBrushedArea, onChangeBrushedArea, xScale, yScale]);
 
