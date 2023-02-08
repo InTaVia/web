@@ -53,4 +53,4 @@ jobs:
           curl \
             -X POST \
             -H "Authorization: Bearer ${{ secrets.RANCHER_API_TOKEN }}" \
-            'https://rancher.acdh-dev.oeaw.ac.at/v3/project/c-zdbh8:p-wj9db/workloads/deployment:intavia:intavia-web-client?action=redeploy'
+            'https://rancher.acdh-dev.oeaw.ac.at/v3/project/c-m-6hwgqq2g:p-rtbhz/workloads/deployment:intavia:intavia-web-client?action=redeploy'
