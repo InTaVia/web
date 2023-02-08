@@ -1,4 +1,7 @@
-import { useSearchBirthStatisticsQuery } from '@/api/intavia.service';
+import {
+  useSearchBirthStatisticsQuery,
+  useSearchDeathStatisticsQuery,
+} from '@/api/intavia.service';
 import { useAppDispatch } from '@/app/store';
 import type {
   PersonBirthDateConstraint,
@@ -17,7 +20,12 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   const { width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
-  const { data, isLoading } = useSearchBirthStatisticsQuery({});
+  const { data, isLoading } =
+    constraint.id === 'person-birth-date'
+      ? // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSearchBirthStatisticsQuery({})
+      : // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSearchDeathStatisticsQuery({});
 
   const dimensions = {
     x: 0,
