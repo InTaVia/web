@@ -72,7 +72,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
             textAnchor="middle"
             startOffset="50%"
           >
-            {constraint.id}
+            {constraint.label.default}
           </textPath>
         </text>
       ) : (
@@ -83,7 +83,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
               textAnchor="middle"
               startOffset="50%"
             >
-              {constraint.id}
+              {constraint.label.default}
             </textPath>
           </text>
 

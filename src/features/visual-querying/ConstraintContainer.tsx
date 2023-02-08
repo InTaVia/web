@@ -58,7 +58,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
   return (
     <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
       <div className="h-content justify-left flex flex-row items-center gap-2">
-        <p className="ml-3 mr-4 text-lg">{constraint.id}</p>
+        <p className="ml-3 mr-4 text-lg">{constraint.label.default}</p>
         {renderTypeSpecificHeader()}
       </div>
 

@@ -11,7 +11,10 @@
       "name": "Next.js: debug client-side",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000",
+      "sourceMapPathOverrides": {
+        "webpack://_N_E/*": "${workspaceFolder}/*"
+      }
     },
     {
       "name": "Next.js: debug full stack",
@@ -19,6 +22,9 @@
       "request": "launch",
       "command": "npm run dev",
       "console": "integratedTerminal",
+      "sourceMapPathOverrides": {
+        "webpack://_N_E/*": "${workspaceFolder}/*"
+      },
       "serverReadyAction": {
         "pattern": "started server on .+, url: (https?://.+)",
         "uriFormat": "%s",

@@ -1,8 +1,5 @@
+import type { EntityKind, InternationalizedLabel, VocabularyEntry } from '@intavia/api-client';
 import type { Feature } from 'geojson';
-
-import type { EntityKind, Occupation } from '@intavia/api-client';
-
-// FIXME:  we probably also want constraint groups (i.e. the outer rings, which are *not* constraint types)
 
 export interface DateRangeConstraintKind {
   kind: 'date-range';
@@ -42,6 +39,7 @@ export const constraintKindIds: Array<ConstraintKindId> = [
 export interface ConstraintBase {
   id: string;
   entityKinds: Array<EntityKind>;
+  label: InternationalizedLabel;
 }
 
 export interface PersonBirthDateConstraint extends ConstraintBase, DateRangeConstraintKind {
@@ -71,9 +69,17 @@ export interface PersonNameConstraint extends ConstraintBase, LabelConstraintKin
 
 export interface PersonOccupationConstraint
   extends ConstraintBase,
-    VocabularyConstraintKind<Occupation> {
+    VocabularyConstraintKind<VocabularyEntry> {
   id: 'person-occupation';
   entityKinds: ['person'];
+}
+
+// FIXME: We probably also want constraint groups (i.e. the outer rings, which are *not* constraint types)
+// FIXME: Two data structures: constraint list and constraint-by-group dict?
+export interface ContraintGroup {
+  id: string;
+  label: InternationalizedLabel;
+  constraints: Array<Constraint>;
 }
 
 export type Constraint =
