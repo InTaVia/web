@@ -1,3 +1,5 @@
+import type { EntityKind } from '@intavia/api-client';
+
 import type { Plurals } from '@/app/i18n/dictionaries';
 
 export interface Dictionary {
@@ -32,6 +34,17 @@ export interface Dictionary {
       title: string;
     };
     ui: { 'load-data': string; 'import-data': string };
+  };
+  entity: {
+    kind: string;
+    'all-kinds': string;
+    kinds: Record<EntityKind, Plurals>;
+    label: string;
+    gender: Plurals;
+    occupation: Plurals;
+    location: Plurals;
+    'edit-entity': string;
+    'missing-entity': string;
   };
   geomap: {
     metadata: {

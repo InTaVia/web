@@ -1,15 +1,17 @@
-import type { Entity, Person } from '@intavia/api-client';
+import type { Entity, Event, Person } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { assert } from '@stefanprobst/assert';
 
 import type { RootState } from '@/app/store';
+import { unique } from '@/lib/unique';
 
 export interface Visualization {
   id: string;
   type: 'map' | 'story-map' | 'story-timeline' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
-  eventIds: Array<string>;
+  eventIds: Array<Event['id']>;
   properties?: Record<string, VisualizationProperty>;
   visibilities?: Record<string, boolean>;
 }
@@ -172,6 +174,24 @@ const visualizationSlice = createSlice({
         state[visId]!.entityIds.push(person.id);
       }
     },
+    addEntitiesToVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; entities: Array<Entity['id']> }>,
+    ) => {
+      const { visId, entities } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.entityIds = unique([...vis.entityIds, ...entities]);
+    },
+    addEventsToVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; events: Array<Event['id']> }>,
+    ) => {
+      const { visId, events } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.eventIds = unique([...vis.eventIds, ...events]);
+    },
     addEventToVisualization: (state, action) => {
       const event = action.payload.event;
       const visId = action.payload.visId;
@@ -190,6 +210,8 @@ const visualizationSlice = createSlice({
 export const {
   removeVisualization,
   createVisualization,
+  addEntitiesToVisualization,
+  addEventsToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
   editVisualization,

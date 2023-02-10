@@ -129,7 +129,14 @@ export interface LayoutButtonProps {
 
 export default function LayoutButton(props: LayoutButtonProps): JSX.Element {
   return (
-    <Popover buttonClassName="flex gap-1 items-center" panelClassName="z-50" noOverlay={true}>
+    <Popover
+      buttonClassName="flex gap-1 items-center"
+      panelClassName="z-50"
+      noOverlay={true}
+      color="accent"
+      size="small"
+      round="pill"
+    >
       {({ open, placement }) => {
         return (
           <Fragment>

@@ -47,7 +47,7 @@ const initialState: UiState = {
     },
     vas: {
       leftPaneOpen: true,
-      rightPaneOpen: true,
+      rightPaneOpen: false,
     },
     stc: {
       leftPaneOpen: true,
