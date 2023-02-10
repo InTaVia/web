@@ -8,7 +8,7 @@ import type {
 } from '@intavia/api-client/dist/models';
 import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
-import { forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
 import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
@@ -271,7 +271,6 @@ export function Timeline(props: TimelineProps): JSX.Element {
         style={{
           width: `${width}px`,
           height: `${height}px`,
-          border: '1px solid gray',
         }}
         key={`timeline${amount}${vertical}`}
       >
@@ -312,7 +311,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
           );
         })}
       </div>
-      {/* <fieldset style={{ border: '1px solid gray' }}>
+      <fieldset style={{ border: '1px solid gray' }}>
         <legend>Un-Plottable Entities</legend>
         {(Object.values(unPlottableEntities) as Array<Entity>).map((entry: Entity) => {
           return <div key={`${entry.id}unPlottableEntity`}>{entry.label.default}</div>;
@@ -323,7 +322,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
         {(Object.values(unTimeableEvents) as Array<Event>).map((entry: Event) => {
           return <div key={`${entry.id}UnTimeableEvent`}>{entry.label.default}</div>;
         })}
-      </fieldset> */}
+      </fieldset>
     </>
   );
 }

@@ -76,6 +76,7 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
           style={{
             marginLeft: `${marginLeft}px`,
             marginRight: `${marginRight}px`,
+            padding: '0 4px',
             backgroundColor: 'white',
           }}
         >

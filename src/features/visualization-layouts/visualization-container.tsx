@@ -135,7 +135,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         </div>
       </div>
       {visualization !== undefined && (
-        <div className="w-50 h-full overflow-auto bg-slate-500">
+        <div className="w-50 h-full overflow-auto">
           {<VisualisationComponent visualization={visualization} />}
         </div>
       )}
