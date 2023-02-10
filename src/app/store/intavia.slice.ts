@@ -181,6 +181,26 @@ export const slice = createSlice({
       (state, action) => {
         const entities = action.payload.results;
 
+        entities.forEach((entity: Entity) => {
+          const newEntity = { ...entity };
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          if (newEntity.kind === 'Person') {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            newEntity.kind = 'person';
+          }
+          state.entities.upstream.byId[newEntity.id] = newEntity;
+          state.entities.upstream.byKind[newEntity.kind][newEntity.id] = newEntity;
+        });
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.retrieveEntitiesByIds.matchFulfilled,
+      (state, action) => {
+        const entities = action.payload.results;
+
         entities.forEach((entity) => {
           state.entities.upstream.byId[entity.id] = entity;
           state.entities.upstream.byKind[entity.kind][entity.id] = entity;
@@ -189,11 +209,57 @@ export const slice = createSlice({
     );
 
     builder.addMatcher(
+      intaviaApiService.endpoints.retrieveEventsByIds.matchFulfilled,
+      (state, action) => {
+        const events = action.payload.results;
+        events.forEach((event: Event) => {
+          state.events.upstream.byId[event.id] = event;
+        });
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.searchEventKinds.matchFulfilled,
+      (state, action) => {
+        const vocabularies = action.payload.results;
+        for (const vocab of vocabularies) {
+          state.vocabularies.upstream.byVocabularyEntryId[vocab.id] = vocab;
+          if (state.vocabularies.upstream.byVocabularyId['event-kind'] === undefined) {
+            state.vocabularies.upstream.byVocabularyId['event-kind'] = {};
+          }
+          state.vocabularies.upstream.byVocabularyId['event-kind']![vocab.id] = vocab;
+        }
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.searchRelationRoles.matchFulfilled,
+      (state, action) => {
+        const vocabularies = action.payload.results;
+        for (const vocab of vocabularies) {
+          state.vocabularies.upstream.byVocabularyEntryId[vocab.id] = vocab;
+          if (state.vocabularies.upstream.byVocabularyId['role'] === undefined) {
+            state.vocabularies.upstream.byVocabularyId['role'] = {};
+          }
+          state.vocabularies.upstream.byVocabularyId['role']![vocab.id] = vocab;
+        }
+      },
+    );
+
+    builder.addMatcher(
       intaviaApiService.endpoints.getEntityById.matchFulfilled,
       (state, action) => {
         const entity = action.payload;
-        state.entities.upstream.byId[entity.id] = entity;
-        state.entities.upstream.byKind[entity.kind][entity.id] = entity;
+        const newEntity = { ...entity };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        if (newEntity.kind === 'Person') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          newEntity.kind = 'person';
+        }
+        state.entities.upstream.byId[newEntity.id] = newEntity;
+        state.entities.upstream.byKind[newEntity.kind][newEntity.id] = newEntity;
       },
     );
   },

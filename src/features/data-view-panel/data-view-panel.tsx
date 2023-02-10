@@ -1,3 +1,4 @@
+import type { Person } from '@intavia/api-client';
 import { Box, List, ListItem, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
@@ -5,23 +6,28 @@ import TextField from '@mui/material/TextField';
 import type { ChangeEvent } from 'react';
 import { Fragment, useState } from 'react';
 
-import type { Person } from '@intavia/api-client';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
 import { addPersonToVisualization } from '@/features/common/visualization.slice';
 import CollectionPanelEntry from '@/features/entities/collection-panel-entry';
+import { useRetrieveEventsForCollection } from '@/features/entities/useRetrieveEventsForCollection';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
 export function CollectionEntitiesList(): JSX.Element {
   const _collections = useAppSelector(selectCollections);
   const collections = Object.values(_collections);
   const [selected, setSelected] = useState<Collection['id']>('');
-  const collection = selected.length === 0 ? null : _collections[selected];
+  const collection = selected.length !== 0 ? _collections[selected] : null;
+  const _entities = useAppSelector(selectEntities);
+
+  const { isLoading } = useRetrieveEventsForCollection(selected);
 
   function onSelectionChange(event: ChangeEvent<HTMLInputElement>) {
-    setSelected(event.target.value);
+    const newCollectionID = event.target.value;
+
+    setSelected(newCollectionID);
   }
 
   if (collections.length === 0) {
@@ -54,7 +60,7 @@ export function CollectionEntitiesList(): JSX.Element {
             borderTopColor: '#eee',
           }}
         >
-          <CollectionEntities collection={collection} />
+          <CollectionEntities collection={collection} isEventsLoading={isLoading} />
         </Box>
       ) : null}
     </Fragment>
@@ -63,10 +69,11 @@ export function CollectionEntitiesList(): JSX.Element {
 
 interface CollectionEntitiesProps {
   collection: Collection;
+  isEventsLoading?: boolean;
 }
 
 function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
-  const { collection } = props;
+  const { collection, isEventsLoading = false } = props;
   const dispatch = useAppDispatch();
   const workspaces = useAppSelector(selectAllWorkspaces);
   const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
@@ -99,7 +106,12 @@ function CollectionEntities(props: CollectionEntitiesProps): JSX.Element {
 
           return (
             <ListItem key={entity.id} sx={{ paddingBlock: 2 }}>
-              <CollectionPanelEntry entity={entity} draggable mini />
+              <CollectionPanelEntry
+                entity={entity}
+                isEventsLoading={isEventsLoading}
+                draggable
+                mini
+              />
             </ListItem>
           );
         })}

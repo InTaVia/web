@@ -17,6 +17,10 @@ import {
 import Button from '@/features/ui/Button';
 import VisualisationComponent from '@/features/visualization-layouts/visualization';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
+import {
+  selectAllWorkspaces,
+  switchVisualizationsInWorkspace,
+} from '@/features/visualization-layouts/workspaces.slice';
 
 interface VisualisationContainerProps {
   visualizationSlot: SlotId;
@@ -41,6 +45,8 @@ export default function VisualisationContainer(props: VisualisationContainerProp
   } = props;
 
   const dispatch = useAppDispatch();
+
+  const workspaces = useAppSelector(selectAllWorkspaces);
 
   const allVisualizations = useAppSelector(selectAllVisualizations);
 
@@ -92,6 +98,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   function onDrop(event: DragEvent<HTMLDivElement>) {
     const data = event.dataTransfer.getData(mediaType);
+    console.log(event);
 
     try {
       const payload: DataTransferData = JSON.parse(data);
@@ -105,10 +112,26 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         // }
         case 'data': {
           const { entities, events } = payload;
+          console.log({ entities, events });
           dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
           dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
           // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
           // dispatch(addEventsToVisualisation({ events, id: content.id }));
+          break;
+        }
+        case 'visualization': {
+          // onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
+          const { sourceSlot, sourceVis } = payload;
+          console.log(visualizationSlot, visualization!.id, sourceSlot, sourceVis);
+          dispatch(
+            switchVisualizationsInWorkspace({
+              targetSlot: visualizationSlot,
+              targetVis: sourceVis,
+              sourceSlot,
+              sourceVis: visualization!.id,
+              workspace: workspaces.currentWorkspace,
+            }),
+          );
           break;
         }
         // case 'layout': {
@@ -126,7 +149,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   return (
     <div
-      className="grid h-full w-full cursor-grabbing grid-rows-[29px_1fr]"
+      className="grid h-full w-full cursor-grabbing grid-cols-[100%] grid-rows-[29px_1fr]"
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
@@ -134,15 +157,21 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
-          return event.dataTransfer.setData(
-            'Text',
-            JSON.stringify({
-              type: 'visualization',
-              props: visualization,
-              parent: visualizationSlot,
-              content: '',
-            }),
-          );
+          const data: DataTransferData = {
+            type: 'visualization',
+            sourceSlot: visualizationSlot,
+            sourceVis: visualization.id,
+          };
+          event.dataTransfer.setData(mediaType, JSON.stringify(data));
+          // return event.dataTransfer.setData(
+          //   'Text',
+          //   JSON.stringify({
+          //     type: 'visualization',
+          //     props: visualization,
+          //     parent: visualizationSlot,
+          //     content: '',
+          //   }),
+          // );
         }}
       >
         <div className="truncate">{name}</div>
@@ -176,7 +205,9 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         </div>
       </div>
       {visualization !== undefined && (
-        <div>{<VisualisationComponent visualization={visualization} />}</div>
+        <div className="w-50 h-full overflow-auto">
+          {<VisualisationComponent visualization={visualization} />}
+        </div>
       )}
     </div>
   );

@@ -1,4 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
+
+import type { Visualization } from '@/features/common/visualization.slice';
+import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 // import type { LayoutGridItemId } from '@/features/common/layout.config';
 // import type {
 //   SlideContent,
@@ -29,7 +32,13 @@ interface DataDataTransferData {
 //   source: LayoutGridItemId;
 // }
 
-export type DataTransferData = DataDataTransferData;
+interface VisualizationDataTransferData {
+  type: 'visualization';
+  sourceSlot: SlotId;
+  sourceVis: Visualization['id'] | null;
+}
+
+export type DataTransferData = DataDataTransferData | VisualizationDataTransferData;
 // | ContentContentContentDataTransferData
 // | ContentDataTransferData
 // | DataDataTransferData
