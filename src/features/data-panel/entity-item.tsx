@@ -97,7 +97,8 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
                               <p>{getTranslatedLabel(event.label, locale)}</p>
                               <div className="text-xs text-neutral-500">
                                 {[
-                                  vocabularies[event.kind] != null
+                                  vocabularies[event.kind] != null &&
+                                  'label' in vocabularies[event.kind]
                                     ? getTranslatedLabel(vocabularies[event.kind].label)
                                     : null,
                                   // [event.startDate, event.endDate].filter(Boolean).join(' - '),
