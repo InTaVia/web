@@ -189,6 +189,44 @@ export const slice = createSlice({
     );
 
     builder.addMatcher(
+      intaviaApiService.endpoints.retrieveEventsByIds.matchFulfilled,
+      (state, action) => {
+        const events = action.payload.results;
+        events.forEach((event: Event) => {
+          state.events.upstream.byId[event.id] = event;
+        });
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.searchEventKinds.matchFulfilled,
+      (state, action) => {
+        const vocabularies = action.payload.results;
+        for (const vocab of vocabularies) {
+          state.vocabularies.upstream.byVocabularyEntryId[vocab.id] = vocab;
+          if (state.vocabularies.upstream.byVocabularyId['event-kind'] === undefined) {
+            state.vocabularies.upstream.byVocabularyId['event-kind'] = {};
+          }
+          state.vocabularies.upstream.byVocabularyId['event-kind']![vocab.id] = vocab;
+        }
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.searchRelationRoles.matchFulfilled,
+      (state, action) => {
+        const vocabularies = action.payload.results;
+        for (const vocab of vocabularies) {
+          state.vocabularies.upstream.byVocabularyEntryId[vocab.id] = vocab;
+          if (state.vocabularies.upstream.byVocabularyId['role'] === undefined) {
+            state.vocabularies.upstream.byVocabularyId['role'] = {};
+          }
+          state.vocabularies.upstream.byVocabularyId['role']![vocab.id] = vocab;
+        }
+      },
+    );
+
+    builder.addMatcher(
       intaviaApiService.endpoints.getEntityById.matchFulfilled,
       (state, action) => {
         const entity = action.payload;
