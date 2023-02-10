@@ -85,7 +85,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   return (
     <div
-      className="grid h-full w-full cursor-grabbing grid-rows-[29px_1fr]"
+      className="grid h-full w-full cursor-grabbing grid-cols-[100%] grid-rows-[29px_1fr]"
       onDrop={drop}
       onDragOver={allowDrop}
     >
@@ -135,7 +135,9 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         </div>
       </div>
       {visualization !== undefined && (
-        <div>{<VisualisationComponent visualization={visualization} />}</div>
+        <div className="w-50 h-full overflow-auto">
+          {<VisualisationComponent visualization={visualization} />}
+        </div>
       )}
     </div>
   );
