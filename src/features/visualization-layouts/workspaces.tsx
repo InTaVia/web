@@ -12,7 +12,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import Button from '@/features/ui/Button';
-import { EditableText } from '@/features/ui/editable-text';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
 import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 import {

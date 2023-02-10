@@ -36,6 +36,26 @@ export const dictionary: Dictionary = {
     },
     ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' },
   },
+  entity: {
+    kind: 'Entity type',
+    'all-kinds': 'All entity kinds',
+    kinds: {
+      'cultural-heritage-object': {
+        one: 'Cultural heritage object',
+        other: 'Cultural heritage objects',
+      },
+      group: { one: 'Group or institution', other: 'Groups or institutions' },
+      'historical-event': { one: 'Historical event', other: 'Historical events' },
+      person: { one: 'Person', other: 'Persons' },
+      place: { one: 'Place', other: 'Places' },
+    },
+    label: 'Label',
+    gender: { one: 'Gender', other: 'Genders' },
+    occupation: { one: 'Occupation', other: 'Occupations' },
+    location: { one: 'Location', other: 'Locations' },
+    'edit-entity': 'Edit {{kind}}',
+    'missing-entity': 'Missing entity',
+  },
   geomap: {
     metadata: {
       title: 'Map',

@@ -4,8 +4,12 @@ import type { Event, Person } from '@intavia/api-client';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { DataTransferData } from '@/features/common/data-transfer.types';
+import { type as mediaType } from '@/features/common/data-transfer.types';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
+  addEntitiesToVisualization,
+  addEventsToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
   selectAllVisualizations,
@@ -58,36 +62,73 @@ export default function VisualisationContainer(props: VisualisationContainerProp
     }
   }
 
-  const allowDrop = (event: DragEvent) => {
-    event.preventDefault();
-  };
-
-  const drop = (event: DragEvent) => {
-    event.preventDefault();
-    const data = JSON.parse(event.dataTransfer.getData('Text'));
-
-    switch (data.type) {
-      case 'visualization':
-        onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
-        break;
-      case 'Person':
-        dispatch(
-          addPersonToVisualization({ visId: visualization!.id, person: data.props as Person }),
-        );
-        break;
-      case 'Event':
-        dispatch(addEventToVisualization({ visId: visualization!.id, event: data.props as Event }));
-        break;
-      default:
-        break;
+  function onDragOver(event: DragEvent<HTMLDivElement>) {
+    if (event.dataTransfer.types.includes(mediaType)) {
+      /** Allow drop events. */
+      event.preventDefault();
     }
-  };
+  }
+
+  // function onDrop(event: DragEvent) {
+  //   event.preventDefault();
+  //   const data = JSON.parse(event.dataTransfer.getData('Text'));
+
+  //   switch (data.type) {
+  //     case 'visualization':
+  //       onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
+  //       break;
+  //     case 'Person':
+  //       dispatch(
+  //         addPersonToVisualization({ visId: visualization!.id, person: data.props as Person }),
+  //       );
+  //       break;
+  //     case 'Event':
+  //       dispatch(addEventToVisualization({ visId: visualization!.id, event: data.props as Event }));
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
+  function onDrop(event: DragEvent<HTMLDivElement>) {
+    const data = event.dataTransfer.getData(mediaType);
+
+    try {
+      const payload: DataTransferData = JSON.parse(data);
+
+      switch (payload.type) {
+        // case 'content': {
+        //   break;
+        // }
+        // case 'content-item': {
+        //   break;
+        // }
+        case 'data': {
+          const { entities, events } = payload;
+          dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
+          dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
+          // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
+          // dispatch(addEventsToVisualisation({ events, id: content.id }));
+          break;
+        }
+        // case 'layout': {
+        //   const { source } = payload;
+        //   dispatch(switchWorkspaceContent({ id, items: [source, item] }));
+        //   break;
+        // }
+      }
+    } catch {
+      /** Ignore invalid json. */
+    }
+
+    event.preventDefault();
+  }
 
   return (
     <div
       className="grid h-full w-full cursor-grabbing grid-rows-[29px_1fr]"
-      onDrop={drop}
-      onDragOver={allowDrop}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
     >
       <div
         className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"

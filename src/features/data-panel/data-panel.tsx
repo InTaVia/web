@@ -11,7 +11,7 @@ export function DataPanel(): JSX.Element {
   ];
 
   return (
-    <Tab.Group>
+    <Tab.Group as="div" className="grid h-full grid-rows-[auto_1fr] bg-gray-100">
       <Tab.List className="flex w-full" as="div">
         {tabs.map((tab) => {
           return (
@@ -31,9 +31,17 @@ export function DataPanel(): JSX.Element {
           );
         })}
       </Tab.List>
-      <Tab.Panels>
+      <Tab.Panels as="div" className="h-full overflow-hidden">
         {tabs.map((tab) => {
-          return <Tab.Panel key={`tab-panel-${tab.label}`}>{tab.panel}</Tab.Panel>;
+          return (
+            <Tab.Panel
+              key={`tab-panel-${tab.label}`}
+              as="div"
+              className="flex h-full flex-col gap-1"
+            >
+              {tab.panel}
+            </Tab.Panel>
+          );
         })}
       </Tab.Panels>
     </Tab.Group>
