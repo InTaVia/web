@@ -28,7 +28,7 @@ export function GroupItem(props: GroupItemProps): JSX.Element {
                   <span className="text-sm font-medium text-slate-900">{group.label}</span>
                 </div>
                 <ChevronUpIcon
-                  className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-slate-500`}
+                  className={`${open ? '' : 'rotate-180 transform'} h-5 w-5 text-slate-500`}
                 />
               </Disclosure.Button>
               <Disclosure.Panel>{group.children}</Disclosure.Panel>
