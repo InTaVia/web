@@ -15,7 +15,7 @@ export interface Visualization {
 }
 
 export interface VisualizationProperty {
-  type: 'entitiesAndEvents' | 'select' | 'text';
+  type: 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text';
   id: string;
   label: string;
   value?: any;
@@ -136,7 +136,7 @@ const visualizationSlice = createSlice({
             eventIds: [],
           };
           break;
-        case 'story-timeline':
+        /* case 'story-timeline':
           state[vis['id']] = {
             ...vis,
             properties: {
@@ -159,7 +159,105 @@ const visualizationSlice = createSlice({
             entityIds: [],
             eventIds: [],
           };
+          break; */
+        case 'story-timeline': {
+          state[vis['id']] = {
+            ...vis,
+            properties: {
+              /*  entities: {
+                type: 'entitiesAndEvents',
+                id: 'entities',
+                label: 'Entities',
+                editable: true,
+                sort: 4,
+              }, */
+              name: {
+                type: 'text',
+                id: 'name',
+                value: '',
+                label: 'Name',
+                editable: true,
+                sort: 1,
+              },
+              sort: {
+                type: 'boolean',
+                id: 'sort',
+                value: false,
+                editable: true,
+                sort: 2,
+                label: 'Sort Entities',
+              },
+              cluster: {
+                type: 'boolean',
+                id: 'cluster',
+                value: false,
+                editable: true,
+                sort: 3,
+                label: 'Cluster',
+              },
+              showLabels: {
+                type: 'boolean',
+                id: 'showLabels',
+                value: false,
+                editable: true,
+                sort: 5,
+                label: 'Show Labels',
+              },
+              vertical: {
+                type: 'boolean',
+                id: 'vertical',
+                value: false,
+                editable: true,
+                sort: 6,
+                label: 'Vertical',
+              },
+              stackEntities: {
+                type: 'boolean',
+                id: 'stackEntities',
+                value: false,
+                editable: true,
+                sort: 7,
+                label: 'Stack Entities',
+              },
+              thickness: {
+                type: 'number',
+                id: 'thickness',
+                value: 1,
+                editable: true,
+                sort: 8,
+                label: 'Thickness',
+              },
+              clusterMode: {
+                type: 'select',
+                id: 'clusterMode',
+                label: 'Cluster Style',
+                sort: 4,
+                value: {
+                  name: 'Pie',
+                  value: 'pie',
+                },
+                options: [
+                  {
+                    name: 'Pie',
+                    value: 'pie',
+                  },
+                  {
+                    name: 'Donut',
+                    value: 'donut',
+                  },
+                  {
+                    name: 'Bee',
+                    value: 'bee',
+                  },
+                ],
+                editable: true,
+              },
+            },
+            entityIds: [],
+            eventIds: [],
+          };
           break;
+        }
         default:
           break;
       }

@@ -85,7 +85,7 @@ interface TimelineProps {
   events: Record<string, Event>;
   width: number;
   height: number;
-  amount: number;
+  amount?: number;
   vertical: boolean;
   thickness: number;
   showLabels: boolean;
@@ -104,7 +104,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     events,
     width = 600,
     height = 300,
-    amount = 100,
+    amount = null,
     vertical = false,
     thickness = 1,
     showLabels = true,
@@ -127,7 +127,9 @@ export function Timeline(props: TimelineProps): JSX.Element {
     const tmpUnPlottableEntities = {} as Record<string, Entity>;
     const tmpUnTimeableEvents = {} as Record<string, Event>;
     const tmpPlotableEvents = {};
-    const tmpSlicedData = Object.fromEntries(Object.entries(entities).slice(0, amount));
+    const tmpEntries =
+      amount != null ? Object.entries(entities).slice(0, amount) : Object.entries(entities);
+    const tmpSlicedData = Object.fromEntries(tmpEntries);
     const tmpFilteredData = Object.fromEntries(
       Object.entries(tmpSlicedData).filter((keyValue) => {
         const entry = keyValue[1] as Entity;

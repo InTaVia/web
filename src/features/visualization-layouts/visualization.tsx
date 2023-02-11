@@ -8,6 +8,7 @@ import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import { Timeline } from '@/features/timelineV2/timeline';
+import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
@@ -130,20 +131,12 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
       case 'story-timeline':
         return (
-          <Timeline
+          <TimelineComponent
             entities={visPersonsAsObject}
             events={pickedEvents}
             width={width}
             height={height}
-            amount={100}
-            vertical={false}
-            thickness={1}
-            showLabels={true}
-            overlap={false}
-            cluster={true}
-            stackEntities={false}
-            sortEntities={false}
-            clusterMode="bee"
+            properties={visualization.properties}
           />
         );
       /* case 'story-timeline':

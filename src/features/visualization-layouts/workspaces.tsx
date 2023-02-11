@@ -81,7 +81,7 @@ export default function Workspaces(): JSX.Element {
         onChange={onChangeWorkspace}
         defaultIndex={0}
       >
-        <Tab.Panels className="h-full w-full grow bg-indigo-300">
+        <Tab.Panels className="h-full w-full grow">
           {workspaces.workspaces.map((workspace, idx) => {
             return (
               <Tab.Panel key={idx} className="h-full w-full p-0">

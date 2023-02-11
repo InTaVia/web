@@ -36,7 +36,7 @@ export default function AnalysePage(): JSX.Element {
         <DisclosureWrapper title="Search History" defaultOpen={true}></DisclosureWrapper>
       </Allotment.Pane>
       <Allotment.Pane {...centerPaneProps}>
-        <div className="flex h-full w-full flex-col bg-red-100">
+        <div className="flex h-full w-full flex-col">
           <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
           <Workspaces />
         </div>
