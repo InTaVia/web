@@ -8,7 +8,7 @@ import { unique } from '@/lib/unique';
 
 export interface Visualization {
   id: string;
-  type: 'map' | 'story-map' | 'story-timeline' | 'timeline';
+  type: 'map' | 'timeline' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
   eventIds: Array<Event['id']>;
@@ -93,7 +93,7 @@ const visualizationSlice = createSlice({
       const vis = action.payload;
 
       switch (vis.type) {
-        case 'story-map':
+        case 'map':
           state[vis['id']] = {
             ...vis,
             properties: {
@@ -138,31 +138,7 @@ const visualizationSlice = createSlice({
             eventIds: [],
           };
           break;
-        /* case 'story-timeline':
-          state[vis['id']] = {
-            ...vis,
-            properties: {
-              entities: {
-                type: 'entitiesAndEvents',
-                id: 'entities',
-                label: 'Entities',
-                editable: true,
-                sort: 3,
-              },
-              name: {
-                type: 'text',
-                id: 'name',
-                value: '',
-                label: 'Name',
-                editable: true,
-                sort: 1,
-              },
-            },
-            entityIds: [],
-            eventIds: [],
-          };
-          break; */
-        case 'story-timeline': {
+        case 'timeline': {
           state[vis['id']] = {
             ...vis,
             properties: {
@@ -206,12 +182,29 @@ const visualizationSlice = createSlice({
                 label: 'Show Labels',
               },
               vertical: {
-                type: 'boolean',
+                type: 'select',
                 id: 'vertical',
-                value: false,
-                editable: true,
+                label: 'Orientation',
                 sort: 6,
-                label: 'Vertical',
+                value: {
+                  name: 'Automatic',
+                  value: undefined,
+                },
+                options: [
+                  {
+                    name: 'Automatic',
+                    value: undefined,
+                  },
+                  {
+                    name: 'Vertical',
+                    value: true,
+                  },
+                  {
+                    name: 'Horizontal',
+                    value: false,
+                  },
+                ],
+                editable: true,
               },
               stackEntities: {
                 type: 'boolean',

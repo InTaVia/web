@@ -1,15 +1,11 @@
 import type { Entity, EntityEventRelation } from '@intavia/api-client';
-import type { ElementRef } from 'react';
-import { Fragment, useRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { StoryMapComponent } from '@/features/storycreator/StoryMap';
-import { Timeline } from '@/features/timelineV2/timeline';
 import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
-import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
 
@@ -126,10 +122,8 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
-        return <StoryMapComponent properties={visualization.properties} events={visEvents} />; //GeoMap
-      case 'story-map':
         return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
-      case 'story-timeline':
+      case 'timeline':
         return (
           <TimelineComponent
             entities={visPersonsAsObject}
@@ -139,8 +133,6 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
             properties={visualization.properties}
           />
         );
-      /* case 'story-timeline':
-        return <StoryTimeline persons={visPersons} events={visEvents} />; */
       default:
         return <div>{`Wrong type of visualization ${visualization.type}!`}</div>;
     }

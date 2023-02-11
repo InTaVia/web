@@ -15,12 +15,12 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const { events, entities, properties = {}, width = 0, height = 0 } = props;
 
   const sortEntities = properties['sort']?.value ?? false;
-  const clusterMode = properties['clusterMode']?.value ?? 'pie';
+  const clusterMode = properties['clusterMode']?.value.value ?? 'pie';
   const cluster = properties['cluster']?.value ?? false;
   const stackEntities = properties['stackEntities']?.value ?? false;
   const showLabels = properties['showLabels']?.value ?? false;
   const thickness = properties['thickness']?.value ?? 1;
-  const vertical = properties['vertical']?.value ?? false;
+  const vertical = properties['vertical']?.value.value ?? false;
 
   return (
     <Timeline

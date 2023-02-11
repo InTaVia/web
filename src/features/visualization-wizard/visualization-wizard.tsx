@@ -31,89 +31,33 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     return visId;
   }
 
-  /* function onAddVisualization() {
-    if (slide !== undefined) {
-      dispatch(
-        setVisualizationForVisualizationSlotForStorySlide({
-          slide: slide,
-          visualizationSlot: visualizationSlot,
-          visualizationId: visId,
-        }),
-      );
-    } else {
-      dispatch(
-        setVisualizationForVisualizationSlotForCurrentWorkspace({
-          visualizationSlot: visualizationSlot,
-          visualizationId: visId,
-        }),
-      );
-    }
-  } */
-
   function onButtonClick(type: Visualization['type']) {
     const visId = createVis(type);
-    console.log(visId);
     onAddVisualization(visualizationSlot, visId);
   }
 
   return (
     <div className="flex h-full w-full items-center justify-center p-5">
       <div className="grid grid-cols-2 gap-2">
-        {/* <Button
+        <Button
           round="round"
           color="accent"
           onClick={() => {
             onButtonClick('map');
           }}
         >
-          Map
-        </Button> */}
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('story-map');
-          }}
-        >
           Create Map Visualization
         </Button>
-        {/* <Button
+        <Button
           round="round"
           color="accent"
           onClick={() => {
             onButtonClick('timeline');
           }}
         >
-          Timeline
-        </Button> */}
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('story-timeline');
-          }}
-        >
           Create Timeline Visualization
         </Button>
-        {/* <Button round="round" color="accent">
-          Set
-        </Button>
-        <Button round="round" color="accent">
-          Hierarchy
-        </Button> */}
       </div>
     </div>
   );
-}
-
-{
-  /* <Button
-      size="small"
-      color="warning"
-      round="round"
-      onClick={onAddVisualization}
-      className="ml-auto self-end"
-    >
-      Add Visualization
-    </Button> */
 }

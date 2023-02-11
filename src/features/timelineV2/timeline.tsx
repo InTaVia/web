@@ -86,7 +86,7 @@ interface TimelineProps {
   width: number;
   height: number;
   amount?: number;
-  vertical: boolean;
+  vertical?: boolean;
   thickness: number;
   showLabels: boolean;
   overlap: boolean;
@@ -105,7 +105,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     width = 600,
     height = 300,
     amount = null,
-    vertical = false,
+    vertical: i_vertical,
     thickness = 1,
     showLabels = true,
     overlap = false,
@@ -122,6 +122,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
   const [filteredData, setFilteredData] = useState({});
   const [unPlottableEntities, setUnPlottableEntities] = useState({});
   const [plotableEvents, setPlotableEvents] = useState({});
+
+  const vertical = i_vertical == null ? (height > width ? true : false) : i_vertical;
 
   useEffect(() => {
     const tmpUnPlottableEntities = {} as Record<string, Entity>;
