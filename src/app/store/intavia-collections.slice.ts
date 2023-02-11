@@ -125,3 +125,7 @@ export function selectCollections(state: RootState) {
 export function selectCollectionById(state: RootState, id: Collection['id']) {
   return state.collections.collections.byId[id];
 }
+
+export function selectCollectionsCount(state: RootState) {
+  return Object.keys(state.collections.collections.byId).length;
+}

@@ -197,6 +197,18 @@ export const slice = createSlice({
     );
 
     builder.addMatcher(
+      intaviaApiService.endpoints.retrieveEntitiesByIds.matchFulfilled,
+      (state, action) => {
+        const entities = action.payload.results;
+
+        entities.forEach((entity) => {
+          state.entities.upstream.byId[entity.id] = entity;
+          state.entities.upstream.byKind[entity.kind][entity.id] = entity;
+        });
+      },
+    );
+
+    builder.addMatcher(
       intaviaApiService.endpoints.retrieveEventsByIds.matchFulfilled,
       (state, action) => {
         const events = action.payload.results;
