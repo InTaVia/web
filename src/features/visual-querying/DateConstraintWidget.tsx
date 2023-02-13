@@ -1,6 +1,3 @@
-import type { Bin } from '@intavia/api-client';
-import { useEffect, useState } from 'react';
-
 import {
   useSearchBirthStatisticsQuery,
   useSearchDeathStatisticsQuery,
@@ -23,55 +20,12 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   const { width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
-  const [histData, setHistData] = useState<Array<Bin<Date | IsoDateString | number>> | null>(null);
-
   const { data, isLoading } =
     constraint.id === 'person-birth-date'
       ? // eslint-disable-next-line react-hooks/rules-of-hooks
         useSearchBirthStatisticsQuery({ bins: 1600 })
       : // eslint-disable-next-line react-hooks/rules-of-hooks
-        useSearchDeathStatisticsQuery({});
-
-  useEffect(() => {
-    if (!data) return;
-
-    // Process data
-    const desiredNumBins = 200;
-    const bins = data.bins;
-
-    if (desiredNumBins > bins.length) {
-      setHistData(data.bins);
-      return;
-    }
-
-    const summarizationFactor = bins.length / desiredNumBins;
-
-    const processedData: Array<Bin<Date | IsoDateString | number>> = [];
-
-    for (let i = 0; i < desiredNumBins; i++) {
-      const clippedData = bins.slice(
-        i * summarizationFactor,
-        i * summarizationFactor + summarizationFactor,
-      );
-      const cumCount = clippedData
-        .map((d) => {
-          return d.count;
-        })
-        .reduce((sum, num) => {
-          return sum + num;
-        });
-      const firstValue = clippedData[0]!.values[0];
-      const lastValue = clippedData[clippedData.length - 1]!.values[1];
-
-      processedData.push({
-        label: `${firstValue} - ${lastValue}`,
-        count: cumCount,
-        values: [firstValue, lastValue],
-      });
-    }
-
-    setHistData(processedData);
-  }, [data]);
+        useSearchDeathStatisticsQuery({ bins: 1600 });
 
   const dimensions = {
     x: 0,
@@ -98,10 +52,10 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
       return <p>Loading ...</p>;
     }
 
-    if (histData) {
+    if (data) {
       return (
         <Histogram
-          data={histData}
+          rawData={data.bins}
           initialBrushedArea={constraint.value}
           onChangeBrushedArea={setBrushedArea}
         />

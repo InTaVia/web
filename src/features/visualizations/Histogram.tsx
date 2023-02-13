@@ -10,7 +10,7 @@ import { VisualizationRoot } from '@/features/visualizations/visualization-root'
 import { useElementRef } from '@/lib/use-element-ref';
 
 export interface HistogramProps<T extends Date | IsoDateString | number> {
-  data: Array<Bin<T>>;
+  rawData: Array<Bin<T>>;
   initialBrushedArea?: [number, number] | null;
   onChangeBrushedArea?: (area: [number, number]) => void;
 }
@@ -18,13 +18,15 @@ export interface HistogramProps<T extends Date | IsoDateString | number> {
 export function Histogram<T extends Date | IsoDateString | number>(
   props: HistogramProps<T>,
 ): JSX.Element {
-  const { data, initialBrushedArea, onChangeBrushedArea } = props;
+  const { rawData, initialBrushedArea, onChangeBrushedArea } = props;
 
   const [containerElement, setContainerElement] = useElementRef();
   const dimensions = useVisualisationDimensions({ element: containerElement });
   const ref = useRef<SVGGElement>(null);
 
-  const thresholds = data.map((d) => {
+  const histData = computeBins(rawData, 200);
+
+  const thresholds = histData.map((d) => {
     return new Date(d.values[0]).getTime();
   });
   const binSize = thresholds[1]! - thresholds[0]!;
@@ -37,7 +39,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
     .domain([
       0,
       Math.max(
-        ...data.map((d) => {
+        ...histData.map((d) => {
           return d.count;
         }),
       ),
@@ -105,7 +107,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
   return (
     <VisualizationRoot ref={setContainerElement} dimensions={dimensions}>
       <g ref={ref}>
-        {data.map((bin, index) => {
+        {histData.map((bin, index) => {
           const x = xScale(thresholds[index]!);
           const w = xScale(thresholds[index]! + binSize) - x;
           const y = yScale(bin.count);
@@ -120,4 +122,37 @@ export function Histogram<T extends Date | IsoDateString | number>(
       </g>
     </VisualizationRoot>
   );
+}
+
+function computeBins(
+  rawData: Array<Bin<Date | IsoDateString | number>>,
+  numBins: number,
+): Array<Bin<Date | IsoDateString | number>> {
+  if (numBins > rawData.length) return rawData;
+  const summarizationFactor = rawData.length / numBins;
+  const bins: Array<Bin<Date | IsoDateString | number>> = [];
+
+  for (let i = 0; i < numBins; i++) {
+    const clippedData = rawData.slice(
+      i * summarizationFactor,
+      i * summarizationFactor + summarizationFactor,
+    );
+    const cumCount = clippedData
+      .map((d) => {
+        return d.count;
+      })
+      .reduce((sum, num) => {
+        return sum + num;
+      });
+    const firstValue = clippedData[0]!.values[0];
+    const lastValue = clippedData[clippedData.length - 1]!.values[1];
+
+    bins.push({
+      label: `${firstValue} - ${lastValue}`,
+      count: cumCount,
+      values: [firstValue, lastValue],
+    });
+  }
+
+  return bins;
 }
