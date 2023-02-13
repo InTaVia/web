@@ -63,7 +63,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
   function onChangeHover(features) {
     return;
-    console.log(features);
+    // console.log(features);
   }
 
   function onToggleSelection(ids) {

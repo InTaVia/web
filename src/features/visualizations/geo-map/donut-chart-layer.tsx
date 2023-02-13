@@ -79,7 +79,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
     };
   }, [id, map]);
 
-  console.log(colors);
+  // console.log(colors);
 
   return (
     <Fragment>

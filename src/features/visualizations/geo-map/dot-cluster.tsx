@@ -70,7 +70,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
     if (source.type === 'geojson') {
       source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
         if (error != null) {
-          console.log('getClusterLeaves', error);
+          // console.log('getClusterLeaves', error);
           return;
         }
 

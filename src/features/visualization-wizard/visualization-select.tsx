@@ -13,7 +13,6 @@ export function VisualizationSelect(props: VisualizationSelectProps): JSX.Elemen
   const { options, selectedVisualizationId, setSelectedVisualizationId } = props;
   if (selectedVisualizationId == null) {
     const initalOption = Object.values(options)[0]!;
-    console.log(initalOption);
     setSelectedVisualizationId(initalOption.id);
     return <></>;
   }

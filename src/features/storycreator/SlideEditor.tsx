@@ -66,7 +66,7 @@ export function SlideEditor(props: SlideEditorProps) {
     return currSlide.id === slide.id;
   })[0];
   const highlighted = currentSlide!.highlighted;
-  console.log(highlighted);
+  // console.log(highlighted);
 
   const handleClose = () => {
     setEditElement(null);

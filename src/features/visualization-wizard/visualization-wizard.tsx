@@ -47,7 +47,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
   }
 
   function onLoadVisualization() {
-    console.log('load', selectedVisualizationId, 'into', visualizationSlot);
+    // console.log('load', selectedVisualizationId, 'into', visualizationSlot);
     onAddVisualization(visualizationSlot, selectedVisualizationId);
   }
 
