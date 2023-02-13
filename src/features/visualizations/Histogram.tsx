@@ -89,45 +89,41 @@ export function Histogram<T extends Date | IsoDateString | number>(
           : extent.map((d: number) => {
               return Math.trunc(xScale.invert(d));
             });
-      onChangeBrushedArea?.(
-        years.map((date: number) => {
-          return new Date(date).getFullYear();
-        }),
-      );
+      onChangeBrushedArea?.(years);
     });
   }, [initialBrushedArea, onChangeBrushedArea, xScale, yScale]);
 
   // Zooming
-  // useEffect(() => {
-  //   const g = select(ref.current);
-  //   const sel = g.select<SVGGElement>('g.our-brush');
+  useEffect(() => {
+    const g = select(ref.current);
+    const sel = g.select<SVGGElement>('g.our-brush');
 
-  //   sel.call(
-  //     zoom<SVGGElement, unknown>()
-  //       .scaleExtent([1, 10])
-  //       .on('zoom', (event) => {
-  //         const transform = event.transform;
-  //         const numBins = Math.floor(transform.k * 10);
+    sel.call(
+      zoom<SVGGElement, unknown>()
+        .scaleExtent([1, 10])
+        .on('zoom', (event) => {
+          const transform = event.transform;
+          const numBins = Math.floor(transform.k * 10);
 
-  //         // Compute new dimensions
-  //         // const range = xScale.range().map(transform.invertX, transform);
-  //         // const domain = range.map(xScale.invert as any, xScale);
-  //         // const newXScale = xScale.copy().domain(domain as [number, number]);
+          // Compute new dimensions
+          // const range = xScale.range().map(transform.invertX, transform);
+          // const domain = range.map(xScale.invert as any, xScale);
+          // const newXScale = xScale.copy().domain(domain as [number, number]);
 
-  //         // xScale = newXScale;
+          // xScale = newXScale;
 
-  //         // const newBins = computeBins(rawData, numBins, xScale.domain() as [number, number]);
-  //         const newBins = computeBins(rawData, numBins);
-  //         setHistData(newBins);
+          // const newBins = computeBins(rawData, numBins, xScale.domain() as [number, number]);
+          const newBins = computeBins(rawData, numBins);
+          setHistData(newBins);
 
-  //         // xAxis.scale(xScale);
-  //         // if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
-  //       })
-  //       .filter((event: any) => {
-  //         return event.type === 'wheel';
-  //       }),
-  //   );
-  // });
+          // xAxis.scale(xScale);
+          // if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
+        })
+        .filter((event: any) => {
+          return event.type === 'wheel';
+        }),
+    );
+  });
 
   // Add axes
   useEffect(() => {

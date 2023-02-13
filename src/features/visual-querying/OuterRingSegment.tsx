@@ -37,7 +37,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
         return value.substring(0, 29) + '...';
       case 'date-range':
         const [start, end] = constraint.value as [number, number];
-        return `${start} - ${end}`;
+        return `${new Date(start).getFullYear()} - ${new Date(end).getFullYear()}`;
       case 'geometry':
         return 'Polygon';
       case 'vocabulary':
