@@ -1,7 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { nanoid } from '@reduxjs/toolkit';
 import type { Feature, Point, Position } from 'geojson';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Marker } from 'react-map-gl';
 
 interface DotMarkerProps<T> {
@@ -25,17 +25,20 @@ export function DotMarker(props: DotMarkerProps<T>): JSX.Element {
     feature,
     highlightedByVis,
   } = props;
-  const [selected, setSelected] = useState<boolean>(
-    highlightedByVis.events.includes(feature.properties.event.id),
-  );
+  // const [selected, setSelected] = useState<boolean>(false);
   const [lng, lat] = coordinates;
   const id = feature.id;
 
+  // console.log('highlighted', highlightedByVis);
+
+  const selected = useMemo(() => {
+    // console.log(highlightedByVis.events);
+    if (highlightedByVis.events == null) return false;
+    return highlightedByVis.events.includes(feature.properties.event.id);
+  }, [feature.properties.event.id, highlightedByVis.events]);
+
   function onClick() {
-    // console.log(id);
-    // const id = feature;
     onToggleSelection?.([id]);
-    setSelected(!selected);
   }
 
   return (

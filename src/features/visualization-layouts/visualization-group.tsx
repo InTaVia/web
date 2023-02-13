@@ -256,7 +256,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
               return (
                 <VisualizationContainer
                   visualizationSlot={content.id as SlotId}
-                  hightlighted={hightlighted}
+                  highlighted={hightlighted}
                   id={visualizationSlots[content.id as SlotId]}
                   onReleaseVisualization={onReleaseVisualization}
                   onSwitchVisualization={onSwitchVisualization}

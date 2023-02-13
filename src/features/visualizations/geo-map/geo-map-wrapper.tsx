@@ -43,7 +43,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     events: data.events,
     entities: data.entities,
   });
-  console.log(lines);
+  // console.log(lines);
 
   const { points } = usePointFeatureCollection({ events: data.events, entities: data.entities });
   // console.log(points);
@@ -62,11 +62,12 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   // console.log(cluster);
 
   function onChangeHover(features) {
+    return;
     console.log(features);
   }
 
   function onToggleSelection(ids) {
-    console.log(ids);
+    // console.log(ids);
     onToggleHighlight([], ids as Array<Event['id']>);
   }
 

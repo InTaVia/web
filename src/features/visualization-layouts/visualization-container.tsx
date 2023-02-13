@@ -24,9 +24,11 @@ import {
 
 interface VisualisationContainerProps {
   visualizationSlot: SlotId;
-  highlighted:
-    | Record<Visualization['id'], { entities: Array<Entity['id']>; events: Array<Event['id']> }>
-    | never;
+  highlighted: Record<
+    Visualization['id'],
+    { entities: Array<Entity['id']>; events: Array<Event['id']> }
+  >;
+
   id: Visualization['id'] | null;
   onReleaseVisualization: (visSlot: string, visId: string) => void;
   onSwitchVisualization: (
