@@ -98,7 +98,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   function onDrop(event: DragEvent<HTMLDivElement>) {
     const data = event.dataTransfer.getData(mediaType);
-    console.log(event);
+    // console.log(event);
 
     try {
       const payload: DataTransferData = JSON.parse(data);
@@ -112,7 +112,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         // }
         case 'data': {
           const { entities, events } = payload;
-          console.log({ entities, events });
+          // console.log({ entities, events });
           dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
           dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
           // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
@@ -122,7 +122,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         case 'visualization': {
           // onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
           const { sourceSlot, sourceVis } = payload;
-          console.log(visualizationSlot, visualization!.id, sourceSlot, sourceVis);
+          // console.log(visualizationSlot, visualization!.id, sourceSlot, sourceVis);
           dispatch(
             switchVisualizationsInWorkspace({
               targetSlot: visualizationSlot,
