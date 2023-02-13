@@ -9,23 +9,29 @@ import { eventKindColors, getColorById } from '@/features/common/visualization.c
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
 import { base } from '@/features/visualizations/geo-map/geo-map.config';
+import { GeoMapClusterMarkerLayer } from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
+import { GeoMapDotMarkerLayer } from '@/features/visualizations/geo-map/geo-map-dot-marker-layer';
 import { GeoMapLineLayer } from '@/features/visualizations/geo-map/geo-map-line-layer';
-import { GeoMapMarkerLayer } from '@/features/visualizations/geo-map/geo-map-marker-layer';
 import { useLineStringFeatureCollection } from '@/features/visualizations/geo-map/lib/use-line-string-feature-collection';
 import { useMarkerCluster } from '@/features/visualizations/geo-map/lib/use-marker-cluster';
 import { usePointFeatureCollection } from '@/features/visualizations/geo-map/lib/use-point-feature-collection';
 
 interface GeoMapWrapperProps {
   visualization: Visualization;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   events?: Record<Event['id'], Event>;
   entities?: Record<Entity['id'], Entity>;
   width?: number;
   height?: number;
   properties?: Record<string, VisualizationProperty>;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
 }
 
 export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
-  const { visualization } = props;
+  const { visualization, onToggleHighlight, highlightedByVis } = props;
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +43,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     events: data.events,
     entities: data.entities,
   });
-  console.log(lines);
+  // console.log(lines);
 
   const { points } = usePointFeatureCollection({ events: data.events, entities: data.entities });
   // console.log(points);
@@ -56,7 +62,13 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   // console.log(cluster);
 
   function onChangeHover(features) {
-    console.log(features);
+    return;
+    // console.log(features);
+  }
+
+  function onToggleSelection(ids) {
+    // console.log(ids);
+    onToggleHighlight([], ids as Array<Event['id']>);
   }
 
   // function onMoveEnd(event: ViewStateChangeEvent) {
@@ -85,8 +97,18 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       {renderLines === true && isCluster === false && lines.features.length > 0 && (
         <GeoMapLineLayer data={lines} />
       )}
-      {points.features.length > 0 && (
-        <GeoMapMarkerLayer
+
+      {isCluster === false && points.features.length > 0 && (
+        <GeoMapDotMarkerLayer
+          data={points}
+          onChangeHover={onChangeHover}
+          onToggleSelection={onToggleSelection}
+          highlightedByVis={highlightedByVis}
+        />
+      )}
+
+      {isCluster === true && points.features.length > 0 && (
+        <GeoMapClusterMarkerLayer
           id={visualization.id}
           {...cluster}
           isCluster={isCluster}

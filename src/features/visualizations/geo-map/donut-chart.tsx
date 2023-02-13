@@ -144,7 +144,6 @@ export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
         if (source?.type === 'geojson') {
           source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
             const filtered = features.filter((feature) => {
-              //TODO not hardcoded event kind but attribute we use to cluster
               return get(feature.properties, clusterByProperty.split('.')) === value;
             });
 

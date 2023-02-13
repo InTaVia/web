@@ -70,7 +70,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
     if (source.type === 'geojson') {
       source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
         if (error != null) {
-          console.log('getClusterLeaves', error);
+          // console.log('getClusterLeaves', error);
           return;
         }
 
@@ -161,6 +161,12 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
             cy={clusterWidth * cy + offset}
             r={circleRadius}
             fill={color}
+            onMouseEnter={() => {
+              onChangeHover?.(feature);
+            }}
+            onMouseLeave={() => {
+              onChangeHover?.(null);
+            }}
             // stroke="salmon"
             // strokeWidth={strokeWidth}
             //TODO Callback Mouseover, Mouseleave

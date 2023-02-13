@@ -1,8 +1,9 @@
+import type { Entity, Event, StoryEvent } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { StoryEvent } from '@intavia/api-client';
+import type { Visualization } from '@/features/common/visualization.slice';
 import type { StoryContentProperty } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
@@ -47,6 +48,9 @@ export interface Slide {
   layout: PanelLayout;
   visualizationSlots: Record<SlotId, string | null>;
   contentPaneSlots: Record<ContentSlotId, string | null>;
+  highlighted:
+    | Record<Visualization['id'], { entities: Array<Entity['id']>; events: Array<Event['id']> }>
+    | never;
 }
 
 export interface Story {
@@ -74,6 +78,7 @@ const initialState: StoryCreatorState = {
           selected: true,
           image: null,
           layout: 'single-vis',
+          highlighted: {},
         },
       },
     },
@@ -107,6 +112,7 @@ export const storyCreatorSlice = createSlice({
           visualizationSlots: { 'vis-1': null, 'vis-2': null },
           contentPaneSlots: { 'cont-1': null, 'cont-2': null },
           layout: 'single-vis',
+          highlighted: {},
         } as Slide,
       };
       newStories[story.id] = story;
@@ -143,6 +149,7 @@ export const storyCreatorSlice = createSlice({
         layout: 'single-vis',
         sort: counter,
         selected: false,
+        highlighted: {},
       } as Slide;
 
       state.stories[slide.story]!.slides[slide.id] = slide;
@@ -266,6 +273,42 @@ export const storyCreatorSlice = createSlice({
       state.stories[slide.story]!.slides[slide.id]!.visualizationSlots[sourceSlot as SlotId] =
         sourceVis;
     },
+    setHighlighted: (state, action) => {
+      const { visId, slide, events, entities } = action.payload;
+      // console.log(visId, slide.story, slide.id, events, entities);
+      const highlighted = state.stories[slide.story]!.slides[slide.id]!.highlighted;
+      if (!(visId in highlighted)) {
+        highlighted[visId] = { entities: [], events: [] };
+      }
+      const eventsByVis = highlighted[visId]!.events;
+      if (events != null && events.length > 0) {
+        events.forEach((event: Event['id']) => {
+          if (eventsByVis.includes(event)) {
+            //remove
+            const index = eventsByVis.indexOf(event);
+            if (index > -1) {
+              eventsByVis.splice(index, 1);
+            }
+          } else {
+            eventsByVis.push(event);
+          }
+        });
+      }
+      const entitiesByVis = highlighted[visId]!.entities;
+      if (entities != null && entities.length > 0) {
+        entities.forEach((entity: Entity['id']) => {
+          if (entitiesByVis.includes(entity)) {
+            //remove
+            const index = entitiesByVis.indexOf(entity);
+            if (index > -1) {
+              eventsByVis.splice(index, 1);
+            }
+          } else {
+            entitiesByVis.push(entity);
+          }
+        });
+      }
+    },
     /* editContentOfContentPane: (state, action) => {
       const content = action.payload;
 
@@ -291,6 +334,7 @@ export const {
   setImage,
   copySlide,
   createSlidesInBulk,
+  setHighlighted,
   setLayoutForSlide,
   setSlidesForStory,
   setVisualizationForVisualizationSlotForStorySlide,
