@@ -1,13 +1,10 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
-import type { Event } from '@intavia/api-client';
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment, useState } from 'react';
 
-import { useAppSelector } from '@/app/store';
-import { selectEntities } from '@/app/store/intavia.slice';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
@@ -45,11 +42,13 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
       return (a.sort !== undefined ? a.sort : 0) - (b.sort !== undefined ? b.sort : 0);
     });
 
-  const entitiesByID = useAppSelector(selectEntities);
-
-  let name = tmpElement.name;
+  let name = tmpElement.id;
   if (tmpElement.properties !== undefined) {
-    if (tmpElement.properties.name !== undefined && tmpElement.properties.name.value !== '') {
+    if (
+      tmpElement.properties.name !== undefined &&
+      tmpElement.properties.name.value !== '' &&
+      tmpElement.properties.name.value !== undefined
+    ) {
       name = tmpElement.properties.name.value;
     }
   }

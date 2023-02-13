@@ -1,6 +1,6 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import type { Event, Person } from '@intavia/api-client';
+import type { Entity, Event, Person } from '@intavia/api-client';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -24,6 +24,11 @@ import {
 
 interface VisualisationContainerProps {
   visualizationSlot: SlotId;
+  highlighted: Record<
+    Visualization['id'],
+    { entities: Array<Entity['id']>; events: Array<Event['id']> }
+  >;
+
   id: Visualization['id'] | null;
   onReleaseVisualization: (visSlot: string, visId: string) => void;
   onSwitchVisualization: (
@@ -33,15 +38,22 @@ interface VisualisationContainerProps {
     sourceVis: string | null,
   ) => void;
   setVisualizationEditElement?: (editElement: Visualization) => void;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+    visId: string,
+  ) => void;
 }
 
 export default function VisualisationContainer(props: VisualisationContainerProps): JSX.Element {
   const {
     visualizationSlot,
+    highlighted,
     id,
     onReleaseVisualization,
     onSwitchVisualization,
     setVisualizationEditElement,
+    onToggleHighlight,
   } = props;
 
   const dispatch = useAppDispatch();
@@ -98,7 +110,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   function onDrop(event: DragEvent<HTMLDivElement>) {
     const data = event.dataTransfer.getData(mediaType);
-    console.log(event);
+    // console.log(event);
 
     try {
       const payload: DataTransferData = JSON.parse(data);
@@ -112,7 +124,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         // }
         case 'data': {
           const { entities, events } = payload;
-          console.log({ entities, events });
+          // console.log({ entities, events });
           dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
           dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
           // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
@@ -122,7 +134,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         case 'visualization': {
           // onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
           const { sourceSlot, sourceVis } = payload;
-          console.log(visualizationSlot, visualization!.id, sourceSlot, sourceVis);
+          // console.log(visualizationSlot, visualization!.id, sourceSlot, sourceVis);
           dispatch(
             switchVisualizationsInWorkspace({
               targetSlot: visualizationSlot,
@@ -206,7 +218,22 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       </div>
       {visualization !== undefined && (
         <div className="w-50 h-full overflow-auto">
-          {<VisualisationComponent visualization={visualization} />}
+          {
+            <VisualisationComponent
+              visualization={visualization}
+              highlightedByVis={
+                highlighted != null && visualization.id in highlighted
+                  ? highlighted[visualization.id]
+                  : { events: [], entities: [] }
+              }
+              onToggleHighlight={(
+                entities: Array<Entity['id'] | null>,
+                events: Array<Event['id'] | null>,
+              ) => {
+                onToggleHighlight(entities, events, visualization.id);
+              }}
+            />
+          }
         </div>
       )}
     </div>

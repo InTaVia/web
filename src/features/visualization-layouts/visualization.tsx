@@ -1,20 +1,25 @@
-import type { Entity, EntityEventRelation } from '@intavia/api-client';
+import type { Entity, EntityEventRelation, Event } from '@intavia/api-client';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
-import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
+import { GeoMapWrapper } from '@/features/visualizations/geo-map/geo-map-wrapper';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
 
 interface VisualizationProps {
   visualization: Visualization;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
 }
 
 export default function VisualisationComponent(props: VisualizationProps): JSX.Element {
-  const { visualization } = props;
+  const { visualization, onToggleHighlight, highlightedByVis } = props;
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const allPersons = Object.values(entitiesByKind.person);
@@ -122,7 +127,13 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
-        return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
+        return (
+          <GeoMapWrapper
+            visualization={visualization}
+            onToggleHighlight={onToggleHighlight}
+            highlightedByVis={highlightedByVis}
+          />
+        );
       case 'timeline':
         return (
           <TimelineComponent
@@ -131,6 +142,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
             width={width}
             height={height}
             properties={visualization.properties}
+            // onToggleHighlight={onToggleHighlight}
           />
         );
       default:

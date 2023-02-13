@@ -1,3 +1,4 @@
+import type { Entity, Event } from '@intavia/api-client';
 import { Allotment } from 'allotment';
 import { Fragment } from 'react';
 
@@ -12,6 +13,9 @@ import VisualizationWizard from '@/features/visualization-wizard/visualization-w
 interface VisualisationGroupProps {
   visualizationSlots: Record<SlotId, string | null>;
   contentPaneSlots?: Record<ContentSlotId, string | null>;
+  hightlighted:
+    | Record<Visualization['id'], { entities: Array<Entity['id']>; events: Array<Event['id']> }>
+    | never;
   layout?: PanelLayout;
   onAddVisualization: (visSlot: string, visId: string) => void;
   onReleaseVisualization: (visSlot: string, visId: string) => void;
@@ -26,6 +30,11 @@ interface VisualisationGroupProps {
   onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
   setEditElement?: (editElement: SlideContent) => void;
   setVisualizationEditElement?: (editElement: Visualization) => void;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+    visId: string,
+  ) => void;
 }
 
 export interface LayoutPaneContent {
@@ -202,6 +211,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
   const {
     visualizationSlots,
     contentPaneSlots,
+    hightlighted,
     onAddVisualization,
     onReleaseVisualization,
     onSwitchVisualization,
@@ -209,6 +219,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
     onContentPaneWizard,
     setEditElement,
     setVisualizationEditElement,
+    onToggleHighlight,
     layout = 'single-vis',
   } = props;
   const selectedLayout = layoutTemplates[layout] as LayoutTemplateItem;
@@ -245,10 +256,12 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
               return (
                 <VisualizationContainer
                   visualizationSlot={content.id as SlotId}
+                  highlighted={hightlighted}
                   id={visualizationSlots[content.id as SlotId]}
                   onReleaseVisualization={onReleaseVisualization}
                   onSwitchVisualization={onSwitchVisualization}
                   setVisualizationEditElement={setVisualizationEditElement}
+                  onToggleHighlight={onToggleHighlight}
                 />
               );
             } else {
