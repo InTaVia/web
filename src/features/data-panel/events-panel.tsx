@@ -1,6 +1,7 @@
 import type { Event } from '@intavia/api-client';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
+import { PageContext } from '@/app/context/page.context';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { addEventsToVisualization } from '@/features/common/visualization.slice';
@@ -8,6 +9,11 @@ import { DataList } from '@/features/data-panel/data-list';
 import { EntityItem } from '@/features/data-panel/entity-item';
 import { EventItem } from '@/features/data-panel/event-item';
 import { GroupItem } from '@/features/data-panel/group-item';
+import {
+  selectSlide,
+  selectSlidesByStoryID,
+  selectStories,
+} from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
@@ -21,9 +27,19 @@ export function EventsPanel(props: EventsPanelProps): JSX.Element {
 
   const [isGroupedByEventKind, setIsGroupedByEventKind] = useState<boolean>(false);
 
+  const pageContext = useContext(PageContext);
+
   const dispatch = useAppDispatch();
   const workspaces = useAppSelector(selectAllWorkspaces);
   const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
+
+  const stories = useAppSelector(selectStories);
+  const currentSlide =
+    pageContext.page === 'story-creator'
+      ? Object.values(stories[pageContext.storyId]?.slides).filter((slide) => {
+          return slide.selected;
+        })[0]
+      : null;
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
 
@@ -32,7 +48,20 @@ export function EventsPanel(props: EventsPanelProps): JSX.Element {
   };
 
   function viewAllData() {
-    const currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
+    let currentVisualizationIds = null;
+    switch (pageContext.page) {
+      case 'visual-analytics-studio':
+        currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
+        break;
+      case 'story-creator':
+        currentVisualizationIds = Object.values(currentSlide!.visualizationSlots);
+        break;
+      default:
+        return;
+    }
+    if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
+
+    // console.log(currentVisualizationIds);
     for (const visualizationId of currentVisualizationIds) {
       if (visualizationId != null) {
         dispatch(

@@ -1,6 +1,7 @@
 import type { Entity, EntityKind } from '@intavia/api-client';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
+import { PageContext } from '@/app/context/page.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { EntityKindIcon } from '@/features/common/entity-kind-icon';
@@ -10,6 +11,7 @@ import { DataList } from '@/features/data-panel/data-list';
 import { EntityItem } from '@/features/data-panel/entity-item';
 import { EventItem } from '@/features/data-panel/event-item';
 import { GroupItem } from '@/features/data-panel/group-item';
+import { selectStories } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
@@ -23,16 +25,38 @@ export function EntitiesPanel(props: EntitiesPanelProps): JSX.Element {
 
   const [isGroupedByEntityKind, setIsGroupedByEntityKind] = useState<boolean>(true);
 
+  const pageContext = useContext(PageContext);
+
   const dispatch = useAppDispatch();
   const workspaces = useAppSelector(selectAllWorkspaces);
   const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
+
+  const stories = useAppSelector(selectStories);
+  const currentSlide =
+    pageContext.page === 'story-creator'
+      ? Object.values(stories[pageContext.storyId]?.slides).filter((slide) => {
+          return slide.selected;
+        })[0]
+      : null;
 
   const toggleGrouping = () => {
     setIsGroupedByEntityKind(!isGroupedByEntityKind);
   };
 
   function viewAllData() {
-    const currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
+    let currentVisualizationIds = null;
+    switch (pageContext.page) {
+      case 'visual-analytics-studio':
+        currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
+        break;
+      case 'story-creator':
+        currentVisualizationIds = Object.values(currentSlide!.visualizationSlots);
+        break;
+      default:
+        return;
+    }
+    if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
+
     for (const visualizationId of currentVisualizationIds) {
       if (visualizationId != null) {
         dispatch(
