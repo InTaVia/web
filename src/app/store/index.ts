@@ -25,6 +25,7 @@ import visualizationReducer from '@/features/common/visualization.slice';
 import searchHistoryReducer from '@/features/entities/search-history.slice';
 import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
 import contentPaneReducer from '@/features/storycreator/contentPane.slice';
+import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
@@ -43,6 +44,7 @@ const persistConfig: PersistConfig<RootState> = {
 
 const rootReducer = combineReducers({
   [intaviaApiService.reducerPath]: intaviaApiService.reducer,
+  [intaviaStoryApiService.reducerPath]: intaviaStoryApiService.reducer,
   [intaviaCollectionsSlice.name]: intaviaCollectionsSlice.reducer,
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
@@ -81,7 +83,7 @@ export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
           ],
           ignoreState: true,
         },
-      }).concat(intaviaApiService.middleware, errorMiddleware);
+      }).concat(intaviaApiService.middleware, intaviaStoryApiService.middleware, errorMiddleware);
     },
     preloadedState,
   });

@@ -2,28 +2,37 @@ import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
 import { toPng } from 'html-to-image';
-import { useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import type { StringLiteral } from 'typescript';
 
+import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { PropertiesDialog } from '@/features/common/properties-dialog';
+import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
   createContentPane,
+  selectAllConentPanes,
 } from '@/features/storycreator/contentPane.slice';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
+import { usePostStoryMutation } from '@/features/storycreator/story-suite-api.service';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
+  editStory,
   selectSlidesByStoryID,
   setContentPaneToSlot,
   setImage,
   setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
+import Button from '@/features/ui/Button';
+import { Dialog, DialogContent, DialogControls } from '@/features/ui/Dialog';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
+import { useDialogState } from '@/features/ui/use-dialog-state';
 import type {
   LayoutPaneContent,
   LayoutTemplateItem,
@@ -41,6 +50,8 @@ interface StoryCenterPaneProps {
 export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const { story, desktop, onDesktopChange, timescale, onTimescaleChange } = props;
 
+  const { t } = useI18n<'common'>();
+
   const dispatch = useAppDispatch();
 
   const slides = useAppSelector((state) => {
@@ -53,6 +64,19 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
 
   const ref = useRef<HTMLDivElement>(null);
+
+  const [propertiesEditElement, setPropertiesEditElement] = useState<any | null>(null);
+  const dialog = useDialogState();
+
+  const handleSaveEdit = (newStory: Story) => {
+    dispatch(editStory(newStory));
+  };
+
+  const [postStory] = usePostStoryMutation();
+
+  const handleCloseEditDialog = () => {
+    setPropertiesEditElement(null);
+  };
 
   const setSlideThumbnail = function () {
     if (ref.current === null) {
@@ -179,6 +203,42 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   setSlideThumbnail();
 
+  const allVisualizations = useAppSelector(selectAllVisualizations);
+  const allContentPanes = useAppSelector(selectAllConentPanes);
+
+  const storyObject = useMemo(() => {
+    const storyVisualizations = {};
+    const storyContentPanes = {};
+
+    Object.values(story.slides).forEach((slide) => {
+      for (const visID of Object.values(slide.visualizationSlots)) {
+        if (visID != null) {
+          storyVisualizations[visID] = allVisualizations[visID];
+        }
+      }
+      for (const contID of Object.values(slide.contentPaneSlots)) {
+        if (contID != null) {
+          storyContentPanes[contID] = allContentPanes[contID];
+        }
+      }
+    });
+
+    const slideOutput = Object.fromEntries(
+      Object.values(story.slides).map((s) => {
+        const ret = { ...s };
+        delete ret.image;
+        return [ret.id, ret];
+      }),
+    );
+
+    return {
+      ...story,
+      slides: slideOutput,
+      visualizations: storyVisualizations,
+      contentPanes: storyContentPanes,
+    };
+  }, [story, allContentPanes, allVisualizations]);
+
   return (
     <div className="grid h-full w-full grid-rows-[max-content_1fr]">
       <StroyCreatorToolbar
@@ -187,6 +247,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         onDesktopChange={onDesktopChange}
         timescale={timescale}
         onTimescaleChange={onTimescaleChange}
+        onExportStory={() => {
+          dialog.open();
+        }}
+        onOpenSettingsDialog={() => {
+          setPropertiesEditElement(story);
+        }}
       />
       <ReactResizeDetector key="test" handleWidth handleHeight>
         {({ width, height }) => {
@@ -214,6 +280,64 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           );
         }}
       </ReactResizeDetector>
+      {propertiesEditElement != null && (
+        <PropertiesDialog
+          onClose={handleCloseEditDialog}
+          element={propertiesEditElement}
+          onSave={handleSaveEdit}
+        />
+      )}
+      {dialog.isOpen && (
+        <Dialog dialog={dialog} title="Export Story">
+          <DialogContent>
+            <form
+              id={'storyExportDialog'}
+              name={'storyExportDialog'}
+              noValidate
+              onSubmit={(event) => {
+                event.preventDefault();
+                postStory(storyObject)
+                  .unwrap()
+                  .then((fulfilled) => {
+                    console.log(fulfilled);
+                  })
+                  .catch((rejected) => {
+                    console.error(rejected);
+                  });
+                dialog.close();
+              }}
+            >
+              <textarea
+                id="message"
+                rows={6}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                defaultValue={JSON.stringify(storyObject, null, 2)}
+              ></textarea>
+            </form>
+          </DialogContent>
+          <DialogControls>
+            <Button
+              size="small"
+              round="round"
+              shadow="small"
+              color="warning"
+              onClick={dialog.close}
+            >
+              {t(['common', 'form', 'cancel'])}
+            </Button>
+            <Button
+              size="small"
+              round="round"
+              shadow="small"
+              color="accent"
+              form={'storyExportDialog'}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogControls>
+        </Dialog>
+      )}
     </div>
   );
 }

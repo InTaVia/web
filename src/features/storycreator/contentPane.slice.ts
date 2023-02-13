@@ -310,8 +310,8 @@ export const selectContentPaneByID = createSelector(
   },
 );
 
-/* export const selectStories = (state: RootState) => {
-  return state.storycreator.stories;
-}; */
+export const selectAllConentPanes = (state: RootState) => {
+  return state.contentPane;
+};
 
 export default contentPaneSlice.reducer;

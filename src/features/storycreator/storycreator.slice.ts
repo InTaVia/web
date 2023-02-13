@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { Visualization } from '@/features/common/visualization.slice';
+import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import type { StoryContentProperty } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
@@ -57,32 +57,113 @@ export interface Story {
   id: string;
   title: string;
   slides: Record<Slide['id'], Slide>;
+  properties: Record<VisualizationProperty['id'], VisualizationProperty>;
 }
 
 export interface StoryCreatorState {
   stories: Record<Story['id'], Story>;
 }
 
-const initialState: StoryCreatorState = {
-  stories: {
-    story0: {
-      title: 'The Life of Vergerio',
-      id: 'story0',
-      slides: {
-        '0': {
-          id: '0',
-          sort: 0,
-          story: 'story0',
-          visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
-          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
-          selected: true,
-          image: null,
-          layout: 'single-vis',
-          highlighted: {},
-        },
+const emptyStory = {
+  slides: {},
+  properties: {
+    name: {
+      type: 'text',
+      id: 'name',
+      label: 'Name',
+      sort: 1,
+      value: '',
+      editable: true,
+    },
+    subtitle: {
+      type: 'text',
+      id: 'subtitle',
+      label: 'Subtitle',
+      sort: 2,
+      value: '',
+      editable: true,
+    },
+    author: {
+      type: 'text',
+      id: 'author',
+      label: 'Author',
+      sort: 3,
+      value: '',
+      editable: true,
+    },
+    copyright: {
+      type: 'text',
+      id: 'copyright',
+      label: 'Copyright',
+      sort: 4,
+      value: '',
+      editable: true,
+    },
+    language: {
+      type: 'select',
+      id: 'language',
+      label: 'Language',
+      sort: 5,
+      value: {
+        name: 'English',
+        value: 'english',
       },
+      options: [
+        {
+          name: 'Deutsch',
+          value: 'german',
+        },
+        {
+          name: 'English',
+          value: 'english',
+        },
+      ],
+      editable: true,
+    },
+    font: {
+      type: 'select',
+      id: 'font',
+      label: 'Font',
+      sort: 3,
+      value: {
+        name: 'Sans Serif',
+        value: 'Verdana, Arial, Helvetica, sans-serif',
+        font: 'Verdana, Arial, Helvetica, sans-serif',
+      },
+      options: [
+        {
+          name: 'Serif',
+          value: 'Times, "Times New Roman", Georgia, serif',
+          font: 'Times, "Times New Roman", Georgia, serif',
+        },
+        {
+          name: 'Sans Serif',
+          value: 'Verdana, Arial, Helvetica, sans-serif',
+          font: 'Verdana, Arial, Helvetica, sans-serif',
+        },
+        {
+          name: 'Monospace',
+          value: '"Lucida Console", Courier, monospace',
+          font: '"Lucida Console", Courier, monospace',
+        },
+        {
+          name: 'Cursive',
+          value: 'cursive',
+          font: 'cursive',
+        },
+        {
+          name: 'Fantasy',
+          value: 'fantasy',
+          font: 'fantasy',
+        },
+      ],
+      editable: true,
     },
   },
+};
+
+const initialState: StoryCreatorState = {
+  stories: {},
 };
 
 export const storyCreatorSlice = createSlice({
@@ -90,7 +171,7 @@ export const storyCreatorSlice = createSlice({
   initialState,
   reducers: {
     createStory: (state, action) => {
-      const story = action.payload;
+      const story = { ...emptyStory, ...action.payload };
 
       const newStories = { ...state.stories };
       const oldIDs = Object.keys(newStories);
