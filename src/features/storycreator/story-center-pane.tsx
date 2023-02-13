@@ -2,22 +2,26 @@ import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
 import { toPng } from 'html-to-image';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import type { StringLiteral } from 'typescript';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
+import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
   createContentPane,
+  selectAllConentPanes,
 } from '@/features/storycreator/contentPane.slice';
 import { SlideEditor } from '@/features/storycreator/SlideEditor';
 import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
+import { usePostStoryMutation } from '@/features/storycreator/story-suite-api.service';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
+  editStory,
   selectSlidesByStoryID,
   setContentPaneToSlot,
   setImage,
@@ -26,7 +30,6 @@ import {
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import Button from '@/features/ui/Button';
 import { Dialog, DialogContent, DialogControls } from '@/features/ui/Dialog';
-import TextField from '@/features/ui/TextField';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import { useDialogState } from '@/features/ui/use-dialog-state';
@@ -65,9 +68,11 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const [propertiesEditElement, setPropertiesEditElement] = useState<any | null>(null);
   const dialog = useDialogState();
 
-  const handleSaveEdit = (element: Story) => {
-    //dispatch(editVisualization(element));
+  const handleSaveEdit = (newStory: Story) => {
+    dispatch(editStory(newStory));
   };
+
+  const [postStory] = usePostStoryMutation();
 
   const handleCloseEditDialog = () => {
     setPropertiesEditElement(null);
@@ -198,13 +203,41 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   setSlideThumbnail();
 
-  const slideOutput = Object.values(story.slides).map((s) => {
-    const ret = { ...s };
-    delete ret.image;
-    return ret;
-  });
+  const allVisualizations = useAppSelector(selectAllVisualizations);
+  const allContentPanes = useAppSelector(selectAllConentPanes);
 
-  const storyObject = { ...story, slides: slideOutput };
+  const storyObject = useMemo(() => {
+    const storyVisualizations = {};
+    const storyContentPanes = {};
+
+    Object.values(story.slides).forEach((slide) => {
+      for (const visID of Object.values(slide.visualizationSlots)) {
+        if (visID != null) {
+          storyVisualizations[visID] = allVisualizations[visID];
+        }
+      }
+      for (const contID of Object.values(slide.contentPaneSlots)) {
+        if (contID != null) {
+          storyContentPanes[contID] = allContentPanes[contID];
+        }
+      }
+    });
+
+    const slideOutput = Object.fromEntries(
+      Object.values(story.slides).map((s) => {
+        const ret = { ...s };
+        delete ret.image;
+        return [ret.id, ret];
+      }),
+    );
+
+    return {
+      ...story,
+      slides: slideOutput,
+      visualizations: storyVisualizations,
+      contentPanes: storyContentPanes,
+    };
+  }, [story, allContentPanes, allVisualizations]);
 
   return (
     <div className="grid h-full w-full grid-rows-[max-content_1fr]">
@@ -261,15 +294,25 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               id={'storyExportDialog'}
               name={'storyExportDialog'}
               noValidate
-              onSubmit={() => {}}
+              onSubmit={(event) => {
+                event.preventDefault();
+                postStory(storyObject)
+                  .unwrap()
+                  .then((fulfilled) => {
+                    console.log(fulfilled);
+                  })
+                  .catch((rejected) => {
+                    console.error(rejected);
+                  });
+                dialog.close();
+              }}
             >
               <textarea
                 id="message"
                 rows={6}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              >
-                {JSON.stringify(storyObject, null, 2)}
-              </textarea>
+                defaultValue={JSON.stringify(storyObject, null, 2)}
+              ></textarea>
             </form>
           </DialogContent>
           <DialogControls>
