@@ -5,9 +5,10 @@ import { type LayerProps, type MapLayerMouseEvent, Layer, Source, useMap } from 
 
 import { DonutChartLayer } from '@/features/visualizations/geo-map/donut-chart-layer';
 import { DotClusterLayer } from '@/features/visualizations/geo-map/dot-cluster-layer';
+import { DotMarkerLayer } from '@/features/visualizations/geo-map/geo-map-dot-marker-layer';
 import { createKey } from '@/lib/create-key';
 
-export interface GeoMapMarkerLayerProps<T extends EmptyObject = EmptyObject> {
+export interface GeoMapClusterLayerProps<T extends EmptyObject = EmptyObject> {
   id: string;
   circleColors: Array<Array<string> | string>;
   // clusterColors?: Record<string, string>
@@ -25,8 +26,8 @@ export interface GeoMapMarkerLayerProps<T extends EmptyObject = EmptyObject> {
 /**
  * GeoJSON marker layer for geo-visualisation.
  */
-export function GeoMapMarkerLayer<T extends EmptyObject = EmptyObject>(
-  props: GeoMapMarkerLayerProps<T>,
+export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
+  props: GeoMapClusterLayerProps<T>,
 ): JSX.Element {
   const {
     id,
@@ -50,7 +51,7 @@ export function GeoMapMarkerLayer<T extends EmptyObject = EmptyObject>(
       type: 'circle',
       paint: {
         'circle-color': circleColors as Expression,
-        'circle-radius': 5,
+        'circle-radius': 0,
         'circle-stroke-color': 'salmon',
         'circle-stroke-width': ['case', ['boolean', ['feature-state', 'hover'], false], 2, 0],
       },
@@ -76,7 +77,7 @@ export function GeoMapMarkerLayer<T extends EmptyObject = EmptyObject>(
     return () => {
       map.off('mousemove', onHover);
     };
-  }, [map]);
+  }, [map, onHover]);
   // function addLayer(map: mapboxgl.Map, gl: WebGLRenderingContext) {
   //   console.log('ADD', map, gl)
   //   // // Retrieve the current list of interactivelayerids
@@ -104,7 +105,7 @@ export function GeoMapMarkerLayer<T extends EmptyObject = EmptyObject>(
           colors={colors}
           id={id}
           onChangeHover={onChangeHover}
-          clusterByProperty={clusterByProperty}
+          clusterByProperty={clusterByProperty!}
         />
       ) : null}
       {isCluster && clusterType === 'dot' ? (
@@ -112,7 +113,7 @@ export function GeoMapMarkerLayer<T extends EmptyObject = EmptyObject>(
           colors={colors}
           id={id}
           onChangeHover={onChangeHover}
-          clusterByProperty={clusterByProperty}
+          clusterByProperty={clusterByProperty!}
         />
       ) : null}
     </Source>

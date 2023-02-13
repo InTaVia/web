@@ -1,3 +1,4 @@
+import type { Entity, Event } from '@intavia/api-client';
 import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
@@ -11,6 +12,7 @@ import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   releaseVisualizationForVisualizationSlotForSlide,
   setContentPaneToSlot,
+  setHighlighted,
   setVisualizationForVisualizationSlotForStorySlide,
   switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
@@ -142,6 +144,15 @@ export function SlideEditor(props: SlideEditorProps) {
         onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
         setVisualizationEditElement={setVisualizationEditElement}
+        hightlighted={slide.highlighted}
+        onToggleHighlight={(
+          entities: Array<Entity['id'] | null>,
+          events: Array<Event['id'] | null>,
+          visId: string,
+        ) => {
+          // console.log({ entities, events, visId, slide });
+          dispatch(setHighlighted({ entities, events, visId, slide }));
+        }}
       />
       {editElement !== null && (
         <StoryContentDialog onClose={handleClose} element={editElement} onSave={handleSave} />

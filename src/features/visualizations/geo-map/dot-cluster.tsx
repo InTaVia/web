@@ -161,6 +161,12 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
             cy={clusterWidth * cy + offset}
             r={circleRadius}
             fill={color}
+            onMouseEnter={() => {
+              onChangeHover?.(feature);
+            }}
+            onMouseLeave={() => {
+              onChangeHover?.(null);
+            }}
             // stroke="salmon"
             // strokeWidth={strokeWidth}
             //TODO Callback Mouseover, Mouseleave
