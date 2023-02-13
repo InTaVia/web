@@ -4,7 +4,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';
@@ -26,13 +26,16 @@ export function Histogram<T extends Date | IsoDateString | number>(
   const ref = useRef<SVGGElement>(null);
 
   // Data
-  const histData = computeBins(rawData, 200);
+  const [histData, setHistData] = useState<Array<Bin<Date | IsoDateString | number>>>(
+    computeBins(rawData, 10),
+  );
+
   const thresholds = histData.map((d) => {
     return new Date(d.values[0]).getTime();
   });
   const binSize = thresholds[1]! - thresholds[0]!;
   const minYear = thresholds[0]!;
-  const maxYear = thresholds.at(-1)! + binSize;
+  const maxYear = new Date(histData[histData.length - 1]!.values[1]).getTime();
 
   // Declare scales and axes
   const xScale = scaleLinear().domain([minYear, maxYear]).range([0, dimensions.boundedWidth]);
@@ -95,23 +98,36 @@ export function Histogram<T extends Date | IsoDateString | number>(
   }, [initialBrushedArea, onChangeBrushedArea, xScale, yScale]);
 
   // Zooming
-  useEffect(() => {
-    const g = select(ref.current);
-    const sel = g.select<SVGGElement>('g.our-brush');
+  // useEffect(() => {
+  //   const g = select(ref.current);
+  //   const sel = g.select<SVGGElement>('g.our-brush');
 
-    // g.append('rect')
-    //   .attr('fill', 'none')
-    //   .attr('pointer-events', 'all')
-    //   .attr('width', xScale.range()[1]! - xScale.range()[0]!)
-    //   .attr('height', yScale.range()[0]! - yScale.range()[1]!)
+  //   sel.call(
+  //     zoom<SVGGElement, unknown>()
+  //       .scaleExtent([1, 10])
+  //       .on('zoom', (event) => {
+  //         const transform = event.transform;
+  //         const numBins = Math.floor(transform.k * 10);
 
-    sel.call(
-      zoom<SVGGElement, unknown>().on('zoom', (event) => {
-        const zoomState = event.transform;
-        console.log(zoomState);
-      }),
-    );
-  });
+  //         // Compute new dimensions
+  //         // const range = xScale.range().map(transform.invertX, transform);
+  //         // const domain = range.map(xScale.invert as any, xScale);
+  //         // const newXScale = xScale.copy().domain(domain as [number, number]);
+
+  //         // xScale = newXScale;
+
+  //         // const newBins = computeBins(rawData, numBins, xScale.domain() as [number, number]);
+  //         const newBins = computeBins(rawData, numBins);
+  //         setHistData(newBins);
+
+  //         // xAxis.scale(xScale);
+  //         // if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
+  //       })
+  //       .filter((event: any) => {
+  //         return event.type === 'wheel';
+  //       }),
+  //   );
+  // });
 
   // Add axes
   useEffect(() => {
@@ -132,7 +148,17 @@ export function Histogram<T extends Date | IsoDateString | number>(
           const y = yScale(bin.count);
           const h = yScale(0) - y;
 
-          return <rect key={index} width={w} height={h} x={x} y={y} fill="lightGray" />;
+          return (
+            <rect
+              className="hist-bar"
+              key={index}
+              width={w}
+              height={h}
+              x={x}
+              y={y}
+              fill="lightGray"
+            />
+          );
         })}
       </g>
       <g>
@@ -146,16 +172,30 @@ export function Histogram<T extends Date | IsoDateString | number>(
 function computeBins(
   rawData: Array<Bin<Date | IsoDateString | number>>,
   numBins: number,
+  bounds: [number, number] | null = null,
 ): Array<Bin<Date | IsoDateString | number>> {
   if (numBins > rawData.length) return rawData;
-  const summarizationFactor = rawData.length / numBins;
+
+  // Clip data according to bounds
+  let data = rawData;
+  if (bounds) {
+    data = rawData.filter((bin) => {
+      return (
+        new Date(bin.values[0]) >= new Date(bounds[0]) &&
+        new Date(bin.values[1]) <= new Date(bounds[1])
+      );
+    });
+  }
+
+  const summarizationFactor = data.length / numBins;
   const bins: Array<Bin<Date | IsoDateString | number>> = [];
 
   for (let i = 0; i < numBins; i++) {
-    const clippedData = rawData.slice(
+    const clippedData = data.slice(
       i * summarizationFactor,
       i * summarizationFactor + summarizationFactor,
     );
+    // if (clippedData.length <= 0) debugger;
     const cumCount = clippedData
       .map((d) => {
         return d.count;
