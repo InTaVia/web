@@ -1,5 +1,6 @@
 import { Allotment } from 'allotment';
 
+import { PageContext } from '@/app/context/page.context';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { DataPanel } from '@/features/data-panel/data-panel';
@@ -28,21 +29,23 @@ export default function AnalysePage(): JSX.Element {
   };
 
   return (
-    <Allotment>
-      <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
-        <DataPanel />
-      </Allotment.Pane>
-      <Allotment.Pane {...centerPaneProps}>
-        <div className="flex h-full w-full flex-col overflow-hidden">
-          <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
-          <Workspaces />
-        </div>
-      </Allotment.Pane>
-      <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
-        <DisclosureWrapper title="Test" defaultOpen={true}>
-          <div>Placeholder</div>
-        </DisclosureWrapper>
-      </Allotment.Pane>
-    </Allotment>
+    <PageContext.Provider value={{ page: 'visual-analytics-studio' }}>
+      <Allotment>
+        <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
+          <DataPanel />
+        </Allotment.Pane>
+        <Allotment.Pane {...centerPaneProps}>
+          <div className="flex h-full w-full flex-col overflow-hidden">
+            <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
+            <Workspaces />
+          </div>
+        </Allotment.Pane>
+        <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
+          <DisclosureWrapper title="Test" defaultOpen={true}>
+            <div>Placeholder</div>
+          </DisclosureWrapper>
+        </Allotment.Pane>
+      </Allotment>
+    </PageContext.Provider>
   );
 }
