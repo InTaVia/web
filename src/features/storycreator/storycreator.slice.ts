@@ -1,8 +1,9 @@
+import type { StoryEvent } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { StoryEvent } from '@intavia/api-client';
+import type { VisualizationProperty } from '@/features/common/visualization.slice';
 import type { StoryContentProperty } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
@@ -53,6 +54,7 @@ export interface Story {
   id: string;
   title: string;
   slides: Record<Slide['id'], Slide>;
+  properties: Record<VisualizationProperty['id'], VisualizationProperty>;
 }
 
 export interface StoryCreatorState {
@@ -74,6 +76,100 @@ const initialState: StoryCreatorState = {
           selected: true,
           image: null,
           layout: 'single-vis',
+        },
+      },
+      properties: {
+        name: {
+          type: 'text',
+          id: 'name',
+          label: 'Name',
+          sort: 1,
+          value: 'The Life of Vergerio',
+          editable: true,
+        },
+        subtitle: {
+          type: 'text',
+          id: 'subtitle',
+          label: 'Subtitle',
+          sort: 2,
+          value: '',
+          editable: true,
+        },
+        author: {
+          type: 'text',
+          id: 'author',
+          label: 'Author',
+          sort: 3,
+          value: 'InTaVia',
+          editable: true,
+        },
+        copyright: {
+          type: 'text',
+          id: 'copyright',
+          label: 'Copyright',
+          sort: 4,
+          value: 'InTaVia',
+          editable: true,
+        },
+        language: {
+          type: 'select',
+          id: 'language',
+          label: 'Language',
+          sort: 5,
+          value: {
+            name: 'English',
+            value: 'english',
+          },
+          options: [
+            {
+              name: 'Deutsch',
+              value: 'german',
+            },
+            {
+              name: 'English',
+              value: 'english',
+            },
+          ],
+          editable: true,
+        },
+        font: {
+          type: 'select',
+          id: 'font',
+          label: 'Font',
+          sort: 3,
+          value: {
+            name: 'Sans Serif',
+            value: 'Verdana, Arial, Helvetica, sans-serif',
+            font: 'Verdana, Arial, Helvetica, sans-serif',
+          },
+          options: [
+            {
+              name: 'Serif',
+              value: 'Times, "Times New Roman", Georgia, serif',
+              font: 'Times, "Times New Roman", Georgia, serif',
+            },
+            {
+              name: 'Sans Serif',
+              value: 'Verdana, Arial, Helvetica, sans-serif',
+              font: 'Verdana, Arial, Helvetica, sans-serif',
+            },
+            {
+              name: 'Monospace',
+              value: '"Lucida Console", Courier, monospace',
+              font: '"Lucida Console", Courier, monospace',
+            },
+            {
+              name: 'Cursive',
+              value: 'cursive',
+              font: 'cursive',
+            },
+            {
+              name: 'Fantasy',
+              value: 'fantasy',
+              font: 'fantasy',
+            },
+          ],
+          editable: true,
         },
       },
     },
