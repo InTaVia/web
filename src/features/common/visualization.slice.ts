@@ -5,7 +5,6 @@ import { assert } from '@stefanprobst/assert';
 import type { ViewState } from 'react-map-gl';
 
 import type { RootState } from '@/app/store';
-import { base } from '@/features/geomap/maps.config';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -114,6 +113,14 @@ const visualizationSlice = createSlice({
                   },
                 ],
                 editable: true,
+              },
+              renderLines: {
+                type: 'boolean',
+                id: 'renderLines',
+                value: false,
+                editable: true,
+                sort: 5,
+                label: 'Connect events chronologically with lines (for each entity)',
               },
             },
             entityIds: [],

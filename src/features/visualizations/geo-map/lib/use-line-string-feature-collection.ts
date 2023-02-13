@@ -57,6 +57,7 @@ export function useLineStringFeatureCollection(
       Feature<LineString, { entity: Entity; events: Array<Event>; places: Array<Place> }>
     > = [];
 
+    // TODO : also return "unmappable" events
     const spatioTemporalEvents: Array<Event> = [];
     const spatialEvents: Array<Event> = [];
     const temporalEvents: Array<Event> = [];
@@ -97,70 +98,11 @@ export function useLineStringFeatureCollection(
       return sortDateA - sortDateB;
     });
 
-    console.log('sortedEvents', sortedEvents);
-    //       return eventsById![eventId1].sortDate - eventsById![eventId2].sortDate;
-    //     });
-
-    // .map((event) => {
-    //   if (event.hasDate) {
-    //     return {
-    //       ...event,
-    //       sortDate:
-    //         'startDate' in event
-    //           ? new Date(event.startDate as string)
-    //           : new Date(event.endDate as string),
-    //     };
-    //   } else {
-    //     return event;
-    //   }
-    // });
-
-    // const eventsById = keyBy(_events, (event) => {
-    //   return event.id;
-    // });
-
-    // console.log(eventsById);
-
-    // iterate over event ids of entities
-    // for (const entity of entities) {
-    //   if (entity.kind === 'place') continue;
-    //   if (!('relations' in entity) || entity.relations == null) continue;
-    //   const eventsSortedByDate: Array<EntityEventRelation> = entity.relations
-    //     .filter((relation) => {
-    //       const eventId = relation.event;
-    //       if (!(eventId in eventsById) || eventsById![eventId!] == null) return null;
-    //       return eventsById![eventId!].hasDate;
-    //     })
-    //     .filter(Boolean)
-    //     .sort((eventId1, eventId2) => {
-    //       return eventsById![eventId1].sortDate - eventsById![eventId2].sortDate;
-    //     });
-
-    //   console.log(eventsSortedByDate);
-
-    //   const eventsWithPlaceAndDate: Array<Event['id']> = eventsSortedByDate.filter((eventId) => {
-    //     return (
-    //       eventsById![eventId!].relatedPlaces != null &&
-    //       eventsById![eventId!].relatedPlaces.length > 0 &&
-    //       eventsById![eventId!].hasDate
-    //     );
-    //   });
-
-    // const eventsWithPlaceOnly: Array<Event['id']> = entity.events.filter((eventId) => {
-    //   return eventsById![eventId].hasPlace && !eventsById![eventId].hasDate;
-    // });
-
-    // const eventsWithoutDateAndPlace: Array<Event['id']> = entity.events.filter((eventId) => {
-    //   return !eventsById![eventId].hasPlace && !eventsById![eventId].hasDate;
-    // });
-
-    // console.log(eventsSortedByDate)
-    // console.log(eventsWithPlaceOnly)
-    // console.log(eventsWithoutDateAndPlace)
-    // console.log(eventsWithPlaceAndDate)
+    // console.log('sortedEvents', sortedEvents);
 
     for (const entity of entities) {
       if (entity.kind === 'place') continue;
+
       // Option A: one line string per entity
       const relatedEvents = sortedEvents.filter((event) => {
         return event.relations
@@ -173,10 +115,6 @@ export function useLineStringFeatureCollection(
         createLineFeature({
           entity,
           events: relatedEvents,
-
-          // eventsWithPlaceAndDate.map((eventId) => {
-          //   return eventsById[eventId] as Event;
-          // }),
           id: entity.id,
           places: relatedEvents
             .flatMap((event) => {
@@ -186,6 +124,7 @@ export function useLineStringFeatureCollection(
         }),
       );
       // Option B: multiple line strings per entity
+
       // console.log('entity', entity.id);
       // for (let i = 0; i < eventsWithPlaceAndDate.length - 1; i++) {
       //   console.log(eventsWithPlaceAndDate[i], ' => ', eventsWithPlaceAndDate[i + 1]);
@@ -196,7 +135,7 @@ export function useLineStringFeatureCollection(
       type: 'FeatureCollection',
       features,
     };
-  }, [events, entities]);
+  }, [events, places, entities]);
 
   return {
     lines,

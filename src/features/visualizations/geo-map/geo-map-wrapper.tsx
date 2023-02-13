@@ -44,6 +44,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
   const isCluster = visualization.properties!.cluster!.value ?? false;
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
+  const renderLines = visualization.properties!.renderLines!.value ?? false;
   // console.log(clusterMode);
 
   const cluster = useMarkerCluster({
@@ -81,7 +82,9 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       // onMove={onMove}
     >
       {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
-      {lines.features.length > 0 && <GeoMapLineLayer data={lines} />}
+      {renderLines === true && isCluster === false && lines.features.length > 0 && (
+        <GeoMapLineLayer data={lines} />
+      )}
       {points.features.length > 0 && (
         <GeoMapMarkerLayer
           id={visualization.id}
