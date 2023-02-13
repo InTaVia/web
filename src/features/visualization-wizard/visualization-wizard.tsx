@@ -1,3 +1,5 @@
+import { nanoid } from '@reduxjs/toolkit';
+
 import { useAppDispatch } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { createVisualization } from '@/features/common/visualization.slice';
@@ -13,11 +15,8 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
   const dispatch = useAppDispatch();
 
   function createVis(type: Visualization['type']) {
-    const visId = `visualization-${Math.random()
-      .toString(36)
-      .replace(/[^a-z]+/g, '')
-      .substring(0, 4)}`;
-    //TODO dispatch -> createVisualisation -> common/visualization.slice
+    const visId = `visualization-${nanoid(4)}`;
+
     dispatch(
       createVisualization({
         id: visId,

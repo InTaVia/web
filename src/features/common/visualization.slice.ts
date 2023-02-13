@@ -2,18 +2,21 @@ import type { Entity, Event, Person } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { assert } from '@stefanprobst/assert';
+import type { ViewState } from 'react-map-gl';
 
 import type { RootState } from '@/app/store';
+import { base } from '@/features/geomap/maps.config';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
   id: string;
-  type: 'map' | 'timeline' | 'timeline';
+  type: 'map' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
   eventIds: Array<Event['id']>;
   properties?: Record<string, VisualizationProperty>;
   visibilities?: Record<string, boolean>;
+  mapState?: { mapStyle: string; viewState: Partial<ViewState> };
 }
 
 export interface VisualizationProperty {
@@ -26,58 +29,14 @@ export interface VisualizationProperty {
   sort?: number | 0;
 }
 
-const initialState: Record<Visualization['id'], Visualization> = {
-  'vis-1': {
-    id: 'vis-1',
-    type: 'map',
-    name: "Vegerio's Life",
-    entityIds: ['abc', 'def'],
-    eventIds: [],
-    properties: {
-      mapStyle: {
-        type: 'select',
-        id: 'mapStyle',
-        label: 'Map Style',
-        value: {
-          name: 'Default',
-          value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-        },
-        options: [
-          {
-            name: 'Default',
-            value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-          },
-          {
-            name: 'Alternative',
-            value: 'https://openmaptiles.github.io/dark-matter-gl-style/style-cdn.json',
-          },
-        ],
-        editable: true,
-      },
-    },
-    /*  props: {
-      mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-      initialViewState: {
-        longitude: 7.571606,
-        latitude: 50.226913,
-        zoom: 4,
-      },
-    }, */
-  },
-  'vis-2': {
-    id: 'vis-2',
-    type: 'map',
-    name: 'Dürer',
-    entityIds: ['abc', 'def'],
-    eventIds: [],
-    /* props: {
-      mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-      initialViewState: {
-        longitude: 8.571606,
-        latitude: 50.226913,
-        zoom: 9,
-      },
-    }, */
+const initialState: Record<Visualization['id'], Visualization> = {};
+
+const defaultMapState = {
+  mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+  viewState: {
+    latitude: 37.8,
+    longitude: -122.4,
+    zoom: 14,
   },
 };
 
@@ -96,6 +55,7 @@ const visualizationSlice = createSlice({
         case 'map':
           state[vis['id']] = {
             ...vis,
+            mapState: defaultMapState,
             properties: {
               mapStyle: {
                 type: 'select',
@@ -118,13 +78,6 @@ const visualizationSlice = createSlice({
                 editable: true,
                 sort: 2,
               },
-              entities: {
-                type: 'entitiesAndEvents',
-                id: 'entities',
-                label: 'Entities',
-                editable: true,
-                sort: 3,
-              },
               name: {
                 type: 'text',
                 id: 'name',
@@ -132,6 +85,35 @@ const visualizationSlice = createSlice({
                 label: 'Name',
                 editable: true,
                 sort: 1,
+              },
+              cluster: {
+                type: 'boolean',
+                id: 'cluster',
+                value: false,
+                editable: true,
+                sort: 3,
+                label: 'Cluster',
+              },
+              clusterMode: {
+                type: 'select',
+                id: 'clusterMode',
+                label: 'Cluster Style',
+                sort: 4,
+                value: {
+                  name: 'Donut',
+                  value: 'donut',
+                },
+                options: [
+                  {
+                    name: 'Donut',
+                    value: 'donut',
+                  },
+                  {
+                    name: 'Dot',
+                    value: 'dot',
+                  },
+                ],
+                editable: true,
               },
             },
             entityIds: [],
@@ -295,6 +277,28 @@ const visualizationSlice = createSlice({
       const vis = action.payload as Visualization;
       state[vis.id] = vis;
     },
+    setMapViewState: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; viewState: ViewState }>,
+    ) => {
+      const visId = action.payload.visId;
+      const viewState = action.payload.viewState;
+      const vis = state[visId];
+      assert(vis != null);
+      assert(vis.mapState != null);
+      vis.mapState.viewState = viewState;
+    },
+    setMapStyle: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; mapStyle: string }>,
+    ) => {
+      const visId = action.payload.visId;
+      const mapStyle = action.payload.mapStyle;
+      const vis = state[visId];
+      assert(vis != null);
+      assert(vis.mapState != null);
+      vis.mapState.mapStyle = mapStyle;
+    },
   },
 });
 
@@ -306,6 +310,8 @@ export const {
   addEventToVisualization,
   addPersonToVisualization,
   editVisualization,
+  setMapViewState,
+  setMapStyle,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

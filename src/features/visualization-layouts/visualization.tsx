@@ -4,8 +4,8 @@ import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
-import { StoryMapComponent } from '@/features/storycreator/StoryMap';
 import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
+import { GeoMapWrapper } from '@/features/visualizations/geo-map/geo-map-wrapper';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
 
@@ -122,7 +122,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
-        return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
+        return <GeoMapWrapper visualization={visualization} />;
       case 'timeline':
         return (
           <TimelineComponent
