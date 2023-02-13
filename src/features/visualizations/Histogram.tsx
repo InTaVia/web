@@ -1,4 +1,5 @@
 import type { Bin } from '@intavia/api-client';
+import { zoom } from 'd3';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { brushX } from 'd3-brush';
 import { scaleLinear } from 'd3-scale';
@@ -24,8 +25,8 @@ export function Histogram<T extends Date | IsoDateString | number>(
   const dimensions = useVisualisationDimensions({ element: containerElement });
   const ref = useRef<SVGGElement>(null);
 
+  // Data
   const histData = computeBins(rawData, 200);
-
   const thresholds = histData.map((d) => {
     return new Date(d.values[0]).getTime();
   });
@@ -33,8 +34,8 @@ export function Histogram<T extends Date | IsoDateString | number>(
   const minYear = thresholds[0]!;
   const maxYear = thresholds.at(-1)! + binSize;
 
+  // Declare scales and axes
   const xScale = scaleLinear().domain([minYear, maxYear]).range([0, dimensions.boundedWidth]);
-
   const yScale = scaleLinear()
     .domain([
       0,
@@ -45,12 +46,9 @@ export function Histogram<T extends Date | IsoDateString | number>(
       ),
     ])
     .range([dimensions.boundedHeight, 0]);
-
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
-
   const ticks = thresholds.concat(maxYear);
-
   const xAxis = axisBottom(xScale)
     .tickValues(ticks)
     .tickFormat((d) => {
@@ -58,6 +56,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
     });
   const yAxis = axisLeft(yScale);
 
+  // Brush
   useEffect(() => {
     const g = select(ref.current);
 
@@ -95,6 +94,26 @@ export function Histogram<T extends Date | IsoDateString | number>(
     });
   }, [initialBrushedArea, onChangeBrushedArea, xScale, yScale]);
 
+  // Zooming
+  useEffect(() => {
+    const g = select(ref.current);
+    const sel = g.select<SVGGElement>('g.our-brush');
+
+    // g.append('rect')
+    //   .attr('fill', 'none')
+    //   .attr('pointer-events', 'all')
+    //   .attr('width', xScale.range()[1]! - xScale.range()[0]!)
+    //   .attr('height', yScale.range()[0]! - yScale.range()[1]!)
+
+    sel.call(
+      zoom<SVGGElement, unknown>().on('zoom', (event) => {
+        const zoomState = event.transform;
+        console.log(zoomState);
+      }),
+    );
+  });
+
+  // Add axes
   useEffect(() => {
     if (xAxisRef.current)
       select(xAxisRef.current)
