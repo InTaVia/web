@@ -243,8 +243,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
 
   const sortedData = useMemo(() => {
     return (Object.values(plotableEntities) as Array<Entity>).sort((a: Entity, b: Entity) => {
-      const entityAExtent = pickedEvents[a.id];
-      const entityBExtent = pickedEvents[b.id];
+      const entityAExtent = getTemporalExtent([pickedEvents[a.id]]);
+      const entityBExtent = getTemporalExtent([pickedEvents[b.id]]);
 
       if (sortEntities) {
         return new Date(entityAExtent[0]).getTime() - new Date(entityBExtent[0]).getTime();
