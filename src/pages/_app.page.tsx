@@ -106,20 +106,3 @@ export default function App(props: AppProps): JSX.Element {
     </Fragment>
   );
 }
-
-if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
-  const { seed } = await import('@/mocks/db');
-  seed();
-
-  if (typeof window !== 'undefined') {
-    log.warn('API mocking enabled (client).');
-
-    const { worker } = await import('@/mocks/mocks.browser');
-    void worker.start({ onUnhandledRequest: 'bypass' });
-  } else {
-    log.warn('API mocking enabled (server).');
-
-    const { server } = await import('@/mocks/mocks.server');
-    server.listen({ onUnhandledRequest: 'bypass' });
-  }
-}
