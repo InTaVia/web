@@ -42,7 +42,7 @@ export function DotMarker(props: DotMarkerProps<T>): JSX.Element {
   }
 
   return (
-    <Marker key={nanoid(4)} anchor="center" latitude={lat} longitude={lng}>
+    <Marker key={nanoid(4)} latitude={lat} longitude={lng}>
       <svg
         className="cursor-pointer"
         height={size}

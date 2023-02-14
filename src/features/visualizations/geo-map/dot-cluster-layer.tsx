@@ -106,6 +106,8 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
         }
         const size = 15;
         // TDODO: use Marker
+        const eventKind = JSON.parse(marker.feature.properties.event).kind;
+
         return (
           <Marker key={marker.id} {...marker.coordinates}>
             <svg
@@ -115,7 +117,12 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
               onMouseLeave={onHoverEnd}
               viewBox="0 0 24 24"
             >
-              <circle cx={12} cy={12} r={size / 2} fill={colors[marker.id] || colors.default} />
+              <circle
+                cx={12}
+                cy={12}
+                r={size / 2}
+                fill={eventKind in colors ? colors[eventKind] : colors.default}
+              />
             </svg>
           </Marker>
         );
