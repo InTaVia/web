@@ -23,11 +23,10 @@ import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-url
 import { useCanonicalUrl } from '@/app/route/use-canonical-url';
 import { useLocale } from '@/app/route/use-locale';
 import { persistor, store } from '@/app/store';
+import { SetupStore } from '@/app/store/setup-store';
 import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
-import { log } from '@/lib/log';
-import SetupStore from '@/pages/setup-store';
 import { theme } from '@/styles/theme';
 import { manifestFileName, openGraphImageName } from '~/config/metadata.config';
 
