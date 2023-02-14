@@ -1,5 +1,6 @@
 import type { CulturalHeritageObject } from '@intavia/api-client';
 
+import { EgoNetworkComponent } from '@/features/ego-network/ego-network-component';
 import { EntityAlternativeLabels } from '@/features/entities/entity-alternative-labels';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
@@ -27,6 +28,7 @@ export function CulturalHeritageObjectDetails(
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={cho.linkedIds} />
       {hasRelations ? <EntityRelations relations={cho.relations} /> : null}
+      {hasRelations ? <EgoNetworkComponent entity={cho} width={600} height={600} /> : null}
     </div>
   );
 }
