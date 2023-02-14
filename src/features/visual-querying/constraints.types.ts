@@ -1,33 +1,39 @@
 import type { EntityKind, InternationalizedLabel, VocabularyEntry } from '@intavia/api-client';
 import type { Feature } from 'geojson';
 
+export interface ConstraintKindType {
+  id: string;
+  label: InternationalizedLabel;
+}
+
 export interface DateRangeConstraintKind {
-  kind: 'date-range';
+  kind: { id: 'date-range'; label: { default: 'Dates' } };
   value: [IsoDateTimestamp, IsoDateTimestamp] | null;
 }
 
 export interface GeometryConstraintKind {
-  kind: 'geometry';
+  kind: { id: 'geometry'; label: { default: 'Places' } };
   value: Array<Feature> | null;
 }
 
 export interface LabelConstraintKind {
-  kind: 'label';
+  kind: { id: 'label'; label: { default: 'Labels' } };
   value: string | null;
 }
 
 export interface VocabularyConstraintKind<T extends { id: string } = { id: string }> {
-  kind: 'vocabulary';
+  kind: { id: 'vocabulary'; label: { default: 'Attributes' } };
   value: Array<T['id']> | null;
 }
 
 export type ConstraintKind =
   | DateRangeConstraintKind
-  | GeometryConstraintKind
+  // | GeometryConstraintKind
   | LabelConstraintKind
   | VocabularyConstraintKind;
 
-export type ConstraintKindId = ConstraintKind['kind'];
+export type ConstraintKindId = ConstraintKind['kind']['id'];
+export type ConstraintKindLabel = ConstraintKind['kind']['label'];
 
 export const constraintKindIds: Array<ConstraintKindId> = [
   'date-range',
@@ -35,6 +41,13 @@ export const constraintKindIds: Array<ConstraintKindId> = [
   'label',
   'vocabulary',
 ];
+
+export const constraintKindLabelById: Record<ConstraintKindId, ConstraintKindLabel> = {
+  'date-range': { default: 'Dates' },
+  // geometry: { default: 'Places' },
+  label: { default: 'Labels' },
+  vocabulary: { default: 'Attributes' },
+};
 
 export interface ConstraintBase {
   id: string;

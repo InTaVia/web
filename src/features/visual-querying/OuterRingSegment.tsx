@@ -28,7 +28,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
     if (constraint.value === null) {
       return '';
     }
-    switch (constraint.kind) {
+    switch (constraint.kind.id) {
       case 'label':
         const value = constraint.value as string;
         if (value.length < 30) {
@@ -38,10 +38,11 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
       case 'date-range':
         const [start, end] = constraint.value as [number, number];
         return `${new Date(start).getFullYear()} - ${new Date(end).getFullYear()}`;
-      case 'geometry':
-        return 'Polygon';
+      // case 'geometry':
+      //   return 'Polygon';
       case 'vocabulary':
-        const list = constraint.value.join(', ');
+        const list =
+          typeof constraint.value === 'string' ? constraint.value : constraint.value.join(', ');
         if (list.length < 30) {
           return list;
         }

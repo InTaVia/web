@@ -14,13 +14,13 @@ export function VisualQuerying(): JSX.Element {
 
   const [selectedConstraint, setSelectedConstraint] = useState<string | null>(null);
 
-  function getContainerPosition(type: Constraint['kind']): { x: number; y: number } {
+  function getContainerPosition(type: Constraint['kind']['id']): { x: number; y: number } {
     const center: [number, number] = [width / 2, height / 2];
     switch (type) {
       case 'date-range':
         return { x: center[0] + 200, y: Math.max(0, center[1] - 300) };
-      case 'geometry':
-        return { x: center[0] + 200, y: center[1] + 0 };
+      // case 'geometry':
+      //   return { x: center[0] + 200, y: center[1] + 0 };
       case 'vocabulary':
         return { x: Math.max(0, center[0] - 550), y: center[1] + 0 };
       case 'label':
@@ -51,7 +51,7 @@ export function VisualQuerying(): JSX.Element {
           return (
             <ConstraintContainer
               key={idx}
-              position={getContainerPosition(constraint.kind)}
+              position={getContainerPosition(constraint.kind.id)}
               constraint={constraint}
               setSelectedConstraint={setSelectedConstraint}
             />
