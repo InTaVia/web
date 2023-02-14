@@ -10,6 +10,8 @@ import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import Button from '@/features/ui/Button';
+import { NumberField } from '@/features/ui/NumberField';
+import { Switch } from '@/features/ui/Switch';
 import TextField from '@/features/ui/TextField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -85,208 +87,234 @@ export function VisualizationPropertiesDialog(
                   {`Edit ${name}`}
                 </Dialog.Title>
                 <div className="mt-2">
-                  <div className="grid h-auto w-auto grid-cols-[auto,auto] gap-4">
+                  <div key={'gridTest'} className="grid h-auto w-auto grid-cols-[auto,auto] gap-4">
                     {editableAttributes.map((property: VisualizationProperty) => {
                       switch (property.type) {
-                        case 'text':
-                          return (
-                            <>
-                              <div>{property.label}</div>
-                              <TextField
-                                id={property.id}
-                                onChange={onChange}
-                                value={property.value}
-                              />
-                            </>
-                          );
-                        case 'select':
-                          return (
-                            <>
-                              <div>{property.label}</div>
-                              <Listbox
-                                value={property.value}
-                                onChange={(val: any) => {
-                                  const newProps = {
-                                    ...tmpProperties,
-                                  };
+                        case 'boolean':
+                          return [
+                            <div key={`${property.id}Label`}>{property.label}</div>,
+                            <Switch
+                              key={`${property.id}Switch`}
+                              value={property.value as boolean}
+                              onChange={() => {
+                                const newProps = {
+                                  ...tmpProperties,
+                                };
 
-                                  newProps[property.id] = { ...property, value: val };
-                                  setTmpProperties(newProps);
-                                }}
-                              >
-                                <div className="relative mt-1">
-                                  <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                                    <span className="block truncate">{property.value.name}</span>
-                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                      <SelectorIcon
-                                        className="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                      />
-                                    </span>
-                                  </Listbox.Button>
-                                  <Transition
-                                    as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
-                                  >
-                                    <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                      {property.options?.map((option, optionIdx) => {
-                                        return (
-                                          <Listbox.Option
-                                            key={optionIdx}
-                                            className={({ active }) => {
-                                              return `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                                active
-                                                  ? 'bg-amber-100 text-amber-900'
-                                                  : 'text-gray-900'
-                                              }`;
-                                            }}
-                                            value={option}
+                                const oldValue = newProps[property.id]!.value as boolean;
+
+                                newProps[property.id] = { ...property, value: !oldValue };
+                                setTmpProperties(newProps);
+                              }}
+                            />,
+                          ];
+                        case 'number':
+                          return [
+                            <div key={`${property.id}Label`}>{property.label}</div>,
+                            <NumberField
+                              key={`${property.id}Number`}
+                              value={property.value}
+                              onChange={(val: any) => {
+                                const newProps = {
+                                  ...tmpProperties,
+                                };
+
+                                newProps[property.id] = { ...property, value: val };
+                                setTmpProperties(newProps);
+                              }}
+                            />,
+                          ];
+                        case 'text':
+                          return [
+                            <div key={`${property.id}Label`}>{property.label}</div>,
+                            <TextField
+                              key={`${property.id}TextField`}
+                              id={property.id}
+                              onChange={onChange}
+                              value={property.value}
+                            />,
+                          ];
+                        case 'select':
+                          return [
+                            <div key={`${property.id}Label`}>{property.label}</div>,
+                            <Listbox
+                              key={`${property.id}Listbox`}
+                              value={property.value}
+                              onChange={(val: any) => {
+                                const newProps = {
+                                  ...tmpProperties,
+                                };
+
+                                newProps[property.id] = { ...property, value: val };
+                                setTmpProperties(newProps);
+                              }}
+                            >
+                              <div className="relative mt-1">
+                                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                  <span className="block truncate">{property.value.name}</span>
+                                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <SelectorIcon
+                                      className="h-5 w-5 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </Listbox.Button>
+                                <Transition
+                                  as={Fragment}
+                                  leave="transition ease-in duration-100"
+                                  leaveFrom="opacity-100"
+                                  leaveTo="opacity-0"
+                                >
+                                  <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    {property.options?.map((option, optionIdx) => {
+                                      return (
+                                        <Listbox.Option
+                                          key={`option${optionIdx}`}
+                                          className={({ active }) => {
+                                            return `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                              active
+                                                ? 'bg-amber-100 text-amber-900'
+                                                : 'text-gray-900'
+                                            }`;
+                                          }}
+                                          value={option}
+                                        >
+                                          <span
+                                            className={`block truncate ${
+                                              property.value !== null
+                                                ? 'font-medium'
+                                                : 'font-normal'
+                                            }`}
                                           >
-                                            {() => {
-                                              return (
-                                                <>
-                                                  <span
-                                                    className={`block truncate ${
-                                                      property.value !== null
-                                                        ? 'font-medium'
-                                                        : 'font-normal'
-                                                    }`}
-                                                  >
-                                                    {option.name}
-                                                  </span>
-                                                  {property.value.value === option.value ? (
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                                      <CheckIcon
-                                                        className="h-5 w-5"
-                                                        aria-hidden="true"
-                                                      />
-                                                    </span>
-                                                  ) : null}
-                                                </>
-                                              );
-                                            }}
-                                          </Listbox.Option>
-                                        );
-                                      })}
-                                    </Listbox.Options>
-                                  </Transition>
-                                </div>
-                              </Listbox>
-                            </>
-                          );
+                                            {option.name}
+                                          </span>
+                                          {property.value.value === option.value ? (
+                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                            </span>
+                                          ) : null}
+                                        </Listbox.Option>
+                                      );
+                                    })}
+                                  </Listbox.Options>
+                                </Transition>
+                              </div>
+                            </Listbox>,
+                          ];
                         case 'entitiesAndEvents':
                           return (
                             <>
-                              {tmpElement.entityIds.length > 0 && (
-                                <>
-                                  <div>{property.label}</div>
-                                  <div className="grid auto-rows-min grid-cols-[10px,auto,auto] gap-2">
-                                    {tmpElement.entityIds.map((e) => {
-                                      const entity = entitiesByID[e];
-                                      if (entity == null) {
-                                        return null;
+                              {tmpElement.entityIds.length > 0 && [
+                                <div key={`${property.label}ListLabel`}>{property.label}</div>,
+                                <div
+                                  key={`${property.label}List`}
+                                  className="grid auto-rows-min grid-cols-[10px,auto,auto] gap-2"
+                                >
+                                  {tmpElement.entityIds.map((e) => {
+                                    const entity = entitiesByID[e];
+                                    if (entity == null) {
+                                      return null;
+                                    }
+                                    const events = /* entity?.history || */ [] as Array<any>;
+                                    const newVisibilities = { ...tmpElement.visibilities };
+
+                                    if (newVisibilities[e] === undefined) {
+                                      newVisibilities[e] = true;
+                                      for (const event of events) {
+                                        newVisibilities[event.id] = true;
                                       }
-                                      const events = /* entity?.history || */ [] as Array<any>;
-                                      const newVisibilities = { ...tmpElement.visibilities };
+                                      tmpElement.visibilities = newVisibilities;
+                                    } else {
+                                      newVisibilities[e] =
+                                        events.filter((event) => {
+                                          return newVisibilities[event.id] === true;
+                                        }).length > 0;
+                                    }
 
-                                      if (newVisibilities[e] === undefined) {
-                                        newVisibilities[e] = true;
-                                        for (const event of events) {
-                                          newVisibilities[event.id] = true;
-                                        }
-                                        tmpElement.visibilities = newVisibilities;
-                                      } else {
-                                        newVisibilities[e] =
-                                          events.filter((event) => {
-                                            return newVisibilities[event.id] === true;
-                                          }).length > 0;
-                                      }
+                                    return [
+                                      <div
+                                        key={`entity${entity.id}`}
+                                        className="flex h-7 items-center"
+                                      >
+                                        <input
+                                          id={`default-checkbox-${e}`}
+                                          type="checkbox"
+                                          checked={newVisibilities[e]}
+                                          value={`${newVisibilities[e]}`}
+                                          onChange={() => {
+                                            newVisibilities[e] = !(newVisibilities[e] as boolean);
 
-                                      return (
-                                        <>
-                                          <div className="flex h-7 items-center">
-                                            <input
-                                              id={`default-checkbox-${e}`}
-                                              type="checkbox"
-                                              checked={newVisibilities[e]}
-                                              value={`${newVisibilities[e]}`}
-                                              onChange={() => {
-                                                newVisibilities[e] = !(newVisibilities[
-                                                  e
-                                                ] as boolean);
+                                            for (const event of events) {
+                                              newVisibilities[event.id] = newVisibilities[
+                                                e
+                                              ] as boolean;
+                                            }
 
-                                                for (const event of events) {
-                                                  newVisibilities[event.id] = newVisibilities[
-                                                    e
-                                                  ] as boolean;
-                                                }
+                                            setTmpElement({
+                                              ...tmpElement,
+                                              visibilities: newVisibilities,
+                                            });
+                                          }}
+                                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                                        />
+                                      </div>,
+                                      <div
+                                        key={`${property.label}Disclosure`}
+                                        className="w-full max-w-md rounded-2xl bg-white"
+                                      >
+                                        <Disclosure>
+                                          {({ open }) => {
+                                            return (
+                                              <>
+                                                <Disclosure.Button className="flex h-7 w-full justify-between rounded-lg bg-blue-100 p-1 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
+                                                  <span>
+                                                    entity
+                                                    {getTranslatedLabel(entity.label)}
+                                                  </span>
+                                                  <ChevronUpIcon
+                                                    className={`${
+                                                      open ? '' : 'rotate-180 transform'
+                                                    } h-5 w-5 text-blue-500`}
+                                                  />
+                                                </Disclosure.Button>
+                                                <Disclosure.Panel className="rounded-lg bg-blue-50 p-2 text-sm text-blue-900">
+                                                  {events.map((event: Event) => {
+                                                    newVisibilities[event.id] !== undefined
+                                                      ? newVisibilities[event.id]
+                                                      : true;
 
-                                                setTmpElement({
-                                                  ...tmpElement,
-                                                  visibilities: newVisibilities,
-                                                });
-                                              }}
-                                              className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                                            />
-                                          </div>
-                                          <div className="w-full max-w-md rounded-2xl bg-white">
-                                            <Disclosure>
-                                              {({ open }) => {
-                                                return (
-                                                  <>
-                                                    <Disclosure.Button className="flex h-7 w-full justify-between rounded-lg bg-blue-100 p-1 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
-                                                      <span>
-                                                        entity
-                                                        {getTranslatedLabel(entity.label)}
-                                                      </span>
-                                                      <ChevronUpIcon
-                                                        className={`${
-                                                          open ? '' : 'rotate-180 transform'
-                                                        } h-5 w-5 text-blue-500`}
-                                                      />
-                                                    </Disclosure.Button>
-                                                    <Disclosure.Panel className="rounded-lg bg-blue-50 p-2 text-sm text-blue-900">
-                                                      {events.map((event: Event) => {
-                                                        newVisibilities[event.id] !== undefined
-                                                          ? newVisibilities[event.id]
-                                                          : true;
+                                                    const eventVisible = newVisibilities[event.id];
 
-                                                        const eventVisible =
-                                                          newVisibilities[event.id];
+                                                    return (
+                                                      <div
+                                                        key={event.id}
+                                                        className="grid grid-cols-[25px,1fr] items-center"
+                                                      >
+                                                        <input
+                                                          id={`${event.id}-checkbox`}
+                                                          type="checkbox"
+                                                          checked={eventVisible}
+                                                          value={''}
+                                                          onChange={() => {
+                                                            newVisibilities[event.id] =
+                                                              !(eventVisible as boolean);
 
-                                                        return (
-                                                          <div
-                                                            key={event.id}
-                                                            className="grid grid-cols-[25px,1fr] items-center"
-                                                          >
-                                                            <input
-                                                              id={`${event.id}-checkbox`}
-                                                              type="checkbox"
-                                                              checked={eventVisible}
-                                                              value={''}
-                                                              onChange={() => {
-                                                                newVisibilities[event.id] =
-                                                                  !(eventVisible as boolean);
+                                                            if (
+                                                              newVisibilities[event.id] === true &&
+                                                              newVisibilities[e] === false
+                                                            ) {
+                                                              newVisibilities[e] = true;
+                                                            }
 
-                                                                if (
-                                                                  newVisibilities[event.id] ===
-                                                                    true &&
-                                                                  newVisibilities[e] === false
-                                                                ) {
-                                                                  newVisibilities[e] = true;
-                                                                }
-
-                                                                setTmpElement({
-                                                                  ...tmpElement,
-                                                                  visibilities: newVisibilities,
-                                                                });
-                                                              }}
-                                                              className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                                                            />
-                                                            <div className="table">
-                                                              {/*  <div className="table-cell w-1/3 font-semibold">
+                                                            setTmpElement({
+                                                              ...tmpElement,
+                                                              visibilities: newVisibilities,
+                                                            });
+                                                          }}
+                                                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                                                        />
+                                                        <div className="table">
+                                                          {/*  <div className="table-cell w-1/3 font-semibold">
                                                                 {eventTypes[event.type].label}
                                                               </div>
                                                               <div className="table-cell">
@@ -301,47 +329,48 @@ export function VisualizationPropertiesDialog(
                                                                   <span>in {event.place.name}</span>
                                                                 ) : null}
                                                               </div> */}
-                                                            </div>
-                                                          </div>
-                                                        );
-                                                      })}
-                                                    </Disclosure.Panel>
-                                                  </>
-                                                );
-                                              }}
-                                            </Disclosure>
-                                          </div>
-                                          <div className="flex h-7 items-center">
-                                            <Button
-                                              onClick={() => {
-                                                const newEntityIds = tmpElement.entityIds.filter(
-                                                  (id) => {
-                                                    return id !== e;
-                                                  },
-                                                );
-                                                const newVis = { ...newVisibilities };
-                                                delete newVis[e];
-                                                for (const event of events) {
-                                                  delete newVis[event.id];
-                                                }
-                                                setTmpElement({
-                                                  ...tmpElement,
-                                                  entityIds: newEntityIds,
-                                                  visibilities: newVis,
-                                                });
-                                              }}
-                                              size="extra-small"
-                                              round="circle"
-                                            >
-                                              <TrashIcon className="h-4 w-4" />
-                                            </Button>
-                                          </div>
-                                        </>
-                                      );
-                                    })}
-                                  </div>
-                                </>
-                              )}
+                                                        </div>
+                                                      </div>
+                                                    );
+                                                  })}
+                                                </Disclosure.Panel>
+                                              </>
+                                            );
+                                          }}
+                                        </Disclosure>
+                                      </div>,
+                                      <div
+                                        key={`${property.label}ListButton`}
+                                        className="flex h-7 items-center"
+                                      >
+                                        <Button
+                                          onClick={() => {
+                                            const newEntityIds = tmpElement.entityIds.filter(
+                                              (id) => {
+                                                return id !== e;
+                                              },
+                                            );
+                                            const newVis = { ...newVisibilities };
+                                            delete newVis[e];
+                                            for (const event of events) {
+                                              delete newVis[event.id];
+                                            }
+                                            setTmpElement({
+                                              ...tmpElement,
+                                              entityIds: newEntityIds,
+                                              visibilities: newVis,
+                                            });
+                                          }}
+                                          size="extra-small"
+                                          round="circle"
+                                        >
+                                          <TrashIcon className="h-4 w-4" />
+                                        </Button>
+                                      </div>,
+                                    ];
+                                  })}
+                                </div>,
+                              ]}
                               {element.eventIds.length > 0 && (
                                 <>
                                   <div>Events</div>

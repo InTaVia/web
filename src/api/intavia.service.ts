@@ -7,6 +7,8 @@ import type {
   GetOccupationById,
   GetRelationRoleById,
   OccupationStatisticsSearch,
+  RetrieveEntitiesByIds,
+  RetrieveEventsByIds,
   SearchEntities,
   SearchEventKinds,
   SearchEvents,
@@ -20,6 +22,8 @@ import {
   getEventKindById,
   getOccupationById,
   getRelationRoleById,
+  retrieveEntitiesByIds,
+  retrieveEventsByIds,
   searchBirthStatistics,
   searchDeathStatistics,
   searchEntities,
@@ -169,6 +173,28 @@ export const service = createApi({
           };
         },
       }),
+      retrieveEntitiesByIds: builder.query<
+        RetrieveEntitiesByIds.Response,
+        { params: RetrieveEntitiesByIds.Params; body: RetrieveEntitiesByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveEntitiesByIds.url(params.params),
+            options: retrieveEntitiesByIds.options(params.body),
+          };
+        },
+      }),
+      retrieveEventsByIds: builder.query<
+        RetrieveEventsByIds.Response,
+        { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveEventsByIds.url(params.params),
+            options: retrieveEventsByIds.options(params.body),
+          };
+        },
+      }),
     };
   },
 });
@@ -180,7 +206,11 @@ export const {
   useSearchEntitiesQuery,
   useLazySearchEntitiesQuery,
   useSearchEventsQuery,
+  useSearchEventKindsQuery,
   useLazySearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchOccupationStatisticsQuery,
+  useRetrieveEntitiesByIdsQuery,
+  useRetrieveEventsByIdsQuery,
+  useSearchRelationRolesQuery,
 } = service;

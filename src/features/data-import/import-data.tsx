@@ -16,8 +16,6 @@ export function ImportData(props: ImportDataProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const importData = () => {
-    console.log(data);
-
     // add entities
     data?.entities && dispatch(addLocalEntities(data.entities));
 

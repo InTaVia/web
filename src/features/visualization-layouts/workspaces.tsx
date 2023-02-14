@@ -4,15 +4,16 @@ import {
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
 import { clsx } from 'clsx';
+import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { PropertiesDialog } from '@/features/common/properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import Button from '@/features/ui/Button';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
-import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 import {
   addWorkspace,
   releaseVisualizationForVisualizationSlotForCurrentWorkspace,
@@ -81,7 +82,7 @@ export default function Workspaces(): JSX.Element {
         onChange={onChangeWorkspace}
         defaultIndex={0}
       >
-        <Tab.Panels className="h-full w-full grow bg-indigo-300">
+        <Tab.Panels className="h-full basis-auto">
           {workspaces.workspaces.map((workspace, idx) => {
             return (
               <Tab.Panel key={idx} className="h-full w-full p-0">
@@ -106,56 +107,72 @@ export default function Workspaces(): JSX.Element {
             );
           })}
         </Tab.Panels>
-        <Tab.List className="flex grow-0 space-x-1 bg-blue-900 p-1">
-          {workspaces.workspaces.map((workspace, idx) => {
-            return (
-              <Tab
-                key={workspace.id}
-                className={({ selected }) => {
-                  return clsx({
-                    ['rounded-sm py-1 px-2 text-sm font-medium leading-5 text-blue-700']: true, //always applies
-                    ['bg-white shadow']: selected, //only when open === true
-                    ['text-blue-100 hover:bg-white/[0.12] hover:text-white']: !selected,
-                  });
-                }}
-              >
-                {({ selected }) => {
-                  return selected ? (
-                    <div className="flex gap-2">
-                      {workspace.label}
-                      <Button
-                        shadow="none"
-                        size="extra-small"
-                        round="circle"
-                        onClick={() => {
-                          return onRemoveWorkspace(idx);
-                        }}
-                      >
-                        <CloseWorkspaceIcon className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  ) : (
-                    workspace.label
-                  );
-                }}
-              </Tab>
-            );
-          })}
-          <div className="grow"></div>
-          <Button
-            className="ml-auto grow-0"
-            shadow="none"
-            size="small"
-            round="circle"
-            color="accent"
-            onClick={onAddWorkspace}
-          >
-            <AddWorkspaceIcon className="h-5 w-5" />
-          </Button>
-        </Tab.List>
+        <div className="flex h-12 w-full flex-row items-center justify-between overflow-hidden bg-blue-900">
+          <div className="p-1">
+            <Button
+              className="ml-auto grow-0"
+              shadow="none"
+              size="small"
+              round="circle"
+              color="accent"
+              onClick={onAddWorkspace}
+              onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault();
+              }}
+            >
+              <AddWorkspaceIcon className="h-5 w-5" />
+            </Button>
+          </div>
+          <Tab.List className="flex w-full grow basis-1 space-x-1" as="div">
+            {workspaces.workspaces.map((workspace, idx) => {
+              return (
+                <Tab
+                  as="div"
+                  key={workspace.id}
+                  className={({ selected }) => {
+                    return clsx({
+                      ['flex cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-blue-700']:
+                        true, //always applies
+                      ['bg-white shadow']: selected, //only when open === true
+                      ['text-blue-100 hover:bg-white/[0.12] hover:text-white']: !selected,
+                    });
+                  }}
+                  onDoubleClick={(event: MouseEvent<HTMLDivElement>) => {
+                    event.preventDefault();
+                  }}
+                >
+                  {({ selected }) => {
+                    return selected ? (
+                      <div className="flex items-center gap-2">
+                        <p className="cursor-pointer whitespace-nowrap">{workspace.label}</p>
+                        {workspaces.workspaces.length > 1 && (
+                          <Button
+                            shadow="none"
+                            size="extra-small"
+                            round="circle"
+                            onClick={() => {
+                              return onRemoveWorkspace(idx);
+                            }}
+                          >
+                            <CloseWorkspaceIcon className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <p className="cursor-pointer whitespace-nowrap">{workspace.label}</p>
+                      </div>
+                    );
+                  }}
+                </Tab>
+              );
+            })}
+          </Tab.List>
+          <div className="h-full basis-full" onDoubleClick={onAddWorkspace}></div>
+        </div>
       </Tab.Group>
       {visualizationEditElement != null && (
-        <VisualizationPropertiesDialog
+        <PropertiesDialog
           onClose={handleCloseVisualizationDialog}
           element={visualizationEditElement}
           onSave={handleSaveVisualization}

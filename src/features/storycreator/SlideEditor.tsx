@@ -1,7 +1,8 @@
+import type { Entity, Event } from '@intavia/api-client';
 import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
-import { useAppDispatch } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
@@ -10,7 +11,9 @@ import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   releaseVisualizationForVisualizationSlotForSlide,
+  selectSlidesByStoryID,
   setContentPaneToSlot,
+  setHighlighted,
   setVisualizationForVisualizationSlotForStorySlide,
   switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
@@ -55,6 +58,15 @@ export function SlideEditor(props: SlideEditorProps) {
   const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
   const dispatch = useAppDispatch();
+
+  const slides = useAppSelector((state) => {
+    return selectSlidesByStoryID(state, slide.story);
+  });
+  const currentSlide = slides.filter((currSlide) => {
+    return currSlide.id === slide.id;
+  })[0];
+  const highlighted = currentSlide!.highlighted;
+  // console.log(highlighted);
 
   const handleClose = () => {
     setEditElement(null);
@@ -142,6 +154,15 @@ export function SlideEditor(props: SlideEditorProps) {
         onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
         setVisualizationEditElement={setVisualizationEditElement}
+        hightlighted={highlighted}
+        onToggleHighlight={(
+          entities: Array<Entity['id'] | null>,
+          events: Array<Event['id'] | null>,
+          visId: string,
+        ) => {
+          // console.log({ entities, events, visId, slide });
+          dispatch(setHighlighted({ entities, events, visId, slide }));
+        }}
       />
       {editElement !== null && (
         <StoryContentDialog onClose={handleClose} element={editElement} onSave={handleSave} />

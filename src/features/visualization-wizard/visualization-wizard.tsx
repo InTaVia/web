@@ -1,8 +1,17 @@
-import { useAppDispatch } from '@/app/store';
+import { nanoid } from '@reduxjs/toolkit';
+import { useState } from 'react';
+import { isConstructorDeclaration } from 'typescript';
+
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
-import { createVisualization } from '@/features/common/visualization.slice';
+import {
+  createVisualization,
+  selectAllVisualizations,
+} from '@/features/common/visualization.slice';
 import Button from '@/features/ui/Button';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
+import { setVisualizationForVisualizationSlotForCurrentWorkspace } from '@/features/visualization-layouts/workspaces.slice';
+import { VisualizationSelect } from '@/features/visualization-wizard/visualization-select';
 
 interface VisualizationWizardProps {
   visualizationSlot: SlotId;
@@ -11,13 +20,14 @@ interface VisualizationWizardProps {
 export default function VisualizationWizard(props: VisualizationWizardProps): JSX.Element {
   const { visualizationSlot, onAddVisualization } = props;
   const dispatch = useAppDispatch();
+  const [selectedVisualizationId, setSelectedVisualizationId] = useState<
+    Visualization['id'] | null
+  >(null);
+  const visualizations = useAppSelector(selectAllVisualizations);
 
   function createVis(type: Visualization['type']) {
-    const visId = `visualization-${Math.random()
-      .toString(36)
-      .replace(/[^a-z]+/g, '')
-      .substring(0, 4)}`;
-    //TODO dispatch -> createVisualisation -> common/visualization.slice
+    const visId = `visualization-${nanoid(4)}`;
+
     dispatch(
       createVisualization({
         id: visId,
@@ -31,89 +41,50 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     return visId;
   }
 
-  /* function onAddVisualization() {
-    if (slide !== undefined) {
-      dispatch(
-        setVisualizationForVisualizationSlotForStorySlide({
-          slide: slide,
-          visualizationSlot: visualizationSlot,
-          visualizationId: visId,
-        }),
-      );
-    } else {
-      dispatch(
-        setVisualizationForVisualizationSlotForCurrentWorkspace({
-          visualizationSlot: visualizationSlot,
-          visualizationId: visId,
-        }),
-      );
-    }
-  } */
-
   function onButtonClick(type: Visualization['type']) {
     const visId = createVis(type);
-    console.log(visId);
     onAddVisualization(visualizationSlot, visId);
   }
 
+  function onLoadVisualization() {
+    // console.log('load', selectedVisualizationId, 'into', visualizationSlot);
+    onAddVisualization(visualizationSlot, selectedVisualizationId);
+  }
+
   return (
-    <div className="flex h-full w-full items-center justify-center p-5">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-5 p-5">
       <div className="grid grid-cols-2 gap-2">
-        {/* <Button
+        <Button
           round="round"
           color="accent"
           onClick={() => {
             onButtonClick('map');
           }}
         >
-          Map
-        </Button> */}
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('story-map');
-          }}
-        >
           Create Map Visualization
         </Button>
-        {/* <Button
+        <Button
           round="round"
           color="accent"
           onClick={() => {
             onButtonClick('timeline');
           }}
         >
-          Timeline
-        </Button> */}
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('story-timeline');
-          }}
-        >
           Create Timeline Visualization
         </Button>
-        {/* <Button round="round" color="accent">
-          Set
-        </Button>
-        <Button round="round" color="accent">
-          Hierarchy
-        </Button> */}
       </div>
+      {Object.keys(visualizations).length > 0 && (
+        <div className="grid grid-cols-2 gap-2">
+          <VisualizationSelect
+            options={visualizations}
+            setSelectedVisualizationId={setSelectedVisualizationId}
+            selectedVisualizationId={selectedVisualizationId}
+          />
+          <Button size="extra-small" round="round" color="primary" onClick={onLoadVisualization}>
+            Add Visualization
+          </Button>
+        </div>
+      )}
     </div>
   );
-}
-
-{
-  /* <Button
-      size="small"
-      color="warning"
-      round="round"
-      onClick={onAddVisualization}
-      className="ml-auto self-end"
-    >
-      Add Visualization
-    </Button> */
 }

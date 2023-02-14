@@ -1,25 +1,34 @@
-import { Fragment } from 'react';
+import type { Entity, EntityEventRelation, Event } from '@intavia/api-client';
 
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/app/store/intavia.slice';
+import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
-import { GeoMap } from '@/features/geomap/geo-map';
-import { StoryTimeline } from '@/features/storycreator/story-timeline';
-import { StoryMapComponent } from '@/features/storycreator/StoryMap';
-import { Timeline } from '@/features/timeline/timeline';
+//import { StoryTimeline } from '@/features/storycreator/story-timeline';
+import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
+import { GeoMapWrapper } from '@/features/visualizations/geo-map/geo-map-wrapper';
+import { useElementDimensions } from '@/lib/use-element-dimensions';
+import { useElementRef } from '@/lib/use-element-ref';
 
 interface VisualizationProps {
   visualization: Visualization;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
 }
 
 export default function VisualisationComponent(props: VisualizationProps): JSX.Element {
-  const { visualization } = props;
+  const { visualization, onToggleHighlight, highlightedByVis } = props;
 
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const allPersons = Object.values(entitiesByKind.person);
+  const allEvents = useAppSelector(selectEvents);
 
   const eventIds = visualization.eventIds;
   const personIds = visualization.entityIds;
+
+  const [containerElement, setContainerElement] = useElementRef();
 
   const filteredPersons =
     personIds.length > 0
@@ -48,17 +57,17 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const filteredEvents =
     eventIds.length > 0
-      ? allPersonEvents.filter((event) => {
-          return eventIds.includes(event.id);
+      ? allPersonEvents.filter((eventId) => {
+          return eventIds.includes(eventId as string);
         })
       : [];
 
-  const visEvents = [...personEvents, ...filteredEvents].filter((event) => {
+  const visEvents = [...personEvents, ...filteredEvents].filter((eventId) => {
     let visible = true;
     if (visualization.visibilities !== undefined) {
       visible =
-        visualization.visibilities[event.id] !== undefined
-          ? Boolean(visualization.visibilities[event.id])
+        visualization.visibilities[eventId as string] !== undefined
+          ? Boolean(visualization.visibilities[eventId as string])
           : true;
     }
     return visible;
@@ -72,20 +81,85 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
 
   const visPersons = [...filteredPersons, ...twiceFilteredPersons];
 
+  const visPersonsAsObject = Object.fromEntries(
+    visPersons.map((entry) => {
+      return [entry.id, entry];
+    }),
+  );
+
+  const visPersonsEventIds = visPersons.flatMap((entity: Entity) => {
+    return entity.relations !== undefined
+      ? entity.relations.map((rel: EntityEventRelation) => {
+          return rel.event;
+        })
+      : [];
+  });
+
+  /* export const pick = (obj: Record<string, any>, keys: Array<string>) => {
+  return Object.fromEntries(
+    keys
+      .filter((key) => {
+        return key in obj;
+      })
+      .map((key) => {
+        return [key, obj[key]];
+      }),
+  );
+}; */
+
+  // console.log('allEvent', allEvents);
+
+  const pickedEvents = Object.fromEntries(
+    visPersonsEventIds
+      .filter((id) => {
+        return id in allEvents;
+      })
+      .map((id) => {
+        return [id, allEvents[id]];
+      }),
+  );
+
+  const rect = useElementDimensions({ element: containerElement });
+
+  const width = rect != null ? rect.width : 50;
+  const height = rect != null ? rect.height : 50;
+
   const generateVisualization = (visualization: Visualization) => {
     switch (visualization.type) {
       case 'map':
-        return <StoryMapComponent properties={visualization.properties} events={visEvents} />; //GeoMap
-      case 'story-map':
-        return <StoryMapComponent properties={visualization.properties} events={visEvents} />;
+        return (
+          <GeoMapWrapper
+            visualization={visualization}
+            onToggleHighlight={onToggleHighlight}
+            highlightedByVis={highlightedByVis}
+          />
+        );
       case 'timeline':
-        return <Timeline />;
-      case 'story-timeline':
-        return <StoryTimeline persons={visPersons} events={visEvents} />;
+        return (
+          <TimelineComponent
+            entities={visPersonsAsObject}
+            events={pickedEvents}
+            width={width}
+            height={height}
+            properties={visualization.properties}
+            // onToggleHighlight={onToggleHighlight}
+          />
+        );
       default:
         return <div>{`Wrong type of visualization ${visualization.type}!`}</div>;
     }
   };
 
-  return <Fragment>{generateVisualization(visualization)}</Fragment>;
+  return (
+    <div ref={setContainerElement} className={'h-full w-full'}>
+      <div
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      >
+        {generateVisualization(visualization)}
+      </div>
+    </div>
+  );
 }

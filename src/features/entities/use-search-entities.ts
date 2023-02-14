@@ -1,4 +1,5 @@
-import type { SearchEntities } from '@/api/intavia.client';
+import type { SearchEntities } from '@intavia/api-client';
+
 import * as routes from '@/app/route/routes';
 import { sanitizeSearchEntitiesParams } from '@/features/entities/sanitize-search-entities-params';
 import type { UseSearchResult } from '@/features/entities/use-search';

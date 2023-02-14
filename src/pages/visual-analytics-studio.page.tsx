@@ -1,8 +1,9 @@
 import { Allotment } from 'allotment';
 
+import { PageContext } from '@/app/context/page.context';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { CollectionEntitiesList } from '@/features/data-view-panel/data-view-panel';
+import { DataPanel } from '@/features/data-panel/data-panel';
 import type { LayoutOptionData } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import AnalysePageToolbar from '@/features/ui/analyse-page-toolbar/toolbar';
 import DisclosureWrapper from '@/features/ui/DisclosureWrapper';
@@ -28,24 +29,23 @@ export default function AnalysePage(): JSX.Element {
   };
 
   return (
-    <Allotment>
-      <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
-        <DisclosureWrapper title="Data" defaultOpen={true}>
-          <CollectionEntitiesList />
-        </DisclosureWrapper>
-        <DisclosureWrapper title="Search History" defaultOpen={true}></DisclosureWrapper>
-      </Allotment.Pane>
-      <Allotment.Pane {...centerPaneProps}>
-        <div className="flex h-full w-full flex-col bg-red-100">
-          <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
-          <Workspaces />
-        </div>
-      </Allotment.Pane>
-      <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
-        <DisclosureWrapper title="Test" defaultOpen={true}>
-          <div>Placeholder</div>
-        </DisclosureWrapper>
-      </Allotment.Pane>
-    </Allotment>
+    <PageContext.Provider value={{ page: 'visual-analytics-studio' }}>
+      <Allotment>
+        <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
+          <DataPanel />
+        </Allotment.Pane>
+        <Allotment.Pane {...centerPaneProps}>
+          <div className="flex h-full w-full flex-col overflow-hidden">
+            <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
+            <Workspaces />
+          </div>
+        </Allotment.Pane>
+        <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
+          <DisclosureWrapper title="Test" defaultOpen={true}>
+            <div>Placeholder</div>
+          </DisclosureWrapper>
+        </Allotment.Pane>
+      </Allotment>
+    </PageContext.Provider>
   );
 }

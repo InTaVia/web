@@ -1,21 +1,25 @@
+import type { Entity, Event, Person } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { assert } from '@stefanprobst/assert';
+import type { ViewState } from 'react-map-gl';
 
-import type { Entity, Person } from '@intavia/api-client';
 import type { RootState } from '@/app/store';
+import { unique } from '@/lib/unique';
 
 export interface Visualization {
   id: string;
-  type: 'map' | 'story-map' | 'story-timeline' | 'timeline';
+  type: 'map' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
-  eventIds: Array<string>;
+  eventIds: Array<Event['id']>;
   properties?: Record<string, VisualizationProperty>;
   visibilities?: Record<string, boolean>;
+  mapState?: { mapStyle: string; viewState: Partial<ViewState> };
 }
 
 export interface VisualizationProperty {
-  type: 'entitiesAndEvents' | 'select' | 'text';
+  type: 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text';
   id: string;
   label: string;
   value?: any;
@@ -24,58 +28,14 @@ export interface VisualizationProperty {
   sort?: number | 0;
 }
 
-const initialState: Record<Visualization['id'], Visualization> = {
-  'vis-1': {
-    id: 'vis-1',
-    type: 'map',
-    name: "Vegerio's Life",
-    entityIds: ['abc', 'def'],
-    eventIds: [],
-    properties: {
-      mapStyle: {
-        type: 'select',
-        id: 'mapStyle',
-        label: 'Map Style',
-        value: {
-          name: 'Default',
-          value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-        },
-        options: [
-          {
-            name: 'Default',
-            value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-          },
-          {
-            name: 'Alternative',
-            value: 'https://openmaptiles.github.io/dark-matter-gl-style/style-cdn.json',
-          },
-        ],
-        editable: true,
-      },
-    },
-    /*  props: {
-      mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-      initialViewState: {
-        longitude: 7.571606,
-        latitude: 50.226913,
-        zoom: 4,
-      },
-    }, */
-  },
-  'vis-2': {
-    id: 'vis-2',
-    type: 'map',
-    name: 'Dürer',
-    entityIds: ['abc', 'def'],
-    eventIds: [],
-    /* props: {
-      mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-      initialViewState: {
-        longitude: 8.571606,
-        latitude: 50.226913,
-        zoom: 9,
-      },
-    }, */
+const initialState: Record<Visualization['id'], Visualization> = {};
+
+const defaultMapState = {
+  mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+  viewState: {
+    latitude: 37.8,
+    longitude: -122.4,
+    zoom: 14,
   },
 };
 
@@ -91,9 +51,10 @@ const visualizationSlice = createSlice({
       const vis = action.payload;
 
       switch (vis.type) {
-        case 'story-map':
+        case 'map':
           state[vis['id']] = {
             ...vis,
+            mapState: defaultMapState,
             properties: {
               mapStyle: {
                 type: 'select',
@@ -116,13 +77,6 @@ const visualizationSlice = createSlice({
                 editable: true,
                 sort: 2,
               },
-              entities: {
-                type: 'entitiesAndEvents',
-                id: 'entities',
-                label: 'Entities',
-                editable: true,
-                sort: 3,
-              },
               name: {
                 type: 'text',
                 id: 'name',
@@ -131,22 +85,59 @@ const visualizationSlice = createSlice({
                 editable: true,
                 sort: 1,
               },
+              cluster: {
+                type: 'boolean',
+                id: 'cluster',
+                value: false,
+                editable: true,
+                sort: 3,
+                label: 'Cluster',
+              },
+              clusterMode: {
+                type: 'select',
+                id: 'clusterMode',
+                label: 'Cluster Style',
+                sort: 4,
+                value: {
+                  name: 'Donut',
+                  value: 'donut',
+                },
+                options: [
+                  {
+                    name: 'Donut',
+                    value: 'donut',
+                  },
+                  {
+                    name: 'Dot',
+                    value: 'dot',
+                  },
+                ],
+                editable: true,
+              },
+              renderLines: {
+                type: 'boolean',
+                id: 'renderLines',
+                value: false,
+                editable: true,
+                sort: 5,
+                label: 'Connect events chronologically with lines (for each entity)',
+              },
             },
             entityIds: [],
             eventIds: [],
           };
           break;
-        case 'story-timeline':
+        case 'timeline': {
           state[vis['id']] = {
             ...vis,
             properties: {
-              entities: {
+              /*  entities: {
                 type: 'entitiesAndEvents',
                 id: 'entities',
                 label: 'Entities',
                 editable: true,
-                sort: 3,
-              },
+                sort: 4,
+              }, */
               name: {
                 type: 'text',
                 id: 'name',
@@ -155,11 +146,102 @@ const visualizationSlice = createSlice({
                 editable: true,
                 sort: 1,
               },
+              sort: {
+                type: 'boolean',
+                id: 'sort',
+                value: false,
+                editable: true,
+                sort: 2,
+                label: 'Sort Entities',
+              },
+              cluster: {
+                type: 'boolean',
+                id: 'cluster',
+                value: false,
+                editable: true,
+                sort: 3,
+                label: 'Cluster',
+              },
+              showLabels: {
+                type: 'boolean',
+                id: 'showLabels',
+                value: false,
+                editable: true,
+                sort: 5,
+                label: 'Show Labels',
+              },
+              vertical: {
+                type: 'select',
+                id: 'vertical',
+                label: 'Orientation',
+                sort: 6,
+                value: {
+                  name: 'Automatic',
+                  value: undefined,
+                },
+                options: [
+                  {
+                    name: 'Automatic',
+                    value: undefined,
+                  },
+                  {
+                    name: 'Vertical',
+                    value: true,
+                  },
+                  {
+                    name: 'Horizontal',
+                    value: false,
+                  },
+                ],
+                editable: true,
+              },
+              stackEntities: {
+                type: 'boolean',
+                id: 'stackEntities',
+                value: false,
+                editable: true,
+                sort: 7,
+                label: 'Stack Entities',
+              },
+              thickness: {
+                type: 'number',
+                id: 'thickness',
+                value: 1,
+                editable: true,
+                sort: 8,
+                label: 'Thickness',
+              },
+              clusterMode: {
+                type: 'select',
+                id: 'clusterMode',
+                label: 'Cluster Style',
+                sort: 4,
+                value: {
+                  name: 'Pie',
+                  value: 'pie',
+                },
+                options: [
+                  {
+                    name: 'Pie',
+                    value: 'pie',
+                  },
+                  {
+                    name: 'Donut',
+                    value: 'donut',
+                  },
+                  {
+                    name: 'Bee',
+                    value: 'bee',
+                  },
+                ],
+                editable: true,
+              },
             },
             entityIds: [],
             eventIds: [],
           };
           break;
+        }
         default:
           break;
       }
@@ -171,6 +253,24 @@ const visualizationSlice = createSlice({
       if (!state[visId]!.entityIds.includes(person.id)) {
         state[visId]!.entityIds.push(person.id);
       }
+    },
+    addEntitiesToVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; entities: Array<Entity['id']> }>,
+    ) => {
+      const { visId, entities } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.entityIds = unique([...vis.entityIds, ...entities]);
+    },
+    addEventsToVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; events: Array<Event['id']> }>,
+    ) => {
+      const { visId, events } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.eventIds = unique([...vis.eventIds, ...events]);
     },
     addEventToVisualization: (state, action) => {
       const event = action.payload.event;
@@ -184,15 +284,41 @@ const visualizationSlice = createSlice({
       const vis = action.payload as Visualization;
       state[vis.id] = vis;
     },
+    setMapViewState: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; viewState: ViewState }>,
+    ) => {
+      const visId = action.payload.visId;
+      const viewState = action.payload.viewState;
+      const vis = state[visId];
+      assert(vis != null);
+      assert(vis.mapState != null);
+      vis.mapState.viewState = viewState;
+    },
+    setMapStyle: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; mapStyle: string }>,
+    ) => {
+      const visId = action.payload.visId;
+      const mapStyle = action.payload.mapStyle;
+      const vis = state[visId];
+      assert(vis != null);
+      assert(vis.mapState != null);
+      vis.mapState.mapStyle = mapStyle;
+    },
   },
 });
 
 export const {
   removeVisualization,
   createVisualization,
+  addEntitiesToVisualization,
+  addEventsToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
   editVisualization,
+  setMapViewState,
+  setMapStyle,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

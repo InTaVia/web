@@ -4,11 +4,13 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { PageContext } from '@/app/context/page.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { useParams } from '@/app/route/use-params';
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { DataPanel } from '@/features/data-panel/data-panel';
 import { CollectionPanel } from '@/features/entities/collection-panel';
 import { StoryCenterPane } from '@/features/storycreator/story-center-pane';
 import {
@@ -82,16 +84,17 @@ function StoryScreen(): JSX.Element | null {
   }
 
   return (
-    <Fragment>
+    <PageContext.Provider value={{ page: 'story-creator', storyId: id }}>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Allotment>
         <Allotment.Pane
-          className="grid overflow-hidden overflow-y-scroll"
+          // className="grid overflow-hidden overflow-y-scroll"
           visible={leftPaneOpen}
           {...leftPaneProps}
           preferredSize="20%"
         >
-          <Allotment vertical={true} proportionalLayout={false}>
+          <DataPanel />
+          {/* <Allotment vertical={true} proportionalLayout={false}>
             <Allotment.Pane
               key={`leftUpperPanel${openLeftUpperPanel}`}
               minSize={24}
@@ -106,6 +109,7 @@ function StoryScreen(): JSX.Element | null {
                   }}
                 />
                 <div className="overflow-hidden overflow-y-scroll">Collections</div>
+                <DataPanel />
               </div>
             </Allotment.Pane>
             <Allotment.Pane
@@ -126,7 +130,7 @@ function StoryScreen(): JSX.Element | null {
                 </div>
               </div>
             </Allotment.Pane>
-          </Allotment>
+          </Allotment> */}
         </Allotment.Pane>
         <Allotment.Pane {...centerPaneProps}>
           <StoryCenterPane
@@ -204,6 +208,6 @@ function StoryScreen(): JSX.Element | null {
           </Allotment>
         </Allotment.Pane>
       </Allotment>
-    </Fragment>
+    </PageContext.Provider>
   );
 }

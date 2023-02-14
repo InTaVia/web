@@ -9,11 +9,20 @@ interface StroyCreatorToolbarProps {
   onDesktopChange: (desktop: boolean) => void;
   timescale: boolean;
   onTimescaleChange: (timescale: boolean) => void;
+  onExportStory: () => void;
+  onOpenSettingsDialog: () => void;
 }
 
 export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JSX.Element {
   /* const { split = false, onSplit, onSave } = props; */
-  const { desktop, onDesktopChange, timescale, onTimescaleChange } = props;
+  const {
+    desktop,
+    onDesktopChange,
+    timescale,
+    onTimescaleChange,
+    onExportStory,
+    onOpenSettingsDialog,
+  } = props;
 
   return (
     <div className="w-100 flex h-fit justify-between gap-2 bg-intavia-brand-100 p-2">
@@ -29,6 +38,26 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           }}
         >
           {desktop ? 'Mobile' : 'Desktop'}
+        </Button>
+        <Button
+          size="small"
+          round="pill"
+          color="accent"
+          onClick={() => {
+            onOpenSettingsDialog();
+          }}
+        >
+          Settings
+        </Button>
+        <Button
+          size="small"
+          round="pill"
+          color="accent"
+          onClick={() => {
+            onExportStory();
+          }}
+        >
+          Export
         </Button>
         {/* <Button
           size="small"
