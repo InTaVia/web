@@ -8,6 +8,7 @@ import type { StringLiteral } from 'typescript';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
@@ -205,15 +206,22 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   const allVisualizations = useAppSelector(selectAllVisualizations);
   const allContentPanes = useAppSelector(selectAllConentPanes);
+  const allEntities = useAppSelector(selectEntities);
+  const allEvents = useAppSelector(selectEvents);
 
   const storyObject = useMemo(() => {
     const storyVisualizations = {};
     const storyContentPanes = {};
+    const storyEntityIds = [];
+    const storyEventIds = [];
 
     Object.values(story.slides).forEach((slide) => {
       for (const visID of Object.values(slide.visualizationSlots)) {
         if (visID != null) {
-          storyVisualizations[visID] = allVisualizations[visID];
+          const vis = allVisualizations[visID];
+          storyVisualizations[visID] = vis;
+          storyEntityIds.push(...vis.entityIds);
+          storyEventIds.push(...vis.eventIds);
         }
       }
       for (const contID of Object.values(slide.contentPaneSlots)) {
@@ -231,11 +239,33 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       }),
     );
 
+    const storyEvents = Object.fromEntries(
+      storyEventIds
+        .filter((key) => {
+          return key in allEvents;
+        })
+        .map((key) => {
+          return [key, allEvents[key]];
+        }),
+    );
+
+    const storyEntities = Object.fromEntries(
+      storyEntityIds
+        .filter((key) => {
+          return key in allEntities;
+        })
+        .map((key) => {
+          return [key, allEntities[key]];
+        }),
+    );
+
     return {
       ...story,
       slides: slideOutput,
       visualizations: storyVisualizations,
       contentPanes: storyContentPanes,
+      storyEntities: storyEntities,
+      storyEvents: storyEvents,
     };
   }, [story, allContentPanes, allVisualizations]);
 
