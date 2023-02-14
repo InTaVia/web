@@ -24,6 +24,7 @@ export const type = 'application/x-intavia';
 interface DataDataTransferData {
   type: 'data';
   entities: Array<Entity['id']>;
+  targetEntities: Array<Entity['id']>;
   events: Array<Event['id']>;
 }
 

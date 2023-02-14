@@ -2,7 +2,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client/dist/models';
 import type { ScaleBand } from 'd3-scale';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import {
   type TimelineType,
@@ -10,6 +10,7 @@ import {
   TimelineColors as colors,
 } from '@/features/timelineV2/timeline';
 import TimelineEvent from '@/features/timelineV2/timelineEvent';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 import TimelineEventCluster from './timelineEventCluster';
 
@@ -204,6 +205,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     return !test.includes(eventId);
   });
 
+  const [hover, setHover] = useState(false);
+
   return (
     <div
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -222,6 +225,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     >
       <div style={{ position: 'relative' }}>
         <div
+          className="cursor-default"
           style={{
             left: vertical ? midOffset : 0,
             top: vertical ? 0 : midOffset,
@@ -229,8 +233,19 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             height: `${vertical ? height : thickness}px`,
             backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
             position: 'absolute',
+            paddingLeft: '5px',
+            lineHeight: `${vertical ? height : thickness}px`,
+            fontSize: `${(vertical ? height : thickness) - 1}px`,
           }}
-        />
+          onMouseEnter={() => {
+            setHover(true);
+          }}
+          onMouseLeave={() => {
+            setHover(false);
+          }}
+        >
+          {hover && getTranslatedLabel(entity.label)}
+        </div>
       </div>
       {mode !== 'mass' && (
         <>

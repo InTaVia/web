@@ -1,7 +1,7 @@
 import type { Entity, EntityEventRelation, Event } from '@intavia/api-client';
 
 import { useAppSelector } from '@/app/store';
-import { selectEntitiesByKind, selectEvents } from '@/app/store/intavia.slice';
+import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
@@ -21,12 +21,13 @@ interface VisualizationProps {
 export default function VisualisationComponent(props: VisualizationProps): JSX.Element {
   const { visualization, onToggleHighlight, highlightedByVis } = props;
 
-  const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const allPersons = Object.values(entitiesByKind.person);
+  const entities = useAppSelector(selectEntities);
+  const allPersons = Object.values(entities);
   const allEvents = useAppSelector(selectEvents);
 
   const eventIds = visualization.eventIds;
   const personIds = visualization.entityIds;
+  const targetIds = visualization.targetEntityIds;
 
   const [containerElement, setContainerElement] = useElementRef();
 
@@ -44,16 +45,31 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
+  //console.log('filteredPersons', filteredPersons);
+
   const personEvents = filteredPersons.flatMap((person) => {
-    return person.events ?? [];
-  });
-  const allPersonEvents = allPersons.flatMap((person) => {
-    if ('events' in person) {
-      return person.events;
-    } else {
+    if (person.relations == null) {
       return [];
+    } else {
+      return person.relations.map((relation) => {
+        return relation.event;
+      });
     }
   });
+
+  //console.log('personEvents', personEvents);
+
+  const allPersonEvents = allPersons.flatMap((person) => {
+    if (person.relations == null) {
+      return [];
+    } else {
+      return person.relations.map((relation) => {
+        return relation.event;
+      });
+    }
+  });
+
+  //console.log('allPersonEvents', allPersonEvents);
 
   const filteredEvents =
     eventIds.length > 0
@@ -62,7 +78,15 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
         })
       : [];
 
-  const visEvents = [...personEvents, ...filteredEvents].filter((eventId) => {
+  // console.log(
+  //   'filteredEvents',
+  //   filteredEvents,
+  //   filteredEvents.map((eventId) => {
+  //     return allEvents[eventId];
+  //   }),
+  // );
+
+  /*   const visEvents = [...personEvents, ...filteredEvents].filter((eventId) => {
     let visible = true;
     if (visualization.visibilities !== undefined) {
       visible =
@@ -71,18 +95,19 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
           : true;
     }
     return visible;
-  });
+  }); */
 
-  const targetIds: Array<string> = []; // FIXME:
+  //const targetIds: Array<string> = []; // FIXME:
+  // console.log(targetIds);
 
-  const twiceFilteredPersons = allPersons.filter((person) => {
+  const targetPersons = allPersons.filter((person) => {
     return targetIds.includes(person.id);
   });
 
-  const visPersons = [...filteredPersons, ...twiceFilteredPersons];
+  const visPersons = [...filteredPersons];
 
   const visPersonsAsObject = Object.fromEntries(
-    visPersons.map((entry) => {
+    [...visPersons, ...targetPersons].map((entry) => {
       return [entry.id, entry];
     }),
   );
@@ -107,10 +132,8 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   );
 }; */
 
-  // console.log('allEvent', allEvents);
-
   const pickedEvents = Object.fromEntries(
-    visPersonsEventIds
+    [...visPersonsEventIds, ...eventIds]
       .filter((id) => {
         return id in allEvents;
       })

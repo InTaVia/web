@@ -12,6 +12,7 @@ import {
   addEventsToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
+  addTargetEntitiesToVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';
 import Button from '@/features/ui/Button';
@@ -123,10 +124,11 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         //   break;
         // }
         case 'data': {
-          const { entities, events } = payload;
+          const { entities, events, targetEntities } = payload;
           // console.log({ entities, events });
           dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
           dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
+          dispatch(addTargetEntitiesToVisualization({ visId: visualization!.id, targetEntities }));
           // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
           // dispatch(addEventsToVisualisation({ events, id: content.id }));
           break;
@@ -161,12 +163,12 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   return (
     <div
-      className="grid h-full w-full cursor-grabbing grid-cols-[100%] grid-rows-[29px_1fr]"
+      className="grid h-full w-full grid-cols-[100%] grid-rows-[29px_1fr]"
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
       <div
-        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
+        className="flex cursor-grabbing flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
           const data: DataTransferData = {

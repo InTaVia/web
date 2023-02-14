@@ -12,6 +12,7 @@ export interface Visualization {
   type: 'map' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
+  targetEntityIds: Array<Entity['id']>;
   eventIds: Array<Event['id']>;
   properties?: Record<string, VisualizationProperty>;
   visibilities?: Record<string, boolean>;
@@ -124,6 +125,7 @@ const visualizationSlice = createSlice({
               },
             },
             entityIds: [],
+            targetEntityIds: [],
             eventIds: [],
           };
           break;
@@ -163,9 +165,26 @@ const visualizationSlice = createSlice({
                 label: 'Cluster',
               },
               showLabels: {
-                type: 'boolean',
+                type: 'select',
                 id: 'showLabels',
-                value: false,
+                value: {
+                  name: 'Automatic',
+                  value: undefined,
+                },
+                options: [
+                  {
+                    name: 'Off',
+                    value: false,
+                  },
+                  {
+                    name: 'On',
+                    value: true,
+                  },
+                  {
+                    name: 'Automatic',
+                    value: undefined,
+                  },
+                ],
                 editable: true,
                 sort: 5,
                 label: 'Show Labels',
@@ -211,6 +230,14 @@ const visualizationSlice = createSlice({
                 sort: 8,
                 label: 'Thickness',
               },
+              diameter: {
+                type: 'number',
+                id: 'diameter',
+                value: 14,
+                editable: true,
+                sort: 9,
+                label: 'Diameter',
+              },
               clusterMode: {
                 type: 'select',
                 id: 'clusterMode',
@@ -238,6 +265,7 @@ const visualizationSlice = createSlice({
               },
             },
             entityIds: [],
+            targetEntityIds: [],
             eventIds: [],
           };
           break;
@@ -262,6 +290,15 @@ const visualizationSlice = createSlice({
       const vis = state[visId];
       assert(vis != null);
       vis.entityIds = unique([...vis.entityIds, ...entities]);
+    },
+    addTargetEntitiesToVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; targetEntities: Array<Entity['id']> }>,
+    ) => {
+      const { visId, targetEntities } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.targetEntityIds = unique([...vis.entityIds, ...targetEntities]);
     },
     addEventsToVisualization: (
       state,
@@ -314,6 +351,7 @@ export const {
   createVisualization,
   addEntitiesToVisualization,
   addEventsToVisualization,
+  addTargetEntitiesToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
   editVisualization,

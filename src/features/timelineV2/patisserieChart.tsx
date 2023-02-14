@@ -63,6 +63,7 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             //@ts-ignore
             colors[translateEventType(vocabularies[item[0].kind])] ?? 'teal',
             patisserieType,
+            `${index}${JSON.stringify(events)}segment`,
           );
         })}
       </g>
@@ -77,6 +78,7 @@ function donutSegment(
   r0: number,
   color: string,
   patisserieType: 'donut' | 'pie',
+  key: string,
 ) {
   let end = i_end;
   if (end - start === 1) end -= 0.00001;
@@ -91,6 +93,7 @@ function donutSegment(
   if (patisserieType === 'donut') {
     return (
       <path
+        key={key}
         d={`M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
           r + r * y0
         } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${r + r0 * x1} ${
@@ -102,9 +105,10 @@ function donutSegment(
   } else {
     return (
       <path
-        d={`M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
-          r + r * y0
-        } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} Z`}
+        key={key}
+        d={`M ${r} ${r} L ${r + r * x0} ${r + r * y0} A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${
+          r + r * y1
+        } Z`}
         fill={`${color}`}
       />
     );

@@ -8,11 +8,7 @@ import { type LegacyRef, forwardRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
-import {
-  getTemporalExtent,
-  TimelineColors as colors,
-  translateEventType,
-} from '@/features/timelineV2/timeline';
+import { getTemporalExtent, translateEventType } from '@/features/timelineV2/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
 
@@ -33,7 +29,10 @@ interface BeeSwarmProperties {
 }
 
 const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
-  const { events, width, vertical, dotRadius = 5 } = props;
+  const { events, width, vertical, dotRadius: i_dotRadius } = props;
+
+  const total = events.length;
+  const dotRadius = total >= 100 ? 2 : total >= 50 ? 3 : total >= 10 ? 4 : i_dotRadius ?? 5;
 
   const eventsExtent = getTemporalExtent([events]);
 
@@ -73,22 +72,22 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
   const xDiff = parseInt(xExtent[1]) - parseInt(xExtent[0]) + dotRadius * 2;
   const yDiff = parseInt(yExtent[1]) - parseInt(yExtent[0]) + dotRadius * 2;
 
-  const x0 = parseInt(xExtent[0]) - dotRadius;
-  const y0 = parseInt(yExtent[0]) - dotRadius;
+  const x0 = parseInt(xExtent[0]);
+  const y0 = parseInt(yExtent[0]);
 
   return (
     <svg
       ref={ref as LegacyRef<SVGSVGElement>}
       width={`${xDiff}`}
-      viewBox={`${x0} ${y0} ${xDiff} ${yDiff}`}
-      textAnchor="middle"
       height={`${yDiff}`}
+      viewBox={`${x0} ${y0 - 1} ${xDiff} ${yDiff + 2}`}
+      textAnchor="middle"
     >
       {swarm.map((dot: Bee) => {
         return (
           <g
             key={`${JSON.stringify(dot.datum)}TimelineClusterEventMarker`}
-            transform={`translate(${dot.x - dotRadius} ${dot.y - dotRadius})`}
+            transform={`translate(${dot.x} ${dot.y})`}
           >
             <TimelineEventMarker
               width={dotRadius * 2}

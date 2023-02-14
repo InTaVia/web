@@ -6,6 +6,10 @@ import { forwardRef, useState } from 'react';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
+  getEventKindById,
+  getEventKindPropertiesById,
+} from '@/features/common/visualization.config';
+import {
   type TimelineType,
   getTemporalExtent,
   translateEventType,
@@ -102,7 +106,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     className = className + ' hover-animation';
   }
 
-  const type = translateEventType(
+  /* const type = translateEventType(
     vocabularies[event.kind],
     roles
       .map((roleId) => {
@@ -111,7 +115,9 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
       .filter((entry) => {
         return entry !== undefined;
       }),
-  );
+  ); */
+
+  const type = getEventKindPropertiesById(event.kind).type;
 
   return (
     <>
@@ -144,7 +150,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         posX={posX + width / 2}
         posY={posY + height / 2}
         labelText={event.label.default}
-        showLabels={showLabels}
+        showLabels={hover ? true : showLabels}
         entityIndex={entityIndex}
         mode={mode}
         thickness={thickness}

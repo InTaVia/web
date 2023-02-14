@@ -77,6 +77,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
                           type: 'data',
                           entities: [],
                           events: [eventId],
+                          targetEntities: [entity.id],
                         };
                         event.dataTransfer.setData(mediaType, JSON.stringify(data));
                       }

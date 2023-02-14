@@ -1,5 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+import { entity } from '@intavia/api-client';
 import type {
   Entity,
   EntityEventRelation,
@@ -8,7 +9,7 @@ import type {
 } from '@intavia/api-client/dist/models';
 import { extent } from 'd3-array';
 import { scaleBand, scaleTime } from 'd3-scale';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
 import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
@@ -88,7 +89,7 @@ interface TimelineProps {
   amount?: number;
   vertical?: boolean;
   thickness: number;
-  showLabels: boolean;
+  showLabels: boolean | undefined;
   overlap: boolean;
   cluster: boolean;
   clusterMode: 'bee' | 'donut' | 'pie';
@@ -107,7 +108,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     amount = null,
     vertical: i_vertical,
     thickness = 1,
-    showLabels = true,
+    showLabels: i_showLabels,
     overlap = false,
     cluster = false,
     clusterMode = 'pie',
@@ -117,31 +118,32 @@ export function Timeline(props: TimelineProps): JSX.Element {
     diameter = 14,
   } = props;
 
-  const [unTimeableEvents, setUnTimeableEvents] = useState({});
+  //const [unTimeableEvents, setUnTimeableEvents] = useState({});
 
-  const [filteredData, setFilteredData] = useState({});
-  const [unPlottableEntities, setUnPlottableEntities] = useState({});
-  const [plotableEvents, setPlotableEvents] = useState({});
+  //const [filteredData, setFilteredData] = useState({});
+  //const [unPlottableEntities, setUnPlottableEntities] = useState({});
+  //const [plotableEvents, setPlotableEvents] = useState({});
 
-  const vertical = i_vertical == null ? (height > width ? true : false) : i_vertical;
+  const vertical = i_vertical === undefined ? (height > width ? true : false) : i_vertical;
 
-  useEffect(() => {
-    const tmpUnPlottableEntities = {} as Record<string, Entity>;
-    const tmpUnTimeableEvents = {} as Record<string, Event>;
-    const tmpPlotableEvents = {};
-    const tmpEntries =
-      amount != null ? Object.entries(entities).slice(0, amount) : Object.entries(entities);
-    const tmpSlicedData = Object.fromEntries(tmpEntries);
-    const tmpFilteredData = Object.fromEntries(
-      Object.entries(tmpSlicedData).filter((keyValue) => {
-        const entry = keyValue[1] as Entity;
+  const { plotableEntities, unPlottableEntities, plotableEvents, unTimeableEvents } =
+    useMemo(() => {
+      const tmpPlotableEntities = {};
+      const tmpUnPlottableEntities = {};
+      const tmpPlotableEvents = {};
+      const tmpUnTimeableEvents = {};
+      Object.values(entities).forEach((entry) => {
         if (entry.relations === undefined) {
           tmpUnPlottableEntities[entry.id] = entry;
           return false;
         } else {
-          for (const eventId of entry.relations.map((rel: EntityEventRelation) => {
-            return rel.event;
-          })) {
+          for (const eventId of entry.relations
+            .map((rel: EntityEventRelation) => {
+              return rel.event;
+            })
+            .filter((eventId) => {
+              return eventId in events;
+            })) {
             const event = { ...events[eventId] };
             if (event.startDate === undefined && event.endDate === undefined) {
               tmpUnTimeableEvents[event.id] = event;
@@ -154,16 +156,32 @@ export function Timeline(props: TimelineProps): JSX.Element {
             tmpPlotableEvents[event.id] = event;
           }
 
-          return true;
+          tmpPlotableEntities[entry.id] = entry;
         }
-      }),
-    );
+      });
+
+      return {
+        plotableEntities: tmpPlotableEntities,
+        unPlottableEntities: tmpUnPlottableEntities,
+        plotableEvents: tmpPlotableEvents,
+        unTimeableEvents: tmpUnTimeableEvents,
+      };
+    }, [entities, events]);
+
+  /* useEffect(() => {
+    const tmpUnPlottableEntities = {} as Record<string, Entity>;
+    const tmpUnTimeableEvents = {} as Record<string, Event>;
+    const tmpPlotableEvents = {};
+    const tmpEntries =
+      amount != null ? Object.entries(entities).slice(0, amount) : Object.entries(entities);
+    const tmpSlicedData = Object.fromEntries(tmpEntries);
+
 
     setFilteredData(tmpFilteredData);
     setPlotableEvents(tmpPlotableEvents);
     setUnPlottableEntities(tmpUnPlottableEntities);
     setUnTimeableEvents(tmpUnTimeableEvents);
-  }, [amount, entities, nameFilter, events]);
+  }, [amount, entities, nameFilter, events]); */
 
   const lanesData = (data: Array<Entity>) => {
     const lanesData: Array<LaneEntry> = [];
@@ -203,42 +221,38 @@ export function Timeline(props: TimelineProps): JSX.Element {
     return { lanes: lanesData, numberOfLanes: stack.length };
   };
 
-  const pickedEvents: Record<string, Array<Event>> = {};
+  const pickedEvents = useMemo(() => {
+    const tmpPickedEvents = {} as Record<Entity['id'], Array<Event>>;
 
-  const sortedData = (Object.values(filteredData) as Array<Entity>).sort((a: Entity, b: Entity) => {
-    const entityAEvents = Object.values(
-      pick(
-        plotableEvents,
-        a.relations !== undefined
-          ? a.relations.map((rel: EntityEventRelation) => {
-              return rel.event;
-            })
-          : ([] as Array<string>),
-      ),
-    );
-    const entityBEvents = Object.values(
-      pick(
-        plotableEvents,
-        b.relations !== undefined
-          ? b.relations.map((rel: EntityEventRelation) => {
-              return rel.event;
-            })
-          : ([] as Array<string>),
-      ),
-    );
+    (Object.values(plotableEntities) as Array<Entity>).forEach((entity) => {
+      const entityEvents = Object.values(
+        pick(
+          plotableEvents,
+          entity.relations !== undefined
+            ? entity.relations.map((rel: EntityEventRelation) => {
+                return rel.event;
+              })
+            : ([] as Array<string>),
+        ),
+      ) as Array<Event>;
+      tmpPickedEvents[entity.id] = entityEvents;
+    });
 
-    pickedEvents[a.id] = entityAEvents;
-    pickedEvents[b.id] = entityBEvents;
+    return tmpPickedEvents;
+  }, [plotableEntities, plotableEvents]);
 
-    const entityAExtent = getTemporalExtent([entityAEvents]);
-    const entityBExtent = getTemporalExtent([entityBEvents]);
+  const sortedData = useMemo(() => {
+    return (Object.values(plotableEntities) as Array<Entity>).sort((a: Entity, b: Entity) => {
+      const entityAExtent = getTemporalExtent([pickedEvents[a.id]]);
+      const entityBExtent = getTemporalExtent([pickedEvents[b.id]]);
 
-    if (sortEntities) {
-      return new Date(entityAExtent[0]).getTime() - new Date(entityBExtent[0]).getTime();
-    } else {
-      return 1;
-    }
-  });
+      if (sortEntities) {
+        return new Date(entityAExtent[0]).getTime() - new Date(entityBExtent[0]).getTime();
+      } else {
+        return 1;
+      }
+    });
+  }, [plotableEntities, pickedEvents, sortEntities]);
 
   const timeDomain = getTemporalExtent(Object.values(pickedEvents));
 
@@ -267,6 +281,13 @@ export function Timeline(props: TimelineProps): JSX.Element {
   } else if (Object.values(sortedData).length === 1) {
     mode = 'single';
   }
+
+  const showLabels =
+    i_showLabels !== undefined
+      ? i_showLabels
+      : Object.values(plotableEntities).length < 5
+      ? true
+      : false;
 
   return (
     <>
@@ -305,7 +326,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
               vertical={vertical}
               index={entry.yIndex}
               thickness={mode === 'mass' ? scaleY.bandwidth() : thickness}
-              showLabels={Object.values(filteredData).length < 5 ? showLabels : false}
+              showLabels={showLabels}
               overlap={overlap}
               cluster={cluster}
               clusterMode={clusterMode}
