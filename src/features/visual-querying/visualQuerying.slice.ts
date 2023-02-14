@@ -20,13 +20,13 @@ const initialState: VisualQueryBuilderState = {
       label: { default: 'Birth Date' },
       value: null,
     },
-    'person-birth-place': {
-      entityKinds: ['person'],
-      id: 'person-birth-place',
-      kind: 'geometry',
-      label: { default: 'Birth Place' },
-      value: null,
-    },
+    // 'person-birth-place': {
+    //   entityKinds: ['person'],
+    //   id: 'person-birth-place',
+    //   kind: 'geometry',
+    //   label: { default: 'Birth Place' },
+    //   value: null,
+    // },
     'person-death-date': {
       entityKinds: ['person'],
       id: 'person-death-date',
@@ -34,13 +34,13 @@ const initialState: VisualQueryBuilderState = {
       label: { default: 'Death Date' },
       value: null,
     },
-    'person-death-place': {
-      entityKinds: ['person'],
-      id: 'person-death-place',
-      kind: 'geometry',
-      label: { default: 'Death Place' },
-      value: null,
-    },
+    // 'person-death-place': {
+    //   entityKinds: ['person'],
+    //   id: 'person-death-place',
+    //   kind: 'geometry',
+    //   label: { default: 'Death Place' },
+    //   value: null,
+    // },
     'person-name': {
       entityKinds: ['person'],
       id: 'person-name',

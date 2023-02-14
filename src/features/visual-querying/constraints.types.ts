@@ -31,7 +31,7 @@ export type ConstraintKindId = ConstraintKind['kind'];
 
 export const constraintKindIds: Array<ConstraintKindId> = [
   'date-range',
-  'geometry',
+  // 'geometry',
   'label',
   'vocabulary',
 ];
@@ -84,8 +84,8 @@ export interface ContraintGroup {
 
 export type Constraint =
   | PersonBirthDateConstraint
-  | PersonBirthPlaceConstraint
+  // | PersonBirthPlaceConstraint
   | PersonDeathDateConstraint
-  | PersonDeathPlaceConstraint
+  // | PersonDeathPlaceConstraint
   | PersonNameConstraint
   | PersonOccupationConstraint;
