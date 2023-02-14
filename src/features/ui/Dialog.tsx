@@ -35,7 +35,7 @@ export const Dialog = forwardRef(function Dialog(
 
   return (
     <Transition.Root as={Fragment} show={dialog.isOpen}>
-      <HeadlessDialog as="div" className="z-dialog relative" onClose={dialog.close}>
+      <HeadlessDialog as="div" className="relative z-dialog" onClose={dialog.close}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -48,7 +48,7 @@ export const Dialog = forwardRef(function Dialog(
           <div className="fixed inset-0 bg-neutral-500/25 backdrop-blur-sm transition-opacity" />
         </Transition.Child>
 
-        <div className="z-dialog fixed inset-0 overflow-auto p-4 sm:p-6 md:p-20">
+        <div className="fixed inset-0 z-dialog overflow-auto p-4 sm:p-6 md:p-20">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
