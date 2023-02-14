@@ -36,6 +36,9 @@ export interface Dictionary {
     ui: { 'load-data': string; 'import-data': string };
   };
   entity: {
+    metadata: {
+      title: string;
+    };
     kind: string;
     'all-kinds': string;
     kinds: Record<EntityKind, Plurals>;
@@ -74,11 +77,6 @@ export interface Dictionary {
     };
   };
   'learn-more': string;
-  person: {
-    metadata: {
-      title: string;
-    };
-  };
   search: {
     metadata: {
       title: string;

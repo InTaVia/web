@@ -9,6 +9,8 @@ import type {
   OccupationStatisticsSearch,
   RetrieveEntitiesByIds,
   RetrieveEventsByIds,
+  RetrieveOccupationsByIds,
+  RetrieveRelationRolesByIds,
   SearchEntities,
   SearchEventKinds,
   SearchEvents,
@@ -23,7 +25,10 @@ import {
   getOccupationById,
   getRelationRoleById,
   retrieveEntitiesByIds,
+  retrieveEventKindsByIds,
   retrieveEventsByIds,
+  retrieveOccupationsByIds,
+  retrieveRelationRolesByIds,
   searchBirthStatistics,
   searchDeathStatistics,
   searchEntities,
@@ -62,6 +67,17 @@ export const service = createApi({
           };
         },
       }),
+      retrieveEntitiesByIds: builder.query<
+        RetrieveEntitiesByIds.Response,
+        { params: RetrieveEntitiesByIds.Params; body: RetrieveEntitiesByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveEntitiesByIds.url(params.params),
+            options: retrieveEntitiesByIds.options(params.body),
+          };
+        },
+      }),
       searchEntities: builder.query<SearchEntities.Response, SearchEntities.SearchParams>({
         query(params) {
           return {
@@ -70,11 +86,23 @@ export const service = createApi({
           };
         },
       }),
+
       getEventById: builder.query<GetEventById.Response, GetEventById.PathParams>({
         query(params) {
           return {
             url: getEventById.url(params),
             options: getEventById.options(),
+          };
+        },
+      }),
+      retrieveEventsByIds: builder.query<
+        RetrieveEventsByIds.Response,
+        { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveEventsByIds.url(params.params),
+            options: retrieveEventsByIds.options(params.body),
           };
         },
       }),
@@ -86,6 +114,26 @@ export const service = createApi({
           };
         },
       }),
+
+      getEventKindById: builder.query<GetEventKindById.Response, GetEventKindById.PathParams>({
+        query(params) {
+          return {
+            url: getEventKindById.url(params),
+            options: getEventKindById.options(),
+          };
+        },
+      }),
+      retrieveEventKindsByIds: builder.query<
+        RetrieveEventsByIds.Response,
+        { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveEventKindsByIds.url(params.params),
+            options: retrieveEventKindsByIds.options(params.body),
+          };
+        },
+      }),
       searchEventKinds: builder.query<SearchEventKinds.Response, SearchEventKinds.SearchParams>({
         query(params) {
           return {
@@ -94,11 +142,26 @@ export const service = createApi({
           };
         },
       }),
-      getEventKindById: builder.query<GetEventKindById.Response, GetEventKindById.PathParams>({
+
+      getRelationRoleById: builder.query<
+        GetRelationRoleById.Response,
+        GetRelationRoleById.PathParams
+      >({
         query(params) {
           return {
-            url: getEventKindById.url(params),
-            options: getEventKindById.options(),
+            url: getRelationRoleById.url(params),
+            options: getRelationRoleById.options(),
+          };
+        },
+      }),
+      retrieveRelationRolesByIds: builder.query<
+        RetrieveRelationRolesByIds.Response,
+        { params: RetrieveRelationRolesByIds.Params; body: RetrieveRelationRolesByIds.RequestBody }
+      >({
+        query(params) {
+          return {
+            url: retrieveRelationRolesByIds.url(params.params),
+            options: retrieveRelationRolesByIds.options(params.body),
           };
         },
       }),
@@ -113,14 +176,23 @@ export const service = createApi({
           };
         },
       }),
-      getRelationRoleById: builder.query<
-        GetRelationRoleById.Response,
-        GetRelationRoleById.PathParams
+
+      getOccupationById: builder.query<GetOccupationById.Response, GetOccupationById.PathParams>({
+        query(params) {
+          return {
+            url: getOccupationById.url(params),
+            options: getOccupationById.options(),
+          };
+        },
+      }),
+      retrieveOccupationsByIds: builder.query<
+        RetrieveOccupationsByIds.Response,
+        { params: RetrieveOccupationsByIds.Params; body: RetrieveOccupationsByIds.RequestBody }
       >({
         query(params) {
           return {
-            url: getRelationRoleById.url(params),
-            options: getRelationRoleById.options(),
+            url: retrieveOccupationsByIds.url(params.params),
+            options: retrieveOccupationsByIds.options(params.body),
           };
         },
       }),
@@ -132,14 +204,7 @@ export const service = createApi({
           };
         },
       }),
-      getOccupationById: builder.query<GetOccupationById.Response, GetOccupationById.PathParams>({
-        query(params) {
-          return {
-            url: getOccupationById.url(params),
-            options: getOccupationById.options(),
-          };
-        },
-      }),
+
       searchBirthStatistics: builder.query<
         BirthStatisticsSearch.Response,
         BirthStatisticsSearch.SearchParams
@@ -173,44 +238,34 @@ export const service = createApi({
           };
         },
       }),
-      retrieveEntitiesByIds: builder.query<
-        RetrieveEntitiesByIds.Response,
-        { params: RetrieveEntitiesByIds.Params; body: RetrieveEntitiesByIds.RequestBody }
-      >({
-        query(params) {
-          return {
-            url: retrieveEntitiesByIds.url(params.params),
-            options: retrieveEntitiesByIds.options(params.body),
-          };
-        },
-      }),
-      retrieveEventsByIds: builder.query<
-        RetrieveEventsByIds.Response,
-        { params: RetrieveEventsByIds.Params; body: RetrieveEventsByIds.RequestBody }
-      >({
-        query(params) {
-          return {
-            url: retrieveEventsByIds.url(params.params),
-            options: retrieveEventsByIds.options(params.body),
-          };
-        },
-      }),
     };
   },
 });
 
 export const {
   useGetEntityByIdQuery,
-  useSearchBirthStatisticsQuery,
-  useSearchDeathStatisticsQuery,
+  useRetrieveEntitiesByIdsQuery,
   useSearchEntitiesQuery,
   useLazySearchEntitiesQuery,
-  useSearchEventsQuery,
-  useSearchEventKindsQuery,
-  useLazySearchEventsQuery,
-  useSearchOccupationsQuery,
-  useSearchOccupationStatisticsQuery,
-  useRetrieveEntitiesByIdsQuery,
+
+  useGetEventByIdQuery,
   useRetrieveEventsByIdsQuery,
+  useSearchEventsQuery,
+  useLazySearchEventsQuery,
+
+  useGetEventKindByIdQuery,
+  useRetrieveEventKindsByIdsQuery,
+  useSearchEventKindsQuery,
+
+  useGetRelationRoleByIdQuery,
+  useRetrieveRelationRolesByIdsQuery,
   useSearchRelationRolesQuery,
+
+  useGetOccupationByIdQuery,
+  useRetrieveOccupationsByIdsQuery,
+  useSearchOccupationsQuery,
+
+  useSearchBirthStatisticsQuery,
+  useSearchDeathStatisticsQuery,
+  useSearchOccupationStatisticsQuery,
 } = service;
