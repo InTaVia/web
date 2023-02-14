@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Bin } from '@intavia/api-client';
 import { zoom } from 'd3';
 import { axisBottom, axisLeft } from 'd3-axis';
@@ -119,6 +120,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
           // xAxis.scale(xScale);
           // if (xAxisRef.current) select(xAxisRef.current).call(xAxis);
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .filter((event: any) => {
           return event.type === 'wheel';
         }),
