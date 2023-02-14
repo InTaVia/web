@@ -150,7 +150,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         posX={posX + width / 2}
         posY={posY + height / 2}
         labelText={event.label.default}
-        showLabels={showLabels}
+        showLabels={hover ? true : showLabels}
         entityIndex={entityIndex}
         mode={mode}
         thickness={thickness}

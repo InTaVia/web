@@ -163,12 +163,12 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   return (
     <div
-      className="grid h-full w-full cursor-grabbing grid-cols-[100%] grid-rows-[29px_1fr]"
+      className="grid h-full w-full grid-cols-[100%] grid-rows-[29px_1fr]"
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
       <div
-        className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
+        className="flex cursor-grabbing flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
           const data: DataTransferData = {
