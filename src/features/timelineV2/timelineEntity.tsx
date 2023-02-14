@@ -207,6 +207,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
 
   const [hover, setHover] = useState(false);
 
+  const lineHeight = mode === 'mass' ? thickness : vertical ? width : height;
+
   return (
     <div
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -233,9 +235,12 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             height: `${vertical ? height : thickness}px`,
             backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
             position: 'absolute',
-            paddingLeft: '5px',
-            lineHeight: `${vertical ? height : thickness}px`,
-            fontSize: `${(vertical ? height : thickness) - 1}px`,
+            paddingLeft: vertical ? 0 : '5px',
+            paddingTop: vertical ? '5px' : 0,
+            lineHeight: `${lineHeight}px`,
+            fontSize: `${lineHeight - 1}px`,
+            writingMode: vertical ? 'vertical-rl' : '',
+            textOrientation: vertical ? 'mixed' : '',
           }}
           onMouseEnter={() => {
             setHover(true);

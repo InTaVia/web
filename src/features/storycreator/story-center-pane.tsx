@@ -1,6 +1,7 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
+import type { Entity, EntityEventRelation, Event } from '@intavia/api-client/dist/models';
 import { toPng } from 'html-to-image';
 import { useMemo, useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
@@ -248,6 +249,14 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           return [key, allEvents[key]];
         }),
     );
+
+    const linkedEntities = Object.values(storyEvents).flatMap((event: Event) => {
+      return event.relations.map((relation) => {
+        return relation.entity;
+      });
+    });
+
+    storyEntityIds.push(...linkedEntities);
 
     const storyEntities = Object.fromEntries(
       storyEntityIds
