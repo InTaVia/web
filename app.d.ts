@@ -33,6 +33,8 @@ type UriString = string;
 
 type UrlString = string;
 
+type Nullable<T> = T | null | undefined;
+
 declare module '*.svg' {
   import type { StaticImageData } from 'next/future/image';
 
