@@ -1,5 +1,6 @@
 import type { Place } from '@intavia/api-client';
 
+import { EgoNetworkComponent } from '@/features/ego-network/ego-network-component';
 import { EntityAlternativeLabels } from '@/features/entities/entity-alternative-labels';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
@@ -25,6 +26,7 @@ export function PlaceDetails(props: PlaceDetailsProps): JSX.Element {
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={place.linkedIds} />
       {hasRelations ? <EntityRelations relations={place.relations} /> : null}
+      {hasRelations ? <EgoNetworkComponent entity={place} width={600} height={600} /> : null}
     </div>
   );
 }
