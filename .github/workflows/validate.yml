@@ -2,7 +2,9 @@ name: Validate
 
 on:
   pull_request:
-    branches: [main, dev]
+    branches:
+      - main
+      - dev
 
 jobs:
   validate:
@@ -11,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
         os: [ubuntu-latest]
 
     steps:
@@ -27,13 +29,10 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Format
-        run: npm run format
+        run: npm run format:check
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint:check
 
       - name: Typecheck
-        run: npm run typecheck
-
-      - name: Test
-        run: npm run test:ci
+        run: npm run types:check

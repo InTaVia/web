@@ -37,6 +37,9 @@ export const dictionary: Dictionary = {
     ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' },
   },
   entity: {
+    metadata: {
+      title: 'Entity',
+    },
     kind: 'Entity type',
     'all-kinds': 'All entity kinds',
     kinds: {
@@ -81,11 +84,6 @@ export const dictionary: Dictionary = {
   imprint: {
     metadata: {
       title: 'Imprint',
-    },
-  },
-  person: {
-    metadata: {
-      title: 'Person',
     },
   },
   'learn-more': 'Learn more about InTaVia',

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { PageContext } from '@/app/context/page.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
@@ -83,7 +84,7 @@ function StoryScreen(): JSX.Element | null {
   }
 
   return (
-    <Fragment>
+    <PageContext.Provider value={{ page: 'story-creator', storyId: id }}>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <Allotment>
         <Allotment.Pane
@@ -207,6 +208,6 @@ function StoryScreen(): JSX.Element | null {
           </Allotment>
         </Allotment.Pane>
       </Allotment>
-    </Fragment>
+    </PageContext.Provider>
   );
 }

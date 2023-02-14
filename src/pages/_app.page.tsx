@@ -23,11 +23,10 @@ import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-url
 import { useCanonicalUrl } from '@/app/route/use-canonical-url';
 import { useLocale } from '@/app/route/use-locale';
 import { persistor, store } from '@/app/store';
+import { SetupStore } from '@/app/store/setup-store';
 import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
-import { log } from '@/lib/log';
-import SetupStore from '@/pages/setup-store';
 import { theme } from '@/styles/theme';
 import { manifestFileName, openGraphImageName } from '~/config/metadata.config';
 
@@ -105,21 +104,4 @@ export default function App(props: AppProps): JSX.Element {
       </Provider>
     </Fragment>
   );
-}
-
-if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
-  const { seed } = await import('@/mocks/db');
-  seed();
-
-  if (typeof window !== 'undefined') {
-    log.warn('API mocking enabled (client).');
-
-    const { worker } = await import('@/mocks/mocks.browser');
-    void worker.start({ onUnhandledRequest: 'bypass' });
-  } else {
-    log.warn('API mocking enabled (server).');
-
-    const { server } = await import('@/mocks/mocks.server');
-    server.listen({ onUnhandledRequest: 'bypass' });
-  }
 }

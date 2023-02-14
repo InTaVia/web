@@ -4,15 +4,12 @@ import { useState } from 'react';
 import { useAppDispatch } from '@/app/store';
 import Button from '@/features/ui/Button';
 import TextField from '@/features/ui/TextField';
-import type {
-  Constraint,
-  PersonNameConstraint,
-} from '@/features/visual-querying/constraints.types';
+import type { PersonNameConstraint } from '@/features/visual-querying/constraints.types';
 import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface TextConstraintWidgetProps {
   constraint: PersonNameConstraint;
-  setSelectedConstraint: (constraint: Constraint | null) => void;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Element {

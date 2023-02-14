@@ -1,47 +1,58 @@
+import type { EntityKind, InternationalizedLabel, VocabularyEntry } from '@intavia/api-client';
 import type { Feature } from 'geojson';
 
-import type { EntityKind, Occupation } from '@intavia/api-client';
-
-// FIXME:  we probably also want constraint groups (i.e. the outer rings, which are *not* constraint types)
+export interface ConstraintKindType {
+  id: string;
+  label: InternationalizedLabel;
+}
 
 export interface DateRangeConstraintKind {
-  kind: 'date-range';
+  kind: { id: 'date-range'; label: { default: 'Dates' } };
   value: [IsoDateTimestamp, IsoDateTimestamp] | null;
 }
 
 export interface GeometryConstraintKind {
-  kind: 'geometry';
+  kind: { id: 'geometry'; label: { default: 'Places' } };
   value: Array<Feature> | null;
 }
 
 export interface LabelConstraintKind {
-  kind: 'label';
+  kind: { id: 'label'; label: { default: 'Labels' } };
   value: string | null;
 }
 
 export interface VocabularyConstraintKind<T extends { id: string } = { id: string }> {
-  kind: 'vocabulary';
+  kind: { id: 'vocabulary'; label: { default: 'Attributes' } };
   value: Array<T['id']> | null;
 }
 
 export type ConstraintKind =
   | DateRangeConstraintKind
-  | GeometryConstraintKind
+  // | GeometryConstraintKind
   | LabelConstraintKind
   | VocabularyConstraintKind;
 
-export type ConstraintKindId = ConstraintKind['kind'];
+export type ConstraintKindId = ConstraintKind['kind']['id'];
+export type ConstraintKindLabel = ConstraintKind['kind']['label'];
 
 export const constraintKindIds: Array<ConstraintKindId> = [
   'date-range',
-  'geometry',
+  // 'geometry',
   'label',
   'vocabulary',
 ];
 
+export const constraintKindLabelById: Record<ConstraintKindId, ConstraintKindLabel> = {
+  'date-range': { default: 'Dates' },
+  // geometry: { default: 'Places' },
+  label: { default: 'Labels' },
+  vocabulary: { default: 'Attributes' },
+};
+
 export interface ConstraintBase {
   id: string;
   entityKinds: Array<EntityKind>;
+  label: InternationalizedLabel;
 }
 
 export interface PersonBirthDateConstraint extends ConstraintBase, DateRangeConstraintKind {
@@ -71,15 +82,23 @@ export interface PersonNameConstraint extends ConstraintBase, LabelConstraintKin
 
 export interface PersonOccupationConstraint
   extends ConstraintBase,
-    VocabularyConstraintKind<Occupation> {
+    VocabularyConstraintKind<VocabularyEntry> {
   id: 'person-occupation';
   entityKinds: ['person'];
 }
 
+// FIXME: We probably also want constraint groups (i.e. the outer rings, which are *not* constraint types)
+// FIXME: Two data structures: constraint list and constraint-by-group dict?
+export interface ContraintGroup {
+  id: string;
+  label: InternationalizedLabel;
+  constraints: Array<Constraint>;
+}
+
 export type Constraint =
   | PersonBirthDateConstraint
-  | PersonBirthPlaceConstraint
+  // | PersonBirthPlaceConstraint
   | PersonDeathDateConstraint
-  | PersonDeathPlaceConstraint
+  // | PersonDeathPlaceConstraint
   | PersonNameConstraint
   | PersonOccupationConstraint;

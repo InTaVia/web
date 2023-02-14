@@ -3,6 +3,7 @@ import type { Feature, FeatureCollection, Geometry, Point } from 'geojson';
 import { Fragment, useEffect, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
+import { getColorById } from '@/features/common/visualization.config';
 import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
 
 // export interface Point<T> {
@@ -40,7 +41,7 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         if (feature.geometry.type !== 'Point') return null;
 
         const coordinates = feature.geometry.coordinates;
-        const color = 'tomato'; // FIXME:
+        const color = getColorById(feature.properties.event.kind);
 
         return (
           <DotMarker

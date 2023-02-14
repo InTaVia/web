@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
-import { string } from 'zod';
 
 import { useAppDispatch } from '@/app/store';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';

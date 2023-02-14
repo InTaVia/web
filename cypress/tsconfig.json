@@ -1,8 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["@testing-library/cypress", "cypress", "node"]
-  },
-  "include": ["./**/*.ts", "./**/*.tsx", "../app.d.ts", "../src/mocks/mocks.browser.ts"],
-  "exclude": []
-}

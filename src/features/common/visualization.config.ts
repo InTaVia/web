@@ -17,12 +17,12 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
   creation: {
     label: 'Creation',
     type: 'creation',
-    color: { foreground: 'black', background: 'teal' },
+    color: { foreground: 'black', background: '#008080' },
   },
   default: {
     label: 'Unknown',
     type: 'default',
-    color: { foreground: 'black', background: 'teal' },
+    color: { foreground: 'black', background: 'purple' },
   },
 };
 

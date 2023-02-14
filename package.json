@@ -4,44 +4,30 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "analyze-bundle": "cross-env BUNDLE_ANALYZER='enabled' NEXT_PUBLIC_API_MOCKING='disabled' next build --no-lint",
+    "analyze-bundle": "cross-env BUNDLE_ANALYZER='enabled' next build --no-lint",
     "build": "next build",
-    "cypress": "cypress open --config-file ./cypress/cypress.config.ts",
-    "cypress:headless": "cypress run --config-file ./cypress/cypress.config.ts",
     "dev": "next dev",
-    "format": "prettier . --cache --check --ignore-path .gitignore",
-    "format:fix": "npm run format -- --write",
+    "format:check": "prettier . --cache --check --ignore-path ./.gitignore",
+    "format:fix": "npm run format:check -- --write",
     "generate:favicons": "run-ts-script scripts/generate-favicons",
-    "generate:msw": "msw init public",
-    "lint": "run-p lint:*:check",
+    "lint:check": "run-p lint:*:check",
     "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path .gitignore",
+    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path ./.gitignore",
     "lint:code:fix": "npm run lint:code:check -- --fix",
-    "lint:styles:check": "stylelint \"**/*.css\" --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
+    "lint:styles:check": "stylelint \"**/*.css\" --allow-empty-input --cache --cache-location .next/cache/stylelint/ --ignore-path ./.gitignore",
     "lint:styles:fix": "npm run lint:styles:check -- --fix",
     "prebuild": "npm run generate:favicons",
-    "prepare": "run-p generate:* && simple-git-hooks || exit 0",
+    "prepare": "run-p setup generate:*",
+    "setup": "simple-git-hooks || exit 0",
     "start": "next start",
-    "stories:build": "build-storybook --config-dir stories --quiet",
-    "stories:build:docs": "npm run stories:build --docs",
-    "stories:dev": "start-storybook --config-dir stories --no-open --port 6006",
-    "stories:dev:docs": "npm run stories:dev --docs",
-    "test": "jest --config ./test/jest.config.mjs --passWithNoTests",
-    "test:ci": "npm run test -- --ci",
-    "test:coverage": "npm run test -- --coverage",
-    "test:watch": "npm run test -- --watch",
-    "test:e2e:dev": "start-server-and-test dev 3000 cypress",
-    "test:e2e:dev:headless": "start-server-and-test dev 3000 cypress:headless",
-    "test:e2e:start": "start-server-and-test start 3000 cypress",
-    "test:e2e:start:headless": "start-server-and-test start 3000 cypress:headless",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit && tsc -p ./cypress/tsconfig.json --noEmit",
-    "validate": "npm run format && npm run lint && npm run typecheck && npm run test"
+    "types:check": "tsc --noEmit",
+    "validate": "run-s format:check lint:check types:check"
   },
   "engines": {
-    "node": ">=16.13.0",
-    "npm": ">=8.3.0"
+    "node": ">=18.14.0",
+    "npm": ">=8.19.0"
   },
-  "packageManager": "npm@8.3.1",
+  "packageManager": "npm@8.19.2",
   "dependencies": {
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.1",
@@ -49,8 +35,9 @@
     "@emotion/styled": "^11.8.1",
     "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
-    "@intavia/api-client": "^0.1.14",
+    "@intavia/api-client": "^0.1.15",
     "@intavia/data-import": "^0.1.2",
+    "@intavia/ui": "^0.1.1",
     "@mapbox/mapbox-gl-draw": "^1.3.0",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
@@ -64,7 +51,6 @@
     "@stefanprobst/next-i18n": "1.2.0-legacy",
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
     "@stefanprobst/request": "^0.1.10",
-    "@turf/turf": "^6.5.0",
     "allotment": "^1.14.2",
     "clsx": "^1.2.0",
     "d3": "^7.0.0",
@@ -81,13 +67,11 @@
     "final-form": "^4.20.7",
     "final-form-arrays": "^3.0.2",
     "final-form-focus": "^1.1.2",
-    "geojson-world-map": "^0.0.2",
     "html-to-image": "^1.9.0",
     "lodash.get": "^4.4.2",
     "mapbox-gl": "npm:empty-npm-package@^1.0.0",
     "maplibre-gl": "^2.1.9",
     "next": "^12.2.5",
-    "normalizr": "^3.6.2",
     "react": "^17.0.2",
     "react-contenteditable": "^3.3.6",
     "react-dom": "^17.0.2",
@@ -102,34 +86,13 @@
     "react-spinners": "^0.13.3",
     "redux-persist": "^6.0.0",
     "sharp": "^0.30.4",
-    "tailwindcss": "^3.1.4",
-    "uuid": "^8.3.2",
-    "xlsx": "^0.18.5",
     "zod": "^3.15.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.7",
-    "@cypress/webpack-preprocessor": "^5.12.0",
-    "@faker-js/faker": "^6.3.1",
-    "@jest/types": "^27.5.1",
     "@next/eslint-plugin-next": "^12.2.5",
     "@stefanprobst/favicons": "^2.0.4",
     "@stefanprobst/ts-script": "^2.0.5",
-    "@storybook/addon-a11y": "^6.4.19",
-    "@storybook/addon-actions": "^6.4.19",
-    "@storybook/addon-essentials": "^6.4.19",
-    "@storybook/addon-interactions": "^6.4.19",
-    "@storybook/addon-links": "^6.4.19",
-    "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/builder-webpack5": "^6.4.19",
-    "@storybook/manager-webpack5": "^6.4.19",
-    "@storybook/react": "^6.4.19",
-    "@storybook/testing-library": "^0.0.9",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "@testing-library/cypress": "^8.0.2",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.0.0",
     "@types/d3-array": "^3.0.3",
     "@types/d3-axis": "^3.0.1",
@@ -142,7 +105,7 @@
     "@types/final-form-focus": "^1.1.2",
     "@types/lodash.get": "^4.4.7",
     "@types/mapbox__mapbox-gl-draw": "^1.2.3",
-    "@types/node": "^16.11.26",
+    "@types/node": "^18.13.0",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
     "@types/react-grid-layout": "^1.3.2",
@@ -152,28 +115,16 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "autoprefixer": "^10.4.2",
-    "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
-    "cypress": "^10.0.3",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jest": "^26.1.1",
-    "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-storybook": "^0.5.7",
-    "eslint-plugin-testing-library": "^5.1.0",
-    "jest": "^27.5.1",
-    "jest-watch-typeahead": "^1.0.0",
     "lint-staged": "^12.3.5",
-    "match-sorter": "^6.3.1",
-    "msw": "^0.39.2",
-    "msw-storybook-addon": "^1.6.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.8",
     "postcss-custom-media": "^8.0.0",
@@ -181,11 +132,11 @@
     "prettier": "^2.7.0",
     "prettier-plugin-tailwindcss": "^0.1.11",
     "simple-git-hooks": "^2.7.0",
-    "start-server-and-test": "^1.14.0",
     "stylelint": "^14.6.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^25.0.0",
     "stylelint-order": "^5.0.0",
+    "tailwindcss": "^3.1.4",
     "typescript": "^4.6.2"
   },
   "browserslist": {
@@ -224,7 +175,7 @@
       "node": true
     },
     "parserOptions": {
-      "project": "./**/tsconfig.json",
+      "project": "./tsconfig.json",
       "extraFileExtensions": [
         ".cjs",
         ".mjs"
@@ -233,7 +184,7 @@
     "settings": {
       "import/resolver": {
         "typescript": {
-          "project": "./*/tsconfig.json",
+          "project": "./tsconfig.json",
           "alwaysTryTypes": true
         }
       },
@@ -354,40 +305,10 @@
       },
       {
         "files": [
-          "**/*.test.@(ts|tsx)"
-        ],
-        "extends": [
-          "plugin:jest/recommended",
-          "plugin:jest/style",
-          "plugin:jest-dom/recommended",
-          "plugin:testing-library/react"
-        ]
-      },
-      {
-        "files": [
-          "**/*.test.e2e.@(ts|tsx)"
-        ],
-        "extends": "plugin:cypress/recommended"
-      },
-      {
-        "files": [
-          "**/*.stories.tsx"
-        ],
-        "plugins": [
-          "storybook"
+          "*.page.tsx"
         ],
         "rules": {
-          "@typescript-eslint/explicit-module-boundary-types": "off",
-          "react/function-component-definition": "off",
-          "storybook/await-interactions": "error",
-          "storybook/context-in-play-function": "error",
-          "storybook/default-exports": "error",
-          "storybook/hierarchy-separator": "warn",
-          "storybook/no-redundant-story-name": "warn",
-          "storybook/prefer-pascal-case": "warn",
-          "storybook/story-exports": "error",
-          "storybook/use-storybook-expect": "error",
-          "storybook/use-storybook-testing-library": "error"
+          "@typescript-eslint/no-namespace": "off"
         }
       }
     ]
@@ -401,10 +322,7 @@
       "stylelint --cache --cache-location .next/cache/stylelint/ --fix",
       "prettier --cache --write"
     ],
-    "*.@(json|md)": "prettier --cache --write"
-  },
-  "msw": {
-    "workerDirectory": "public"
+    "*.!(cjs|css|js|mjs|ts|tsx)": "prettier --cache --ignore-unknown --write"
   },
   "postcss": {
     "plugins": {
