@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import type { Constraint, ConstraintKind } from '@/features/visual-querying/constraints.types';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 import type { RingDims } from '@/features/visual-querying/ringSegmentUtils';
 import {
@@ -12,7 +12,7 @@ interface OuterRingSegmentProps {
   dims: RingDims;
   origin: Origin;
   constraint: Constraint;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
@@ -28,7 +28,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
     if (constraint.value === null) {
       return '';
     }
-    switch (constraint.kind) {
+    switch (constraint.kind.id) {
       case 'label':
         const value = constraint.value as string;
         if (value.length < 30) {
@@ -37,11 +37,12 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
         return value.substring(0, 29) + '...';
       case 'date-range':
         const [start, end] = constraint.value as [number, number];
-        return `${start} - ${end}`;
-      case 'geometry':
-        return 'Polygon';
+        return `${new Date(start).getFullYear()} - ${new Date(end).getFullYear()}`;
+      // case 'geometry':
+      //   return 'Polygon';
       case 'vocabulary':
-        const list = constraint.value.join(', ');
+        const list =
+          typeof constraint.value === 'string' ? constraint.value : constraint.value.join(', ');
         if (list.length < 30) {
           return list;
         }
@@ -53,7 +54,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
     <g
       id={`ring-constraint-${constraint.id}`}
       onClick={(event) => {
-        setSelectedConstraint(constraint);
+        setSelectedConstraint(constraint.id);
         event.stopPropagation();
       }}
     >
@@ -72,7 +73,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
             textAnchor="middle"
             startOffset="50%"
           >
-            {constraint.id}
+            {constraint.label.default}
           </textPath>
         </text>
       ) : (
@@ -83,7 +84,7 @@ export function OuterRingSegment(props: OuterRingSegmentProps): JSX.Element {
               textAnchor="middle"
               startOffset="50%"
             >
-              {constraint.id}
+              {constraint.label.default}
             </textPath>
           </text>
 

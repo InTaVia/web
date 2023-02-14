@@ -1,4 +1,7 @@
-import { useSearchBirthStatisticsQuery } from '@/api/intavia.service';
+import {
+  useSearchBirthStatisticsQuery,
+  useSearchDeathStatisticsQuery,
+} from '@/api/intavia.service';
 import { useAppDispatch } from '@/app/store';
 import type {
   PersonBirthDateConstraint,
@@ -17,7 +20,12 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
   const { width, height, constraint } = props;
   const dispatch = useAppDispatch();
 
-  const { data, isLoading } = useSearchBirthStatisticsQuery({});
+  const { data, isLoading } =
+    constraint.id === 'person-birth-date'
+      ? // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSearchBirthStatisticsQuery({ bins: 1600 })
+      : // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSearchDeathStatisticsQuery({ bins: 1600 });
 
   const dimensions = {
     x: 0,
@@ -47,7 +55,7 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
     if (data) {
       return (
         <Histogram
-          data={data.bins}
+          rawData={data.bins}
           initialBrushedArea={constraint.value}
           onChangeBrushedArea={setBrushedArea}
         />

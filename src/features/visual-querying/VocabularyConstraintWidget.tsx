@@ -7,7 +7,7 @@ import { setConstraintValue } from '@/features/visual-querying/visualQuerying.sl
 import { IciclePlot } from '@/features/visualizations/icicle-plot';
 
 interface VocabularyConstraintWidgetProps<T extends { id: string }> {
-  constraint: Extract<Constraint, { kind: 'vocabulary' }>;
+  constraint: Extract<Constraint, { kind: { id: 'vocabulary' } }>;
   data: RootNode<T> | undefined;
   isLoading: boolean;
 }

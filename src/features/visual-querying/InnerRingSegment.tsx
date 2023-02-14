@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import type { ConstraintKind } from '@/features/visual-querying/constraints.types';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
+import { constraintKindLabelById } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';
 import { OuterRingSegment } from '@/features/visual-querying/OuterRingSegment';
 import type { RingDims } from '@/features/visual-querying/ringSegmentUtils';
@@ -15,22 +16,21 @@ import { selectConstraints } from '@/features/visual-querying/visualQuerying.sli
 interface InnerRingSegmentProps {
   idx: number;
   dims: RingDims;
-  type: ConstraintKind['kind'];
-  label: string;
+  kind: Constraint['kind']['id'];
   origin: Origin;
-  selectedConstraint: ConstraintKind | null;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  selectedConstraint: string | null;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
-  const { idx, dims, type, label, origin, selectedConstraint, setSelectedConstraint } = props;
+  const { idx, dims, kind, origin, selectedConstraint, setSelectedConstraint } = props;
 
   const [isHovered, setIsHovered] = useState(false);
 
   const outerRingWidth = 55;
 
   const constraints = Object.values(useAppSelector(selectConstraints)).filter((constraint) => {
-    return constraint.kind === type;
+    return constraint.kind.id === kind;
   });
 
   // Calculate dims of outer ring segments
@@ -45,7 +45,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
 
   const path = getRingSegmentPath(origin, dims);
   const textPath = getArcedTextPath(origin, dims, 'center');
-  const [fillColor, textColor] = getRingSegmentColors(type);
+  const [fillColor, textColor] = getRingSegmentColors(kind);
 
   function drawOuterRing() {
     let visibleOuterRingDims = outerRingDims;
@@ -54,7 +54,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
       visibleOuterRingDims = visibleOuterRingDims.filter(({ constraint }) => {
         return (
           (constraint.value !== null && constraint.value !== '') ||
-          constraint.kind === selectedConstraint?.kind
+          constraint.id === selectedConstraint
         );
       });
     }
@@ -97,7 +97,7 @@ export function InnerRingSegment(props: InnerRingSegmentProps): JSX.Element {
 
         <text pointerEvents="none" fill={textColor} fontSize="17px">
           <textPath xlinkHref={`#textPath-${idx}`} textAnchor="middle" startOffset="50%">
-            {label}
+            {constraintKindLabelById[kind].default}
           </textPath>
         </text>
       </g>

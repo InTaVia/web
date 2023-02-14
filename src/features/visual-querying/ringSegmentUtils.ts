@@ -64,14 +64,16 @@ export function getArcedTextPath(origin: Origin, dims: RingDims, position: strin
   return p;
 }
 
-export function getRingSegmentColors(id: Constraint['id'] | Constraint['kind']): [string, string] {
+export function getRingSegmentColors(
+  id: Constraint['id'] | Constraint['kind']['id'],
+): [string, string] {
   switch (id) {
     case 'date-range':
       return ['#29C24B', '#0A5C1C'];
     case 'label':
       return ['#EB436B', '#6F001A'];
-    case 'geometry':
-      return ['#5184E7', '#0C2E72'];
+    // case 'geometry':
+    //   return ['#5184E7', '#0C2E72'];
     case 'vocabulary':
       return ['#E9E131', '#565307'];
     // case 'date-lived-constraint':
@@ -82,10 +84,10 @@ export function getRingSegmentColors(id: Constraint['id'] | Constraint['kind']):
       return ['#5EE97D', '#006717'];
     // case 'place-lived-constraint':
     //   return ['#1E4A7D', '#70B2FF'];
-    case 'person-birth-place':
-      return ['#1E89C5', '#0E4462'];
-    case 'person-death-place':
-      return ['#5ED0E9', '#005A6D'];
+    // case 'person-birth-place':
+    //   return ['#1E89C5', '#0E4462'];
+    // case 'person-death-place':
+    //   return ['#5ED0E9', '#005A6D'];
     case 'person-name':
       return ['#DC2450', '#FFD0DB'];
     case 'person-occupation':

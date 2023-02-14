@@ -1,14 +1,13 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
-import type { ConstraintKind } from '@/features/visual-querying/constraints.types';
 import { constraintKindIds } from '@/features/visual-querying/constraints.types';
 import { InnerRingSegment } from '@/features/visual-querying/InnerRingSegment';
 import type { Origin } from '@/features/visual-querying/Origin';
 
 interface QueryNodeProps {
   origin: Origin;
-  selectedConstraint: ConstraintKind | null;
-  setSelectedConstraint: (constraintKind: ConstraintKind | null) => void;
+  selectedConstraint: string | null;
+  setSelectedConstraint: (constraintId: string | null) => void;
 }
 
 export function QueryNode(props: QueryNodeProps): JSX.Element {
@@ -18,14 +17,14 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
   const innerRingWidth = 40;
   const iconSize = 2 * circleRadius * (2 / 3);
 
-  const ringDims = constraintKindIds.map((type, idx, arr) => {
+  const ringDims = constraintKindIds.map((kind, idx, arr) => {
     const delta = 360 / arr.length;
     const padding = 0;
     const startAngle = idx * delta;
     const endAngle = (idx + 1) * delta - padding;
-    const constraintType = type;
+    const constraintKindId = kind;
 
-    return { delta, padding, idx, constraintType, startAngle, endAngle };
+    return { delta, padding, idx, constraintKindId, startAngle, endAngle };
   });
 
   return (
@@ -39,7 +38,7 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
         htmlColor="#A1A1A1"
       />
 
-      {ringDims.map(({ startAngle, endAngle, constraintType }, idx) => {
+      {ringDims.map(({ startAngle, endAngle, constraintKindId }, idx) => {
         return (
           <InnerRingSegment
             key={idx}
@@ -50,8 +49,7 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
               innerRadius: circleRadius,
               outerRadius: circleRadius + innerRingWidth,
             }}
-            type={constraintType}
-            label={constraintType}
+            kind={constraintKindId}
             origin={origin.clone()}
             selectedConstraint={selectedConstraint}
             setSelectedConstraint={setSelectedConstraint}
