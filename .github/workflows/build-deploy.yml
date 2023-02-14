@@ -57,5 +57,5 @@ jobs:
         uses: acdh-oeaw/deploy-action@v1
         with:
           token: ${{ secrets.RANCHER_API_TOKEN }}
-          project: c-zdbh8:p-wj9db
+          project: c-m-6hwgqq2g:p-rtbhz
           deployment: intavia:intavia-web-client
