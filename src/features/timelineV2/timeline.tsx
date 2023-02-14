@@ -137,9 +137,13 @@ export function Timeline(props: TimelineProps): JSX.Element {
           tmpUnPlottableEntities[entry.id] = entry;
           return false;
         } else {
-          for (const eventId of entry.relations.map((rel: EntityEventRelation) => {
-            return rel.event;
-          })) {
+          for (const eventId of entry.relations
+            .map((rel: EntityEventRelation) => {
+              return rel.event;
+            })
+            .filter((eventId) => {
+              return eventId in events;
+            })) {
             const event = { ...events[eventId] };
             if (event.startDate === undefined && event.endDate === undefined) {
               tmpUnTimeableEvents[event.id] = event;

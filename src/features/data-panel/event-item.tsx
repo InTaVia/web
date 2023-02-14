@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react';
 import { CursorClickIcon, PlusSmIcon } from '@heroicons/react/outline';
-import type { Event } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
 import type { DragEvent, ReactNode } from 'react';
 import { useState } from 'react';
 

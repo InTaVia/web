@@ -12,6 +12,7 @@ import {
   addEventsToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
+  addTargetEntitiesToVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';
 import Button from '@/features/ui/Button';
@@ -123,10 +124,11 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         //   break;
         // }
         case 'data': {
-          const { entities, events } = payload;
+          const { entities, events, targetEntities } = payload;
           // console.log({ entities, events });
           dispatch(addEntitiesToVisualization({ visId: visualization!.id, entities }));
           dispatch(addEventsToVisualization({ visId: visualization!.id, events }));
+          dispatch(addTargetEntitiesToVisualization({ visId: visualization!.id, targetEntities }));
           // dispatch(addEntitiesToVisualisation({ entities, id: content.id }));
           // dispatch(addEventsToVisualisation({ events, id: content.id }));
           break;
