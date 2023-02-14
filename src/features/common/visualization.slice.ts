@@ -163,9 +163,26 @@ const visualizationSlice = createSlice({
                 label: 'Cluster',
               },
               showLabels: {
-                type: 'boolean',
+                type: 'select',
                 id: 'showLabels',
-                value: false,
+                value: {
+                  name: 'Automatic',
+                  value: undefined,
+                },
+                options: [
+                  {
+                    name: 'Off',
+                    value: false,
+                  },
+                  {
+                    name: 'On',
+                    value: true,
+                  },
+                  {
+                    name: 'Automatic',
+                    value: undefined,
+                  },
+                ],
                 editable: true,
                 sort: 5,
                 label: 'Show Labels',
@@ -210,6 +227,14 @@ const visualizationSlice = createSlice({
                 editable: true,
                 sort: 8,
                 label: 'Thickness',
+              },
+              diameter: {
+                type: 'number',
+                id: 'diameter',
+                value: 14,
+                editable: true,
+                sort: 9,
+                label: 'Diameter',
               },
               clusterMode: {
                 type: 'select',

@@ -18,9 +18,10 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const clusterMode = properties['clusterMode']?.value.value ?? 'pie';
   const cluster = properties['cluster']?.value ?? false;
   const stackEntities = properties['stackEntities']?.value ?? false;
-  const showLabels = properties['showLabels']?.value ?? false;
+  const showLabels = properties['showLabels']?.value.value ?? undefined;
   const thickness = properties['thickness']?.value ?? 1;
-  const vertical = properties['vertical']?.value.value ?? false;
+  const vertical = properties['vertical']?.value.value ?? undefined;
+  const diameter = properties['diameter']?.value ?? 14;
 
   return (
     <Timeline
@@ -36,6 +37,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
       stackEntities={stackEntities}
       sortEntities={sortEntities}
       clusterMode={clusterMode}
+      diameter={diameter}
     />
   );
 }

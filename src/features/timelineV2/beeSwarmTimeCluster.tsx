@@ -1,4 +1,5 @@
 import type { Event } from '@intavia/api-client/dist/models';
+import { height } from '@mui/system';
 import { extent } from 'd3-array';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore

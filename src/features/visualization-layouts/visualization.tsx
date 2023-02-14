@@ -107,8 +107,6 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   );
 }; */
 
-  // console.log('allEvent', allEvents);
-
   const pickedEvents = Object.fromEntries(
     visPersonsEventIds
       .filter((id) => {

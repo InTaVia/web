@@ -1,7 +1,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Event } from '@intavia/api-client/dist/models';
-import { type LegacyRef, forwardRef, useRef, useState } from 'react';
+import { type LegacyRef, forwardRef, useLayoutEffect, useRef, useState } from 'react';
 
 import { type TimelineType, getTemporalExtent } from '@/features/timelineV2/timeline';
 
@@ -46,7 +46,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
   } = props;
 
   const [hover, setHover] = useState(false);
-  const diameterWithStroke = diameter + thickness;
+  const diameterWithStroke = diameter + thickness * 3;
 
   let className = 'timeline-event';
 
@@ -70,9 +70,20 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
 
   const nodeRef = useRef<HTMLDivElement>(null);
 
-  const clusterNodeHeight = nodeRef.current ? nodeRef.current.clientHeight : 0;
+  const [clusterDimensions, setClusterDimensions] = useState([
+    diameterWithStroke,
+    diameterWithStroke,
+  ]);
 
-  const clusterNodeWidth = nodeRef.current ? nodeRef.current.clientWidth : 0;
+  useLayoutEffect(() => {
+    if (nodeRef.current != null) {
+      const { height, width } = nodeRef.current.getBoundingClientRect();
+      setClusterDimensions([width, height]);
+    }
+  }, []);
+
+  const clusterNodeWidth = clusterDimensions[0];
+  const clusterNodeHeight = clusterDimensions[1];
 
   const clusterPosX = posX - clusterNodeWidth / 2;
   const clusterPosY = posY - clusterNodeHeight / 2;

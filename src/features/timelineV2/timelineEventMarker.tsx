@@ -2,12 +2,13 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { forwardRef } from 'react';
 
+import { getEventKindPropertiesByType } from '@/features/common/visualization.config';
 import { TimelineColors } from '@/features/timelineV2/timeline';
 
 interface TimelineEventMarkerProps {
   width: number;
   height: number;
-  type?: 'birth' | 'death' | 'personplace';
+  type?: 'birth' | 'creation' | 'death' | 'personplace';
   thickness: number;
 }
 
@@ -17,7 +18,7 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;
 
-  const color = TimelineColors[type] ?? 'teal';
+  const color = getEventKindPropertiesByType(type).color.background;
 
   switch (type) {
     case 'birth':
@@ -51,31 +52,34 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           />
         </g>
       );
+    case 'creation':
+      return (
+        <rect
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          ref={ref}
+          x={thickness / 2}
+          y={thickness / 2}
+          width={width - thickness}
+          height={height - thickness}
+          fill={color}
+          stroke="black"
+          strokeWidth={thickness}
+        />
+      );
     default:
       return (
         <circle
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        ref={ref}
-        cx={width / 2}
-        cy={height / 2}
-        r={(width - thickness) / 2}
-        fill={color}
-        stroke="black"
-        strokeWidth={thickness}
-      />
-        // <rect
-        //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //   //@ts-ignore
-        //   ref={ref}
-        //   x={thickness / 2}
-        //   y={thickness / 2}
-        //   width={width - thickness}
-        //   height={height - thickness}
-        //   fill={color}
-        //   stroke="black"
-        //   strokeWidth={thickness}
-        // />
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
+          ref={ref}
+          cx={width / 2}
+          cy={height / 2}
+          r={(width - thickness) / 2}
+          fill={color}
+          stroke="black"
+          strokeWidth={thickness}
+        />
       );
   }
 });
