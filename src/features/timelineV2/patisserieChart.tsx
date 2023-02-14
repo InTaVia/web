@@ -88,6 +88,8 @@ function donutSegment(
     y1 = Math.sin(a1);
   const largeArc = end - start > 0.5 ? 1 : 0;
 
+  console.log(r, r0, start, i_end);
+
   if (patisserieType === 'donut') {
     return (
       <path
@@ -102,9 +104,9 @@ function donutSegment(
   } else {
     return (
       <path
-        d={`M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
-          r + r * y0
-        } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} Z`}
+        d={`M ${r} ${r} L ${r + r * x0} ${r + r * y0} A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${
+          r + r * y1
+        } Z`}
         fill={`${color}`}
       />
     );
