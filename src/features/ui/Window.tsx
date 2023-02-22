@@ -76,7 +76,7 @@ export function Window(props: WindowProps): JSX.Element {
       } h-full w-full overflow-hidden`}
       onClick={props.onClick}
     >
-      <div className="flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-purple-300 px-2 py-1 text-white">
+      <div className="flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-brand-200 px-2 py-1 text-white">
         <div className="align-items-center">{props.title}</div>
         <div className="sticky right-0 flex flex-nowrap gap-1">
           {onCopyWindow && (

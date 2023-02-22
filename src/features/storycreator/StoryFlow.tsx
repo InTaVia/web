@@ -29,7 +29,6 @@ export function StoryFlow(props: StoryFlowProps) {
   const sortedSlides = Object.values(slides).sort((a, b) => {
     return a.sort - b.sort;
   });
-
   const layout = generateLayout(Object.values(slides));
 
   function generateLayout(i_slides: Array<Slide>) {
@@ -99,7 +98,7 @@ export function StoryFlow(props: StoryFlowProps) {
         useCSSTransforms={true}
         style={{ height: `${height}px`, maxHeight: `${height}px` }}
       >
-        {sortedSlides.map((slide: Slide, index: number) => {
+        {sortedSlides.map((slide: Slide) => {
           return (
             <div
               key={slide.id}
@@ -108,7 +107,7 @@ export function StoryFlow(props: StoryFlowProps) {
               }}
               className={`cursor-pointer overflow-hidden rounded-md border ${
                 slide.selected ?? true
-                  ? 'border-[3px] border-intavia-green-900'
+                  ? 'border-[3px] border-intavia-blue-900'
                   : 'border-intavia-gray-400'
               }`}
               onKeyUp={() => {
@@ -117,7 +116,7 @@ export function StoryFlow(props: StoryFlowProps) {
             >
               <Window
                 id={`slide-window-${slide.id}`}
-                title={`${index}`}
+                title={`${slide.id}`}
                 onRemoveWindow={() => {
                   onRemove(slide.id);
                 }}
