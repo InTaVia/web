@@ -343,6 +343,10 @@ const visualizationSlice = createSlice({
       assert(vis.mapState != null);
       vis.mapState.mapStyle = mapStyle;
     },
+    importVisualization: (state, action) => {
+      const vis = action.payload as Visualization;
+      state[vis.id] = vis;
+    },
   },
 });
 
@@ -357,6 +361,7 @@ export const {
   editVisualization,
   setMapViewState,
   setMapStyle,
+  importVisualization,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

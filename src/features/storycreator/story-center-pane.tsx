@@ -1,7 +1,7 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import type { Entity, EntityEventRelation, Event } from '@intavia/api-client/dist/models';
+import type { Event } from '@intavia/api-client/dist/models';
 import { toPng } from 'html-to-image';
 import { useMemo, useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
@@ -11,8 +11,9 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
+import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
-import type { ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
   createContentPane,
@@ -49,6 +50,10 @@ interface StoryCenterPaneProps {
   onTimescaleChange: (timescale: boolean) => void;
 }
 
+interface StoryViewerResponse {
+  url: string;
+}
+
 export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const { story, desktop, onDesktopChange, timescale, onTimescaleChange } = props;
 
@@ -68,6 +73,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
 
   const [propertiesEditElement, setPropertiesEditElement] = useState<any | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const dialog = useDialogState();
 
   const handleSaveEdit = (newStory: Story) => {
@@ -211,15 +218,15 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const allEvents = useAppSelector(selectEvents);
 
   const storyObject = useMemo(() => {
-    const storyVisualizations = {};
-    const storyContentPanes = {};
+    const storyVisualizations: Record<string, Visualization> = {};
+    const storyContentPanes: Record<string, ContentPane> = {};
     const storyEntityIds = [];
-    const storyEventIds = [];
+    const storyEventIds: Array<string> = [];
 
     Object.values(story.slides).forEach((slide) => {
       for (const visID of Object.values(slide.visualizationSlots)) {
         if (visID != null) {
-          const vis = allVisualizations[visID];
+          const vis = allVisualizations[visID] as Visualization;
           storyVisualizations[visID] = vis;
           storyEntityIds.push(...vis.entityIds);
           storyEventIds.push(...vis.eventIds);
@@ -227,7 +234,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       }
       for (const contID of Object.values(slide.contentPaneSlots)) {
         if (contID != null) {
-          storyContentPanes[contID] = allContentPanes[contID];
+          storyContentPanes[contID] = allContentPanes[contID] as ContentPane;
         }
       }
     });
@@ -250,7 +257,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
-    const linkedEntities = Object.values(storyEvents).flatMap((event: Event) => {
+    const linkedEntities = (Object.values(storyEvents) as Array<Event>).flatMap((event: Event) => {
       return event.relations.map((relation) => {
         return relation.entity;
       });
@@ -337,13 +344,14 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 event.preventDefault();
                 postStory(storyObject)
                   .unwrap()
-                  .then((fulfilled) => {
-                    console.log(fulfilled);
+                  .then((fulfilled: any) => {
+                    const response = { ...fulfilled } as StoryViewerResponse;
+                    const url = response.url;
+                    setPreviewUrl(url);
                   })
                   .catch((rejected) => {
                     console.error(rejected);
                   });
-                dialog.close();
               }}
             >
               <textarea
@@ -374,6 +382,13 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
             >
               Submit
             </Button>
+            {previewUrl !== null && (
+              <a target="_blank" href={previewUrl} rel="noreferrer">
+                <Button size="small" round="round" shadow="small" color="accent">
+                  Preview
+                </Button>
+              </a>
+            )}
           </DialogControls>
         </Dialog>
       )}

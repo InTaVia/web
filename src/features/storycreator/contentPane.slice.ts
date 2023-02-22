@@ -287,6 +287,10 @@ export const contentPaneSlice = createSlice({
           break;
       }
     },
+    importContentPane: (state, action) => {
+      const contentPane = action.payload;
+      state[contentPane.id] = contentPane;
+    },
   },
 });
 
@@ -296,6 +300,7 @@ export const {
   resizeMoveContent,
   editSlideContent,
   removeSlideContent,
+  importContentPane,
 } = contentPaneSlice.actions;
 
 export const selectContentPaneByID = createSelector(

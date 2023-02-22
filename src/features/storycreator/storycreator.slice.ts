@@ -1,4 +1,4 @@
-import type { Entity, Event, StoryEvent } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
@@ -32,7 +32,7 @@ export interface SlideContent {
 
 export interface VisualisationPane {
   id: string;
-  events: Array<StoryEvent>;
+  events: Array<Event>;
   contents: Record<SlideContent['id'], SlideContent>;
 }
 
@@ -402,11 +402,16 @@ export const storyCreatorSlice = createSlice({
       const image = action.payload.image;
       state.stories[slide.story]!.slides[slide.id]!.image = image;
     },
+    importStory: (state, action) => {
+      const story = action.payload.story;
+      state.stories[story.id] = story;
+    },
   },
 });
 
 export const {
   createStory,
+  importStory,
   editStory,
   removeStory,
   removeSlide,
