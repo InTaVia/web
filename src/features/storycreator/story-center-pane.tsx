@@ -1,9 +1,9 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import type { Event } from '@intavia/api-client/dist/models';
+import type { Entity, Event } from '@intavia/api-client/dist/models';
 import { toPng } from 'html-to-image';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import type { StringLiteral } from 'typescript';
 
@@ -11,7 +11,7 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
-import type { Visualization } from '@/features/common/visualization.slice';
+import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
@@ -217,7 +217,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const allEntities = useAppSelector(selectEntities);
   const allEvents = useAppSelector(selectEvents);
 
-  const storyObject = useMemo(() => {
+  /* const storyObject = useMemo(() => {
     const storyVisualizations: Record<string, Visualization> = {};
     const storyContentPanes: Record<string, ContentPane> = {};
     const storyEntityIds = [];
@@ -275,6 +275,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+
     return {
       ...story,
       slides: slideOutput,
@@ -283,7 +284,84 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       storyEntities: storyEntities,
       storyEvents: storyEvents,
     };
-  }, [story, allContentPanes, allVisualizations]);
+  }, [story, allContentPanes, allVisualizations]); */
+
+  const [storyExportObject, setStoryExportObject] = useState<{
+    slides: Record<string, Slide>;
+    visualizations: Record<string, Visualization>;
+    contentPanes: Record<string, ContentPane>;
+    properties: Record<string, VisualizationProperty>;
+    storyEntities: Record<string, Entity>;
+    storyEvents: Record<string, Event>;
+  }>();
+
+  const createStoryObject = () => {
+    const storyVisualizations: Record<string, Visualization> = {};
+    const storyContentPanes: Record<string, ContentPane> = {};
+    const storyEntityIds = [];
+    const storyEventIds: Array<string> = [];
+
+    Object.values(story.slides).forEach((slide) => {
+      for (const visID of Object.values(slide.visualizationSlots)) {
+        if (visID != null) {
+          const vis = allVisualizations[visID] as Visualization;
+          storyVisualizations[visID] = vis;
+          storyEntityIds.push(...vis.entityIds);
+          storyEventIds.push(...vis.eventIds);
+        }
+      }
+      for (const contID of Object.values(slide.contentPaneSlots)) {
+        if (contID != null) {
+          storyContentPanes[contID] = allContentPanes[contID] as ContentPane;
+        }
+      }
+    });
+
+    const slideOutput: Record<string, Slide> = Object.fromEntries(
+      Object.values(story.slides).map((s) => {
+        const ret = { ...s };
+        delete ret.image;
+        return [ret.id, ret];
+      }),
+    );
+
+    const storyEvents = Object.fromEntries(
+      storyEventIds
+        .filter((key) => {
+          return key in allEvents;
+        })
+        .map((key) => {
+          return [key, allEvents[key] as Event];
+        }),
+    );
+
+    const linkedEntities = (Object.values(storyEvents) as Array<Event>).flatMap((event: Event) => {
+      return event.relations.map((relation) => {
+        return relation.entity;
+      });
+    });
+
+    storyEntityIds.push(...linkedEntities);
+
+    const storyEntities = Object.fromEntries(
+      storyEntityIds
+        .filter((key) => {
+          return key in allEntities;
+        })
+        .map((key) => {
+          return [key, allEntities[key] as Entity];
+        }),
+    );
+
+    setStoryExportObject({
+      ...story,
+      slides: slideOutput,
+      visualizations: storyVisualizations,
+      contentPanes: storyContentPanes,
+      storyEntities: storyEntities,
+      storyEvents: storyEvents,
+    });
+  };
 
   return (
     <div className="grid h-full w-full grid-rows-[max-content_1fr]">
@@ -294,6 +372,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         timescale={timescale}
         onTimescaleChange={onTimescaleChange}
         onExportStory={() => {
+          createStoryObject();
           dialog.open();
         }}
         onOpenSettingsDialog={() => {
@@ -342,14 +421,14 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               noValidate
               onSubmit={(event) => {
                 event.preventDefault();
-                postStory(storyObject)
+                postStory(storyExportObject)
                   .unwrap()
                   .then((fulfilled: any) => {
                     const response = { ...fulfilled } as StoryViewerResponse;
                     const url = response.url;
                     setPreviewUrl(url);
                   })
-                  .catch((rejected) => {
+                  .catch((rejected: unknown) => {
                     console.error(rejected);
                   });
               }}
@@ -358,7 +437,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 id="message"
                 rows={6}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                defaultValue={JSON.stringify(storyObject, null, 2)}
+                defaultValue={JSON.stringify(storyExportObject, null, 2)}
               ></textarea>
             </form>
           </DialogContent>
@@ -372,6 +451,16 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
             >
               {t(['common', 'form', 'cancel'])}
             </Button>
+            <a
+              href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                JSON.stringify(storyExportObject, null, 2),
+              )}`}
+              download={`${story.properties.name?.value ?? story.id}.istory.json`}
+            >
+              <Button size="small" round="round" shadow="small" color="accent">
+                Download
+              </Button>
+            </a>
             <Button
               size="small"
               round="round"
