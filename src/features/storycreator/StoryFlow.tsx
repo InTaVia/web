@@ -90,7 +90,7 @@ export function StoryFlow(props: StoryFlowProps) {
         innerRef={targetRef as RefObject<HTMLDivElement>}
         className="layout"
         layout={layout}
-        rowHeight={120}
+        rowHeight={130}
         width={width}
         cols={vertical ? 1 : 8}
         compactType={vertical ? 'vertical' : 'horizontal'}
@@ -125,7 +125,7 @@ export function StoryFlow(props: StoryFlowProps) {
                 }}
               >
                 {slide.image !== null && (
-                  <img className="h-full" src={slide.image} alt={'ScreenShot'} />
+                  <img className="block h-full w-auto" src={slide.image} alt={'ScreenShot'} />
                 )}
               </Window>
             </div>

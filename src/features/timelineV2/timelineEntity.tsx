@@ -147,7 +147,11 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   }, [itemsRef, width, height]); */
 
   const clusterArray = useMemo(() => {
-    const tmpClusterArray = [];
+    if (cluster !== true) {
+      return [];
+    }
+
+    const tmpClusterArray: Array<Set<string>> = [];
     Object.values(events).forEach((entry: any, index: any) => {
       Object.values(events).forEach((otherEntry: any, otherIndex: any) => {
         if (otherIndex >= index) {
@@ -192,7 +196,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     });
 
     return tmpClusterArray;
-  }, [diameter, events, timeScale]);
+  }, [diameter, events, timeScale, cluster]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
