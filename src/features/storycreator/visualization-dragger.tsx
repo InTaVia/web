@@ -2,6 +2,8 @@ import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
 import type { Place } from '@intavia/api-client';
+
+import { SlideContentTypes } from '@/features/storycreator/contentPane.slice';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 
 interface DropProps {
@@ -95,13 +97,9 @@ export function VisualizationDragger(): JSX.Element {
 
   return (
     <div className="grid w-full p-2">
-      {[
-        /* createDrops({ type: 'Map' }),
-        createDrops({ type: 'Timeline' }), */
-        createDrops({ type: 'Text' }),
-        createDrops({ type: 'Image' }),
-        createDrops({ type: 'Quiz' }),
-      ]}
+      {SlideContentTypes.map((type) => {
+        return createDrops({ type });
+      })}
     </div>
   );
 }

@@ -12,7 +12,7 @@ export interface StoryMapMarker {
 export interface SlideContent {
   id: string;
   parentPane: string;
-  type: 'Image' | 'Map' | 'Quiz' | 'Text' | 'Timeline';
+  type: typeof SlideContentTypes[number];
   layout: {
     x: number;
     y: number;
@@ -21,6 +21,8 @@ export interface SlideContent {
   };
   properties?: Record<StoryContentProperty['id'], StoryContentProperty>;
 }
+
+export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio'];
 
 export interface ContentPane {
   id: string;
@@ -54,6 +56,11 @@ export interface StoryMap extends SlideContent {
 
 export interface StoryImage extends SlideContent {
   type: 'Image';
+  properties: Record<string, StoryContentProperty>;
+}
+
+export interface StoryVideoAudio extends SlideContent {
+  type: 'Video/Audio';
   properties: Record<string, StoryContentProperty>;
 }
 
@@ -182,6 +189,58 @@ export class StoryImageObject implements StoryImage {
   properties: Record<string, StoryContentProperty>;
 }
 
+export class StoryVideoAudioObject implements StoryVideoAudio {
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  type: 'Video/Audio' = 'Video/Audio';
+
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.parentPane = parentPane;
+    this.layout = layout;
+    this.properties = {
+      title: {
+        type: 'text',
+        id: 'title',
+        editable: true,
+        label: 'Title',
+        value: '',
+        sort: 1,
+      } as StoryContentProperty,
+      caption: {
+        type: 'text',
+        id: 'caption',
+        editable: true,
+        label: 'Caption',
+        value: '',
+        sort: 2,
+      } as StoryContentProperty,
+      link: {
+        type: 'text',
+        id: 'link',
+        editable: true,
+        label: 'Link',
+        value: '',
+        sort: 0,
+      } as StoryContentProperty,
+      start: {
+        type: 'text',
+        id: 'start',
+        editable: true,
+        label: 'Start',
+        value: '',
+        sort: 3,
+      } as StoryContentProperty,
+    };
+  }
+  parentPane: string;
+  properties: Record<string, StoryContentProperty>;
+}
+
 const initialState: Record<ContentPane['id'], ContentPane> = {};
 
 export const contentPaneSlice = createSlice({
@@ -232,6 +291,13 @@ export const contentPaneSlice = createSlice({
         case 'Image':
           contentObject = new StoryImageObject(content.id, content.contentPane, content.layout);
           break;
+        case 'Video/Audio':
+          contentObject = new StoryVideoAudioObject(
+            content.id,
+            content.contentPane,
+            content.layout,
+          );
+          break;
         case 'Text':
           contentObject = new StoryTextObject(content.id, content.contentPane, content.layout);
           break;
@@ -268,24 +334,12 @@ export const contentPaneSlice = createSlice({
     editSlideContent: (state, action) => {
       const content = action.payload.content;
 
-      switch (content.type) {
-        case 'Text':
-        case 'Image':
-        case 'Quiz':
-          state[content.parentPane]!.contents[content.id] = content;
-          break;
-      }
+      state[content.parentPane]!.contents[content.id] = content;
     },
     removeSlideContent: (state, action) => {
       const content = action.payload.content;
 
-      switch (content.type) {
-        case 'Text':
-        case 'Image':
-        case 'Quiz':
-          delete state[content.parentPane]!.contents[content.id];
-          break;
-      }
+      delete state[content.parentPane]!.contents[content.id];
     },
     importContentPane: (state, action) => {
       const contentPane = action.payload;

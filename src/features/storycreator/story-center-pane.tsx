@@ -174,6 +174,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         layoutItem['h'] = 2;
         layoutItem['w'] = 1;
         break;
+      case 'Video/Audio':
+        layoutItem['h'] = 2;
+        layoutItem['w'] = 1;
+        break;
       default:
         layoutItem['h'] = 1;
         layoutItem['w'] = 1;

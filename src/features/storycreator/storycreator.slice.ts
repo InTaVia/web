@@ -4,7 +4,6 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
-import type { StoryContentProperty } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 
@@ -17,23 +16,9 @@ export interface StoryMapMarker {
   type: string;
 }
 
-export interface SlideContent {
-  id: string;
-  parentPane: string;
-  type: 'Image' | 'Map' | 'Quiz' | 'Text' | 'Timeline';
-  layout: {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-  };
-  properties?: Record<StoryContentProperty['id'], StoryContentProperty>;
-}
-
 export interface VisualisationPane {
   id: string;
   events: Array<Event>;
-  contents: Record<SlideContent['id'], SlideContent>;
 }
 
 export interface Slide {

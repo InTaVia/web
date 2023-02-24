@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { SlideContentTypes } from '@/features/storycreator/contentPane.slice';
 import Button from '@/features/ui/Button';
 
 interface ContentPaneWizardProps {
@@ -36,33 +37,20 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
   } else {
     content = (
       <div className="grid w-full grid-cols-3 gap-2 rounded-lg bg-white p-4">
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('Text');
-          }}
-        >
-          Text
-        </Button>
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('Image');
-          }}
-        >
-          Image
-        </Button>
-        <Button
-          round="round"
-          color="accent"
-          onClick={() => {
-            onButtonClick('Quiz');
-          }}
-        >
-          Quiz
-        </Button>
+        {SlideContentTypes.map((type) => {
+          return (
+            <Button
+              key={`${type}ContentButton`}
+              round="round"
+              color="accent"
+              onClick={() => {
+                onButtonClick(type);
+              }}
+            >
+              {type}
+            </Button>
+          );
+        })}
       </div>
     );
   }

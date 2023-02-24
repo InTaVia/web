@@ -4,6 +4,7 @@ import {
   DocumentTextIcon,
   MapIcon,
   PhotographIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/outline';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -25,6 +26,8 @@ const getIcon: any = (type: string) => {
       return <DocumentTextIcon className={classStr} />;
     case 'Image':
       return <PhotographIcon className={classStr} />;
+    case 'Video/Audio':
+      return <VideoCameraIcon className={classStr} />;
     case 'Person':
       return (
         <PersonOutlineOutlinedIcon

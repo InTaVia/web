@@ -1,6 +1,8 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
+import ReactAudioPlayer from 'react-audio-player';
 import ReactGridLayout from 'react-grid-layout';
+import ReactPlayer from 'react-player';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -9,6 +11,7 @@ import type {
   StoryAnswerList,
   StoryImage,
   StoryQuizAnswer,
+  StoryVideoAudio,
 } from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
@@ -158,6 +161,27 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             )}
           </div>
         );
+      case 'Video/Audio':
+        return (
+          <div className="flex h-full max-h-full justify-center bg-white p-2">
+            {(element as StoryVideoAudio).properties.link?.value !== '' && (
+              <ReactPlayer
+                width="100%"
+                height="100%"
+                controls
+                url={`${(element as StoryVideoAudio).properties.link?.value}`}
+              />
+            )}
+            {/*  <div className="absolute bottom-0 w-full bg-white p-2">
+              {element.properties!.title!.value !== '' && (
+                <p className="mb-1 text-xl">{element.properties!.title!.value}</p>
+              )}
+              {element.properties!.caption!.value !== '' && (
+                <p>{element.properties!.caption!.value}</p>
+              )}
+            </div> */}
+          </div>
+        );
       default:
         return [];
     }
@@ -168,47 +192,40 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   };
 
   const createLayoutPane = (element: any) => {
-    switch (element.type) {
-      case 'Text':
-      case 'Image':
-      case 'Quiz':
-        return (
-          <div key={element.id} className={'overflow-hidden'}>
-            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
-              <div className="truncate">{element.type}</div>
-              <div className="sticky right-0 flex flex-nowrap gap-1">
-                <Button
-                  className="ml-auto grow-0"
-                  shadow="none"
-                  size="extra-small"
-                  round="circle"
-                  onClick={() => {
-                    if (setEditElement !== undefined) {
-                      setEditElement(element);
-                    }
-                  }}
-                >
-                  <AdjustmentsIcon className="h-3 w-3" />
-                </Button>
-                <Button
-                  className="ml-auto grow-0"
-                  shadow="none"
-                  size="extra-small"
-                  round="circle"
-                  onClick={() => {
-                    removeWindowHandler(element);
-                  }}
-                >
-                  <XIcon className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-            {createWindowContent(element)}
+    return (
+      <div key={element.id} className={'overflow-hidden'}>
+        <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
+          <div className="truncate">{element.type}</div>
+          <div className="sticky right-0 flex flex-nowrap gap-1">
+            <Button
+              className="ml-auto grow-0"
+              shadow="none"
+              size="extra-small"
+              round="circle"
+              onClick={() => {
+                if (setEditElement !== undefined) {
+                  setEditElement(element);
+                }
+              }}
+            >
+              <AdjustmentsIcon className="h-3 w-3" />
+            </Button>
+            <Button
+              className="ml-auto grow-0"
+              shadow="none"
+              size="extra-small"
+              round="circle"
+              onClick={() => {
+                removeWindowHandler(element);
+              }}
+            >
+              <XIcon className="h-3 w-3" />
+            </Button>
           </div>
-        );
-      default:
-        return;
-    }
+        </div>
+        {createWindowContent(element)}
+      </div>
+    );
   };
 
   const layout = [

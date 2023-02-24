@@ -97,13 +97,14 @@ interface TimelineProps {
   stackEntities: boolean;
   sortEntities: boolean;
   diameter?: number;
+  zoom?: number;
 }
 
 export function Timeline(props: TimelineProps): JSX.Element {
   const {
     entities,
     events,
-    width = 600,
+    width: i_width,
     height = 300,
     amount = null,
     vertical: i_vertical,
@@ -116,6 +117,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     stackEntities = false,
     sortEntities = false,
     diameter = 14,
+    zoom = 0,
   } = props;
 
   //const [unTimeableEvents, setUnTimeableEvents] = useState({});
@@ -123,6 +125,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
   //const [filteredData, setFilteredData] = useState({});
   //const [unPlottableEntities, setUnPlottableEntities] = useState({});
   //const [plotableEvents, setPlotableEvents] = useState({});
+
+  const width = i_width + zoom * 500;
 
   const vertical = i_vertical === undefined ? (height > width ? true : false) : i_vertical;
 

@@ -6,7 +6,11 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
-import { createContentPane, editSlideContent } from '@/features/storycreator/contentPane.slice';
+import {
+  createContentPane,
+  editSlideContent,
+  SlideContentTypes,
+} from '@/features/storycreator/contentPane.slice';
 import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
@@ -120,7 +124,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const drop = (event: DragEvent) => {
     event.preventDefault();
     const data = JSON.parse(event.dataTransfer.getData('Text'));
-    if (['Text', 'Image', 'Quiz'].includes(data.type)) {
+    if (SlideContentTypes.includes(data.type)) {
       increaseNumberOfContentPanes(data.type);
     }
   };
