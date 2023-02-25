@@ -1,6 +1,5 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import ReactAudioPlayer from 'react-audio-player';
 import ReactGridLayout from 'react-grid-layout';
 import ReactPlayer from 'react-player';
 import ReactResizeDetector from 'react-resize-detector';
@@ -8,6 +7,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
 import type {
+  SlideContent,
   StoryAnswerList,
   StoryImage,
   StoryQuizAnswer,
@@ -18,7 +18,6 @@ import {
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
-import type { SlideContent } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];

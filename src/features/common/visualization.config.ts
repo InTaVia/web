@@ -8,25 +8,38 @@ interface EventKindColor {
 interface EventKindProperties {
   type: string;
   label: string;
+  shape: 'dot' | 'rectangle';
   color: EventKindColor;
 }
 
 const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindProperties> = {
-  birth: { label: 'Birth', type: 'birth', color: { foreground: 'black', background: '#0571b0' } },
-  death: { label: 'Death', type: 'death', color: { foreground: 'black', background: '#ca0020' } },
+  birth: {
+    label: 'Birth',
+    type: 'birth',
+    shape: 'dot',
+    color: { foreground: 'black', background: '#0571b0' },
+  },
+  death: {
+    label: 'Death',
+    type: 'death',
+    shape: 'dot',
+    color: { foreground: 'black', background: '#ca0020' },
+  },
   creation: {
     label: 'Creation',
     type: 'creation',
+    shape: 'rectangle',
     color: { foreground: 'black', background: '#008080' },
   },
   default: {
     label: 'Unknown',
     type: 'default',
+    shape: 'dot',
     color: { foreground: 'black', background: 'purple' },
   },
 };
 
-const eventKindByEventId: Record<EventKind['id'], EventKindProperties['type']> = {
+export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['type']> = {
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth',
   'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death',

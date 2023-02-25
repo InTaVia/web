@@ -73,7 +73,6 @@
     "maplibre-gl": "^2.1.9",
     "next": "^12.2.5",
     "react": "^17.0.2",
-    "react-audio-player": "^0.17.0",
     "react-contenteditable": "^3.3.6",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.9",

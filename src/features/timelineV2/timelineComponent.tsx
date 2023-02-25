@@ -2,6 +2,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import { useState } from 'react';
 
 import type { VisualizationProperty } from '@/features/common/visualization.slice';
+import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Timeline } from '@/features/timelineV2/timeline';
 import Button from '@/features/ui/Button';
 
@@ -60,6 +61,9 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         >
           -
         </Button>
+      </div>
+      <div className="absolute bottom-0 right-0 z-50">
+        <VisualizationLegend events={events} entities={entities} />
       </div>
     </>
   );
