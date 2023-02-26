@@ -19,18 +19,18 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
   const { current: map } = useMap();
   // const [isHovered, setIsHovered] = useState<Point<T>['id'] | null>(null);
 
-  useEffect(() => {
-    if (map == null || autoFitBounds !== true) return;
+  // useEffect(() => {
+  //   if (map == null || autoFitBounds !== true) return;
 
-    map.fitBounds(
-      calculateBounds(
-        data.features.map((feature) => {
-          return feature.geometry.coordinates;
-        }),
-      ),
-      { padding: 50, duration: 100 },
-    );
-  }, [autoFitBounds, data.features, map]);
+  //   map.fitBounds(
+  //     calculateBounds(
+  //       data.features.map((feature) => {
+  //         return feature.geometry.coordinates;
+  //       }),
+  //     ),
+  //     { padding: 50, duration: 100 },
+  //   );
+  // }, [autoFitBounds, data.features, map]);
 
   return (
     <Fragment>
@@ -66,8 +66,6 @@ function calculateBounds(points: Array<Position>): [number, number, number, numb
     lng.push(point[0] as number);
     lat.push(point[1] as number);
   });
-
-  console.log('fitbounds', points);
 
   const corners = [Math.min(...lng), Math.min(...lat), Math.max(...lng), Math.max(...lat)];
 
