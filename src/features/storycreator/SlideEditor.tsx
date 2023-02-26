@@ -3,6 +3,7 @@ import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
@@ -11,7 +12,6 @@ import {
   editSlideContent,
   SlideContentTypes,
 } from '@/features/storycreator/contentPane.slice';
-import { StoryContentDialog } from '@/features/storycreator/StoryContentDialog';
 import type { Slide } from '@/features/storycreator/storycreator.slice';
 import {
   releaseVisualizationForVisualizationSlotForSlide,
@@ -23,7 +23,6 @@ import {
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
-import { VisualizationPropertiesDialog } from '@/features/visualization-layouts/visualization-properties-dialog';
 
 interface SlideEditorProps {
   width?: number | undefined;
@@ -59,7 +58,6 @@ export function SlideEditor(props: SlideEditorProps) {
   } = props;
 
   const [editElement, setEditElement] = useState<any | null>(null);
-  const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
   const dispatch = useAppDispatch();
 
@@ -76,16 +74,12 @@ export function SlideEditor(props: SlideEditorProps) {
     setEditElement(null);
   };
 
-  const handleCloseVisualizationDialog = () => {
-    setVisualizationEditElement(null);
-  };
-
-  const handleSave = (element: SlideContent) => {
-    dispatch(editSlideContent({ slide: slide, content: element }));
-  };
-
-  const handleSaveVisualization = (element: Visualization) => {
-    dispatch(editVisualization(element));
+  const handleSave = (element: SlideContent | Visualization) => {
+    if (SlideContentTypes.includes(element.type)) {
+      dispatch(editSlideContent({ slide: slide, content: element }));
+    } else {
+      dispatch(editVisualization(element));
+    }
   };
 
   const onSwitchVisualization = (
@@ -157,7 +151,7 @@ export function SlideEditor(props: SlideEditorProps) {
         onDropContentPane={onDropContentPane}
         onContentPaneWizard={onContentPaneWizard}
         setEditElement={setEditElement}
-        setVisualizationEditElement={setVisualizationEditElement}
+        setVisualizationEditElement={setEditElement}
         hightlighted={highlighted}
         onToggleHighlight={(
           entities: Array<Entity['id'] | null>,
@@ -169,13 +163,10 @@ export function SlideEditor(props: SlideEditorProps) {
         }}
       />
       {editElement !== null && (
-        <StoryContentDialog onClose={handleClose} element={editElement} onSave={handleSave} />
-      )}
-      {visualizationEditElement !== null && (
-        <VisualizationPropertiesDialog
-          onClose={handleCloseVisualizationDialog}
-          element={visualizationEditElement}
-          onSave={handleSaveVisualization}
+        <ComponentPropertiesDialog
+          onClose={handleClose}
+          element={editElement}
+          onSave={handleSave}
         />
       )}
     </div>

@@ -10,8 +10,9 @@ import type { StringLiteral } from 'typescript';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
+import type { ComponentProperty } from '@/features/common/component-property';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
-import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
+import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
@@ -294,7 +295,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     slides: Record<string, Slide>;
     visualizations: Record<string, Visualization>;
     contentPanes: Record<string, ContentPane>;
-    properties: Record<string, VisualizationProperty>;
+    properties: Record<string, ComponentProperty>;
     storyEntities: Record<string, Entity>;
     storyEvents: Record<string, Event>;
   }>();

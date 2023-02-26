@@ -5,6 +5,7 @@ import { assert } from '@stefanprobst/assert';
 import type { ViewState } from 'react-map-gl';
 
 import type { RootState } from '@/app/store';
+import type { ComponentProperty } from '@/features/common/component-property';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -14,19 +15,9 @@ export interface Visualization {
   entityIds: Array<Entity['id']>;
   targetEntityIds: Array<Entity['id']>;
   eventIds: Array<Event['id']>;
-  properties?: Record<string, VisualizationProperty>;
+  properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
-}
-
-export interface VisualizationProperty {
-  type: 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text';
-  id: string;
-  label: string;
-  value?: any;
-  options?: Array<any>;
-  editable: boolean | false;
-  sort?: number | 0;
 }
 
 const initialState: Record<Visualization['id'], Visualization> = {};

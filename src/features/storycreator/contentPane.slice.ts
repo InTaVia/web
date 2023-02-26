@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
+import type { ComponentProperty, QuizAnswer } from '@/features/common/component-property';
 
 export type ContentSlotId = 'cont-1' | 'cont-2';
 
@@ -19,7 +20,7 @@ export interface SlideContent {
     w: number;
     h: number;
   };
-  properties?: Record<StoryContentProperty['id'], StoryContentProperty>;
+  properties?: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
 export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio'];
@@ -29,56 +30,42 @@ export interface ContentPane {
   contents: Record<SlideContent['id'], SlideContent>;
 }
 
-export interface StoryContentProperty {
-  type: 'answerlist' | 'text' | 'textarea';
-  id: string;
-  label: string;
-  value: string;
-  editable: boolean | false;
-  sort: number | 0;
-}
-
-export interface StoryQuizAnswer {
-  text: string;
-  correct: boolean;
-}
-
-export interface StoryAnswerList extends StoryContentProperty {
+export interface AnswerList extends ComponentProperty {
   type: 'answerlist';
-  answers: Array<StoryQuizAnswer>;
+  answers: Array<QuizAnswer>;
 }
 
 export interface StoryMap extends SlideContent {
   type: 'Map';
-  properties: Record<StoryContentProperty['id'], StoryContentProperty>;
+  properties: Record<ComponentProperty['id'], ComponentProperty>;
   bounds: Array<Array<number>>;
 }
 
 export interface StoryImage extends SlideContent {
   type: 'Image';
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 export interface StoryVideoAudio extends SlideContent {
   type: 'Video/Audio';
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 export interface StoryText extends SlideContent {
   type: 'Text';
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 export interface StoryQuiz extends SlideContent {
   type: 'Quiz';
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 export class StoryQuizObject implements StoryQuiz {
   type: 'Quiz' = 'Quiz';
   id: string;
   layout: { x: number; y: number; w: number; h: number };
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
   constructor(
     id: string,
     parentPane: string,
@@ -95,7 +82,7 @@ export class StoryQuizObject implements StoryQuiz {
         label: 'Question',
         value: '',
         sort: 0,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       answerlist: {
         type: 'answerlist',
         id: 'answers',
@@ -104,7 +91,7 @@ export class StoryQuizObject implements StoryQuiz {
         value: '',
         sort: 1,
         answers: [{ text: 'Answer 1', correct: false }],
-      } as StoryAnswerList,
+      } as AnswerList,
     };
   }
   parentPane: string;
@@ -114,7 +101,7 @@ export class StoryTextObject implements StoryText {
   type: 'Text' = 'Text';
   id: string;
   layout: { x: number; y: number; w: number; h: number };
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
   constructor(
     id: string,
     parentPane: string,
@@ -131,7 +118,7 @@ export class StoryTextObject implements StoryText {
         label: 'Title',
         value: '',
         sort: 0,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       text: {
         type: 'textarea',
         id: 'text',
@@ -139,7 +126,7 @@ export class StoryTextObject implements StoryText {
         label: 'Text',
         value: '',
         sort: 1,
-      } as StoryContentProperty,
+      } as ComponentProperty,
     };
   }
   parentPane: string;
@@ -166,7 +153,7 @@ export class StoryImageObject implements StoryImage {
         label: 'Title',
         value: '',
         sort: 1,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       text: {
         type: 'text',
         id: 'text',
@@ -174,7 +161,7 @@ export class StoryImageObject implements StoryImage {
         label: 'Text',
         value: '',
         sort: 2,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       link: {
         type: 'text',
         id: 'link',
@@ -182,11 +169,11 @@ export class StoryImageObject implements StoryImage {
         label: 'Link',
         value: '',
         sort: 0,
-      } as StoryContentProperty,
+      } as ComponentProperty,
     };
   }
   parentPane: string;
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 export class StoryVideoAudioObject implements StoryVideoAudio {
@@ -210,7 +197,7 @@ export class StoryVideoAudioObject implements StoryVideoAudio {
         label: 'Title',
         value: '',
         sort: 1,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       caption: {
         type: 'text',
         id: 'caption',
@@ -218,7 +205,7 @@ export class StoryVideoAudioObject implements StoryVideoAudio {
         label: 'Caption',
         value: '',
         sort: 2,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       link: {
         type: 'text',
         id: 'link',
@@ -226,19 +213,19 @@ export class StoryVideoAudioObject implements StoryVideoAudio {
         label: 'Link',
         value: '',
         sort: 0,
-      } as StoryContentProperty,
+      } as ComponentProperty,
       start: {
-        type: 'text',
+        type: 'number',
         id: 'start',
         editable: true,
-        label: 'Start',
-        value: '',
+        label: 'Start at second',
+        value: 0,
         sort: 3,
-      } as StoryContentProperty,
+      } as ComponentProperty,
     };
   }
   parentPane: string;
-  properties: Record<string, StoryContentProperty>;
+  properties: Record<string, ComponentProperty>;
 }
 
 const initialState: Record<ContentPane['id'], ContentPane> = {};

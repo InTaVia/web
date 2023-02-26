@@ -5,7 +5,8 @@ import { Dialog, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment, useState } from 'react';
 
-import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
+import type { ComponentProperty } from '@/features/common/component-property';
+import type { Visualization } from '@/features/common/visualization.slice';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
@@ -35,10 +36,10 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
   let editableAttributes = [];
 
   editableAttributes = Object.values(tmpProperties as object)
-    .filter((prop: VisualizationProperty) => {
+    .filter((prop: ComponentProperty) => {
       return prop.editable;
     })
-    .sort((a: VisualizationProperty, b: VisualizationProperty) => {
+    .sort((a: ComponentProperty, b: ComponentProperty) => {
       return (a.sort !== undefined ? a.sort : 0) - (b.sort !== undefined ? b.sort : 0);
     });
 
@@ -85,7 +86,7 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                 </Dialog.Title>
                 <div className="mt-2">
                   <div key={'gridTest'} className="grid h-auto w-auto grid-cols-[auto,auto] gap-4">
-                    {editableAttributes.map((property: VisualizationProperty) => {
+                    {editableAttributes.map((property: ComponentProperty) => {
                       switch (property.type) {
                         case 'boolean':
                           return [

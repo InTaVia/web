@@ -10,8 +10,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import {
   addEntitiesToVisualization,
   addEventsToVisualization,
-  addEventToVisualization,
-  addPersonToVisualization,
   addTargetEntitiesToVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';

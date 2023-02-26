@@ -1,7 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { useState } from 'react';
 
-import type { VisualizationProperty } from '@/features/common/visualization.slice';
+import type { ComponentProperty } from '@/features/common/component-property';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Timeline } from '@/features/timelineV2/timeline';
 import Button from '@/features/ui/Button';
@@ -11,7 +11,7 @@ interface TimelineProps {
   entities: Record<Entity['id'], Entity>;
   width?: number;
   height?: number;
-  properties?: Record<string, VisualizationProperty>;
+  properties?: Record<string, ComponentProperty>;
 }
 
 export function TimelineComponent(props: TimelineProps): JSX.Element {
@@ -46,7 +46,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         diameter={diameter}
         zoom={zoom}
       />
-      <div className="absolute top-1 right-1 z-50">
+      <div className="absolute top-1 right-1">
         <Button
           onClick={() => {
             setZoom(Math.min(zoom + 1, 20));
@@ -62,7 +62,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
           -
         </Button>
       </div>
-      <div className="absolute bottom-0 right-0 z-50">
+      <div className="absolute bottom-0 right-0">
         <VisualizationLegend events={events} entities={entities} />
       </div>
     </>

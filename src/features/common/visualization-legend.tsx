@@ -37,20 +37,24 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
     }
   };
 
-  return (
-    <div className="grid grid-cols-2 gap-2 border border-solid border-intavia-gray-400 bg-white p-1">
-      {eventKindProperties.map((eventKindProperties) => {
-        return (
-          <>
-            <div className="flex items-center justify-center">
-              <svg width={16} height={16}>
-                {createShapeSVG(eventKindProperties.shape, eventKindProperties.color.background)}
-              </svg>
-            </div>
-            <div>{eventKindProperties.label}</div>
-          </>
-        );
-      })}
-    </div>
-  );
+  if (eventKindProperties.length > 0) {
+    return (
+      <div className="grid grid-cols-2 gap-2 border border-solid border-intavia-gray-400 bg-white p-1">
+        {eventKindProperties.map((eventKindProperties) => {
+          return (
+            <>
+              <div className="flex items-center justify-center">
+                <svg width={16} height={16}>
+                  {createShapeSVG(eventKindProperties.shape, eventKindProperties.color.background)}
+                </svg>
+              </div>
+              <div>{eventKindProperties.label}</div>
+            </>
+          );
+        })}
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 }

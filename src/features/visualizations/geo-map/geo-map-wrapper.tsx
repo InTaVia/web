@@ -1,12 +1,10 @@
 import type { Entity, Event } from '@intavia/api-client';
-import type { Feature } from 'geojson';
-import { useCallback } from 'react';
-import type { ViewStateChangeEvent } from 'react-map-gl';
 
 import { useAppDispatch } from '@/app/store';
+import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
-import { eventKindColors, getColorById } from '@/features/common/visualization.config';
-import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
+import { getColorById } from '@/features/common/visualization.config';
+import type { Visualization } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
 import { base } from '@/features/visualizations/geo-map/geo-map.config';
 import { GeoMapClusterMarkerLayer } from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
@@ -23,7 +21,7 @@ interface GeoMapWrapperProps {
   entities?: Record<Entity['id'], Entity>;
   width?: number;
   height?: number;
-  properties?: Record<string, VisualizationProperty>;
+  properties?: Record<string, ComponentProperty>;
   onToggleHighlight?: (
     entities: Array<Entity['id'] | null>,
     events: Array<Event['id'] | null>,

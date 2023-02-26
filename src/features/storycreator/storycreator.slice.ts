@@ -3,7 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
-import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
+import type { ComponentProperty } from '@/features/common/component-property';
+import type { Visualization } from '@/features/common/visualization.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 
@@ -42,7 +43,7 @@ export interface Story {
   id: string;
   title: string;
   slides: Record<Slide['id'], Slide>;
-  properties: Record<VisualizationProperty['id'], VisualizationProperty>;
+  properties: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
 export interface StoryCreatorState {

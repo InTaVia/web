@@ -5,12 +5,12 @@ import ReactPlayer from 'react-player';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { QuizAnswer } from '@/features/common/component-property';
 import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
 import type {
+  AnswerList,
   SlideContent,
-  StoryAnswerList,
   StoryImage,
-  StoryQuizAnswer,
   StoryVideoAudio,
 } from '@/features/storycreator/contentPane.slice';
 import {
@@ -88,8 +88,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
           if (element.properties.question.value) {
             quizContent.push(
               <div className="grid grid-cols-[auto] gap-1">
-                {(element.properties.answerlist as StoryAnswerList).answers.map(
-                  (answer: StoryQuizAnswer, index: number) => {
+                {(element.properties.answerlist as AnswerList).answers.map(
+                  (answer: QuizAnswer, index: number) => {
                     return (
                       <div
                         key={`answer${index}`}
