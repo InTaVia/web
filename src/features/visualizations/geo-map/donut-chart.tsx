@@ -1,32 +1,52 @@
-import type { Feature, Point } from 'geojson';
+import type { Feature } from 'geojson';
 import get from 'lodash.get';
-import { Fragment, useMemo, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-map-gl';
+
+import { useHoverState } from '@/app/context/hover.context';
 
 interface DonutChartProps<T> {
   clusterByProperty: string;
   clusterId: number;
   clusterProperties: T;
-  clusterColors: Record<string, string>;
-  onChangeHover?: (feature: Feature<Point, T> | null) => void;
+  clusterColors: Record<string, Record<string, string>>;
   sourceId: string;
 }
 
 export function DonutChart<T>(props: DonutChartProps<T>): JSX.Element {
-  const {
-    clusterByProperty,
-    clusterColors,
-    clusterId,
-    clusterProperties,
-    onChangeHover,
-    sourceId,
-  } = props;
+  const { clusterByProperty, clusterColors, clusterId, clusterProperties, sourceId } = props;
 
+  const [clusterFeatures, setClusterFeatures] = useState<Array<Feature>>([]);
   const [isHovered, setIsHoverd] = useState<boolean>(false);
+
+  const { hovered, updateHover } = useHoverState();
+
+  const { current: map } = useMap();
+
+  useEffect(() => {
+    const source = map?.getSource(sourceId);
+    if (source?.type === 'geojson') {
+      source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
+        setClusterFeatures(features);
+      });
+    }
+
+    return () => {
+      setClusterFeatures([]);
+      setIsHoverd(false);
+    };
+  }, [clusterId, map, sourceId]);
+
   const [segments, total] = useMemo(() => {
     const internal = ['cluster', 'cluster_id', 'point_count', 'point_count_abbreviated'];
 
-    const segments: Array<{ start: number; end: number; color: string; value: any }> = [];
+    const segments: Array<{
+      start: number;
+      end: number;
+      color: Record<string, string>;
+      value: any;
+    }> = [];
     let total = 0;
 
     Object.keys(clusterProperties)
@@ -36,7 +56,7 @@ export function DonutChart<T>(props: DonutChartProps<T>): JSX.Element {
       .sort()
       .forEach((key) => {
         const count = clusterProperties[key];
-        const color = clusterColors[key] ?? '#999';
+        const color = clusterColors[key] ?? clusterColors.default!;
 
         segments.push({ start: total, end: total + count, color, value: key });
         total += count;
@@ -51,22 +71,22 @@ export function DonutChart<T>(props: DonutChartProps<T>): JSX.Element {
   const r0 = Math.round(r * 0.6);
   const w = (r + offset) * 2;
 
-  const { current: map } = useMap();
-
   return (
     <svg width={w} height={w} viewBox={`${-offset} ${-offset} ${w} ${w}`} textAnchor="middle">
       <g
-        onMouseEnter={() => {
-          const source = map?.getSource(sourceId);
-          if (source?.type === 'geojson') {
-            source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
-              onChangeHover?.(features);
-            });
-          }
+        className="cursor-pointer"
+        onMouseEnter={(event: MouseEvent<SVGGElement>) => {
+          updateHover({
+            entities: [],
+            events: clusterFeatures.map((feature) => {
+              return feature.id;
+            }) as Array<string>,
+            clientRect: event.currentTarget.getBoundingClientRect(),
+          });
           setIsHoverd(true);
         }}
         onMouseLeave={() => {
-          onChangeHover?.(null);
+          updateHover(null);
           setIsHoverd(false);
         }}
       >
@@ -85,16 +105,25 @@ export function DonutChart<T>(props: DonutChartProps<T>): JSX.Element {
             r={r}
             r0={r0}
             color={color}
-            onChangeHover={onChangeHover}
             value={value}
             sourceId={sourceId}
             clusterByProperty={clusterByProperty}
+            clusterHovered={isHovered}
+            segmentFeatureIds={
+              clusterFeatures
+                .filter((feature) => {
+                  return get(feature.properties, clusterByProperty.split('.')) === value;
+                })
+                .map((feature) => {
+                  return feature.id;
+                }) as Array<string>
+            }
           />
         );
       })}
-      {isHovered ? (
+      {/* {isHovered ? (
         <circle cx={r} cy={r} r={r} stroke={'salmon'} strokeWidth={2} fill={'none'} />
-      ) : null}
+      ) : null} */}
     </svg>
   );
 }
@@ -106,17 +135,45 @@ interface DonutSegmentProps<T> {
   end: number;
   r: number;
   r0: number;
-  color: string;
-  onChangeHover?: (feature: Feature<Point, T> | null) => void;
+  color: Record<string, string>;
   value: any;
   sourceId: string;
+  clusterHovered: boolean;
+  segmentFeatureIds: Array<string>;
 }
 
 export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
-  const { clusterByProperty, start, end, r, r0, color, onChangeHover, clusterId, value, sourceId } =
-    props;
+  const {
+    clusterByProperty,
+    start,
+    end,
+    r,
+    r0,
+    color,
+    clusterId,
+    value,
+    sourceId,
+    clusterHovered = false,
+    segmentFeatureIds,
+  } = props;
 
+  // const [segmentFeatureIds, setSegmentFeatureIds] = useState<Array<string>>([]);
   const [isHovered, setIsHoverd] = useState<boolean>(false);
+  const { hovered, updateHover } = useHoverState();
+
+  useEffect(() => {
+    return () => {
+      setIsHoverd(false);
+    };
+  }, []);
+
+  const allHighlighted = segmentFeatureIds.every((featureId) => {
+    return hovered?.events.includes(featureId);
+  });
+
+  const someHighlighted = segmentFeatureIds.some((featureId) => {
+    return hovered?.events.includes(featureId);
+  });
 
   let end_ = end;
 
@@ -135,31 +192,35 @@ export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
     r + r0 * y1
   } A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${r + r0 * y0}`;
 
-  const { current: map } = useMap();
-
   return (
     <path
-      onMouseEnter={() => {
-        const source = map?.getSource(sourceId);
-        if (source?.type === 'geojson') {
-          source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
-            const filtered = features.filter((feature) => {
-              return get(feature.properties, clusterByProperty.split('.')) === value;
-            });
-
-            onChangeHover?.(filtered);
-          });
-        }
+      className="cursor-pointer"
+      onMouseEnter={(event: MouseEvent<SVGPathElement>) => {
+        updateHover({
+          entities: [],
+          events: segmentFeatureIds,
+          clientRect: event.currentTarget.getBoundingClientRect(),
+        });
         setIsHoverd(true);
       }}
       onMouseLeave={() => {
-        onChangeHover?.(null);
+        updateHover(null);
         setIsHoverd(false);
       }}
       d={pathData}
-      fill={color}
-      strokeWidth={isHovered ? 2 : 0}
-      stroke={isHovered ? 'salmon' : 'none'}
+      fill={
+        clusterHovered || isHovered || allHighlighted || someHighlighted
+          ? color.foreground
+          : color.background
+      }
+      strokeWidth={clusterHovered || isHovered || allHighlighted || someHighlighted ? 2 : 0}
+      stroke={
+        clusterHovered || isHovered || allHighlighted || someHighlighted ? color.background : 'none'
+      }
+      strokeLinecap="round"
+      strokeDasharray={
+        !clusterHovered && !isHovered && !allHighlighted && someHighlighted ? '4' : 'none'
+      }
     />
   );
 }

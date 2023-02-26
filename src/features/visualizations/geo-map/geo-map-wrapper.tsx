@@ -1,11 +1,8 @@
 import type { Entity, Event } from '@intavia/api-client';
-import type { Feature } from 'geojson';
-import { useCallback } from 'react';
-import type { ViewStateChangeEvent } from 'react-map-gl';
 
 import { useAppDispatch } from '@/app/store';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
-import { eventKindColors, getColorById } from '@/features/common/visualization.config';
+import { getColorsById } from '@/features/common/visualization.config';
 import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
 import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
 import { base } from '@/features/visualizations/geo-map/geo-map.config';
@@ -33,7 +30,7 @@ interface GeoMapWrapperProps {
 export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const { visualization, onToggleHighlight, highlightedByVis } = props;
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   //fetch all required data
   const data = useDataFromVisualization({ visualization });
@@ -46,7 +43,6 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   // console.log(lines);
 
   const { points } = usePointFeatureCollection({ events: data.events, entities: data.entities });
-  // console.log(points);
 
   const isCluster = visualization.properties!.cluster!.value ?? false;
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
@@ -55,16 +51,9 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
-    getColor: getColorById,
+    getColors: getColorsById,
     data: points,
   });
-
-  // console.log(cluster);
-
-  function onChangeHover(features) {
-    return;
-    // console.log(features);
-  }
 
   function onToggleSelection(ids) {
     // console.log(ids);
@@ -101,19 +90,18 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       {isCluster === false && points.features.length > 0 && (
         <GeoMapDotMarkerLayer
           data={points}
-          onChangeHover={onChangeHover}
           onToggleSelection={onToggleSelection}
           highlightedByVis={highlightedByVis}
         />
       )}
 
       {isCluster === true && points.features.length > 0 && (
+        //NOTE: does not have to be visulization id - used to keep source id
         <GeoMapClusterMarkerLayer
           id={visualization.id}
           {...cluster}
           isCluster={isCluster}
           clusterType={clusterMode}
-          onChangeHover={onChangeHover}
         />
       )}
     </GeoMap>
