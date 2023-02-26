@@ -4,12 +4,14 @@ import type { Entity, Event } from '@intavia/api-client';
 import type { DragEvent, ReactNode } from 'react';
 import { useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useLocale } from '@/app/route/use-locale';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
 import { type as mediaType } from '@/features/common/data-transfer.types';
 import { EntityKindIcon } from '@/features/common/entity-kind-icon';
+import { getColorsById } from '@/features/common/visualization.config';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface EventItemProps {
@@ -20,10 +22,13 @@ export function EventItem(props: EventItemProps): JSX.Element {
   const { event, icon = null } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const { hovered, updateHover } = useHoverState();
 
   const { locale } = useLocale();
   const _entities = useAppSelector(selectEntities);
   const vocabularies = useAppSelector(selectVocabularyEntries);
+
+  const hoverColor = getColorsById(event.kind).foreground;
 
   function onDragStart(dragEvent: DragEvent<HTMLDivElement>) {
     const data: DataTransferData = { type: 'data', entities: [], events: [event.id] };
@@ -31,11 +36,13 @@ export function EventItem(props: EventItemProps): JSX.Element {
   }
 
   function onMouseEnter() {
+    updateHover({ entities: [], events: [event.id], clientRect: null });
     setIsHovered(true);
     //update workspace hovered
   }
 
   function onMouseLeave() {
+    updateHover(null);
     setIsHovered(false);
     //update workspace hovered
   }
@@ -47,7 +54,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
             <>
               <Disclosure.Button
                 as="div"
-                className="flex w-full flex-row items-center justify-between px-2 py-1 text-left hover:bg-slate-200"
+                className={`flex w-full flex-row items-center justify-between px-2 py-1 text-left hover:bg-slate-200`}
                 draggable
                 onDragStart={onDragStart}
                 onMouseEnter={onMouseEnter}

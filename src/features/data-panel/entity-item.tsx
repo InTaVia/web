@@ -4,6 +4,7 @@ import type { Entity } from '@intavia/api-client';
 import type { DragEvent, ReactNode } from 'react';
 import { useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useLocale } from '@/app/route/use-locale';
 import { useAppSelector } from '@/app/store';
 import { selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
@@ -19,6 +20,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
   const { entity, icon = null } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const { hovered, updateHover } = useHoverState();
 
   const { locale } = useLocale();
   const _events = useAppSelector(selectEvents);
@@ -30,11 +32,13 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
   }
 
   function onMouseEnter() {
+    updateHover({ entities: [entity.id], events: [], clientRect: null });
     setIsHovered(true);
     //update workspace hovered
   }
 
   function onMouseLeave() {
+    updateHover(null);
     setIsHovered(false);
     //update workspace hovered
   }
