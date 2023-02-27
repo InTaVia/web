@@ -5,6 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Dialog,
 } from '@intavia/ui';
 import { MenuIcon } from 'lucide-react';
 import NextLink from 'next/link';
@@ -16,6 +17,8 @@ import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { useState } from 'react';
+import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 
 interface SearchResultProps<T extends Entity> {
   entity: T;
@@ -37,13 +40,14 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const dispatch = useAppDispatch();
   const { currentCollection } = useCollection();
 
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
   function onShowDetails() {
     void router.push(detailsUrl);
   }
 
   function onEditItem() {
-    //
-    console.log('onEditItem');
+    setDialogOpen(true);
   }
 
   function onAddToCollection() {
@@ -80,6 +84,15 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+        <EditEntityDialog
+          entity={entity}
+          onClose={() => {
+            setDialogOpen(false);
+          }}
+        />
+      </Dialog>
     </article>
   );
 }

@@ -1,15 +1,13 @@
 import type { Entity, EntityKind } from '@intavia/api-client';
 import {
   Button,
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@intavia/ui';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
@@ -18,24 +16,23 @@ import { Form } from '@/components/form/form';
 import { FormTextField } from '@/components/form/form-text-field';
 
 interface EditEntityDialogProps<T extends Entity> {
-  children: JSX.Element;
   entity: T;
+  onClose: () => void;
 }
 
 export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<T>): JSX.Element {
-  const { children, entity } = props;
+  const { entity, onClose } = props;
 
   const formId = 'edit-entity';
 
   const { t } = useI18n<'common'>();
 
   const dispatch = useAppDispatch();
-  const [isDialogOpen, setDialogOpen] = useState(false);
 
   function onSubmit(values: T) {
     dispatch(addLocalEntity(values));
 
-    setDialogOpen(false);
+    onClose();
   }
 
   const label = t(['common', 'entity', 'edit-entity'], {
@@ -43,32 +40,28 @@ export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<
   });
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>{label}</DialogTitle>
+        <DialogDescription>
+          Edit entity details. Click save when you&apos;re done.
+        </DialogDescription>
+      </DialogHeader>
 
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{label}</DialogTitle>
-          <DialogDescription>
-            Edit entity details. Click save when you&apos;re done.
-          </DialogDescription>
-        </DialogHeader>
+      <div className="grid gap-4 py-4">
+        <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
+          <FormTextField label={t(['common', 'entity', 'label'])} name="label.default" />
 
-        <div className="grid gap-4 py-4">
-          <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
-            <FormTextField label={t(['common', 'entity', 'label'])} name="label.default" />
+          <EntityFormFields kind={entity.kind} />
+        </Form>
+      </div>
 
-            <EntityFormFields kind={entity.kind} />
-          </Form>
-        </div>
-
-        <DialogFooter>
-          <Button form={formId} type="submit">
-            {t(['common', 'form', 'save'])}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      <DialogFooter>
+        <Button form={formId} type="submit">
+          {t(['common', 'form', 'save'])}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
   );
 }
 

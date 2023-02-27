@@ -1,6 +1,8 @@
 import type { Entity } from '@intavia/api-client';
 import {
   Button,
+  Dialog,
+  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -20,12 +22,16 @@ import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { useState } from 'react';
+import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 
 export function CollectionView(): JSX.Element {
   const { t } = useI18n<'common'>();
 
   const _collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
+
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
   function onCreateCollection() {
     //
@@ -35,11 +41,18 @@ export function CollectionView(): JSX.Element {
   if (currentCollection == null) {
     return (
       <div className="grid h-full w-full place-items-center bg-neutral-50">
-        <CreateCollectionDialog>
-          <Button onClick={onCreateCollection}>
-            {t(['common', 'collections', 'create-collection'])}
-          </Button>
-        </CreateCollectionDialog>
+        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button onClick={onCreateCollection}>
+              {t(['common', 'collections', 'create-collection'])}
+            </Button>
+          </DialogTrigger>
+          <CreateCollectionDialog
+            onClose={() => {
+              setDialogOpen(false);
+            }}
+          />
+        </Dialog>
       </div>
     );
   }
@@ -82,7 +95,6 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const dispatch = useAppDispatch();
 
-  const _collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
 
   const _entities = useAppSelector(selectEntities);
@@ -95,7 +107,11 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
-  function onEditItem() {}
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  function onEditItem() {
+    setDialogOpen(true);
+  }
 
   function onRemoveItem() {
     if (currentCollection == null) return;
@@ -128,6 +144,15 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+        <EditEntityDialog
+          entity={entity}
+          onClose={() => {
+            setDialogOpen(false);
+          }}
+        />
+      </Dialog>
     </article>
   );
 }

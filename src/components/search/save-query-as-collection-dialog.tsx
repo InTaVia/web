@@ -12,12 +12,13 @@ import { useAppDispatch } from '@/app/store';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
 import { Form } from '@/components/form/form';
 import { FormTextField } from '@/components/form/form-text-field';
+import { useAllSearchResults } from '@/components/search/use-all-search-results';
 
-interface CreateCollectionDialogProps {
+interface SaveQueryAsCollectionDialogProps {
   onClose: () => void;
 }
 
-export function CreateCollectionDialog(props: CreateCollectionDialogProps): JSX.Element {
+export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogProps): JSX.Element {
   const { onClose } = props;
 
   const formId = 'save-collection';
@@ -26,10 +27,13 @@ export function CreateCollectionDialog(props: CreateCollectionDialogProps): JSX.
 
   const dispatch = useAppDispatch();
 
-  function onSubmit(values: { label: string }) {
+  const { getSearchResults } = useAllSearchResults();
+
+  async function onSubmit(values: { label: string }) {
     onClose();
 
-    const collection = createCollection(values);
+    const { entities, metadata } = await getSearchResults();
+    const collection = createCollection({ ...values, entities, metadata });
     dispatch(addCollection(collection));
   }
 
