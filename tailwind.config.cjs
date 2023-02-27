@@ -1,8 +1,16 @@
-const colors = require('tailwindcss/colors');
+// @ts-expect-error Missing types.
+const preset = require('@intavia/ui/dist/tailwind-preset.config.cjs');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.@(css|tsx)', './stories/**/*.@(css|tsx)'],
+  content: [
+    './src/**/*.@(css|tsx)',
+    './stories/**/*.@(css|tsx)',
+    './node_modules/@intavia/ui/dist/**/*.js',
+  ],
+  /** Disable dark mode. */
+  darkMode: '',
+  preset: [preset],
   theme: {
     extend: {
       // https://colorbox.io/?c0=%26p%24s%24%3D10%26p%24h%24st%24%3D91%26p%24h%24e%24%3D91%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0%26p%24sa%24e%24%3D0.49%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Deqo%26p%24b%24st%24%3D1%26p%24b%24e%24%3D0.69%26p%24b%24c%24%3Dl%26o%24n%24%3DGreen%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24lockHex%24%3D84b15b%26o%24minorStep%24%3D1&c1=%26p%24s%24%3D10%26p%24h%24st%24%3D147%26p%24h%24e%24%3D147%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0.0%26p%24sa%24e%24%3D1%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Dl%26p%24b%24st%24%3D1%26p%24b%24e%24%3D0.69%26p%24b%24c%24%3Dl%26o%24n%24%3DBrand%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24lockHex%24%3D%2300B050%26o%24minorStep%24%3D1&c2=%26p%24s%24%3D10%26p%24h%24st%24%3D60%26p%24h%24e%24%3D60%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0%26p%24sa%24e%24%3D0%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Deqo%26p%24b%24st%24%3D1%26p%24b%24e%24%3D0.08%26p%24b%24c%24%3Dl%26o%24n%24%3DGray%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24minorStep%24%3D1&c3=%26p%24s%24%3D10%26p%24h%24st%24%3D200%26p%24h%24e%24%3D200%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0%26p%24sa%24e%24%3D0.85%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Deqo%26p%24b%24st%24%3D0.99%26p%24b%24e%24%3D0.92%26p%24b%24c%24%3Deci%26o%24n%24%3DBlue%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24minorStep%24%3D1&c4=%26p%24s%24%3D10%26p%24h%24st%24%3D359%26p%24h%24e%24%3D359%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0%26p%24sa%24e%24%3D0.74%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Deqo%26p%24b%24st%24%3D1%26p%24b%24e%24%3D0.78%26p%24b%24c%24%3Deqi%26o%24n%24%3DRed%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24minorStep%24%3D1&c5=%26p%24s%24%3D10%26p%24h%24st%24%3D273%26p%24h%24e%24%3D273%26p%24h%24c%24%3Deqo%26p%24sa%24st%24%3D0%26p%24sa%24e%24%3D0.6%26p%24sa%24r%24%3D1%26p%24sa%24c%24%3Deqo%26p%24b%24st%24%3D1%26p%24b%24e%24%3D0.64%26p%24b%24c%24%3Deqi%26o%24n%24%3DPurple%26o%24ro%24%3Dcw%26o%24ms%24%3D0%26o%24minorStep%24%3D1
@@ -79,7 +87,6 @@ module.exports = {
           800: '#844ab3',
           900: '#7741a3',
         },
-        neutral: { 0: colors.white, ...colors.slate, 1000: colors.black },
       },
       zIndex: {
         dialog: 50,
@@ -89,8 +96,4 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // @ts-expect-error Missing module declaration.
-    require('@tailwindcss/line-clamp'),
-  ],
 };

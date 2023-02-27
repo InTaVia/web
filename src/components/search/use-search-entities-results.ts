@@ -1,5 +1,5 @@
 import { useSearchEntitiesQuery } from '@/api/intavia.service';
-import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 
 export function useSearchEntitiesResults() {
   const searchEntitiesFilters = useSearchEntitiesFilters();

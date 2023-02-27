@@ -1,4 +1,4 @@
-import { useSearchEntitiesResults } from '@/features/entities/use-search-entities-results';
+import { useSearchEntitiesResults } from '@/components/search/use-search-entities-results';
 
 export function SearchResultsCount(): JSX.Element {
   const searchResults = useSearchEntitiesResults();

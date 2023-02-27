@@ -21,8 +21,12 @@ export const dictionary: Dictionary = {
       one: 'Save one entity as collection',
       other: 'Save {{count}} entities as collection',
     },
+    'select-collection': 'Select collection',
     'save-collection': 'Save collection',
+    'create-collection': 'Create collection',
     'collection-name': 'Collection name',
+    'empty-collection': 'This collection is empty.',
+    'remove-item': 'Remove item',
   },
   coordination: {
     metadata: {
@@ -96,6 +100,10 @@ export const dictionary: Dictionary = {
     'search-results-count': '{{count}} results',
     'search-history': 'Search history',
     'clear-search-history': 'Clear search history',
+    'nothing-found': 'Nothing found',
+    'show-details': 'Show details',
+    'edit-item': 'Edit item',
+    'add-to-collection': 'Add to collection',
   },
   stories: {
     metadata: {

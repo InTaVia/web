@@ -2,8 +2,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { useSearchEntities } from '@/features/entities/use-search-entities';
-import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
+import { useSearchEntities } from '@/components/search/use-search-entities';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import Button from '@/features/ui/Button';
 import { selectModalOpen, setModal } from '@/features/ui/ui.slice';
 import { VisualQuerying } from '@/features/visual-querying/VisualQuerying';

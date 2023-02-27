@@ -1,5 +1,5 @@
 import { useSearchOccupationStatisticsQuery } from '@/api/intavia.service';
-import { useSearchEntitiesFilters } from '@/features/entities/use-search-entities-filters';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import type { PersonOccupationConstraint } from '@/features/visual-querying/constraints.types';
 import { VocabularyConstraintWidget } from '@/features/visual-querying/VocabularyConstraintWidget';
 
