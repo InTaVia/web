@@ -10,15 +10,16 @@ interface TimelineEventMarkerProps {
   height: number;
   type?: 'birth' | 'creation' | 'death' | 'personplace';
   thickness: number;
+  hover: boolean;
 }
 
 const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): JSX.Element => {
-  const { width, height, type = '', thickness } = props;
+  const { width, height, type = '', thickness, hover = false } = props;
 
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;
 
-  const color = getEventKindPropertiesByType(type).color.background;
+  const color = getEventKindPropertiesByType(type).color;
 
   switch (type) {
     case 'birth':
@@ -31,8 +32,8 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           cx={width / 2}
           cy={height / 2}
           r={(width - thickness) / 2}
-          fill={color}
-          stroke="black"
+          fill={hover ? color.foreground : color.background}
+          stroke={hover ? color.background : 'black'}
           strokeWidth={thickness}
         />
       );
@@ -45,8 +46,8 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           transform={`translate(${thickness / 2} ${thickness / 2}) scale(${scale})`}
         >
           <path
-            fill={color}
-            stroke="black"
+            fill={hover ? color.foreground : color.background}
+            stroke={hover ? color.background : 'black'}
             strokeWidth={strokeWidth}
             d="M 256,0 C 170.3,0 100.8,68.2 100.8,152.2 100.8,236.3 256,512 256,512 256,512 411.2,236.3 411.2,152.2 411.2,68.2 341.7,0 256,0 Z"
           />
@@ -62,8 +63,8 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           y={thickness / 2}
           width={width - thickness}
           height={height - thickness}
-          fill={color}
-          stroke="black"
+          fill={hover ? color.foreground : color.background}
+          stroke={hover ? color.background : 'black'}
           strokeWidth={thickness}
         />
       );
@@ -76,8 +77,8 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           cx={width / 2}
           cy={height / 2}
           r={(width - thickness) / 2}
-          fill={color}
-          stroke="black"
+          fill={hover ? color.foreground : color.background}
+          stroke={hover ? color.background : 'black'}
           strokeWidth={thickness}
         />
       );
