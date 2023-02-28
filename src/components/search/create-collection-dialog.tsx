@@ -15,6 +15,7 @@ import { useAppDispatch } from '@/app/store';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
+import { useCollection } from '@/components/search/collection.context';
 
 interface CreateCollectionDialogProps {
   onClose: () => void;
@@ -26,7 +27,7 @@ export function CreateCollectionDialog(props: CreateCollectionDialogProps): JSX.
   const formId = 'save-collection';
 
   const { t } = useI18n<'common'>();
-
+  const { setCurrentCollection } = useCollection();
   const dispatch = useAppDispatch();
 
   function onSubmit(values: { label: string }) {
@@ -34,6 +35,7 @@ export function CreateCollectionDialog(props: CreateCollectionDialogProps): JSX.
 
     const collection = createCollection(values);
     dispatch(addCollection(collection));
+    setCurrentCollection(collection.id);
   }
 
   return (

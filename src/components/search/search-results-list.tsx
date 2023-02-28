@@ -10,7 +10,11 @@ export function SearchResultsList(): JSX.Element {
   const entities = searchResults.data?.results ?? [];
 
   if (entities.length === 0) {
-    return <NothingFoundMessage />;
+    return (
+      <div className="grid place-items-center">
+        <NothingFoundMessage />
+      </div>
+    );
   }
 
   return (
