@@ -41,6 +41,7 @@ export function EgoNetwork(props: EgoNetworkProps): JSX.Element {
     return () => {
       simulation.stop();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodes, links, width, height]);
 
   return (
@@ -126,7 +127,7 @@ function NodeView(props: Node): JSX.Element {
 }
 
 function LinkView(props: Link): JSX.Element {
-  const { source, target, roles } = props;
+  const { source, target } = props;
 
   return (
     <g>
