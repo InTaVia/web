@@ -13,7 +13,7 @@ import { Fragment } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
-import { SearchForm } from '@/features/entities/search-form';
+import { SearchForm } from '@/components/search/search-form';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 export const getStaticProps = withDictionaries(['common']);
@@ -79,7 +79,7 @@ export default function HomePage(): JSX.Element {
             </Link>
           </div>
           <div className="w-full px-96">
-            <SearchForm round="pill" size="regular" />
+            <SearchForm />
           </div>
         </section>
         <section className="flex justify-center gap-x-10">
@@ -87,16 +87,16 @@ export default function HomePage(): JSX.Element {
             return (
               <div
                 key={card.title}
-                className="flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800"
+                className="dark:border-gray-700 dark:bg-gray-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-gray-200 bg-white shadow-md"
               >
                 <Link href={card.href.pathname}>
                   <a className="flex place-content-center gap-2 pt-3 text-intavia-green-900">
                     <div>{card.icon}</div>
-                    <div className="text-lg font-medium dark:text-white">{card.title}</div>
+                    <div className="dark:text-white text-lg font-medium">{card.title}</div>
                   </a>
                 </Link>
 
-                <p className="h-full px-5 py-2 text-justify font-normal text-gray-700 dark:text-gray-400">
+                <p className="dark:text-gray-400 h-full px-5 py-2 text-justify font-normal text-gray-700">
                   {card.text}
                 </p>
                 <Link href={card.href.pathname} className="">
@@ -112,10 +112,10 @@ export default function HomePage(): JSX.Element {
         <footer className="flex h-16 place-content-center items-center gap-4 bg-gray-200 px-20 text-gray-900">
           <Image src="/assets/images/EC_logo_s.png" alt="EC Logo" width={55} height={36} />
           <p>
-            This project has received funding from the European Union’s Horizon 2020 research and
-            innovation programme under grant agreement No. 101004825. This website reflects only the
-            authors’ views and the European Union is not liable for any use that may be made of the
-            information contained therein.
+            This project has received funding from the European Union&apos;s Horizon 2020 research
+            and innovation programme under grant agreement No. 101004825. This website reflects only
+            the authors&apos; views and the European Union is not liable for any use that may be
+            made of the information contained therein.
           </p>
         </footer>
       </div>

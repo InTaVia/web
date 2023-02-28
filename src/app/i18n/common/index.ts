@@ -26,7 +26,11 @@ export interface Dictionary {
     'save-selection-as-collection': string;
     'save-entities-as-collection': Plurals;
     'save-collection': string;
+    'select-collection': string;
+    'create-collection': string;
     'collection-name': string;
+    'empty-collection': string;
+    'remove-item': string;
   };
   coordination: {
     metadata: {
@@ -95,6 +99,10 @@ export interface Dictionary {
     'search-results-count': string;
     'search-history': string;
     'clear-search-history': string;
+    'nothing-found': string;
+    'show-details': string;
+    'edit-item': string;
+    'add-to-collection': string;
   };
   stories: {
     metadata: {
