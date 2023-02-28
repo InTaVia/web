@@ -1,4 +1,3 @@
-// @ts-expect-error Missing module declaration.
 const preset = require('@intavia/ui/dist/tailwind-preset.config.cjs');
 
 /** @type {import('tailwindcss').Config} */

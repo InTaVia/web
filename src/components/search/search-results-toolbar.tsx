@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogTrigger } from '@intavia/ui';
+import { Button, Dialog, DialogTrigger, useToast } from '@intavia/ui';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
@@ -37,11 +37,18 @@ function AddQueryToCollectionButton(): JSX.Element {
   const dispatch = useAppDispatch();
   const { currentCollection } = useCollection();
   const { getSearchResults } = useAllSearchResults();
+  const { toast } = useToast();
 
   async function onAddQueryToCollection() {
     if (currentCollection == null) return;
 
+    const { dismiss } = toast({
+      title: 'Fetching entities',
+      description: 'Retrieving search results for current query',
+    });
     const { entities } = await getSearchResults();
+    dismiss();
+
     dispatch(addEntitiesToCollection({ id: currentCollection, entities }));
   }
 

@@ -75,7 +75,7 @@ export function CollectionView(): JSX.Element {
           );
         })}
       </ul>
-      <footer className="border-t border-neutral-200 py-12 px-8">
+      <footer className="border-t border-neutral-200 py-10 px-8">
         {collection?.entities.length} Entities
       </footer>
     </div>

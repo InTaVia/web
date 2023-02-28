@@ -5,6 +5,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  useToast,
 } from '@intavia/ui';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -24,7 +25,7 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
   const formId = 'save-collection';
 
   const { t } = useI18n<'common'>();
-
+  const { toast } = useToast();
   const dispatch = useAppDispatch();
 
   const { getSearchResults } = useAllSearchResults();
@@ -32,7 +33,13 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
   async function onSubmit(values: { label: string }) {
     onClose();
 
+    const { dismiss } = toast({
+      title: 'Fetching entities',
+      description: 'Retrieving search results for current query...',
+    });
+
     const { entities, metadata } = await getSearchResults();
+    dismiss();
     const collection = createCollection({ ...values, entities, metadata });
     dispatch(addCollection(collection));
   }
