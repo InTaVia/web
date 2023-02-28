@@ -57,6 +57,8 @@ export interface Dictionary {
     location: Plurals;
     'edit-entity': string;
     'missing-entity': string;
+    'select-gender': string;
+    'select-occupations': string;
   };
   geomap: {
     metadata: {
@@ -90,6 +92,13 @@ export interface Dictionary {
     };
   };
   'learn-more': string;
+  pagination: {
+    pagination: string;
+    'go-to-previous-page': string;
+    'go-to-next-page': string;
+    'go-to-page': string;
+    page: string;
+  };
   search: {
     metadata: {
       title: string;

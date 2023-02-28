@@ -4,6 +4,7 @@ import 'tailwindcss/tailwind.css';
 
 import type { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import { Toaster } from '@intavia/ui';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { ErrorBoundary } from '@stefanprobst/next-error-boundary';
@@ -94,6 +95,7 @@ export default function App(props: AppProps): JSX.Element {
                   <PageLayout>
                     <Component {...pageProps} />
                   </PageLayout>
+                  <Toaster />
                   <SetupStore></SetupStore>
                 </ErrorBoundary>
               </PersistGate>

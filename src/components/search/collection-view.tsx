@@ -10,6 +10,7 @@ import {
 } from '@intavia/ui';
 import { MenuIcon } from 'lucide-react';
 import NextLink from 'next/link';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -21,9 +22,8 @@ import {
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
-import { getTranslatedLabel } from '@/lib/get-translated-label';
-import { useState } from 'react';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export function CollectionView(): JSX.Element {
   const { t } = useI18n<'common'>();
@@ -33,19 +33,12 @@ export function CollectionView(): JSX.Element {
 
   const [isDialogOpen, setDialogOpen] = useState(false);
 
-  function onCreateCollection() {
-    //
-    console.log('onCreateCollection');
-  }
-
   if (currentCollection == null) {
     return (
       <div className="grid h-full w-full place-items-center bg-neutral-50">
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={onCreateCollection}>
-              {t(['common', 'collections', 'create-collection'])}
-            </Button>
+            <Button>{t(['common', 'collections', 'create-collection'])}</Button>
           </DialogTrigger>
           <CreateCollectionDialog
             onClose={() => {
@@ -72,15 +65,20 @@ export function CollectionView(): JSX.Element {
   // FIXME: ensure all entities are in the store, pass full entity
 
   return (
-    <ul role="list" className="divide-y-200 divide-y bg-neutral-50">
-      {collection?.entities.map((id) => {
-        return (
-          <li key={id} className="odd:bg-white">
-            <CollectionEntity id={id} />
-          </li>
-        );
-      })}
-    </ul>
+    <div className="min-h-0 overflow-auto bg-neutral-50">
+      <ul role="list" className="divide-y divide-neutral-200">
+        {collection?.entities.map((id) => {
+          return (
+            <li key={id} className="odd:bg-white">
+              <CollectionEntity id={id} />
+            </li>
+          );
+        })}
+      </ul>
+      <footer className="border-t border-neutral-200 py-10 px-8">
+        {collection?.entities.length} Entities
+      </footer>
+    </div>
   );
 }
 
@@ -103,11 +101,11 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
   const _localEntities = useAppSelector(selectLocalEntities);
   const hasLocalEntity = id in _localEntities;
 
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
   if (entity == null) return null;
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
-
-  const [isDialogOpen, setDialogOpen] = useState(false);
 
   function onEditItem() {
     setDialogOpen(true);

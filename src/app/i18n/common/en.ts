@@ -67,6 +67,8 @@ export const dictionary: Dictionary = {
     location: { one: 'Location', other: 'Locations' },
     'edit-entity': 'Edit {{kind}}',
     'missing-entity': 'Missing entity',
+    'select-gender': 'Select gender',
+    'select-occupations': 'Select occupations',
   },
   geomap: {
     metadata: {
@@ -100,6 +102,13 @@ export const dictionary: Dictionary = {
     },
   },
   'learn-more': 'Learn more about InTaVia',
+  pagination: {
+    pagination: 'Pagination',
+    'go-to-previous-page': 'Go to previous page',
+    'go-to-next-page': 'Go to next page',
+    'go-to-page': 'Go to page',
+    page: 'Page',
+  },
   search: {
     metadata: {
       title: 'Search',

@@ -2,10 +2,10 @@ import { useSearchEntitiesResults } from '@/components/search/use-search-entitie
 
 export function SearchResultsCount(): JSX.Element {
   const searchResults = useSearchEntitiesResults();
-  const entities = searchResults.data?.results ?? [];
+  const count = searchResults.data?.count;
 
   if (searchResults.isFetching === true) return <div></div>;
-  if (entities.length === 0) return <div></div>;
+  if (count === 0) return <div></div>;
 
-  return <p>Results: {entities.length}</p>;
+  return <p>Results: {count}</p>;
 }
