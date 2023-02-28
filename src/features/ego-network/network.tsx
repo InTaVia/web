@@ -2,16 +2,16 @@ import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } 
 import { useEffect, useState } from 'react';
 
 import { getEntityColorByKind } from '@/features/common/visualization.config';
-import type { Link, Node } from '@/features/ego-network/ego-network-component';
+import type { Link, Node } from '@/features/ego-network/network-component';
 
-export interface EgoNetworkProps {
+export interface NetworkProps {
   nodes: Array<Node>;
   links: Array<Link>;
   width: number;
   height: number;
 }
 
-export function EgoNetwork(props: EgoNetworkProps): JSX.Element {
+export function Network(props: NetworkProps): JSX.Element {
   const { nodes, links, width, height } = props;
 
   const [animatedNodes, setAnimatedNodes] = useState(nodes);
@@ -19,21 +19,14 @@ export function EgoNetwork(props: EgoNetworkProps): JSX.Element {
 
   useEffect(() => {
     const simulation = forceSimulation(animatedNodes)
-      .force('charge', forceManyBody().strength(-1))
-      .force('link', forceLink(animatedLinks).distance(150).strength(1))
+      .force('charge', forceManyBody().strength(-500))
+      .force('link', forceLink(animatedLinks).distance(100).strength(1))
       .force('collide', forceCollide(20))
       .force('center', forceCenter(width / 2, height / 2));
 
-    simulation.alpha(0.1).restart();
+    simulation.alpha(1).restart();
 
     simulation.on('tick', () => {
-      // Fix center
-      const centerNode = simulation.nodes()[0];
-      if (centerNode) {
-        centerNode.x = width / 2;
-        centerNode.y = height / 2;
-      }
-
       setAnimatedNodes([...simulation.nodes()]);
       setAnimatedLinks([...animatedLinks]);
     });
