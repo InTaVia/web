@@ -5,15 +5,18 @@ import {
   InformationCircleIcon,
   SearchIcon,
 } from '@heroicons/react/outline';
+import { Button, Input } from '@intavia/ui';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { FormEvent } from 'react';
 import { Fragment } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
-import { SearchForm } from '@/components/search/search-form';
+import { useSearchEntities } from '@/components/search/use-search-entities';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 export const getStaticProps = withDictionaries(['common']);
@@ -120,5 +123,47 @@ export default function HomePage(): JSX.Element {
         </footer>
       </div>
     </Fragment>
+  );
+}
+
+function SearchForm(): JSX.Element {
+  const { t } = useI18n<'common'>();
+
+  const searchFilters = useSearchEntitiesFilters();
+  const { search } = useSearchEntities();
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const formData = new FormData(event.currentTarget);
+
+    const searchTerm = formData.get('q') as string;
+
+    search({ ...searchFilters, page: 1, q: searchTerm });
+
+    event.preventDefault();
+  }
+
+  return (
+    <form
+      className="mx-auto w-full max-w-7xl px-8 py-4"
+      autoComplete="off"
+      name="search"
+      noValidate
+      onSubmit={onSubmit}
+      role="search"
+    >
+      <div className="grid grid-cols-[1fr_auto_auto] gap-2">
+        <Input
+          aria-label={t(['common', 'search', 'search'])}
+          className="bg-neutral-50"
+          defaultValue={searchFilters.q}
+          key={searchFilters.q}
+          name="q"
+          placeholder={t(['common', 'search', 'search-term'])}
+          type="search"
+        />
+
+        <Button type="submit">{t(['common', 'search', 'search'])}</Button>
+      </div>
+    </form>
   );
 }
