@@ -26,7 +26,20 @@ export function GroupDetails(props: GroupDetailsProps): JSX.Element {
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={group.linkedIds} />
       {hasRelations ? <EntityRelations relations={group.relations} /> : null}
-      {hasRelations ? <EgoNetworkComponent entity={group} width={600} height={600} /> : null}
+      {hasRelations ? (
+        <EgoNetworkComponent
+          visualization={{
+            id: `ego-network-${group.id}`,
+            type: 'ego-network',
+            name: `ego-network-${group.id}`,
+            entityIds: [group.id],
+            targetEntityIds: [],
+            eventIds: [],
+          }}
+          width={600}
+          height={600}
+        />
+      ) : null}
     </div>
   );
 }

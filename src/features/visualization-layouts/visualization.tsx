@@ -3,6 +3,7 @@ import type { Entity, EntityEventRelation, Event } from '@intavia/api-client';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
+import { EgoNetworkComponent } from '@/features/ego-network/ego-network-component';
 //import { StoryTimeline } from '@/features/storycreator/story-timeline';
 import { TimelineComponent } from '@/features/timelineV2/timelineComponent';
 import { GeoMapWrapper } from '@/features/visualizations/geo-map/geo-map-wrapper';
@@ -168,6 +169,8 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
             // onToggleHighlight={onToggleHighlight}
           />
         );
+      case 'ego-network':
+        return <EgoNetworkComponent visualization={visualization} width={width} height={height} />;
       default:
         return <div>{`Wrong type of visualization ${visualization.type}!`}</div>;
     }

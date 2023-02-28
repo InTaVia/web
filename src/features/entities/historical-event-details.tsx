@@ -27,7 +27,18 @@ export function HistoricalEventDetails(props: HistoricalEventDetailsProps): JSX.
       <EntityLinkedIds links={historicalEvent.linkedIds} />
       {hasRelations ? <EntityRelations relations={historicalEvent.relations} /> : null}
       {hasRelations ? (
-        <EgoNetworkComponent entity={historicalEvent} width={600} height={600} />
+        <EgoNetworkComponent
+          visualization={{
+            id: `ego-network-${historicalEvent.id}`,
+            type: 'ego-network',
+            name: `ego-network-${historicalEvent.id}`,
+            entityIds: [historicalEvent.id],
+            targetEntityIds: [],
+            eventIds: [],
+          }}
+          width={600}
+          height={600}
+        />
       ) : null}
     </div>
   );

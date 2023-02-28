@@ -26,7 +26,20 @@ export function PlaceDetails(props: PlaceDetailsProps): JSX.Element {
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={place.linkedIds} />
       {hasRelations ? <EntityRelations relations={place.relations} /> : null}
-      {hasRelations ? <EgoNetworkComponent entity={place} width={600} height={600} /> : null}
+      {hasRelations ? (
+        <EgoNetworkComponent
+          visualization={{
+            id: `ego-network-${place.id}`,
+            type: 'ego-network',
+            name: `ego-network-${place.id}`,
+            entityIds: [place.id],
+            targetEntityIds: [],
+            eventIds: [],
+          }}
+          width={600}
+          height={600}
+        />
+      ) : null}
     </div>
   );
 }

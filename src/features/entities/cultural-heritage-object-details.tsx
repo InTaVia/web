@@ -28,7 +28,20 @@ export function CulturalHeritageObjectDetails(
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={cho.linkedIds} />
       {hasRelations ? <EntityRelations relations={cho.relations} /> : null}
-      {hasRelations ? <EgoNetworkComponent entity={cho} width={600} height={600} /> : null}
+      {hasRelations ? (
+        <EgoNetworkComponent
+          visualization={{
+            id: `ego-network-${cho.id}`,
+            type: 'ego-network',
+            name: `ego-network-${cho.id}`,
+            entityIds: [cho.id],
+            targetEntityIds: [],
+            eventIds: [],
+          }}
+          width={600}
+          height={600}
+        />
+      ) : null}
     </div>
   );
 }
