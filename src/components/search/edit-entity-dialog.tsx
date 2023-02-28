@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@intavia/ui';
+import { keyBy } from '@stefanprobst/key-by';
 import { Fragment, useMemo } from 'react';
 import { useField } from 'react-final-form';
 
@@ -190,7 +191,14 @@ function OccupationsComboBox(): JSX.Element {
 
   const { data, isLoading } = useSearchOccupationsQuery({ limit: 10 });
   const occupations = useMemo(() => {
-    return (data?.results ?? []).concat(field.input.value);
+    const occupations = keyBy(data?.results ?? [], (item) => {
+      return item.id;
+    });
+    const selected = field.input.value;
+    if (selected != null && typeof selected === 'object') {
+      occupations[selected.id] = selected;
+    }
+    return occupations;
   }, [data, field.input.value]);
 
   /**
@@ -205,9 +213,7 @@ function OccupationsComboBox(): JSX.Element {
   const value = field.input.value.id;
 
   function onValueChange(id: string) {
-    const occupation = occupations.find((o) => {
-      return o.id === id;
-    });
+    const occupation = occupations[id];
     field.input.onChange(occupation);
   }
 
@@ -222,7 +228,7 @@ function OccupationsComboBox(): JSX.Element {
           </div>
         </SelectTrigger>
         <SelectContent>
-          {occupations.map((occupation) => {
+          {Object.values(occupations).map((occupation) => {
             return (
               <SelectItem key={occupation.id} value={occupation.id}>
                 {getTranslatedLabel(occupation.label)}
