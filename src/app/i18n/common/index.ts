@@ -13,6 +13,11 @@ export interface Dictionary {
       title: string;
     };
   };
+  'app-bar': {
+    'data-curation-lab': string;
+    'visual-analytics-studio': string;
+    'story-creator': string;
+  };
   collections: {
     metadata: {
       title: string;
@@ -21,7 +26,11 @@ export interface Dictionary {
     'save-selection-as-collection': string;
     'save-entities-as-collection': Plurals;
     'save-collection': string;
+    'select-collection': string;
+    'create-collection': string;
     'collection-name': string;
+    'empty-collection': string;
+    'remove-item': string;
   };
   coordination: {
     metadata: {
@@ -58,6 +67,10 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    hero: {
+      title: string;
+      subtitle: string;
+    };
     'card-dcl': {
       title: string;
       text: string;
@@ -86,6 +99,10 @@ export interface Dictionary {
     'search-results-count': string;
     'search-history': string;
     'clear-search-history': string;
+    'nothing-found': string;
+    'show-details': string;
+    'edit-item': string;
+    'add-to-collection': string;
   };
   stories: {
     metadata: {

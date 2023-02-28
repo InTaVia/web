@@ -1,4 +1,5 @@
-import type { SearchEntities } from '@/api/intavia.client';
+import type { SearchEntities } from '@intavia/api-client';
+
 import { defaultPageSize } from '~/config/intavia.config';
 
 export function sanitizeSearchEntitiesParams(

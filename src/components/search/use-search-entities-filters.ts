@@ -1,7 +1,7 @@
+import type { SearchEntities } from '@intavia/api-client';
+import { isEntityKind } from '@intavia/api-client';
 import { useMemo } from 'react';
 
-import type { SearchEntities } from '@/api/intavia.client';
-import { isEntityKind } from '@intavia/api-client';
 import { useSearchParams } from '@/app/route/use-search-params';
 import { getSearchParam } from '@/lib/get-search-param';
 import { getSearchParams } from '@/lib/get-search-params';
@@ -26,8 +26,8 @@ export function useSearchEntitiesFilters(): SearchEntities.SearchParams {
       kind: getSearchParams(searchParams, 'kind').filter(isEntityKind),
       occupation: getSearchParam(searchParams, 'occupation'),
       occupations_id: getSearchParams(searchParams, 'occupations_id'),
-      gender: getSearchParam(searchParams, 'gender'),
-      gender_id: getSearchParam(searchParams, 'gender_id'),
+      gender: getSearchParams(searchParams, 'gender'),
+      gender_id: getSearchParams(searchParams, 'gender_id'),
       bornBefore: getSearchParam(searchParams, 'bornBefore'),
       bornAfter: getSearchParam(searchParams, 'bornAfter'),
       diedBefore: getSearchParam(searchParams, 'diedBefore'),
