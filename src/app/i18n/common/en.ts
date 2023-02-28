@@ -67,6 +67,8 @@ export const dictionary: Dictionary = {
     location: { one: 'Location', other: 'Locations' },
     'edit-entity': 'Edit {{kind}}',
     'missing-entity': 'Missing entity',
+    'select-gender': 'Select gender',
+    'select-occupations': 'Select occupations',
   },
   geomap: {
     metadata: {

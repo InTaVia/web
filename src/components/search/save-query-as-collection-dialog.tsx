@@ -5,14 +5,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  Input,
+  Label,
   useToast,
 } from '@intavia/ui';
+import { useField } from 'react-final-form';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
-import { Form } from '@/components/form/form';
-import { FormTextField } from '@/components/form/form-text-field';
+import { Form } from '@/components/form';
+import { FormField } from '@/components/form-field';
 import { useAllSearchResults } from '@/components/search/use-all-search-results';
 
 interface SaveQueryAsCollectionDialogProps {
@@ -55,11 +58,7 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
 
       <div className="grid gap-4 py-4">
         <Form id={formId} onSubmit={onSubmit}>
-          <FormTextField
-            label={t(['common', 'collections', 'collection-name'])}
-            name="label"
-            required
-          />
+          <CollectionNameTextField />
         </Form>
       </div>
 
@@ -69,5 +68,22 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
         </Button>
       </DialogFooter>
     </DialogContent>
+  );
+}
+
+function CollectionNameTextField(): JSX.Element {
+  const name = 'label';
+
+  const { t } = useI18n<'common'>();
+  const field = useField(name);
+
+  const id = name;
+  const label = t(['common', 'collections', 'collection-name']);
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} {...field.input} required />
+    </FormField>
   );
 }

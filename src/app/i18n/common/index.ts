@@ -57,6 +57,8 @@ export interface Dictionary {
     location: Plurals;
     'edit-entity': string;
     'missing-entity': string;
+    'select-gender': string;
+    'select-occupations': string;
   };
   geomap: {
     metadata: {
