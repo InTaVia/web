@@ -31,8 +31,8 @@ export function EgoNetworkComponent(props: EgoNetworkComponentProps): JSX.Elemen
   const entityId = visualization.entityIds[0];
   const { nodes, links } = useNodesAndLinks(entityId);
 
-  if (nodes.length === 0 || links.length === 0) {
-    return <p>Nodes or Links are empty</p>;
+  if (nodes.length === 0) {
+    return <p>Please add an entity</p>;
   }
   return <EgoNetwork nodes={nodes} links={links} width={width} height={height} />;
 }
