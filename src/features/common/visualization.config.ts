@@ -1,4 +1,4 @@
-import type { EventKind } from '@intavia/api-client';
+import type { EntityKind, EventKind } from '@intavia/api-client';
 
 interface EventKindColor {
   foreground: string;
@@ -59,4 +59,16 @@ export function getEventKindPropertiesByType(type: string): EventKindProperties 
   } else {
     return eventKindPropertiesByType.default as EventKindProperties;
   }
+}
+
+const entityColorByKind: Record<EntityKind, string> = {
+  person: '#57AE5F',
+  'cultural-heritage-object': '#5785AE',
+  place: '#AE5757',
+  group: '#C6C6C6',
+  'historical-event': '#A957AE',
+};
+
+export function getEntityColorByKind(kind: EntityKind): string {
+  return entityColorByKind[kind];
 }

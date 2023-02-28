@@ -1,6 +1,7 @@
 import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } from 'd3-force';
 import { useEffect, useState } from 'react';
 
+import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Link, Node } from '@/features/ego-network/ego-network-component';
 
 export interface EgoNetworkProps {
@@ -40,6 +41,7 @@ export function EgoNetwork(props: EgoNetworkProps): JSX.Element {
     return () => {
       simulation.stop();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodes, links, width, height]);
 
   return (
@@ -62,39 +64,41 @@ function NodeView(props: Node): JSX.Element {
   const width = 15;
   const height = 15;
 
-  const personFill = '#57AE5F';
-  const objectFill = '#5785AE';
-  const placeFill = '#AE5757';
-  const groupFill = '#C6C6C6';
-  const eventFill = '#A957AE';
-
   function renderPersonNode(): JSX.Element {
     // Draw circle with center at origin
-    return <circle r={width / 2} fill={personFill} />;
+    return <circle r={width / 2} fill={getEntityColorByKind(entity.kind)} />;
   }
 
   function renderObjectNode(): JSX.Element {
     // Draw square with center at origin
-    return <rect x={-width / 2} y={-height / 2} width={width} height={height} fill={objectFill} />;
+    return (
+      <rect
+        x={-width / 2}
+        y={-height / 2}
+        width={width}
+        height={height}
+        fill={getEntityColorByKind(entity.kind)}
+      />
+    );
   }
 
   function renderPlaceNode(): JSX.Element {
     // Draw triangle with center at origin
     const p = `${-width / 2},${height / 2} ${width / 2},${height / 2} 0,${-height / 2}`;
-    return <polygon fill={placeFill} points={p} />;
+    return <polygon fill={getEntityColorByKind(entity.kind)} points={p} />;
   }
 
   function renderGroupNode(): JSX.Element {
     // Draw ellipse with center at origin
     const rx = width * (5 / 7);
     const ry = height / 2;
-    return <ellipse rx={rx} ry={ry} fill={groupFill} />;
+    return <ellipse rx={rx} ry={ry} fill={getEntityColorByKind(entity.kind)} />;
   }
 
   function renderEventNode(): JSX.Element {
     // Draw rhombus wijth center at origin
     const p = `${-width / 2},0 0,${height / 2} ${width / 2},0 0,${-height / 2}`;
-    return <polygon fill={eventFill} points={p} />;
+    return <polygon fill={getEntityColorByKind(entity.kind)} points={p} />;
   }
 
   function renderNode(): JSX.Element {
@@ -123,7 +127,7 @@ function NodeView(props: Node): JSX.Element {
 }
 
 function LinkView(props: Link): JSX.Element {
-  const { source, target, roles } = props;
+  const { source, target } = props;
 
   return (
     <g>
