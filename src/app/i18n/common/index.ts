@@ -90,6 +90,13 @@ export interface Dictionary {
     };
   };
   'learn-more': string;
+  pagination: {
+    pagination: string;
+    'go-to-previous-page': string;
+    'go-to-next-page': string;
+    'go-to-page': string;
+    page: string;
+  };
   search: {
     metadata: {
       title: string;

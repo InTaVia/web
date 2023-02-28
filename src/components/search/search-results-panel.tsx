@@ -6,7 +6,7 @@ import { SearchResultsView } from '@/components/search/search-results-view';
 
 export function SearchResultsPanel(): JSX.Element {
   return (
-    <div className="grid h-full grid-cols-2 grid-rows-[auto_1fr] divide-x divide-neutral-200">
+    <div className="grid h-full min-h-0 grid-cols-2 grid-rows-[auto_1fr] divide-x divide-neutral-200 overflow-hidden">
       <CollectionProvider>
         <SearchResultsToolbar />
         <CollectionToolbar />

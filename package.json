@@ -50,6 +50,7 @@
     "@stefanprobst/next-error-boundary": "3.0.2-legacy",
     "@stefanprobst/next-i18n": "1.2.0-legacy",
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
+    "@stefanprobst/pagination": "^1.0.0",
     "@stefanprobst/request": "^0.1.10",
     "allotment": "^1.14.2",
     "clsx": "^1.2.0",

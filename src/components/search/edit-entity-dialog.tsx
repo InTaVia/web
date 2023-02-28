@@ -6,6 +6,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@intavia/ui';
 import { Fragment } from 'react';
 
@@ -13,7 +17,9 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form/form';
+import { FormSelect } from '@/components/form/form-select';
 import { FormTextField } from '@/components/form/form-text-field';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface EditEntityDialogProps<T extends Entity> {
   entity: T;
@@ -50,9 +56,10 @@ export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<
 
       <div className="grid gap-4 py-4">
         <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
-          <FormTextField label={t(['common', 'entity', 'label'])} name="label.default" />
-
-          <EntityFormFields kind={entity.kind} />
+          <div className="grid gap-4">
+            <FormTextField label={t(['common', 'entity', 'label'])} name="label.default" />
+            <EntityFormFields kind={entity.kind} />
+          </div>
         </Form>
       </div>
 
@@ -72,6 +79,14 @@ interface EntityFormFieldsProps {
 function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
   const { kind } = props;
 
+  const { t } = useI18n<'common'>();
+
+  // FIXME: vocabs endpoint for gender?
+  const genders = [
+    { id: 'http://ldf.fi/schema/bioc/Female', label: { default: 'Female' } },
+    { id: 'http://ldf.fi/schema/bioc/Male', label: { default: 'Male' } },
+  ];
+
   switch (kind) {
     case 'cultural-heritage-object':
       return <Fragment></Fragment>;
@@ -80,7 +95,24 @@ function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
     case 'historical-event':
       return <Fragment></Fragment>;
     case 'person':
-      return <Fragment></Fragment>;
+      return (
+        <Fragment>
+          <FormSelect label={t(['common', 'entity', 'gender', 'one'])} name="gender.id">
+            <SelectTrigger>
+              <SelectValue placeholder={t(['common', 'collections', 'select-collection'])} />
+            </SelectTrigger>
+            <SelectContent>
+              {genders.map((gender) => {
+                return (
+                  <SelectItem key={gender.id} value={gender.id}>
+                    {getTranslatedLabel(gender.label)}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </FormSelect>
+        </Fragment>
+      );
     case 'place':
       return <Fragment></Fragment>;
   }
