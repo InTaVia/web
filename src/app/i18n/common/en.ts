@@ -11,6 +11,11 @@ export const dictionary: Dictionary = {
       title: 'Unexpected error',
     },
   },
+  'app-bar': {
+    'data-curation-lab': 'Search & Curation',
+    'visual-analytics-studio': 'Viualization & Analysis',
+    'story-creator': 'Storytelling & Presentation',
+  },
   collections: {
     metadata: {
       title: 'Collections',
@@ -72,17 +77,21 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Home',
     },
+    hero: {
+      title: 'Visual Analysis, Curation & Communication',
+      subtitle: 'for In/Tangible European Heritage',
+    },
     'card-dcl': {
       title: 'find, create & curate',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+      text: 'The InTaVia knowledge graph contains data on Europe’s cultural history, including data on individual artists, cultural objects, and groups or organizations. Search for these entities in our knowledge base (with a focus on Slovenia, Austria, the Netherlands and Finland) or with a global reach via data from Wikipedia. You can also upload your own data, and curate (i.e., edit, assemble, or enrich) all kinds of data for further operations of visual analysis and narration.',
     },
     'card-vas': {
       title: 'visualize, analyze & explore',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+      text: 'A visualization studio allows you to explore and analyze selected data on cultural actors, objects or organizations - and to further curate your data. This components offers a geo-analytical map-based view, a timeline view for chronological analysis, a set-based view for prosopographical data aspects and a network-analytical view. You can further annotate the resulting visualizations and store them for future use, or export them to a presentation and storytelling component.',
     },
     'card-stc': {
       title: 'communicate, show & tell',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!',
+      text: 'The story creator module allows you to communicate your selected culture and history data by narrative means. Connect and combine rich media elements (images, text, or A/V data) with data visualizations (maps, timelines, sets, or network diagrams, created in the visualization studio) to compelling stories. These stories or presentations can be further enriched with gamification elements, and exported to a story viewer component for the reception on different target devices.',
     },
   },
   imprint: {

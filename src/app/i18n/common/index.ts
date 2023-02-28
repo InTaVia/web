@@ -13,6 +13,11 @@ export interface Dictionary {
       title: string;
     };
   };
+  'app-bar': {
+    'data-curation-lab': string;
+    'visual-analytics-studio': string;
+    'story-creator': string;
+  };
   collections: {
     metadata: {
       title: string;
@@ -61,6 +66,10 @@ export interface Dictionary {
   home: {
     metadata: {
       title: string;
+    };
+    hero: {
+      title: string;
+      subtitle: string;
     };
     'card-dcl': {
       title: string;

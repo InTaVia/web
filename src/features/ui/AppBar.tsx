@@ -22,19 +22,19 @@ export function AppBar(): JSX.Element {
     {
       id: 'data-curation-lab',
       href: { pathname: '/search' },
-      label: t(['common', 'data-curation-lab']),
+      label: t(['common', 'app-bar', 'data-curation-lab']),
       current: false,
     },
     {
       id: 'visual-analytics-studio',
       href: { pathname: '/visual-analytics-studio' },
-      label: t(['common', 'visual-analytics-studio']),
+      label: t(['common', 'app-bar', 'visual-analytics-studio']),
       current: false,
     },
     {
       id: 'storytelling-creator',
       href: { pathname: '/storycreator' },
-      label: t(['common', 'storytelling-creator']),
+      label: t(['common', 'app-bar', 'story-creator']),
       current: false,
     },
   ];
