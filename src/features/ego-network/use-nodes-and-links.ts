@@ -1,4 +1,6 @@
-import type { Entity } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
+import { entity } from '@intavia/api-client';
+import { string } from 'zod';
 
 import type { Link, Node } from '@/features/ego-network/ego-network-component';
 import { unique } from '@/lib/unique';
@@ -6,37 +8,41 @@ import { useEntities } from '@/lib/use-entities';
 import { useEntity } from '@/lib/use-entity';
 import { useEvents } from '@/lib/use-events';
 
-export function useNodesAndLinks(id: Entity['id'] | undefined): {
+export function useNodesAndLinks(ids: Array<Entity['id']>): {
   nodes: Array<Node>;
   links: Array<Link>;
 } {
   const nodes: Array<Node> = [];
   const links: Array<Link> = [];
 
-  // Return empty arrays if id is undefined
-  if (id === undefined) {
-    return { nodes: nodes, links: links };
-  }
+  // Get entities by id
+  const entities = useEntities(ids).data;
+  let events = new Map<string, Event>();
 
-  const entity = useEntity(id).data;
-  if (!entity) {
-    return { nodes: nodes, links: links };
-  }
-
-  // Get events from relations
-  const eventIds = entity.relations.map((relation) => {
-    return relation.event;
+  // Create nodes for added entities
+  entities?.forEach((entity) => {
+    nodes.push({ entity: entity, x: 0, y: 0 });
   });
-  const events = useEvents(eventIds);
 
-  // Get related entityIds from events
-  const entityIds: Array<Entity['id']> = [];
-  events.data?.forEach((event) => {
-    entityIds.push(
-      ...event.relations.map((relation) => {
-        return relation.entity;
-      }),
-    );
+  // Get events from relations for each entity
+  entities?.forEach((entity) => {
+    const eventIds = entity.relations.map((relation) => {
+      return relation.event;
+    });
+    const entityEvents = useEvents(eventIds).data;
+    if (entityEvents) {
+      events = new Map<string, Event>([...events, ...entityEvents]);
+    }
+
+    // Get related entityIds from events
+    const entityIds: Array<Entity['id']> = [];
+    events.data?.forEach((event) => {
+      entityIds.push(
+        ...event.relations.map((relation) => {
+          return relation.entity;
+        }),
+      );
+    });
   });
 
   // Remove duplicate entityIds and filter out central entity
@@ -46,9 +52,6 @@ export function useNodesAndLinks(id: Entity['id'] | undefined): {
 
   // Get related entities with entityIds
   const relatedEntities = useEntities(uniqueEntityIds);
-
-  // Add central entity to node array
-  nodes.push({ entity: entity, x: 0, y: 0 });
 
   if (!events.data || !relatedEntities.data) return { nodes: nodes, links: links };
 

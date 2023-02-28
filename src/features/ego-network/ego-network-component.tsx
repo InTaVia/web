@@ -28,7 +28,7 @@ interface EgoNetworkComponentProps {
 export function EgoNetworkComponent(props: EgoNetworkComponentProps): JSX.Element | null {
   const { visualization, width, height } = props;
 
-  const entityId = visualization.entityIds[0];
+  const entityIds = visualization.entityIds;
   const { nodes, links } = useNodesAndLinks(entityId);
 
   if (nodes.length === 0) {
