@@ -2,8 +2,10 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client/dist/models';
 import type { ScaleBand } from 'd3-scale';
+import type { MouseEvent } from 'react';
 import { useMemo, useRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import {
   type TimelineType,
   getTemporalExtent,
@@ -49,6 +51,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
 
   // const itemsRef = useRef([]);
   const ref = useRef();
+
+  const { hovered, updateHover } = useHoverState();
 
   //const tmpInitEventsWithoutCluster = Object.keys(events);
 
@@ -242,14 +246,20 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             writingMode: vertical ? 'vertical-rl' : '',
             textOrientation: vertical ? 'mixed' : '',
           }}
-          onMouseEnter={() => {
+          onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+            updateHover({
+              entities: [entity.id],
+              events: [],
+              clientRect: e.currentTarget.getBoundingClientRect(),
+            });
             setHover(true);
           }}
           onMouseLeave={() => {
+            updateHover(null);
             setHover(false);
           }}
         >
-          {hover && getTranslatedLabel(entity.label)}
+          {(hover || hovered?.entities.includes(entity.id)) && getTranslatedLabel(entity.label)}
         </div>
       </div>
       {mode !== 'mass' && (

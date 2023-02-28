@@ -4,8 +4,10 @@ import { extent } from 'd3-array';
 //@ts-ignore
 import { beeswarm } from 'd3-beeswarm';
 import { scaleTime } from 'd3-scale';
-import { type LegacyRef, forwardRef } from 'react';
+import type { MouseEvent } from 'react';
+import { type LegacyRef, forwardRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { getTemporalExtent, translateEventType } from '@/features/timelineV2/timeline';
@@ -30,6 +32,9 @@ interface BeeSwarmProperties {
 
 const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
   const { events, width, vertical, dotRadius: i_dotRadius } = props;
+
+  const [hover, setHover] = useState(false);
+  const { hovered, updateHover } = useHoverState();
 
   const total = events.length;
   const dotRadius = total >= 100 ? 2 : total >= 50 ? 3 : total >= 10 ? 4 : i_dotRadius ?? 5;
@@ -88,6 +93,18 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
           <g
             key={`${JSON.stringify(dot.datum)}TimelineClusterEventMarker`}
             transform={`translate(${dot.x} ${dot.y})`}
+            onMouseEnter={(e: MouseEvent<SVGGElement>) => {
+              updateHover({
+                entities: [],
+                events: [dot.datum.id],
+                clientRect: e.currentTarget.getBoundingClientRect(),
+              });
+              setHover(true);
+            }}
+            onMouseLeave={() => {
+              updateHover(null);
+              setHover(false);
+            }}
           >
             <TimelineEventMarker
               width={dotRadius * 2}
@@ -96,6 +113,7 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               //@ts-ignore
               type={translateEventType(vocabularies[dot.datum.kind])}
               thickness={1}
+              hover={hovered?.events.includes(dot.datum.id) === true ? true : false}
             />
           </g>
         );

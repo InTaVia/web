@@ -1,8 +1,10 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { EntityRelationRole, Event } from '@intavia/api-client/dist/models';
+import type { MouseEvent } from 'react';
 import { forwardRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
@@ -56,6 +58,8 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
   const vocabularies = useAppSelector(selectVocabularyEntries);
 
   const [hover, setHover] = useState(false);
+
+  const { hovered, updateHover } = useHoverState();
 
   const eventExtent = getTemporalExtent([[event]]);
   const extentDiffInYears = eventExtent[1].getUTCFullYear() - eventExtent[0].getUTCFullYear();
@@ -135,15 +139,27 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
           cursor: 'pointer',
         }}
         className={`${className}`}
-        onMouseEnter={() => {
+        onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+          updateHover({
+            entities: [],
+            events: [event.id],
+            clientRect: e.currentTarget.getBoundingClientRect(),
+          });
           setHover(true);
         }}
         onMouseLeave={() => {
+          updateHover(null);
           setHover(false);
         }}
       >
         <svg style={{ width: `${width}px`, height: `${height}px` }} width={width} height={height}>
-          <TimelineEventMarker width={width} height={height} type={type} thickness={thickness} />
+          <TimelineEventMarker
+            width={width}
+            height={height}
+            type={type}
+            thickness={thickness}
+            hover={hover || hovered?.events.includes(event.id) === true ? true : false}
+          />
         </svg>
       </div>
       <TimelineLabel
