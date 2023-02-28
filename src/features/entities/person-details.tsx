@@ -1,6 +1,6 @@
 import type { Person } from '@intavia/api-client';
 
-import { EgoNetworkComponent } from '@/features/ego-network/ego-network-component';
+import { NetworkComponent } from '@/features/ego-network/network-component';
 import { EntityAlternativeLabels } from '@/features/entities/entity-alternative-labels';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
@@ -28,7 +28,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
       <PersonMetadataList gender={person.gender} occupations={person.occupations} />
       {hasRelations ? <EntityRelations relations={person.relations} /> : null}
       {hasRelations ? (
-        <EgoNetworkComponent
+        <NetworkComponent
           visualization={{
             id: `ego-network-${person.id}`,
             type: 'ego-network',
