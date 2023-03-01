@@ -5,6 +5,7 @@ import { assert } from '@stefanprobst/assert';
 import type { ViewState } from 'react-map-gl';
 
 import type { RootState } from '@/app/store';
+import type { ComponentProperty } from '@/features/common/component-property';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -14,19 +15,9 @@ export interface Visualization {
   entityIds: Array<Entity['id']>;
   targetEntityIds: Array<Entity['id']>;
   eventIds: Array<Event['id']>;
-  properties?: Record<string, VisualizationProperty>;
+  properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
-}
-
-export interface VisualizationProperty {
-  type: 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text';
-  id: string;
-  label: string;
-  value?: any;
-  options?: Array<any>;
-  editable: boolean | false;
-  sort?: number | 0;
 }
 
 const initialState: Record<Visualization['id'], Visualization> = {};
@@ -159,7 +150,7 @@ const visualizationSlice = createSlice({
               cluster: {
                 type: 'boolean',
                 id: 'cluster',
-                value: false,
+                value: true,
                 editable: true,
                 sort: 3,
                 label: 'Cluster',
@@ -361,6 +352,10 @@ const visualizationSlice = createSlice({
       assert(vis.mapState != null);
       vis.mapState.mapStyle = mapStyle;
     },
+    importVisualization: (state, action) => {
+      const vis = action.payload as Visualization;
+      state[vis.id] = vis;
+    },
   },
 });
 
@@ -375,6 +370,7 @@ export const {
   editVisualization,
   setMapViewState,
   setMapStyle,
+  importVisualization,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

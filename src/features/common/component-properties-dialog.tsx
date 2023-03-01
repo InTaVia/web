@@ -8,22 +8,23 @@ import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
-import type { Visualization, VisualizationProperty } from '@/features/common/visualization.slice';
+import type { ComponentProperty, QuizAnswer } from '@/features/common/component-property';
+import type { Visualization } from '@/features/common/visualization.slice';
+import type { AnswerList, SlideContent } from '@/features/storycreator/contentPane.slice';
+import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
 import { Switch } from '@/features/ui/Switch';
 import TextField from '@/features/ui/TextField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
-interface VisualizationPropertiesDialogProps {
-  element: Visualization;
+interface ComponentPropertiesDialogProps {
+  element: SlideContent | Visualization;
   onClose: () => void;
-  onSave: (element: Visualization) => void;
+  onSave: (element: SlideContent | Visualization) => void;
 }
 
-export function VisualizationPropertiesDialog(
-  props: VisualizationPropertiesDialogProps,
-): JSX.Element {
+export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps): JSX.Element {
   const { element, onClose, onSave } = props;
 
   const [tmpProperties, setTmpProperties] = useState({ ...element.properties });
@@ -31,6 +32,11 @@ export function VisualizationPropertiesDialog(
     ...element,
     visibilities: element.visibilities !== undefined ? element.visibilities : {},
   });
+
+  const setAnswerListForQuiz = (answers: Array<QuizAnswer>) => {
+    const newVal = { ...tmpProperties.answerlist, answers: answers } as AnswerList;
+    setTmpProperties({ ...tmpProperties, answerlist: newVal });
+  };
 
   const onChange = (event: any) => {
     const newVal = { ...tmpProperties[event.target.id], value: event.target.value };
@@ -40,10 +46,10 @@ export function VisualizationPropertiesDialog(
   let editableAttributes = [];
 
   editableAttributes = Object.values(tmpProperties as object)
-    .filter((prop: VisualizationProperty) => {
+    .filter((prop: ComponentProperty) => {
       return prop.editable;
     })
-    .sort((a: VisualizationProperty, b: VisualizationProperty) => {
+    .sort((a: ComponentProperty, b: ComponentProperty) => {
       return (a.sort !== undefined ? a.sort : 0) - (b.sort !== undefined ? b.sort : 0);
     });
 
@@ -58,7 +64,7 @@ export function VisualizationPropertiesDialog(
 
   return (
     <Transition appear show={true} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -88,7 +94,7 @@ export function VisualizationPropertiesDialog(
                 </Dialog.Title>
                 <div className="mt-2">
                   <div key={'gridTest'} className="grid h-auto w-auto grid-cols-[auto,auto] gap-4">
-                    {editableAttributes.map((property: VisualizationProperty) => {
+                    {editableAttributes.map((property: ComponentProperty) => {
                       switch (property.type) {
                         case 'boolean':
                           return [
@@ -124,6 +130,29 @@ export function VisualizationPropertiesDialog(
                               }}
                             />,
                           ];
+                        case 'textarea':
+                          return (
+                            <>
+                              <div>{property.label}</div>
+                              <TextField
+                                id={property.id}
+                                key={property.label}
+                                value={property.value}
+                                onChange={onChange}
+                              />
+                            </>
+                          );
+                        case 'answerlist':
+                          return (
+                            <>
+                              <div>{property.label}</div>
+                              <StoryQuizAnswerList
+                                key={property.label}
+                                setAnswerListForQuiz={setAnswerListForQuiz}
+                                answerList={property as AnswerList}
+                              />
+                            </>
+                          );
                         case 'text':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -255,7 +284,7 @@ export function VisualizationPropertiesDialog(
                                               visibilities: newVisibilities,
                                             });
                                           }}
-                                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                                          className="dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
                                         />
                                       </div>,
                                       <div
@@ -311,7 +340,7 @@ export function VisualizationPropertiesDialog(
                                                               visibilities: newVisibilities,
                                                             });
                                                           }}
-                                                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                                                          className="dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
                                                         />
                                                         <div className="table">
                                                           {/*  <div className="table-cell w-1/3 font-semibold">

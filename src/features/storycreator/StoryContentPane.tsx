@@ -1,21 +1,23 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import ReactGridLayout from 'react-grid-layout';
+import ReactPlayer from 'react-player';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import type { QuizAnswer } from '@/features/common/component-property';
 import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
 import type {
-  StoryAnswerList,
+  AnswerList,
+  SlideContent,
   StoryImage,
-  StoryQuizAnswer,
 } from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
-import type { SlideContent } from '@/features/storycreator/storycreator.slice';
+import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
 import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
@@ -86,8 +88,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
           if (element.properties.question.value) {
             quizContent.push(
               <div className="grid grid-cols-[auto] gap-1">
-                {(element.properties.answerlist as StoryAnswerList).answers.map(
-                  (answer: StoryQuizAnswer, index: number) => {
+                {(element.properties.answerlist as AnswerList).answers.map(
+                  (answer: QuizAnswer, index: number) => {
                     return (
                       <div
                         key={`answer${index}`}
@@ -158,6 +160,8 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             )}
           </div>
         );
+      case 'Video/Audio':
+        return <StoryVideoAudio content={element} />;
       default:
         return [];
     }
@@ -168,47 +172,40 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   };
 
   const createLayoutPane = (element: any) => {
-    switch (element.type) {
-      case 'Text':
-      case 'Image':
-      case 'Quiz':
-        return (
-          <div key={element.id} className={'overflow-hidden'}>
-            <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
-              <div className="truncate">{element.type}</div>
-              <div className="sticky right-0 flex flex-nowrap gap-1">
-                <Button
-                  className="ml-auto grow-0"
-                  shadow="none"
-                  size="extra-small"
-                  round="circle"
-                  onClick={() => {
-                    if (setEditElement !== undefined) {
-                      setEditElement(element);
-                    }
-                  }}
-                >
-                  <AdjustmentsIcon className="h-3 w-3" />
-                </Button>
-                <Button
-                  className="ml-auto grow-0"
-                  shadow="none"
-                  size="extra-small"
-                  round="circle"
-                  onClick={() => {
-                    removeWindowHandler(element);
-                  }}
-                >
-                  <XIcon className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-            {createWindowContent(element)}
+    return (
+      <div key={element.id} className={'overflow-hidden'}>
+        <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
+          <div className="truncate">{element.type}</div>
+          <div className="sticky right-0 flex flex-nowrap gap-1">
+            <Button
+              className="ml-auto grow-0"
+              shadow="none"
+              size="extra-small"
+              round="circle"
+              onClick={() => {
+                if (setEditElement !== undefined) {
+                  setEditElement(element);
+                }
+              }}
+            >
+              <AdjustmentsIcon className="h-3 w-3" />
+            </Button>
+            <Button
+              className="ml-auto grow-0"
+              shadow="none"
+              size="extra-small"
+              round="circle"
+              onClick={() => {
+                removeWindowHandler(element);
+              }}
+            >
+              <XIcon className="h-3 w-3" />
+            </Button>
           </div>
-        );
-      default:
-        return;
-    }
+        </div>
+        {createWindowContent(element)}
+      </div>
+    );
   };
 
   const layout = [

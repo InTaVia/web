@@ -85,11 +85,11 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
   const clusterNodeWidth = clusterDimensions[0];
   const clusterNodeHeight = clusterDimensions[1];
 
-  const clusterPosX = posX - clusterNodeWidth / 2;
-  const clusterPosY = posY - clusterNodeHeight / 2;
+  const clusterPosX = posX; // - clusterNodeWidth / 2;
+  const clusterPosY = posY; // - clusterNodeHeight / 2;
 
-  const textPosX = clusterPosX + clusterNodeWidth / 2;
-  const textPosY = clusterPosY + clusterNodeHeight / 2;
+  const textPosX = clusterPosX; // + clusterNodeWidth / 2;
+  const textPosY = clusterPosY; // + clusterNodeHeight / 2;
 
   className = className + ' hover-animation';
 

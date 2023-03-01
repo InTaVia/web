@@ -8,9 +8,10 @@ import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { PropertiesDialog } from '@/features/common/properties-dialog';
+import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
+import type { SlideContent } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import Button from '@/features/ui/Button';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
@@ -172,10 +173,10 @@ export default function Workspaces(): JSX.Element {
         </div>
       </Tab.Group>
       {visualizationEditElement != null && (
-        <PropertiesDialog
+        <ComponentPropertiesDialog
           onClose={handleCloseVisualizationDialog}
           element={visualizationEditElement}
-          onSave={handleSaveVisualization}
+          onSave={handleSaveVisualization as (element: SlideContent | Visualization) => void}
         />
       )}
     </>

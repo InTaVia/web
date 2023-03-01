@@ -177,7 +177,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   };
 
   return (
-    <div ref={setContainerElement} className={'h-full w-full'}>
+    <div ref={setContainerElement} className={'h-full w-full overflow-auto'}>
       <div
         style={{
           width: `${width}px`,

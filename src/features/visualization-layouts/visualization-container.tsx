@@ -10,8 +10,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import {
   addEntitiesToVisualization,
   addEventsToVisualization,
-  addEventToVisualization,
-  addPersonToVisualization,
   addTargetEntitiesToVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';
@@ -219,7 +217,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
         </div>
       </div>
       {visualization !== undefined && (
-        <div className="w-50 h-full overflow-auto">
+        <div className="w-50 relative h-full">
           {
             <VisualisationComponent
               visualization={visualization}

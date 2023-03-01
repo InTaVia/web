@@ -61,7 +61,7 @@ export const Dialog = forwardRef(function Dialog(
             <HeadlessDialog.Panel
               ref={forwardedRef}
               className={cx(
-                'bg-neutral-0 ring-neutral-1000/5 mx-auto grid transform grid-rows-[auto_1fr_auto] gap-4 overflow-hidden rounded-md p-4 shadow-2xl ring-1 transition-all',
+                'bg-neutral-0 ring-neutral-1000/5 mx-auto grid transform grid-rows-[auto_1fr_auto] gap-4 overflow-hidden rounded-md bg-white p-4 shadow-2xl ring-1 transition-all',
                 styles.sizes[size],
               )}
             >

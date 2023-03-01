@@ -11,6 +11,7 @@ import {
   getTemporalExtent,
   TimelineColors as colors,
 } from '@/features/timelineV2/timeline';
+import { TimelineEntityLabel } from '@/features/timelineV2/timelineEntityLabel';
 import TimelineEvent from '@/features/timelineV2/timelineEvent';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -22,7 +23,7 @@ interface TimelineEntityProps {
   vertical: boolean;
   timeScale: (data: Date) => number;
   scaleY: ScaleBand<string>;
-  index: number;
+  entityIndex: number;
   thickness: number;
   showLabels: boolean;
   overlap: boolean;
@@ -39,7 +40,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     vertical = false,
     timeScale,
     scaleY,
-    index,
+    entityIndex,
     thickness = 1,
     showLabels,
     overlap = false,
@@ -65,7 +66,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   let midOffset = 0;
   if (vertical) {
     if (mode === 'dual') {
-      midOffset = index * scaleY.bandwidth();
+      midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = 0;
     } else {
@@ -73,7 +74,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   } else {
     if (mode === 'dual') {
-      midOffset = index * scaleY.bandwidth();
+      midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = scaleY.bandwidth();
     } else {
@@ -151,7 +152,11 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   }, [itemsRef, width, height]); */
 
   const clusterArray = useMemo(() => {
-    const tmpClusterArray = [];
+    if (cluster !== true) {
+      return [];
+    }
+
+    const tmpClusterArray: Array<Set<string>> = [];
     Object.values(events).forEach((entry: any, index: any) => {
       Object.values(events).forEach((otherEntry: any, otherIndex: any) => {
         if (otherIndex >= index) {
@@ -196,11 +201,11 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     });
 
     return tmpClusterArray;
-  }, [diameter, events, timeScale]);
+  }, [diameter, events, timeScale, cluster]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  const y = scaleY(index) ?? 0;
+  const y = scaleY(entityIndex) ?? 0;
 
   const eventsWithoutCluster = Object.keys(events).filter((eventId) => {
     const test = clusterArray.flatMap((set) => {
@@ -238,13 +243,9 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
             backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
+            minHeight: `1px`,
+            minWidth: `1px`,
             position: 'absolute',
-            paddingLeft: vertical ? 0 : '5px',
-            paddingTop: vertical ? '5px' : 0,
-            lineHeight: `${lineHeight}px`,
-            fontSize: `${lineHeight - 1}px`,
-            writingMode: vertical ? 'vertical-rl' : '',
-            textOrientation: vertical ? 'mixed' : '',
           }}
           onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
             updateHover({
@@ -259,7 +260,14 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             setHover(false);
           }}
         >
-          {(hover || hovered?.entities.includes(entity.id)) && getTranslatedLabel(entity.label)}
+          <TimelineEntityLabel
+            vertical={vertical}
+            lineHeight={lineHeight}
+            mode={mode}
+            entityIndex={entityIndex}
+          >
+            {getTranslatedLabel(entity.label)}
+          </TimelineEntityLabel>
         </div>
       </div>
       {mode !== 'mass' && (
@@ -293,7 +301,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                     .map((rel: EventEntityRelation) => {
                       return rel.role;
                     })}
-                  entityIndex={index}
+                  entityIndex={entityIndex}
                   thickness={thickness}
                   showLabels={showLabels}
                   mode={mode}
@@ -318,7 +326,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 clusterMode={clusterMode}
                 showLabels={showLabels}
                 timeScaleOffset={timeScale(entityExtent[0])}
-                entityIndex={index}
+                entityIndex={entityIndex}
                 diameter={diameter}
                 mode={mode}
               />
