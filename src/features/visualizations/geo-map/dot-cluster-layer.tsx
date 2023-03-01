@@ -3,19 +3,12 @@ import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
 import { DotCluster } from '@/features/visualizations/geo-map/dot-cluster';
-
-interface DotMarker<T> {
-  id: string;
-  coordinates: { longitude: number; latitude: number };
-  properties: T;
-  feature: Feature<Point, T>;
-}
-
-interface ClusterMarker<T> {
-  id: number;
-  coordinates: { longitude: number; latitude: number };
-  properties: T;
-}
+import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
+import type {
+  ClusterMarker,
+  DotMarker as DotMarkerType,
+} from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
+import { createClusterMarkers } from '@/features/visualizations/geo-map/lib/create-cluster-markers';
 
 interface DotClusterLayerProps<T> {
   colors: Record<string, string>;
@@ -29,48 +22,18 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
 
   const { current: map } = useMap();
 
-  const [clusterMarkers, setClusterMarkers] = useState<Array<ClusterMarker<any>>>([]);
-  const [dotMarkers, setDotMarkers] = useState<Array<DotMarker<any>>>([]);
+  const [clusterMarkers, setClusterMarkers] = useState<Array<ClusterMarker<T>>>([]);
+  const [dotMarkers, setDotMarkers] = useState<Array<DotMarkerType<T>>>([]);
 
   useEffect(() => {
     if (map == null) return;
 
     function updateClusterMarkers() {
-      const features = map?.querySourceFeatures(id);
-
-      const markers: Record<string, ClusterMarker<any>> = {};
-      const _dotMarkers: Record<DotMarker<any>> = {};
-
-      features?.forEach((feature) => {
-        const properties = feature.properties;
-
-        if (properties == null) return;
-
-        const coordinates = feature.geometry.coordinates;
-
-        if (properties['cluster'] == null) {
-          const markerId = JSON.parse(properties.event).id;
-          _dotMarkers[markerId] = {
-            id: markerId,
-            coordinates: { longitude: coordinates[0], latitude: coordinates[1] },
-            properties,
-            feature,
-          };
-          return;
-        }
-
-        const id = properties['cluster_id'];
-
-        const marker = {
-          id,
-          coordinates: { longitude: coordinates[0], latitude: coordinates[1] },
-          properties,
-        };
-        markers[id] = marker;
+      const { _clusterMarkers, _dotMarkers } = createClusterMarkers({
+        features: map?.querySourceFeatures(id),
       });
-
-      setClusterMarkers(Object.values(markers));
-      setDotMarkers(Object.values(_dotMarkers));
+      setClusterMarkers(_clusterMarkers);
+      setDotMarkers(_dotMarkers);
     }
 
     map.on('render', updateClusterMarkers);
@@ -88,7 +51,6 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
             <DotCluster
               clusterProperties={marker.properties}
               clusterColors={colors}
-              onChangeHover={onChangeHover}
               clusterId={marker.id}
               sourceId={id}
               clusterByProperty={clusterByProperty}
@@ -104,27 +66,32 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
         function onHoverEnd() {
           onChangeHover?.(null);
         }
-        const size = 15;
-        // TDODO: use Marker
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
 
+        //Workaround to parse stringified property objects (event and place)
+        const feature = {
+          ...marker.feature,
+          properties: {
+            event: JSON.parse(marker.feature.properties.event),
+            place: JSON.parse(marker.feature.properties.place),
+          },
+        };
+
         return (
-          <Marker key={marker.id} {...marker.coordinates}>
-            <svg
-              className="cursor-pointer"
-              height={size}
-              onMouseEnter={onHoverStart}
-              onMouseLeave={onHoverEnd}
-              viewBox="0 0 24 24"
-            >
-              <circle
-                cx={12}
-                cy={12}
-                r={size / 2}
-                fill={eventKind in colors ? colors[eventKind] : colors.default}
-              />
-            </svg>
-          </Marker>
+          <DotMarker
+            key={marker.id}
+            backgroundColor={
+              eventKind in colors ? colors[eventKind].background : colors.default.background
+            }
+            foregroundColor={
+              eventKind in colors ? colors[eventKind].foreground : colors.default.foreground
+            }
+            coordinates={marker.coordinates}
+            // onToggleSelection={onToggleSelection}
+            // highlightedByVis={highlightedByVis}
+            size={15}
+            feature={feature}
+          />
         );
       })}
     </Fragment>

@@ -11,13 +11,13 @@ import type {
   AnswerList,
   SlideContent,
   StoryImage,
-  StoryVideoAudio,
 } from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
+import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
 import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
@@ -161,26 +161,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
           </div>
         );
       case 'Video/Audio':
-        return (
-          <div className="flex h-full max-h-full justify-center bg-white p-2">
-            {(element as StoryVideoAudio).properties.link?.value !== '' && (
-              <ReactPlayer
-                width="100%"
-                height="100%"
-                controls
-                url={`${(element as StoryVideoAudio).properties.link?.value}`}
-              />
-            )}
-            {/*  <div className="absolute bottom-0 w-full bg-white p-2">
-              {element.properties!.title!.value !== '' && (
-                <p className="mb-1 text-xl">{element.properties!.title!.value}</p>
-              )}
-              {element.properties!.caption!.value !== '' && (
-                <p>{element.properties!.caption!.value}</p>
-              )}
-            </div> */}
-          </div>
-        );
+        return <StoryVideoAudio content={element} />;
       default:
         return [];
     }

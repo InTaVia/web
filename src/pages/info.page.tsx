@@ -1,3 +1,4 @@
+import { Button } from '@intavia/ui';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
@@ -19,6 +20,7 @@ export default function InfoPage(): JSX.Element {
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <main>
         <h1>Info</h1>
+        <Button>Click me</Button>
       </main>
     </Fragment>
   );

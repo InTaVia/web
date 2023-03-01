@@ -1,40 +1,41 @@
-import dist from '@storybook/addons';
 import type { Feature, Point } from 'geojson';
 import get from 'lodash.get';
-import { useMemo, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
-import { unique } from '@/lib/unique';
+import { useHoverState } from '@/app/context/hover.context';
 
 interface DotClusterProps<T> {
   clusterByProperty: string;
   clusterColors: Record<string, string>;
   clusterId: number;
   clusterProperties: any;
-  onChangeHover?: (feature: Feature<Point, T> | null) => void;
   sourceId: string;
 }
 
 interface Dot {
   cx: number;
   cy: number;
-  color: string;
+  backgroundColor: string;
+  foregroundColor: string;
   value: any;
   feature: Feature<Point, T>;
 }
 
 export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
-  const {
-    clusterByProperty,
-    clusterColors,
-    clusterId,
-    clusterProperties,
-    onChangeHover,
-    sourceId,
-  } = props;
+  const { clusterByProperty, clusterColors, clusterId, clusterProperties, sourceId } = props;
 
   const [dots, setDots] = useState<Array<Dot>>([]);
   const [clusterWidth, setClusterWidth] = useState<number>(0);
+
+  useEffect(() => {
+    return () => {
+      setDots([]);
+    };
+  }, []);
+
+  const { hovered, updateHover } = useHoverState();
 
   const { current: mapRef } = useMap();
 
@@ -93,7 +94,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
           _dots.push({
             cx: cx,
             cy: cy,
-            color: clusterColors[clusterKey] as string,
+            backgroundColor: clusterColors[clusterKey]!.background as string,
+            foregroundColor: clusterColors[clusterKey]!.foreground as string,
             value: clusterKey,
             feature: feature as Feature<Point, T>,
           });
@@ -152,65 +154,45 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
       textAnchor="middle"
     >
       {/* <rect width={svgWidth} height={svgWidth} fill="rgba(200,0,0, 0.1)" /> */}
-      {dots.map(({ cx, cy, color, value, feature }, index) => {
+      {dots.map(({ cx, cy, backgroundColor, foregroundColor, value, feature }) => {
         //TODO Make own component
         return (
-          <circle
-            key={index}
-            cx={clusterWidth * cx + offset}
-            cy={clusterWidth * cy + offset}
-            r={circleRadius}
-            fill={color}
-            onMouseEnter={() => {
-              onChangeHover?.(feature);
+          <g
+            key={`g-${feature.id}`}
+            onMouseEnter={(event: MouseEvent<SVGGElement>) => {
+              updateHover({
+                entities: [],
+                events: [feature.id as string],
+                clientRect: event.currentTarget.getBoundingClientRect(),
+              });
             }}
             onMouseLeave={() => {
-              onChangeHover?.(null);
+              updateHover(null);
             }}
-            // stroke="salmon"
-            // strokeWidth={strokeWidth}
-            //TODO Callback Mouseover, Mouseleave
-          />
+          >
+            <circle
+              className="cursor-pointer"
+              key={feature.id}
+              cx={clusterWidth * cx + offset}
+              cy={clusterWidth * cy + offset}
+              r={circleRadius}
+              fill={backgroundColor}
+            />
+            {hovered?.events.includes(feature.id as string) === true && (
+              <circle
+                className="cursor-pointer"
+                key={`hovered-${feature.id}`}
+                cx={clusterWidth * cx + offset}
+                cy={clusterWidth * cy + offset}
+                r={circleRadius}
+                stroke={backgroundColor}
+                strokeWidth={2}
+                fill={foregroundColor}
+              />
+            )}
+          </g>
         );
       })}
     </svg>
   );
 }
-
-// interface DotProps<T> {
-//   clusterId: number;
-//   start: number;
-//   end: number;
-//   r: number;
-//   r0: number;
-//   color: string;
-//   onChangeHover?: (feature: Feature<Point, T> | null) => void;
-//   value: any;
-//   sourceId: string;
-// }
-
-// export function Dot<T>(props: DotProps<T>): JSX.Element {
-//   const { start, end, r, r0, color, onChangeHover, clusterId, value, sourceId } = props;
-
-//   const { current: map } = useMap();
-
-//   return (
-//     <path
-//       onMouseEnter={() => {
-//         const source = map?.getSource(sourceId);
-//         if (source?.type === 'geojson') {
-//           source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
-//             const filtered = features.filter((feature) => {
-//               return get(feature.properties, ['event', 'kind']) === value;
-//             });
-
-//             onChangeHover?.(filtered);
-//           });
-//         }
-//       }}
-//       onMouseLeave={() => {
-//         onChangeHover?.(null);
-//       }}
-//     />
-//   );
-// }

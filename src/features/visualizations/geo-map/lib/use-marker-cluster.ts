@@ -5,24 +5,23 @@ import { useMemo } from 'react';
 interface UseMarkerClusterParams<T> {
   /** Dotted path to feature property by which to cluster. */
   clusterByProperty: string;
-  getColor: (id: string) => string;
+  getColors: (id: string) => any;
   data: FeatureCollection<Point, T>;
 }
 
 interface UseMarkerClusterResult<T> {
-  colors: Record<string, string>;
+  colors: Record<string, Record<string, string>>;
   data: FeatureCollection<Point, T>;
   isCluster: true;
   clusterProperties: Record<string, unknown>;
   clusterByProperty: string;
-  circleColors: Array<Array<string> | string>;
 }
 
 export function useMarkerCluster<T>(params: UseMarkerClusterParams<T>): UseMarkerClusterResult<T> {
-  const { clusterByProperty, getColor, data } = params;
+  const { clusterByProperty, getColors, data } = params;
 
   const options = useMemo(() => {
-    const colors = {} as Record<string, string>;
+    const colors = {} as Record<string, Record<string, string>>;
     const values = new Set();
     data.features.forEach((feature) => {
       const value: string = get(feature.properties, clusterByProperty);
@@ -30,7 +29,6 @@ export function useMarkerCluster<T>(params: UseMarkerClusterParams<T>): UseMarke
     });
 
     const clusterProperties: Record<string, unknown> = {};
-    const circleColors: Array<Array<string> | string> = ['case'];
 
     const expression = clusterByProperty.split('.').reduce((acc, segment) => {
       return acc.length > 0 ? ['get', segment, acc] : ['get', segment];
@@ -44,13 +42,11 @@ export function useMarkerCluster<T>(params: UseMarkerClusterParams<T>): UseMarke
 
       clusterProperties[value] = clusterAccumulatorExpression;
 
-      const color = getColor(value);
-      circleColors.push(equalsExpression, color);
+      const color = getColors(value);
       colors[value] = color;
     });
 
-    const defaultColor = getColor('default');
-    circleColors.push(defaultColor);
+    const defaultColor = getColors('default');
     colors['default'] = defaultColor;
 
     return {
@@ -58,11 +54,9 @@ export function useMarkerCluster<T>(params: UseMarkerClusterParams<T>): UseMarke
       clusterProperties,
       // cluster attribute/property used for clustering
       clusterByProperty,
-      // circle paint expression
-      circleColors,
       colors,
     };
-  }, [clusterByProperty, data.features, getColor]); // FIXME: memo
+  }, [clusterByProperty, data.features, getColors]);
 
   return { data, isCluster: true, ...options };
 }

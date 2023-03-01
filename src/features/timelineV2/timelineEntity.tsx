@@ -2,13 +2,16 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client/dist/models';
 import type { ScaleBand } from 'd3-scale';
+import type { MouseEvent } from 'react';
 import { useMemo, useRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import {
   type TimelineType,
   getTemporalExtent,
   TimelineColors as colors,
 } from '@/features/timelineV2/timeline';
+import { TimelineEntityLabel } from '@/features/timelineV2/timelineEntityLabel';
 import TimelineEvent from '@/features/timelineV2/timelineEvent';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -20,7 +23,7 @@ interface TimelineEntityProps {
   vertical: boolean;
   timeScale: (data: Date) => number;
   scaleY: ScaleBand<string>;
-  index: number;
+  entityIndex: number;
   thickness: number;
   showLabels: boolean;
   overlap: boolean;
@@ -37,7 +40,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     vertical = false,
     timeScale,
     scaleY,
-    index,
+    entityIndex,
     thickness = 1,
     showLabels,
     overlap = false,
@@ -50,6 +53,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   // const itemsRef = useRef([]);
   const ref = useRef();
 
+  const { hovered, updateHover } = useHoverState();
+
   //const tmpInitEventsWithoutCluster = Object.keys(events);
 
   const entityExtent = getTemporalExtent([Object.values(events)]);
@@ -61,7 +66,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   let midOffset = 0;
   if (vertical) {
     if (mode === 'dual') {
-      midOffset = index * scaleY.bandwidth();
+      midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = 0;
     } else {
@@ -69,7 +74,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   } else {
     if (mode === 'dual') {
-      midOffset = index * scaleY.bandwidth();
+      midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = scaleY.bandwidth();
     } else {
@@ -200,7 +205,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  const y = scaleY(index) ?? 0;
+  const y = scaleY(entityIndex) ?? 0;
 
   const eventsWithoutCluster = Object.keys(events).filter((eventId) => {
     const test = clusterArray.flatMap((set) => {
@@ -238,22 +243,31 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
             backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
+            minHeight: `1px`,
+            minWidth: `1px`,
             position: 'absolute',
-            paddingLeft: vertical ? 0 : '5px',
-            paddingTop: vertical ? '5px' : 0,
-            lineHeight: `${lineHeight}px`,
-            fontSize: `${lineHeight - 1}px`,
-            writingMode: vertical ? 'vertical-rl' : '',
-            textOrientation: vertical ? 'mixed' : '',
           }}
-          onMouseEnter={() => {
+          onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+            updateHover({
+              entities: [entity.id],
+              events: [],
+              clientRect: e.currentTarget.getBoundingClientRect(),
+            });
             setHover(true);
           }}
           onMouseLeave={() => {
+            updateHover(null);
             setHover(false);
           }}
         >
-          {hover && getTranslatedLabel(entity.label)}
+          <TimelineEntityLabel
+            vertical={vertical}
+            lineHeight={lineHeight}
+            mode={mode}
+            entityIndex={entityIndex}
+          >
+            {getTranslatedLabel(entity.label)}
+          </TimelineEntityLabel>
         </div>
       </div>
       {mode !== 'mass' && (
@@ -287,7 +301,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                     .map((rel: EventEntityRelation) => {
                       return rel.role;
                     })}
-                  entityIndex={index}
+                  entityIndex={entityIndex}
                   thickness={thickness}
                   showLabels={showLabels}
                   mode={mode}
@@ -312,7 +326,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 clusterMode={clusterMode}
                 showLabels={showLabels}
                 timeScaleOffset={timeScale(entityExtent[0])}
-                entityIndex={index}
+                entityIndex={entityIndex}
                 diameter={diameter}
                 mode={mode}
               />

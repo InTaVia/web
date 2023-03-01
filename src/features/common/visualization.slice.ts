@@ -10,7 +10,7 @@ import { unique } from '@/lib/unique';
 
 export interface Visualization {
   id: string;
-  type: 'map' | 'timeline';
+  type: 'ego-network' | 'map' | 'timeline';
   name: string;
   entityIds: Array<Entity['id']>;
   targetEntityIds: Array<Entity['id']>;
@@ -150,7 +150,7 @@ const visualizationSlice = createSlice({
               cluster: {
                 type: 'boolean',
                 id: 'cluster',
-                value: false,
+                value: true,
                 editable: true,
                 sort: 3,
                 label: 'Cluster',
@@ -258,6 +258,24 @@ const visualizationSlice = createSlice({
             entityIds: [],
             targetEntityIds: [],
             eventIds: [],
+          };
+          break;
+        }
+        case 'ego-network': {
+          state[vis['id']] = {
+            ...vis,
+            properties: {
+              name: {
+                type: 'text',
+                id: 'name',
+                value: '',
+                label: 'Name',
+                editable: true,
+                sort: 1,
+              },
+            },
+            entityIds: [],
+            targetEntityIds: [],
           };
           break;
         }

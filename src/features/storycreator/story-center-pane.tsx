@@ -441,7 +441,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               <textarea
                 id="message"
                 rows={6}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 defaultValue={JSON.stringify(storyExportObject, null, 2)}
               ></textarea>
             </form>
@@ -474,7 +474,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               form={'storyExportDialog'}
               type="submit"
             >
-              Submit
+              {t(['common', 'form', 'submit'])}
             </Button>
             {previewUrl !== null && (
               <a target="_blank" href={previewUrl} rel="noreferrer">

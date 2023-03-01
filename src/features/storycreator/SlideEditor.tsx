@@ -64,10 +64,11 @@ export function SlideEditor(props: SlideEditorProps) {
   const slides = useAppSelector((state) => {
     return selectSlidesByStoryID(state, slide.story);
   });
+
   const currentSlide = slides.filter((currSlide) => {
     return currSlide.id === slide.id;
   })[0];
-  const highlighted = currentSlide!.highlighted;
+  const highlighted = currentSlide?.highlighted ?? [];
   // console.log(highlighted);
 
   const handleClose = () => {

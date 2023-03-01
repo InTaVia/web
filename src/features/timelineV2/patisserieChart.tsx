@@ -36,7 +36,14 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
     offsets.push(total);
     total += groupedValue.length;
   }
-  const r = diameter / 2;
+  const r =
+    total >= 75
+      ? (3 * diameter) / 2
+      : total >= 25
+      ? diameter
+      : total >= 5
+      ? (2 * diameter) / 3
+      : diameter / 2;
   const r0 = Math.round(r * 0.4);
   const w = r * 2;
 
@@ -49,6 +56,7 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       height={`${w}`}
       viewBox={`0 0 ${w} ${w}`}
       textAnchor="middle"
+      style={{ transform: 'translate(-50%, -50%)' }}
     >
       <circle cx={r} cy={r} r={r - 1} fill="white" stroke="black"></circle>
       <g transform={'translate(1, 1)'}>

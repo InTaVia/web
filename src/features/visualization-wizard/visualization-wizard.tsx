@@ -72,6 +72,15 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
         >
           Create Timeline Visualization
         </Button>
+        <Button
+          round="round"
+          color="accent"
+          onClick={() => {
+            onButtonClick('ego-network');
+          }}
+        >
+          Create Network Visualization
+        </Button>
       </div>
       {Object.keys(visualizations).length > 0 && (
         <div className="grid grid-cols-2 gap-2">

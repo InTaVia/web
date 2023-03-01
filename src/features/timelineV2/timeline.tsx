@@ -328,7 +328,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
               timeScale={timeScale}
               scaleY={scaleY}
               vertical={vertical}
-              index={entry.yIndex}
+              entityIndex={entry.yIndex}
               thickness={mode === 'mass' ? scaleY.bandwidth() : thickness}
               showLabels={showLabels}
               overlap={overlap}

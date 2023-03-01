@@ -27,7 +27,20 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
       <EntityLinkedIds links={person.linkedIds} />
       <PersonMetadataList gender={person.gender} occupations={person.occupations} />
       {hasRelations ? <EntityRelations relations={person.relations} /> : null}
-      {hasRelations ? <EgoNetworkComponent entity={person} width={600} height={600} /> : null}
+      {hasRelations ? (
+        <EgoNetworkComponent
+          visualization={{
+            id: `ego-network-${person.id}`,
+            type: 'ego-network',
+            name: `ego-network-${person.id}`,
+            entityIds: [person.id],
+            targetEntityIds: [],
+            eventIds: [],
+          }}
+          width={600}
+          height={600}
+        />
+      ) : null}
     </div>
   );
 }
