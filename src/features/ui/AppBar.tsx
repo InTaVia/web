@@ -55,7 +55,7 @@ export function AppBar(): JSX.Element {
   ];
 
   const currentLink = linksLeft.concat(linksRight).find((link) => {
-    return link.href.pathname === currentPath;
+    return currentPath.includes(link.href.pathname);
   });
   if (currentLink) {
     currentLink.current = true;
