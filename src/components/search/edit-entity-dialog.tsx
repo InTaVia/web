@@ -6,7 +6,6 @@ import {
   ComboBoxContent,
   ComboBoxInput,
   ComboBoxItem,
-  Command,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -37,7 +36,6 @@ import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
-import { LoadingIndicator } from '@/components/loading-indicator';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface EditEntityDialogProps<T extends Entity> {
@@ -250,23 +248,18 @@ function OccupationsComboBox(): JSX.Element {
   return (
     <FormField>
       <Label htmlFor={id}>{label}</Label>
-      <Select disabled={isLoading} {...field.input} value={value} onValueChange={onValueChange}>
-        <SelectTrigger id={id}>
-          <div className="flex flex-1 items-center justify-between pr-2">
-            <SelectValue placeholder={placeholder} />
-            {isLoading ? <LoadingIndicator /> : null}
-          </div>
-        </SelectTrigger>
-        <SelectContent>
+      <ComboBox disabled={isLoading} {...field.input} value={value} onValueChange={onValueChange}>
+        <ComboBoxInput id={id} placeholder={placeholder} />
+        <ComboBoxContent>
           {Object.values(occupations).map((occupation) => {
             return (
-              <SelectItem key={occupation.id} value={occupation.id}>
+              <ComboBoxItem key={occupation.id} value={occupation.id}>
                 {getTranslatedLabel(occupation.label)}
-              </SelectItem>
+              </ComboBoxItem>
             );
           })}
-        </SelectContent>
-      </Select>
+        </ComboBoxContent>
+      </ComboBox>
     </FormField>
   );
 }

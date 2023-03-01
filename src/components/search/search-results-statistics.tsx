@@ -17,14 +17,14 @@ export function SearchResultsStatistics(): JSX.Element {
   });
 
   return (
-    <div className="grid h-full max-h-96 overflow-auto">
-      <aside className="mx-auto grid h-full w-full max-w-7xl px-8 py-4">
+    <div className="grid max-h-96 overflow-auto">
+      <aside className="mx-auto grid w-full max-w-7xl px-8 py-4">
         <Collapsible className="grid gap-4">
           <CollapsibleTrigger asChild>
             <Button variant="outline">Show search results statistics</Button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            {!isFetching ? (
+            {isFetching ? (
               <div className="grid place-items-center py-8">
                 <LoadingIndicator />
               </div>
