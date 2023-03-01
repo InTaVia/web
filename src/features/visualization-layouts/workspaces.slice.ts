@@ -31,7 +31,7 @@ const initialState: Workspaces = {
   ],
 };
 
-const workspacesSlice = createSlice({
+export const workspacesSlice = createSlice({
   name: 'workspaces',
   initialState,
   reducers: {

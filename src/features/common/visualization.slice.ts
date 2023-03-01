@@ -31,7 +31,7 @@ const defaultMapState = {
   },
 };
 
-const visualizationSlice = createSlice({
+export const visualizationSlice = createSlice({
   name: 'visualization',
   initialState,
   reducers: {
