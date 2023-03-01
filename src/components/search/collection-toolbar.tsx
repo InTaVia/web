@@ -1,5 +1,5 @@
 import { TrashIcon } from '@heroicons/react/outline';
-import { Button, Dialog, DialogTrigger } from '@intavia/ui';
+import { Button, Dialog, DialogTrigger, IconButton } from '@intavia/ui';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -39,16 +39,15 @@ export function CollectionToolbar(): JSX.Element {
           />
         </Dialog>
 
-        <Button
-          className="h-10 w-10 p-1"
+        <IconButton
+          className="h-10 w-10"
           disabled={currentCollection == null}
+          label="Delete collection"
           onClick={onDeleteCollection}
-          title="Delete collection"
           variant="destructive"
         >
-          <TrashIcon className="h-5 w-5" />
-          <span className="sr-only">Delete collection</span>
-        </Button>
+          <TrashIcon className="h-5 w-5 shrink-0" />
+        </IconButton>
       </div>
     </div>
   );

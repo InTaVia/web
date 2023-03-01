@@ -2,11 +2,13 @@ import { TrashIcon } from '@heroicons/react/outline';
 import type { Entity, EntityKind } from '@intavia/api-client';
 import {
   Button,
+  Command,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  IconButton,
   Input,
   Label,
   Select,
@@ -285,10 +287,14 @@ function RelationsFormFields(): JSX.Element {
             <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
               <RelationRoleComboBox name={role} />
               <RelationEventComboBox name={event} />
-              <Button className="h-10 w-10 p-1" variant="destructive" onClick={onRemove}>
-                <span className="sr-only">Remove</span>
-                <TrashIcon className="w-h w-5" />
-              </Button>
+              <IconButton
+                className="h-10 w-10"
+                label="Remove"
+                onClick={onRemove}
+                variant="destructive"
+              >
+                <TrashIcon className="h-5 w-5 shrink-0" />
+              </IconButton>
             </div>
           </li>
         );
@@ -309,9 +315,15 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
 
   const { data } = useSearchRelationRolesQuery({ limit: 1000 });
   const roles = useMemo(() => {
-    const values = data?.results ?? [];
-    return values;
-  }, [data]);
+    const roles = keyBy(data?.results ?? [], (role) => {
+      return role.id;
+    });
+    const selected = field.input.value;
+    if (selected != null && typeof selected === 'object') {
+      roles[selected.id] = selected;
+    }
+    return roles;
+  }, [data, field.input.value]);
 
   return (
     <FormField>
@@ -321,7 +333,7 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
           <SelectValue placeholder="Select role" />
         </SelectTrigger>
         <SelectContent>
-          {roles.map((role) => {
+          {Object.values(roles).map((role) => {
             return (
               <SelectItem key={role.id} value={role.id}>
                 {getTranslatedLabel(role.label)}
@@ -347,9 +359,15 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   const [searchTerm] = useState('');
   const { data } = useSearchEventsQuery({ q: searchTerm });
   const events = useMemo(() => {
-    const values = data?.results ?? [];
-    return values;
-  }, [data]);
+    const events = keyBy(data?.results ?? [], (event) => {
+      return event.id;
+    });
+    const selected = field.input.value;
+    if (selected != null && typeof selected === 'object') {
+      events[selected.id] = selected;
+    }
+    return events;
+  }, [data, field.input.value]);
 
   return (
     <FormField>
@@ -359,7 +377,7 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
           <SelectValue placeholder="Select event" />
         </SelectTrigger>
         <SelectContent>
-          {events.map((event) => {
+          {Object.values(events).map((event) => {
             return (
               <SelectItem key={event.id} value={event.id}>
                 {getTranslatedLabel(event.label)}
