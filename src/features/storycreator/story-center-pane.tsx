@@ -69,7 +69,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
   });
-  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
+  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0] ?? null;
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -89,7 +89,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const setSlideThumbnail = function () {
-    if (ref.current === null) {
+    if (ref.current === null || selectedSlide === null) {
       return;
     }
 
@@ -103,6 +103,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const addContentPane = (slotId: StringLiteral, contentToAddType: string | undefined) => {
+    if (selectedSlide === null) {
+      return;
+    }
+
     const contId = `contentPane-${Math.random()
       .toString(36)
       .replace(/[^a-z]+/g, '')
@@ -123,7 +127,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     for (const [key, value] of Object.entries(layoutTemplate)) {
       if (key !== 'cols' && key !== 'rows') {
         if (layoutTemplate.type === 'contentPane') {
-          const contentPaneSlots = selectedSlide!.contentPaneSlots;
+          const contentPaneSlots = selectedSlide
+            ? selectedSlide.contentPaneSlots
+            : ({} as Record<ContentSlotId, string | null>);
           const slotId = layoutTemplate.id as ContentSlotId;
           if (contentPaneSlots[slotId] === null) {
             addContentPane(layoutTemplate.id, contentToAddType);
@@ -138,6 +144,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const onLayoutSelected = (i_layout: PanelLayout) => {
+    if (selectedSlide === null) {
+      return;
+    }
     checkForEmptyContentPaneSlots(layoutTemplates[i_layout] as LayoutPaneContent);
     dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
   };
@@ -203,6 +212,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const increaseNumberOfContentPanes = (contentToAddType: string | undefined) => {
+    if (selectedSlide === null) {
+      return;
+    }
+
     const layout = selectedSlide!.layout;
 
     const newLayout = (layout + '-content') as PanelLayout;
@@ -396,15 +409,19 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           return (
             <div className="grid h-full w-full grid-cols-1 justify-items-center">
               <div className="h-full border border-intavia-gray-300" style={{ width: newWidth }}>
-                <SlideEditor
-                  slide={selectedSlide as Slide}
-                  imageRef={ref}
-                  layout={selectedSlide!.layout}
-                  desktop={desktop}
-                  timescale={timescale}
-                  increaseNumberOfContentPanes={increaseNumberOfContentPanes}
-                  addContent={addContent}
-                />
+                {selectedSlide ? (
+                  <SlideEditor
+                    slide={selectedSlide as Slide}
+                    imageRef={ref}
+                    layout={selectedSlide!.layout}
+                    desktop={desktop}
+                    timescale={timescale}
+                    increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                    addContent={addContent}
+                  />
+                ) : (
+                  <div className="flex justify-center">Please add at least one slide!</div>
+                )}
               </div>
             </div>
           );

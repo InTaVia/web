@@ -299,11 +299,11 @@ export const storyCreatorSlice = createSlice({
     removeSlide: (state, action) => {
       const storyID = action.payload.story;
       const slideID = action.payload.slide;
-      const newStories = { ...state.stories };
-      const story = newStories[storyID];
-      delete story!.slides[slideID];
+      const story = state.stories[storyID];
 
-      state.stories = newStories;
+      if (story !== undefined) {
+        delete story.slides[slideID];
+      }
     },
     setSlidesForStory: (state, action) => {
       const story = action.payload.story;
