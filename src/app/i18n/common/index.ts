@@ -123,7 +123,7 @@ export interface Dictionary {
       title: string;
     };
   };
-  'storytelling-creator': string;
+  'story-creator': string;
   timeline: {
     metadata: {
       title: string;

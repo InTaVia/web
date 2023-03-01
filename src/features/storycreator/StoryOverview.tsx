@@ -3,6 +3,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 
+import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addLocalEntity,
@@ -32,6 +33,8 @@ import { PageTitle } from '@/features/ui/page-title';
 
 export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const { t } = useI18n<'common'>();
 
   const stories = useAppSelector(selectStories);
   const allVisualizations = useAppSelector(selectAllVisualizations);
@@ -135,7 +138,7 @@ export function StoryOverview(): JSX.Element {
 
   return (
     <>
-      <PageTitle>Storytelling Creator</PageTitle>
+      <PageTitle>{t(['common', 'stories', 'metadata', 'title'])}</PageTitle>
       <div key={'storyEntryListWrapper'} className="flex h-full items-center">
         <div key={'storyEntryList'} className="grid grid-cols-4 gap-2 text-lg">
           {Object.values(stories).map((story, index) => {

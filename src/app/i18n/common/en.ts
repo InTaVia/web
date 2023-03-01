@@ -13,7 +13,7 @@ export const dictionary: Dictionary = {
   },
   'app-bar': {
     'data-curation-lab': 'Search & Curation',
-    'visual-analytics-studio': 'Viualization & Analysis',
+    'visual-analytics-studio': 'Visualization & Analysis',
     'story-creator': 'Storytelling & Presentation',
   },
   collections: {
@@ -125,7 +125,7 @@ export const dictionary: Dictionary = {
   },
   stories: {
     metadata: {
-      title: 'Storycreator',
+      title: 'Story Creator',
     },
   },
   story: {
@@ -133,7 +133,7 @@ export const dictionary: Dictionary = {
       title: 'Story',
     },
   },
-  'storytelling-creator': 'Storytelling Creator',
+  'story-creator': 'Story Creator',
   timeline: {
     metadata: {
       title: 'Timeline',
