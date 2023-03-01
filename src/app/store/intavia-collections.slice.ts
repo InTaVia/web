@@ -51,7 +51,7 @@ export const slice = createSlice({
       const collection = action.payload;
       state.collections.byId[collection.id] = collection;
     },
-    removeCollection(state, action: PayloadAction<Collection>) {
+    removeCollection(state, action: PayloadAction<Pick<Collection, 'id'>>) {
       const collection = action.payload;
       delete state.collections.byId[collection.id];
     },
