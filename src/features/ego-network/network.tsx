@@ -4,6 +4,7 @@ import { zoom, zoomIdentity } from 'd3-zoom';
 import { useEffect, useRef, useState } from 'react';
 
 import { getEntityColorByKind } from '@/features/common/visualization.config';
+import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 
 export interface NetworkProps {
@@ -11,10 +12,15 @@ export interface NetworkProps {
   links: Array<Link>;
   width: number;
   height: number;
+  visProperties: Visualization['properties'];
 }
 
 export function Network(props: NetworkProps): JSX.Element {
-  const { nodes, links, width, height } = props;
+  const { nodes, links, width, height, visProperties } = props;
+
+  const showAllLabels: boolean = visProperties
+    ? visProperties['showAllLabels']?.value ?? false
+    : false;
 
   const [animatedNodes, setAnimatedNodes] = useState(nodes);
   const [animatedLinks, setAnimatedLinks] = useState(links);
@@ -46,16 +52,11 @@ export function Network(props: NetworkProps): JSX.Element {
     // Zoom
     let transform = zoomIdentity;
     const svg = select(svgRef.current);
-    const zoomRect = svg
-      .append('rect')
-      .attr('width', width)
-      .attr('height', height)
-      .style('fill', 'none')
-      .style('pointer-events', 'all');
-    const myZoom = zoom<SVGRectElement, unknown>()
+    const myZoom = zoom<SVGSVGElement, unknown>()
       .scaleExtent([1 / 10, 8])
       .on('zoom', zoomed);
-    zoomRect.call(myZoom).call(myZoom.translateTo, width / 2, height / 2);
+    // FIXME: Fix zoomBehavior type error
+    svg.call(myZoom).call(myZoom.translateTo, width / 2, height / 2);
 
     function zoomed(event: any) {
       transform = event.transform;
@@ -72,7 +73,7 @@ export function Network(props: NetworkProps): JSX.Element {
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
-            return <NodeView {...node} key={node.entity.id} />;
+            return <NodeView {...node} showAllLabels={showAllLabels} key={node.entity.id} />;
           })}
         </g>
       </svg>
@@ -80,8 +81,10 @@ export function Network(props: NetworkProps): JSX.Element {
   );
 }
 
-function NodeView(props: Node): JSX.Element {
-  const { entity, x, y } = props;
+function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
+  const { entity, x, y, isPrimary, showAllLabels } = props;
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const width = 15;
   const height = 15;
@@ -170,11 +173,22 @@ function NodeView(props: Node): JSX.Element {
   }
 
   return (
-    <g transform={`translate(${x}, ${y})`} className="network-node">
+    <g
+      transform={`translate(${x}, ${y})`}
+      className="network-node"
+      onMouseEnter={() => {
+        return setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        return setIsHovered(false);
+      }}
+    >
       {renderNode()}
-      <text x={0} y={height + 12} textAnchor="middle" fill="black">
-        {entity.label.default}
-      </text>
+      {(showAllLabels || isPrimary || isHovered) && (
+        <text x={0} y={height + 12} textAnchor="middle" fill="black">
+          {entity.label.default}
+        </text>
+      )}
     </g>
   );
 }
