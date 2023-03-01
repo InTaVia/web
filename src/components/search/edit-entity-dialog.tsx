@@ -2,6 +2,10 @@ import { TrashIcon } from '@heroicons/react/outline';
 import type { Entity, EntityKind } from '@intavia/api-client';
 import {
   Button,
+  ComboBox,
+  ComboBoxContent,
+  ComboBoxInput,
+  ComboBoxItem,
   Command,
   DialogContent,
   DialogDescription,
@@ -328,20 +332,18 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   return (
     <FormField>
       <Label htmlFor={id}>Role</Label>
-      <Select {...field.input} onValueChange={field.input.onChange}>
-        <SelectTrigger id={id}>
-          <SelectValue placeholder="Select role" />
-        </SelectTrigger>
-        <SelectContent>
+      <ComboBox {...field.input} onValueChange={field.input.onChange}>
+        <ComboBoxInput id={id} placeholder="Select role" />
+        <ComboBoxContent>
           {Object.values(roles).map((role) => {
             return (
-              <SelectItem key={role.id} value={role.id}>
+              <ComboBoxItem key={role.id} value={role.id}>
                 {getTranslatedLabel(role.label)}
-              </SelectItem>
+              </ComboBoxItem>
             );
           })}
-        </SelectContent>
-      </Select>
+        </ComboBoxContent>
+      </ComboBox>
     </FormField>
   );
 }
@@ -372,20 +374,18 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   return (
     <FormField>
       <Label htmlFor={id}>Event</Label>
-      <Select {...field.input} onValueChange={field.input.onChange}>
-        <SelectTrigger id={id}>
-          <SelectValue placeholder="Select event" />
-        </SelectTrigger>
-        <SelectContent>
+      <ComboBox {...field.input} onValueChange={field.input.onChange}>
+        <ComboBoxInput id={id} placeholder="Select event" />
+        <ComboBoxContent>
           {Object.values(events).map((event) => {
             return (
-              <SelectItem key={event.id} value={event.id}>
+              <ComboBoxItem key={event.id} value={event.id}>
                 {getTranslatedLabel(event.label)}
-              </SelectItem>
+              </ComboBoxItem>
             );
           })}
-        </SelectContent>
-      </Select>
+        </ComboBoxContent>
+      </ComboBox>
     </FormField>
   );
 }

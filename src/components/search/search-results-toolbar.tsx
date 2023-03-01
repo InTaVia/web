@@ -44,7 +44,7 @@ function AddQueryToCollectionButton(): JSX.Element {
 
     const { dismiss } = toast({
       title: 'Fetching entities',
-      description: 'Retrieving search results for current query',
+      description: 'Retrieving search results for current query...',
     });
     const { entities } = await getSearchResults();
     dismiss();
