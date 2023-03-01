@@ -1,14 +1,18 @@
-import type { Action, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
+import { toast } from '@intavia/ui';
+import type { Action, Middleware } from '@reduxjs/toolkit';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 
-import { addNotification } from '@/app/notifications/notifications.slice';
-
-const middleware: Middleware = function errorMiddleware(api: MiddlewareAPI) {
+const middleware: Middleware = function errorMiddleware() {
   return (next) => {
     return (action: Action) => {
       if (isRejectedWithValue(action)) {
-        const message = action.error.message;
-        api.dispatch(addNotification({ message, type: 'negative' }));
+        const description = action.error.message;
+
+        toast({
+          title: 'Error',
+          description,
+          variant: 'destructive ',
+        });
       }
 
       return next(action);

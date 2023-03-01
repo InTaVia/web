@@ -17,7 +17,6 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { service as intaviaApiService } from '@/api/intavia.service';
-import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
@@ -47,7 +46,6 @@ const rootReducer = combineReducers({
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
-  notifications: notificationsReducer,
   storycreator: storycreatorReducer,
   timeline: timelineReducer,
   ui: uiReducer,
@@ -65,8 +63,6 @@ export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
       return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [
-            /** Ignore JSX element allowed as notification action button. */
-            String(addNotification),
             /** Ignore `Date` objects. */
             String(setTimeRangeBrush),
             /** `redux-persist` */
