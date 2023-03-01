@@ -52,6 +52,7 @@ export interface Dictionary {
     'all-kinds': string;
     kinds: Record<EntityKind, Plurals>;
     label: string;
+    description: string;
     gender: Plurals;
     occupation: Plurals;
     location: Plurals;

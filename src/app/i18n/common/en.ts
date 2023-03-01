@@ -62,6 +62,7 @@ export const dictionary: Dictionary = {
       place: { one: 'Place', other: 'Places' },
     },
     label: 'Label',
+    description: 'Description',
     gender: { one: 'Gender', other: 'Genders' },
     occupation: { one: 'Occupation', other: 'Occupations' },
     location: { one: 'Location', other: 'Locations' },

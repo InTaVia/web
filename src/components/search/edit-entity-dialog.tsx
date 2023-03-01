@@ -13,6 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Textarea,
 } from '@intavia/ui';
 import { keyBy } from '@stefanprobst/key-by';
 import { Fragment, useMemo } from 'react';
@@ -64,9 +65,9 @@ export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<
         <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
           <div className="grid gap-4">
             <EntityLabelTextField />
+            <EntityDescriptionTextField />
             <EntityFormFields kind={entity.kind} />
-
-            <pre>{JSON.stringify(entity.relations, null, 2)}</pre>
+            <RelationsFormFields relations={entity.relations} />
           </div>
         </Form>
       </div>
@@ -93,6 +94,23 @@ function EntityLabelTextField(): JSX.Element {
     <FormField>
       <Label htmlFor={id}>{label}</Label>
       <Input id={id} {...field.input} required />
+    </FormField>
+  );
+}
+
+function EntityDescriptionTextField(): JSX.Element {
+  const name = 'description';
+
+  const { t } = useI18n<'common'>();
+  const field = useField(name);
+
+  const id = name;
+  const label = t(['common', 'entity', 'description']);
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>{label}</Label>
+      <Textarea id={id} {...field.input} />
     </FormField>
   );
 }

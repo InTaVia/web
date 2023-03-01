@@ -1,24 +1,24 @@
 import type { Entity } from '@intavia/api-client';
 import {
   Button,
+  Dialog,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Dialog,
 } from '@intavia/ui';
 import { MenuIcon } from 'lucide-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
-import { getTranslatedLabel } from '@/lib/get-translated-label';
-import { useState } from 'react';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface SearchResultProps<T extends Entity> {
   entity: T;

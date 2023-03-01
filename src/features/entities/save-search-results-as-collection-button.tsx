@@ -1,3 +1,4 @@
+import type { Entity } from '@intavia/api-client';
 import { Dialog, TextField, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,7 +12,6 @@ import { addNotification } from '@/app/notifications/notifications.slice';
 import { useAppDispatch } from '@/app/store';
 import type { QueryMetadata } from '@/app/store/entities.slice';
 import { addCollection } from '@/app/store/entities.slice';
-import type { Entity } from '@intavia/api-client';
 import intaviaService from '@/features/common/intavia-api.service';
 import { usePersonsSearchFilters } from '@/features/entities/use-persons-search-filters';
 import { usePersonsSearchResults } from '@/features/entities/use-persons-search-results';

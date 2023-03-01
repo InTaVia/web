@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogTrigger } from '@intavia/ui';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { CollectionSelect } from '@/components/search/collection-select';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
-import { useState } from 'react';
 
 export function CollectionToolbar(): JSX.Element {
   const { t } = useI18n<'common'>();

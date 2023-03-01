@@ -1,7 +1,8 @@
-import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
-import { Entity } from '@intavia/api-client';
+import type { Entity } from '@intavia/api-client';
+
 import { useLazySearchEntitiesQuery } from '@/api/intavia.service';
-import { QueryMetadata } from '@/app/store/intavia-collections.slice';
+import type { QueryMetadata } from '@/app/store/intavia-collections.slice';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 
 export function useAllSearchResults() {
   const searchFilters = useSearchEntitiesFilters();
