@@ -22,8 +22,6 @@ import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
 import visualizationReducer from '@/features/common/visualization.slice';
-import searchHistoryReducer from '@/features/entities/search-history.slice';
-import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
 import contentPaneReducer from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
 import storycreatorReducer from '@/features/storycreator/storycreator.slice';
@@ -50,8 +48,6 @@ const rootReducer = combineReducers({
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
   notifications: notificationsReducer,
-  searchHistory: searchHistoryReducer,
-  searchResultsSelection: searchResultsSelectionReducer,
   storycreator: storycreatorReducer,
   timeline: timelineReducer,
   ui: uiReducer,
