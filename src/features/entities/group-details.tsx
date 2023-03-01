@@ -2,6 +2,7 @@ import type { Group } from '@intavia/api-client';
 
 import { NetworkComponent } from '@/features/ego-network/network-component';
 import { EntityAlternativeLabels } from '@/features/entities/entity-alternative-labels';
+import { EntityDescription } from '@/features/entities/entity-description';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
 import { EntityTitle } from '@/features/entities/entity-title';
@@ -25,6 +26,7 @@ export function GroupDetails(props: GroupDetailsProps): JSX.Element {
       <EntityTitle kind={group.kind} label={group.label} />
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={group.linkedIds} />
+      <EntityDescription description={group.description} />
       {hasRelations ? <EntityRelations relations={group.relations} /> : null}
       {hasRelations ? (
         <NetworkComponent
