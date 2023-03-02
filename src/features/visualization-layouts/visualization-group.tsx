@@ -74,6 +74,12 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
       { type: 'visualization', id: 'vis-2' },
     ],
   },
+  'single-content': {
+    cols: [{ type: 'contentPane', id: 'cont-1' }],
+  },
+  title: {
+    cols: [{ type: 'contentPane', id: 'cont-1' }],
+  },
   'two-contents': {
     cols: [
       { type: 'contentPane', id: 'cont-1' },
