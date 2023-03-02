@@ -118,12 +118,17 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   return (
     <article className="flex items-center justify-between gap-8 px-8 py-2">
-      <NextLink href={detailsUrl}>
-        <a>
-          <span>{getTranslatedLabel(entity.label)}</span>
-          {hasLocalEntity ? <span> (edited locally)</span> : null}
-        </a>
-      </NextLink>
+      <div>
+        <NextLink href={detailsUrl}>
+          <a>
+            <span>{getTranslatedLabel(entity.label)}</span>
+            {hasLocalEntity ? <span> (edited locally)</span> : null}
+          </a>
+        </NextLink>
+        <div className="text-xs text-neutral-500">
+          {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+        </div>
+      </div>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

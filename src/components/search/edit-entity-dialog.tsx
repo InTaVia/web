@@ -31,6 +31,8 @@ import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
 
 import {
+  useGetEventByIdQuery,
+  useGetRelationRoleByIdQuery,
   useSearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchRelationRolesQuery,
@@ -42,7 +44,7 @@ import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
-import { isNotNullable } from '@/lib/is-not-nullable';
+import { isNonEmptyString } from '@/lib/is-nonempty-string';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 
 interface EditEntityDialogProps<T extends Entity> {
@@ -65,12 +67,14 @@ export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<
     const sanitized = {
       ...values,
       relations: values.relations.filter((relation) => {
-        return isNotNullable(relation.event) && isNotNullable(relation.role);
+        return isNonEmptyString(relation.event) && isNonEmptyString(relation.role);
       }),
     };
 
     if (sanitized.kind === 'person' && Array.isArray(sanitized.occupations)) {
-      sanitized.occupations = sanitized.occupations.filter(isNotNullable);
+      sanitized.occupations = sanitized.occupations.filter((occupation) => {
+        return isNonEmptyString(occupation.id);
+      });
     }
 
     dispatch(addLocalEntity(sanitized));
@@ -89,7 +93,7 @@ export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<
         </DialogDescription>
       </DialogHeader>
 
-      <div className="grid gap-4 py-4">
+      <div className="-mx-4 grid gap-4 overflow-y-auto p-4">
         <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
           <div className="grid gap-4">
             <EntityLabelTextField />
@@ -234,7 +238,7 @@ function OccupationsFormFields(): JSX.Element {
   const label = t(['common', 'entity', 'occupation', 'other']);
 
   function onAdd() {
-    fieldArray.fields.push({ role: undefined, event: undefined });
+    fieldArray.fields.push({ id: undefined });
   }
 
   return (
@@ -254,7 +258,7 @@ function OccupationsFormFields(): JSX.Element {
             return (
               <li key={name}>
                 <div className="grid grid-cols-[1fr_auto] items-end gap-2">
-                  <OccupationComboBox />
+                  <OccupationComboBox name={name} />
                   <IconButton
                     className="h-10 w-10"
                     label={t(['common', 'form', 'remove'])}
@@ -279,12 +283,28 @@ function OccupationsFormFields(): JSX.Element {
   );
 }
 
-function OccupationComboBox(): JSX.Element {
-  const name = 'occupations.0';
+interface OccupationComboBoxProps {
+  name: string;
+}
+
+function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
+  const { name } = props;
 
   const { t } = useI18n<'common'>();
   const field = useField(name);
   const id = useId();
+
+  const selected = field.input.value;
+  /**
+   *
+   * Currently, the api returns full objects, so we need to populate the field with
+   * full objects as well. Ideally, we only save the vocabulary entry id, and
+   * look up a label from vocabularies in the store where needed.
+   *
+   * @see https://github.com/InTaVia/InTaVia-Backend/issues/131
+   */
+
+  const value = selected.id;
 
   const label = t(['common', 'entity', 'occupation', 'one']);
   const placeholder = t(['common', 'entity', 'select-occupations']);
@@ -296,23 +316,11 @@ function OccupationComboBox(): JSX.Element {
     const occupations = keyBy(data?.results ?? [], (item) => {
       return item.id;
     });
-    const selected = field.input.value;
-    if (selected != null && typeof selected === 'object') {
+    if (selected != null && selected.id != null) {
       occupations[selected.id] = selected;
     }
     return occupations;
-  }, [data, field.input.value]);
-
-  /**
-   *
-   * Currently, the api returns full objects, so we need to populate the field with
-   * full objects as well. Ideally, we only save the vocabulary entry id, and
-   * look up a label from vocabularies in the store where needed.
-   *
-   * @see https://github.com/InTaVia/InTaVia-Backend/issues/131
-   */
-
-  const value = field.input.value.id;
+  }, [data, selected]);
 
   function onValueChange(id: string) {
     const occupation = occupations[id];
@@ -339,10 +347,14 @@ function OccupationComboBox(): JSX.Element {
           onChange={onInputChange}
           placeholder={placeholder}
         />
-        <ComboBoxContent className={cn(isFetching && 'opacity-50 grayscale')}>
+        <ComboBoxContent>
           {Object.values(occupations).map((occupation) => {
             return (
-              <ComboBoxItem key={occupation.id} value={occupation.id}>
+              <ComboBoxItem
+                key={occupation.id}
+                className={cn(isFetching && 'opacity-50 grayscale')}
+                value={occupation.id}
+              >
                 {getTranslatedLabel(occupation.label)}
               </ComboBoxItem>
             );
@@ -364,7 +376,7 @@ function RelationsFormFields(): JSX.Element {
   const label = t(['common', 'entity', 'relation', 'other']);
 
   function onAdd() {
-    fieldArray.fields.push(undefined);
+    fieldArray.fields.push({ event: undefined, role: undefined });
   }
 
   return (
@@ -423,6 +435,11 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
+  const { data: selected } = useGetRelationRoleByIdQuery(
+    { id: field.input.value },
+    { skip: !isNonEmptyString(field.input.value) },
+  );
+
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
   const { data, isLoading, isFetching } = useSearchRelationRolesQuery({ q });
@@ -430,12 +447,11 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
     const roles = keyBy(data?.results ?? [], (role) => {
       return role.id;
     });
-    const selected = field.input.value;
-    if (selected != null && typeof selected === 'object') {
+    if (selected != null) {
       roles[selected.id] = selected;
     }
     return roles;
-  }, [data, field.input.value]);
+  }, [data, selected]);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.currentTarget.value);
@@ -457,10 +473,14 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
           onChange={onInputChange}
           placeholder="Select role"
         />
-        <ComboBoxContent className={cn(isFetching && 'opacity-50 grayscale')}>
+        <ComboBoxContent>
           {Object.values(roles).map((role) => {
             return (
-              <ComboBoxItem key={role.id} value={role.id}>
+              <ComboBoxItem
+                key={role.id}
+                value={role.id}
+                className={cn(isFetching && 'opacity-50 grayscale')}
+              >
                 {getTranslatedLabel(role.label)}
               </ComboBoxItem>
             );
@@ -482,6 +502,11 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
+  const { data: selected } = useGetEventByIdQuery(
+    { id: field.input.value },
+    { skip: !isNonEmptyString(field.input.value) },
+  );
+
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
   const { data, isLoading, isFetching } = useSearchEventsQuery({ q });
@@ -489,12 +514,11 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
     const events = keyBy(data?.results ?? [], (event) => {
       return event.id;
     });
-    const selected = field.input.value;
-    if (selected != null && typeof selected === 'object') {
+    if (selected != null) {
       events[selected.id] = selected;
     }
     return events;
-  }, [data, field.input.value]);
+  }, [data, selected]);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.currentTarget.value);
@@ -516,10 +540,14 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
           onChange={onInputChange}
           placeholder="Select event"
         />
-        <ComboBoxContent className={cn(isFetching && 'opacity-50 grayscale')}>
+        <ComboBoxContent>
           {Object.values(events).map((event) => {
             return (
-              <ComboBoxItem key={event.id} value={event.id}>
+              <ComboBoxItem
+                key={event.id}
+                value={event.id}
+                className={cn(isFetching && 'opacity-50 grayscale')}
+              >
                 {getTranslatedLabel(event.label)}
               </ComboBoxItem>
             );
