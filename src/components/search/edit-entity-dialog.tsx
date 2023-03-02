@@ -22,7 +22,7 @@ import {
   Textarea,
 } from '@intavia/ui';
 import { keyBy } from '@stefanprobst/key-by';
-import { Fragment, useId, useMemo, useState } from 'react';
+import { ChangeEvent, Fragment, useId, useMemo, useState } from 'react';
 import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
 
@@ -37,6 +37,7 @@ import { addLocalEntity } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { useDebouncedValue } from '@/lib/use-debounced-value';
 
 interface EditEntityDialogProps<T extends Entity> {
   entity: T;
@@ -217,7 +218,9 @@ function OccupationsComboBox(): JSX.Element {
   const label = t(['common', 'entity', 'occupation', 'other']);
   const placeholder = t(['common', 'entity', 'select-occupations']);
 
-  const { data, isLoading } = useSearchOccupationsQuery({ limit: 10 });
+  const [searchTerm, setSearchTerm] = useState('');
+  const q = useDebouncedValue(searchTerm.trim());
+  const { data, isLoading } = useSearchOccupationsQuery({ q });
   const occupations = useMemo(() => {
     const occupations = keyBy(data?.results ?? [], (item) => {
       return item.id;
@@ -245,11 +248,15 @@ function OccupationsComboBox(): JSX.Element {
     field.input.onChange(occupation);
   }
 
+  function onInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
   return (
     <FormField>
       <Label htmlFor={id}>{label}</Label>
-      <ComboBox disabled={isLoading} {...field.input} value={value} onValueChange={onValueChange}>
-        <ComboBoxInput id={id} placeholder={placeholder} />
+      <ComboBox disabled={isLoading} onValueChange={onValueChange} value={value}>
+        <ComboBoxInput id={id} onChange={onInputChange} placeholder={placeholder} />
         <ComboBoxContent>
           {Object.values(occupations).map((occupation) => {
             return (
@@ -310,7 +317,9 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
-  const { data } = useSearchRelationRolesQuery({ limit: 1000 });
+  const [searchTerm, setSearchTerm] = useState('');
+  const q = useDebouncedValue(searchTerm.trim());
+  const { data } = useSearchRelationRolesQuery({ q });
   const roles = useMemo(() => {
     const roles = keyBy(data?.results ?? [], (role) => {
       return role.id;
@@ -322,11 +331,15 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
     return roles;
   }, [data, field.input.value]);
 
+  function onInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
   return (
     <FormField>
       <Label htmlFor={id}>Role</Label>
-      <ComboBox {...field.input} onValueChange={field.input.onChange}>
-        <ComboBoxInput id={id} placeholder="Select role" />
+      <ComboBox onValueChange={field.input.onChange} value={field.input.value}>
+        <ComboBoxInput id={id} onChange={onInputChange} placeholder="Select role" />
         <ComboBoxContent>
           {Object.values(roles).map((role) => {
             return (
@@ -351,8 +364,9 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
-  const [searchTerm] = useState('');
-  const { data } = useSearchEventsQuery({ q: searchTerm });
+  const [searchTerm, setSearchTerm] = useState('');
+  const q = useDebouncedValue(searchTerm.trim());
+  const { data } = useSearchEventsQuery({ q });
   const events = useMemo(() => {
     const events = keyBy(data?.results ?? [], (event) => {
       return event.id;
@@ -364,11 +378,15 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
     return events;
   }, [data, field.input.value]);
 
+  function onInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
   return (
     <FormField>
       <Label htmlFor={id}>Event</Label>
-      <ComboBox {...field.input} onValueChange={field.input.onChange}>
-        <ComboBoxInput id={id} placeholder="Select event" />
+      <ComboBox onValueChange={field.input.onChange} value={field.input.value}>
+        <ComboBoxInput id={id} onChange={onInputChange} placeholder="Select event" />
         <ComboBoxContent>
           {Object.values(events).map((event) => {
             return (
