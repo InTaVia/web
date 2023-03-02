@@ -46,7 +46,7 @@ export function Network(props: NetworkProps): JSX.Element {
       simulation.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nodes, links, width, height]);
+  }, [width, height]);
 
   useEffect(() => {
     // Zoom
