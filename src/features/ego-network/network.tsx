@@ -86,6 +86,8 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const colors = getEntityColorByKind(entity.kind);
+
   const width = 15;
   const height = 15;
 
@@ -94,9 +96,15 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
     return (
       <circle
         r={width / 2}
-        fill={getEntityColorByKind(entity.kind)}
-        stroke="white"
+        fill={isHovered ? colors.foreground : colors.background}
+        stroke={isHovered ? colors.background : 'white'}
         strokeWidth={1.5}
+        onMouseEnter={() => {
+          return setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          return setIsHovered(false);
+        }}
       />
     );
   }
@@ -109,9 +117,15 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
         y={-height / 2}
         width={width}
         height={height}
-        fill={getEntityColorByKind(entity.kind)}
-        stroke="white"
+        fill={isHovered ? colors.foreground : colors.background}
+        stroke={isHovered ? colors.background : 'white'}
         strokeWidth={1.5}
+        onMouseEnter={() => {
+          return setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          return setIsHovered(false);
+        }}
       />
     );
   }
@@ -121,10 +135,16 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
     const p = `${-width / 2},${height / 2} ${width / 2},${height / 2} 0,${-height / 2}`;
     return (
       <polygon
-        fill={getEntityColorByKind(entity.kind)}
+        fill={isHovered ? colors.foreground : colors.background}
         points={p}
-        stroke="white"
+        stroke={isHovered ? colors.background : 'white'}
         strokeWidth={1.5}
+        onMouseEnter={() => {
+          return setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          return setIsHovered(false);
+        }}
       />
     );
   }
@@ -137,9 +157,15 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
       <ellipse
         rx={rx}
         ry={ry}
-        fill={getEntityColorByKind(entity.kind)}
-        stroke="white"
+        fill={isHovered ? colors.foreground : colors.background}
+        stroke={isHovered ? colors.background : 'white'}
         strokeWidth={1.5}
+        onMouseEnter={() => {
+          return setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          return setIsHovered(false);
+        }}
       />
     );
   }
@@ -149,10 +175,16 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
     const p = `${-width / 2},0 0,${height / 2} ${width / 2},0 0,${-height / 2}`;
     return (
       <polygon
-        fill={getEntityColorByKind(entity.kind)}
+        fill={isHovered ? colors.foreground : colors.background}
         points={p}
-        stroke="white"
+        stroke={isHovered ? colors.background : 'white'}
         strokeWidth={1.5}
+        onMouseEnter={() => {
+          return setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          return setIsHovered(false);
+        }}
       />
     );
   }
@@ -173,16 +205,7 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
   }
 
   return (
-    <g
-      transform={`translate(${x}, ${y})`}
-      className="network-node"
-      onMouseEnter={() => {
-        return setIsHovered(true);
-      }}
-      onMouseLeave={() => {
-        return setIsHovered(false);
-      }}
-    >
+    <g transform={`translate(${x}, ${y})`} className="network-node">
       {renderNode()}
       {(showAllLabels || isPrimary || isHovered) && (
         <text x={0} y={height + 12} textAnchor="middle" fill="black">
