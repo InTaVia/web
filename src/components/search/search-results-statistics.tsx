@@ -68,6 +68,7 @@ export function BarChart(props: BarChartProps): JSX.Element | null {
   const [containerElement, setContainerElement] = useElementRef();
   const dimensions = useVisualisationDimensions({
     element: containerElement,
+    dimensions: { marginLeft: 64 },
   });
   const xAxisRef = useRef<SVGGElement>(null);
   const yAxisRef = useRef<SVGGElement>(null);
