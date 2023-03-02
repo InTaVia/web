@@ -6,7 +6,7 @@ import type { Collection } from '@/app/store/intavia-collections.slice';
 
 interface CollectionContextValue {
   currentCollection: Collection['id'] | null;
-  setCurrentCollection: (id: Collection['id']) => void;
+  setCurrentCollection: (id: Collection['id'] | null) => void;
 }
 
 const CollectionContext = createContext<CollectionContextValue | null>(null);

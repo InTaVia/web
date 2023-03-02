@@ -17,13 +17,10 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { service as intaviaApiService } from '@/api/intavia.service';
-import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
 import { visualizationSlice } from '@/features/common/visualization.slice';
-import searchHistoryReducer from '@/features/entities/search-history.slice';
-import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
 import { contentPaneSlice } from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
 import { storyCreatorSlice } from '@/features/storycreator/storycreator.slice';
@@ -53,9 +50,6 @@ const rootReducer = combineReducers({
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
-  notifications: notificationsReducer,
-  searchHistory: searchHistoryReducer,
-  searchResultsSelection: searchResultsSelectionReducer,
   [storyCreatorSlice.name]: storyCreatorSlice.reducer,
   timeline: timelineReducer, // deprecated ?
   ui: uiReducer, // deprecated ?
@@ -73,8 +67,6 @@ export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
       return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [
-            /** Ignore JSX element allowed as notification action button. */
-            String(addNotification),
             /** Ignore `Date` objects. */
             String(setTimeRangeBrush),
             /** `redux-persist` */

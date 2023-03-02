@@ -18,7 +18,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { createEmotionCache } from '@/app/create-emotion-cache';
 import { useAppMetadata } from '@/app/metadata/use-app-metadata';
-import { Notifications } from '@/app/notifications/notifications';
 import { RootErrorBoundaryFallback } from '@/app/root-error-boundary-fallback';
 import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-urls';
 import { useCanonicalUrl } from '@/app/route/use-canonical-url';
@@ -99,7 +98,6 @@ export default function App(props: AppProps): JSX.Element {
                   <SetupStore></SetupStore>
                 </ErrorBoundary>
               </PersistGate>
-              <Notifications />
             </ThemeProvider>
           </CacheProvider>
         </I18nProvider>

@@ -8,6 +8,7 @@ import {
   Input,
   Label,
 } from '@intavia/ui';
+import { useId } from 'react';
 import { useField } from 'react-final-form';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -67,8 +68,8 @@ function CollectionNameTextField(): JSX.Element {
 
   const { t } = useI18n<'common'>();
   const field = useField(name);
+  const id = useId();
 
-  const id = name;
   const label = t(['common', 'collections', 'collection-name']);
 
   return (

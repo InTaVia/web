@@ -2,6 +2,7 @@ import type { HistoricalEvent } from '@intavia/api-client';
 
 import { NetworkComponent } from '@/features/ego-network/network-component';
 import { EntityAlternativeLabels } from '@/features/entities/entity-alternative-labels';
+import { EntityDescription } from '@/features/entities/entity-description';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
 import { EntityTitle } from '@/features/entities/entity-title';
@@ -25,6 +26,7 @@ export function HistoricalEventDetails(props: HistoricalEventDetailsProps): JSX.
       <EntityTitle kind={historicalEvent.kind} label={historicalEvent.label} />
       <EntityAlternativeLabels labels={alternativeLabels} />
       <EntityLinkedIds links={historicalEvent.linkedIds} />
+      <EntityDescription description={historicalEvent.description} />
       {hasRelations ? <EntityRelations relations={historicalEvent.relations} /> : null}
       {hasRelations ? (
         <NetworkComponent
