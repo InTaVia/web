@@ -1,4 +1,5 @@
 import type { InternationalizedLabel } from '@intavia/api-client';
+
 import type { Locale } from '~/config/i18n.config';
 import { defaultLocale } from '~/config/i18n.config';
 

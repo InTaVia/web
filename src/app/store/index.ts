@@ -17,20 +17,17 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { service as intaviaApiService } from '@/api/intavia.service';
-import notificationsReducer, { addNotification } from '@/app/notifications/notifications.slice';
 import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
-import visualizationReducer from '@/features/common/visualization.slice';
-import searchHistoryReducer from '@/features/entities/search-history.slice';
-import searchResultsSelectionReducer from '@/features/entities/search-results-selection.slice';
-import contentPaneReducer from '@/features/storycreator/contentPane.slice';
+import { visualizationSlice } from '@/features/common/visualization.slice';
+import { contentPaneSlice } from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
-import storycreatorReducer from '@/features/storycreator/storycreator.slice';
+import { storyCreatorSlice } from '@/features/storycreator/storycreator.slice';
 import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
 import { slice as visualQueryingSlice } from '@/features/visual-querying/visualQuerying.slice';
-import workspacesReducer from '@/features/visualization-layouts/workspaces.slice';
+import { workspacesSlice } from '@/features/visualization-layouts/workspaces.slice';
 
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
@@ -39,6 +36,10 @@ const persistConfig: PersistConfig<RootState> = {
   whitelist: [
     intaviaCollectionsSlice.name /** Collections. */,
     intaviaDataSlice.name /** Entities, events. */,
+    workspacesSlice.name,
+    storyCreatorSlice.name,
+    visualizationSlice.name,
+    contentPaneSlice.name,
   ],
 };
 
@@ -49,15 +50,12 @@ const rootReducer = combineReducers({
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
-  notifications: notificationsReducer,
-  searchHistory: searchHistoryReducer,
-  searchResultsSelection: searchResultsSelectionReducer,
-  storycreator: storycreatorReducer,
-  timeline: timelineReducer,
-  ui: uiReducer,
-  visualization: visualizationReducer,
-  contentPane: contentPaneReducer,
-  workspaces: workspacesReducer,
+  [storyCreatorSlice.name]: storyCreatorSlice.reducer,
+  timeline: timelineReducer, // deprecated ?
+  ui: uiReducer, // deprecated ?
+  [visualizationSlice.name]: visualizationSlice.reducer,
+  [contentPaneSlice.name]: contentPaneSlice.reducer,
+  [workspacesSlice.name]: workspacesSlice.reducer,
 });
 
 const persistedRootReducer = persistReducer(persistConfig, rootReducer);
@@ -69,8 +67,6 @@ export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
       return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [
-            /** Ignore JSX element allowed as notification action button. */
-            String(addNotification),
             /** Ignore `Date` objects. */
             String(setTimeRangeBrush),
             /** `redux-persist` */

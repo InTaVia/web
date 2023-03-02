@@ -9,7 +9,7 @@ import { useAllSearchResults } from '@/components/search/use-all-search-results'
 
 export function SearchResultsToolbar(): JSX.Element {
   return (
-    <div className="flex justify-between gap-2 border-b border-neutral-200 px-8 py-4">
+    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-4 lg:flex-row">
       <SaveQueryAsCollectionButton />
       <AddQueryToCollectionButton />
     </div>
@@ -44,7 +44,7 @@ function AddQueryToCollectionButton(): JSX.Element {
 
     const { dismiss } = toast({
       title: 'Fetching entities',
-      description: 'Retrieving search results for current query',
+      description: 'Retrieving search results for current query...',
     });
     const { entities } = await getSearchResults();
     dismiss();

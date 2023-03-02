@@ -8,6 +8,7 @@ export interface Node {
   entity: Entity;
   x: number;
   y: number;
+  isPrimary: boolean;
 }
 
 export interface Link {
@@ -20,7 +21,6 @@ export interface Link {
 
 interface NetworkComponentProps {
   visualization: Visualization;
-  // entity: Entity
   width: number;
   height: number;
 }
@@ -42,6 +42,7 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
       links={links}
       width={width}
       height={height}
+      visProperties={visualization.properties}
     />
   );
 }

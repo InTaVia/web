@@ -49,7 +49,9 @@ export function SearchForm(): JSX.Element {
 
         <Button type="submit">{t(['common', 'search', 'search'])}</Button>
 
-        <Button onClick={onOpenVisualQueryDialog}>Create visual query</Button>
+        <Button onClick={onOpenVisualQueryDialog}>
+          {t(['common', 'search', 'adjust-search-filters'])}
+        </Button>
       </div>
     </form>
   );

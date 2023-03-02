@@ -62,6 +62,7 @@ export const dictionary: Dictionary = {
       place: { one: 'Place', other: 'Places' },
     },
     label: 'Label',
+    description: 'Description',
     gender: { one: 'Gender', other: 'Genders' },
     occupation: { one: 'Occupation', other: 'Occupations' },
     location: { one: 'Location', other: 'Locations' },
@@ -69,6 +70,9 @@ export const dictionary: Dictionary = {
     'missing-entity': 'Missing entity',
     'select-gender': 'Select gender',
     'select-occupations': 'Select occupations',
+    role: { one: 'Role', other: 'Roles' },
+    event: { one: 'Event', other: 'Events' },
+    relation: { one: 'Relation', other: 'Relations' },
   },
   geomap: {
     metadata: {
@@ -122,6 +126,7 @@ export const dictionary: Dictionary = {
     'show-details': 'Show details',
     'edit-item': 'Edit item',
     'add-to-collection': 'Add to collection',
+    'adjust-search-filters': 'Adjust search filters',
   },
   stories: {
     metadata: {
@@ -149,5 +154,7 @@ export const dictionary: Dictionary = {
     save: 'Save',
     cancel: 'Cancel',
     submit: 'Submit',
+    remove: 'Remove',
+    add: 'Add',
   },
 };

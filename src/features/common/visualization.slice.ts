@@ -31,7 +31,7 @@ const defaultMapState = {
   },
 };
 
-const visualizationSlice = createSlice({
+export const visualizationSlice = createSlice({
   name: 'visualization',
   initialState,
   reducers: {
@@ -272,6 +272,14 @@ const visualizationSlice = createSlice({
                 label: 'Name',
                 editable: true,
                 sort: 1,
+              },
+              showAllLabels: {
+                type: 'boolean',
+                id: 'showAllLabels',
+                value: false,
+                label: 'Show all labels',
+                editable: true,
+                sort: 2,
               },
             },
             entityIds: [],

@@ -53,6 +53,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       entity: entity,
       x: 0,
       y: 0,
+      isPrimary: ids.includes(entity.id),
     });
   });
 
