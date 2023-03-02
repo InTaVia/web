@@ -60,6 +60,9 @@ export interface Dictionary {
     'missing-entity': string;
     'select-gender': string;
     'select-occupations': string;
+    role: Plurals;
+    event: Plurals;
+    relation: Plurals;
   };
   geomap: {
     metadata: {
@@ -113,6 +116,7 @@ export interface Dictionary {
     'show-details': string;
     'edit-item': string;
     'add-to-collection': string;
+    'adjust-search-filters': string;
   };
   stories: {
     metadata: {
@@ -140,5 +144,7 @@ export interface Dictionary {
     save: string;
     cancel: string;
     submit: string;
+    remove: string;
+    add: string;
   };
 }
