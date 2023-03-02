@@ -1,3 +1,4 @@
+import type { Event } from '@intavia/api-client';
 import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } from 'd3-force';
 import { select } from 'd3-selection';
 import { zoom, zoomIdentity } from 'd3-zoom';
@@ -174,11 +175,53 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
 }
 
 function LinkView(props: Link): JSX.Element {
-  const { source, target } = props;
+  const { source, target, roles } = props;
+
+  const { hovered, updateHover } = useHoverState();
+
+  const hoveredEvents = new Array<Event>();
+  hovered?.events.forEach((id) => {
+    roles.forEach((event) => {
+      if (event.id === id) hoveredEvents.push(event);
+    });
+  });
+
+  // const labelX =
+  //   Math.min(source.x, target.x) + (Math.max(source.x, target.x) - Math.min(source.x, target.x));
+  // const labelY =
+  //   Math.min(source.y, target.y) + (Math.max(source.y, target.y) - Math.min(source.y, target.y));
 
   return (
     <g>
-      <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} stroke="lightgray" />
+      <line
+        x1={source.x}
+        y1={source.y}
+        x2={target.x}
+        y2={target.y}
+        stroke={hoveredEvents.length > 0 ? 'gray' : 'lightgray'}
+        cursor={'pointer'}
+        onMouseEnter={(e) => {
+          updateHover({
+            entities: [],
+            events: roles.map((event) => {
+              return event.id;
+            }),
+            clientRect: e.currentTarget.getBoundingClientRect(),
+          });
+        }}
+        onMouseLeave={() => {
+          updateHover(null);
+        }}
+      />
+      {/* {hoveredEvents.length > 0 && (
+        <text x={labelX} y={labelY} textAnchor="middle" fill="black">
+          {hoveredEvents
+            .map((event) => {
+              return event.label.default;
+            })
+            .toString()}
+        </text>
+      )} */}
     </g>
   );
 }

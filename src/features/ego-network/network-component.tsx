@@ -1,4 +1,4 @@
-import type { Entity } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
 
 import type { Visualization } from '@/features/common/visualization.slice';
 import { Network } from '@/features/ego-network/network';
@@ -14,9 +14,7 @@ export interface Node {
 export interface Link {
   source: Node;
   target: Node;
-  // FIXME: roles should be of type EntityRelationRole
-  // roles: Array<EntityRelationRole>;
-  roles: Array<string>;
+  roles: Array<Event>;
 }
 
 interface NetworkComponentProps {
