@@ -1,8 +1,10 @@
 import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } from 'd3-force';
 import { select } from 'd3-selection';
 import { zoom, zoomIdentity } from 'd3-zoom';
+import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
@@ -30,8 +32,8 @@ export function Network(props: NetworkProps): JSX.Element {
   useEffect(() => {
     // Force simulation
     const simulation = forceSimulation(animatedNodes)
-      .force('charge', forceManyBody().strength(-500))
-      .force('link', forceLink(animatedLinks).distance(100).strength(1))
+      .force('charge', forceManyBody().strength(-200))
+      .force('link', forceLink(animatedLinks).distance(100))
       .force('collide', forceCollide(20))
       .force('center', forceCenter(width / 2, height / 2));
 
@@ -84,109 +86,58 @@ export function Network(props: NetworkProps): JSX.Element {
 function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
   const { entity, x, y, isPrimary, showAllLabels } = props;
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const colors = getEntityColorByKind(entity.kind);
+  const { hovered, updateHover } = useHoverState();
+  const isHovered = hovered?.entities.includes(entity.id) ?? false;
 
   const width = 15;
   const height = 15;
+  const colors = getEntityColorByKind(entity.kind);
+
+  const nodeProps = {
+    fill: isHovered ? colors.foreground : colors.background,
+    stroke: isHovered ? colors.background : 'white',
+    strokeWidth: 1.5,
+    onMouseEnter: (
+      e: MouseEvent<SVGCircleElement | SVGEllipseElement | SVGPolygonElement | SVGRectElement>,
+    ) => {
+      updateHover({
+        entities: [entity.id],
+        events: [],
+        clientRect: e.currentTarget.getBoundingClientRect(),
+      });
+    },
+    onMouseLeave: () => {
+      updateHover(null);
+    },
+  };
 
   function renderPersonNode(): JSX.Element {
     // Draw circle with center at origin
-    return (
-      <circle
-        r={width / 2}
-        fill={isHovered ? colors.foreground : colors.background}
-        stroke={isHovered ? colors.background : 'white'}
-        strokeWidth={1.5}
-        onMouseEnter={() => {
-          return setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          return setIsHovered(false);
-        }}
-      />
-    );
+    return <circle r={width / 2} {...nodeProps} />;
   }
 
   function renderObjectNode(): JSX.Element {
     // Draw square with center at origin
-    return (
-      <rect
-        x={-width / 2}
-        y={-height / 2}
-        width={width}
-        height={height}
-        fill={isHovered ? colors.foreground : colors.background}
-        stroke={isHovered ? colors.background : 'white'}
-        strokeWidth={1.5}
-        onMouseEnter={() => {
-          return setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          return setIsHovered(false);
-        }}
-      />
-    );
+    return <rect x={-width / 2} y={-height / 2} width={width} height={height} {...nodeProps} />;
   }
 
   function renderPlaceNode(): JSX.Element {
     // Draw triangle with center at origin
     const p = `${-width / 2},${height / 2} ${width / 2},${height / 2} 0,${-height / 2}`;
-    return (
-      <polygon
-        fill={isHovered ? colors.foreground : colors.background}
-        points={p}
-        stroke={isHovered ? colors.background : 'white'}
-        strokeWidth={1.5}
-        onMouseEnter={() => {
-          return setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          return setIsHovered(false);
-        }}
-      />
-    );
+    return <polygon points={p} {...nodeProps} />;
   }
 
   function renderGroupNode(): JSX.Element {
     // Draw ellipse with center at origin
     const rx = width * (5 / 7);
     const ry = height / 2;
-    return (
-      <ellipse
-        rx={rx}
-        ry={ry}
-        fill={isHovered ? colors.foreground : colors.background}
-        stroke={isHovered ? colors.background : 'white'}
-        strokeWidth={1.5}
-        onMouseEnter={() => {
-          return setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          return setIsHovered(false);
-        }}
-      />
-    );
+    return <ellipse rx={rx} ry={ry} {...nodeProps} />;
   }
 
   function renderEventNode(): JSX.Element {
     // Draw rhombus wijth center at origin
     const p = `${-width / 2},0 0,${height / 2} ${width / 2},0 0,${-height / 2}`;
-    return (
-      <polygon
-        fill={isHovered ? colors.foreground : colors.background}
-        points={p}
-        stroke={isHovered ? colors.background : 'white'}
-        strokeWidth={1.5}
-        onMouseEnter={() => {
-          return setIsHovered(true);
-        }}
-        onMouseLeave={() => {
-          return setIsHovered(false);
-        }}
-      />
-    );
+    return <polygon points={p} {...nodeProps} />;
   }
 
   function renderNode(): JSX.Element {
