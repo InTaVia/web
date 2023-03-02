@@ -69,7 +69,13 @@ export function Network(props: NetworkProps): JSX.Element {
 
   return (
     <div style={{ width: `${width}px`, height: `${height}px` }}>
-      <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} ref={svgRef}>
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        width={width}
+        height={height}
+        ref={svgRef}
+        cursor="grab"
+      >
         {animatedLinks.map((link) => {
           return <LinkView {...link} key={`${link.source.entity.id}-${link.target.entity.id}`} />;
         })}
@@ -92,11 +98,11 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
   const width = 15;
   const height = 15;
   const colors = getEntityColorByKind(entity.kind);
-
   const nodeProps = {
     fill: isHovered ? colors.foreground : colors.background,
     stroke: isHovered ? colors.background : 'white',
     strokeWidth: 1.5,
+    cursor: 'pointer',
     onMouseEnter: (
       e: MouseEvent<SVGCircleElement | SVGEllipseElement | SVGPolygonElement | SVGRectElement>,
     ) => {
