@@ -80,7 +80,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       });
       if (existingLink) {
         // Update existing link with additional role
-        existingLink.roles.push(relation.role);
+        if (!existingLink.roles.includes(event)) existingLink.roles.push(event);
       } else {
         // Create new link
         const sourceNode = nodes.find((node) => {
@@ -96,7 +96,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
         links.push({
           source: sourceNode,
           target: targetNode,
-          roles: [relation.role],
+          roles: [event],
         });
       }
     });
