@@ -38,8 +38,8 @@ import {
   useSearchRelationRolesQuery,
 } from '@/api/intavia.service';
 import { useI18n } from '@/app/i18n/use-i18n';
-import { useAppDispatch } from '@/app/store';
-import { addLocalEntity } from '@/app/store/intavia.slice';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { addLocalEntity, selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
@@ -359,7 +359,11 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
               </ComboBoxItem>
             );
           })}
-          {data?.results.length === 0 ? <ComboBoxEmpty>Nothing found</ComboBoxEmpty> : null}
+          {data?.results.length === 0 ? (
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+              Nothing found
+            </ComboBoxEmpty>
+          ) : null}
         </ComboBoxContent>
       </ComboBox>
     </FormField>
@@ -435,10 +439,15 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
-  const { data: selected } = useGetRelationRoleByIdQuery(
+  const hasSelection = isNonEmptyString(field.input.value);
+  const storedRoles = useAppSelector(selectVocabularyEntries);
+  const selectedRoleFromStore = hasSelection ? storedRoles[field.input.value] : undefined;
+  const { data: selectedRoleFrombackend } = useGetRelationRoleByIdQuery(
     { id: field.input.value },
-    { skip: !isNonEmptyString(field.input.value) },
+    { skip: !hasSelection || selectedRoleFromStore != null },
   );
+  const selected = selectedRoleFromStore ?? selectedRoleFrombackend;
+  console.log({ selectedRoleFromStore, selectedRoleFrombackend });
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -485,7 +494,11 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
               </ComboBoxItem>
             );
           })}
-          {data?.results.length === 0 ? <ComboBoxEmpty>Nothing found</ComboBoxEmpty> : null}
+          {data?.results.length === 0 ? (
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+              Nothing found
+            </ComboBoxEmpty>
+          ) : null}
         </ComboBoxContent>
       </ComboBox>
     </FormField>
@@ -502,10 +515,15 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   const field = useField(name);
   const id = useId();
 
-  const { data: selected } = useGetEventByIdQuery(
+  const hasSelection = isNonEmptyString(field.input.value);
+  const storedEvents = useAppSelector(selectEvents);
+  const selectedEventFromStore = hasSelection ? storedEvents[field.input.value] : undefined;
+  const { data: selectedEventFromBackend } = useGetEventByIdQuery(
     { id: field.input.value },
-    { skip: !isNonEmptyString(field.input.value) },
+    { skip: !hasSelection || selectedEventFromStore != null },
   );
+  const selected = selectedEventFromStore ?? selectedEventFromBackend;
+  console.log({ selectedEventFromStore, selectedEventFromBackend });
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -552,7 +570,11 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
               </ComboBoxItem>
             );
           })}
-          {data?.results.length === 0 ? <ComboBoxEmpty>Nothing found</ComboBoxEmpty> : null}
+          {data?.results.length === 0 ? (
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+              Nothing found
+            </ComboBoxEmpty>
+          ) : null}
         </ComboBoxContent>
       </ComboBox>
     </FormField>
