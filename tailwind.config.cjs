@@ -85,9 +85,6 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
-      screens: {
-        'vq-min': [{ raw: '(max-width: 1550px)' }, { raw: '(max-height: 980px)' }],
-      },
     },
   },
 };

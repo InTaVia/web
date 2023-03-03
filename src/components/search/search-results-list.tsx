@@ -9,7 +9,7 @@ export function SearchResultsList(): JSX.Element {
   const searchResults = useSearchEntitiesResults();
   const entities = searchResults.data?.results ?? [];
 
-  if (entities.length === 0) {
+  if (!searchResults.isFetching && entities.length === 0) {
     return (
       <div className="grid place-items-center">
         <NothingFoundMessage />

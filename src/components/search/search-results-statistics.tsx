@@ -1,5 +1,4 @@
 import type { Bin } from '@intavia/api-client';
-import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger } from '@intavia/ui';
 import { axisBottom, axisLeft, select } from 'd3';
 import { scaleLinear } from 'd3-scale';
 import { useEffect, useRef } from 'react';
@@ -23,38 +22,29 @@ export function SearchResultsStatistics(): JSX.Element {
     return query.isFetching;
   });
 
+  if (isFetching) {
+    return (
+      <div className="grid place-items-center py-8">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
   return (
-    <div className="grid max-h-96 overflow-auto">
-      <aside className="mx-auto grid w-full max-w-7xl px-8 py-4">
-        <Collapsible className="grid gap-4">
-          <CollapsibleTrigger asChild>
-            <Button variant="outline">Show search results statistics</Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            {isFetching ? (
-              <div className="grid place-items-center py-8">
-                <LoadingIndicator />
-              </div>
-            ) : (
-              <dl className="grid h-64 min-w-0 grid-cols-2 overflow-hidden">
-                <div className="relative grid min-w-0">
-                  <dt className="text-xs font-medium uppercase tracking-wider">Birth</dt>
-                  <dd className="absolute inset-0 h-full w-full">
-                    <BarChart data={birthStatisticsQuery.data?.bins ?? []} />
-                  </dd>
-                </div>
-                <div className="relative grid min-w-0">
-                  <dt className="text-xs font-medium uppercase tracking-wider">Death</dt>
-                  <dd className="absolute inset-0 h-full w-full">
-                    <BarChart data={deathStatisticsQuery.data?.bins ?? []} />
-                  </dd>
-                </div>
-              </dl>
-            )}
-          </CollapsibleContent>
-        </Collapsible>
-      </aside>
-    </div>
+    <dl className="grid h-full min-w-0 grid-cols-2 overflow-hidden">
+      <div className="relative grid min-w-0">
+        <dt className="text-xs font-medium uppercase tracking-wider">Birth</dt>
+        <dd className="absolute inset-0 h-full w-full">
+          <BarChart data={birthStatisticsQuery.data?.bins ?? []} />
+        </dd>
+      </div>
+      <div className="relative grid min-w-0">
+        <dt className="text-xs font-medium uppercase tracking-wider">Death</dt>
+        <dd className="absolute inset-0 h-full w-full">
+          <BarChart data={deathStatisticsQuery.data?.bins ?? []} />
+        </dd>
+      </div>
+    </dl>
   );
 }
 

@@ -35,7 +35,7 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
         height={iconSize}
         x={origin.x(0) - iconSize / 2}
         y={origin.y(0) - iconSize / 2}
-        color="#A1A1A1"
+        color="#a1a1a1"
       />
 
       {ringDims.map(({ startAngle, endAngle, constraintKindId }, idx) => {

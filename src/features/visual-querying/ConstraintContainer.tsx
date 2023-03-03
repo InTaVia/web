@@ -1,7 +1,8 @@
 import { TrashIcon } from '@heroicons/react/outline';
+import { IconButton } from '@intavia/ui';
+import { Fragment } from 'react';
 
 import { useAppDispatch } from '@/app/store';
-import Button from '@/features/ui/Button';
 import type {
   Constraint,
   PersonBirthDateConstraint,
@@ -43,7 +44,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
       case 'date-range':
         if (constraint.value !== null) {
           return (
-            <>
+            <Fragment>
               <p className="text-base text-intavia-brand-700">
                 {new Date(constraint.value[0]).getFullYear()}
               </p>
@@ -51,7 +52,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
               <p className="text-base text-intavia-brand-700">
                 {new Date(constraint.value[1]).getFullYear()}
               </p>
-            </>
+            </Fragment>
           );
         }
         return <></>;
@@ -62,21 +63,21 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
 
   return (
     <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
-      <div className="h-content justify-left flex flex-row items-center gap-2">
+      <div className="flex h-min flex-row items-center justify-start gap-2">
         <p className="ml-3 mr-4 text-lg">{constraint.label.default}</p>
         {renderTypeSpecificHeader()}
       </div>
 
-      <Button
-        round="circle"
-        size="small"
+      <IconButton
+        size="sm"
         className="mr-3"
-        color="warning"
+        variant="destructive"
         onClick={confirmDeleteConstraint}
         disabled={constraint.value === null || constraint.value === ''}
+        label="Clear constraint"
       >
         <TrashIcon className="h-5 w-5" />
-      </Button>
+      </IconButton>
     </div>
   );
 }
@@ -116,7 +117,7 @@ export function ConstraintContainer(props: ConstraintContainerProps): JSX.Elemen
 
   return (
     <div
-      className="absolute overflow-clip rounded-md border bg-white"
+      className="absolute text-clip rounded-md border bg-white"
       style={{ left: position.x, top: position.y }}
     >
       <ConstraintContainerHeader
