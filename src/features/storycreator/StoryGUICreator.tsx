@@ -1,13 +1,13 @@
-import '~/node_modules/react-grid-layout/css/styles.css';
-import '~/node_modules/react-resizable/css/styles.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
-import { Button, IconButton } from '@mui/material';
+import type { Place } from '@intavia/api-client';
+import { Button, IconButton } from '@intavia/ui';
 import { Allotment } from 'allotment';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
-import type { Place } from '@intavia/api-client';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 import styles from '@/features/storycreator/storycreator.module.css';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
@@ -216,14 +216,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     <div style={{ position: 'relative', height: `100%`, width: `100%` }}>
       <div style={{ width: '100%', backgroundColor: 'honeydew' }}>
         <IconButton
-          key={'singlevisLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('singlevis');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/singlevis.png"
             alt="Single Visualization"
@@ -232,14 +230,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'twovisverticalLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('twovisvertical');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/twovisvertical.png"
             alt="Two Visualization Vertical"
@@ -248,14 +244,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'twovishorizontalLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('twovishorizontal');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/twovishorizontal.png"
             alt="Two Visualization Horizontal"
@@ -264,14 +258,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'singleviscontentLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('singleviscontent');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/singleviscontent.png"
             alt="Single Content"
@@ -280,14 +272,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'twoviscontenthorizontalLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('twoviscontenthorizontal');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/twoviscontenthorizontal.png"
             alt="Two Visualization With Content"
@@ -296,14 +286,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'twoviscontentverticalLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('twoviscontentvertical');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/twoviscontentvertical.png"
             alt="Two Visualization With Content Vertical"
@@ -312,14 +300,12 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
           />
         </IconButton>
         <IconButton
-          key={'twocontentsLayoutButton'}
-          color="primary"
-          aria-label="upload picture"
-          component="span"
+          label="upload picture"
           onClick={() => {
             switchLayout('twocontents');
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/images/twocontents.png"
             alt="Two Content Panes"

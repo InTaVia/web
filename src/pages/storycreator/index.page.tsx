@@ -1,4 +1,3 @@
-import Container from '@mui/material/Container';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
@@ -25,8 +24,8 @@ export default function StoriesPage(): JSX.Element {
 
 function StoriesScreen(): JSX.Element {
   return (
-    <Container maxWidth={false} sx={{ display: 'grid', gap: 4, padding: 4 }}>
+    <div className="grid gap-8 p-8">
       <StoryOverview />
-    </Container>
+    </div>
   );
 }

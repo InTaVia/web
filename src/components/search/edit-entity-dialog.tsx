@@ -243,10 +243,12 @@ function OccupationsFormFields(): JSX.Element {
 
   return (
     <div aria-labelledby={id} role="group" className="grid gap-3">
-      <span id={id}>{label}</span>
+      <span className="text-sm font-medium" id={id}>
+        {label}
+      </span>
       {fieldArray.fields.length === 0 ? (
         <div className="grid place-items-center py-2">
-          <NothingFoundMessage />
+          <NothingFoundMessage className="text-sm" />
         </div>
       ) : (
         <ul className="grid gap-3" role="list">
@@ -381,10 +383,12 @@ function RelationsFormFields(): JSX.Element {
 
   return (
     <div aria-labelledby={id} role="group" className="grid gap-3">
-      <span id={id}>{label}</span>
+      <span className="text-sm font-medium" id={id}>
+        {label}
+      </span>
       {fieldArray.fields.length === 0 ? (
         <div className="grid place-items-center py-2">
-          <NothingFoundMessage />
+          <NothingFoundMessage className="text-sm" />
         </div>
       ) : (
         <ul className="grid gap-3" role="list">

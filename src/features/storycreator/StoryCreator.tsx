@@ -1,8 +1,8 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import IntegrationInstructionsOutlinedIcon from '@mui/icons-material/IntegrationInstructionsOutlined';
-import { IconButton } from '@mui/material';
+import { DocumentTextIcon } from '@heroicons/react/outline';
+import { IconButton } from '@intavia/ui';
 import { useState } from 'react';
 
 import { ButtonRow } from '@/features/storycreator/ButtonRow';
@@ -30,8 +30,8 @@ export function StoryCreator(props: StoryCreatorProps): JSX.Element {
         <div className={styles['story-editor-headline']}>{story.title}</div>
         <ButtonRow style={{ position: 'absolute', top: 0, right: 0 }}>
           <div className={styles['button-row-button']}>
-            <IconButton color="primary" onClick={toggleTextMode} component="span">
-              <IntegrationInstructionsOutlinedIcon />
+            <IconButton label="Toggle text mode" onClick={toggleTextMode}>
+              <DocumentTextIcon />
             </IconButton>
           </div>
         </ButtonRow>

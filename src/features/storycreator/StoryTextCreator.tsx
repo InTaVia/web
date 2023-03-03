@@ -1,7 +1,7 @@
 import '~/node_modules/react-grid-layout/css/styles.css';
 import '~/node_modules/react-resizable/css/styles.css';
 
-import { Button, FormControl, TextareaAutosize } from '@mui/material';
+import { Button,  Textarea } from '@intavia/ui';
 import type { FormEvent } from 'react';
 import { createRef } from 'react';
 
@@ -50,13 +50,11 @@ export function StoryTextCreator(props: StoryTextCreatorProps): JSX.Element {
   return (
     <div>
       <form onSubmit={handleSave} id="storytexteditor">
-        <FormControl style={{ width: '100%' }}>
-          <TextareaAutosize
-            ref={textAreaRef}
-            className={styles['story-textarea']}
-            defaultValue={JSON.stringify(storyObject, null, 2)}
-          />
-        </FormControl>
+        <Textarea
+          ref={textAreaRef}
+          className={styles['story-textarea']}
+          defaultValue={JSON.stringify(storyObject, null, 2)}
+        />
       </form>
       <Button type="submit" form="storytexteditor">
         Save

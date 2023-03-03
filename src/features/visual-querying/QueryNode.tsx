@@ -1,4 +1,4 @@
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { UserIcon as PersonIcon } from '@heroicons/react/outline';
 
 import { constraintKindIds } from '@/features/visual-querying/constraints.types';
 import { InnerRingSegment } from '@/features/visual-querying/InnerRingSegment';
@@ -29,13 +29,13 @@ export function QueryNode(props: QueryNodeProps): JSX.Element {
 
   return (
     <g>
-      <circle cx={origin.x(0)} cy={origin.y(0)} r={circleRadius} fill="#EDEDED" />
-      <PersonOutlineOutlinedIcon
+      <circle cx={origin.x(0)} cy={origin.y(0)} r={circleRadius} fill="#ededed" />
+      <PersonIcon
         width={iconSize}
         height={iconSize}
         x={origin.x(0) - iconSize / 2}
         y={origin.y(0) - iconSize / 2}
-        htmlColor="#A1A1A1"
+        color="#A1A1A1"
       />
 
       {ringDims.map(({ startAngle, endAngle, constraintKindId }, idx) => {

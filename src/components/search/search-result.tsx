@@ -56,8 +56,8 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   }
 
   return (
-    <article className="flex items-center justify-between gap-8 px-8 py-2">
-      <div>
+    <article className="flex items-center justify-between gap-8 px-8 py-2.5">
+      <div className="grid gap-1 leading-tight">
         <NextLink href={detailsUrl}>
           <a>
             <span>{getTranslatedLabel(entity.label)}</span>
