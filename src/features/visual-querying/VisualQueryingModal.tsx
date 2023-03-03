@@ -1,10 +1,17 @@
-import { Dialog, Transition } from "@headlessui/react";
+import {
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	Select,
+	Button,
+} from "@intavia/ui";
 import { Fragment } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { useSearchEntities } from "@/components/search/use-search-entities";
 import { useSearchEntitiesFilters } from "@/components/search/use-search-entities-filters";
-import Button from "@/features/ui/Button";
 import { selectModalOpen, setModal } from "@/features/ui/ui.slice";
 import { VisualQuerying } from "@/features/visual-querying/VisualQuerying";
 import { selectConstraints } from "@/features/visual-querying/visualQuerying.slice";

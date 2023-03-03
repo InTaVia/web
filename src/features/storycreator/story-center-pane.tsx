@@ -32,8 +32,15 @@ import {
 	setLayoutForSlide,
 } from "@/features/storycreator/storycreator.slice";
 import type { PanelLayout } from "@/features/ui/analyse-page-toolbar/layout-popover";
-import Button from "@/features/ui/Button";
-import { Dialog, DialogContent, DialogControls } from "@/features/ui/Dialog";
+import { Button } from "@intavia/ui";
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogTrigger,
+	DialogHeader,
+	DialogTitle,
+} from "@intavia/ui";
 import type { UiWindow } from "@/features/ui/ui.slice";
 import { selectWindows } from "@/features/ui/ui.slice";
 import { useDialogState } from "@/features/ui/use-dialog-state";

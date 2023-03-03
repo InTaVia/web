@@ -8,7 +8,7 @@ import {
 	createVisualization,
 	selectAllVisualizations,
 } from "@/features/common/visualization.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import type { SlotId } from "@/features/visualization-layouts/workspaces.slice";
 import { setVisualizationForVisualizationSlotForCurrentWorkspace } from "@/features/visualization-layouts/workspaces.slice";
 import { VisualizationSelect } from "@/features/visualization-wizard/visualization-select";

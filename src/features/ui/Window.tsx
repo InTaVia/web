@@ -1,7 +1,6 @@
 import { AdjustmentsVerticalIcon, Square2StackIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { ReactNode } from "react";
-
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 
 export interface WindowProps {
 	children?: ReactNode;

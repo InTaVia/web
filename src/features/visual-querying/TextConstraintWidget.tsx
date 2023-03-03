@@ -2,8 +2,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import { useState } from "react";
 
 import { useAppDispatch } from "@/app/store";
-import Button from "@/features/ui/Button";
-import TextField from "@/features/ui/TextField";
+import { Input, Button } from "@intavia/ui";
 import type { PersonNameConstraint } from "@/features/visual-querying/constraints.types";
 import { setConstraintValue } from "@/features/visual-querying/visualQuerying.slice";
 
@@ -29,7 +28,7 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
 	return (
 		<form onSubmit={onSubmit} className="flex justify-center gap-2 p-2">
-			<TextField
+			<Input
 				placeholder="Please enter a name"
 				value={text ?? ""}
 				onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +36,7 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 				}}
 				autoFocus={true}
 			/>
-			<Button round="round" color="accent" disabled={text === ""}>
-				Add
-			</Button>
+			<Button disabled={text === ""}>Add</Button>
 		</form>
 	);
 }

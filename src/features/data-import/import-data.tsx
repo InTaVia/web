@@ -4,7 +4,7 @@ import { useI18n } from "@/app/i18n/use-i18n";
 import { useAppDispatch } from "@/app/store";
 import { addLocalEntities, addLocalEvents, addLocalVocabulary } from "@/app/store/intavia.slice";
 import { addCollection, createCollection } from "@/app/store/intavia-collections.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 
 interface ImportDataProps {
 	data: ImportData | null;
@@ -44,14 +44,7 @@ export function ImportData(props: ImportDataProps): JSX.Element {
 	return (
 		<div className="flex flex-row justify-between">
 			{/* TODO: add option/dialog to define collections */}
-			<Button
-				type="submit"
-				onClick={importData}
-				disabled={!data}
-				color="accent"
-				size="small"
-				round="pill"
-			>
+			<Button type="submit" onClick={importData} disabled={!data}>
 				{t(["common", "data-import", "ui", "import-data"])}
 			</Button>
 		</div>

@@ -12,7 +12,7 @@ import { EntityItem } from "@/features/data-panel/entity-item";
 import { EventItem } from "@/features/data-panel/event-item";
 import { GroupItem } from "@/features/data-panel/group-item";
 import { selectStories } from "@/features/storycreator/storycreator.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import { selectAllWorkspaces } from "@/features/visualization-layouts/workspaces.slice";
 
 interface EntitiesPanelProps {

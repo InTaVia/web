@@ -1,17 +1,21 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import {
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	Select,
+} from "@intavia/ui";
 import { CheckIcon, ChevronUpDownIcon as SelectorIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 
 import type { ComponentProperty } from "@/features/common/component-property";
 import type { Visualization } from "@/features/common/visualization.slice";
 import type { Story } from "@/features/storycreator/storycreator.slice";
-import Button from "@/features/ui/Button";
-import { NumberField } from "@/features/ui/NumberField";
-import { Switch } from "@/features/ui/Switch";
-import TextField from "@/features/ui/TextField";
+import { Input, Switch, Button } from "@intavia/ui";
 
 interface PropertiesDialogProps {
 	element: Story | Visualization;
@@ -125,8 +129,8 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
 												case "text":
 													return [
 														<div key={`${property.id}Label`}>{property.label}</div>,
-														<TextField
-															key={`${property.id}TextField`}
+														<Input
+															key={`${property.id}Input`}
 															id={property.id}
 															onChange={onChange}
 															value={property.value}

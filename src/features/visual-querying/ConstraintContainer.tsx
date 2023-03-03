@@ -1,7 +1,7 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 import { useAppDispatch } from "@/app/store";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import type {
 	Constraint,
 	PersonBirthDateConstraint,

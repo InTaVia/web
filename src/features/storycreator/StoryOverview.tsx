@@ -27,7 +27,7 @@ import {
 	removeStory,
 	selectStories,
 } from "@/features/storycreator/storycreator.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 
 export function StoryOverview(): JSX.Element {
 	const dispatch = useAppDispatch();

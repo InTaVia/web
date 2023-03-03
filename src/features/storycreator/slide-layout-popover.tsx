@@ -4,8 +4,8 @@ import type {
 	StoryVisOptionData,
 } from "@/features/ui/analyse-page-toolbar/layout-popover";
 import { layoutOptions, storyLayout } from "@/features/ui/analyse-page-toolbar/layout-popover";
-import Button from "@/features/ui/Button";
-import Popover from "@/features/ui/Popover";
+import { Button } from "@intavia/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@intavia/ui";
 
 export interface SlideLayoutButtonProps {
 	onLayoutSelected: (layoutKey: PanelLayout) => void;
@@ -13,7 +13,7 @@ export interface SlideLayoutButtonProps {
 
 export default function SlideLayoutButton(props: SlideLayoutButtonProps): JSX.Element {
 	return (
-		<Popover color="accent" size="small" round="pill">
+		<Popover>
 			Slide Layout
 			{({ close }) => {
 				return (

@@ -12,7 +12,7 @@ import {
 	addTargetEntitiesToVisualization,
 	selectAllVisualizations,
 } from "@/features/common/visualization.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import VisualisationComponent from "@/features/visualization-layouts/visualization";
 import type { SlotId } from "@/features/visualization-layouts/workspaces.slice";
 import {

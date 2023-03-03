@@ -1,11 +1,11 @@
 .button-area-button {
+	display: flex;
 	float: right;
+	border: none;
+	background: none;
+	color: rgb(0 0 0);
 	line-height: 25px;
 	cursor: pointer;
-	display: flex;
-	background: none;
-	border: none;
-	color: rgb(0 0 0);
 }
 
 .close-button:hover {
@@ -14,12 +14,12 @@
 }
 
 .header-area {
+	position: relative;
+	width: 100%;
 	height: 25px;
 	background-color: rgb(245 245 245 / 96.1%);
-	width: 100%;
 	box-shadow: 0 0 8px rgb(136 136 136);
 	line-height: 25px;
-	position: relative;
 	cursor: grabbing;
 }
 

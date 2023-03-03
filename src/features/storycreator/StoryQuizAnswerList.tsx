@@ -5,8 +5,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 import type { StoryAnswerList, StoryQuizAnswer } from "@/features/storycreator/contentPane.slice";
-import Button from "@/features/ui/Button";
-import TextField from "@/features/ui/TextField";
+import { Input, Button } from "@intavia/ui";
 
 interface StoryQuizAnswerListProps {
 	answerList: StoryAnswerList;
@@ -73,7 +72,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
 							checked={answer.correct}
 							onChange={onChange}
 						/>
-						<TextField
+						<Input
 							key={`answer${index + 1}`}
 							id={`answer${index + 1}`}
 							name={`${index}`}
@@ -87,8 +86,6 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
 								onClick={() => {
 									deleteAnswer(index);
 								}}
-								size="extra-small"
-								round="circle"
 							>
 								<TrashIcon className="h-4 w-4" />
 							</Button>
@@ -97,9 +94,7 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
 				);
 			})}
 			<div className="flex justify-center">
-				<Button round="round" color="accent" size="small" onClick={addAnswer}>
-					Add Answer
-				</Button>
+				<Button onClick={addAnswer}>Add Answer</Button>
 			</div>
 		</div>
 	);

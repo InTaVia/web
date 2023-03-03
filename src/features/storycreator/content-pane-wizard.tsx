@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { SlideContentTypes } from "@/features/storycreator/contentPane.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 
 interface ContentPaneWizardProps {
 	mini?: boolean;

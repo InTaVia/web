@@ -16,7 +16,7 @@ import {
 	selectContentPaneByID,
 } from "@/features/storycreator/contentPane.slice";
 import { StoryVideoAudio } from "@/features/storycreator/StoryVideoAudio";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 
 const margin: [number, number] = [0, 0];
 

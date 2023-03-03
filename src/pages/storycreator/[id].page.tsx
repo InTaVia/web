@@ -17,7 +17,7 @@ import { createSlide, selectStories } from "@/features/storycreator/storycreator
 import { StoryFlow } from "@/features/storycreator/StoryFlow";
 import { VisualizationDragger } from "@/features/storycreator/visualization-dragger";
 import AllotmentHeader from "@/features/ui/AllotmentHeader";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import { centerPaneProps, leftPaneProps, rightPaneProps } from "@/features/ui/panes.config";
 import { selectPaneOpen } from "@/features/ui/ui.slice";
 

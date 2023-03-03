@@ -14,7 +14,7 @@ import {
 	selectSlidesByStoryID,
 	selectStories,
 } from "@/features/storycreator/storycreator.slice";
-import Button from "@/features/ui/Button";
+import { Button } from "@intavia/ui";
 import { selectAllWorkspaces } from "@/features/visualization-layouts/workspaces.slice";
 import { getTranslatedLabel } from "@/lib/get-translated-label";
 

@@ -1,7 +1,7 @@
 import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 
-import Popover from "@/features/ui/Popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@intavia/ui";
 
 export interface LayoutOptionData {
 	key: string;
