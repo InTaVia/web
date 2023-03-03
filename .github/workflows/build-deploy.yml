@@ -48,8 +48,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
+            NEXT_PUBLIC_API_BASE_URL=https://intavia-backend.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_BASE_URL=https://intavia.acdh-dev.oeaw.ac.at
-            NEXT_PUBLIC_INTAVIA_API_BASE_URL=https://intavia-backend.acdh-dev.oeaw.ac.at
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

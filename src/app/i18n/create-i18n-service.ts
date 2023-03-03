@@ -1,1 +1,1 @@
-export { createI18nService } from '@stefanprobst/next-i18n';
+export { createI18nService } from "@stefanprobst/next-i18n";

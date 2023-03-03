@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface FormFieldProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export function FormField(props: FormFieldProps): JSX.Element {
-  const { children } = props;
+	const { children } = props;
 
-  return <div className="grid gap-1.5">{children}</div>;
+	return <div className="grid gap-1.5">{children}</div>;
 }

@@ -1,14 +1,14 @@
 export interface ComponentProperty {
-  type: 'answerlist' | 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text' | 'textarea';
-  id: string;
-  label: string;
-  value?: any;
-  options?: Array<any>;
-  editable: boolean | false;
-  sort?: number | 0;
+	type: "answerlist" | "boolean" | "entitiesAndEvents" | "number" | "select" | "text" | "textarea";
+	id: string;
+	label: string;
+	value?: any;
+	options?: Array<any>;
+	editable: boolean | false;
+	sort?: number | 0;
 }
 
 export interface QuizAnswer {
-  text: string;
-  correct: boolean;
+	text: string;
+	correct: boolean;
 }

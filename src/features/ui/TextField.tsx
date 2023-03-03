@@ -1,17 +1,17 @@
-import type { DOMAttributes } from 'react';
+import type { DOMAttributes } from "react";
 
 export interface TextFieldProps {
-  disabled?: boolean;
-  className?: string;
+	disabled?: boolean;
+	className?: string;
 }
 
 export default function TextField(
-  props: Partial<DOMAttributes<HTMLInputElement>> &
-    React.InputHTMLAttributes<HTMLInputElement> &
-    TextFieldProps,
+	props: Partial<DOMAttributes<HTMLInputElement>> &
+		React.InputHTMLAttributes<HTMLInputElement> &
+		TextFieldProps,
 ): JSX.Element {
-  const { disabled = false, className = '', ...otherProps } = props;
-  const ownClasses = `
+	const { disabled = false, className = "", ...otherProps } = props;
+	const ownClasses = `
     bg-white text-intavia-gray-900
     rounded-md
     border
@@ -26,12 +26,12 @@ export default function TextField(
     invalid:empty:border-intavia-red-700
   `;
 
-  return (
-    <input
-      type="text"
-      className={`${ownClasses} ${className}`}
-      disabled={disabled}
-      {...otherProps}
-    />
-  );
+	return (
+		<input
+			type="text"
+			className={`${ownClasses} ${className}`}
+			disabled={disabled}
+			{...otherProps}
+		/>
+	);
 }

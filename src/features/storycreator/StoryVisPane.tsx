@@ -259,5 +259,5 @@ export function StoryVisPane(props: StoryVisPaneProps) {
  */
 
 export function StoryVisPane() {
-  return <></>;
+	return <></>;
 }

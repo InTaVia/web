@@ -8,8 +8,8 @@ WORKDIR /app
 
 USER node
 
-COPY --chown=node:node package.json package-lock.json .npmrc ./
-COPY --chown=node:node next.config.mjs tsconfig.json app.d.ts next-env.d.ts tailwind.config.cjs ./
+COPY --chown=node:node .npmrc package.json package-lock.json ./
+COPY --chown=node:node app.d.ts next.config.mjs tailwind.config.cjs tsconfig.json ./
 COPY --chown=node:node scripts ./scripts
 COPY --chown=node:node config ./config
 COPY --chown=node:node public ./public
@@ -20,9 +20,8 @@ RUN npm install --ci --no-audit --no-fund
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+ARG NEXT_PUBLIC_API_BASE_URL
 ARG NEXT_PUBLIC_BASE_URL
-ARG NEXT_PUBLIC_INTAVIA_API_BASE_URL
-ARG NEXT_PUBLIC_API_MOCKING
 
 RUN npm run build
 

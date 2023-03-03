@@ -1,135 +1,135 @@
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
-import type { Place } from '@intavia/api-client';
-import { Button, IconButton } from '@intavia/ui';
-import { Allotment } from 'allotment';
-import ReactResizeDetector from 'react-resize-detector';
+import type { Place } from "@intavia/api-client";
+import { Button, IconButton } from "@intavia/ui";
+import { Allotment } from "allotment";
+import ReactResizeDetector from "react-resize-detector";
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntitiesByKind } from '@/app/store/intavia.slice';
-import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
-import styles from '@/features/storycreator/storycreator.module.css';
-import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
+import { useAppDispatch, useAppSelector } from "@/app/store";
+import { selectEntitiesByKind } from "@/app/store/intavia.slice";
+import { DroppableIcon } from "@/features/storycreator/DroppableIcon";
+import styles from "@/features/storycreator/storycreator.module.css";
+import type { Slide, Story } from "@/features/storycreator/storycreator.slice";
 import {
-  createSlide,
-  createSlidesInBulk,
-  selectSlidesByStoryID,
-  setLayoutForSlide,
-} from '@/features/storycreator/storycreator.slice';
-import { StoryFlow } from '@/features/storycreator/StoryFlow';
+	createSlide,
+	createSlidesInBulk,
+	selectSlidesByStoryID,
+	setLayoutForSlide,
+} from "@/features/storycreator/storycreator.slice";
+import { StoryFlow } from "@/features/storycreator/StoryFlow";
 
 interface DropProps {
-  name?: string | null;
-  title?: string | null;
-  label?: string | null;
-  type: string;
-  place?: Place | null;
-  date?: IsoDateString;
+	name?: string | null;
+	title?: string | null;
+	label?: string | null;
+	type: string;
+	place?: Place | null;
+	date?: IsoDateString;
 }
 
 const createDrops = (props: DropProps) => {
-  const { type } = props;
+	const { type } = props;
 
-  const content = [<DroppableIcon key={`${type}Icon`} type={type} />];
-  let text = '';
-  let subline = '';
-  let padding = 0;
-  let key = `${type}Drop`;
-  switch (type) {
-    case 'Person':
-      if (props.name != null) {
-        text = props.name;
-      }
-      key = key + props.name;
-      padding = 5;
-      break;
-    case 'Event':
-      if (props.label != null) {
-        text = props.label;
-      } else {
-        text = type;
-      }
+	const content = [<DroppableIcon key={`${type}Icon`} type={type} />];
+	let text = "";
+	let subline = "";
+	let padding = 0;
+	let key = `${type}Drop`;
+	switch (type) {
+		case "Person":
+			if (props.name != null) {
+				text = props.name;
+			}
+			key = key + props.name;
+			padding = 5;
+			break;
+		case "Event":
+			if (props.label != null) {
+				text = props.label;
+			} else {
+				text = type;
+			}
 
-      key = key + JSON.stringify(props);
-      if (props.place != null) {
-        subline = `in ${props.place.name}`;
-      }
-      if (props.date !== undefined && props.date !== '') {
-        subline += ` in ${props.date.substring(0, 4)}`;
-      }
-      padding = 5;
-      break;
-    default:
-      text = type;
-      padding = 5;
-      break;
-  }
+			key = key + JSON.stringify(props);
+			if (props.place != null) {
+				subline = `in ${props.place.name}`;
+			}
+			if (props.date !== undefined && props.date !== "") {
+				subline += ` in ${props.date.substring(0, 4)}`;
+			}
+			padding = 5;
+			break;
+		default:
+			text = type;
+			padding = 5;
+			break;
+	}
 
-  content.push(
-    <div
-      key="imageLabel"
-      style={{
-        verticalAlign: 'middle',
-        paddingLeft: '10px',
-        display: 'table-cell',
-      }}
-    >
-      {text}
-      <br />
-      {subline}
-    </div>,
-  );
+	content.push(
+		<div
+			key="imageLabel"
+			style={{
+				verticalAlign: "middle",
+				paddingLeft: "10px",
+				display: "table-cell",
+			}}
+		>
+			{text}
+			<br />
+			{subline}
+		</div>,
+	);
 
-  return (
-    <div
-      key={key}
-      className="droppable-element"
-      draggable={true}
-      unselectable="on"
-      onDragStart={(e) => {
-        return e.dataTransfer.setData(
-          'Text',
-          JSON.stringify({
-            type: type,
-            props: props,
-            content: '',
-          }),
-        );
-      }}
-      style={{
-        border: 'solid 1px black',
-        padding: padding,
-        marginBottom: 10,
-        cursor: 'pointer',
-        display: 'table',
-        width: '100%',
-      }}
-    >
-      <div style={{ display: 'table-row', width: '100%' }}>{content}</div>
-    </div>
-  );
+	return (
+		<div
+			key={key}
+			className="droppable-element"
+			draggable={true}
+			unselectable="on"
+			onDragStart={(e) => {
+				return e.dataTransfer.setData(
+					"Text",
+					JSON.stringify({
+						type: type,
+						props: props,
+						content: "",
+					}),
+				);
+			}}
+			style={{
+				border: "solid 1px black",
+				padding: padding,
+				marginBottom: 10,
+				cursor: "pointer",
+				display: "table",
+				width: "100%",
+			}}
+		>
+			<div style={{ display: "table-row", width: "100%" }}>{content}</div>
+		</div>
+	);
 };
 
 interface StoryGUICreatorProps {
-  story: Story;
+	story: Story;
 }
 
 export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
-  const { story } = props;
+	const { story } = props;
 
-  const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 
-  const slides = useAppSelector((state) => {
-    return selectSlidesByStoryID(state, story.id);
-  });
+	const slides = useAppSelector((state) => {
+		return selectSlidesByStoryID(state, story.id);
+	});
 
-  const filteredSlides = slides.filter((slide: Slide) => {
-    return slide.selected;
-  });
-  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
+	const filteredSlides = slides.filter((slide: Slide) => {
+		return slide.selected;
+	});
+	const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
 
-  /*  const ref = useRef<HTMLDivElement>(null);
+	/*  const ref = useRef<HTMLDivElement>(null);
      const takeScreenshot = function () {
     if (ref.current === null) {
       return;
@@ -144,56 +144,56 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
       });
   }; */
 
-  const entitiesByKind = useAppSelector(selectEntitiesByKind);
-  const persons = Object.values(entitiesByKind.person).slice(-1);
+	const entitiesByKind = useAppSelector(selectEntitiesByKind);
+	const persons = Object.values(entitiesByKind.person).slice(-1);
 
-  if (persons.length === 1 && slides.length === 0) {
-    const newSlides = [];
-    const person = persons[0];
-    if (person?.history !== undefined) {
-      const history = [...person.history] as Array<any>;
-      //FIXME: use real types for events/relations
-      const sortedHistory = history.sort((a: any, b: any) => {
-        return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
-      });
-      for (const event of sortedHistory) {
-        newSlides.push({
-          story: story.id,
-          title: event.name,
-          entities: [event],
-          content: [
-            {
-              x: 0,
-              y: 0,
-              w: 12,
-              h: 13,
-              type: 'Map',
-              key: 'Map',
-            },
-            {
-              x: 9,
-              y: 8,
-              w: 2,
-              h: 4,
-              type: 'Text',
-              key: 'Text',
-              text: event.description,
-            },
-          ],
-        });
-      }
+	if (persons.length === 1 && slides.length === 0) {
+		const newSlides = [];
+		const person = persons[0];
+		if (person?.history !== undefined) {
+			const history = [...person.history] as Array<any>;
+			//FIXME: use real types for events/relations
+			const sortedHistory = history.sort((a: any, b: any) => {
+				return parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4));
+			});
+			for (const event of sortedHistory) {
+				newSlides.push({
+					story: story.id,
+					title: event.name,
+					entities: [event],
+					content: [
+						{
+							x: 0,
+							y: 0,
+							w: 12,
+							h: 13,
+							type: "Map",
+							key: "Map",
+						},
+						{
+							x: 9,
+							y: 8,
+							w: 2,
+							h: 4,
+							type: "Text",
+							key: "Text",
+							text: event.description,
+						},
+					],
+				});
+			}
 
-      dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
-    }
-  }
+			dispatch(createSlidesInBulk({ story: story, newSlides: newSlides }));
+		}
+	}
 
-  /* const gridHeight = height !== undefined ? Math.round(height / 5) : 15; */
+	/* const gridHeight = height !== undefined ? Math.round(height / 5) : 15; */
 
-  const switchLayout = (i_layout: string | null) => {
-    dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
-  };
+	const switchLayout = (i_layout: string | null) => {
+		dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
+	};
 
-  /*const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[
+	/*const { numberOfVis, numberOfContentPanes, vertical } = SlideLayouts[
     selectedSlide!.layout
   ] as SlideLayout;
 
@@ -212,135 +212,135 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
     }
   }; */
 
-  return (
-    <div style={{ position: 'relative', height: `100%`, width: `100%` }}>
-      <div style={{ width: '100%', backgroundColor: 'honeydew' }}>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('singlevis');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/singlevis.png"
-            alt="Single Visualization"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('twovisvertical');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/twovisvertical.png"
-            alt="Two Visualization Vertical"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('twovishorizontal');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/twovishorizontal.png"
-            alt="Two Visualization Horizontal"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('singleviscontent');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/singleviscontent.png"
-            alt="Single Content"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('twoviscontenthorizontal');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/twoviscontenthorizontal.png"
-            alt="Two Visualization With Content"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('twoviscontentvertical');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/twoviscontentvertical.png"
-            alt="Two Visualization With Content Vertical"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-        <IconButton
-          label="upload picture"
-          onClick={() => {
-            switchLayout('twocontents');
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/images/twocontents.png"
-            alt="Two Content Panes"
-            height="32px"
-            className="h-8"
-          />
-        </IconButton>
-      </div>
-      <Allotment vertical={true}>
-        <Allotment.Pane preferredSize="70%">
-          <Allotment>
-            <Allotment.Pane preferredSize="20%">
-              <div className={styles['story-editor-pane']}>
-                {persons.length > 1
-                  ? persons.map((person: any) => {
-                      return createDrops({ ...person, type: 'Person' });
-                    })
-                  : persons.map((person: any) => {
-                      return [...person.history]
-                        .sort((a, b) => {
-                          return (
-                            parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4))
-                          );
-                        })
-                        .map((element: any) => {
-                          return createDrops({ ...element, type: 'Event' });
-                        });
-                    })}
-              </div>
-            </Allotment.Pane>
-            <Allotment.Pane preferredSize="60%">
-              <ReactResizeDetector handleWidth handleHeight>
-                {() => {
-                  return (
-                    /*  <SlideEditor
+	return (
+		<div style={{ position: "relative", height: `100%`, width: `100%` }}>
+			<div style={{ width: "100%", backgroundColor: "honeydew" }}>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("singlevis");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/singlevis.png"
+						alt="Single Visualization"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("twovisvertical");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/twovisvertical.png"
+						alt="Two Visualization Vertical"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("twovishorizontal");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/twovishorizontal.png"
+						alt="Two Visualization Horizontal"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("singleviscontent");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/singleviscontent.png"
+						alt="Single Content"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("twoviscontenthorizontal");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/twoviscontenthorizontal.png"
+						alt="Two Visualization With Content"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("twoviscontentvertical");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/twoviscontentvertical.png"
+						alt="Two Visualization With Content Vertical"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+				<IconButton
+					label="upload picture"
+					onClick={() => {
+						switchLayout("twocontents");
+					}}
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src="/assets/images/twocontents.png"
+						alt="Two Content Panes"
+						height="32px"
+						className="h-8"
+					/>
+				</IconButton>
+			</div>
+			<Allotment vertical={true}>
+				<Allotment.Pane preferredSize="70%">
+					<Allotment>
+						<Allotment.Pane preferredSize="20%">
+							<div className={styles["story-editor-pane"]}>
+								{persons.length > 1
+									? persons.map((person: any) => {
+											return createDrops({ ...person, type: "Person" });
+									  })
+									: persons.map((person: any) => {
+											return [...person.history]
+												.sort((a, b) => {
+													return (
+														parseInt(a.date.substring(0, 4)) - parseInt(b.date.substring(0, 4))
+													);
+												})
+												.map((element: any) => {
+													return createDrops({ ...element, type: "Event" });
+												});
+									  })}
+							</div>
+						</Allotment.Pane>
+						<Allotment.Pane preferredSize="60%">
+							<ReactResizeDetector handleWidth handleHeight>
+								{() => {
+									return (
+										/*  <SlideEditor
                       targetRef={targetRef as RefObject<HTMLDivElement>}
                       width={width}
                       height={height}
@@ -353,40 +353,40 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
                       desktop={true}
                       increaseNumberOfContentPanes={increaseNumberOfContentPanes}
                     /> */
-                    <></>
-                  );
-                }}
-              </ReactResizeDetector>
-            </Allotment.Pane>
-            <Allotment.Pane preferredSize="20%">
-              <div className={styles['story-editor-pane']}>
-                {[
-                  createDrops({ type: 'Map' }),
-                  createDrops({ type: 'Text' }),
-                  createDrops({ type: 'Image' }),
-                  createDrops({ type: 'Quiz' }),
-                ]}
-              </div>
-            </Allotment.Pane>
-          </Allotment>
-        </Allotment.Pane>
-        <Allotment.Pane preferredSize="30%">
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => {
-              return (
-                <StoryFlow targetRef={targetRef} width={width} height={height} story={story} />
-              );
-            }}
-          </ReactResizeDetector>
-        </Allotment.Pane>
-        <Button
-          onClick={() => {
-            dispatch(createSlide(story.id));
-          }}
-        >
-          Add Slide
-        </Button>
-      </Allotment>
-    </div>
-  );
+										<></>
+									);
+								}}
+							</ReactResizeDetector>
+						</Allotment.Pane>
+						<Allotment.Pane preferredSize="20%">
+							<div className={styles["story-editor-pane"]}>
+								{[
+									createDrops({ type: "Map" }),
+									createDrops({ type: "Text" }),
+									createDrops({ type: "Image" }),
+									createDrops({ type: "Quiz" }),
+								]}
+							</div>
+						</Allotment.Pane>
+					</Allotment>
+				</Allotment.Pane>
+				<Allotment.Pane preferredSize="30%">
+					<ReactResizeDetector handleWidth handleHeight>
+						{({ width, height, targetRef }) => {
+							return (
+								<StoryFlow targetRef={targetRef} width={width} height={height} story={story} />
+							);
+						}}
+					</ReactResizeDetector>
+				</Allotment.Pane>
+				<Button
+					onClick={() => {
+						dispatch(createSlide(story.id));
+					}}
+				>
+					Add Slide
+				</Button>
+			</Allotment>
+		</div>
+	);
 }

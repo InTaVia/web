@@ -1,11 +1,11 @@
-import type { Entity } from '@intavia/api-client';
+import type { Entity } from "@intavia/api-client";
 
 interface EntityDescriptionProps {
-  description: Entity['description'];
+	description: Entity["description"];
 }
 
 export function EntityDescription(props: EntityDescriptionProps): JSX.Element {
-  const { description } = props;
+	const { description } = props;
 
-  return <div>{description}</div>;
+	return <div>{description}</div>;
 }

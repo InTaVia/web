@@ -1,73 +1,73 @@
 import {
-  useSearchBirthStatisticsQuery,
-  useSearchDeathStatisticsQuery,
-} from '@/api/intavia.service';
-import { useAppDispatch } from '@/app/store';
+	useSearchBirthStatisticsQuery,
+	useSearchDeathStatisticsQuery,
+} from "@/api/intavia.service";
+import { useAppDispatch } from "@/app/store";
 import type {
-  PersonBirthDateConstraint,
-  PersonDeathDateConstraint,
-} from '@/features/visual-querying/constraints.types';
-import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
-import { Histogram } from '@/features/visualizations/Histogram';
+	PersonBirthDateConstraint,
+	PersonDeathDateConstraint,
+} from "@/features/visual-querying/constraints.types";
+import { setConstraintValue } from "@/features/visual-querying/visualQuerying.slice";
+import { Histogram } from "@/features/visualizations/Histogram";
 
 interface DateConstraintWidgetProps {
-  width: number;
-  height: number;
-  constraint: PersonBirthDateConstraint | PersonDeathDateConstraint;
+	width: number;
+	height: number;
+	constraint: PersonBirthDateConstraint | PersonDeathDateConstraint;
 }
 
 export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
-  const { width, height, constraint } = props;
-  const dispatch = useAppDispatch();
+	const { width, height, constraint } = props;
+	const dispatch = useAppDispatch();
 
-  const { data, isLoading } =
-    constraint.id === 'person-birth-date'
-      ? // eslint-disable-next-line react-hooks/rules-of-hooks
-        useSearchBirthStatisticsQuery({ bins: 1600 })
-      : // eslint-disable-next-line react-hooks/rules-of-hooks
-        useSearchDeathStatisticsQuery({ bins: 1600 });
+	const { data, isLoading } =
+		constraint.id === "person-birth-date"
+			? // eslint-disable-next-line react-hooks/rules-of-hooks
+			  useSearchBirthStatisticsQuery({ bins: 1600 })
+			: // eslint-disable-next-line react-hooks/rules-of-hooks
+			  useSearchDeathStatisticsQuery({ bins: 1600 });
 
-  const dimensions = {
-    x: 0,
-    y: 0,
-    marginTop: height - 32,
-    marginLeft: 50,
-    width: width,
-    height: height,
-    boundedWidth: width - 50,
-    boundedHeight: height - 100,
-  };
+	const dimensions = {
+		x: 0,
+		y: 0,
+		marginTop: height - 32,
+		marginLeft: 50,
+		width: width,
+		height: height,
+		boundedWidth: width - 50,
+		boundedHeight: height - 100,
+	};
 
-  function setBrushedArea(area: [number, number]) {
-    dispatch(
-      setConstraintValue({
-        id: constraint.id,
-        value: area,
-      }),
-    );
-  }
+	function setBrushedArea(area: [number, number]) {
+		dispatch(
+			setConstraintValue({
+				id: constraint.id,
+				value: area,
+			}),
+		);
+	}
 
-  function renderContent(): JSX.Element {
-    if (isLoading) {
-      return <p>Loading ...</p>;
-    }
+	function renderContent(): JSX.Element {
+		if (isLoading) {
+			return <p>Loading ...</p>;
+		}
 
-    if (data) {
-      return (
-        <Histogram
-          rawData={data.bins}
-          initialBrushedArea={constraint.value}
-          onChangeBrushedArea={setBrushedArea}
-        />
-      );
-    }
+		if (data) {
+			return (
+				<Histogram
+					rawData={data.bins}
+					initialBrushedArea={constraint.value}
+					onChangeBrushedArea={setBrushedArea}
+				/>
+			);
+		}
 
-    return <p>No data</p>;
-  }
+		return <p>No data</p>;
+	}
 
-  return (
-    <div className="grid" style={{ width: dimensions.width, height: dimensions.height }}>
-      {renderContent()}
-    </div>
-  );
+	return (
+		<div className="grid" style={{ width: dimensions.width, height: dimensions.height }}>
+			{renderContent()}
+		</div>
+	);
 }

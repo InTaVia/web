@@ -1,14 +1,14 @@
 interface NumberFieldProperties {
-  value: number;
-  onChange: (val: number) => void;
-  min?: number;
-  max?: number;
+	value: number;
+	onChange: (val: number) => void;
+	min?: number;
+	max?: number;
 }
 
 export function NumberField(props: NumberFieldProperties): JSX.Element {
-  const { value, onChange, min, max } = props;
+	const { value, onChange, min, max } = props;
 
-  const ownClasses = `
+	const ownClasses = `
   bg-white text-intavia-gray-900
   rounded-md
   border
@@ -23,17 +23,17 @@ export function NumberField(props: NumberFieldProperties): JSX.Element {
   invalid:empty:border-intavia-red-700
 `;
 
-  return (
-    <input
-      type="number"
-      max={max}
-      min={min}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-        onChange(parseInt(newValue));
-      }}
-      value={value}
-      className={ownClasses}
-    ></input>
-  );
+	return (
+		<input
+			type="number"
+			max={max}
+			min={min}
+			onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+				const newValue = event.target.value;
+				onChange(parseInt(newValue));
+			}}
+			value={value}
+			className={ownClasses}
+		></input>
+	);
 }

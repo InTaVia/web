@@ -1,3 +1,3 @@
-# Intavia Web Client
+# Intavia web client
 
-[InTaVia](https://intavia.eu/) web client.
+Web client for [InTaVia](https://intavia.eu/). Deplyed at <https://intavia.acdh-dev.oeaw.ac.at>

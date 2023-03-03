@@ -1,31 +1,31 @@
-import { PageMetadata } from '@stefanprobst/next-page-metadata';
-import { Fragment } from 'react';
+import { PageMetadata } from "@stefanprobst/next-page-metadata";
+import { Fragment } from "react";
 
-import { useI18n } from '@/app/i18n/use-i18n';
-import { withDictionaries } from '@/app/i18n/with-dictionaries';
-import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
-import { StoryOverview } from '@/features/storycreator/StoryOverview';
+import { useI18n } from "@/app/i18n/use-i18n";
+import { withDictionaries } from "@/app/i18n/with-dictionaries";
+import { usePageTitleTemplate } from "@/app/metadata/use-page-title-template";
+import { StoryOverview } from "@/features/storycreator/StoryOverview";
 
-export const getStaticProps = withDictionaries(['common']);
+export const getStaticProps = withDictionaries(["common"]);
 
 export default function StoriesPage(): JSX.Element {
-  const { t } = useI18n<'common'>();
-  const titleTemplate = usePageTitleTemplate();
+	const { t } = useI18n<"common">();
+	const titleTemplate = usePageTitleTemplate();
 
-  const metadata = { title: t(['common', 'stories', 'metadata', 'title']) };
+	const metadata = { title: t(["common", "stories", "metadata", "title"]) };
 
-  return (
-    <Fragment>
-      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      <StoriesScreen />
-    </Fragment>
-  );
+	return (
+		<Fragment>
+			<PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+			<StoriesScreen />
+		</Fragment>
+	);
 }
 
 function StoriesScreen(): JSX.Element {
-  return (
-    <div className="grid gap-8 p-8">
-      <StoryOverview />
-    </div>
-  );
+	return (
+		<div className="grid gap-8 p-8">
+			<StoryOverview />
+		</div>
+	);
 }

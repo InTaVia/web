@@ -1,24 +1,24 @@
-import type { ForwardedRef, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import type { ForwardedRef, ReactNode } from "react";
+import { forwardRef } from "react";
 
-import type { VisualizationDimensions } from '@/features/visualizations/use-visualization-dimensions';
+import type { VisualizationDimensions } from "@/features/visualizations/use-visualization-dimensions";
 
 interface VisualizationRootProps {
-  children: ReactNode;
-  dimensions: VisualizationDimensions;
+	children: ReactNode;
+	dimensions: VisualizationDimensions;
 }
 
 export const VisualizationRoot = forwardRef(function VisualisationRoot(
-  props: VisualizationRootProps,
-  ref: ForwardedRef<HTMLDivElement>,
+	props: VisualizationRootProps,
+	ref: ForwardedRef<HTMLDivElement>,
 ): JSX.Element {
-  const { children, dimensions } = props;
+	const { children, dimensions } = props;
 
-  return (
-    <div ref={ref} className="h-full w-full">
-      <svg height={dimensions.height} width={dimensions.width}>
-        <g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>{children}</g>
-      </svg>
-    </div>
-  );
+	return (
+		<div ref={ref} className="h-full w-full">
+			<svg height={dimensions.height} width={dimensions.width}>
+				<g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>{children}</g>
+			</svg>
+		</div>
+	);
 });

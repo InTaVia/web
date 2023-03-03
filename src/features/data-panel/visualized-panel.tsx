@@ -1,3 +1,3 @@
 export function VisualizedPanel(): JSX.Element {
-  return <p>visualized-panel</p>;
+	return <p>visualized-panel</p>;
 }

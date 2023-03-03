@@ -1,7 +1,7 @@
 export const entityKindOrder = [
-  'person',
-  'cultural-heritage-object',
-  'group',
-  'historical-event',
-  'place',
+	"person",
+	"cultural-heritage-object",
+	"group",
+	"historical-event",
+	"place",
 ];

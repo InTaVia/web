@@ -1,1 +1,1 @@
-export { log } from '@stefanprobst/log';
+export { log } from "@stefanprobst/log";

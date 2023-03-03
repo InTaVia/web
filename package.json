@@ -1,419 +1,166 @@
 {
-  "name": "@intavia/web",
-  "version": "0.2.0",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "analyze-bundle": "cross-env BUNDLE_ANALYZER='enabled' next build --no-lint",
-    "build": "next build",
-    "dev": "next dev",
-    "format:check": "prettier . --cache --check --ignore-path ./.gitignore",
-    "format:fix": "npm run format:check -- --write",
-    "generate:favicons": "run-ts-script scripts/generate-favicons",
-    "lint:check": "run-p lint:*:check",
-    "lint:fix": "run-p lint:*:fix",
-    "lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,js,mjs,ts,tsx --ignore-path ./.gitignore",
-    "lint:code:fix": "npm run lint:code:check -- --fix",
-    "lint:styles:check": "stylelint \"**/*.css\" --allow-empty-input --cache --cache-location .next/cache/stylelint/ --ignore-path ./.gitignore",
-    "lint:styles:fix": "npm run lint:styles:check -- --fix",
-    "prebuild": "npm run generate:favicons",
-    "prepare": "run-p setup generate:*",
-    "setup": "simple-git-hooks || exit 0",
-    "start": "next start",
-    "types:check": "tsc --noEmit",
-    "validate": "run-s format:check lint:check types:check"
-  },
-  "engines": {
-    "node": ">=18.14.0",
-    "npm": ">=8.19.0"
-  },
-  "packageManager": "npm@9.3.1",
-  "dependencies": {
-    "@headlessui/react": "^1.6.5",
-    "@heroicons/react": "^1.0.6",
-    "@intavia/api-client": "^0.1.16",
-    "@intavia/data-import": "^0.1.3",
-    "@intavia/ui": "^0.1.15",
-    "@mapbox/mapbox-gl-draw": "^1.3.0",
-    "@next/bundle-analyzer": "^12.2.5",
-    "@popperjs/core": "^2.11.6",
-    "@reduxjs/toolkit": "^1.8.0",
-    "@stefanprobst/assert": "^1.0.3",
-    "@stefanprobst/group-by": "^1.1.0",
-    "@stefanprobst/key-by": "^1.0.1",
-    "@stefanprobst/log": "^1.0.3",
-    "@stefanprobst/next-error-boundary": "3.0.2-legacy",
-    "@stefanprobst/next-i18n": "1.2.0-legacy",
-    "@stefanprobst/next-page-metadata": "2.0.5-legacy",
-    "@stefanprobst/pagination": "^1.0.0",
-    "@stefanprobst/request": "^0.1.10",
-    "allotment": "^1.14.2",
-    "clsx": "^1.2.0",
-    "d3": "^7.0.0",
-    "d3-array": "^3.2.0",
-    "d3-axis": "^3.0.0",
-    "d3-beeswarm": "^0.0.5",
-    "d3-brush": "^3.0.0",
-    "d3-format": "^3.1.0",
-    "d3-path": "^3.0.1",
-    "d3-scale": "^4.0.2",
-    "d3-selection": "^3.0.0",
-    "d3-time-format": "^4.1.0",
-    "date-fns": "^2.29.3",
-    "final-form": "^4.20.7",
-    "final-form-arrays": "^3.0.2",
-    "final-form-focus": "^1.1.2",
-    "html-to-image": "^1.9.0",
-    "lodash.get": "^4.4.2",
-    "lodash.isequal": "^4.5.0",
-    "mapbox-gl": "npm:empty-npm-package@^1.0.0",
-    "maplibre-gl": "^2.1.9",
-    "next": "^12.2.5",
-    "react": "^18.2.0",
-    "react-contenteditable": "^3.3.6",
-    "react-dom": "^18.2.0",
-    "react-final-form": "^6.5.9",
-    "react-final-form-arrays": "^3.1.3",
-    "react-grid-layout": "^1.3.4",
-    "react-hot-toast": "^2.2.0",
-    "react-map-gl": "^7.0.13",
-    "react-player": "^2.11.2",
-    "react-popper": "^2.3.0",
-    "react-redux": "^7.2.6",
-    "react-resize-detector": "^7.0.0",
-    "react-spinners": "^0.13.3",
-    "redux-persist": "^6.0.0",
-    "sharp": "^0.30.4",
-    "zod": "^3.15.1"
-  },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^12.2.5",
-    "@stefanprobst/favicons": "^2.0.4",
-    "@stefanprobst/ts-script": "^2.0.5",
-    "@types/d3": "^7.0.0",
-    "@types/d3-array": "^3.0.3",
-    "@types/d3-axis": "^3.0.1",
-    "@types/d3-brush": "^3.0.1",
-    "@types/d3-format": "^3.0.1",
-    "@types/d3-path": "^3.0.0",
-    "@types/d3-scale": "^4.0.2",
-    "@types/d3-selection": "^3.0.2",
-    "@types/d3-time-format": "^4.0.0",
-    "@types/final-form-focus": "^1.1.2",
-    "@types/lodash.get": "^4.4.7",
-    "@types/mapbox__mapbox-gl-draw": "^1.2.3",
-    "@types/node": "^18.13.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-grid-layout": "^1.3.2",
-    "@types/react-redux": "^7.1.23",
-    "@types/sharp": "^0.30.2",
-    "@types/webpack": "^5.28.0",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
-    "autoprefixer": "^10.4.2",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.11.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.29.3",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-tailwindcss": "^3.10.0",
-    "lint-staged": "^12.3.5",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.8",
-    "postcss-custom-media": "^8.0.0",
-    "postcss-nesting": "^10.1.3",
-    "prettier": "^2.7.0",
-    "simple-git-hooks": "^2.7.0",
-    "stylelint": "^14.6.0",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^25.0.0",
-    "stylelint-order": "^5.0.0",
-    "tailwindcss": "^3.1.4",
-    "typescript": "^4.6.2"
-  },
-  "browserslist": {
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ],
-    "production": [
-      ">=0.75%",
-      "not dead",
-      "not op_mini all"
-    ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "reportUnusedDisableDirectives": true,
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@next/next/core-web-vitals",
-      "plugin:import/recommended",
-      "plugin:import/typescript",
-      "plugin:react/recommended",
-      "plugin:react/jsx-runtime",
-      "plugin:react-hooks/recommended",
-      "plugin:jsx-a11y/recommended",
-      "plugin:tailwindcss/recommended",
-      "prettier"
-    ],
-    "plugins": [
-      "simple-import-sort"
-    ],
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-    },
-    "parserOptions": {
-      "project": "./tsconfig.json",
-      "extraFileExtensions": [
-        ".cjs",
-        ".mjs"
-      ]
-    },
-    "settings": {
-      "import/resolver": {
-        "typescript": {
-          "project": "./tsconfig.json",
-          "alwaysTryTypes": true
-        }
-      },
-      "react": {
-        "version": "detect"
-      },
-      "tailwindcss": {
-        "config": "./tailwind.config.cjs"
-      }
-    },
-    "rules": {
-      "arrow-body-style": [
-        "error",
-        "always"
-      ],
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "ignore"
-        }
-      ],
-      "no-console": [
-        "warn",
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ],
-      "no-implicit-coercion": "error",
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-          "ignorePropertyModificationsFor": [
-            "state"
-          ]
-        }
-      ],
-      "no-multiple-empty-lines": "error",
-      "no-restricted-globals": [
-        "error",
-        {
-          "name": "isNaN",
-          "message": "Use Number.isNaN instead."
-        }
-      ],
-      "no-var": "error",
-      "no-throw-literal": "error",
-      "prefer-const": "error",
-      "@typescript-eslint/array-type": [
-        "error",
-        {
-          "default": "generic"
-        }
-      ],
-      "@typescript-eslint/consistent-type-exports": "error",
-      "@typescript-eslint/consistent-type-imports": "error",
-      "@typescript-eslint/no-floating-promises": "error",
-      "@typescript-eslint/no-unnecessary-condition": "error",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ],
-      "@typescript-eslint/sort-type-union-intersection-members": "error",
-      "@typescript-eslint/strict-boolean-expressions": "error",
-      "@typescript-eslint/switch-exhaustiveness-check": "error",
-      "import/first": "error",
-      "import/newline-after-import": "error",
-      "import/no-anonymous-default-export": "error",
-      "import/no-duplicates": "error",
-      "jsx-a11y/anchor-is-valid": [
-        "error",
-        {
-          "components": [
-            "Link"
-          ],
-          "aspects": [
-            "invalidHref",
-            "preferButton"
-          ]
-        }
-      ],
-      "jsx-a11y/no-autofocus": [
-        "error",
-        {
-          "ignoreNonDOM": true
-        }
-      ],
-      "jsx-a11y/no-onchange": "off",
-      "jsx-a11y/no-redundant-roles": [
-        "error",
-        {
-          "ul": [
-            "list"
-          ],
-          "ol": [
-            "list"
-          ]
-        }
-      ],
-      "react/boolean-prop-naming": "error",
-      "react/function-component-definition": "error",
-      "react/prop-types": "off",
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.cjs"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "*.page.tsx"
-        ],
-        "rules": {
-          "@typescript-eslint/no-namespace": "off"
-        }
-      }
-    ]
-  },
-  "lint-staged": {
-    "*.@(cjs|js|mjs|ts|tsx)": [
-      "eslint --cache --cache-location .next/cache/eslint/ --fix",
-      "prettier --cache --write"
-    ],
-    "*.css": [
-      "stylelint --cache --cache-location .next/cache/stylelint/ --fix",
-      "prettier --cache --write"
-    ],
-    "*.!(cjs|css|js|mjs|ts|tsx)": "prettier --cache --ignore-unknown --write"
-  },
-  "postcss": {
-    "plugins": {
-      "postcss-custom-media": {},
-      "tailwindcss/nesting": "postcss-nesting",
-      "tailwindcss": {},
-      "autoprefixer": {}
-    }
-  },
-  "prettier": {
-    "endOfLine": "lf",
-    "printWidth": 100,
-    "proseWrap": "always",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "all"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
-    "pre-push": "npm run validate"
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-standard",
-      "stylelint-config-prettier"
-    ],
-    "plugins": [
-      "stylelint-order"
-    ],
-    "reportNeedlessDisables": true,
-    "rules": {
-      "at-rule-no-vendor-prefix": true,
-      "media-feature-name-no-vendor-prefix": true,
-      "property-no-vendor-prefix": true,
-      "selector-no-vendor-prefix": true,
-      "value-no-vendor-prefix": true,
-      "alpha-value-notation": "percentage",
-      "color-function-notation": "modern",
-      "color-named": "never",
-      "color-no-hex": true,
-      "font-weight-notation": "numeric",
-      "hue-degree-notation": "angle",
-      "declaration-block-no-redundant-longhand-properties": [
-        true,
-        {
-          "ignoreShorthands": [
-            "/grid/"
-          ]
-        }
-      ],
-      "function-no-unknown": [
-        true,
-        {
-          "ignoreFunctions": [
-            "theme"
-          ]
-        }
-      ],
-      "selector-id-pattern": [
-        "^(_{0,2}[a-z][a-z0-9]*)(-[a-z0-9]+)*$",
-        {
-          "message": "Expected id selector to be kebab-case"
-        }
-      ],
-      "value-keyword-case": [
-        "lower",
-        {
-          "camelCaseSvgKeywords": true
-        }
-      ],
-      "order/order": [
-        [
-          "custom-properties",
-          "declarations",
-          {
-            "type": "at-rule",
-            "name": "supports"
-          },
-          {
-            "type": "at-rule",
-            "name": "media"
-          },
-          "rules",
-          "at-rules"
-        ],
-        {
-          "severity": "warning"
-        }
-      ]
-    }
-  }
+	"name": "@intavia/web",
+	"version": "0.2.0",
+	"license": "MIT",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=18.14.0",
+		"npm": ">=8.19.0"
+	},
+	"packageManager": "npm@9.3.1",
+	"scripts": {
+		"analyze-bundle": "cross-env BUNDLE_ANALYZER='enabled' next build --no-lint",
+		"build": "next build",
+		"dev": "next dev",
+		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
+		"format:fix": "npm run format:check -- --write",
+		"generate:favicons": "dotenv -- tsx ./scripts/generate-favicons.ts",
+		"lint:check": "run-p lint:*:check",
+		"lint:fix": "run-p lint:*:fix",
+		"lint:code:check": "eslint . --cache --cache-location .next/cache/eslint/ --ext cjs,mjs,ts,tsx --ignore-path ./.gitignore",
+		"lint:code:fix": "npm run lint:code:check -- --fix",
+		"lint:styles:check": "stylelint \"./**/*.css\" --allow-empty-input --cache --cache-location .next/cache/stylelint/ --ignore-path ./.gitignore",
+		"lint:styles:fix": "npm run lint:styles:check -- --fix",
+		"prebuild": "npm run generate:favicons",
+		"prepare": "run-p setup generate:*",
+		"setup": "simple-git-hooks || exit 0",
+		"start": "next start",
+		"test": "exit 0",
+		"types:check": "tsc --noEmit",
+		"validate": "run-s format:check lint:check types:check test"
+	},
+	"dependencies": {
+		"@headlessui/react": "^1.7.12",
+		"@heroicons/react": "^2.0.16",
+		"@intavia/api-client": "^0.1.16",
+		"@intavia/data-import": "^0.1.3",
+		"@intavia/ui": "^0.1.15",
+		"@mapbox/mapbox-gl-draw": "^1.4.1",
+		"@next/bundle-analyzer": "^13.2.3",
+		"@popperjs/core": "^2.11.6",
+		"@reduxjs/toolkit": "^1.9.3",
+		"@stefanprobst/assert": "^1.0.3",
+		"@stefanprobst/group-by": "^1.1.0",
+		"@stefanprobst/key-by": "^1.0.1",
+		"@stefanprobst/log": "^1.0.3",
+		"@stefanprobst/next-error-boundary": "^3.0.2",
+		"@stefanprobst/next-i18n": "^1.2.0",
+		"@stefanprobst/next-page-metadata": "^2.0.5",
+		"@stefanprobst/pagination": "^1.0.0",
+		"@stefanprobst/request": "^0.1.11",
+		"allotment": "^1.18.1",
+		"d3": "^7.0.0",
+		"d3-beeswarm": "^0.0.5",
+		"date-fns": "^2.29.3",
+		"final-form": "^4.20.9",
+		"final-form-arrays": "^3.1.0",
+		"final-form-focus": "^1.1.2",
+		"html-to-image": "^1.11.11",
+		"lodash.get": "^4.4.2",
+		"lucide-react": "^0.121.0",
+		"mapbox-gl": "npm:empty-npm-package@^1.0.0",
+		"maplibre-gl": "^2.4.0",
+		"next": "^13.2.3",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-final-form": "^6.5.9",
+		"react-final-form-arrays": "^3.1.4",
+		"react-grid-layout": "^1.3.4",
+		"react-map-gl": "^7.0.21",
+		"react-popper": "^2.3.0",
+		"react-redux": "^8.0.5",
+		"react-resize-detector": "^8.0.4",
+		"redux-persist": "^6.0.0",
+		"sharp": "^0.30.7",
+		"zod": "^3.20.6"
+	},
+	"devDependencies": {
+		"@next/eslint-plugin-next": "^13.2.3",
+		"@stefanprobst/eslint-config": "^1.0.10",
+		"@stefanprobst/eslint-config-next": "^7.0.6",
+		"@stefanprobst/eslint-config-react": "^1.0.4",
+		"@stefanprobst/favicons": "^2.2.2",
+		"@stefanprobst/prettier-config": "^3.0.0",
+		"@stefanprobst/stylelint-config": "^3.0.1",
+		"@stefanprobst/tsconfig": "^2.2.2",
+		"@types/d3": "^7.4.0",
+		"@types/final-form-focus": "^1.1.3",
+		"@types/lodash.get": "^4.4.7",
+		"@types/mapbox__mapbox-gl-draw": "^1.3.3",
+		"@types/node": "^18.14.5",
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"@types/react-grid-layout": "^1.3.2",
+		"@types/react-redux": "^7.1.25",
+		"@types/sharp": "^0.30.5",
+		"autoprefixer": "^10.4.13",
+		"cross-env": "^7.0.3",
+		"dotenv-cli": "^7.0.0",
+		"eslint": "^8.35.0",
+		"eslint-plugin-tailwindcss": "^3.10.1",
+		"lint-staged": "^13.1.2",
+		"npm-run-all": "^4.1.5",
+		"postcss": "^8.4.21",
+		"postcss-custom-media": "^9.1.2",
+		"postcss-nesting": "^11.2.1",
+		"prettier": "^2.8.4",
+		"simple-git-hooks": "^2.8.1",
+		"stylelint": "^15.2.0",
+		"tailwindcss": "^3.2.7",
+		"tsx": "^3.12.3",
+		"typescript": "^4.9.5"
+	},
+	"browserslist": {
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		],
+		"production": [
+			">=0.75%",
+			"not dead",
+			"not op_mini all"
+		]
+	},
+	"eslintConfig": {
+		"extends": [
+			"@stefanprobst/eslint-config",
+			"@stefanprobst/eslint-config-react",
+			"@stefanprobst/eslint-config-next",
+			"plugin:tailwindcss/recommended"
+		],
+		"settings": {
+			"tailwindcss": {
+				"config": "./tailwind.config.cjs"
+			}
+		}
+	},
+	"lint-staged": {
+		"*.@(cjs|mjs|ts|tsx)": [
+			"eslint --cache --cache-location .next/cache/eslint/ --fix",
+			"prettier --cache --write"
+		],
+		"*.css": [
+			"stylelint --cache --cache-location .next/cache/stylelint/ --fix",
+			"prettier --cache --write"
+		],
+		"*.!(cjs|css|mjs|ts|tsx)": "prettier --cache --ignore-unknown --write"
+	},
+	"postcss": {
+		"plugins": {
+			"postcss-custom-media": {},
+			"tailwindcss/nesting": "postcss-nesting",
+			"tailwindcss": {},
+			"autoprefixer": {}
+		}
+	},
+	"prettier": "@stefanprobst/prettier-config",
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged",
+		"pre-push": "npm run validate"
+	},
+	"stylelint": {
+		"extends": "@stefanprobst/stylelint-config"
+	}
 }

@@ -1,36 +1,36 @@
-import { assert } from '@stefanprobst/assert';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { assert } from "@stefanprobst/assert";
+import type { ReactNode } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
-import type { Collection } from '@/app/store/intavia-collections.slice';
+import type { Collection } from "@/app/store/intavia-collections.slice";
 
 interface CollectionContextValue {
-  currentCollection: Collection['id'] | null;
-  setCurrentCollection: (id: Collection['id'] | null) => void;
+	currentCollection: Collection["id"] | null;
+	setCurrentCollection: (id: Collection["id"] | null) => void;
 }
 
 const CollectionContext = createContext<CollectionContextValue | null>(null);
 
 interface CollectionProviderProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export function CollectionProvider(props: CollectionProviderProps) {
-  const { children } = props;
+	const { children } = props;
 
-  const [currentCollection, setCurrentCollection] = useState<Collection['id'] | null>(null);
+	const [currentCollection, setCurrentCollection] = useState<Collection["id"] | null>(null);
 
-  const value = useMemo(() => {
-    return { currentCollection, setCurrentCollection };
-  }, [currentCollection]);
+	const value = useMemo(() => {
+		return { currentCollection, setCurrentCollection };
+	}, [currentCollection]);
 
-  return <CollectionContext.Provider value={value}>{children}</CollectionContext.Provider>;
+	return <CollectionContext.Provider value={value}>{children}</CollectionContext.Provider>;
 }
 
 export function useCollection(): CollectionContextValue {
-  const value = useContext(CollectionContext);
+	const value = useContext(CollectionContext);
 
-  assert(value);
+	assert(value);
 
-  return value;
+	return value;
 }

@@ -1,11 +1,11 @@
-import { SearchResultsCount } from '@/components/search/search-results-count';
-import { SearchResultsPagination } from '@/components/search/search-results-pagination';
+import { SearchResultsCount } from "@/components/search/search-results-count";
+import { SearchResultsPagination } from "@/components/search/search-results-pagination";
 
 export function SearchPageFooter(): JSX.Element {
-  return (
-    <footer className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-neutral-200 bg-white py-12 px-8">
-      <SearchResultsCount />
-      <SearchResultsPagination />
-    </footer>
-  );
+	return (
+		<footer className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-neutral-200 bg-white py-12 px-8">
+			<SearchResultsCount />
+			<SearchResultsPagination />
+		</footer>
+	);
 }
