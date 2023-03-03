@@ -24,7 +24,6 @@ import { visualizationSlice } from '@/features/common/visualization.slice';
 import { contentPaneSlice } from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
 import { storyCreatorSlice } from '@/features/storycreator/storycreator.slice';
-import timelineReducer, { setTimeRangeBrush } from '@/features/timeline/timeline.slice';
 import uiReducer from '@/features/ui/ui.slice';
 import { slice as visualQueryingSlice } from '@/features/visual-querying/visualQuerying.slice';
 import { workspacesSlice } from '@/features/visualization-layouts/workspaces.slice';
@@ -51,7 +50,6 @@ const rootReducer = combineReducers({
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //
   [storyCreatorSlice.name]: storyCreatorSlice.reducer,
-  timeline: timelineReducer, // deprecated ?
   ui: uiReducer, // deprecated ?
   [visualizationSlice.name]: visualizationSlice.reducer,
   [contentPaneSlice.name]: contentPaneSlice.reducer,
@@ -67,8 +65,6 @@ export function configureAppStore(preloadedState?: PreloadedState<RootState>) {
       return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [
-            /** Ignore `Date` objects. */
-            String(setTimeRangeBrush),
             /** `redux-persist` */
             FLUSH,
             PAUSE,

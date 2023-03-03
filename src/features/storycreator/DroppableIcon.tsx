@@ -1,13 +1,13 @@
 import {
+  CalendarIcon as EventIcon,
   ChartBarIcon,
   ChatIcon,
   DocumentTextIcon,
   MapIcon,
   PhotographIcon,
+  UserIcon as PersonIcon,
   VideoCameraIcon,
 } from '@heroicons/react/outline';
-import AdjustIcon from '@mui/icons-material/Adjust';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 import styles from '@/features/ui/ui.module.css';
 
@@ -15,7 +15,7 @@ export interface DroppableIconProps {
   type: string;
 }
 
-const getIcon: any = (type: string) => {
+function getIcon(type: string) {
   const classStr = 'h-6 w-6 text-intavia-blue-800';
   switch (type) {
     case 'Timeline':
@@ -29,21 +29,15 @@ const getIcon: any = (type: string) => {
     case 'Video/Audio':
       return <VideoCameraIcon className={classStr} />;
     case 'Person':
-      return (
-        <PersonOutlineOutlinedIcon
-          className={styles['droppable-icon']}
-          color="primary"
-          key="personIcon"
-        />
-      );
+      return <PersonIcon className={styles['droppable-icon']} />;
     case 'Quiz':
       return <ChatIcon className={classStr} />;
     case 'Event':
-      return <AdjustIcon className={styles['droppable-icon']} color="primary" key="EventIcon" />;
+      return <EventIcon className={styles['droppable-icon']} />;
     default:
       break;
   }
-};
+}
 
 export function DroppableIcon(props: DroppableIconProps): JSX.Element {
   const { type } = props;

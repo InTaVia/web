@@ -2,21 +2,16 @@ import '@/styles/index.css';
 import 'allotment/dist/style.css';
 import 'tailwindcss/tailwind.css';
 
-import type { EmotionCache } from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import { Toaster } from '@intavia/ui';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 import { ErrorBoundary } from '@stefanprobst/next-error-boundary';
 import { I18nProvider } from '@stefanprobst/next-i18n';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
-import type { AppProps as NextAppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { createEmotionCache } from '@/app/create-emotion-cache';
 import { useAppMetadata } from '@/app/metadata/use-app-metadata';
 import { RootErrorBoundaryFallback } from '@/app/root-error-boundary-fallback';
 import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-urls';
@@ -27,17 +22,10 @@ import { SetupStore } from '@/app/store/setup-store';
 import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
-import { theme } from '@/styles/theme';
 import { manifestFileName, openGraphImageName } from '~/config/metadata.config';
 
-const clientSideEmotionCache = createEmotionCache();
-
-interface AppProps extends NextAppProps {
-  emotionCache?: EmotionCache;
-}
-
 export default function App(props: AppProps): JSX.Element {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, pageProps } = props;
   const { dictionaries } = pageProps;
 
   const { locale } = useLocale();
@@ -86,20 +74,15 @@ export default function App(props: AppProps): JSX.Element {
       />
       <Provider store={store}>
         <I18nProvider dictionaries={dictionaries}>
-          <CacheProvider value={emotionCache}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <PersistGate loading={null} persistor={persistor}>
-                <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
-                  <PageLayout>
-                    <Component {...pageProps} />
-                  </PageLayout>
-                  <Toaster />
-                  <SetupStore></SetupStore>
-                </ErrorBoundary>
-              </PersistGate>
-            </ThemeProvider>
-          </CacheProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
+              <PageLayout>
+                <Component {...pageProps} />
+              </PageLayout>
+              <Toaster />
+              <SetupStore></SetupStore>
+            </ErrorBoundary>
+          </PersistGate>
         </I18nProvider>
       </Provider>
     </Fragment>

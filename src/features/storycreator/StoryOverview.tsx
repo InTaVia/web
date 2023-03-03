@@ -28,7 +28,6 @@ import {
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
-import { PageTitle } from '@/features/ui/page-title';
 
 export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -135,7 +134,7 @@ export function StoryOverview(): JSX.Element {
 
   return (
     <>
-      <PageTitle>Storytelling Creator</PageTitle>
+      <h1 className="text-5xl font-light">Storytelling Creator</h1>
       <div key={'storyEntryListWrapper'} className="flex h-full items-center">
         <div key={'storyEntryList'} className="grid grid-cols-4 gap-2 text-lg">
           {Object.values(stories).map((story, index) => {
