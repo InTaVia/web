@@ -1,5 +1,4 @@
-import { TrashIcon } from '@heroicons/react/outline';
-import { PlusIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, EntityKind } from '@intavia/api-client';
 import {
   Button,
@@ -25,7 +24,7 @@ import {
   Textarea,
 } from '@intavia/ui';
 import { keyBy } from '@stefanprobst/key-by';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 import { Fragment, useId, useMemo, useState } from 'react';
 import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
@@ -249,29 +248,40 @@ function OccupationsFormFields(): JSX.Element {
           <NothingFoundMessage />
         </div>
       ) : (
-        <ul className="grid gap-3" role="list">
-          {fieldArray.fields.map((name, index) => {
-            function onRemove() {
-              fieldArray.fields.remove(index);
-            }
+        <PaginatedFormFields length={fieldArray.fields.length}>
+          {({ page, pageSize }) => {
+            const start = (page - 1) * pageSize;
+            const end = page * pageSize;
 
             return (
-              <li key={name}>
-                <div className="grid grid-cols-[1fr_auto] items-end gap-2">
-                  <OccupationComboBox name={name} />
-                  <IconButton
-                    className="h-10 w-10"
-                    label={t(['common', 'form', 'remove'])}
-                    onClick={onRemove}
-                    variant="destructive"
-                  >
-                    <TrashIcon className="h-5 w-5 shrink-0" />
-                  </IconButton>
-                </div>
-              </li>
+              <ul className="grid gap-3" role="list">
+                {fieldArray.fields.map((name, index) => {
+                  if (index < start || index >= end) return null;
+
+                  function onRemove() {
+                    fieldArray.fields.remove(index);
+                  }
+
+                  return (
+                    <li key={name}>
+                      <div className="grid grid-cols-[1fr_auto] items-end gap-2">
+                        <OccupationComboBox name={name} />
+                        <IconButton
+                          className="h-10 w-10"
+                          label={t(['common', 'form', 'remove'])}
+                          onClick={onRemove}
+                          variant="destructive"
+                        >
+                          <TrashIcon className="h-5 w-5 shrink-0" />
+                        </IconButton>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
             );
-          })}
-        </ul>
+          }}
+        </PaginatedFormFields>
       )}
       <div className="flex items-center justify-end">
         <Button onClick={onAdd} variant="outline">
@@ -391,33 +401,44 @@ function RelationsFormFields(): JSX.Element {
           <NothingFoundMessage />
         </div>
       ) : (
-        <ul className="grid gap-3" role="list">
-          {fieldArray.fields.map((name, index) => {
-            function onRemove() {
-              fieldArray.fields.remove(index);
-            }
-
-            const role = [name, 'role'].join('.');
-            const event = [name, 'event'].join('.');
+        <PaginatedFormFields length={fieldArray.fields.length}>
+          {({ page, pageSize }) => {
+            const start = (page - 1) * pageSize;
+            const end = page * pageSize;
 
             return (
-              <li key={name}>
-                <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
-                  <RelationRoleComboBox name={role} />
-                  <RelationEventComboBox name={event} />
-                  <IconButton
-                    className="h-10 w-10"
-                    label={t(['common', 'form', 'remove'])}
-                    onClick={onRemove}
-                    variant="destructive"
-                  >
-                    <TrashIcon className="h-5 w-5 shrink-0" />
-                  </IconButton>
-                </div>
-              </li>
+              <ul className="grid gap-3" role="list">
+                {fieldArray.fields.map((name, index) => {
+                  if (index < start || index >= end) return null;
+
+                  function onRemove() {
+                    fieldArray.fields.remove(index);
+                  }
+
+                  const role = [name, 'role'].join('.');
+                  const event = [name, 'event'].join('.');
+
+                  return (
+                    <li key={name}>
+                      <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
+                        <RelationRoleComboBox name={role} />
+                        <RelationEventComboBox name={event} />
+                        <IconButton
+                          className="h-10 w-10"
+                          label={t(['common', 'form', 'remove'])}
+                          onClick={onRemove}
+                          variant="destructive"
+                        >
+                          <TrashIcon className="h-5 w-5 shrink-0" />
+                        </IconButton>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
             );
-          })}
-        </ul>
+          }}
+        </PaginatedFormFields>
       )}
       <div className="flex items-center justify-end">
         <Button onClick={onAdd} variant="outline">
@@ -447,7 +468,6 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
     { skip: !hasSelection || selectedRoleFromStore != null },
   );
   const selected = selectedRoleFromStore ?? selectedRoleFrombackend;
-  console.log({ selectedRoleFromStore, selectedRoleFrombackend });
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -523,7 +543,6 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
     { skip: !hasSelection || selectedEventFromStore != null },
   );
   const selected = selectedEventFromStore ?? selectedEventFromBackend;
-  console.log({ selectedEventFromStore, selectedEventFromBackend });
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -578,5 +597,68 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
         </ComboBoxContent>
       </ComboBox>
     </FormField>
+  );
+}
+
+interface PaginatedFormFieldsProps {
+  children: (pagination: { page: number; pageSize: number }) => ReactNode;
+  length: number | undefined;
+}
+
+function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
+  const { children, length = 0 } = props;
+
+  const { t } = useI18n<'common'>();
+
+  const pageSize = 10;
+  const pages = Math.ceil(length / pageSize);
+  const [page, setPage] = useState(1);
+
+  if (pages === 1) {
+    return <Fragment>{children({ page, pageSize })}</Fragment>;
+  }
+
+  function onPreviousPage() {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  }
+
+  function onNextPage() {
+    if (page < pages) {
+      setPage(page + 1);
+    }
+  }
+
+  return (
+    <div className="grid gap-4">
+      {children({ page, pageSize })}
+      <nav
+        className="flex flex-wrap items-start justify-between"
+        aria-label={t(['common', 'pagination', 'pagination'])}
+      >
+        <span>{length} relations</span>
+        <div className="flex flex-wrap items-center gap-4">
+          <button
+            className="flex items-center gap-1 disabled:cursor-not-allowed disabled:text-neutral-500"
+            disabled={page <= 1}
+            onClick={onPreviousPage}
+            type="button"
+          >
+            <ChevronLeftIcon className="h-4 w-4 shrink-0" />
+            {t(['common', 'pagination', 'go-to-previous-page'])}
+          </button>
+          <button
+            className="flex items-center gap-1 disabled:cursor-not-allowed disabled:text-neutral-500"
+            disabled={page >= pages}
+            onClick={onNextPage}
+            type="button"
+          >
+            {t(['common', 'pagination', 'go-to-next-page'])}
+            <ChevronRightIcon className="h-4 w-4 shrink-0" />
+          </button>
+        </div>
+      </nav>
+    </div>
   );
 }
