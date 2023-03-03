@@ -1,6 +1,6 @@
-import '@/styles/index.css';
 import 'allotment/dist/style.css';
 import 'tailwindcss/tailwind.css';
+import '@/styles/index.css';
 
 import { Toaster } from '@intavia/ui';
 import { ErrorBoundary } from '@stefanprobst/next-error-boundary';

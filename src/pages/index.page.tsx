@@ -93,7 +93,7 @@ export default function HomePage(): JSX.Element {
                 className="dark:border-gray-700 dark:bg-gray-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-gray-200 bg-white shadow-md"
               >
                 <Link href={card.href.pathname}>
-                  <a className="flex place-content-center gap-2 pt-3 text-intavia-green-900">
+                  <a className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
                     <div>{card.icon}</div>
                     <div className="dark:text-white text-lg font-medium">{card.title}</div>
                   </a>
@@ -103,7 +103,7 @@ export default function HomePage(): JSX.Element {
                   {card.text}
                 </p>
                 <Link href={card.href.pathname} className="">
-                  <a className="flex w-full place-content-end gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
+                  <a className="flex w-full place-content-end items-center gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
                     {card.button}
                     <ChevronRightIcon className="h-5 w-5" />
                   </a>
