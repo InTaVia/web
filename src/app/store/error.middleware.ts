@@ -11,7 +11,7 @@ const middleware: Middleware = function errorMiddleware() {
         toast({
           title: 'Error',
           description,
-          variant: 'destructive ',
+          variant: 'destructive',
         });
       }
 
