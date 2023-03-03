@@ -32,6 +32,11 @@ export function useSearchEntitiesFilters(): SearchEntities.SearchParams {
       bornAfter: getSearchParam(searchParams, 'bornAfter'),
       diedBefore: getSearchParam(searchParams, 'diedBefore'),
       diedAfter: getSearchParam(searchParams, 'diedAfter'),
+
+      relatedEntity: getSearchParam(searchParams, 'relatedEntity'),
+      relatedEntities_id: getSearchParams(searchParams, 'relatedEntities_id'),
+      eventRole: getSearchParam(searchParams, 'eventRole'),
+      eventRoles_id: getSearchParams(searchParams, 'eventRoles_id'),
     };
 
     return searchEntitiesFilters;

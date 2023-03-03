@@ -15,14 +15,11 @@ export function SearchForm(): JSX.Element {
   const searchFilters = useSearchEntitiesFilters();
   const { search } = useSearchEntities();
 
-  const [searchTerm, setSearchTerm] = useState('');
-
   function onSubmit(event: FormEvent<HTMLFormElement>) {
-    search({
-      ...searchFilters,
-      page: 1,
-      q: searchTerm,
-    });
+    const formData = new FormData(event.currentTarget);
+    const q = formData.get('q') as string;
+
+    search({ ...searchFilters, page: 1, q });
 
     event.preventDefault();
   }
@@ -68,12 +65,8 @@ export function SearchForm(): JSX.Element {
             defaultValue={searchFilters.q}
             key={searchFilters.q}
             name="q"
-            onChange={(event) => {
-              setSearchTerm(event.currentTarget.value);
-            }}
             placeholder={t(['common', 'search', 'search-term'])}
             type="search"
-            value={searchTerm}
           />
 
           <Button type="submit">{t(['common', 'search', 'search'])}</Button>
