@@ -1,4 +1,11 @@
-import type { Entity, EntityKind, Event, VocabularyEntry } from '@intavia/api-client';
+import type {
+  Biography,
+  Entity,
+  EntityKind,
+  Event,
+  MediaResource,
+  VocabularyEntry,
+} from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
@@ -17,6 +24,14 @@ interface IndexedEvents {
   byId: Record<Event['id'], Event>;
 }
 
+interface IndexedMediaResources {
+  byId: Record<MediaResource['id'], MediaResource>;
+}
+
+interface IndexedBiographies {
+  byId: Record<Biography['id'], Biography>;
+}
+
 interface IndexedVocabularies {
   byVocabularyEntryId: Record<VocabularyEntry['id'], VocabularyEntry>;
   byVocabularyId: Record<string, Record<VocabularyEntry['id'], VocabularyEntry>>;
@@ -30,6 +45,14 @@ interface IntaviaState {
   events: {
     upstream: IndexedEvents;
     local: IndexedEvents;
+  };
+  mediaResources: {
+    upstream: IndexedMediaResources;
+    local: IndexedMediaResources;
+  };
+  biographies: {
+    upstream: IndexedBiographies;
+    local: IndexedBiographies;
   };
   vocabularies: {
     upstream: IndexedVocabularies;
@@ -61,6 +84,22 @@ const initialState: IntaviaState = {
     },
   },
   events: {
+    upstream: {
+      byId: {},
+    },
+    local: {
+      byId: {},
+    },
+  },
+  mediaResources: {
+    upstream: {
+      byId: {},
+    },
+    local: {
+      byId: {},
+    },
+  },
+  biographies: {
     upstream: {
       byId: {},
     },
@@ -134,6 +173,52 @@ export const slice = createSlice({
         const event = state.events.local.byId[id];
         if (event != null) {
           delete state.events.local.byId[event.id];
+        }
+      });
+    },
+    addLocalMediaResource(state, action: PayloadAction<MediaResource>) {
+      const mediaResource = action.payload;
+      state.mediaResources.local.byId[mediaResource.id] = mediaResource;
+    },
+    addLocalMediaResources(state, action: PayloadAction<Array<MediaResource>>) {
+      const mediaResources = action.payload;
+      mediaResources.forEach((mediaResource) => {
+        state.mediaResources.local.byId[mediaResource.id] = mediaResource;
+      });
+    },
+    removeLocalMediaResource(state, action: PayloadAction<MediaResource['id']>) {
+      const id = action.payload;
+      delete state.mediaResources.local.byId[id];
+    },
+    removeLocalMediaResources(state, action: PayloadAction<Array<MediaResource['id']>>) {
+      const ids = action.payload;
+      ids.forEach((id) => {
+        const mediaResource = state.mediaResources.local.byId[id];
+        if (mediaResource != null) {
+          delete state.mediaResources.local.byId[mediaResource.id];
+        }
+      });
+    },
+    addLocalBiography(state, action: PayloadAction<Biography>) {
+      const biography = action.payload;
+      state.biographies.local.byId[biography.id] = biography;
+    },
+    addLocalBiographies(state, action: PayloadAction<Array<Biography>>) {
+      const biographies = action.payload;
+      biographies.forEach((biography) => {
+        state.biographies.local.byId[biography.id] = biography;
+      });
+    },
+    removeLocalBiography(state, action: PayloadAction<Biography['id']>) {
+      const id = action.payload;
+      delete state.biographies.local.byId[id];
+    },
+    removeLocalBiographies(state, action: PayloadAction<Array<Biography['id']>>) {
+      const ids = action.payload;
+      ids.forEach((id) => {
+        const biography = state.biographies.local.byId[id];
+        if (biography != null) {
+          delete state.biographies.local.byId[biography.id];
         }
       });
     },
@@ -352,6 +437,14 @@ export const {
   addLocalEvents,
   removeLocalEvent,
   removeLocalEvents,
+  addLocalMediaResource,
+  addLocalMediaResources,
+  removeLocalMediaResource,
+  removeLocalMediaResources,
+  addLocalBiography,
+  addLocalBiographies,
+  removeLocalBiography,
+  removeLocalBiographies,
   addLocalVocabulary,
   clearEntities,
   clearEvents,
