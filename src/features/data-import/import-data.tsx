@@ -1,8 +1,15 @@
 import type { ImportData } from '@intavia/data-import';
+import { toast } from '@intavia/ui';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
-import { addLocalEntities, addLocalEvents, addLocalVocabulary } from '@/app/store/intavia.slice';
+import {
+  addLocalBiographies,
+  addLocalEntities,
+  addLocalEvents,
+  addLocalMediaResources,
+  addLocalVocabulary,
+} from '@/app/store/intavia.slice';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
 import Button from '@/features/ui/Button';
 
@@ -22,6 +29,12 @@ export function ImportData(props: ImportDataProps): JSX.Element {
     // add events
     data?.events && dispatch(addLocalEvents(data.events));
 
+    // add media resources
+    data?.media && dispatch(addLocalMediaResources(data.media));
+
+    // add biographies
+    data?.biographies && dispatch(addLocalBiographies(data.biographies));
+
     // add vocabularies
     if (data?.vocabularies != null) {
       for (const id in data.vocabularies) {
@@ -39,6 +52,12 @@ export function ImportData(props: ImportDataProps): JSX.Element {
         }
       }
     }
+
+    toast({
+      title: 'Data Import Successfull',
+      description: 'Data was imported.',
+      variant: 'default',
+    });
   };
 
   return (
