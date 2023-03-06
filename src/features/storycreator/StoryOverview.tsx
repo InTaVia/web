@@ -1,5 +1,6 @@
 import { AdjustmentsIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
+import { Dialog } from '@intavia/ui';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 
@@ -192,12 +193,15 @@ export function StoryOverview(): JSX.Element {
         </Button>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
       </div>
+
       {propertiesEditElement != null && (
-        <PropertiesDialog
-          onClose={handleCloseEditDialog}
-          element={propertiesEditElement}
-          onSave={handleSaveEdit}
-        />
+        <Dialog open={propertiesEditElement != null} onOpenChange={handleCloseEditDialog}>
+          <PropertiesDialog
+            onClose={handleCloseEditDialog}
+            element={propertiesEditElement}
+            onSave={handleSaveEdit}
+          />
+        </Dialog>
       )}
     </>
   );

@@ -3,7 +3,7 @@ import {
   DocumentAddIcon as AddWorkspaceIcon,
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
-import { cn } from '@intavia/ui';
+import { cn, Dialog } from '@intavia/ui';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
@@ -172,13 +172,19 @@ export default function Workspaces(): JSX.Element {
           <div className="h-full basis-full" onDoubleClick={onAddWorkspace}></div>
         </div>
       </Tab.Group>
-      {visualizationEditElement != null && (
-        <ComponentPropertiesDialog
-          onClose={handleCloseVisualizationDialog}
-          element={visualizationEditElement}
-          onSave={handleSaveVisualization as (element: SlideContent | Visualization) => void}
-        />
-      )}
+
+      {visualizationEditElement != null ? (
+        <Dialog
+          open={visualizationEditElement != null}
+          onOpenChange={handleCloseVisualizationDialog}
+        >
+          <ComponentPropertiesDialog
+            onClose={handleCloseVisualizationDialog}
+            element={visualizationEditElement}
+            onSave={handleSaveVisualization as (element: SlideContent | Visualization) => void}
+          />
+        </Dialog>
+      ) : null}
     </>
   );
 }
