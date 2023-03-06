@@ -1,7 +1,8 @@
+import { Button } from '@intavia/ui';
+
 import SlideLayoutButton from '@/features/storycreator/slide-layout-popover';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import { PaneToggle } from '@/features/ui/analyse-page-toolbar/PaneToggle';
-import Button from '@/features/ui/Button';
 
 interface StroyCreatorToolbarProps {
   onLayoutSelected: (layout: PanelLayout) => void;
@@ -30,9 +31,6 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
         <PaneToggle parentComponent="stc" orientation="left" />
         <SlideLayoutButton onLayoutSelected={props.onLayoutSelected} />
         <Button
-          size="small"
-          round="pill"
-          color="accent"
           onClick={() => {
             onDesktopChange(!desktop);
           }}
@@ -40,9 +38,6 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           {desktop ? 'Mobile' : 'Desktop'}
         </Button>
         <Button
-          size="small"
-          round="pill"
-          color="accent"
           onClick={() => {
             onOpenSettingsDialog();
           }}
@@ -50,9 +45,6 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           Settings
         </Button>
         <Button
-          size="small"
-          round="pill"
-          color="accent"
           onClick={() => {
             onExportStory();
           }}
@@ -60,9 +52,6 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           Export
         </Button>
         {/* <Button
-          size="small"
-          round="pill"
-          color="accent"
           onClick={() => {
             onTimescaleChange(!timescale);
           }}

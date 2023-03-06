@@ -44,13 +44,7 @@ export function LoadStory(props: LoadStoryProps): JSX.Element {
         />
         <label
           htmlFor={inputId}
-          className="isolate box-border -translate-y-1 cursor-pointer rounded-md border-none bg-intavia-brand-700
-          p-1.5
-    px-3
-    py-1.5 text-sm
-    font-normal text-intavia-gray-50 outline-current
-    drop-shadow-md transition-transform
-     hover:translate-y-0 hover:bg-intavia-brand-900 hover:drop-shadow-sm focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-gray-900 disabled:translate-y-0 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 disabled:drop-shadow-sm"
+          className="isolate box-border -translate-y-1 cursor-pointer rounded-md border-none bg-intavia-brand-700 p-1.5 px-3 text-sm font-normal text-intavia-neutral-50 outline-current drop-shadow-md transition-transform hover:translate-y-0 hover:bg-intavia-brand-900 hover:drop-shadow-sm focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-neutral-900 disabled:translate-y-0 disabled:cursor-not-allowed disabled:bg-neutral-300 disabled:text-neutral-600 disabled:drop-shadow-sm"
         >
           Import Story
         </label>

@@ -15,9 +15,9 @@ export default function SlideLayoutButton(props: SlideLayoutButtonProps): JSX.El
       </PopoverTrigger>
 
       <PopoverContent className="grid w-full">
-        <h3 className="text-lg font-semibold text-intavia-gray-800">Set Your Slide Layout</h3>
+        <h3 className="text-lg font-semibold text-intavia-neutral-800">Set Your Slide Layout</h3>
 
-        <div className="grid grid-cols-2 gap-1 overflow-y-auto rounded-md p-1 text-gray-800 drop-shadow-2xl">
+        <div className="grid grid-cols-2 gap-1 overflow-y-auto rounded-md p-1 text-neutral-800 drop-shadow-2xl">
           {storyLayout.map((option) => {
             const layout = layoutOptions[option];
 

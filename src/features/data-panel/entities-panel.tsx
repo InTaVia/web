@@ -1,4 +1,5 @@
 import type { Entity, EntityKind } from '@intavia/api-client';
+import { Button } from '@intavia/ui';
 import { useContext, useState } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
@@ -12,7 +13,6 @@ import { EntityItem } from '@/features/data-panel/entity-item';
 import { EventItem } from '@/features/data-panel/event-item';
 import { GroupItem } from '@/features/data-panel/group-item';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
-import Button from '@/features/ui/Button';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
 interface EntitiesPanelProps {
@@ -75,7 +75,7 @@ export function EntitiesPanel(props: EntitiesPanelProps): JSX.Element {
     <div className="flex h-full flex-col overflow-auto">
       {/* <EntityPanelTasks /> */}
       <div className="flex min-h-fit flex-col items-start bg-slate-200 p-2">
-        <Button size="small" color="accent" round="pill" onClick={viewAllData}>
+        <Button size="sm" onClick={viewAllData}>
           Add All
         </Button>
         <div className="flex flex-row gap-x-1">

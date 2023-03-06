@@ -10,7 +10,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
   const { children } = props;
 
   return (
-    <div className="grid min-h-full grid-rows-[auto_1fr] bg-gray-50">
+    <div className="grid min-h-full grid-rows-[auto_1fr] bg-neutral-50">
       <AppBar />
       <main>{children}</main>
     </div>

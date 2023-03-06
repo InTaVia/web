@@ -29,7 +29,7 @@ export function DataView(props: DataViewProps): JSX.Element {
                 return cn({
                   ['flex-grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
                     true, //always applies
-                  ['bg-white text-gray-400 hover:text-intavia-brand-800']: !selected,
+                  ['bg-white text-neutral-400 hover:text-intavia-brand-800']: !selected,
                   ['hover:bg-white/[0.12] hover:text-intavia-brand-800']: selected,
                 });
               }}

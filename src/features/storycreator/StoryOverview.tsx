@@ -1,6 +1,6 @@
 import { AdjustmentsIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
-import { Dialog } from '@intavia/ui';
+import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 
@@ -28,7 +28,6 @@ import {
   removeStory,
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
-import Button from '@/features/ui/Button';
 
 export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -152,28 +151,24 @@ export function StoryOverview(): JSX.Element {
                   {story.id}
                 </div>
                 <div key={`storyEditButton${index}`}>
-                  <Button
-                    shadow="none"
-                    size="extra-small"
-                    round="circle"
+                  <IconButton
+                    label="Edit"
                     onClick={() => {
                       setPropertiesEditElement(story);
                     }}
                   >
                     <AdjustmentsIcon className="h-3 w-3" />
-                  </Button>
+                  </IconButton>
                 </div>
                 <div key={`storyDeleteButton${index}`}>
-                  <Button
-                    shadow="none"
-                    size="extra-small"
-                    round="circle"
+                  <IconButton
+                    label="Remove"
                     onClick={() => {
                       onRemoveStory(story.id);
                     }}
                   >
                     <TrashIcon className="h-3 w-3" />
-                  </Button>
+                  </IconButton>
                 </div>
               </Fragment>
             );
@@ -181,14 +176,7 @@ export function StoryOverview(): JSX.Element {
         </div>
       </div>
       <div key={'storyListButtonRow'} className="flex grid-flow-row gap-4">
-        <Button
-          size="small"
-          round="round"
-          shadow="small"
-          color="accent"
-          type="submit"
-          onClick={onCreateStory}
-        >
+        <Button type="submit" onClick={onCreateStory}>
           New Story
         </Button>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>

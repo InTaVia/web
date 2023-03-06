@@ -1,10 +1,10 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { Button } from '@intavia/ui';
 import { useState } from 'react';
 
 import type { ComponentProperty } from '@/features/common/component-property';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Timeline } from '@/features/timelineV2/timeline';
-import Button from '@/features/ui/Button';
 
 interface TimelineProps {
   events: Record<Event['id'], Event>;

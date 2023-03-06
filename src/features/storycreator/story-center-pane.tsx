@@ -2,7 +2,14 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
 import type { Entity, Event } from '@intavia/api-client/dist/models';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@intavia/ui';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@intavia/ui';
 import { toPng } from 'html-to-image';
 import { useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
@@ -33,7 +40,6 @@ import {
   setLayoutForSlide,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import Button from '@/features/ui/Button';
 import type { UiWindow } from '@/features/ui/ui.slice';
 import { selectWindows } from '@/features/ui/ui.slice';
 import type {
@@ -395,7 +401,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
           return (
             <div className="grid h-full w-full grid-cols-1 justify-items-center">
-              <div className="h-full border border-intavia-gray-300" style={{ width: newWidth }}>
+              <div className="h-full border border-intavia-neutral-300" style={{ width: newWidth }}>
                 <SlideEditor
                   slide={selectedSlide as Slide}
                   imageRef={ref}
@@ -454,7 +460,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               <textarea
                 id="message"
                 rows={6}
-                className="dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                className="dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:placeholder:text-neutral-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 block w-full rounded-lg border border-neutral-300 bg-neutral-50 p-2.5 text-sm text-neutral-900 focus:border-blue-500 focus:ring-blue-500"
                 defaultValue={JSON.stringify(storyExportObject, null, 2)}
               ></textarea>
             </form>
@@ -462,10 +468,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
           <DialogFooter>
             <Button
-              size="small"
-              round="round"
-              shadow="small"
-              color="warning"
+              variant="outline"
               onClick={() => {
                 setDialogOpen(false);
               }}
@@ -479,27 +482,16 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               )}`}
               download={`${story.properties.name?.value ?? story.id}.istory.json`}
             >
-              <Button size="small" round="round" shadow="small" color="accent">
-                Download
-              </Button>
+              <Button>Download</Button>
             </a>
 
-            <Button
-              size="small"
-              round="round"
-              shadow="small"
-              color="accent"
-              form={'storyExportDialog'}
-              type="submit"
-            >
+            <Button form={'storyExportDialog'} type="submit">
               {t(['common', 'form', 'submit'])}
             </Button>
 
             {previewUrl !== null && (
               <a target="_blank" href={previewUrl} rel="noreferrer">
-                <Button size="small" round="round" shadow="small" color="accent">
-                  Preview
-                </Button>
+                <Button>Preview</Button>
               </a>
             )}
           </DialogFooter>

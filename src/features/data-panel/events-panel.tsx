@@ -1,4 +1,5 @@
 import type { Event } from '@intavia/api-client';
+import { Button } from '@intavia/ui';
 import { useContext, useState } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
@@ -14,7 +15,6 @@ import {
   selectSlidesByStoryID,
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
-import Button from '@/features/ui/Button';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -80,7 +80,7 @@ export function EventsPanel(props: EventsPanelProps): JSX.Element {
     <div className="flex h-full flex-col overflow-auto">
       {/* <EventPanelTasks /> */}
       <div className="flex min-h-fit flex-col items-start bg-slate-200 p-2">
-        <Button size="small" color="accent" round="pill" onClick={viewAllData}>
+        <Button size="sm" onClick={viewAllData}>
           Add All
         </Button>
         <div className="flex flex-row gap-x-1">

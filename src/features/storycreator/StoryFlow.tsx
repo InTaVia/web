@@ -108,7 +108,7 @@ export function StoryFlow(props: StoryFlowProps) {
               className={`cursor-pointer overflow-hidden rounded-md border ${
                 slide.selected ?? true
                   ? 'border-[3px] border-intavia-blue-900'
-                  : 'border-intavia-gray-400'
+                  : 'border-intavia-neutral-400'
               }`}
               onKeyUp={() => {
                 onClick(slide.id);

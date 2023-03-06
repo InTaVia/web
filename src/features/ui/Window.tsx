@@ -1,9 +1,7 @@
 import { DuplicateIcon, XIcon } from '@heroicons/react/outline';
 import { AdjustmentsIcon } from '@heroicons/react/solid';
+import { Button } from '@intavia/ui';
 import type { ReactNode } from 'react';
-
-import Button from '@/features/ui/Button';
-import styles from '@/features/ui/ui.module.css';
 
 export interface WindowProps {
   children?: ReactNode;

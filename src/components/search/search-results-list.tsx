@@ -21,7 +21,7 @@ export function SearchResultsList(): JSX.Element {
       <ul
         role="list"
         className={cn('divide-y-200 divide-y transition-all', {
-          'opacity-50 grayscale': searchResults.isFetching,
+          'opacity-50 neutralscale': searchResults.isFetching,
         })}
       >
         {entities.map((entity) => {

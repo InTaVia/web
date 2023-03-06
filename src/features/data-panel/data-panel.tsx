@@ -11,7 +11,7 @@ export function DataPanel(): JSX.Element {
   ];
 
   return (
-    <Tab.Group as="div" className="grid h-full grid-rows-[auto_1fr] bg-gray-100">
+    <Tab.Group as="div" className="grid h-full grid-rows-[auto_1fr] bg-neutral-100">
       <Tab.List className="flex w-full" as="div">
         {tabs.map((tab) => {
           return (
@@ -21,7 +21,7 @@ export function DataPanel(): JSX.Element {
                 return cn({
                   ['grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
                     true, //always applies
-                  ['bg-white text-gray-400 hover:text-intavia-brand-800']: !selected,
+                  ['bg-white text-neutral-400 hover:text-intavia-brand-800']: !selected,
                   ['hover:bg-white/[0.12] hover:text-intavia-brand-800']: selected,
                 });
               }}

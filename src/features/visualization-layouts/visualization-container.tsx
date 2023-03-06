@@ -1,6 +1,7 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import type { Entity, Event } from '@intavia/api-client';
+import { Button, IconButton } from '@intavia/ui';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -13,7 +14,6 @@ import {
   addTargetEntitiesToVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';
-import Button from '@/features/ui/Button';
 import VisualisationComponent from '@/features/visualization-layouts/visualization';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 import {
@@ -188,11 +188,8 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       >
         <div className="truncate">{name}</div>
         <div className="sticky right-0 flex flex-nowrap gap-1">
-          <Button
+          <IconButton
             className="ml-auto grow-0"
-            shadow="none"
-            size="extra-small"
-            round="circle"
             onClick={() => {
               if (setVisualizationEditElement !== undefined) {
                 setVisualizationEditElement(visualization as Visualization);
@@ -200,12 +197,9 @@ export default function VisualisationContainer(props: VisualisationContainerProp
             }}
           >
             <AdjustmentsIcon className="h-3 w-3" />
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             className="ml-auto grow-0"
-            shadow="none"
-            size="extra-small"
-            round="circle"
             onClick={() => {
               if (id !== null) {
                 onReleaseVisualization(visualizationSlot, id);
@@ -213,7 +207,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
             }}
           >
             <XIcon className="h-3 w-3" />
-          </Button>
+          </IconButton>
         </div>
       </div>
       {visualization !== undefined && (

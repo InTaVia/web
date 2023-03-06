@@ -33,7 +33,7 @@ module.exports = {
           800: '#8bba61',
           900: '#84b15b',
         },
-        'intavia-gray': {
+        'intavia-neutral': {
           50: '#f2f2f2',
           100: '#e5e5e5',
           200: '#cbcbcb',

@@ -48,7 +48,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
               <p className="text-base text-intavia-brand-700">
                 {new Date(constraint.value[0]).getFullYear()}
               </p>
-              <p className="text-base text-intavia-gray-700">-</p>
+              <p className="text-base text-intavia-neutral-700">-</p>
               <p className="text-base text-intavia-brand-700">
                 {new Date(constraint.value[1]).getFullYear()}
               </p>
@@ -62,7 +62,7 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
   }
 
   return (
-    <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-gray-50">
+    <div className="flex h-12 w-full flex-row items-center justify-between bg-intavia-neutral-50">
       <div className="flex h-min flex-row items-center justify-start gap-2">
         <p className="ml-3 mr-4 text-lg">{constraint.label.default}</p>
         {renderTypeSpecificHeader()}

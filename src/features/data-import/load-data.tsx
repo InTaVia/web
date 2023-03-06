@@ -58,7 +58,7 @@ export function LoadData(props: LoadDataProps): JSX.Element {
         />
         <label
           htmlFor={inputId}
-          className="rounded-full bg-intavia-brand-700 p-1.5 px-3 text-sm font-normal text-intavia-gray-50 outline-current transition hover:bg-intavia-brand-900 focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-gray-900 disabled:bg-gray-300 disabled:text-gray-600"
+          className="rounded-full bg-intavia-brand-700 p-1.5 px-3 text-sm font-normal text-intavia-neutral-50 outline-current transition hover:bg-intavia-brand-900 focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-neutral-900 disabled:bg-neutral-300 disabled:text-neutral-600"
         >
           {t(['common', 'data-import', 'ui', 'load-data'])}
         </label>

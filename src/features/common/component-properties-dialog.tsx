@@ -5,10 +5,12 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon, TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
 import {
+  Button,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  IconButton,
   Input,
   Select,
   SelectContent,
@@ -26,7 +28,6 @@ import type { ComponentProperty, QuizAnswer } from '@/features/common/component-
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { AnswerList, SlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
-import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -238,7 +239,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                     visibilities: newVisibilities,
                                   });
                                 }}
-                                className="dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
+                                className="dark:border-neutral-600 dark:bg-neutral-700 dark:ring-offset-neutral-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-neutral-300 bg-neutral-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
                               />
                             </div>,
                             <div
@@ -294,7 +295,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                                     visibilities: newVisibilities,
                                                   });
                                                 }}
-                                                className="dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
+                                                className="dark:border-neutral-600 dark:bg-neutral-700 dark:ring-offset-neutral-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-neutral-300 bg-neutral-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
                                               />
                                               <div className="table">
                                                 {/*  <div className="table-cell w-1/3 font-semibold">
@@ -326,7 +327,8 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               key={`${property.label}ListButton`}
                               className="flex h-7 items-center"
                             >
-                              <Button
+                              <IconButton
+                                label="Remove"
                                 onClick={() => {
                                   const newEntityIds = tmpElement.entityIds.filter((id) => {
                                     return id !== e;
@@ -342,11 +344,9 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                     visibilities: newVis,
                                   });
                                 }}
-                                size="extra-small"
-                                round="circle"
                               >
                                 <TrashIcon className="h-4 w-4" />
-                              </Button>
+                              </IconButton>
                             </div>,
                           ];
                         })}
@@ -370,7 +370,9 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
       </div>
 
       <DialogFooter>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
 
         <Button
           onClick={() => {

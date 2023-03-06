@@ -93,6 +93,6 @@ export function getRingSegmentColors(
     case 'person-occupation':
       return ['#D8D027', '#FFFDCF'];
     default:
-      return ['lightGray', 'darkGray'];
+      return ['lightneutral', 'darkneutral'];
   }
 }

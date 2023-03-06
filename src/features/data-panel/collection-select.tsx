@@ -1,6 +1,7 @@
-import type { ChangeEvent } from 'react';
+import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@intavia/ui';
 
 import type { Collection } from '@/app/store/intavia-collections.slice';
+import { FormField } from '@/components/form-field';
 import { useCollections } from '@/features/common/data/use-collections';
 
 interface CollectionSelectProps {
@@ -13,31 +14,23 @@ export function CollectionSelect(props: CollectionSelectProps): JSX.Element {
 
   const items = Object.entries(collections);
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onChange(event.target.value);
-  };
-
   return (
-    <div className="flex flex-col p-2">
-      <label htmlFor="collection">Collection:</label>
-      <select
-        defaultValue="default"
-        name="collection"
-        id="collection"
-        onChange={handleChange}
-        className="h-8 p-2"
-      >
-        <option value="default" disabled hidden>
-          Choose a collection
-        </option>
-        {items.map(([id, collection]) => {
-          return (
-            <option key={id} value={id}>
-              {collection.label}
-            </option>
-          );
-        })}
-      </select>
-    </div>
+    <FormField>
+      <Label htmlFor="collection">Collection:</Label>
+      <Select name="collection" onValueChange={onChange}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select a collection" />
+        </SelectTrigger>
+        <SelectContent>
+          {items.map(([id, collection]) => {
+            return (
+              <SelectItem key={id} value={id}>
+                {collection.label}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
+    </FormField>
   );
 }

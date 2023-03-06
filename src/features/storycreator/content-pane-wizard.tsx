@@ -1,7 +1,7 @@
+import { Button } from '@intavia/ui';
 import { useState } from 'react';
 
 import { SlideContentTypes } from '@/features/storycreator/contentPane.slice';
-import Button from '@/features/ui/Button';
 
 interface ContentPaneWizardProps {
   mini?: boolean;
@@ -25,8 +25,6 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
   if (!open && mini) {
     content = (
       <Button
-        round="round"
-        color="accent"
         onClick={() => {
           setOpen(!open);
         }}
@@ -41,8 +39,6 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
           return (
             <Button
               key={`${type}ContentButton`}
-              round="round"
-              color="accent"
               onClick={() => {
                 onButtonClick(type);
               }}

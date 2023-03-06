@@ -2,11 +2,10 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
 import { TrashIcon } from '@heroicons/react/solid';
-import { CheckBox, Input } from '@intavia/ui';
+import { Button, CheckBox, IconButton, Input } from '@intavia/ui';
 import { useState } from 'react';
 
 import type { StoryAnswerList, StoryQuizAnswer } from '@/features/storycreator/contentPane.slice';
-import Button from '@/features/ui/Button';
 
 interface StoryQuizAnswerListProps {
   answerList: StoryAnswerList;
@@ -81,24 +80,21 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
               className="w-full"
             />
             <div className="flex items-center">
-              <Button
+              <IconButton
+                label="Remove"
                 key={`answer${index + 1}Delete`}
                 onClick={() => {
                   deleteAnswer(index);
                 }}
-                size="extra-small"
-                round="circle"
               >
                 <TrashIcon className="h-4 w-4" />
-              </Button>
+              </IconButton>
             </div>
           </div>
         );
       })}
       <div className="flex justify-center">
-        <Button round="round" color="accent" size="small" onClick={addAnswer}>
-          Add Answer
-        </Button>
+        <Button onClick={addAnswer}>Add Answer</Button>
       </div>
     </div>
   );

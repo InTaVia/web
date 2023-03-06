@@ -114,7 +114,7 @@ function RelatedEntityFilter(): JSX.Element {
             return (
               <ComboBoxItem
                 key={event.id}
-                className={cn(isFetching && 'opacity-50 grayscale')}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
                 value={event.id}
               >
                 {getTranslatedLabel(event.label)}
@@ -122,7 +122,7 @@ function RelatedEntityFilter(): JSX.Element {
             );
           })}
           {data?.results.length === 0 ? (
-            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
               Nothing found
             </ComboBoxEmpty>
           ) : null}
@@ -182,7 +182,7 @@ function RelationRoleFilter(): JSX.Element {
             return (
               <ComboBoxItem
                 key={role.id}
-                className={cn(isFetching && 'opacity-50 grayscale')}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
                 value={role.id}
               >
                 {getTranslatedLabel(role.label)}
@@ -190,7 +190,7 @@ function RelationRoleFilter(): JSX.Element {
             );
           })}
           {data?.results.length === 0 ? (
-            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
               Nothing found
             </ComboBoxEmpty>
           ) : null}

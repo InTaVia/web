@@ -3,7 +3,7 @@ import {
   DocumentAddIcon as AddWorkspaceIcon,
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
-import { cn, Dialog } from '@intavia/ui';
+import { Button, cn, Dialog } from '@intavia/ui';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
@@ -13,7 +13,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import Button from '@/features/ui/Button';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
 import {
   addWorkspace,
