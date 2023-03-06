@@ -139,7 +139,7 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <PageTitle>{t(['common', 'stories', 'metadata', 'title'])}</PageTitle>
-      <div key={'storyEntryListWrapper'} className="flex h-full items-center">
+      <div key={'storyEntryListWrapper'} className="flex items-center">
         <div key={'storyEntryList'} className="grid grid-cols-4 gap-2 text-lg">
           {Object.values(stories).map((story, index) => {
             return (

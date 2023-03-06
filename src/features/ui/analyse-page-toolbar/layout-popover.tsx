@@ -28,7 +28,7 @@ export interface VisOptionData extends LayoutOptionData {
 }
 
 export const storyLayout = [
-  'title',
+  //'title',
   'single-vis',
   'single-vis-content',
   'single-content',

@@ -77,7 +77,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const handleSave = (element: SlideContent | Visualization) => {
     if (SlideContentTypes.includes(element.type)) {
-      dispatch(editSlideContent({ slide: slide, content: element }));
+      dispatch(editSlideContent({ content: element }));
     } else {
       dispatch(editVisualization(element));
     }
@@ -162,6 +162,7 @@ export function SlideEditor(props: SlideEditorProps) {
           // console.log({ entities, events, visId, slide });
           dispatch(setHighlighted({ entities, events, visId, slide }));
         }}
+        handleSaveComponent={handleSave}
       />
       {editElement !== null && (
         <ComponentPropertiesDialog

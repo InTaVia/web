@@ -4,6 +4,7 @@ import 'react-resizable/css/styles.css';
 import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
+import { Textarea } from '@intavia/ui';
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -88,7 +89,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-lg overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                   {`Edit ${name}`}
                 </Dialog.Title>
@@ -134,7 +135,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                           return (
                             <>
                               <div>{property.label}</div>
-                              <TextField
+                              <Textarea
                                 id={property.id}
                                 key={property.label}
                                 value={property.value}
@@ -302,7 +303,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                                   </span>
                                                   <ChevronUpIcon
                                                     className={`${
-                                                      open ? '' : 'rotate-180 transform'
+                                                      open ? '' : 'rotate-180'
                                                     } h-5 w-5 text-blue-500`}
                                                   />
                                                 </Disclosure.Button>

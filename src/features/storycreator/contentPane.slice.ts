@@ -23,7 +23,7 @@ export interface SlideContent {
   properties?: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
-export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio'];
+export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio']; //, 'Title'];
 
 export interface ContentPane {
   id: string;
@@ -53,6 +53,11 @@ export interface StoryVideoAudio extends SlideContent {
 
 export interface StoryText extends SlideContent {
   type: 'Text';
+  properties: Record<string, ComponentProperty>;
+}
+
+export interface StoryTitle extends SlideContent {
+  type: 'Title';
   properties: Record<string, ComponentProperty>;
 }
 
@@ -125,6 +130,41 @@ export class StoryTextObject implements StoryText {
         editable: true,
         label: 'Text',
         value: '',
+        sort: 1,
+      } as ComponentProperty,
+    };
+  }
+  parentPane: string;
+}
+
+export class StoryTitleObject implements StoryTitle {
+  type: 'Title' = 'Title';
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  properties: Record<string, ComponentProperty>;
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.layout = layout;
+    this.parentPane = parentPane;
+    this.properties = {
+      title: {
+        type: 'text',
+        id: 'title',
+        editable: true,
+        label: 'Title',
+        value: 'Title',
+        sort: 0,
+      } as ComponentProperty,
+      subtitle: {
+        type: 'text',
+        id: 'subtitle',
+        editable: true,
+        label: 'Subtitle',
+        value: 'Subtitle',
         sort: 1,
       } as ComponentProperty,
     };
@@ -291,6 +331,10 @@ export const contentPaneSlice = createSlice({
         case 'Quiz':
           contentObject = new StoryQuizObject(content.id, content.contentPane, content.layout);
           break;
+        case 'Title':
+          console.log(content.layout);
+          contentObject = new StoryTitleObject(content.id, content.contentPane, content.layout);
+          break;
         default:
           break;
       }
@@ -345,6 +389,18 @@ export const {
 } = contentPaneSlice.actions;
 
 export const selectContentPaneByID = createSelector(
+  (state: RootState) => {
+    return state.contentPane;
+  },
+  (state: RootState, id: string) => {
+    return id;
+  },
+  (contentPanes, id) => {
+    return contentPanes[id];
+  },
+);
+
+export const selectStoryByContentPaneByID = createSelector(
   (state: RootState) => {
     return state.contentPane;
   },
