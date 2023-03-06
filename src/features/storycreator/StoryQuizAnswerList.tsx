@@ -2,11 +2,11 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
 import { TrashIcon } from '@heroicons/react/solid';
+import { CheckBox, Input } from '@intavia/ui';
 import { useState } from 'react';
 
 import type { StoryAnswerList, StoryQuizAnswer } from '@/features/storycreator/contentPane.slice';
 import Button from '@/features/ui/Button';
-import TextField from '@/features/ui/TextField';
 
 interface StoryQuizAnswerListProps {
   answerList: StoryAnswerList;
@@ -65,15 +65,14 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
             className="grid grid-cols-[10px,auto,auto] gap-2"
             key={`option${index}`}
           >
-            <input
-              type="checkbox"
+            <CheckBox
               key={`answer${index + 1}Checkbox`}
               id={`answer${index + 1}Checkbox`}
               name={`${index}`}
               checked={answer.correct}
-              onChange={onChange}
+              onCheckedChange={onChange}
             />
-            <TextField
+            <Input
               key={`answer${index + 1}`}
               id={`answer${index + 1}`}
               name={`${index}`}

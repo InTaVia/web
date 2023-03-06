@@ -3,7 +3,7 @@ import 'react-resizable/css/styles.css';
 
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import { Switch } from '@intavia/ui';
+import { Input, Switch } from '@intavia/ui';
 import { Fragment, useState } from 'react';
 
 import type { ComponentProperty } from '@/features/common/component-property';
@@ -11,7 +11,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
-import TextField from '@/features/ui/TextField';
 
 interface PropertiesDialogProps {
   element: Story | Visualization;
@@ -127,8 +126,8 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                         case 'text':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
-                            <TextField
-                              key={`${property.id}TextField`}
+                            <Input
+                              key={`${property.id}Input`}
                               id={property.id}
                               onChange={onChange}
                               value={property.value}

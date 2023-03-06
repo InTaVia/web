@@ -4,7 +4,7 @@ import 'react-resizable/css/styles.css';
 import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
-import { Switch } from '@intavia/ui';
+import { Input, Switch, Textarea } from '@intavia/ui';
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -15,7 +15,6 @@ import type { AnswerList, SlideContent } from '@/features/storycreator/contentPa
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
-import TextField from '@/features/ui/TextField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface ComponentPropertiesDialogProps {
@@ -136,7 +135,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                           return (
                             <>
                               <div>{property.label}</div>
-                              <TextField
+                              <Textarea
                                 id={property.id}
                                 key={property.label}
                                 value={property.value}
@@ -160,8 +159,8 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                         case 'text':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
-                            <TextField
-                              key={`${property.id}TextField`}
+                            <Input
+                              key={`${property.id}Input`}
                               id={property.id}
                               onChange={onChange}
                               value={property.value}
