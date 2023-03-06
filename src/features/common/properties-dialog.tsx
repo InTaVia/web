@@ -3,6 +3,7 @@ import 'react-resizable/css/styles.css';
 
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { Switch } from '@intavia/ui';
 import { Fragment, useState } from 'react';
 
 import type { ComponentProperty } from '@/features/common/component-property';
@@ -10,7 +11,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
-import { Switch } from '@/features/ui/Switch';
 import TextField from '@/features/ui/TextField';
 
 interface PropertiesDialogProps {
@@ -80,7 +80,7 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-lg overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                   {`Edit ${name}`}
                 </Dialog.Title>
@@ -93,8 +93,8 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                             <div key={`${property.id}Label`}>{property.label}</div>,
                             <Switch
                               key={`${property.id}Switch`}
-                              value={property.value as boolean}
-                              onChange={() => {
+                              checked={property.value}
+                              onCheckedChange={() => {
                                 const newProps = {
                                   ...tmpProperties,
                                 };
@@ -106,6 +106,7 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                               }}
                             />,
                           ];
+
                         case 'number':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -122,6 +123,7 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                               }}
                             />,
                           ];
+
                         case 'text':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -132,6 +134,7 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
                               value={property.value}
                             />,
                           ];
+
                         case 'select':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,

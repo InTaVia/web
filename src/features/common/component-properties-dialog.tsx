@@ -4,6 +4,7 @@ import 'react-resizable/css/styles.css';
 import { Dialog, Disclosure, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpIcon, SelectorIcon, TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
+import { Switch } from '@intavia/ui';
 import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -14,7 +15,6 @@ import type { AnswerList, SlideContent } from '@/features/storycreator/contentPa
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
 import Button from '@/features/ui/Button';
 import { NumberField } from '@/features/ui/NumberField';
-import { Switch } from '@/features/ui/Switch';
 import TextField from '@/features/ui/TextField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -88,7 +88,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-lg overflow-visible rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                   {`Edit ${name}`}
                 </Dialog.Title>
@@ -101,8 +101,8 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                             <div key={`${property.id}Label`}>{property.label}</div>,
                             <Switch
                               key={`${property.id}Switch`}
-                              value={property.value as boolean}
-                              onChange={() => {
+                              checked={property.value}
+                              onCheckedChange={() => {
                                 const newProps = {
                                   ...tmpProperties,
                                 };
@@ -114,6 +114,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               }}
                             />,
                           ];
+
                         case 'number':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -130,6 +131,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               }}
                             />,
                           ];
+
                         case 'textarea':
                           return (
                             <>
@@ -142,6 +144,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               />
                             </>
                           );
+
                         case 'answerlist':
                           return (
                             <>
@@ -153,6 +156,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               />
                             </>
                           );
+
                         case 'text':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -163,6 +167,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               value={property.value}
                             />,
                           ];
+
                         case 'select':
                           return [
                             <div key={`${property.id}Label`}>{property.label}</div>,
@@ -230,6 +235,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               </div>
                             </Listbox>,
                           ];
+
                         case 'entitiesAndEvents':
                           return (
                             <>
@@ -302,7 +308,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                                   </span>
                                                   <ChevronUpIcon
                                                     className={`${
-                                                      open ? '' : 'rotate-180 transform'
+                                                      open ? '' : 'rotate-180'
                                                     } h-5 w-5 text-blue-500`}
                                                   />
                                                 </Disclosure.Button>
