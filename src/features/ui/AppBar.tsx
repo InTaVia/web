@@ -1,65 +1,41 @@
-import { InformationCircleIcon } from '@heroicons/react/outline';
-import { clsx } from 'clsx';
+import { cn, Dialog, DialogTrigger } from '@intavia/ui';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
+import { DataImportDialog } from '@/features/data-import/data-import-dialog';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
   id: string;
   href: { pathname: string };
   label: JSX.Element | string;
-  current: boolean;
 }
 
 export function AppBar(): JSX.Element {
   const { t } = useI18n<'common'>();
   const currentPath = usePathname();
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
-  const linksLeft: Array<Link> = [
+  const links: Array<Link> = [
     {
       id: 'data-curation-lab',
       href: { pathname: '/search' },
       label: t(['common', 'app-bar', 'data-curation-lab']),
-      current: false,
     },
     {
       id: 'visual-analytics-studio',
       href: { pathname: '/visual-analytics-studio' },
       label: t(['common', 'app-bar', 'visual-analytics-studio']),
-      current: false,
     },
     {
       id: 'storytelling-creator',
       href: { pathname: '/storycreator' },
       label: t(['common', 'app-bar', 'story-creator']),
-      current: false,
     },
   ];
-
-  const linksRight: Array<Link> = [
-    {
-      id: 'data-import',
-      href: { pathname: '/data-import' },
-      label: t(['common', 'data-import', 'ui', 'import-data']),
-      current: false,
-    },
-    {
-      id: 'info',
-      href: { pathname: '/info' },
-      label: <InformationCircleIcon strokeWidth="1.25" className="h-8 w-8" />,
-      current: false,
-    },
-  ];
-
-  const currentLink = linksLeft.concat(linksRight).find((link) => {
-    return link.href.pathname === currentPath;
-  });
-  if (currentLink) {
-    currentLink.current = true;
-  }
 
   return (
     <div className="h-16 w-full bg-white">
@@ -67,21 +43,24 @@ export function AppBar(): JSX.Element {
         <div className="flex flex-row items-center gap-2">
           <div className="relative h-14 w-32">
             <Link href="/">
-              <a>
-                <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
+              <a aria-current={currentPath === '/' ? 'page' : undefined}>
+                <span className="sr-only">Home</span>
+                <Image alt="" src={IntaviaLogo} layout="fill" objectFit="contain" />
               </a>
             </Link>
           </div>
           <div className="flex h-16 flex-row items-center gap-3">
-            {linksLeft.map((item) => {
+            {links.map((item) => {
+              const isCurrent = currentPath === item.href.pathname;
+
               return (
                 <Link key={item.id} href={item.href.pathname}>
                   <a
-                    className={clsx(
-                      item.current ? 'text-intavia-brand-900' : 'text-black',
-                      'px-3 text-base hover:text-intavia-brand-900',
+                    className={cn(
+                      'px-3 text-base transition hover:text-neutral-700',
+                      isCurrent && 'text-neutral-700',
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={isCurrent ? 'page' : undefined}
                   >
                     {item.label}
                   </a>
@@ -91,21 +70,14 @@ export function AppBar(): JSX.Element {
           </div>
         </div>
         <div className="flex h-16 flex-row items-center gap-6 pr-6">
-          {linksRight.map((item) => {
-            return (
-              <Link key={item.id} href={item.href.pathname}>
-                <a
-                  className={clsx(
-                    item.current ? 'text-intavia-brand-900' : 'text-black',
-                    'px-3 text-base hover:text-intavia-brand-900',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
-              </Link>
-            );
-          })}
+          <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger>Import data</DialogTrigger>
+            <DataImportDialog
+              onClose={() => {
+                setDialogOpen(false);
+              }}
+            />
+          </Dialog>
         </div>
       </div>
     </div>
