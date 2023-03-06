@@ -1,6 +1,5 @@
 import type { Event } from '@intavia/api-client';
-import { scaleOrdinal } from 'd3-scale';
-import { schemeTableau10 } from 'd3-scale-chromatic';
+import { scaleOrdinal, schemeTableau10 } from 'd3';
 import { useEffect, useRef } from 'react';
 import type { MapRef } from 'react-map-gl';
 

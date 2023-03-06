@@ -1,7 +1,6 @@
 import type { Bin } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
-import { axisBottom, axisLeft, select } from 'd3';
-import { scaleLinear } from 'd3-scale';
+import { axisBottom, axisLeft, scaleLinear, select } from 'd3';
 import { useEffect, useRef } from 'react';
 
 import {

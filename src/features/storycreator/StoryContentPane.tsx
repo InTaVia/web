@@ -1,7 +1,6 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import ReactGridLayout from 'react-grid-layout';
-import ReactPlayer from 'react-player';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';

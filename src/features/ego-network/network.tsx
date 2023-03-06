@@ -1,7 +1,14 @@
 import type { Event } from '@intavia/api-client';
-import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } from 'd3-force';
-import { select } from 'd3-selection';
-import { zoom, zoomIdentity } from 'd3-zoom';
+import {
+  forceCenter,
+  forceCollide,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  select,
+  zoom,
+  zoomIdentity,
+} from 'd3';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { path } from 'd3-path';
+import { path } from 'd3';
 
 import type { Constraint } from '@/features/visual-querying/constraints.types';
 import type { Origin } from '@/features/visual-querying/Origin';

@@ -1,15 +1,13 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { entity } from '@intavia/api-client';
 import type {
   Entity,
   EntityEventRelation,
   Event,
   VocabularyEntry,
 } from '@intavia/api-client/dist/models';
-import { extent } from 'd3-array';
-import { scaleBand, scaleTime } from 'd3-scale';
-import { useEffect, useMemo, useState } from 'react';
+import { extent, scaleBand, scaleTime } from 'd3';
+import { useMemo } from 'react';
 
 import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
 import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
