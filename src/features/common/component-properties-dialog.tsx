@@ -1,11 +1,13 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon, TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
 import {
   Button,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -20,7 +22,7 @@ import {
   Switch,
   Textarea,
 } from '@intavia/ui';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntities } from '@/app/store/intavia.slice';
@@ -28,7 +30,6 @@ import type { ComponentProperty, QuizAnswer } from '@/features/common/component-
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { AnswerList, SlideContent } from '@/features/storycreator/contentPane.slice';
 import { StoryQuizAnswerList } from '@/features/storycreator/StoryQuizAnswerList';
-import { NumberField } from '@/features/ui/NumberField';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface ComponentPropertiesDialogProps {
@@ -107,7 +108,9 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
               case 'number':
                 return [
                   <div key={`${property.id}Label`}>{property.label}</div>,
-                  <NumberField
+                  <Input
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     key={`${property.id}Number`}
                     value={property.value}
                     onChange={(val: any) => {
@@ -192,7 +195,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
 
               case 'entitiesAndEvents':
                 return (
-                  <>
+                  <Fragment>
                     {tmpElement.entityIds.length > 0 && [
                       <div key={`${property.label}ListLabel`}>{property.label}</div>,
                       <div
@@ -246,59 +249,51 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                               key={`${property.label}Disclosure`}
                               className="w-full max-w-md rounded-2xl bg-white"
                             >
-                              <Disclosure>
-                                {({ open }) => {
-                                  return (
-                                    <>
-                                      <Disclosure.Button className="flex h-7 w-full justify-between rounded-lg bg-blue-100 p-1 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
-                                        <span>
-                                          entity
-                                          {getTranslatedLabel(entity.label)}
-                                        </span>
-                                        <ChevronUpIcon
-                                          className={`${
-                                            open ? '' : 'rotate-180'
-                                          } h-5 w-5 text-blue-500`}
+                              <Collapsible>
+                                <CollapsibleTrigger className="flex h-7 w-full justify-between rounded-lg bg-blue-100 p-1 text-left text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
+                                  <span>
+                                    entity
+                                    {getTranslatedLabel(entity.label)}
+                                  </span>
+                                </CollapsibleTrigger>
+
+                                <CollapsibleContent className="rounded-lg bg-blue-50 p-2 text-sm text-blue-900">
+                                  {events.map((event: Event) => {
+                                    newVisibilities[event.id] !== undefined
+                                      ? newVisibilities[event.id]
+                                      : true;
+
+                                    const eventVisible = newVisibilities[event.id];
+
+                                    return (
+                                      <div
+                                        key={event.id}
+                                        className="grid grid-cols-[25px,1fr] items-center"
+                                      >
+                                        <input
+                                          id={`${event.id}-checkbox`}
+                                          type="checkbox"
+                                          checked={eventVisible}
+                                          value={''}
+                                          onChange={() => {
+                                            newVisibilities[event.id] = !(eventVisible as boolean);
+
+                                            if (
+                                              newVisibilities[event.id] === true &&
+                                              newVisibilities[e] === false
+                                            ) {
+                                              newVisibilities[e] = true;
+                                            }
+
+                                            setTmpElement({
+                                              ...tmpElement,
+                                              visibilities: newVisibilities,
+                                            });
+                                          }}
+                                          className="dark:border-neutral-600 dark:bg-neutral-700 dark:ring-offset-neutral-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-neutral-300 bg-neutral-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
                                         />
-                                      </Disclosure.Button>
-                                      <Disclosure.Panel className="rounded-lg bg-blue-50 p-2 text-sm text-blue-900">
-                                        {events.map((event: Event) => {
-                                          newVisibilities[event.id] !== undefined
-                                            ? newVisibilities[event.id]
-                                            : true;
-
-                                          const eventVisible = newVisibilities[event.id];
-
-                                          return (
-                                            <div
-                                              key={event.id}
-                                              className="grid grid-cols-[25px,1fr] items-center"
-                                            >
-                                              <input
-                                                id={`${event.id}-checkbox`}
-                                                type="checkbox"
-                                                checked={eventVisible}
-                                                value={''}
-                                                onChange={() => {
-                                                  newVisibilities[event.id] =
-                                                    !(eventVisible as boolean);
-
-                                                  if (
-                                                    newVisibilities[event.id] === true &&
-                                                    newVisibilities[e] === false
-                                                  ) {
-                                                    newVisibilities[e] = true;
-                                                  }
-
-                                                  setTmpElement({
-                                                    ...tmpElement,
-                                                    visibilities: newVisibilities,
-                                                  });
-                                                }}
-                                                className="dark:border-neutral-600 dark:bg-neutral-700 dark:ring-offset-neutral-800 dark:focus:ring-blue-600 h-4 w-4 rounded border-neutral-300 bg-neutral-100 text-blue-600 focus:ring-2 focus:ring-blue-500"
-                                              />
-                                              <div className="table">
-                                                {/*  <div className="table-cell w-1/3 font-semibold">
+                                        <div className="table">
+                                          {/*  <div className="table-cell w-1/3 font-semibold">
                                                                 {eventTypes[event.type].label}
                                                               </div>
                                                               <div className="table-cell">
@@ -313,15 +308,12 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                                                   <span>in {event.place.name}</span>
                                                                 ) : null}
                                                               </div> */}
-                                              </div>
-                                            </div>
-                                          );
-                                        })}
-                                      </Disclosure.Panel>
-                                    </>
-                                  );
-                                }}
-                              </Disclosure>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </CollapsibleContent>
+                              </Collapsible>
                             </div>,
                             <div
                               key={`${property.label}ListButton`}
@@ -362,7 +354,7 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                         </div>
                       </>
                     )}
-                  </>
+                  </Fragment>
                 );
             }
           })}

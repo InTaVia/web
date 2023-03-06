@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   Input,
+  Input,
   Select,
   SelectContent,
   SelectItem,
@@ -20,7 +21,6 @@ import { useState } from 'react';
 import type { ComponentProperty } from '@/features/common/component-property';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Story } from '@/features/storycreator/storycreator.slice';
-import { NumberField } from '@/features/ui/NumberField';
 
 interface PropertiesDialogProps {
   element: Story | Visualization;
@@ -95,7 +95,9 @@ export function PropertiesDialog(props: PropertiesDialogProps): JSX.Element {
               case 'number':
                 return [
                   <div key={`${property.id}Label`}>{property.label}</div>,
-                  <NumberField
+                  <Input
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     key={`${property.id}Number`}
                     value={property.value}
                     onChange={(val: any) => {
