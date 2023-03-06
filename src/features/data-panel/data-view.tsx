@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react';
 import type { Entity, Event } from '@intavia/api-client';
-import clsx from 'clsx';
+import { cn } from '@intavia/ui';
 
 import { EntitiesPanel } from '@/features/data-panel/entities-panel';
 import { EventsPanel } from '@/features/data-panel/events-panel';
@@ -26,7 +26,7 @@ export function DataView(props: DataViewProps): JSX.Element {
             <Tab
               key={`tab-${tab.label}`}
               className={({ selected }) => {
-                return clsx({
+                return cn({
                   ['flex-grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
                     true, //always applies
                   ['bg-white text-gray-400 hover:text-intavia-brand-800']: !selected,

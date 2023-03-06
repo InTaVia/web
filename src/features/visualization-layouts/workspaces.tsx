@@ -3,7 +3,7 @@ import {
   DocumentAddIcon as AddWorkspaceIcon,
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
-import { clsx } from 'clsx';
+import { cn } from '@intavia/ui';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
@@ -131,7 +131,7 @@ export default function Workspaces(): JSX.Element {
                   as="div"
                   key={workspace.id}
                   className={({ selected }) => {
-                    return clsx({
+                    return cn({
                       ['flex cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-blue-700']:
                         true, //always applies
                       ['bg-white shadow']: selected, //only when open === true

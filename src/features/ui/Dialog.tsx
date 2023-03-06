@@ -1,5 +1,5 @@
 import { Dialog as HeadlessDialog, Transition } from '@headlessui/react';
-import cx from 'clsx';
+import { cn } from '@intavia/ui';
 import type { ForwardedRef, ReactNode } from 'react';
 import { forwardRef, Fragment } from 'react';
 
@@ -60,7 +60,7 @@ export const Dialog = forwardRef(function Dialog(
           >
             <HeadlessDialog.Panel
               ref={forwardedRef}
-              className={cx(
+              className={cn(
                 'bg-neutral-0 ring-neutral-1000/5 mx-auto grid transform grid-rows-[auto_1fr_auto] gap-4 overflow-hidden rounded-md bg-white p-4 shadow-2xl ring-1 transition-all',
                 styles.sizes[size],
               )}

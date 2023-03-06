@@ -1,5 +1,4 @@
-import { LoadingIndicator } from '@intavia/ui';
-import cn from 'clsx';
+import { cn, LoadingIndicator } from '@intavia/ui';
 
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { SearchResult } from '@/components/search/search-result';

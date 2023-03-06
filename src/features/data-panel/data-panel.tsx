@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react';
-import clsx from 'clsx';
+import { cn } from '@intavia/ui';
 
 import { CollectionPanel } from '@/features/data-panel/collection-panel';
 import { VisualizedPanel } from '@/features/data-panel/visualized-panel';
@@ -18,8 +18,8 @@ export function DataPanel(): JSX.Element {
             <Tab
               key={`tab-${tab.label}`}
               className={({ selected }) => {
-                return clsx({
-                  ['flex-grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
+                return cn({
+                  ['grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
                     true, //always applies
                   ['bg-white text-gray-400 hover:text-intavia-brand-800']: !selected,
                   ['hover:bg-white/[0.12] hover:text-intavia-brand-800']: selected,
