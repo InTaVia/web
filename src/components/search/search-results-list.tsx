@@ -1,6 +1,6 @@
+import { LoadingIndicator } from '@intavia/ui';
 import cn from 'clsx';
 
-import { LoadingIndicator } from '@/components/loading-indicator';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { SearchResult } from '@/components/search/search-result';
 import { useSearchEntitiesResults } from '@/components/search/use-search-entities-results';
@@ -9,7 +9,7 @@ export function SearchResultsList(): JSX.Element {
   const searchResults = useSearchEntitiesResults();
   const entities = searchResults.data?.results ?? [];
 
-  if (entities.length === 0) {
+  if (!searchResults.isFetching && entities.length === 0) {
     return (
       <div className="grid place-items-center">
         <NothingFoundMessage />

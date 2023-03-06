@@ -51,6 +51,7 @@ export interface FullButtonProperties {
   // component properties
   children: React.ReactNode;
   className: string;
+  type: 'button' | 'reset' | 'submit';
 
   // own properties
   size: keyof typeof buttonSizes;
@@ -67,6 +68,7 @@ export type ButtonProperties = ButtonHTMLAttributes<HTMLButtonElement> &
   Pick<FullButtonProperties, 'children'>;
 
 const defaultButtonProperties: Omit<FullButtonProperties, 'children'> = {
+  type: 'button',
   size: 'regular',
   disabled: false,
   color: 'primary',

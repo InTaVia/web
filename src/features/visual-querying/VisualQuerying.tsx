@@ -31,11 +31,7 @@ export function VisualQuerying(): JSX.Element {
   }
 
   return (
-    <div
-      id="vq-outer-wrapper"
-      className="b-white relative h-[80vh] w-full overflow-hidden vq-min:overflow-scroll"
-      ref={parent}
-    >
+    <div className="absolute inset-0 grid h-full w-full overflow-hidden" ref={parent}>
       <VisualQueryingSvg
         parentWidth={width}
         parentHeight={height}

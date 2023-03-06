@@ -4,10 +4,12 @@ import {
   Button,
   cn,
   ComboBox,
+  ComboBoxButton,
   ComboBoxContent,
   ComboBoxEmpty,
   ComboBoxInput,
   ComboBoxItem,
+  ComboBoxTrigger,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -16,6 +18,7 @@ import {
   IconButton,
   Input,
   Label,
+  LoadingIndicator,
   Select,
   SelectContent,
   SelectItem,
@@ -353,12 +356,16 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
     <FormField>
       <Label htmlFor={id}>{label}</Label>
       <ComboBox disabled={isLoading} onValueChange={onValueChange} value={value}>
-        <ComboBoxInput
-          displayValue={getDisplayLabel}
-          id={id}
-          onChange={onInputChange}
-          placeholder={placeholder}
-        />
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder={placeholder}
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
         <ComboBoxContent>
           {Object.values(occupations).map((occupation) => {
             return (
@@ -500,12 +507,16 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
     <FormField>
       <Label htmlFor={id}>Role</Label>
       <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
-        <ComboBoxInput
-          displayValue={getDisplayLabel}
-          id={id}
-          onChange={onInputChange}
-          placeholder="Select role"
-        />
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder="Select role"
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
         <ComboBoxContent>
           {Object.values(roles).map((role) => {
             return (
@@ -575,12 +586,16 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
     <FormField>
       <Label htmlFor={id}>Event</Label>
       <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
-        <ComboBoxInput
-          displayValue={getDisplayLabel}
-          id={id}
-          onChange={onInputChange}
-          placeholder="Select event"
-        />
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder="Select event"
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
         <ComboBoxContent>
           {Object.values(events).map((event) => {
             return (

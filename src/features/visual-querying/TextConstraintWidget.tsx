@@ -1,9 +1,8 @@
-import type { ChangeEvent, FormEvent } from 'react';
+import { Button, Input } from '@intavia/ui';
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
-import Button from '@/features/ui/Button';
-import TextField from '@/features/ui/TextField';
 import type { PersonNameConstraint } from '@/features/visual-querying/constraints.types';
 import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
@@ -19,27 +18,29 @@ export function TextConstraintWidget(props: TextConstraintWidgetProps): JSX.Elem
 
   const [text, setText] = useState(constraint.value);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  function onSubmit() {
     dispatch(setConstraintValue({ ...constraint, value: text }));
 
     setSelectedConstraint(null);
-
-    event.preventDefault();
   }
 
+  // FIXME: avoid form inside a form, should be in a dialog
   return (
-    <form onSubmit={onSubmit} className="flex justify-center gap-2 p-2">
-      <TextField
+    <div className="flex justify-center gap-2 p-2">
+      <Input
         placeholder="Please enter a name"
         value={text ?? ''}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           return setText(e.target.value);
         }}
         autoFocus={true}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') onSubmit();
+        }}
       />
-      <Button round="round" color="accent" disabled={text === ''}>
+      <Button disabled={text === ''} onClick={onSubmit}>
         Add
       </Button>
-    </form>
+    </div>
   );
 }

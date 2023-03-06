@@ -6,7 +6,6 @@ import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { SearchPanel } from '@/components/search/search-panel';
 import { SearchResultsPanel } from '@/components/search/search-results-panel';
-import { VisualQueryingModal } from '@/features/visual-querying/VisualQueryingModal';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -24,8 +23,6 @@ export default function SearchPage(): JSX.Element {
         <SearchPanel />
         <SearchResultsPanel />
       </div>
-
-      <VisualQueryingModal />
     </Fragment>
   );
 }

@@ -1,4 +1,5 @@
-import { LoadingIndicator } from '@/components/loading-indicator';
+import { LoadingIndicator } from '@intavia/ui';
+
 import { SearchPageFooter } from '@/components/search/search-page-footer';
 import { SearchResultsList } from '@/components/search/search-results-list';
 import { useSearchEntitiesResults } from '@/components/search/use-search-entities-results';
