@@ -1,5 +1,5 @@
 import type { Node, RootNode } from '@intavia/api-client';
-import { ClipLoader } from 'react-spinners';
+import { LoadingIndicator } from '@intavia/ui';
 
 import { useAppDispatch } from '@/app/store';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
@@ -36,7 +36,7 @@ export function VocabularyConstraintWidget<T extends { id: string }>(
   if (isLoading) {
     return (
       <div className="grid min-h-[480px] place-items-center">
-        <ClipLoader loading={isLoading} size="17px" color="#94c269" />
+        <LoadingIndicator color="#94c269" />
       </div>
     );
   }
