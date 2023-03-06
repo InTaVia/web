@@ -9,11 +9,9 @@ export function useDebouncedValue<T>(value: T, delay = 150): T {
     }, delay);
 
     return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
+      clearTimeout(timer);
     };
-  }, [value]);
+  }, [value, delay]);
 
   return debouncedValue;
 }
