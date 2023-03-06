@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { AppBar } from '@/features/ui/AppBar';
+import { AppBar } from '@/features/ui/app-bar';
 
 export interface PageLayoutProps {
   children?: ReactNode;

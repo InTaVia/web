@@ -38,7 +38,7 @@ export function AppBar(): JSX.Element {
   ];
 
   return (
-    <div className="h-16 w-full bg-white">
+    <div className="h-16 w-full border-b bg-white">
       <div className="flex flex-row flex-nowrap justify-between">
         <div className="flex flex-row items-center gap-2">
           <div className="relative h-14 w-32">
