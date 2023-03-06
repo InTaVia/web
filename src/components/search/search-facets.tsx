@@ -3,11 +3,14 @@ import {
   Button,
   cn,
   ComboBox,
+  ComboBoxButton,
   ComboBoxContent,
   ComboBoxEmpty,
   ComboBoxInput,
   ComboBoxItem,
+  ComboBoxTrigger,
   Label,
+  LoadingIndicator,
   Select,
   SelectContent,
   SelectItem,
@@ -96,12 +99,16 @@ function RelatedEntityFilter(): JSX.Element {
     <FormField>
       <Label htmlFor={id}>{label}</Label>
       <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
-        <ComboBoxInput
-          displayValue={getDisplayLabel}
-          id={id}
-          onChange={onInputChange}
-          placeholder={placeholder}
-        />
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder={placeholder}
+          />
+          <ComboBoxButton />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+        </ComboBoxTrigger>
         <ComboBoxContent>
           {Object.values(events).map((event) => {
             return (
@@ -160,12 +167,16 @@ function RelationRoleFilter(): JSX.Element {
     <FormField>
       <Label htmlFor={id}>{label}</Label>
       <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
-        <ComboBoxInput
-          displayValue={getDisplayLabel}
-          id={id}
-          onChange={onInputChange}
-          placeholder={placeholder}
-        />
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder={placeholder}
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
         <ComboBoxContent>
           {Object.values(roles).map((role) => {
             return (

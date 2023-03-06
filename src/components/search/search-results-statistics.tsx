@@ -1,4 +1,5 @@
 import type { Bin } from '@intavia/api-client';
+import { LoadingIndicator } from '@intavia/ui';
 import { axisBottom, axisLeft, select } from 'd3';
 import { scaleLinear } from 'd3-scale';
 import { useEffect, useRef } from 'react';
@@ -7,7 +8,6 @@ import {
   useSearchBirthStatisticsQuery,
   useSearchDeathStatisticsQuery,
 } from '@/api/intavia.service';
-import { LoadingIndicator } from '@/components/loading-indicator';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';

@@ -31,9 +31,9 @@
   "dependencies": {
     "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
-    "@intavia/api-client": "^0.1.16",
+    "@intavia/api-client": "^0.1.17",
     "@intavia/data-import": "^0.1.3",
-    "@intavia/ui": "^0.1.15",
+    "@intavia/ui": "^0.1.18",
     "@mapbox/mapbox-gl-draw": "^1.3.0",
     "@next/bundle-analyzer": "^12.2.5",
     "@popperjs/core": "^2.11.6",
@@ -190,6 +190,9 @@
         "version": "detect"
       },
       "tailwindcss": {
+        "callee": [
+          "cn"
+        ],
         "config": "./tailwind.config.cjs"
       }
     },
