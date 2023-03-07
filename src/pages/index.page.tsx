@@ -57,6 +57,7 @@ export default function HomePage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+
       <div className="flex h-full w-full flex-col justify-between">
         <section className="flex max-h-[500px] min-h-[400px] flex-col place-content-center items-center gap-10 bg-gradient-to-r from-intavia-brand-400 to-intavia-green-400">
           <div className="flex flex-row items-center gap-8">
@@ -76,11 +77,12 @@ export default function HomePage(): JSX.Element {
               </h2>
             </div>
           </div>
-          <div className="w-full px-96">
+          <div className="mx-auto w-full max-w-3xl px-8">
             <SearchForm />
           </div>
         </section>
-        <section className="flex justify-center gap-x-10">
+
+        <section className="my-10 flex flex-wrap justify-center gap-10">
           {cards.map((card) => {
             return (
               <div
@@ -107,7 +109,8 @@ export default function HomePage(): JSX.Element {
             );
           })}
         </section>
-        <footer className="flex h-16 place-content-center items-center gap-4 bg-neutral-200 px-20 text-neutral-900">
+
+        <footer className="flex h-16 place-content-center items-center gap-4 bg-neutral-200 px-20 text-sm text-neutral-900">
           <Image src="/assets/images/EC_logo_s.png" alt="EC Logo" width={55} height={36} />
           <p>
             This project has received funding from the European Union&apos;s Horizon 2020 research
