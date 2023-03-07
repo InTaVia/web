@@ -2,7 +2,7 @@ import { AdjustmentsIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {

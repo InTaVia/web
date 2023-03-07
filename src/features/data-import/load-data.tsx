@@ -1,8 +1,7 @@
 import { importData } from '@intavia/data-import';
 import type { ImportData } from '@intavia/data-import/dist/import-data';
-import { useToast } from '@intavia/ui';
-import type { ChangeEvent } from 'react';
-import { useId, useState } from 'react';
+import { FileInput, FileInputTrigger, useToast } from '@intavia/ui';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 
@@ -31,9 +30,10 @@ export function LoadData(props: LoadDataProps): JSX.Element {
     });
   }
 
-  function onChangeFile(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.files != null && event.target.files.length > 0) {
-      const file = event.target.files[0] as File;
+  function onChangeFileInput(files: FileList | null) {
+    if (files != null && files.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const file = files[0]!;
       setFile(file);
       importData({ file, onSuccess, onError });
     } else {
@@ -42,27 +42,12 @@ export function LoadData(props: LoadDataProps): JSX.Element {
     }
   }
 
-  const formId = 'import-data';
-  const inputId = useId();
-
   return (
     <div className="flex flex-row gap-2">
-      <form id={formId} name={formId} noValidate>
-        <input
-          accept=".xlsx"
-          name="file"
-          type="file"
-          id={inputId}
-          onChange={onChangeFile}
-          className="hidden"
-        />
-        <label
-          htmlFor={inputId}
-          className="rounded-full bg-intavia-brand-700 p-1.5 px-3 text-sm font-normal text-intavia-neutral-50 outline-current transition hover:bg-intavia-brand-900 focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-neutral-900 disabled:bg-neutral-300 disabled:text-neutral-600"
-        >
-          {t(['common', 'data-import', 'ui', 'load-data'])}
-        </label>
-      </form>
+      <FileInput accept=".xlsx" onValueChange={onChangeFileInput}>
+        <FileInputTrigger>{t(['common', 'data-import', 'ui', 'load-data'])}</FileInputTrigger>
+      </FileInput>
+
       <p>{file ? file.name : 'Please select a template file'}</p>
     </div>
   );
