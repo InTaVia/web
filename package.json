@@ -29,7 +29,6 @@
   },
   "packageManager": "npm@9.3.1",
   "dependencies": {
-    "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
     "@intavia/api-client": "^0.1.17",
     "@intavia/data-import": "^0.1.4",
