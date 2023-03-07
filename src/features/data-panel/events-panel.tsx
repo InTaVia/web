@@ -1,5 +1,5 @@
 import type { Event } from '@intavia/api-client';
-import { Button } from '@intavia/ui';
+import { Button, CheckBox } from '@intavia/ui';
 import { useContext, useState } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
@@ -10,11 +10,7 @@ import { DataList } from '@/features/data-panel/data-list';
 import { EntityItem } from '@/features/data-panel/entity-item';
 import { EventItem } from '@/features/data-panel/event-item';
 import { GroupItem } from '@/features/data-panel/group-item';
-import {
-  selectSlide,
-  selectSlidesByStoryID,
-  selectStories,
-} from '@/features/storycreator/storycreator.slice';
+import { selectStories } from '@/features/storycreator/storycreator.slice';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -84,13 +80,12 @@ export function EventsPanel(props: EventsPanelProps): JSX.Element {
           Add All
         </Button>
         <div className="flex flex-row gap-x-1">
-          <input
-            type="checkbox"
+          <CheckBox
             id="groupByEntityKind"
             name="groupByEntityKind"
             value="groupByEntityKind"
             checked={isGroupedByEventKind}
-            onChange={toggleGrouping}
+            onCheckedChange={toggleGrouping}
           />
           <label htmlFor="groupByEntityKind">Group events by kind</label>
         </div>

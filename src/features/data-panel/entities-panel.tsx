@@ -1,5 +1,5 @@
 import type { Entity, EntityKind } from '@intavia/api-client';
-import { Button } from '@intavia/ui';
+import { Button, CheckBox } from '@intavia/ui';
 import { useContext, useState } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
@@ -79,13 +79,12 @@ export function EntitiesPanel(props: EntitiesPanelProps): JSX.Element {
           Add All
         </Button>
         <div className="flex flex-row gap-x-1">
-          <input
-            type="checkbox"
+          <CheckBox
             id="groupByEntityKind"
             name="groupByEntityKind"
             value="groupByEntityKind"
             checked={isGroupedByEntityKind}
-            onChange={toggleGrouping}
+            onCheckedChange={toggleGrouping}
           />
           <label htmlFor="groupByEntityKind">Group entities by kind</label>
         </div>

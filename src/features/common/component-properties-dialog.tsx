@@ -1,10 +1,11 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import { ChevronUpIcon, TrashIcon } from '@heroicons/react/solid';
+import { TrashIcon } from '@heroicons/react/solid';
 import type { Event } from '@intavia/api-client';
 import {
   Button,
+  CheckBox,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -225,12 +226,11 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
 
                           return [
                             <div key={`entity${entity.id}`} className="flex h-7 items-center">
-                              <input
+                              <CheckBox
                                 id={`default-checkbox-${e}`}
-                                type="checkbox"
                                 checked={newVisibilities[e]}
                                 value={`${newVisibilities[e]}`}
-                                onChange={() => {
+                                onCheckedChange={() => {
                                   newVisibilities[e] = !(newVisibilities[e] as boolean);
 
                                   for (const event of events) {
@@ -270,12 +270,11 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                                         key={event.id}
                                         className="grid grid-cols-[25px,1fr] items-center"
                                       >
-                                        <input
+                                        <CheckBox
                                           id={`${event.id}-checkbox`}
-                                          type="checkbox"
                                           checked={eventVisible}
                                           value={''}
-                                          onChange={() => {
+                                          onCheckedChange={() => {
                                             newVisibilities[event.id] = !(eventVisible as boolean);
 
                                             if (
