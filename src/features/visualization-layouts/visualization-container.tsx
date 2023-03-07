@@ -1,7 +1,6 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import type { Entity, Event } from '@intavia/api-client';
-import { IconButton } from '@intavia/ui';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
