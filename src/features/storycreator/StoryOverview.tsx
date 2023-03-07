@@ -28,6 +28,7 @@ import {
   removeStory,
   selectStories,
 } from '@/features/storycreator/storycreator.slice';
+import { isNonEmptyString } from '@/lib/is-nonempty-string';
 
 export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -135,49 +136,46 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <h1 className="text-5xl font-light">Storytelling Creator</h1>
-      <div key={'storyEntryListWrapper'} className="flex h-full items-center">
-        <div key={'storyEntryList'} className="grid grid-cols-4 gap-2 text-lg">
-          {Object.values(stories).map((story, index) => {
+      <div className="flex h-full items-center">
+        <ul className="divide-y divide-neutral-200">
+          {Object.values(stories).map((story) => {
+            const _name = story.properties.name?.value.trim();
+            const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
+
             return (
-              <Fragment key={`storyListEntry${index}`}>
-                <Link key={`storyLink${index}`} href={{ pathname: `/storycreator/${story.id}` }}>
+              <li className="flex items-center gap-8" key={story.id}>
+                <Link href={{ pathname: `/storycreator/${story.id}` }}>
                   <a>
-                    {story!.properties!.name!.value.trim() !== ''
-                      ? story!.properties!.name!.value.trim()
-                      : 'Nameless Story'}
+                    {name}
+                    <div className="text-sm text-neutral-500">{story.id}</div>
                   </a>
                 </Link>
-                <div key={`storyID${index}`} className="opacity-50">
-                  {story.id}
-                </div>
-                <div key={`storyEditButton${index}`}>
+                <div className="flex gap-2">
                   <IconButton
                     label="Edit"
                     onClick={() => {
                       setPropertiesEditElement(story);
                     }}
                   >
-                    <AdjustmentsIcon className="h-3 w-3" />
+                    <AdjustmentsIcon className="h-5 w-5" />
                   </IconButton>
-                </div>
-                <div key={`storyDeleteButton${index}`}>
                   <IconButton
                     label="Remove"
                     onClick={() => {
                       onRemoveStory(story.id);
                     }}
                   >
-                    <TrashIcon className="h-3 w-3" />
+                    <TrashIcon className="h-5 w-5" />
                   </IconButton>
                 </div>
-              </Fragment>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
-      <div key={'storyListButtonRow'} className="flex grid-flow-row gap-4">
+      <div className="grid justify-items-start gap-4">
         <Button type="submit" onClick={onCreateStory}>
-          New Story
+          Create new story
         </Button>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
       </div>
