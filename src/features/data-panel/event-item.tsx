@@ -46,32 +46,33 @@ export function EventItem(props: EventItemProps): JSX.Element {
     setIsHovered(false);
     //update workspace hovered
   }
+
   return (
     <div className="grid border border-neutral-200">
       <Collapsible>
         <CollapsibleTrigger
           as="div"
-          className={`flex w-full flex-row items-center justify-between px-2 py-1 text-left hover:bg-slate-200`}
+          className="flex w-full flex-row items-center justify-between px-2 py-1 text-left hover:bg-neutral-200"
           draggable
           onDragStart={onDragStart}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
-          <div className="flex flex-row items-center gap-1">
-            <div className="min-w-fit text-slate-400">{icon}</div>
-            <p className="text-xs text-slate-500">
+          <div className="flex flex-row items-center gap-2">
+            <div className="min-w-fit text-neutral-400">{icon}</div>
+            <p className="text-xs text-neutral-500">
               {[event.startDate, event.endDate].filter(Boolean).join(' - ')}
             </p>
             <p>{getTranslatedLabel(event.label)}</p>
           </div>
-          {isHovered && <CursorClickIcon className="h-4 w-4 text-slate-400" />}
+          {isHovered && <CursorClickIcon className="h-4 w-4 text-neutral-400" />}
           <div className="min-w-fit">
-            <PlusSmIcon className="h-4 w-4 text-slate-500" />
+            <PlusSmIcon className="h-4 w-4 text-neutral-500" />
           </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <ul className="grid gap-1 text-sm" role="list">
+          <ul className="grid gap-2 text-sm" role="list">
             {event.relations != null &&
               event.relations.map((relation) => {
                 const entityId = relation.entity;

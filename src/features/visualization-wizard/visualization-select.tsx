@@ -24,7 +24,7 @@ export function VisualizationSelect(props: VisualizationSelectProps): JSX.Elemen
         setSelectedVisualizationId(visualizatonId);
       }}
     >
-      <SelectTrigger className="w-60">
+      <SelectTrigger>
         <SelectValue>
           <span className="block truncate">{`${options[selectedVisualizationId].type}: ${
             options[selectedVisualizationId].properties.name.value ||

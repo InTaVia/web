@@ -1,7 +1,7 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import type { Entity, Event } from '@intavia/api-client';
-import { Button, IconButton } from '@intavia/ui';
+import { IconButton } from '@intavia/ui';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -188,26 +188,28 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       >
         <div className="truncate">{name}</div>
         <div className="sticky right-0 flex flex-nowrap gap-1">
-          <IconButton
-            className="ml-auto grow-0"
+          <button
+            aria-label="Edit"
+            className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
             onClick={() => {
               if (setVisualizationEditElement !== undefined) {
                 setVisualizationEditElement(visualization as Visualization);
               }
             }}
           >
-            <AdjustmentsIcon className="h-3 w-3" />
-          </IconButton>
-          <IconButton
-            className="ml-auto grow-0"
+            <AdjustmentsIcon className="h-4 w-4" />
+          </button>
+          <button
+            aria-label="Remove"
+            className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
             onClick={() => {
               if (id !== null) {
                 onReleaseVisualization(visualizationSlot, id);
               }
             }}
           >
-            <XIcon className="h-3 w-3" />
-          </IconButton>
+            <XIcon className="h-4 w-4" />
+          </button>
         </div>
       </div>
       {visualization !== undefined && (

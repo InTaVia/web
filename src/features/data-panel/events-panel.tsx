@@ -73,13 +73,13 @@ export function EventsPanel(props: EventsPanelProps): JSX.Element {
   }
 
   return (
-    <div className="flex h-full flex-col overflow-auto">
+    <div className="flex h-full flex-col overflow-auto text-sm">
       {/* <EventPanelTasks /> */}
-      <div className="flex min-h-fit flex-col items-start bg-slate-200 p-2">
-        <Button size="sm" onClick={viewAllData}>
+      <div className="flex min-h-fit flex-col items-start gap-2 bg-neutral-200 p-2">
+        <Button size="xs" onClick={viewAllData}>
           Add All
         </Button>
-        <div className="flex flex-row gap-x-1">
+        <div className="flex flex-row items-center gap-x-1.5">
           <CheckBox
             id="groupByEntityKind"
             name="groupByEntityKind"

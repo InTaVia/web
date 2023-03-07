@@ -1,5 +1,6 @@
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid';
 import type { Entity, Event } from '@intavia/api-client';
-import { Button } from '@intavia/ui';
+import { IconButton } from '@intavia/ui';
 import { useState } from 'react';
 
 import type { ComponentProperty } from '@/features/common/component-property';
@@ -46,21 +47,25 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         diameter={diameter}
         zoom={zoom}
       />
-      <div className="absolute top-1 right-1">
-        <Button
+      <div className="absolute top-1 right-1 flex gap-2">
+        <IconButton
+          size="sm"
+          label="Zoom in"
           onClick={() => {
             setZoom(Math.min(zoom + 1, 20));
           }}
         >
-          +
-        </Button>
-        <Button
+          <PlusSmIcon className="h-4 w-4" />
+        </IconButton>
+        <IconButton
+          size="sm"
+          label="Zoom out"
           onClick={() => {
             setZoom(Math.max(zoom - 1, 0));
           }}
         >
-          -
-        </Button>
+          <MinusSmIcon className="h-4 w-4" />
+        </IconButton>
       </div>
       <div className="absolute bottom-0 right-0">
         <VisualizationLegend events={events} entities={entities} />

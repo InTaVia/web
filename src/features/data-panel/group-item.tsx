@@ -14,11 +14,11 @@ export function GroupItem(props: GroupItemProps): JSX.Element {
   return (
     <div className="grid border border-neutral-200">
       <Collapsible>
-        <CollapsibleTrigger className="flex w-full flex-row items-center justify-between p-2 text-left hover:bg-slate-200">
-          <div className="flex flex-row items-center gap-1">
+        <CollapsibleTrigger className="flex w-full flex-row items-center justify-between p-2 text-left hover:bg-neutral-200">
+          <div className="flex flex-row items-center gap-2">
             {icon}
             {showCount && <span>{group.count}</span>}
-            <span className="text-sm font-medium text-slate-900">{group.label}</span>
+            <span className="text-sm font-medium text-neutral-900">{group.label}</span>
           </div>
         </CollapsibleTrigger>
 

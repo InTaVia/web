@@ -50,8 +50,8 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-5 p-5">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="grid h-full w-full place-content-center gap-5 p-5">
+      <div className="grid gap-2 md:grid-cols-2">
         <Button
           onClick={() => {
             onButtonClick('map');
@@ -74,8 +74,9 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           Create Network Visualization
         </Button>
       </div>
+
       {Object.keys(visualizations).length > 0 && (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid gap-2 border-t pt-4 md:grid-cols-2">
           <VisualizationSelect
             options={visualizations}
             setSelectedVisualizationId={setSelectedVisualizationId}
