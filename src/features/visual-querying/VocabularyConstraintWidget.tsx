@@ -36,7 +36,7 @@ export function VocabularyConstraintWidget<T extends { id: string }>(
   if (isLoading) {
     return (
       <div className="grid min-h-[480px] place-items-center">
-        <LoadingIndicator color="#94c269" />
+        <LoadingIndicator />
       </div>
     );
   }
