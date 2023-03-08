@@ -16,6 +16,7 @@ import { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { HoverProvider } from '@/app/context/hover.context';
 import { createEmotionCache } from '@/app/create-emotion-cache';
 import { useAppMetadata } from '@/app/metadata/use-app-metadata';
 import { RootErrorBoundaryFallback } from '@/app/root-error-boundary-fallback';
@@ -24,6 +25,7 @@ import { useCanonicalUrl } from '@/app/route/use-canonical-url';
 import { useLocale } from '@/app/route/use-locale';
 import { persistor, store } from '@/app/store';
 import { SetupStore } from '@/app/store/setup-store';
+import { Tooltip } from '@/features/common/tooltip/tooltip';
 import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
@@ -91,11 +93,14 @@ export default function App(props: AppProps): JSX.Element {
               <CssBaseline />
               <PersistGate loading={null} persistor={persistor}>
                 <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
-                  <PageLayout>
-                    <Component {...pageProps} />
-                  </PageLayout>
-                  <Toaster />
-                  <SetupStore></SetupStore>
+                  <HoverProvider>
+                    <PageLayout>
+                      <Component {...pageProps} />
+                    </PageLayout>
+                    <Toaster />
+                    <Tooltip />
+                    <SetupStore />
+                  </HoverProvider>
                 </ErrorBoundary>
               </PersistGate>
             </ThemeProvider>

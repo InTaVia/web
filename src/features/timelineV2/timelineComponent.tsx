@@ -27,6 +27,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const thickness = properties['thickness']?.value ?? 1;
   const vertical = properties['vertical']?.value.value ?? undefined;
   const diameter = properties['diameter']?.value ?? 14;
+  const fontSize = properties['fontSize']?.value ?? 10;
 
   return (
     <>
@@ -44,6 +45,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         sortEntities={sortEntities}
         clusterMode={clusterMode}
         diameter={diameter}
+        fontSize={fontSize}
         zoom={zoom}
       />
       <div className="absolute top-1 right-1">

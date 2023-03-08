@@ -98,6 +98,7 @@ interface TimelineProps {
   sortEntities: boolean;
   diameter?: number;
   zoom?: number;
+  fontSize?: number;
 }
 
 export function Timeline(props: TimelineProps): JSX.Element {
@@ -105,7 +106,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     entities,
     events,
     width: i_width,
-    height = 300,
+    height: i_height,
     amount = null,
     vertical: i_vertical,
     thickness = 1,
@@ -118,6 +119,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     sortEntities = false,
     diameter = 14,
     zoom = 0,
+    fontSize = 10,
   } = props;
 
   //const [unTimeableEvents, setUnTimeableEvents] = useState({});
@@ -126,9 +128,10 @@ export function Timeline(props: TimelineProps): JSX.Element {
   //const [unPlottableEntities, setUnPlottableEntities] = useState({});
   //const [plotableEvents, setPlotableEvents] = useState({});
 
-  const width = i_width + zoom * 500;
+  const vertical = i_vertical === undefined ? (i_height > i_width ? true : false) : i_vertical;
 
-  const vertical = i_vertical === undefined ? (height > width ? true : false) : i_vertical;
+  const width = vertical ? i_width : i_width + zoom * 600;
+  const height = vertical ? i_height + zoom * 400 : i_height;
 
   const { plotableEntities, unPlottableEntities, plotableEvents, unTimeableEvents } =
     useMemo(() => {
@@ -336,11 +339,12 @@ export function Timeline(props: TimelineProps): JSX.Element {
               clusterMode={clusterMode}
               mode={mode}
               diameter={mode === 'mass' ? scaleY.bandwidth() : diameter}
+              fontSize={fontSize}
             />
           );
         })}
       </div>
-      <fieldset style={{ border: '1px solid gray' }}>
+      {/*  <fieldset style={{ border: '1px solid gray' }}>
         <legend>Un-Plottable Entities</legend>
         {(Object.values(unPlottableEntities) as Array<Entity>).map((entry: Entity) => {
           return <div key={`${entry.id}unPlottableEntity`}>{entry.label.default}</div>;
@@ -351,7 +355,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
         {(Object.values(unTimeableEvents) as Array<Event>).map((entry: Event) => {
           return <div key={`${entry.id}UnTimeableEvent`}>{entry.label.default}</div>;
         })}
-      </fieldset>
+      </fieldset> */}
     </>
   );
 }

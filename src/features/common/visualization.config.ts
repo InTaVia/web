@@ -32,6 +32,12 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'rectangle',
     color: { foreground: 'hsl(180,60%,80%)', background: 'hsl(180,100%,25%)' },
   },
+  travel: {
+    label: 'Travel',
+    type: 'travel',
+    shape: 'dot',
+    color: { foreground: 'hsl(30, 100%, 75%)', background: 'hsl(30, 100%, 50%)' },
+  },
   default: {
     label: 'Unknown',
     type: 'default',
@@ -47,6 +53,7 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'event-kind-birth': 'birth',
   'event-kind-death': 'death',
   'event-kind-creation': 'creation',
+  'event-kind-travel': 'travel',
 };
 
 export function getColorById(id: string): string {

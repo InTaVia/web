@@ -35,8 +35,15 @@ export function EventItem(props: EventItemProps): JSX.Element {
     dragEvent.dataTransfer.setData(mediaType, JSON.stringify(data));
   }
 
-  function onMouseEnter() {
-    updateHover({ entities: [], events: [event.id], clientRect: null });
+  function onMouseEnter(e) {
+    updateHover({
+      entities: [],
+      events: [event.id],
+      clientRect: {
+        left: e.clientX,
+        top: e.clientY,
+      } as DOMRect,
+    });
     setIsHovered(true);
     //update workspace hovered
   }
@@ -69,9 +76,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
                 </div>
                 {isHovered && <CursorClickIcon className="h-4 w-4 text-slate-400" />}
                 <div className="min-w-fit">
-                  <PlusSmIcon
-                    className={`${open ? 'rotate-45 transform' : ''} h-4 w-4 text-slate-500`}
-                  />
+                  <PlusSmIcon className={`${open ? 'rotate-45' : ''} h-4 w-4 text-slate-500`} />
                 </div>
               </Disclosure.Button>
               <Disclosure.Panel>

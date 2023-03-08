@@ -35,6 +35,7 @@ interface TimelineEventProps {
   overlap: boolean;
   mode?: TimelineType;
   diameter?: number;
+  fontSize?: number;
 }
 
 const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element => {
@@ -53,6 +54,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     overlap = false,
     mode = 'default',
     diameter = 16,
+    fontSize = 10
   } = props;
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
@@ -143,7 +145,10 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
           updateHover({
             entities: [],
             events: [event.id],
-            clientRect: e.currentTarget.getBoundingClientRect(),
+            clientRect: {
+              left: e.clientX,
+              top: e.clientY,
+            } as DOMRect,
           });
           setHover(true);
         }}
@@ -171,6 +176,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         mode={mode}
         thickness={thickness}
         vertical={vertical}
+        fontSize={fontSize}
       />
     </>
   );
