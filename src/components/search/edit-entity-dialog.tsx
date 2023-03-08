@@ -371,7 +371,7 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
             return (
               <ComboBoxItem
                 key={occupation.id}
-                className={cn(isFetching && 'opacity-50 grayscale')}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
                 value={occupation.id}
               >
                 {getTranslatedLabel(occupation.label)}
@@ -379,7 +379,7 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
             );
           })}
           {data?.results.length === 0 ? (
-            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
               Nothing found
             </ComboBoxEmpty>
           ) : null}
@@ -523,14 +523,14 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
               <ComboBoxItem
                 key={role.id}
                 value={role.id}
-                className={cn(isFetching && 'opacity-50 grayscale')}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
               >
                 {getTranslatedLabel(role.label)}
               </ComboBoxItem>
             );
           })}
           {data?.results.length === 0 ? (
-            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
               Nothing found
             </ComboBoxEmpty>
           ) : null}
@@ -602,14 +602,14 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
               <ComboBoxItem
                 key={event.id}
                 value={event.id}
-                className={cn(isFetching && 'opacity-50 grayscale')}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
               >
                 {getTranslatedLabel(event.label)}
               </ComboBoxItem>
             );
           })}
           {data?.results.length === 0 ? (
-            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
               Nothing found
             </ComboBoxEmpty>
           ) : null}

@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import { FileInput, FileInputTrigger, useToast } from '@intavia/ui';
 
 interface LoadStoryProps {
   onStoryImport: (data: Record<string, any>) => void;
@@ -7,54 +7,48 @@ interface LoadStoryProps {
 export function LoadStory(props: LoadStoryProps): JSX.Element {
   const { onStoryImport } = props;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files != null && event.target.files.length > 0) {
-      const file = event.target.files[0] as File;
+  const { toast } = useToast();
+
+  function onChangeFileInput(files: FileList | null) {
+    if (files != null && files.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const file = files[0]!;
       loadData(file);
     }
-  };
+  }
 
   function loadData(file: File) {
-    const onLoad = (event: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function onLoad(event: any) {
       onStoryImport(JSON.parse(event.target.result));
-    };
+
+      toast({
+        title: 'Success',
+        description: 'Successfully imported story.',
+        variant: 'default',
+      });
+    }
+
+    function onError() {
+      toast({
+        title: 'Error',
+        description: 'Failed to import story.',
+        variant: 'destructive',
+      });
+    }
 
     const reader = new FileReader();
     reader.onload = onLoad;
+    reader.onerror = onError;
     reader.readAsText(file);
   }
 
-  const formId = 'import-data';
-  const inputId = 'template-file-upload';
   return (
-    <div className="flex flex-row gap-2">
-      <form
-        className="isolate mt-1 -translate-y-1 cursor-pointer drop-shadow-md transition-transform hover:translate-y-0 hover:drop-shadow-sm disabled:translate-y-0 disabled:drop-shadow-sm"
-        id={formId}
-        name={formId}
-        noValidate
-      >
-        <input
-          accept=".json"
-          name="file"
-          type="file"
-          id={inputId}
-          onChange={handleChange}
-          className="hidden"
-        />
-        <label
-          htmlFor={inputId}
-          className="isolate box-border -translate-y-1 cursor-pointer rounded-md border-none bg-intavia-brand-700
-          p-1.5
-    px-3
-    py-1.5 text-sm
-    font-normal text-intavia-gray-50 outline-current
-    drop-shadow-md transition-transform
-     hover:translate-y-0 hover:bg-intavia-brand-900 hover:drop-shadow-sm focus:outline-2 focus:outline-offset-2 active:bg-intavia-brand-50 active:text-intavia-gray-900 disabled:translate-y-0 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 disabled:drop-shadow-sm"
-        >
-          Import Story
-        </label>
-      </form>
+    <div className="flex items-center gap-2">
+      <FileInput accept=".json" onValueChange={onChangeFileInput}>
+        <FileInputTrigger>Import story</FileInputTrigger>
+      </FileInput>
+
       <p>Please select an InTaVia Story Configuration File</p>
     </div>
   );

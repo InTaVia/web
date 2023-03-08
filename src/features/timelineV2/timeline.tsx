@@ -338,13 +338,13 @@ export function Timeline(props: TimelineProps): JSX.Element {
           );
         })}
       </div>
-      <fieldset style={{ border: '1px solid gray' }}>
+      <fieldset style={{ border: '1px solid neutral' }}>
         <legend>Un-Plottable Entities</legend>
         {(Object.values(unPlottableEntities) as Array<Entity>).map((entry: Entity) => {
           return <div key={`${entry.id}unPlottableEntity`}>{entry.label.default}</div>;
         })}
       </fieldset>
-      <fieldset style={{ border: '1px solid gray' }}>
+      <fieldset style={{ border: '1px solid neutral' }}>
         <legend>Un-Timaable Events</legend>
         {(Object.values(unTimeableEvents) as Array<Event>).map((entry: Event) => {
           return <div key={`${entry.id}UnTimeableEvent`}>{entry.label.default}</div>;

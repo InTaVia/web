@@ -150,7 +150,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
               height={h}
               x={x}
               y={y}
-              fill="lightGray"
+              fill="lightneutral"
             />
           );
         })}

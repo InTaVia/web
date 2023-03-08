@@ -24,40 +24,10 @@ export function CollectionPanel(): JSX.Element {
 
   return (
     <div className="flex h-full flex-col gap-1 overflow-hidden">
-      <CollectionSelect onChange={onCollectionChange} />
+      <div className="p-2">
+        <CollectionSelect onChange={onCollectionChange} />
+      </div>
       <DataView entities={entities} events={events} />
-
-      {/* <div className="h-full overflow-auto">
-        {entities.map((entity) => {
-          return (
-            <p key={entity.id}>
-              {entity.kind} : {entity.label.default}
-            </p>
-          );
-        })}
-        {events.map((event) => {
-          return (
-            <p key={event.id}>
-              {event.kind} : {event.label.default}
-            </p>
-          );
-        })}
-      </div> */}
-      {/* <VisualizationSelect /> */}
-      {/* {selectedCollection != null && (
-        <div className="flow flow-row">
-          Add collection to:
-          <select>
-            <option>all</option>
-            <option>vis 1</option>
-            <option>vis 2</option>
-            <option>vis 3</option>
-          </select>
-          <Button size="small" round="pill">
-            +
-          </Button>
-        </div>
-      )} */}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
+import { Button, IconButton } from '@intavia/ui';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -17,7 +18,6 @@ import {
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
 import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
-import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
 
@@ -176,11 +176,9 @@ export function StoryContentPane(props: StoryContentPaneProps) {
         <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
           <div className="truncate">{element.type}</div>
           <div className="sticky right-0 flex flex-nowrap gap-1">
-            <Button
+            <IconButton
               className="ml-auto grow-0"
-              shadow="none"
-              size="extra-small"
-              round="circle"
+              label="Edit"
               onClick={() => {
                 if (setEditElement !== undefined) {
                   setEditElement(element);
@@ -188,18 +186,16 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               }}
             >
               <AdjustmentsIcon className="h-3 w-3" />
-            </Button>
-            <Button
+            </IconButton>
+            <IconButton
+              label="Close"
               className="ml-auto grow-0"
-              shadow="none"
-              size="extra-small"
-              round="circle"
               onClick={() => {
                 removeWindowHandler(element);
               }}
             >
               <XIcon className="h-3 w-3" />
-            </Button>
+            </IconButton>
           </div>
         </div>
         {createWindowContent(element)}

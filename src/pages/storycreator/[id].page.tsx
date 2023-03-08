@@ -1,3 +1,4 @@
+import { Button } from '@intavia/ui';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Allotment } from 'allotment';
 import { useRouter } from 'next/router';
@@ -17,7 +18,6 @@ import { createSlide, selectStories } from '@/features/storycreator/storycreator
 import { StoryFlow } from '@/features/storycreator/StoryFlow';
 import { VisualizationDragger } from '@/features/storycreator/visualization-dragger';
 import AllotmentHeader from '@/features/ui/AllotmentHeader';
-import Button from '@/features/ui/Button';
 import { centerPaneProps, leftPaneProps, rightPaneProps } from '@/features/ui/panes.config';
 import { selectPaneOpen } from '@/features/ui/ui.slice';
 
@@ -169,12 +169,8 @@ function StoryScreen(): JSX.Element | null {
                       }}
                     </ReactResizeDetector>
                   </div>
-                  <div className="flex justify-center border-t border-intavia-gray-200 p-2">
+                  <div className="flex justify-center border-t border-intavia-neutral-200 p-2">
                     <Button
-                      border={false}
-                      round="pill"
-                      color="accent"
-                      size="small"
                       onClick={() => {
                         dispatch(createSlide(story.id));
                       }}

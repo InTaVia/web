@@ -1,49 +1,32 @@
-import { Tab } from '@headlessui/react';
-import { cn } from '@intavia/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@intavia/ui';
 
 import { CollectionPanel } from '@/features/data-panel/collection-panel';
 import { VisualizedPanel } from '@/features/data-panel/visualized-panel';
 
 export function DataPanel(): JSX.Element {
-  const tabs = [
-    { label: 'Collections', panel: <CollectionPanel /> },
-    { label: 'Visualized', panel: <VisualizedPanel /> },
-  ];
+  const tabs = {
+    collections: { label: 'Collections', panel: <CollectionPanel /> },
+    visualised: { label: 'Visualized', panel: <VisualizedPanel /> },
+  };
 
   return (
-    <Tab.Group as="div" className="grid h-full grid-rows-[auto_1fr] bg-gray-100">
-      <Tab.List className="flex w-full" as="div">
-        {tabs.map((tab) => {
+    <Tabs className="h-full overflow-hidden" defaultValue="collections">
+      <TabsList className="w-full">
+        {Object.entries(tabs).map(([id, tab]) => {
           return (
-            <Tab
-              key={`tab-${tab.label}`}
-              className={({ selected }) => {
-                return cn({
-                  ['grow cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-intavia-brand-800']:
-                    true, //always applies
-                  ['bg-white text-gray-400 hover:text-intavia-brand-800']: !selected,
-                  ['hover:bg-white/[0.12] hover:text-intavia-brand-800']: selected,
-                });
-              }}
-            >
+            <TabsTrigger key={id} value={id}>
               {tab.label}
-            </Tab>
+            </TabsTrigger>
           );
         })}
-      </Tab.List>
-      <Tab.Panels as="div" className="h-full overflow-hidden">
-        {tabs.map((tab) => {
-          return (
-            <Tab.Panel
-              key={`tab-panel-${tab.label}`}
-              as="div"
-              className="flex h-full flex-col gap-1"
-            >
-              {tab.panel}
-            </Tab.Panel>
-          );
-        })}
-      </Tab.Panels>
-    </Tab.Group>
+      </TabsList>
+      {Object.entries(tabs).map(([id, tab]) => {
+        return (
+          <TabsContent key={id} value={id} className="m-0 h-full overflow-auto rounded-none p-0">
+            {tab.panel}
+          </TabsContent>
+        );
+      })}
+    </Tabs>
   );
 }
