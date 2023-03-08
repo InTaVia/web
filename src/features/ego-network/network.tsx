@@ -9,6 +9,7 @@ import {
   zoom,
   zoomIdentity,
 } from 'd3';
+import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -100,6 +101,8 @@ export function Network(props: NetworkProps): JSX.Element {
 function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
   const { entity, x, y, isPrimary, showAllLabels } = props;
 
+  const router = useRouter();
+
   const { hovered, updateHover } = useHoverState();
   const isHovered = hovered?.entities.includes(entity.id) ?? false;
 
@@ -122,6 +125,10 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
     },
     onMouseLeave: () => {
       updateHover(null);
+    },
+    onClick: () => {
+      updateHover(null);
+      void router.push(`/entities/${entity.id}`);
     },
   };
 

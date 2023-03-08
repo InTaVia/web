@@ -57,6 +57,10 @@ export function HoverProvider(props: HoverProviderProps): JSX.Element {
       });
 
       const relatedEvents = hoveredEntities.flatMap((entity: Entity) => {
+        // FIXME: Somehow entity can be undefined in some cases which causes a runtime error in the following if statement
+        if (entity === undefined) {
+          return new Array<Event['id']>();
+        }
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         return entity.relations !== undefined
           ? entity.relations.map((relation: EntityEventRelation) => {
