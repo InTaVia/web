@@ -8,6 +8,8 @@ import { useEvents } from '@/lib/use-events';
 export function useNodesAndLinks(ids: Array<Entity['id']>): {
   nodes: Array<Node>;
   links: Array<Link>;
+  events: Record<string, Event>;
+  entities: Record<string, Entity>;
 } {
   const nodes: Array<Node> = [];
   const links: Array<Link> = [];
@@ -44,7 +46,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   const entitiesResponse = useEntities(uniqueEntityIds);
 
   // || events.keys.length <= 0?
-  if (!entitiesResponse.data) return { nodes: nodes, links: links };
+  if (!entitiesResponse.data) return { nodes: nodes, links: links, events: {}, entities: {} };
   const relatedEntities = entitiesResponse.data;
 
   // Add related entities to node array
@@ -102,5 +104,10 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
     });
   });
 
-  return { nodes: nodes, links: links };
+  return {
+    nodes: nodes,
+    links: links,
+    events: events.data != null ? Object.fromEntries(events.data) : {},
+    entities: Object.fromEntries(relatedEntities),
+  };
 }

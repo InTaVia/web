@@ -31,8 +31,7 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { visualization, width, height } = props;
 
   const entityIds = visualization.entityIds;
-  const { nodes, links } = useNodesAndLinks(entityIds);
-  const entities = useEntities(entityIds).data;
+  const { nodes, links, entities, events } = useNodesAndLinks(entityIds);
 
   if (nodes.length === 0) {
     return <p>Please add an entity</p>;
@@ -48,8 +47,8 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
         height={height}
         visProperties={visualization.properties}
       />
-      <div className="absolute bottom-5 right-0">
-        <VisualizationLegend events={{}} entities={entities} />
+      <div className="absolute bottom-0 right-0">
+        <VisualizationLegend events={{ events }} entities={entities} />
       </div>
     </>
   );

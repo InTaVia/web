@@ -41,7 +41,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
   }, [feature.properties!.event.id, highlightedByVis]);
 
   function onClick() {
-    if (pageContext === 'story-creator') {
+    if (pageContext.page === 'story-creator') {
       onToggleSelection?.([id as string]);
     }
   }

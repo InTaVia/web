@@ -1,6 +1,6 @@
 import type { EntityKind, EventKind } from '@intavia/api-client';
 
-interface EventKindColor {
+interface KindColor {
   foreground: string;
   background: string;
 }
@@ -8,8 +8,15 @@ interface EventKindColor {
 interface EventKindProperties {
   type: string;
   label: string;
-  shape: 'dot' | 'rectangle';
-  color: EventKindColor;
+  shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
+  color: KindColor;
+}
+
+interface EntityKindProperties {
+  kind: string;
+  label: string;
+  shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
+  color: KindColor;
 }
 
 const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindProperties> = {
@@ -17,7 +24,6 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     label: 'Birth',
     type: 'birth',
     shape: 'dot',
-    color: { foreground: 'black', background: '#0571b0' },
     color: { foreground: 'hsl(202,60%,80%)', background: 'hsl(202,100%,35%)' },
   },
   death: {
@@ -65,7 +71,7 @@ export function getColorById(id: string): string {
   }
 }
 
-export function getColorsById(id: string): EventKindColor {
+export function getColorsById(id: string): KindColor {
   const eventKind = eventKindByEventId[id];
   if (eventKind != null) {
     return eventKindPropertiesByType[eventKind]!.color;
@@ -99,6 +105,43 @@ const entityColorByKind: Record<EntityKind, string> = {
   'historical-event': '#A957AE',
 };
 
+const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
+  person: {
+    label: 'Person',
+    kind: 'person',
+    shape: 'dot',
+    color: { foreground: '#57AE5F', background: '#57AE5F' },
+  },
+  'cultural-heritage-object': {
+    label: 'Cultural Heritage Object',
+    kind: 'cultural-heritage-object',
+    shape: 'rectangle',
+    color: { foreground: '#5785AE', background: '#5785AE' },
+  },
+  place: {
+    label: 'Place',
+    kind: 'place',
+    shape: 'triangle',
+    color: { foreground: '#AE5757', background: '#AE5757' },
+  },
+  group: {
+    label: 'Group',
+    kind: 'group',
+    shape: 'ellipse',
+    color: { foreground: '#C6C6C6', background: '#C6C6C6' },
+  },
+  'historical-event': {
+    label: 'Historical Event',
+    kind: 'historical-event',
+    shape: 'dot',
+    color: { foreground: '#A957AE', background: '#A957AE' },
+  },
+};
+
 export function getEntityColorByKind(kind: EntityKind): string {
-  return entityColorByKind[kind];
+  return entityKindProperties[kind].color.foreground;
+}
+
+export function getEntityKindPropertiesByKind(kind: EntityKind): EntityKindProperties {
+  return entityKindProperties[kind] as EntityKindProperties;
 }
