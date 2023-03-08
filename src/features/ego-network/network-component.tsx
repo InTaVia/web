@@ -1,4 +1,5 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { LoadingIndicator } from '@intavia/ui';
 
 import type { Visualization } from '@/features/common/visualization.slice';
 import { Network } from '@/features/ego-network/network';
@@ -27,20 +28,31 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { visualization, width, height } = props;
 
   const entityIds = visualization.entityIds;
-  const { nodes, links } = useNodesAndLinks(entityIds);
+  const { nodes, links, status } = useNodesAndLinks(entityIds);
+
+  console.log(status);
 
   if (nodes.length === 0) {
     return <p>Please add an entity</p>;
   }
 
+  if (status === 'success') {
+    return (
+      <Network
+        key={`network-${entityIds.join('-')}`}
+        nodes={nodes}
+        links={links}
+        width={width}
+        height={height}
+        visProperties={visualization.properties}
+      />
+    );
+  }
+
   return (
-    <Network
-      key={`network-${entityIds.join('-')}`}
-      nodes={nodes}
-      links={links}
-      width={width}
-      height={height}
-      visProperties={visualization.properties}
-    />
+    <div className="grid h-full w-full place-items-center bg-neutral-50">
+      <LoadingIndicator />
+      <p>Loading network</p>
+    </div>
   );
 }
