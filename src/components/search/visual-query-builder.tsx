@@ -27,10 +27,10 @@ export function VisualQueryBuilder(): JSX.Element {
       ...searchFilters,
       page: 1,
       q,
-      bornAfter,
-      bornBefore,
-      diedAfter,
-      diedBefore,
+      born_after: bornAfter,
+      born_before: bornBefore,
+      died_after: diedAfter,
+      died_before: diedBefore,
       occupations_id,
     });
 

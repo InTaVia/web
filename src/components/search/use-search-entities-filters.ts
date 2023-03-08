@@ -28,15 +28,14 @@ export function useSearchEntitiesFilters(): SearchEntities.SearchParams {
       occupations_id: getSearchParams(searchParams, 'occupations_id'),
       gender: getSearchParams(searchParams, 'gender'),
       gender_id: getSearchParams(searchParams, 'gender_id'),
-      bornBefore: getSearchParam(searchParams, 'bornBefore'),
-      bornAfter: getSearchParam(searchParams, 'bornAfter'),
-      diedBefore: getSearchParam(searchParams, 'diedBefore'),
-      diedAfter: getSearchParam(searchParams, 'diedAfter'),
-
-      relatedEntity: getSearchParam(searchParams, 'relatedEntity'),
-      relatedEntities_id: getSearchParams(searchParams, 'relatedEntities_id'),
-      eventRole: getSearchParam(searchParams, 'eventRole'),
-      eventRoles_id: getSearchParams(searchParams, 'eventRoles_id'),
+      born_before: getSearchParam(searchParams, 'born_before'),
+      born_after: getSearchParam(searchParams, 'born_after'),
+      died_before: getSearchParam(searchParams, 'died_before'),
+      died_after: getSearchParam(searchParams, 'died_after'),
+      related_entity: getSearchParam(searchParams, 'related_entity'),
+      related_entities_id: getSearchParams(searchParams, 'related_entities_id'),
+      event_role: getSearchParam(searchParams, 'event_role'),
+      event_roles_id: getSearchParams(searchParams, 'event_roles_id'),
     };
 
     return searchEntitiesFilters;

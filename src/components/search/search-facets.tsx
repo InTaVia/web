@@ -65,7 +65,7 @@ export function SearchFacets(): JSX.Element {
 }
 
 function RelatedEntityFilter(): JSX.Element {
-  const name = 'relatedEntities_id.0';
+  const name = 'related_entities_id.0';
 
   // const { t } = useI18n<'common'>();
   const field = useField(name);
@@ -133,7 +133,7 @@ function RelatedEntityFilter(): JSX.Element {
 }
 
 function RelationRoleFilter(): JSX.Element {
-  const name = 'eventRoles_id.0';
+  const name = 'event_roles_id.0';
 
   // const { t } = useI18n<'common'>();
   const field = useField(name);

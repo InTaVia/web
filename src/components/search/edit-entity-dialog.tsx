@@ -650,7 +650,7 @@ function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 text-sm">
       {children({ page, pageSize })}
       <nav
         className="flex flex-wrap items-start justify-between"
