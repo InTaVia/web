@@ -30,8 +30,6 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const entityIds = visualization.entityIds;
   const { nodes, links, status } = useNodesAndLinks(entityIds);
 
-  console.log(status);
-
   if (nodes.length === 0) {
     return <p>Please add an entity</p>;
   }
