@@ -31,7 +31,11 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { nodes, links, status } = useNodesAndLinks(entityIds);
 
   if (nodes.length === 0) {
-    return <p>Please add an entity</p>;
+    return (
+      <div className="grid h-full w-full place-items-center bg-neutral-50">
+        <p>Please add an entity</p>
+      </div>
+    );
   }
 
   if (status === 'success') {

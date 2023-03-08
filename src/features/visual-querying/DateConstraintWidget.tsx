@@ -1,3 +1,5 @@
+import { LoadingIndicator } from '@intavia/ui';
+
 import {
   useSearchBirthStatisticsQuery,
   useSearchDeathStatisticsQuery,
@@ -49,7 +51,11 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
 
   function renderContent(): JSX.Element {
     if (isLoading) {
-      return <p>Loading ...</p>;
+      return (
+        <div className="grid h-full w-full place-items-center">
+          <LoadingIndicator />
+        </div>
+      );
     }
 
     if (data) {
@@ -62,7 +68,11 @@ export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Elem
       );
     }
 
-    return <p>No data</p>;
+    return (
+      <div className="grid h-full w-full place-items-center">
+        <p>No data</p>
+      </div>
+    );
   }
 
   return (
