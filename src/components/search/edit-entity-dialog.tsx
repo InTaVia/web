@@ -243,6 +243,8 @@ function OccupationsFormFields(): JSX.Element {
     fieldArray.fields.push({ id: undefined });
   }
 
+  const pagination = usePaginationState(fieldArray.fields.length);
+
   return (
     <div aria-labelledby={id} role="group" className="grid gap-3">
       <span className="text-sm font-medium" id={id}>
@@ -253,7 +255,7 @@ function OccupationsFormFields(): JSX.Element {
           <NothingFoundMessage className="text-sm" />
         </div>
       ) : (
-        <PaginatedFormFields length={fieldArray.fields.length}>
+        <PaginatedFormFields pagination={pagination}>
           {({ page, pageSize }) => {
             const start = (page - 1) * pageSize;
             const end = page * pageSize;
@@ -289,7 +291,13 @@ function OccupationsFormFields(): JSX.Element {
         </PaginatedFormFields>
       )}
       <div className="flex items-center justify-end">
-        <Button onClick={onAdd} variant="outline">
+        <Button
+          onClick={() => {
+            pagination.onLastPage();
+            onAdd();
+          }}
+          variant="outline"
+        >
           <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
           <span>{t(['common', 'form', 'add'])}</span>
         </Button>
@@ -402,6 +410,8 @@ function RelationsFormFields(): JSX.Element {
     fieldArray.fields.push({ event: undefined, role: undefined });
   }
 
+  const pagination = usePaginationState(fieldArray.fields.length);
+
   return (
     <div aria-labelledby={id} role="group" className="grid gap-3">
       <span className="text-sm font-medium" id={id}>
@@ -412,7 +422,7 @@ function RelationsFormFields(): JSX.Element {
           <NothingFoundMessage className="text-sm" />
         </div>
       ) : (
-        <PaginatedFormFields length={fieldArray.fields.length}>
+        <PaginatedFormFields pagination={pagination}>
           {({ page, pageSize }) => {
             const start = (page - 1) * pageSize;
             const end = page * pageSize;
@@ -452,7 +462,13 @@ function RelationsFormFields(): JSX.Element {
         </PaginatedFormFields>
       )}
       <div className="flex items-center justify-end">
-        <Button onClick={onAdd} variant="outline">
+        <Button
+          onClick={() => {
+            pagination.onLastPage();
+            onAdd();
+          }}
+          variant="outline"
+        >
           <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
           <span>{t(['common', 'form', 'add'])}</span>
         </Button>
@@ -619,23 +635,20 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
   );
 }
 
-interface PaginatedFormFieldsProps {
-  children: (pagination: { page: number; pageSize: number }) => ReactNode;
-  length: number | undefined;
+interface PaginationState {
+  page: number;
+  pages: number;
+  pageSize: number;
+  onPreviousPage: () => void;
+  onNextPage: () => void;
+  onFirstPage: () => void;
+  onLastPage: () => void;
 }
 
-function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
-  const { children, length = 0 } = props;
-
-  const { t } = useI18n<'common'>();
-
+function usePaginationState(length = 0): PaginationState {
   const pageSize = 10;
   const pages = Math.ceil(length / pageSize);
   const [page, setPage] = useState(1);
-
-  if (pages === 1) {
-    return <Fragment>{children({ page, pageSize })}</Fragment>;
-  }
 
   function onPreviousPage() {
     if (page > 1) {
@@ -649,14 +662,38 @@ function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
     }
   }
 
+  function onFirstPage() {
+    setPage(1);
+  }
+
+  function onLastPage() {
+    setPage(pages);
+  }
+
+  return { page, pages, pageSize, onPreviousPage, onNextPage, onFirstPage, onLastPage };
+}
+
+interface PaginatedFormFieldsProps {
+  children: (pagination: PaginationState) => ReactNode;
+  pagination: PaginationState;
+}
+
+function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
+  const { children, pagination } = props;
+
+  const { t } = useI18n<'common'>();
+  const { page, pages, onPreviousPage, onNextPage } = pagination;
+
+  if (pages === 1) return <Fragment>{children(pagination)}</Fragment>;
+
   return (
     <div className="grid gap-4 text-sm">
-      {children({ page, pageSize })}
+      {children(pagination)}
       <nav
         className="flex flex-wrap items-start justify-between"
         aria-label={t(['common', 'pagination', 'pagination'])}
       >
-        <span>{length} relations</span>
+        <span>{length} entries</span>
         <div className="flex flex-wrap items-center gap-4">
           <button
             className="flex items-center gap-1 disabled:cursor-not-allowed disabled:text-neutral-500"
