@@ -3,25 +3,10 @@ import { IconButton } from '@intavia/ui';
 import { Fragment } from 'react';
 
 import { useAppDispatch } from '@/app/store';
-import type {
-  Constraint,
-  PersonBirthDateConstraint,
-  PersonDeathDateConstraint,
-  PersonNameConstraint,
-  PersonOccupationConstraint,
-} from '@/features/visual-querying/constraints.types';
-import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
-import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
-import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
+import type { Constraint } from '@/features/visual-querying/constraints.types';
 import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 
 interface ConstraintContainerHeaderProps {
-  constraint: Constraint;
-  setSelectedConstraint: (constraintId: string | null) => void;
-}
-
-interface ConstraintContainerProps {
-  position: { x: number; y: number };
   constraint: Constraint;
   setSelectedConstraint: (constraintId: string | null) => void;
 }
@@ -78,53 +63,6 @@ function ConstraintContainerHeader(props: ConstraintContainerHeaderProps): JSX.E
       >
         <TrashIcon className="h-5 w-5" />
       </IconButton>
-    </div>
-  );
-}
-
-export function ConstraintContainer(props: ConstraintContainerProps): JSX.Element {
-  const { constraint, position, setSelectedConstraint } = props;
-
-  function renderWidget(): JSX.Element {
-    switch (constraint.kind.id) {
-      case 'date-range':
-        return (
-          <DateConstraintWidget
-            width={400}
-            height={200}
-            constraint={constraint as PersonBirthDateConstraint | PersonDeathDateConstraint}
-          />
-        );
-      case 'label':
-        return (
-          <TextConstraintWidget
-            constraint={constraint as PersonNameConstraint}
-            setSelectedConstraint={setSelectedConstraint}
-          />
-        );
-      // case 'geometry':
-      //   return <PlaceConstraintWidget width={550} height={350} constraint={constraint} />;
-      case 'vocabulary':
-        return (
-          <ProfessionConstraintWidget
-            width={300}
-            height={400}
-            constraint={constraint as PersonOccupationConstraint}
-          />
-        );
-    }
-  }
-
-  return (
-    <div
-      className="absolute text-clip rounded-md border bg-white"
-      style={{ left: position.x, top: position.y }}
-    >
-      <ConstraintContainerHeader
-        constraint={constraint}
-        setSelectedConstraint={setSelectedConstraint}
-      />
-      {renderWidget()}
     </div>
   );
 }

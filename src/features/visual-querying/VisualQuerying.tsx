@@ -1,9 +1,22 @@
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@intavia/ui';
 import { useRef, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
-import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
+import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
+import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
+import {
+  selectConstraints,
+  setConstraintValue,
+} from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
 import { useResizeObserverDeprecated } from '@/lib/useResizeObserver';
 
@@ -14,21 +27,9 @@ export function VisualQuerying(): JSX.Element {
 
   const [selectedConstraint, setSelectedConstraint] = useState<string | null>(null);
 
-  function getContainerPosition(type: Constraint['kind']['id']): { x: number; y: number } {
-    const center: [number, number] = [width / 2, height / 2];
-    switch (type) {
-      case 'date-range':
-        return { x: center[0] + 200, y: Math.max(0, center[1] - 300) };
-      // case 'geometry':
-      //   return { x: center[0] + 200, y: center[1] + 0 };
-      case 'vocabulary':
-        return { x: Math.max(0, center[0] - 550), y: center[1] + 0 };
-      case 'label':
-        return { x: Math.max(0, center[0] - 550), y: Math.max(0, center[1] - 150) };
-      default:
-        return { x: 0, y: 0 };
-    }
-  }
+  const selected = Object.values(constraints).find((constraint) => {
+    return constraint.id === selectedConstraint;
+  });
 
   return (
     <div className="absolute inset-0 grid h-full w-full overflow-hidden" ref={parent}>
@@ -39,20 +40,64 @@ export function VisualQuerying(): JSX.Element {
         setSelectedConstraint={setSelectedConstraint}
       />
 
-      {Object.values(constraints)
-        .filter((constraint: Constraint) => {
-          return constraint.id === selectedConstraint;
-        })
-        .map((constraint, idx) => {
-          return (
-            <ConstraintContainer
-              key={idx}
-              position={getContainerPosition(constraint.kind.id)}
-              constraint={constraint}
-              setSelectedConstraint={setSelectedConstraint}
-            />
-          );
-        })}
+      <ConstraintDialog constraint={selected} setSelectedConstraint={setSelectedConstraint} />
     </div>
   );
+}
+
+interface ConstraintDialogProps {
+  constraint: Constraint | undefined;
+  setSelectedConstraint: (id: string | null) => void;
+}
+
+function ConstraintDialog(props: ConstraintDialogProps): JSX.Element {
+  const { constraint, setSelectedConstraint } = props;
+
+  function onClose() {
+    setSelectedConstraint(null);
+  }
+
+  function onClear() {}
+
+  function onSubmit() {}
+
+  return (
+    <Dialog open={constraint != null} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit constraint</DialogTitle>
+        </DialogHeader>
+
+        <ConstraintDialogContent constraint={constraint} />
+
+        <DialogFooter>
+          <Button variant="destructive" onClick={onClear}>
+            Clear
+          </Button>
+          <Button onClick={onSubmit}>Apply</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+interface ConstraintDialogContentProps {
+  constraint: Constraint | undefined;
+}
+
+function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Element | null {
+  const { constraint } = props;
+
+  if (constraint == null) return null;
+
+  switch (constraint.kind.id) {
+    case 'date-range':
+      return <DateConstraintWidget constraint={constraint} />;
+    case 'label':
+      return <TextConstraintWidget constraint={constraint} />;
+    // case 'geometry':
+    //   return <PlaceConstraintWidget constraint={constraint} />;
+    case 'vocabulary':
+      return <ProfessionConstraintWidget constraint={constraint} />;
+  }
 }
