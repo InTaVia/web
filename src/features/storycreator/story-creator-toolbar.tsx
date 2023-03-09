@@ -56,6 +56,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
         </Button> */}
 
         <Button
+          size={'xs'}
           onClick={() => {
             onExportStory();
           }}
@@ -63,6 +64,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           Export
         </Button>
         <Button
+          size={'xs'}
           onClick={() => {
             onPreviewStory();
           }}
@@ -72,6 +74,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
       </div>
       <div className="flex gap-3">
         <Button
+          size={'xs'}
           onClick={() => {
             onOpenSettingsDialog();
           }}

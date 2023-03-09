@@ -196,7 +196,12 @@ export const storyCreatorSlice = createSlice({
     createSlide: (state, action: PayloadAction<Story['id']>) => {
       const storyID = action.payload;
 
-      const newSlides = { ...state.stories[storyID]!.slides };
+      const newSlides = Object.fromEntries(
+        Object.entries(state.stories[storyID]!.slides).map(([id, slide]) => {
+          const newSlide = { ...slide, selected: false };
+          return [id, newSlide];
+        }),
+      ) as Record<Slide['id'], Slide>;
 
       const oldIDs = Object.keys(newSlides);
       let counter = oldIDs.length - 1;
@@ -215,11 +220,13 @@ export const storyCreatorSlice = createSlice({
         contentPaneSlots: { 'cont-1': null, 'cont-2': null },
         layout: 'single-vis',
         sort: counter,
-        selected: false,
+        selected: true,
         highlighted: {},
       } as Slide;
 
-      state.stories[slide.story]!.slides[slide.id] = slide;
+      newSlides[slide.id] = slide;
+
+      state.stories[slide.story]!.slides = newSlides;
     },
     setLayoutForSlide: (state, action) => {
       const slide = action.payload.slide as Slide;

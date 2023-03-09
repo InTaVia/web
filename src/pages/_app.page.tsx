@@ -79,12 +79,13 @@ export default function App(props: AppProps): JSX.Element {
         <I18nProvider dictionaries={dictionaries}>
           <PersistGate loading={null} persistor={persistor}>
             <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
-            <HoverProvider>
-              <PageLayout>
-                <Component {...pageProps} />
-              </PageLayout>
-              <Toaster />
-              <SetupStore />
+              <HoverProvider>
+                <PageLayout>
+                  <Component {...pageProps} />
+                </PageLayout>
+                <Toaster />
+                <Tooltip />
+                <SetupStore />
               </HoverProvider>
             </ErrorBoundary>
           </PersistGate>

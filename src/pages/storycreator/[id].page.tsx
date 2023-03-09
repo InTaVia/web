@@ -169,6 +169,7 @@ function StoryScreen(): JSX.Element | null {
                 </div>
                 <div className="flex justify-center border-t border-intavia-neutral-200 p-2">
                   <Button
+                    size={'xs'}
                     onClick={() => {
                       dispatch(createSlide(story.id));
                     }}
