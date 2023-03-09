@@ -13,7 +13,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { HoverProvider } from '@/app/context/hover.context';
-import { createEmotionCache } from '@/app/create-emotion-cache';
 import { useAppMetadata } from '@/app/metadata/use-app-metadata';
 import { RootErrorBoundaryFallback } from '@/app/root-error-boundary-fallback';
 import { useAlternateLanguageUrls } from '@/app/route/use-alternate-language-urls';

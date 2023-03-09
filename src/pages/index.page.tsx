@@ -2,7 +2,6 @@ import {
   ChartSquareBarIcon,
   ChatIcon,
   ChevronRightIcon,
-  InformationCircleIcon,
   SearchIcon,
 } from '@heroicons/react/outline';
 import { Button, Input } from '@intavia/ui';

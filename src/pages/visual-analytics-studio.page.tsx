@@ -1,6 +1,5 @@
 import { Allotment } from 'allotment';
 
-import { HoverProvider } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { useAppDispatch, useAppSelector } from '@/app/store';
