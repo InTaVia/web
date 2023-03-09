@@ -16,6 +16,7 @@ import {
   getTemporalExtent,
   translateEventType,
 } from '@/features/timelineV2/timeline';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 import TimelineEventMarker from './timelineEventMarker';
 import { TimelineLabel } from './timelineLabel';
@@ -54,7 +55,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     overlap = false,
     mode = 'default',
     diameter = 16,
-    fontSize = 10
+    fontSize = 10,
   } = props;
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
@@ -170,7 +171,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
       <TimelineLabel
         posX={posX + width / 2}
         posY={posY + height / 2}
-        labelText={event.label.default}
+        labelText={getTranslatedLabel(event.label)}
         showLabels={hover ? true : showLabels}
         entityIndex={entityIndex}
         mode={mode}
