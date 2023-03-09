@@ -22,7 +22,7 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
 
   let content;
 
-  if (!open && mini) {
+  if (!open) {
     content = (
       <Button
         onClick={() => {
@@ -38,6 +38,7 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
         {SlideContentTypes.map((type) => {
           return (
             <Button
+              size={'xs'}
               key={`${type}ContentButton`}
               onClick={() => {
                 onButtonClick(type);
