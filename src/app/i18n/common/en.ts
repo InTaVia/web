@@ -158,5 +158,7 @@ export const dictionary: Dictionary = {
     submit: 'Submit',
     remove: 'Remove',
     add: 'Add',
+    more: 'More',
+    clear: 'Clear',
   },
 };

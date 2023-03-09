@@ -1,8 +1,20 @@
-import { Button, Input } from '@intavia/ui';
-import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/solid';
+import type { SearchEntities } from '@intavia/api-client';
+import {
+  Button,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Input,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@intavia/ui';
+import { useField } from 'react-final-form';
 
 import { useI18n } from '@/app/i18n/use-i18n';
+import { Form } from '@/components/form';
 import { SearchFacets } from '@/components/search/search-facets';
 import { SearchResultsStatistics } from '@/components/search/search-results-statistics';
 import { useSearchEntities } from '@/components/search/use-search-entities';
@@ -15,83 +27,85 @@ export function SearchForm(): JSX.Element {
   const searchFilters = useSearchEntitiesFilters();
   const { search } = useSearchEntities();
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    const formData = new FormData(event.currentTarget);
-    const q = formData.get('q') as string;
-
-    search({ ...searchFilters, page: 1, q });
-
-    event.preventDefault();
+  function onSubmit(values: SearchEntities.SearchParams) {
+    search({ ...searchFilters, ...values, page: 1 });
   }
 
-  const [filterPanel, setFiltersPanel] = useState<
-    'search-facets' | 'search-statistics' | 'visual-query-builder' | null
-  >(null);
-
-  function onToggleVisualQueryBuilder() {
-    setFiltersPanel((filterPanel) => {
-      if (filterPanel === 'visual-query-builder') return null;
-      return 'visual-query-builder';
-    });
-  }
-
-  function onToggleSearchFacets() {
-    setFiltersPanel((filterPanel) => {
-      if (filterPanel === 'search-facets') return null;
-      return 'search-facets';
-    });
-  }
-
-  function onToggleSearchStatistics() {
-    setFiltersPanel((filterPanel) => {
-      if (filterPanel === 'search-statistics') return null;
-      return 'search-statistics';
-    });
+  function onClear() {
+    search({});
   }
 
   return (
-    <div>
-      <form
-        className="mx-auto w-full max-w-7xl px-8 py-4"
-        autoComplete="off"
-        name="search"
-        noValidate
-        onSubmit={onSubmit}
-        role="search"
-      >
-        <div className="grid grid-cols-[1fr_auto_auto] gap-2">
-          <Input
-            aria-label={t(['common', 'search', 'search'])}
-            defaultValue={searchFilters.q}
-            key={searchFilters.q}
-            name="q"
-            placeholder={t(['common', 'search', 'search-term'])}
-            type="search"
-          />
+    <div className="mx-auto w-full max-w-7xl py-4 px-8">
+      <Form initialValues={searchFilters} name="search" onSubmit={onSubmit} role="search">
+        <Collapsible>
+          <div className="grid gap-2">
+            <div className="grid grid-cols-[1fr_auto_auto] gap-2">
+              <SearchInput />
 
-          <Button type="submit">{t(['common', 'search', 'search'])}</Button>
+              <Button type="submit">{t(['common', 'search', 'search'])}</Button>
 
-          <div className="flex gap-2">
-            <Button onClick={onToggleSearchFacets}>
-              {t(['common', 'search', 'adjust-search-filters'])}
-            </Button>
-            <Button onClick={onToggleVisualQueryBuilder}>
-              {t(['common', 'search', 'visual-query-builder'])}
-            </Button>
-            <Button onClick={onToggleSearchStatistics}>
-              {t(['common', 'search', 'search-statistics'])}
-            </Button>
+              <div className="flex gap-2">
+                <CollapsibleTrigger asChild>
+                  <Button variant="outline">
+                    {t(['common', 'form', 'more'])}
+                    <ChevronDownIcon className="h-4 w-4 shrink-0" />
+                  </Button>
+                </CollapsibleTrigger>
+
+                <Button onClick={onClear} variant="destructive">
+                  {t(['common', 'form', 'clear'])}
+                </Button>
+              </div>
+            </div>
+
+            <CollapsibleContent>
+              <Tabs defaultValue="search-facets">
+                <TabsList>
+                  <TabsTrigger value="search-facets">
+                    {t(['common', 'search', 'adjust-search-filters'])}
+                  </TabsTrigger>
+                  <TabsTrigger value="visual-query-builder">
+                    {t(['common', 'search', 'visual-query-builder'])}
+                  </TabsTrigger>
+                  <TabsTrigger value="search-statistics">
+                    {t(['common', 'search', 'search-statistics'])}
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="search-facets">
+                  <SearchFacets />
+                </TabsContent>
+                <TabsContent value="visual-query-builder">
+                  <div className="relative h-96">
+                    <VisualQueryBuilder />
+                  </div>
+                </TabsContent>
+                <TabsContent value="search-statistics">
+                  <div className="relative h-96">
+                    <SearchResultsStatistics />
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CollapsibleContent>
           </div>
-        </div>
-      </form>
-
-      {filterPanel != null ? (
-        <aside className="relative mx-auto grid h-[480px] w-full max-w-7xl p-8">
-          {filterPanel === 'visual-query-builder' ? <VisualQueryBuilder /> : null}
-          {filterPanel === 'search-facets' ? <SearchFacets /> : null}
-          {filterPanel === 'search-statistics' ? <SearchResultsStatistics /> : null}
-        </aside>
-      ) : null}
+        </Collapsible>
+      </Form>
     </div>
+  );
+}
+
+function SearchInput(): JSX.Element {
+  const { t } = useI18n<'common'>();
+
+  const name = 'q';
+  const field = useField(name);
+
+  return (
+    <Input
+      aria-label={t(['common', 'search', 'search'])}
+      placeholder={t(['common', 'search', 'search-term'])}
+      type="search"
+      {...field.input}
+    />
   );
 }

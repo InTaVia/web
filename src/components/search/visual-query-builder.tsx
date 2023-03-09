@@ -1,5 +1,5 @@
 import { Button } from '@intavia/ui';
-import type { FormEvent } from 'react';
+import { Fragment } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { useSearchEntities } from '@/components/search/use-search-entities';
@@ -13,7 +13,7 @@ export function VisualQueryBuilder(): JSX.Element {
 
   const constraints = useAppSelector(selectConstraints);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  function onSubmit() {
     const q = constraints['person-name'].value ?? undefined;
     const [bornAfter, bornBefore] = constraints['person-birth-date'].value?.map((d) => {
       return new Date(d).toISOString();
@@ -33,17 +33,15 @@ export function VisualQueryBuilder(): JSX.Element {
       died_before: diedBefore,
       occupations_id,
     });
-
-    event.preventDefault();
   }
 
   return (
-    <form className="grid" noValidate onSubmit={onSubmit}>
+    <Fragment>
       <VisualQuerying />
 
       <div className="relative flex justify-end self-end">
-        <Button type="submit">Apply</Button>
+        <Button onClick={onSubmit}>Apply</Button>
       </div>
-    </form>
+    </Fragment>
   );
 }
