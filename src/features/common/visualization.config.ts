@@ -1,4 +1,5 @@
 import type { EntityKind, EventKind } from '@intavia/api-client';
+import { hsl } from 'd3';
 
 interface KindColor {
   foreground: string;
@@ -97,12 +98,15 @@ export function getEventKindPropertiesByType(type: string): EventKindProperties 
   }
 }
 
-const entityColorByKind: Record<EntityKind, string> = {
-  person: '#57AE5F',
-  'cultural-heritage-object': '#5785AE',
-  place: '#AE5757',
-  group: '#C6C6C6',
-  'historical-event': '#A957AE',
+const entityColorByKind: Record<EntityKind, KindColor> = {
+  person: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
+  'cultural-heritage-object': {
+    foreground: 'hsl(208, 60%, 80%)',
+    background: 'hsl(208, 100%, 35%)',
+  },
+  place: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
+  group: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
+  'historical-event': { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
 };
 
 const entityKindProperties: Record<EntityKind, EntityKindProperties> = {

@@ -1,9 +1,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { AxisScale } from 'd3-axis';
-import { axisBottom, axisLeft } from 'd3-axis';
-import { select } from 'd3-selection';
-import { timeFormat } from 'd3-time-format';
+import type { AxisScale } from 'd3';
+import { axisBottom, axisLeft, select, timeFormat } from 'd3';
 import { useEffect, useRef } from 'react';
 
 interface TimelineAxisProps {

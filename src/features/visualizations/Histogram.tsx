@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Bin } from '@intavia/api-client';
-import { zoom } from 'd3';
-import { axisBottom, axisLeft } from 'd3-axis';
-import { brushX } from 'd3-brush';
-import { scaleLinear } from 'd3-scale';
-import { select } from 'd3-selection';
+import { axisBottom, axisLeft, brushX, scaleLinear, select, zoom } from 'd3';
 import { useEffect, useRef, useState } from 'react';
 
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
@@ -154,7 +150,7 @@ export function Histogram<T extends Date | IsoDateString | number>(
               height={h}
               x={x}
               y={y}
-              fill="lightGray"
+              fill="lightneutral"
             />
           );
         })}

@@ -1,7 +1,5 @@
 import type { Event, Person as Entity } from '@intavia/api-client';
-import { color as d3color } from 'd3-color';
-import { scaleOrdinal } from 'd3-scale';
-import { schemeTableau10 } from 'd3-scale-chromatic';
+import { color as d3color, scaleOrdinal, schemeTableau10 } from 'd3';
 import { Fragment } from 'react';
 import { Marker } from 'react-map-gl';
 

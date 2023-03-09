@@ -1,4 +1,4 @@
-import cn from 'clsx';
+import { cn } from '@intavia/ui';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';

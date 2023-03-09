@@ -1,8 +1,20 @@
-@import '@/styles/colors.css';
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-synthesis: none;
+}
 
-@import '@/styles/globals.css';
+:root {
+  font-family: theme(fontFamily.sans);
+  color: theme(colors.neutral.900);
+  background-color: theme(colors.neutral.50);
+}
 
-rect.selection {
-  fill: rgb(70 130 180);
-  opacity: 50%;
+html,
+body,
+#__next {
+  block-size: 100%;
 }

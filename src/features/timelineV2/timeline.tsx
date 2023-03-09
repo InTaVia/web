@@ -1,15 +1,13 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { entity } from '@intavia/api-client';
 import type {
   Entity,
   EntityEventRelation,
   Event,
   VocabularyEntry,
 } from '@intavia/api-client/dist/models';
-import { extent } from 'd3-array';
-import { scaleBand, scaleTime } from 'd3-scale';
-import { useEffect, useMemo, useState } from 'react';
+import { extent, scaleBand, scaleTime } from 'd3';
+import { useMemo } from 'react';
 
 import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
 import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
@@ -350,7 +348,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
           return <div key={`${entry.id}unPlottableEntity`}>{entry.label.default}</div>;
         })}
       </fieldset>
-      <fieldset style={{ border: '1px solid gray' }}>
+      <fieldset style={{ border: '1px solid neutral' }}>
         <legend>Un-Timaable Events</legend>
         {(Object.values(unTimeableEvents) as Array<Event>).map((entry: Event) => {
           return <div key={`${entry.id}UnTimeableEvent`}>{entry.label.default}</div>;

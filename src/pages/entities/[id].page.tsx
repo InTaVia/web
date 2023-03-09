@@ -1,6 +1,7 @@
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
+import { HoverProvider } from '@/app/context/hover.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
@@ -24,9 +25,11 @@ export default function EntityPage(): JSX.Element {
   const metadata = { title: t(['common', 'entity', 'metadata', 'title']) };
 
   return (
-    <Fragment>
-      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      {id != null ? <EntityScreen id={id} /> : null}
-    </Fragment>
+    <HoverProvider>
+      <Fragment>
+        <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+        {id != null ? <EntityScreen id={id} /> : null}
+      </Fragment>
+    </HoverProvider>
   );
 }

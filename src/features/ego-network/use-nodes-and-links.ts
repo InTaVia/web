@@ -10,6 +10,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   links: Array<Link>;
   events: Record<string, Event>;
   entities: Record<string, Entity>;
+  status: 'error' | 'pending' | 'success';
 } {
   const nodes: Array<Node> = [];
   const links: Array<Link> = [];
@@ -46,7 +47,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   const entitiesResponse = useEntities(uniqueEntityIds);
 
   // || events.keys.length <= 0?
-  if (!entitiesResponse.data) return { nodes: nodes, links: links, events: {}, entities: {} };
+  if (!entitiesResponse.data) return { nodes: nodes, links: links, events: {}, entities: {},status: entitiesResponse.status };
   const relatedEntities = entitiesResponse.data;
 
   // Add related entities to node array
@@ -82,7 +83,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       });
       if (existingLink) {
         // Update existing link with additional role
-        existingLink.roles.push(relation.role);
+        if (!existingLink.roles.includes(event)) existingLink.roles.push(event);
       } else {
         // Create new link
         const sourceNode = nodes.find((node) => {
@@ -98,16 +99,19 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
         links.push({
           source: sourceNode,
           target: targetNode,
-          roles: [relation.role],
+          roles: [event],
         });
       }
     });
   });
 
-  return {
-    nodes: nodes,
-    links: links,
-    events: events.data != null ? Object.fromEntries(events.data) : {},
-    entities: Object.fromEntries(relatedEntities),
-  };
+  let status: 'error' | 'pending' | 'success' = 'pending';
+  if (events.status === 'success' && entitiesResponse.status === 'success') {
+    status = 'success';
+  } else if (events.status === 'error' || entitiesResponse.status === 'error') {
+    status = 'error';
+  }
+
+  return { nodes: nodes, links: links, status: status, events: events.data != null ? Object.fromEntries(events.data) : {},
+  entities: Object.fromEntries(relatedEntities), };
 }

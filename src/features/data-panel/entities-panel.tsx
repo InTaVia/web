@@ -1,4 +1,5 @@
 import type { Entity, EntityKind } from '@intavia/api-client';
+import { Button, CheckBox } from '@intavia/ui';
 import { useContext, useState } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
@@ -12,7 +13,6 @@ import { EntityItem } from '@/features/data-panel/entity-item';
 import { EventItem } from '@/features/data-panel/event-item';
 import { GroupItem } from '@/features/data-panel/group-item';
 import { selectStories } from '@/features/storycreator/storycreator.slice';
-import Button from '@/features/ui/Button';
 import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
 interface EntitiesPanelProps {
@@ -72,20 +72,19 @@ export function EntitiesPanel(props: EntitiesPanelProps): JSX.Element {
   }
 
   return (
-    <div className="flex h-full flex-col overflow-auto">
+    <div className="flex h-full flex-col overflow-auto text-sm">
       {/* <EntityPanelTasks /> */}
-      <div className="flex min-h-fit flex-col items-start bg-slate-200 p-2">
-        <Button size="small" color="accent" round="pill" onClick={viewAllData}>
+      <div className="flex min-h-fit flex-col items-start gap-2 bg-neutral-200 p-2">
+        <Button size="xs" onClick={viewAllData}>
           Add All
         </Button>
-        <div className="flex flex-row gap-x-1">
-          <input
-            type="checkbox"
+        <div className="flex flex-row items-center gap-x-1.5">
+          <CheckBox
             id="groupByEntityKind"
             name="groupByEntityKind"
             value="groupByEntityKind"
             checked={isGroupedByEntityKind}
-            onChange={toggleGrouping}
+            onCheckedChange={toggleGrouping}
           />
           <label htmlFor="groupByEntityKind">Group entities by kind</label>
         </div>

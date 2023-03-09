@@ -57,6 +57,7 @@ export default function HomePage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+
       <div className="flex h-full w-full flex-col justify-between">
         <section className="flex max-h-[500px] min-h-[400px] flex-col place-content-center items-center gap-10 bg-gradient-to-r from-intavia-brand-400 to-intavia-green-400">
           <div className="flex flex-row items-center gap-8">
@@ -68,42 +69,38 @@ export default function HomePage(): JSX.Element {
               </Link>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-600">
+              <h1 className="text-2xl font-bold text-neutral-600">
                 {t(['common', 'home', 'hero', 'title'])}
               </h1>
-              <h2 className="text-2xl text-gray-600">
+              <h2 className="text-2xl text-neutral-600">
                 {t(['common', 'home', 'hero', 'subtitle'])}
               </h2>
             </div>
-            <Link href={'/info'}>
-              <a>
-                <InformationCircleIcon strokeWidth="1.25" className="h-8 w-8" />
-              </a>
-            </Link>
           </div>
-          <div className="w-full px-96">
+          <div className="mx-auto w-full max-w-3xl px-8">
             <SearchForm />
           </div>
         </section>
-        <section className="flex justify-center gap-x-10">
+
+        <section className="my-10 flex flex-wrap justify-center gap-10">
           {cards.map((card) => {
             return (
               <div
                 key={card.title}
-                className="dark:border-gray-700 dark:bg-gray-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-gray-200 bg-white shadow-md"
+                className="dark:border-neutral-700 dark:bg-neutral-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md"
               >
                 <Link href={card.href.pathname}>
-                  <a className="flex place-content-center gap-2 pt-3 text-intavia-green-900">
+                  <a className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
                     <div>{card.icon}</div>
                     <div className="dark:text-white text-lg font-medium">{card.title}</div>
                   </a>
                 </Link>
 
-                <p className="dark:text-gray-400 h-full px-5 py-2 text-justify font-normal text-gray-700">
+                <p className="dark:text-neutral-400 h-full px-5 py-2 text-justify font-normal text-neutral-700">
                   {card.text}
                 </p>
                 <Link href={card.href.pathname} className="">
-                  <a className="flex w-full place-content-end gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
+                  <a className="flex w-full place-content-end items-center gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
                     {card.button}
                     <ChevronRightIcon className="h-5 w-5" />
                   </a>
@@ -112,7 +109,8 @@ export default function HomePage(): JSX.Element {
             );
           })}
         </section>
-        <footer className="flex h-16 place-content-center items-center gap-4 bg-gray-200 px-20 text-gray-900">
+
+        <footer className="flex h-16 place-content-center items-center gap-4 bg-neutral-200 px-20 text-sm text-neutral-900">
           <Image src="/assets/images/EC_logo_s.png" alt="EC Logo" width={55} height={36} />
           <p>
             This project has received funding from the European Union&apos;s Horizon 2020 research

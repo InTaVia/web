@@ -1,9 +1,7 @@
 import type { Event } from '@intavia/api-client/dist/models';
-import { extent } from 'd3-array';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
+import { extent, scaleTime } from 'd3';
+// @ts-expect-error Missing types
 import { beeswarm } from 'd3-beeswarm';
-import { scaleTime } from 'd3-scale';
 import type { MouseEvent } from 'react';
 import { type LegacyRef, forwardRef, useState } from 'react';
 

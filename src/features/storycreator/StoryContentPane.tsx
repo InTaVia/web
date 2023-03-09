@@ -1,5 +1,6 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
+import { Button, IconButton } from '@intavia/ui';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -22,7 +23,6 @@ import {
 import { StoryTitleSlide } from '@/features/storycreator/story-title-slide';
 import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
-import Button from '@/features/ui/Button';
 
 const margin: [number, number] = [0, 0];
 
@@ -207,30 +207,26 @@ export function StoryContentPane(props: StoryContentPaneProps) {
         <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
           <div className="truncate">{element.type}</div>
           <div className="sticky right-0 flex flex-nowrap gap-1">
-            <Button
-              className="ml-auto grow-0"
-              shadow="none"
-              size="extra-small"
-              round="circle"
+            <button
+              aria-label="Edit"
+              className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
               onClick={() => {
                 if (setEditElement !== undefined) {
                   setEditElement(element);
                 }
               }}
             >
-              <AdjustmentsIcon className="h-3 w-3" />
-            </Button>
-            <Button
-              className="ml-auto grow-0"
-              shadow="none"
-              size="extra-small"
-              round="circle"
+              <AdjustmentsIcon className="h-4 w-4" />
+            </button>
+            <button
+              aria-label="Remove"
+              className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
               onClick={() => {
                 removeWindowHandler(element);
               }}
             >
-              <XIcon className="h-3 w-3" />
-            </Button>
+              <XIcon className="h-4 w-4" />
+            </button>
           </div>
         </div>
         {createWindowContent(element)}

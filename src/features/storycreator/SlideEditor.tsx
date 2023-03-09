@@ -1,4 +1,5 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { Dialog } from '@intavia/ui';
 import type { DragEvent, RefObject } from 'react';
 import { useState } from 'react';
 
@@ -177,13 +178,16 @@ export function SlideEditor(props: SlideEditorProps) {
         }}
         handleSaveComponent={handleSave}
       />
-      {editElement !== null && (
-        <ComponentPropertiesDialog
-          onClose={handleClose}
-          element={editElement}
-          onSave={handleSave}
-        />
-      )}
+
+      {editElement !== null ? (
+        <Dialog open={editElement !== null} onOpenChange={handleClose}>
+          <ComponentPropertiesDialog
+            onClose={handleClose}
+            element={editElement}
+            onSave={handleSave}
+          />
+        </Dialog>
+      ) : null}
     </div>
   );
 }

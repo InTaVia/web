@@ -13,7 +13,6 @@ export interface UiWindow {
 
 export type ComponentName = 'dcl' | 'stc' | 'vas';
 export type PaneOrientation = 'left' | 'right';
-export type ModalName = 'visualQueryModal';
 
 interface UiState {
   windows: Array<UiWindow>;
@@ -29,11 +28,6 @@ interface UiState {
     stc: {
       leftPaneOpen: boolean;
       rightPaneOpen: boolean;
-    };
-  };
-  modals: {
-    visualQueryModal: {
-      isOpen: boolean;
     };
   };
 }
@@ -52,11 +46,6 @@ const initialState: UiState = {
     stc: {
       leftPaneOpen: true,
       rightPaneOpen: true,
-    },
-  },
-  modals: {
-    visualQueryModal: {
-      isOpen: false,
     },
   },
 };
@@ -101,13 +90,10 @@ export const uiSlice = createSlice({
         }
       }
     },
-    setModal: (state, action: PayloadAction<{ modal: ModalName; isOpen: boolean }>) => {
-      state.modals[action.payload.modal].isOpen = action.payload.isOpen;
-    },
   },
 });
 
-export const { addWindow, editWindow, removeWindow, setSidePane, setModal } = uiSlice.actions;
+export const { addWindow, editWindow, removeWindow, setSidePane } = uiSlice.actions;
 
 export function selectWindows(state: RootState): Array<UiWindow> {
   return state.ui.windows;
@@ -134,18 +120,6 @@ export const selectPaneOpen = createSelector(
       console.error('You provided a not accepted.');
       return false;
     }
-  },
-);
-
-export const selectModalOpen = createSelector(
-  (state: RootState) => {
-    return state.ui;
-  },
-  (state: RootState, modal: ModalName) => {
-    return modal;
-  },
-  (uiState, modal) => {
-    return uiState.modals[modal].isOpen;
   },
 );
 

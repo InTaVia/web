@@ -1,3 +1,4 @@
+import { Button } from '@intavia/ui';
 import { nanoid } from '@reduxjs/toolkit';
 import { useContext, useMemo, useState } from 'react';
 import { isConstructorDeclaration } from 'typescript';
@@ -9,9 +10,7 @@ import {
   createVisualization,
   selectAllVisualizations,
 } from '@/features/common/visualization.slice';
-import Button from '@/features/ui/Button';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
-import { setVisualizationForVisualizationSlotForCurrentWorkspace } from '@/features/visualization-layouts/workspaces.slice';
 import { VisualizationSelect } from '@/features/visualization-wizard/visualization-select';
 
 interface VisualizationWizardProps {
@@ -56,11 +55,9 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
   console.log(pageContext);
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-5 p-5">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="grid h-full w-full place-content-center gap-5 p-5">
+      <div className="grid gap-2 md:grid-cols-2">
         <Button
-          round="round"
-          color="accent"
           onClick={() => {
             onButtonClick('map');
           }}
@@ -68,8 +65,6 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           Create Map Visualization
         </Button>
         <Button
-          round="round"
-          color="accent"
           onClick={() => {
             onButtonClick('timeline');
           }}
@@ -77,27 +72,23 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           Create Timeline Visualization
         </Button>
         {pageContext.page !== 'story-creator' && (
-          <Button
-            round="round"
-            color="accent"
-            onClick={() => {
-              onButtonClick('ego-network');
-            }}
-          >
-            Create Network Visualization
-          </Button>
-        )}
+        <Button
+          onClick={() => {
+            onButtonClick('ego-network');
+          }}
+        >
+          Create Network Visualization
+        </Button>)}
       </div>
+
       {Object.keys(visualizations).length > 0 && (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid gap-2 border-t pt-4 md:grid-cols-2">
           <VisualizationSelect
             options={visualizations}
             setSelectedVisualizationId={setSelectedVisualizationId}
             selectedVisualizationId={selectedVisualizationId}
           />
-          <Button size="extra-small" round="round" color="primary" onClick={onLoadVisualization}>
-            Add Visualization
-          </Button>
+          <Button onClick={onLoadVisualization}>Add Visualization</Button>
         </div>
       )}
     </div>

@@ -1,7 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from '@heroicons/react/solid';
-import { Fragment } from 'react';
-
-import Popover from '@/features/ui/Popover';
+import { Button, Popover, PopoverCloseButton, PopoverContent, PopoverTrigger } from '@intavia/ui';
 
 export interface LayoutOptionData {
   key: string;
@@ -140,64 +137,41 @@ export interface LayoutButtonProps {
 
 export default function LayoutButton(props: LayoutButtonProps): JSX.Element {
   return (
-    <Popover
-      buttonClassName="flex gap-1 items-center"
-      panelClassName="z-50"
-      noOverlay={true}
-      color="accent"
-      size="small"
-      round="pill"
-    >
-      {({ open, placement }) => {
-        return (
-          <Fragment>
-            Layouts
-            {open ? (
-              placement === 'bottom' ? (
-                <ChevronDownIcon className="h-5 w-5" />
-              ) : (
-                <ChevronUpIcon className="h-5 w-5" />
-              )
-            ) : (
-              <ChevronRightIcon className="h-5 w-5" />
-            )}
-          </Fragment>
-        );
-      }}
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button>Layout</Button>
+      </PopoverTrigger>
 
-      {({ close }) => {
-        return (
-          <Fragment>
-            <div className="max-h-54 z-50 grid grid-cols-2 gap-4 overflow-y-auto rounded-md bg-white p-4 text-gray-800 drop-shadow-2xl">
-              {visLayout.map((option: VisLayout) => {
-                const layout = layoutOptions[option] as LayoutOptionData;
-                return (
-                  <button
-                    key={option}
-                    className="grid grid-cols-[3.6rem_1fr] grid-rows-[1.2rem_2.4rem] gap-1 rounded bg-white p-1 hover:bg-slate-100 active:bg-slate-300"
-                    onClick={() => {
-                      props.onLayoutSelected(option);
-                      close();
-                    }}
-                  >
-                    <svg className="col-1 row-span-full" viewBox="-0.3 -0.3 1.6 1.6">
-                      <path
-                        d={layout.symbol}
-                        strokeWidth={0.02}
-                        shapeRendering="crispEdges"
-                        fill="none"
-                        stroke="currentColor"
-                      />
-                    </svg>
-                    <span className="col-2 row-1 text-left font-semibold">{layout.title}</span>
-                    <p className="col-2 row-1 text-left font-light">{layout.description ?? ''}</p>
-                  </button>
-                );
-              })}
-            </div>
-          </Fragment>
-        );
-      }}
+      <PopoverContent className="grid w-full grid-cols-2 gap-4 text-sm">
+        {visLayout.map((option) => {
+          const layout = layoutOptions[option];
+
+          return (
+            <PopoverCloseButton asChild key={option}>
+              <button
+                className="grid grid-cols-[3.6rem_1fr] grid-rows-2 rounded bg-white p-1 hover:bg-neutral-100 active:bg-neutral-200"
+                onClick={() => {
+                  props.onLayoutSelected(option);
+                }}
+              >
+                <svg className="row-span-full" viewBox="-0.3 -0.3 1.6 1.6">
+                  <path
+                    d={layout.symbol}
+                    strokeWidth={0.02}
+                    shapeRendering="crispEdges"
+                    fill="none"
+                    stroke="currentColor"
+                  />
+                </svg>
+
+                <span className="self-end text-left font-medium">{layout.title}</span>
+
+                <p className="text-left font-light">{layout.description ?? ''}</p>
+              </button>
+            </PopoverCloseButton>
+          );
+        })}
+      </PopoverContent>
     </Popover>
   );
 }

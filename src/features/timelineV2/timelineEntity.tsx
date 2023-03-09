@@ -1,7 +1,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Entity, Event, EventEntityRelation } from '@intavia/api-client/dist/models';
-import type { ScaleBand } from 'd3-scale';
+import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
+import type { ScaleBand } from 'd3';
 import type { MouseEvent } from 'react';
 import { useMemo, useRef, useState } from 'react';
 

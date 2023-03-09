@@ -1,6 +1,6 @@
+import type { Node, RootNode } from '@intavia/api-client';
 import { hierarchy, interpolateRainbow, partition, scaleSequential } from 'd3';
 
-import type { Node, RootNode } from '@intavia/api-client';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';
 import { useElementRef } from '@/lib/use-element-ref';

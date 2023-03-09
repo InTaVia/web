@@ -1,10 +1,10 @@
-import type { Entity } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
+import { LoadingIndicator } from '@intavia/ui';
 
 import type { Visualization } from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Network } from '@/features/ego-network/network';
 import { useNodesAndLinks } from '@/features/ego-network/use-nodes-and-links';
-import { useEntities } from '@/lib/use-entities';
 
 export interface Node {
   entity: Entity;
@@ -16,9 +16,7 @@ export interface Node {
 export interface Link {
   source: Node;
   target: Node;
-  // FIXME: roles should be of type EntityRelationRole
-  // roles: Array<EntityRelationRole>;
-  roles: Array<string>;
+  roles: Array<Event>;
 }
 
 interface NetworkComponentProps {
@@ -31,14 +29,19 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { visualization, width, height } = props;
 
   const entityIds = visualization.entityIds;
-  const { nodes, links, entities, events } = useNodesAndLinks(entityIds);
+  const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
 
   if (nodes.length === 0) {
-    return <p>Please add an entity</p>;
+    return (
+      <div className="grid h-full w-full place-items-center bg-neutral-50">
+        <p>Please add an entity</p>
+      </div>
+    );
   }
 
-  return (
-    <>
+  if (status === 'success') {
+    return (
+      <>
       <Network
         key={`network-${entityIds.join('-')}`}
         nodes={nodes}
@@ -51,5 +54,13 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
         <VisualizationLegend events={{ events }} entities={entities} />
       </div>
     </>
+    );
+  }
+
+  return (
+    <div className="grid h-full w-full place-items-center bg-neutral-50">
+      <LoadingIndicator />
+      <p>Loading network</p>
+    </div>
   );
 }

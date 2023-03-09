@@ -33,7 +33,7 @@ module.exports = {
           800: '#8bba61',
           900: '#84b15b',
         },
-        'intavia-gray': {
+        'intavia-neutral': {
           50: '#f2f2f2',
           100: '#e5e5e5',
           200: '#cbcbcb',
@@ -82,8 +82,8 @@ module.exports = {
           900: '#7741a3',
         },
       },
-      screens: {
-        'vq-min': [{ raw: '(max-width: 1550px)' }, { raw: '(max-height: 980px)' }],
+      fontFamily: {
+        sans: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

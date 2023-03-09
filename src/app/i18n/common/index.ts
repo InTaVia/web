@@ -117,6 +117,8 @@ export interface Dictionary {
     'edit-item': string;
     'add-to-collection': string;
     'adjust-search-filters': string;
+    'search-statistics': string;
+    'visual-query-builder': string;
   };
   stories: {
     metadata: {

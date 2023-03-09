@@ -127,6 +127,8 @@ export const dictionary: Dictionary = {
     'edit-item': 'Edit item',
     'add-to-collection': 'Add to collection',
     'adjust-search-filters': 'Adjust search filters',
+    'search-statistics': 'Search statistics',
+    'visual-query-builder': 'Visual query builder',
   },
   stories: {
     metadata: {

@@ -17,7 +17,15 @@ export default function StoriesPage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      <StoryOverview />
+      <StoriesScreen />
     </Fragment>
+  );
+}
+
+function StoriesScreen(): JSX.Element {
+  return (
+    <div className="grid gap-8 p-8">
+      <StoryOverview />
+    </div>
   );
 }

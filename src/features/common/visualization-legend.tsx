@@ -89,7 +89,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
 
   if (eventKindProperties.length > 0 || Object.keys(groupedEntities).length > 0) {
     return (
-      <div className="grid grid-cols-[min-content_auto] gap-2 border border-solid border-intavia-gray-400 bg-white p-1">
+      <div className="grid grid-cols-[min-content_auto] gap-2 border border-solid border-intavia-neutral-400 bg-white p-1">
         {eventKindProperties.map((eventKindProperties) => {
           return (
             <>

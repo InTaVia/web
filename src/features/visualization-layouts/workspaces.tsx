@@ -1,11 +1,9 @@
-import { Tab } from '@headlessui/react';
 import {
   DocumentAddIcon as AddWorkspaceIcon,
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
-import { clsx } from 'clsx';
-import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { Dialog, IconButton, Tabs, TabsContent, TabsList, TabsTrigger } from '@intavia/ui';
+import { Fragment, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
@@ -13,7 +11,6 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import Button from '@/features/ui/Button';
 import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
 import {
   addWorkspace,
@@ -76,17 +73,21 @@ export default function Workspaces(): JSX.Element {
 
   const [visualizationEditElement, setVisualizationEditElement] = useState<any | null>(null);
 
+  // FIXME: why is workspaces.currentWorkspace the array index, not the id?
   return (
-    <>
-      <Tab.Group
-        selectedIndex={workspaces.currentWorkspace}
-        onChange={onChangeWorkspace}
-        defaultIndex={0}
+    <Fragment>
+      <Tabs
+        className="grid h-full w-full grid-rows-[1fr_auto] overflow-hidden"
+        // @ts-expect-error using array indices (number) not string ids
+        defaultValue={workspaces.currentWorkspace}
+        // @ts-expect-error using array indices (number) not string ids
+        onValueChange={onChangeWorkspace}
       >
-        <Tab.Panels className="h-full basis-auto">
-          {workspaces.workspaces.map((workspace, idx) => {
+        <div className="h-full basis-auto">
+          {workspaces.workspaces.map((workspace, index) => {
             return (
-              <Tab.Panel key={idx} className="h-full w-full p-0">
+              // @ts-expect-error using array indices (number) not string ids
+              <TabsContent key={index} value={index} className="m-0 h-full w-full p-0">
                 <VisualizationGroup
                   layout={workspace.layoutOption as PanelLayout}
                   visualizationSlots={workspace.visualizationSlots}
@@ -104,81 +105,78 @@ export default function Workspaces(): JSX.Element {
                   onSwitchVisualization={onSwitchVisualization}
                   setVisualizationEditElement={setVisualizationEditElement}
                 />
-              </Tab.Panel>
+              </TabsContent>
             );
           })}
-        </Tab.Panels>
-        <div className="flex h-12 w-full flex-row items-center justify-between overflow-hidden bg-blue-900">
-          <div className="p-1">
-            <Button
-              className="ml-auto grow-0"
-              shadow="none"
-              size="small"
-              round="circle"
-              color="accent"
+        </div>
+
+        <div className="relative flex w-full flex-row items-center justify-between gap-4 overflow-hidden bg-blue-900 py-1">
+          <div>
+            <IconButton
+              size="sm"
+              label="Add workspace"
               onClick={onAddWorkspace}
-              onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
-                event.preventDefault();
-              }}
+              // onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
+              //   event.preventDefault();
+              // }}
             >
               <AddWorkspaceIcon className="h-5 w-5" />
-            </Button>
+            </IconButton>
           </div>
-          <Tab.List className="flex w-full grow basis-1 space-x-1" as="div">
-            {workspaces.workspaces.map((workspace, idx) => {
+
+          <TabsList className="flex w-full items-center gap-4 bg-transparent">
+            {workspaces.workspaces.map((workspace, index) => {
               return (
-                <Tab
-                  as="div"
-                  key={workspace.id}
-                  className={({ selected }) => {
-                    return clsx({
-                      ['flex cursor-pointer rounded-sm px-2 py-2 text-sm font-medium leading-5 text-blue-700']:
-                        true, //always applies
-                      ['bg-white shadow']: selected, //only when open === true
-                      ['text-blue-100 hover:bg-white/[0.12] hover:text-white']: !selected,
-                    });
-                  }}
-                  onDoubleClick={(event: MouseEvent<HTMLDivElement>) => {
-                    event.preventDefault();
-                  }}
+                <TabsTrigger
+                  key={index}
+                  // @ts-expect-error using array indices (number) not string ids
+                  value={index}
+                  className="m-0 rounded bg-white px-2 py-1 text-sm transition hover:bg-neutral-50"
+                  // onDoubleClick={(event: MouseEvent<HTMLDivElement>) => {
+                  //   event.preventDefault();
+                  // }}
                 >
-                  {({ selected }) => {
-                    return selected ? (
-                      <div className="flex items-center gap-2">
-                        <p className="cursor-pointer whitespace-nowrap">{workspace.label}</p>
-                        {workspaces.workspaces.length > 1 && (
-                          <Button
-                            shadow="none"
-                            size="extra-small"
-                            round="circle"
-                            onClick={() => {
-                              return onRemoveWorkspace(idx);
-                            }}
-                          >
-                            <CloseWorkspaceIcon className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <p className="cursor-pointer whitespace-nowrap">{workspace.label}</p>
-                      </div>
-                    );
-                  }}
-                </Tab>
+                  {index === workspaces.currentWorkspace ? (
+                    <div>
+                      <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
+                      {workspaces.workspaces.length > 1 && (
+                        <button
+                          aria-label="Remove workspace"
+                          onClick={() => {
+                            onRemoveWorkspace(index);
+                          }}
+                          className="hover:text-neutral-700"
+                        >
+                          <CloseWorkspaceIcon className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </TabsTrigger>
               );
             })}
-          </Tab.List>
+          </TabsList>
+
           <div className="h-full basis-full" onDoubleClick={onAddWorkspace}></div>
         </div>
-      </Tab.Group>
-      {visualizationEditElement != null && (
-        <ComponentPropertiesDialog
-          onClose={handleCloseVisualizationDialog}
-          element={visualizationEditElement}
-          onSave={handleSaveVisualization as (element: SlideContent | Visualization) => void}
-        />
-      )}
-    </>
+      </Tabs>
+
+      {visualizationEditElement != null ? (
+        <Dialog
+          open={visualizationEditElement != null}
+          onOpenChange={handleCloseVisualizationDialog}
+        >
+          <ComponentPropertiesDialog
+            onClose={handleCloseVisualizationDialog}
+            element={visualizationEditElement}
+            onSave={handleSaveVisualization as (element: SlideContent | Visualization) => void}
+          />
+        </Dialog>
+      ) : null}
+    </Fragment>
   );
 }

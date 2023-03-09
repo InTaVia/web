@@ -16,6 +16,7 @@ import { useAppDispatch } from '@/app/store';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
+import { useCollection } from '@/components/search/collection.context';
 import { useAllSearchResults } from '@/components/search/use-all-search-results';
 
 interface SaveQueryAsCollectionDialogProps {
@@ -28,6 +29,7 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
   const formId = 'save-collection';
 
   const { t } = useI18n<'common'>();
+  const { setCurrentCollection } = useCollection();
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -45,6 +47,7 @@ export function SaveQueryAsCollectionDialog(props: SaveQueryAsCollectionDialogPr
     dismiss();
     const collection = createCollection({ ...values, entities, metadata });
     dispatch(addCollection(collection));
+    setCurrentCollection(collection.id);
   }
 
   return (
