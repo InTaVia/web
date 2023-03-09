@@ -28,7 +28,7 @@ export function SearchForm(): JSX.Element {
   const { search } = useSearchEntities();
 
   function onSubmit(values: SearchEntities.SearchParams) {
-    search({ ...searchFilters, ...values, page: 1 });
+    search({ ...searchFilters, ...values, q: values.q, page: 1 });
   }
 
   function onClear() {
