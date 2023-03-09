@@ -98,52 +98,52 @@ export function getEventKindPropertiesByType(type: string): EventKindProperties 
   }
 }
 
-const entityColorByKind: Record<EntityKind, KindColor> = {
-  person: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
-  'cultural-heritage-object': {
-    foreground: 'hsl(208, 60%, 80%)',
-    background: 'hsl(208, 100%, 35%)',
-  },
-  place: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
-  group: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
-  'historical-event': { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
-};
+// const entityColorByKind: Record<EntityKind, KindColor> = {
+//   person: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
+//   'cultural-heritage-object': {
+//     foreground: 'hsl(208, 60%, 80%)',
+//     background: 'hsl(208, 100%, 35%)',
+//   },
+//   place: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
+//   group: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
+//   'historical-event': { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
+// };
 
 const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
   person: {
     label: 'Person',
     kind: 'person',
     shape: 'dot',
-    color: { foreground: '#57AE5F', background: '#57AE5F' },
+    color: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
   },
   'cultural-heritage-object': {
     label: 'Cultural Heritage Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
-    color: { foreground: '#5785AE', background: '#5785AE' },
+    color: { foreground: 'hsl(208, 60%, 80%)', background: 'hsl(208, 100%, 35%)' },
   },
   place: {
     label: 'Place',
     kind: 'place',
     shape: 'triangle',
-    color: { foreground: '#AE5757', background: '#AE5757' },
+    color: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
   },
   group: {
     label: 'Group',
     kind: 'group',
     shape: 'ellipse',
-    color: { foreground: '#C6C6C6', background: '#C6C6C6' },
+    color: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
   },
   'historical-event': {
     label: 'Historical Event',
     kind: 'historical-event',
     shape: 'dot',
-    color: { foreground: '#A957AE', background: '#A957AE' },
+    color: { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
   },
 };
 
-export function getEntityColorByKind(kind: EntityKind): string {
-  return entityKindProperties[kind].color.foreground;
+export function getEntityColorByKind(kind: EntityKind): KindColor {
+  return entityKindProperties[kind].color;
 }
 
 export function getEntityKindPropertiesByKind(kind: EntityKind): EntityKindProperties {

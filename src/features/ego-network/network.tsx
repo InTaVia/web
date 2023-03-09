@@ -212,7 +212,7 @@ function LinkView(props: Link): JSX.Element {
         y1={source.y}
         x2={target.x}
         y2={target.y}
-        stroke={hoveredEvents.length > 0 ? 'neutral' : 'lightneutral'}
+        stroke={hoveredEvents.length > 0 ? 'gray' : 'lightgray'}
         cursor={'pointer'}
         onMouseEnter={(e) => {
           updateHover({
