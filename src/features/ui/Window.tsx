@@ -74,7 +74,7 @@ export function Window(props: WindowProps): JSX.Element {
       <div
         className={`${
           props.className !== undefined ? props.className : ''
-        } grid h-full w-full grid-cols-[100%] grid-rows-[29px_101px] overflow-hidden`}
+        } grid h-full grid-rows-[29px_101px] overflow-hidden`}
       >
         <div className="flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-brand-200 px-2 py-1 leading-7 text-white">
           <div>{props.title}</div>

@@ -3,6 +3,10 @@ import { forwardRef } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
+import {
+  getEventKindPropertiesById,
+  getEventKindPropertiesByType,
+} from '@/features/common/visualization.config';
 import { TimelineColors as colors, translateEventType } from '@/features/timelineV2/timeline';
 
 interface PatisserieChartProperties {
@@ -61,6 +65,9 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       <circle cx={r} cy={r} r={r - 1} fill="white" stroke="black"></circle>
       <g transform={'translate(1, 1)'}>
         {grouped.map((item: Array<Event>, index) => {
+          const type = getEventKindPropertiesById(item[0].kind).type;
+          const color = getEventKindPropertiesByType(type).color.background;
+
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(
             offset / total,
@@ -69,7 +76,7 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             r0 - 1,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
-            colors[translateEventType(vocabularies[item[0].kind])] ?? 'teal',
+            color,
             patisserieType,
             `${index}${JSON.stringify(events)}segment`,
           );

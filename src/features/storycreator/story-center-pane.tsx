@@ -74,12 +74,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
   });
-  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
+  const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0] ?? null;
 
   const ref = useRef<HTMLDivElement>(null);
 
   const [propertiesEditElement, setPropertiesEditElement] = useState<any | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewStatus, setPreviewStatus] = useState<'default' | 'error' | 'loading'>('default');
 
   const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -94,7 +94,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const setSlideThumbnail = function () {
-    if (ref.current === null) {
+    if (ref.current === null || selectedSlide === null) {
       return;
     }
 
@@ -108,6 +108,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const addContentPane = (slotId: StringLiteral, contentToAddType: string | undefined) => {
+    if (selectedSlide === null) {
+      return;
+    }
+
     const contId = `contentPane-${Math.random()
       .toString(36)
       .replace(/[^a-z]+/g, '')
@@ -128,7 +132,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     for (const [key, value] of Object.entries(layoutTemplate)) {
       if (key !== 'cols' && key !== 'rows') {
         if (layoutTemplate.type === 'contentPane') {
-          const contentPaneSlots = selectedSlide!.contentPaneSlots;
+          const contentPaneSlots = selectedSlide
+            ? selectedSlide.contentPaneSlots
+            : ({} as Record<ContentSlotId, string | null>);
           const slotId = layoutTemplate.id as ContentSlotId;
           if (contentPaneSlots[slotId] === null) {
             addContentPane(layoutTemplate.id, contentToAddType);
@@ -143,6 +149,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const onLayoutSelected = (i_layout: PanelLayout) => {
+    if (selectedSlide === null) {
+      return;
+    }
     checkForEmptyContentPaneSlots(layoutTemplates[i_layout] as LayoutPaneContent);
     dispatch(setLayoutForSlide({ slide: selectedSlide, layout: i_layout }));
   };
@@ -184,6 +193,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         layoutItem['h'] = 2;
         layoutItem['w'] = 1;
         break;
+      case 'Title':
+        layoutItem['h'] = 8;
+        layoutItem['w'] = 1;
+        break;
       default:
         layoutItem['h'] = 1;
         layoutItem['w'] = 1;
@@ -208,6 +221,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   };
 
   const increaseNumberOfContentPanes = (contentToAddType: string | undefined) => {
+    if (selectedSlide === null) {
+      return;
+    }
+
     const layout = selectedSlide!.layout;
 
     const newLayout = (layout + '-content') as PanelLayout;
@@ -363,14 +380,14 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
-    setStoryExportObject({
+    return {
       ...story,
       slides: slideOutput,
       visualizations: storyVisualizations,
       contentPanes: storyContentPanes,
       storyEntities: storyEntities,
       storyEvents: storyEvents,
-    });
+    };
   };
 
   return (
@@ -382,12 +399,28 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         timescale={timescale}
         onTimescaleChange={onTimescaleChange}
         onExportStory={() => {
-          createStoryObject();
+          setStoryExportObject(createStoryObject());
           setDialogOpen(true);
         }}
         onOpenSettingsDialog={() => {
           setPropertiesEditElement(story);
         }}
+        onPreviewStory={() => {
+          setPreviewStatus('loading');
+          postStory(createStoryObject())
+            .unwrap()
+            .then((fulfilled: any) => {
+              const response = { ...fulfilled } as StoryViewerResponse;
+              const url = response.url;
+              window.open(url, '_newtab' + Date.now());
+              setPreviewStatus('default');
+            })
+            .catch((rejected: unknown) => {
+              console.error(rejected);
+              setPreviewStatus('error');
+            });
+        }}
+        previewStatus={previewStatus}
       />
       <ReactResizeDetector key="test" handleWidth handleHeight>
         {({ width, height }) => {
@@ -402,15 +435,19 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           return (
             <div className="grid h-full w-full grid-cols-1 justify-items-center">
               <div className="h-full border border-intavia-neutral-300" style={{ width: newWidth }}>
-                <SlideEditor
-                  slide={selectedSlide as Slide}
-                  imageRef={ref}
-                  layout={selectedSlide!.layout}
-                  desktop={desktop}
-                  timescale={timescale}
-                  increaseNumberOfContentPanes={increaseNumberOfContentPanes}
-                  addContent={addContent}
-                />
+                {selectedSlide ? (
+                  <SlideEditor
+                    slide={selectedSlide as Slide}
+                    imageRef={ref}
+                    layout={selectedSlide!.layout}
+                    desktop={desktop}
+                    timescale={timescale}
+                    increaseNumberOfContentPanes={increaseNumberOfContentPanes}
+                    addContent={addContent}
+                  />
+                ) : (
+                  <div className="flex justify-center">Please add at least one slide!</div>
+                )}
               </div>
             </div>
           );
@@ -439,24 +476,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               <DialogTitle>Export Story</DialogTitle>
             </DialogHeader>
 
-            <form
-              id={'storyExportDialog'}
-              name={'storyExportDialog'}
-              noValidate
-              onSubmit={(event) => {
-                event.preventDefault();
-                postStory(storyExportObject)
-                  .unwrap()
-                  .then((fulfilled: any) => {
-                    const response = { ...fulfilled } as StoryViewerResponse;
-                    const url = response.url;
-                    setPreviewUrl(url);
-                  })
-                  .catch((rejected: unknown) => {
-                    console.error(rejected);
-                  });
-              }}
-            >
+            <form id={'storyExportDialog'} name={'storyExportDialog'} noValidate>
               <textarea
                 id="message"
                 rows={6}
@@ -464,37 +484,27 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 defaultValue={JSON.stringify(storyExportObject, null, 2)}
               ></textarea>
             </form>
-          </DialogContent>
 
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setDialogOpen(false);
-              }}
-            >
-              {t(['common', 'form', 'cancel'])}
-            </Button>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDialogOpen(false);
+                }}
+              >
+                {t(['common', 'form', 'cancel'])}
+              </Button>
 
-            <a
-              href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                JSON.stringify(storyExportObject, null, 2),
-              )}`}
-              download={`${story.properties.name?.value ?? story.id}.istory.json`}
-            >
-              <Button>Download</Button>
-            </a>
-
-            <Button form={'storyExportDialog'} type="submit">
-              {t(['common', 'form', 'submit'])}
-            </Button>
-
-            {previewUrl !== null && (
-              <a target="_blank" href={previewUrl} rel="noreferrer">
-                <Button>Preview</Button>
+              <a
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                  JSON.stringify(storyExportObject, null, 2),
+                )}`}
+                download={`${story.properties.name?.value ?? story.id}.istory.json`}
+              >
+                <Button>Download</Button>
               </a>
-            )}
-          </DialogFooter>
+            </DialogFooter>
+          </DialogContent>
         </Dialog>
       )}
     </div>

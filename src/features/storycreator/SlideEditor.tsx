@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
+import type { DataTransferData } from '@/features/common/data-transfer.types';
+import { type as mediaType } from '@/features/common/data-transfer.types';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
@@ -78,7 +80,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const handleSave = (element: SlideContent | Visualization) => {
     if (SlideContentTypes.includes(element.type)) {
-      dispatch(editSlideContent({ slide: slide, content: element }));
+      dispatch(editSlideContent({ content: element }));
     } else {
       dispatch(editVisualization(element));
     }
@@ -119,9 +121,20 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const drop = (event: DragEvent) => {
     event.preventDefault();
-    const data = JSON.parse(event.dataTransfer.getData('Text'));
-    if (SlideContentTypes.includes(data.type)) {
-      increaseNumberOfContentPanes(data.type);
+
+    const data = event.dataTransfer.getData(mediaType);
+    // console.log(event);
+
+    try {
+      const payload: DataTransferData = JSON.parse(data);
+
+      if (payload.type === 'contentType') {
+        if (SlideContentTypes.includes(payload.contentType)) {
+          increaseNumberOfContentPanes(payload.contentType);
+        }
+      }
+    } catch {
+      /** Ignore invalid json. */
     }
   };
 
@@ -163,6 +176,7 @@ export function SlideEditor(props: SlideEditorProps) {
           // console.log({ entities, events, visId, slide });
           dispatch(setHighlighted({ entities, events, visId, slide }));
         }}
+        handleSaveComponent={handleSave}
       />
 
       {editElement !== null ? (

@@ -1,7 +1,9 @@
 import { Button } from '@intavia/ui';
 import { nanoid } from '@reduxjs/toolkit';
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import { isConstructorDeclaration } from 'typescript';
 
+import { PageContext } from '@/app/context/page.context';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -22,6 +24,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     Visualization['id'] | null
   >(null);
   const visualizations = useAppSelector(selectAllVisualizations);
+  const pageContext = useContext(PageContext);
 
   function createVis(type: Visualization['type']) {
     const visId = `visualization-${nanoid(4)}`;
@@ -49,6 +52,8 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     onAddVisualization(visualizationSlot, selectedVisualizationId);
   }
 
+  console.log(pageContext);
+
   return (
     <div className="grid h-full w-full place-content-center gap-5 p-5">
       <div className="grid gap-2 md:grid-cols-2">
@@ -66,13 +71,14 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
         >
           Create Timeline Visualization
         </Button>
+        {pageContext.page !== 'story-creator' && (
         <Button
           onClick={() => {
             onButtonClick('ego-network');
           }}
         >
           Create Network Visualization
-        </Button>
+        </Button>)}
       </div>
 
       {Object.keys(visualizations).length > 0 && (

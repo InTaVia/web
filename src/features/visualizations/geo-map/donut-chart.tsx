@@ -81,7 +81,10 @@ export function DonutChart<T>(props: DonutChartProps<T>): JSX.Element {
             events: clusterFeatures.map((feature) => {
               return feature.id;
             }) as Array<string>,
-            clientRect: event.currentTarget.getBoundingClientRect(),
+            clientRect: {
+              left: event.clientX,
+              top: event.clientY,
+            } as DOMRect,
           });
           setIsHoverd(true);
         }}
@@ -199,7 +202,10 @@ export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
         updateHover({
           entities: [],
           events: segmentFeatureIds,
-          clientRect: event.currentTarget.getBoundingClientRect(),
+          clientRect: {
+            left: event.clientX,
+            top: event.clientY,
+          } as DOMRect,
         });
         setIsHoverd(true);
       }}

@@ -31,8 +31,15 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
     event.dataTransfer.setData(mediaType, JSON.stringify(data));
   }
 
-  function onMouseEnter() {
-    updateHover({ entities: [entity.id], events: [], clientRect: null });
+  function onMouseEnter(e) {
+    updateHover({
+      entities: [entity.id],
+      events: [],
+      clientRect: {
+        left: e.clientX,
+        top: e.clientY,
+      } as DOMRect,
+    });
     setIsHovered(true);
     //update workspace hovered
   }

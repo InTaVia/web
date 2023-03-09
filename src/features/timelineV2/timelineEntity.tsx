@@ -31,6 +31,7 @@ interface TimelineEntityProps {
   clusterMode: 'bee' | 'donut' | 'pie';
   mode?: TimelineType;
   diameter?: number;
+  fontSize?: number;
 }
 
 export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
@@ -48,6 +49,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     clusterMode,
     mode = 'default',
     diameter = 14,
+    fontSize = 10,
   } = props;
 
   // const itemsRef = useRef([]);
@@ -251,7 +253,10 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             updateHover({
               entities: [entity.id],
               events: [],
-              clientRect: e.currentTarget.getBoundingClientRect(),
+              clientRect: {
+                left: e.clientX,
+                top: e.clientY,
+              } as DOMRect,
             });
             setHover(true);
           }}
@@ -265,6 +270,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             lineHeight={lineHeight}
             mode={mode}
             entityIndex={entityIndex}
+            fontSize={fontSize}
           >
             {getTranslatedLabel(entity.label)}
           </TimelineEntityLabel>
@@ -308,6 +314,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   overlap={overlap}
                   overlapIndex={0}
                   diameter={diameter}
+                  fontSize={fontSize}
                 />
               );
             })}
@@ -329,6 +336,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 entityIndex={entityIndex}
                 diameter={diameter}
                 mode={mode}
+                fontSize={fontSize}
               />
             );
           })}

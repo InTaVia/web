@@ -163,7 +163,10 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
               updateHover({
                 entities: [],
                 events: [feature.id as string],
-                clientRect: event.currentTarget.getBoundingClientRect(),
+                clientRect: {
+                  left: event.clientX,
+                  top: event.clientY,
+                } as DOMRect,
               });
             }}
             onMouseLeave={() => {

@@ -2,6 +2,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
 
 import type { Visualization } from '@/features/common/visualization.slice';
+import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Network } from '@/features/ego-network/network';
 import { useNodesAndLinks } from '@/features/ego-network/use-nodes-and-links';
 
@@ -28,7 +29,7 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { visualization, width, height } = props;
 
   const entityIds = visualization.entityIds;
-  const { nodes, links, status } = useNodesAndLinks(entityIds);
+  const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
 
   if (nodes.length === 0) {
     return (
@@ -40,6 +41,7 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
 
   if (status === 'success') {
     return (
+      <>
       <Network
         key={`network-${entityIds.join('-')}`}
         nodes={nodes}
@@ -48,6 +50,10 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
         height={height}
         visProperties={visualization.properties}
       />
+      <div className="absolute bottom-0 right-0">
+        <VisualizationLegend events={{ events }} entities={entities} />
+      </div>
+    </>
     );
   }
 

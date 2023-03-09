@@ -213,7 +213,15 @@ export const visualizationSlice = createSlice({
                 sort: 7,
                 label: 'Stack Entities',
               },
-              thickness: {
+              fontSize: {
+                type: 'number',
+                id: 'fontSize',
+                value: 10,
+                editable: true,
+                sort: 8,
+                label: 'Font Size',
+              },
+              /* thickness: {
                 type: 'number',
                 id: 'thickness',
                 value: 1,
@@ -228,7 +236,7 @@ export const visualizationSlice = createSlice({
                 editable: true,
                 sort: 9,
                 label: 'Diameter',
-              },
+              }, */
               clusterMode: {
                 type: 'select',
                 id: 'clusterMode',

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import { HoverProvider } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
@@ -78,16 +77,15 @@ function StoryScreen(): JSX.Element | null {
 
   return (
     <PageContext.Provider value={{ page: 'story-creator', storyId: id }}>
-      <HoverProvider>
-        <Allotment>
-          <Allotment.Pane
-            // className="grid overflow-hidden overflow-y-scroll"
-            visible={leftPaneOpen}
-            {...leftPaneProps}
-            preferredSize="20%"
-          >
-            <DataPanel />
-            {/* <Allotment vertical={true} proportionalLayout={false}>
+      <Allotment>
+        <Allotment.Pane
+          // className="grid overflow-hidden overflow-y-scroll"
+          visible={leftPaneOpen}
+          {...leftPaneProps}
+          preferredSize="20%"
+        >
+          <DataPanel />
+          {/* <Allotment vertical={true} proportionalLayout={false}>
             <Allotment.Pane
               key={`leftUpperPanel${openLeftUpperPanel}`}
               minSize={24}
@@ -124,80 +122,80 @@ function StoryScreen(): JSX.Element | null {
               </div>
             </Allotment.Pane>
           </Allotment> */}
-          </Allotment.Pane>
-          <Allotment.Pane {...centerPaneProps}>
-            <StoryCenterPane
-              story={story}
-              desktop={desktop}
-              onDesktopChange={setDesktop}
-              timescale={timescale}
-              onTimescaleChange={setTimescale}
-            />
-          </Allotment.Pane>
-          <Allotment.Pane
-            className="grid overflow-hidden overflow-y-scroll"
-            visible={rightPaneOpen}
-            {...rightPaneProps}
-          >
-            <Allotment vertical={true} proportionalLayout={false}>
-              <Allotment.Pane
-                key={`upperPanel${openUpperPanel}`}
-                minSize={24}
-                preferredSize={openUpperPanel ? '50%' : 24}
-              >
-                <div className="grid h-full grid-cols-1 grid-rows-[max-content_1fr]">
-                  <AllotmentHeader
-                    title="Story Flow"
-                    open={openUpperPanel}
-                    onClick={() => {
-                      setOpenUpperPanel(!openUpperPanel);
-                    }}
-                  />
-                  <div className="overflow-hidden overflow-y-scroll">
-                    <ReactResizeDetector handleWidth handleHeight>
-                      {({ width, height, targetRef }) => {
-                        return (
-                          <StoryFlow
-                            story={story}
-                            vertical={true}
-                            width={width}
-                            height={height}
-                            targetRef={targetRef}
-                            slides={story.slides}
-                          />
-                        );
-                      }}
-                    </ReactResizeDetector>
-                  </div>
-                  <div className="flex justify-center border-t border-intavia-neutral-200 p-2">
-                    <Button
-                      onClick={() => {
-                        dispatch(createSlide(story.id));
-                      }}
-                    >
-                      <b>+</b> Add Slide
-                    </Button>
-                  </div>
-                </div>
-              </Allotment.Pane>
-              <Allotment.Pane
-                key={`bottomPanel${openBottomPanel}`}
-                minSize={24}
-                preferredSize={openBottomPanel ? '35%' : 24}
-              >
+        </Allotment.Pane>
+        <Allotment.Pane {...centerPaneProps}>
+          <StoryCenterPane
+            story={story}
+            desktop={desktop}
+            onDesktopChange={setDesktop}
+            timescale={timescale}
+            onTimescaleChange={setTimescale}
+          />
+        </Allotment.Pane>
+        <Allotment.Pane
+          className="grid overflow-hidden overflow-y-scroll"
+          visible={rightPaneOpen}
+          {...rightPaneProps}
+        >
+          <Allotment vertical={true} proportionalLayout={false}>
+            <Allotment.Pane
+              key={`upperPanel${openUpperPanel}`}
+              minSize={24}
+              preferredSize={openUpperPanel ? '50%' : 24}
+            >
+              <div className="grid h-full grid-cols-1 grid-rows-[max-content_1fr]">
                 <AllotmentHeader
-                  title="Contents"
-                  open={openBottomPanel}
+                  title="Story Flow"
+                  open={openUpperPanel}
                   onClick={() => {
-                    setOpenBottomPanel(!openBottomPanel);
+                    setOpenUpperPanel(!openUpperPanel);
                   }}
                 />
-                <VisualizationDragger />
-              </Allotment.Pane>
-            </Allotment>
-          </Allotment.Pane>
-        </Allotment>
-      </HoverProvider>
+                <div className="overflow-hidden overflow-y-scroll">
+                  <ReactResizeDetector handleWidth handleHeight>
+                    {({ width, height, targetRef }) => {
+                      return (
+                        <StoryFlow
+                          story={story}
+                          vertical={true}
+                          width={width}
+                          height={height}
+                          targetRef={targetRef}
+                          slides={story.slides}
+                        />
+                      );
+                    }}
+                  </ReactResizeDetector>
+                </div>
+                <div className="flex justify-center border-t border-intavia-neutral-200 p-2">
+                  <Button
+                    size={'xs'}
+                    onClick={() => {
+                      dispatch(createSlide(story.id));
+                    }}
+                  >
+                    <b>+</b> Add Slide
+                  </Button>
+                </div>
+              </div>
+            </Allotment.Pane>
+            <Allotment.Pane
+              key={`bottomPanel${openBottomPanel}`}
+              minSize={24}
+              preferredSize={openBottomPanel ? '35%' : 24}
+            >
+              <AllotmentHeader
+                title="Contents"
+                open={openBottomPanel}
+                onClick={() => {
+                  setOpenBottomPanel(!openBottomPanel);
+                }}
+              />
+              <VisualizationDragger />
+            </Allotment.Pane>
+          </Allotment>
+        </Allotment.Pane>
+      </Allotment>
     </PageContext.Provider>
   );
 }

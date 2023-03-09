@@ -4,19 +4,24 @@ import { Button, IconButton } from '@intavia/ui';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
+import { useParams } from '@/app/route/use-params';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { QuizAnswer } from '@/features/common/component-property';
+import type { Visualization } from '@/features/common/visualization.slice';
 import ContentPaneWizard from '@/features/storycreator/content-pane-wizard';
 import type {
   AnswerList,
   SlideContent,
   StoryImage,
+  StoryTitle,
 } from '@/features/storycreator/contentPane.slice';
 import {
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
+import { StoryTitleSlide } from '@/features/storycreator/story-title-slide';
+import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
 
 const margin: [number, number] = [0, 0];
@@ -26,10 +31,11 @@ interface StoryContentPaneProps {
   setEditElement?: (element: SlideContent) => void;
   onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
   onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
+  handleSaveComponent: (element: SlideContent | Visualization) => void;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const { id, setEditElement, onDrop, onContentPaneWizard } = props;
+  const { id, setEditElement, onDrop, onContentPaneWizard, handleSaveComponent } = props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
@@ -39,6 +45,14 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   const contentPane = useAppSelector((state) => {
     return selectContentPaneByID(state, id);
   });
+
+  const params = useParams();
+  const storyID = params?.get('id') ?? '';
+  const story = useAppSelector((state) => {
+    return selectStoryByID(state, storyID);
+  });
+
+  const fontFamily = story.properties.font.value.value;
 
   let contents: Array<SlideContent>;
   if (contentPane !== undefined) {
@@ -65,6 +79,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 position: 'relative',
                 backgroundColor: 'white',
                 padding: 0,
+                fontFamily: fontFamily,
               }}
             >
               {(Boolean(element!.properties!.title!.value) ||
@@ -81,12 +96,25 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             </div>
           </div>
         );
+      case 'Title':
+        return (
+          <StoryTitleSlide
+            handleSaveComponent={handleSaveComponent}
+            element={element as StoryTitle}
+            editable
+          />
+        );
       case 'Quiz': {
         const quizContent = [];
         if (element.properties && element.properties.question) {
           if (element.properties.question.value) {
             quizContent.push(
-              <div className="grid grid-cols-[auto] gap-1">
+              <div
+                className="grid grid-cols-[auto] gap-1"
+                style={{
+                  fontFamily: fontFamily,
+                }}
+              >
                 {(element.properties.answerlist as AnswerList).answers.map(
                   (answer: QuizAnswer, index: number) => {
                     return (
@@ -119,7 +147,9 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             >
               <div className="p-2">
                 {Boolean(element.properties!.question!.value) && (
-                  <p className="mb-1 text-lg">{element.properties!.question!.value}</p>
+                  <p className="mb-1 text-lg" style={{ fontFamily }}>
+                    {element.properties!.question!.value}
+                  </p>
                 )}
                 {quizContent}
               </div>
@@ -135,6 +165,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               maxHeight: '100%',
               backgroundColor: 'white',
               padding: 0,
+              fontFamily: fontFamily,
             }}
           >
             <div style={{ height: '100%' }}>
@@ -160,7 +191,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
           </div>
         );
       case 'Video/Audio':
-        return <StoryVideoAudio content={element} />;
+        return <StoryVideoAudio content={element} fontFamily={fontFamily} />;
       default:
         return [];
     }
@@ -176,26 +207,26 @@ export function StoryContentPane(props: StoryContentPaneProps) {
         <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
           <div className="truncate">{element.type}</div>
           <div className="sticky right-0 flex flex-nowrap gap-1">
-            <IconButton
-              className="ml-auto grow-0"
-              label="Edit"
+            <button
+              aria-label="Edit"
+              className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
               onClick={() => {
                 if (setEditElement !== undefined) {
                   setEditElement(element);
                 }
               }}
             >
-              <AdjustmentsIcon className="h-3 w-3" />
-            </IconButton>
-            <IconButton
-              label="Close"
-              className="ml-auto grow-0"
+              <AdjustmentsIcon className="h-4 w-4" />
+            </button>
+            <button
+              aria-label="Remove"
+              className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-neutral-200 hover:text-neutral-700"
               onClick={() => {
                 removeWindowHandler(element);
               }}
             >
-              <XIcon className="h-3 w-3" />
-            </IconButton>
+              <XIcon className="h-4 w-4" />
+            </button>
           </div>
         </div>
         {createWindowContent(element)}

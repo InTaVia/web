@@ -132,7 +132,7 @@ export const dictionary: Dictionary = {
   },
   stories: {
     metadata: {
-      title: 'Storycreator',
+      title: 'Story Creator',
     },
   },
   story: {
@@ -140,7 +140,7 @@ export const dictionary: Dictionary = {
       title: 'Story',
     },
   },
-  'storytelling-creator': 'Story Creator',
+  'story-creator': 'Story Creator',
   timeline: {
     metadata: {
       title: 'Timeline',

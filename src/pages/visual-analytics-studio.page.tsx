@@ -30,22 +30,20 @@ export default function AnalysePage(): JSX.Element {
 
   return (
     <PageContext.Provider value={{ page: 'visual-analytics-studio' }}>
-      <HoverProvider>
-        <Allotment>
-          <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
-            <DataPanel />
-          </Allotment.Pane>
-          <Allotment.Pane {...centerPaneProps}>
-            <div className="flex h-full w-full flex-col overflow-hidden">
-              <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
-              <Workspaces />
-            </div>
-          </Allotment.Pane>
-          <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
-            {/* <DetailsPanel /> */}
-          </Allotment.Pane>
-        </Allotment>
-      </HoverProvider>
+      <Allotment>
+        <Allotment.Pane visible={leftPaneOpen} {...leftPaneProps}>
+          <DataPanel />
+        </Allotment.Pane>
+        <Allotment.Pane {...centerPaneProps}>
+          <div className="flex h-full w-full flex-col overflow-hidden">
+            <AnalysePageToolbar onLayoutSelected={onLayoutSelected} />
+            <Workspaces />
+          </div>
+        </Allotment.Pane>
+        <Allotment.Pane visible={rightPaneOpen} {...rightPaneProps}>
+          {/* <DetailsPanel /> */}
+        </Allotment.Pane>
+      </Allotment>
     </PageContext.Provider>
   );
 }

@@ -95,7 +95,10 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               updateHover({
                 entities: [],
                 events: [dot.datum.id],
-                clientRect: e.currentTarget.getBoundingClientRect(),
+                clientRect: {
+                  left: e.clientX,
+                  top: e.clientY,
+                } as DOMRect,
               });
               setHover(true);
             }}

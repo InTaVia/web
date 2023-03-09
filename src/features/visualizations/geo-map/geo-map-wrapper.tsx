@@ -4,6 +4,7 @@ import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
 import { getColorsById } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
+import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
 import { base } from '@/features/visualizations/geo-map/geo-map.config';
 import { GeoMapClusterMarkerLayer } from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
@@ -78,32 +79,37 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   // const vertical = properties['vertical']?.value.value ?? false;
 
   return (
-    <GeoMap
-      {...base}
-      // onMove={onMove}
-    >
-      {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
-      {renderLines === true && isCluster === false && lines.features.length > 0 && (
-        <GeoMapLineLayer data={lines} />
-      )}
+    <>
+      <GeoMap
+        {...base}
+        // onMove={onMove}
+      >
+        {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
+        {renderLines === true && isCluster === false && lines.features.length > 0 && (
+          <GeoMapLineLayer data={lines} />
+        )}
 
-      {isCluster === false && points.features.length > 0 && (
-        <GeoMapDotMarkerLayer
-          data={points}
-          onToggleSelection={onToggleSelection}
-          highlightedByVis={highlightedByVis}
-        />
-      )}
+        {isCluster === false && points.features.length > 0 && (
+          <GeoMapDotMarkerLayer
+            data={points}
+            onToggleSelection={onToggleSelection}
+            highlightedByVis={highlightedByVis}
+          />
+        )}
 
-      {isCluster === true && points.features.length > 0 && (
-        //NOTE: does not have to be visulization id - used to keep source id
-        <GeoMapClusterMarkerLayer
-          id={visualization.id}
-          {...cluster}
-          isCluster={isCluster}
-          clusterType={clusterMode}
-        />
-      )}
-    </GeoMap>
+        {isCluster === true && points.features.length > 0 && (
+          //NOTE: does not have to be visulization id - used to keep source id
+          <GeoMapClusterMarkerLayer
+            id={visualization.id}
+            {...cluster}
+            isCluster={isCluster}
+            clusterType={clusterMode}
+          />
+        )}
+      </GeoMap>
+      <div className="absolute bottom-5 right-0">
+        <VisualizationLegend events={data.events} entities={data.entities} />
+      </div>
+    </>
   );
 }

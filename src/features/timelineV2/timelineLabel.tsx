@@ -11,6 +11,7 @@ interface TimelineLabelProps {
   thickness?: number;
   mode?: TimelineType;
   entityIndex?: number;
+  fontSize?: number;
   showLabels?: boolean;
 }
 
@@ -25,14 +26,16 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
     mode = 'default',
     showLabels = false,
     entityIndex = 0,
+    fontSize = 10,
   } = props;
 
   const textHeight = hover ? 12 : 10;
   const diameter = (hover ? 10 + thickness : 7 + thickness) * 2;
 
-  const textOffset = diameter;
+  const textOffset = diameter + fontSize;
   let textAngle = 45;
   let textTranslateStr = '';
+  let textTranslateStrAfter = '';
   let marginLeft = textOffset;
   let marginRight = 0;
 
@@ -40,7 +43,7 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
     if (mode === 'dual') {
       if (entityIndex === 1) {
         textAngle = -45;
-        textTranslateStr = 'translateX(-100%)';
+        textTranslateStrAfter = 'translateX(-100%)';
         marginLeft = 0;
         marginRight = textOffset;
       }
@@ -53,36 +56,29 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
     } else {
       textAngle = -45;
     }
+    textTranslateStr = `translate(${textOffset}px, ${-textOffset}px)`;
   }
 
   return (
     <>
       <div
         style={{
+          padding: '0 2px',
+          backgroundColor: 'white',
+          borderRadius: '2px',
           position: 'absolute',
           left: posX,
           top: posY,
-          fontSize: `${textHeight}px`,
-          width: 'max-content',
-          transformOrigin: 'left',
-          transform: `rotate(${textAngle}deg) ${textTranslateStr}`.trim(),
-          fontWeight: hover ? 'bold' : 'unset',
-          zIndex: hover ? 9999 : 'unset',
-          marginTop: `${-5}px`,
+          fontSize: `${fontSize}px`,
+          maxWidth: '12em',
+          transformOrigin: 'left bottom',
+          transform: `${textTranslateStr} rotate(${textAngle}deg) ${textTranslateStrAfter}`.trim(),
         }}
-        className={`timelineLabel ${showLabels || hover ? 'visible' : 'invisible'}`}
+        className={`timelineLabel ${
+          showLabels || hover ? 'visible' : 'invisible'
+        } overflow-hidden text-ellipsis whitespace-nowrap`}
       >
-        <div
-          style={{
-            marginLeft: `${marginLeft}px`,
-            marginRight: `${marginRight}px`,
-            padding: '0 4px',
-            backgroundColor: 'white',
-            borderRadius: '2px',
-          }}
-        >
-          {labelText}
-        </div>
+        {labelText}
       </div>
     </>
   );

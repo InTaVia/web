@@ -41,7 +41,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
   }, [feature.properties!.event.id, highlightedByVis]);
 
   function onClick() {
-    if (pageContext === 'story-creator') {
+    if (pageContext.page === 'story-creator') {
       onToggleSelection?.([id as string]);
     }
   }
@@ -60,7 +60,10 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
           updateHover({
             entities: [],
             events: [feature.properties!.event.id],
-            clientRect: event.currentTarget.getBoundingClientRect(),
+            clientRect: {
+              left: event.clientX,
+              top: event.clientY,
+            } as DOMRect,
           });
         }}
         onMouseLeave={() => {

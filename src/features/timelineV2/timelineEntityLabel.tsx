@@ -29,9 +29,9 @@ export function TimelineEntityLabel(props: TimelineEntityLabelProps): JSX.Elemen
     } else {
       if (mode !== 'mass') {
         if (mode === 'dual' && entityIndex === 0) {
-          marginTop = -lineHeight - 9;
+          marginTop = -lineHeight - 12;
         } else {
-          marginTop = 9;
+          marginTop = 12;
         }
       }
     }
@@ -43,7 +43,6 @@ export function TimelineEntityLabel(props: TimelineEntityLabelProps): JSX.Elemen
       style={{
         width: '100%',
         minWidth: vertical ? '1em' : '120px',
-        height: '100%',
         minHeight: vertical ? '120px' : '1em',
         paddingLeft: vertical ? 0 : '5px',
         paddingTop: vertical ? '5px' : 0,

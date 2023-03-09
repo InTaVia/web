@@ -3,7 +3,11 @@ import { Allotment } from 'allotment';
 import { Fragment } from 'react';
 
 import type { Visualization } from '@/features/common/visualization.slice';
-import type { ContentSlotId, SlideContent } from '@/features/storycreator/contentPane.slice';
+import type {
+  ContentPane,
+  ContentSlotId,
+  SlideContent,
+} from '@/features/storycreator/contentPane.slice';
 import { StoryContentPane } from '@/features/storycreator/StoryContentPane';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import VisualizationContainer from '@/features/visualization-layouts/visualization-container';
@@ -35,6 +39,7 @@ interface VisualisationGroupProps {
     events: Array<Event['id'] | null>,
     visId: string,
   ) => void;
+  handleSaveComponent: (element: Visualization | SlideContent) => void;
 }
 
 export interface LayoutPaneContent {
@@ -73,6 +78,12 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
       { type: 'visualization', id: 'vis-1' },
       { type: 'visualization', id: 'vis-2' },
     ],
+  },
+  'single-content': {
+    cols: [{ type: 'contentPane', id: 'cont-1' }],
+  },
+  title: {
+    cols: [{ type: 'contentPane', id: 'cont-1' }],
   },
   'two-contents': {
     cols: [
@@ -221,6 +232,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
     setVisualizationEditElement,
     onToggleHighlight,
     layout = 'single-vis',
+    handleSaveComponent,
   } = props;
   const selectedLayout = layoutTemplates[layout] as LayoutTemplateItem;
 
@@ -281,6 +293,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
                     setEditElement={setEditElement}
                     onDrop={onDropContentPane}
                     onContentPaneWizard={onContentPaneWizard}
+                    handleSaveComponent={handleSaveComponent}
                   />
                 );
               }

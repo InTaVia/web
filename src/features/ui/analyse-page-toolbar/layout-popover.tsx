@@ -25,12 +25,10 @@ export interface VisOptionData extends LayoutOptionData {
 }
 
 export const storyLayout = [
+  //'title',
   'single-vis',
   'single-vis-content',
-  'two-cols',
-  'two-cols-content',
-  'two-rows',
-  'two-rows-content',
+  'single-content',
   'two-contents',
 ] as const;
 
@@ -48,6 +46,19 @@ export const layoutOptions: Record<PanelLayout, LayoutOptionData> = {
     symbol: 'M0 0H1V1H0z',
     title: 'Single Vis',
     description: 'Show only one vis, in full size.',
+  },
+  'single-content': {
+    key: 'single-content',
+    symbol: '',
+    contentSymbol: 'M0 0H1V1H0z',
+    title: 'Single Content',
+    description: 'Show only one content, in full size.',
+  } as StoryVisOptionData,
+  title: {
+    key: 'title',
+    symbol: 'M0 0H1V1H0z M0.2 0.5 L0.8 0.5',
+    title: 'Title Slide',
+    description: 'Show title slide.',
   },
   'two-rows': {
     key: 'two-rows',
@@ -98,7 +109,7 @@ export const layoutOptions: Record<PanelLayout, LayoutOptionData> = {
     title: 'Vis + Content',
     description: 'Two visualizations, placed next to each other.',
   } as StoryVisOptionData,
-  'two-cols-content': {
+  /* 'two-cols-content': {
     key: 'two-cols-content',
     symbol: 'M0 0H.67V1H0zM.33 0V1M.67 0V1Z',
     contentSymbol: 'M.67 0H1V1H.67Z',
@@ -111,7 +122,7 @@ export const layoutOptions: Record<PanelLayout, LayoutOptionData> = {
     contentSymbol: 'M.67 0H1V1H.67Z',
     title: 'Two Vis + Content',
     description: 'Two vis left, one content pane right.',
-  } as StoryVisOptionData,
+  } as StoryVisOptionData, */
   'two-contents': {
     key: 'two-contents',
     contentSymbol: 'M0 0H1V1H0zM0.5 0V1',

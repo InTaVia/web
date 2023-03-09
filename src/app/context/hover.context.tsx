@@ -9,7 +9,9 @@ import { unique } from '@/lib/unique';
 
 interface Hover {
   entities: Array<Entity['id']>;
+  relatedEntities?: Array<Entity['id']>;
   events: Array<Event['id']>;
+  relatedEvents?: Array<Event['id']>;
   clientRect: DOMRect | null;
 }
 
@@ -70,8 +72,10 @@ export function HoverProvider(props: HoverProviderProps): JSX.Element {
       });
 
       setHovered({
-        entities: unique([...hover.entities, ...relatedEntities]),
-        events: unique([...hover.events, ...relatedEvents]),
+        entities: unique([...hover.entities]),
+        relatedEntities: unique([...relatedEntities]),
+        events: unique([...hover.events]),
+        relatedEvents: unique([...relatedEvents]),
         clientRect,
       });
     };

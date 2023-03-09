@@ -196,7 +196,12 @@ export const storyCreatorSlice = createSlice({
     createSlide: (state, action: PayloadAction<Story['id']>) => {
       const storyID = action.payload;
 
-      const newSlides = { ...state.stories[storyID]!.slides };
+      const newSlides = Object.fromEntries(
+        Object.entries(state.stories[storyID]!.slides).map(([id, slide]) => {
+          const newSlide = { ...slide, selected: false };
+          return [id, newSlide];
+        }),
+      ) as Record<Slide['id'], Slide>;
 
       const oldIDs = Object.keys(newSlides);
       let counter = oldIDs.length - 1;
@@ -215,11 +220,13 @@ export const storyCreatorSlice = createSlice({
         contentPaneSlots: { 'cont-1': null, 'cont-2': null },
         layout: 'single-vis',
         sort: counter,
-        selected: false,
+        selected: true,
         highlighted: {},
       } as Slide;
 
-      state.stories[slide.story]!.slides[slide.id] = slide;
+      newSlides[slide.id] = slide;
+
+      state.stories[slide.story]!.slides = newSlides;
     },
     setLayoutForSlide: (state, action) => {
       const slide = action.payload.slide as Slide;
@@ -299,11 +306,11 @@ export const storyCreatorSlice = createSlice({
     removeSlide: (state, action) => {
       const storyID = action.payload.story;
       const slideID = action.payload.slide;
-      const newStories = { ...state.stories };
-      const story = newStories[storyID];
-      delete story!.slides[slideID];
+      const story = state.stories[storyID];
 
-      state.stories = newStories;
+      if (story !== undefined) {
+        delete story.slides[slideID];
+      }
     },
     setSlidesForStory: (state, action) => {
       const story = action.payload.story;

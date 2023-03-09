@@ -1,8 +1,10 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Event } from '@intavia/api-client/dist/models';
+import type { MouseEvent } from 'react';
 import { type LegacyRef, forwardRef, useLayoutEffect, useRef, useState } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { type TimelineType, getTemporalExtent } from '@/features/timelineV2/timeline';
 
 import BeeSwarm from './beeSwarmTimeCluster';
@@ -28,6 +30,7 @@ type TimelineEventClusterProps = {
   clusterMode: 'bee' | 'donut' | 'pie';
   mode?: TimelineType;
   diameter?: number;
+  fontSize?: number;
 };
 
 const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref): JSX.Element => {
@@ -42,11 +45,17 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
     showLabels,
     clusterMode,
     diameter = 14,
+    fontSize = 10,
     mode = 'default',
   } = props;
 
   const [hover, setHover] = useState(false);
   const diameterWithStroke = diameter + thickness * 3;
+  const { hovered, updateHover } = useHoverState();
+
+  const eventIDs = events.map((event: Event) => {
+    return event.id;
+  });
 
   let className = 'timeline-event';
 
@@ -106,10 +115,19 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
           backgroundColor: 'teal',
           display: hover ? 'block' : 'none',
         }}
-        onMouseEnter={() => {
+        onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+          updateHover({
+            entities: [],
+            events: eventIDs,
+            clientRect: {
+              left: e.clientX,
+              top: e.clientY,
+            } as DOMRect,
+          });
           setHover(true);
         }}
         onMouseLeave={() => {
+          updateHover(null);
           setHover(false);
         }}
       ></div>
@@ -122,10 +140,19 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
           cursor: 'pointer',
         }}
         className={className}
-        onMouseEnter={() => {
+        onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+          updateHover({
+            entities: [],
+            events: eventIDs,
+            clientRect: {
+              left: e.clientX,
+              top: e.clientY,
+            } as DOMRect,
+          });
           setHover(true);
         }}
         onMouseLeave={() => {
+          updateHover(null);
           setHover(false);
         }}
       >
@@ -156,6 +183,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
         thickness={thickness}
         vertical={vertical}
         mode={mode}
+        fontSize={fontSize}
       />
     </>
   );

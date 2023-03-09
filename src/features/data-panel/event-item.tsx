@@ -35,8 +35,15 @@ export function EventItem(props: EventItemProps): JSX.Element {
     dragEvent.dataTransfer.setData(mediaType, JSON.stringify(data));
   }
 
-  function onMouseEnter() {
-    updateHover({ entities: [], events: [event.id], clientRect: null });
+  function onMouseEnter(e) {
+    updateHover({
+      entities: [],
+      events: [event.id],
+      clientRect: {
+        left: e.clientX,
+        top: e.clientY,
+      } as DOMRect,
+    });
     setIsHovered(true);
     //update workspace hovered
   }
