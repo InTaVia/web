@@ -3,7 +3,8 @@ import {
   XIcon as CloseWorkspaceIcon,
 } from '@heroicons/react/outline';
 import { Dialog, IconButton, Tabs, TabsContent, TabsList, TabsTrigger } from '@intavia/ui';
-import { Fragment, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
@@ -31,6 +32,7 @@ export default function Workspaces(): JSX.Element {
   }
 
   function onAddWorkspace() {
+    if (workspaces.workspaces.length >= 5) return;
     dispatch(
       //FIXME get template from config (not in store, because can be used to programmatically add a preconfigured workspace)
       addWorkspace({
@@ -82,6 +84,8 @@ export default function Workspaces(): JSX.Element {
         defaultValue={workspaces.currentWorkspace}
         // @ts-expect-error using array indices (number) not string ids
         onValueChange={onChangeWorkspace}
+        // @ts-expect-error using array indices (number) not string ids
+        value={workspaces.currentWorkspace}
       >
         <div className="h-full basis-auto">
           {workspaces.workspaces.map((workspace, index) => {
@@ -110,21 +114,25 @@ export default function Workspaces(): JSX.Element {
           })}
         </div>
 
-        <div className="relative flex w-full flex-row items-center justify-between gap-4 overflow-hidden bg-blue-900 py-1">
-          <div>
+        <div className="relative flex w-full flex-row items-center justify-between overflow-hidden bg-neutral-200 p-1">
+          <div className="pr-1">
             <IconButton
               size="sm"
               label="Add workspace"
               onClick={onAddWorkspace}
-              // onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
-              //   event.preventDefault();
-              // }}
+              onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault();
+              }}
+              disabled={workspaces.workspaces.length >= 5}
             >
               <AddWorkspaceIcon className="h-5 w-5" />
             </IconButton>
           </div>
 
-          <TabsList className="flex w-full items-center gap-4 bg-transparent">
+          <TabsList
+            className="flex w-full grow basis-1 items-start justify-start gap-1 space-x-1 bg-transparent"
+            defaultValue={0}
+          >
             {workspaces.workspaces.map((workspace, index) => {
               return (
                 <TabsTrigger
@@ -132,11 +140,11 @@ export default function Workspaces(): JSX.Element {
                   // @ts-expect-error using array indices (number) not string ids
                   value={index}
                   className="m-0 rounded bg-white px-2 py-1 text-sm transition hover:bg-neutral-50"
-                  // onDoubleClick={(event: MouseEvent<HTMLDivElement>) => {
-                  //   event.preventDefault();
-                  // }}
+                  onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
+                    event.preventDefault();
+                  }}
                 >
-                  {index === workspaces.currentWorkspace ? (
+                  {index !== workspaces.currentWorkspace ? (
                     <div>
                       <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
                     </div>
@@ -149,7 +157,7 @@ export default function Workspaces(): JSX.Element {
                           onClick={() => {
                             onRemoveWorkspace(index);
                           }}
-                          className="hover:text-neutral-700"
+                          className="hover:text-red-700"
                         >
                           <CloseWorkspaceIcon className="h-4 w-4" />
                         </button>

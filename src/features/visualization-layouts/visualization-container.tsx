@@ -165,7 +165,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
       onDrop={onDrop}
     >
       <div
-        className="flex cursor-grabbing flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white"
+        className="flex cursor-grabbing flex-row flex-nowrap justify-between gap-2 truncate bg-neutral-400 px-2 py-1 text-white"
         draggable={true}
         onDragStart={(event) => {
           const data: DataTransferData = {
