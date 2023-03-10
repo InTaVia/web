@@ -105,6 +105,11 @@ interface ConstraintDialogContentProps {
   onClose: () => void;
 }
 
+/**
+ * FIXME: interaction between filters set via visual query builder,
+ * and filters set via form is not entirely clear, e.g. when to
+ * dispatch a new new search query
+ */
 function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Element | null {
   const { constraint, onClose } = props;
 
