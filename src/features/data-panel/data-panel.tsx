@@ -10,11 +10,11 @@ export function DataPanel(): JSX.Element {
   };
 
   return (
-    <Tabs className="h-full overflow-hidden" defaultValue="collections">
+    <Tabs className="grid h-full grid-rows-[auto_1fr] overflow-hidden" defaultValue="collections">
       <TabsList className="w-full">
         {Object.entries(tabs).map(([id, tab]) => {
           return (
-            <TabsTrigger key={id} value={id}>
+            <TabsTrigger key={id} value={id} className="grow">
               {tab.label}
             </TabsTrigger>
           );
@@ -22,7 +22,7 @@ export function DataPanel(): JSX.Element {
       </TabsList>
       {Object.entries(tabs).map(([id, tab]) => {
         return (
-          <TabsContent key={id} value={id} className="m-0 h-full overflow-auto rounded-none p-0">
+          <TabsContent key={id} value={id} className="m-0 h-full overflow-hidden rounded-none p-0">
             {tab.panel}
           </TabsContent>
         );

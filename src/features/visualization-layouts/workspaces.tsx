@@ -4,7 +4,7 @@ import {
 } from '@heroicons/react/outline';
 import { Dialog, IconButton, Tabs, TabsContent, TabsList, TabsTrigger } from '@intavia/ui';
 import type { MouseEvent } from 'react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
@@ -136,34 +136,39 @@ export default function Workspaces(): JSX.Element {
             {workspaces.workspaces.map((workspace, index) => {
               return (
                 <TabsTrigger
+                  asChild
                   key={index}
                   // @ts-expect-error using array indices (number) not string ids
                   value={index}
-                  className="m-0 rounded bg-white px-2 py-1 text-sm transition hover:bg-neutral-50"
-                  onDoubleClick={(event: MouseEvent<HTMLButtonElement>) => {
-                    event.preventDefault();
-                  }}
+                  className="cursor-pointer"
                 >
-                  {index !== workspaces.currentWorkspace ? (
-                    <div>
-                      <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
-                      {workspaces.workspaces.length > 1 && (
-                        <button
-                          aria-label="Remove workspace"
-                          onClick={() => {
-                            onRemoveWorkspace(index);
-                          }}
-                          className="hover:text-red-700"
-                        >
-                          <CloseWorkspaceIcon className="h-4 w-4" />
-                        </button>
-                      )}
-                    </div>
-                  )}
+                  <div
+                    className="m-0 bg-neutral-50 px-2 py-1 text-sm transition hover:bg-white"
+                    onDoubleClick={(event: MouseEvent<HTMLDivElement>) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    {index !== workspaces.currentWorkspace ? (
+                      <div>
+                        <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <span className="cursor-pointer whitespace-nowrap">{workspace.label}</span>
+                        {workspaces.workspaces.length > 1 && (
+                          <button
+                            aria-label="Remove workspace"
+                            onClick={() => {
+                              onRemoveWorkspace(index);
+                            }}
+                            className="hover:text-red-700"
+                          >
+                            <CloseWorkspaceIcon className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </TabsTrigger>
               );
             })}
