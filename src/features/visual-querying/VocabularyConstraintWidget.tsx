@@ -34,19 +34,11 @@ export function VocabularyConstraintWidget<T extends { id: string }>(
   }
 
   if (isLoading) {
-    return (
-      <div className="grid min-h-[480px] place-items-center">
-        <LoadingIndicator />
-      </div>
-    );
+    return <LoadingIndicator />;
   }
 
   if (data == null || data.children.length === 0) {
-    return (
-      <div className="grid min-h-[480px] place-items-center">
-        <p>Nothing found</p>
-      </div>
-    );
+    return <p>Nothing found</p>;
   }
 
   return (

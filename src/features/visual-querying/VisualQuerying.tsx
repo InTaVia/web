@@ -1,9 +1,25 @@
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@intavia/ui';
+import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-import { useAppSelector } from '@/app/store';
-import { ConstraintContainer } from '@/features/visual-querying/ConstraintContainer';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useSearchEntities } from '@/components/search/use-search-entities';
+import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
-import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
+import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
+import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
+import {
+  selectConstraints,
+  setConstraintValue,
+} from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
 import { useResizeObserverDeprecated } from '@/lib/useResizeObserver';
 
@@ -14,20 +30,12 @@ export function VisualQuerying(): JSX.Element {
 
   const [selectedConstraint, setSelectedConstraint] = useState<string | null>(null);
 
-  function getContainerPosition(type: Constraint['kind']['id']): { x: number; y: number } {
-    const center: [number, number] = [width / 2, height / 2];
-    switch (type) {
-      case 'date-range':
-        return { x: center[0] + 200, y: Math.max(0, center[1] - 300) };
-      // case 'geometry':
-      //   return { x: center[0] + 200, y: center[1] + 0 };
-      case 'vocabulary':
-        return { x: Math.max(0, center[0] - 550), y: center[1] + 0 };
-      case 'label':
-        return { x: Math.max(0, center[0] - 550), y: Math.max(0, center[1] - 150) };
-      default:
-        return { x: 0, y: 0 };
-    }
+  const selected = Object.values(constraints).find((constraint) => {
+    return constraint.id === selectedConstraint;
+  });
+
+  function onClose() {
+    setSelectedConstraint(null);
   }
 
   return (
@@ -39,20 +47,205 @@ export function VisualQuerying(): JSX.Element {
         setSelectedConstraint={setSelectedConstraint}
       />
 
-      {Object.values(constraints)
-        .filter((constraint: Constraint) => {
-          return constraint.id === selectedConstraint;
-        })
-        .map((constraint, idx) => {
-          return (
-            <ConstraintContainer
-              key={idx}
-              position={getContainerPosition(constraint.kind.id)}
-              constraint={constraint}
-              setSelectedConstraint={setSelectedConstraint}
-            />
-          );
-        })}
+      <ConstraintDialog constraint={selected} onClose={onClose} />
     </div>
   );
+}
+
+interface ConstraintDialogProps {
+  constraint: Constraint | undefined;
+  onClose: () => void;
+}
+
+function ConstraintDialog(props: ConstraintDialogProps): JSX.Element {
+  const { constraint, onClose } = props;
+
+  return (
+    <Dialog open={constraint != null} onOpenChange={onClose}>
+      {/* TODO: should be inside a form. */}
+      <ConstraintDialogContent constraint={constraint} onClose={onClose} />
+    </Dialog>
+  );
+}
+
+interface ConstraintDialogHeaderProps {
+  children: ReactNode;
+}
+
+function ConstraintDialogHeader(props: ConstraintDialogHeaderProps): JSX.Element {
+  const { children } = props;
+
+  return (
+    <DialogHeader>
+      <DialogTitle>{children}</DialogTitle>
+    </DialogHeader>
+  );
+}
+
+interface ConstraintDialogFooterProps {
+  onClear: () => void;
+  onSubmit: () => void;
+}
+
+function ConstraintDialogFooter(props: ConstraintDialogFooterProps): JSX.Element {
+  const { onClear, onSubmit } = props;
+
+  return (
+    <DialogFooter>
+      <Button variant="destructive" onClick={onClear}>
+        Clear
+      </Button>
+      <Button onClick={onSubmit}>Apply</Button>
+    </DialogFooter>
+  );
+}
+
+interface ConstraintDialogContentProps {
+  constraint: Constraint | undefined;
+  onClose: () => void;
+}
+
+/**
+ * FIXME: interaction between filters set via visual query builder,
+ * and filters set via form is not entirely clear, e.g. when to
+ * dispatch a new new search query
+ */
+function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Element | null {
+  const { constraint, onClose } = props;
+
+  const searchFilters = useSearchEntitiesFilters();
+  const { search } = useSearchEntities();
+
+  const dispatch = useAppDispatch();
+  const constraints = useAppSelector(selectConstraints);
+
+  if (constraint == null) return null;
+
+  switch (constraint.kind.id) {
+    case 'date-range': {
+      // eslint-disable-next-line no-inner-declarations
+      function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
+        search({
+          ...searchFilters,
+          page: 1,
+          born_after: undefined,
+          born_before: undefined,
+          died_after: undefined,
+          died_before: undefined,
+        });
+
+        onClose();
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function onSubmit() {
+        const [bornAfter, bornBefore] = constraints['person-birth-date'].value?.map((d) => {
+          return new Date(d).toISOString();
+        }) ?? [undefined, undefined];
+        const [diedAfter, diedBefore] = constraints['person-death-date'].value?.map((d) => {
+          return new Date(d).toISOString();
+        }) ?? [undefined, undefined];
+
+        search({
+          ...searchFilters,
+          page: 1,
+          born_after: bornAfter,
+          born_before: bornBefore,
+          died_after: diedAfter,
+          died_before: diedBefore,
+        });
+
+        onClose();
+      }
+
+      const range =
+        constraint.value != null
+          ? (constraint.value as [number, number])
+              .map((date) => {
+                return new Date(date).getFullYear();
+              })
+              .join(' - ')
+          : null;
+
+      return (
+        <DialogContent>
+          <ConstraintDialogHeader>Add date constraint {range}</ConstraintDialogHeader>
+          <div className="grid h-96 w-full place-items-center">
+            <DateConstraintWidget constraint={constraint as any} />
+          </div>
+          <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
+        </DialogContent>
+      );
+    }
+
+    case 'label': {
+      // eslint-disable-next-line no-inner-declarations
+      function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
+        search({ ...searchFilters, page: 1, q: undefined });
+
+        onClose();
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function onSubmit() {
+        const q = constraints['person-name'].value ?? undefined;
+
+        search({ ...searchFilters, page: 1, q });
+
+        onClose();
+      }
+
+      return (
+        <DialogContent>
+          <ConstraintDialogHeader>Add name constraint</ConstraintDialogHeader>
+          <TextConstraintWidget constraint={constraint as any} />
+          <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
+        </DialogContent>
+      );
+    }
+
+    // case 'geometry': {
+    //   return (
+    //     <DialogContent>
+    //       <ConstraintDialogHeader>Date</ConstraintDialogHeader>
+    //       <PlaceConstraintWidget constraint={constraint} />
+    //       <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
+    //     </DialogContent>
+    //   );
+    // }
+
+    case 'vocabulary': {
+      // eslint-disable-next-line no-inner-declarations
+      function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
+        search({ ...searchFilters, page: 1, occupations_id: undefined });
+
+        onClose();
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function onSubmit() {
+        const occupations_id = constraints['person-occupation'].value ?? undefined;
+
+        search({ ...searchFilters, page: 1, occupations_id });
+
+        onClose();
+      }
+
+      return (
+        <DialogContent>
+          <ConstraintDialogHeader>Add occupation constraint</ConstraintDialogHeader>
+          <div className="grid h-96 w-full place-items-center">
+            <ProfessionConstraintWidget constraint={constraint as any} />
+          </div>
+          <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
+        </DialogContent>
+      );
+    }
+  }
 }

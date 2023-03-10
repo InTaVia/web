@@ -19,7 +19,7 @@ import { SearchFacets } from '@/components/search/search-facets';
 import { SearchResultsStatistics } from '@/components/search/search-results-statistics';
 import { useSearchEntities } from '@/components/search/use-search-entities';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
-import { VisualQueryBuilder } from '@/components/search/visual-query-builder';
+import { VisualQuerying as VisualQueryBuilder } from '@/features/visual-querying/VisualQuerying';
 
 export function SearchForm(): JSX.Element {
   const { t } = useI18n<'common'>();
@@ -76,12 +76,12 @@ export function SearchForm(): JSX.Element {
                   <SearchFacets />
                 </TabsContent>
                 <TabsContent value="visual-query-builder">
-                  <div className="relative h-96">
+                  <div className="relative h-[420px]">
                     <VisualQueryBuilder />
                   </div>
                 </TabsContent>
                 <TabsContent value="search-statistics">
-                  <div className="relative h-96">
+                  <div className="relative h-[420px]">
                     <SearchResultsStatistics />
                   </div>
                 </TabsContent>
