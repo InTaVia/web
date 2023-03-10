@@ -19,7 +19,7 @@ interface DateConstraintWidgetProps {
 }
 
 export function DateConstraintWidget(props: DateConstraintWidgetProps): JSX.Element {
-  const { width, height, constraint } = props;
+  const { constraint } = props;
   const dispatch = useAppDispatch();
 
   const { data, isLoading } =
