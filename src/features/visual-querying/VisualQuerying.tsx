@@ -160,9 +160,18 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
         onClose();
       }
 
+      const range =
+        constraint.value != null
+          ? (constraint.value as [number, number])
+              .map((date) => {
+                return new Date(date).getFullYear();
+              })
+              .join(' - ')
+          : null;
+
       return (
         <DialogContent>
-          <ConstraintDialogHeader>Add date constraint</ConstraintDialogHeader>
+          <ConstraintDialogHeader>Add date constraint {range}</ConstraintDialogHeader>
           <div className="grid h-96 w-full place-items-center">
             <DateConstraintWidget constraint={constraint as any} />
           </div>
