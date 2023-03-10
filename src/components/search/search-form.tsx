@@ -76,12 +76,12 @@ export function SearchForm(): JSX.Element {
                   <SearchFacets />
                 </TabsContent>
                 <TabsContent value="visual-query-builder">
-                  <div className="relative h-96">
+                  <div className="relative h-[420px]">
                     <VisualQueryBuilder />
                   </div>
                 </TabsContent>
                 <TabsContent value="search-statistics">
-                  <div className="relative h-96">
+                  <div className="relative h-[420px]">
                     <SearchResultsStatistics />
                   </div>
                 </TabsContent>
