@@ -9,14 +9,17 @@ import {
 import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useSearchEntities } from '@/components/search/use-search-entities';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
 import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
 import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
 import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
-import { selectConstraints } from '@/features/visual-querying/visualQuerying.slice';
+import {
+  selectConstraints,
+  setConstraintValue,
+} from '@/features/visual-querying/visualQuerying.slice';
 import { VisualQueryingSvg } from '@/features/visual-querying/VisualQueryingSvg';
 import { useResizeObserverDeprecated } from '@/lib/useResizeObserver';
 
@@ -60,7 +63,7 @@ function ConstraintDialog(props: ConstraintDialogProps): JSX.Element {
   return (
     <Dialog open={constraint != null} onOpenChange={onClose}>
       {/* TODO: should be inside a form. */}
-      <ConstraintDialogContent constraint={constraint} />
+      <ConstraintDialogContent constraint={constraint} onClose={onClose} />
     </Dialog>
   );
 }
@@ -99,14 +102,16 @@ function ConstraintDialogFooter(props: ConstraintDialogFooterProps): JSX.Element
 
 interface ConstraintDialogContentProps {
   constraint: Constraint | undefined;
+  onClose: () => void;
 }
 
 function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Element | null {
-  const { constraint } = props;
+  const { constraint, onClose } = props;
 
   const searchFilters = useSearchEntitiesFilters();
   const { search } = useSearchEntities();
 
+  const dispatch = useAppDispatch();
   const constraints = useAppSelector(selectConstraints);
 
   if (constraint == null) return null;
@@ -115,6 +120,8 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
     case 'date-range': {
       // eslint-disable-next-line no-inner-declarations
       function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
         search({
           ...searchFilters,
           page: 1,
@@ -123,6 +130,8 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
           died_after: undefined,
           died_before: undefined,
         });
+
+        onClose();
       }
 
       // eslint-disable-next-line no-inner-declarations
@@ -142,11 +151,13 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
           died_after: diedAfter,
           died_before: diedBefore,
         });
+
+        onClose();
       }
 
       return (
         <DialogContent>
-          <ConstraintDialogHeader>Date</ConstraintDialogHeader>
+          <ConstraintDialogHeader>Add date constraint</ConstraintDialogHeader>
           <DateConstraintWidget constraint={constraint as any} />
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>
@@ -156,7 +167,11 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
     case 'label': {
       // eslint-disable-next-line no-inner-declarations
       function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
         search({ ...searchFilters, page: 1, q: undefined });
+
+        onClose();
       }
 
       // eslint-disable-next-line no-inner-declarations
@@ -164,11 +179,13 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
         const q = constraints['person-name'].value ?? undefined;
 
         search({ ...searchFilters, page: 1, q });
+
+        onClose();
       }
 
       return (
         <DialogContent>
-          <ConstraintDialogHeader>Date</ConstraintDialogHeader>
+          <ConstraintDialogHeader>Add name constraint</ConstraintDialogHeader>
           <TextConstraintWidget constraint={constraint as any} />
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>
@@ -188,7 +205,11 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
     case 'vocabulary': {
       // eslint-disable-next-line no-inner-declarations
       function onClear() {
+        dispatch(setConstraintValue({ ...constraint, value: null }));
+
         search({ ...searchFilters, page: 1, occupations_id: undefined });
+
+        onClose();
       }
 
       // eslint-disable-next-line no-inner-declarations
@@ -196,11 +217,13 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
         const occupations_id = constraints['person-occupation'].value ?? undefined;
 
         search({ ...searchFilters, page: 1, occupations_id });
+
+        onClose();
       }
 
       return (
         <DialogContent>
-          <ConstraintDialogHeader>Date</ConstraintDialogHeader>
+          <ConstraintDialogHeader>Add occupation constraint</ConstraintDialogHeader>
           <ProfessionConstraintWidget constraint={constraint as any} />
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>
