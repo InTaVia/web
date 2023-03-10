@@ -163,7 +163,9 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
       return (
         <DialogContent>
           <ConstraintDialogHeader>Add date constraint</ConstraintDialogHeader>
-          <DateConstraintWidget constraint={constraint as any} />
+          <div className="grid h-96 w-full place-items-center">
+            <DateConstraintWidget constraint={constraint as any} />
+          </div>
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>
       );
@@ -229,7 +231,9 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
       return (
         <DialogContent>
           <ConstraintDialogHeader>Add occupation constraint</ConstraintDialogHeader>
-          <ProfessionConstraintWidget constraint={constraint as any} />
+          <div className="grid h-96 w-full place-items-center">
+            <ProfessionConstraintWidget constraint={constraint as any} />
+          </div>
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>
       );
