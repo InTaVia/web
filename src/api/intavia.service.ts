@@ -1,14 +1,18 @@
 import type {
   BirthStatisticsSearch,
   DeathStatisticsSearch,
+  GetBiographyById,
   GetEntityById,
   GetEventById,
   GetEventKindById,
+  GetMediaResourceById,
   GetOccupationById,
   GetRelationRoleById,
   OccupationStatisticsSearch,
+  RetrieveBiographiesByIds,
   RetrieveEntitiesByIds,
   RetrieveEventsByIds,
+  RetrieveMediaResourcesByIds,
   RetrieveOccupationsByIds,
   RetrieveRelationRolesByIds,
   SearchEntities,
@@ -19,14 +23,18 @@ import type {
 } from '@intavia/api-client';
 import {
   configureApiBaseUrl,
+  getBiographyById,
   getEntityById,
   getEventById,
   getEventKindById,
+  getMediaResourceById,
   getOccupationById,
   getRelationRoleById,
+  retrieveBiographiesByIds,
   retrieveEntitiesByIds,
   retrieveEventKindsByIds,
   retrieveEventsByIds,
+  retrieveMediaResourcesByIds,
   retrieveOccupationsByIds,
   retrieveRelationRolesByIds,
   searchBirthStatistics,
@@ -83,6 +91,55 @@ export const service = createApi({
           return {
             url: searchEntities.url(params),
             options: searchEntities.options(),
+          };
+        },
+      }),
+
+      getMediaResourceById: builder.query<
+        GetMediaResourceById.Response,
+        GetMediaResourceById.PathParams
+      >({
+        query(params) {
+          return {
+            url: getMediaResourceById.url(params),
+            options: getMediaResourceById.options(),
+          };
+        },
+      }),
+      retrieveMediaResourcesByIds: builder.query<
+        RetrieveMediaResourcesByIds.Response,
+        {
+          params: RetrieveMediaResourcesByIds.Params;
+          body: RetrieveMediaResourcesByIds.RequestBody;
+        }
+      >({
+        query(params) {
+          return {
+            url: retrieveMediaResourcesByIds.url(params.params),
+            options: retrieveMediaResourcesByIds.options(params.body),
+          };
+        },
+      }),
+
+      getBiographyById: builder.query<GetBiographyById.Response, GetBiographyById.PathParams>({
+        query(params) {
+          return {
+            url: getBiographyById.url(params),
+            options: getBiographyById.options(),
+          };
+        },
+      }),
+      retrieveBiographiesIds: builder.query<
+        RetrieveBiographiesByIds.Response,
+        {
+          params: RetrieveBiographiesByIds.Params;
+          body: RetrieveBiographiesByIds.RequestBody;
+        }
+      >({
+        query(params) {
+          return {
+            url: retrieveBiographiesByIds.url(params.params),
+            options: retrieveBiographiesByIds.options(params.body),
           };
         },
       }),
@@ -252,6 +309,11 @@ export const {
   useRetrieveEventsByIdsQuery,
   useSearchEventsQuery,
   useLazySearchEventsQuery,
+
+  useGetMediaResourceByIdQuery,
+  useRetrieveMediaResourcesByIdsQuery,
+  useGetBiographyByIdQuery,
+  useRetrieveBiographiesIdsQuery,
 
   useGetEventKindByIdQuery,
   useRetrieveEventKindsByIdsQuery,
