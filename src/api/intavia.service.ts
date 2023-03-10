@@ -129,7 +129,7 @@ export const service = createApi({
           };
         },
       }),
-      retrieveBiographiesIds: builder.query<
+      retrieveBiographiesByIds: builder.query<
         RetrieveBiographiesByIds.Response,
         {
           params: RetrieveBiographiesByIds.Params;
@@ -313,7 +313,7 @@ export const {
   useGetMediaResourceByIdQuery,
   useRetrieveMediaResourcesByIdsQuery,
   useGetBiographyByIdQuery,
-  useRetrieveBiographiesIdsQuery,
+  useRetrieveBiographiesByIdsQuery,
 
   useGetEventKindByIdQuery,
   useRetrieveEventKindsByIdsQuery,
