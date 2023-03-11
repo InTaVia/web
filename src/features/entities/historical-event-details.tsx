@@ -24,24 +24,30 @@ export function HistoricalEventDetails(props: HistoricalEventDetailsProps): JSX.
   return (
     <div className="mx-auto grid w-full max-w-6xl content-start gap-4 px-8 py-12">
       <EntityTitle kind={historicalEvent.kind} label={historicalEvent.label} />
-      <EntityAlternativeLabels labels={alternativeLabels} />
-      <EntityLinkedIds links={historicalEvent.linkedIds} />
-      <EntityDescription description={historicalEvent.description} />
-      {hasRelations ? <EntityRelations relations={historicalEvent.relations} /> : null}
-      {hasRelations ? (
-        <NetworkComponent
-          visualization={{
-            id: `ego-network-${historicalEvent.id}`,
-            type: 'ego-network',
-            name: `ego-network-${historicalEvent.id}`,
-            entityIds: [historicalEvent.id],
-            targetEntityIds: [],
-            eventIds: [],
-          }}
-          width={600}
-          height={600}
-        />
-      ) : null}
+      <div className="grid grid-cols-2 gap-16">
+        <div className="grid w-full content-start gap-4">
+          <EntityAlternativeLabels labels={alternativeLabels} />
+          <EntityLinkedIds links={historicalEvent.linkedIds} />
+          <EntityDescription description={historicalEvent.description} />
+          {hasRelations ? <EntityRelations relations={historicalEvent.relations} /> : null}
+        </div>
+        <div className="grid w-full content-start gap-4">
+          {hasRelations ? (
+            <NetworkComponent
+              visualization={{
+                id: `ego-network-${historicalEvent.id}`,
+                type: 'ego-network',
+                name: `ego-network-${historicalEvent.id}`,
+                entityIds: [historicalEvent.id],
+                targetEntityIds: [],
+                eventIds: [],
+              }}
+              width={600}
+              height={600}
+            />
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 }
