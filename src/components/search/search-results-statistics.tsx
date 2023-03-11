@@ -93,9 +93,14 @@ export function BarChart(props: BarChartProps): JSX.Element | null {
     .tickFormat((d) => {
       return String(new Date(d as number).getUTCFullYear());
     });
-  const yAxis = axisLeft(yScale).tickFormat((d) => {
-    return Number(d).toFixed();
+  const yAxisTicks = yScale.ticks().filter((tick) => {
+    return Number.isInteger(tick);
   });
+  const yAxis = axisLeft(yScale)
+    .tickValues(yAxisTicks)
+    .tickFormat((d) => {
+      return Number(d).toFixed();
+    });
 
   useEffect(() => {
     if (xAxisRef.current == null || yAxisRef.current == null) return;

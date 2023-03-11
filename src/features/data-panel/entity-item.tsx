@@ -1,30 +1,62 @@
 import { CursorClickIcon, PlusSmIcon } from '@heroicons/react/outline';
-import type { Entity } from '@intavia/api-client';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@intavia/ui';
-import type { DragEvent, ReactNode } from 'react';
-import { useState } from 'react';
+import { ChevronUpIcon } from '@heroicons/react/solid';
+import type { Entity, Event } from '@intavia/api-client';
+import { cn, Collapsible, CollapsibleContent, CollapsibleTrigger, IconButton } from '@intavia/ui';
+import { dispatch } from 'd3';
+import type { DragEvent, MouseEvent, ReactNode } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { PageContext } from '@/app/context/page.context';
 import { useLocale } from '@/app/route/use-locale';
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
 import { type as mediaType } from '@/features/common/data-transfer.types';
+import type { Visualization } from '@/features/common/visualization.slice';
+import { addEntitiesToVisualization } from '@/features/common/visualization.slice';
+import { EventItem } from '@/features/data-panel/event-item';
+import { selectStories } from '@/features/storycreator/storycreator.slice';
+import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface EntityItemProps {
   entity: Entity;
   icon?: ReactNode;
+  currentVisualizationIds?: Array<Visualization['id'] | null> | null;
+  targetHasVisualizations?: boolean;
 }
 export function EntityItem(props: EntityItemProps): JSX.Element {
-  const { entity, icon = null } = props;
+  const {
+    entity,
+    icon = null,
+    currentVisualizationIds = null,
+    targetHasVisualizations = false,
+  } = props;
+
+  const dispatch = useAppDispatch();
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { hovered, updateHover } = useHoverState();
 
   const { locale } = useLocale();
   const _events = useAppSelector(selectEvents);
-  const vocabularies = useAppSelector(selectVocabularyEntries);
+  // const vocabularies = useAppSelector(selectVocabularyEntries);
+
+  function addEntityToVisualizations() {
+    if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
+
+    for (const visualizationId of currentVisualizationIds) {
+      if (visualizationId != null) {
+        dispatch(
+          addEntitiesToVisualization({
+            visId: visualizationId,
+            entities: [entity.id],
+          }),
+        );
+      }
+    }
+  }
 
   function onDragStart(event: DragEvent<HTMLDivElement>) {
     const data: DataTransferData = { type: 'data', entities: [entity.id], events: [] };
@@ -50,73 +82,82 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
     //update workspace hovered
   }
 
+  const relatedEvents = useMemo(() => {
+    const now = Date.now();
+    const relatedEvents = entity.relations
+      .map((relation) => {
+        return _events[relation.event];
+      })
+      .filter(Boolean);
+    const temporallySortedrelatedEvents = relatedEvents.sort((eventA: Event, eventB: Event) => {
+      const sortDateA =
+        'startDate' in eventA
+          ? new Date(eventA.startDate as string)
+          : 'endDate' in eventA
+          ? new Date(eventA.endDate as string)
+          : now;
+      const sortDateB =
+        'startDate' in eventB
+          ? new Date(eventB.startDate as string)
+          : 'endDate' in eventB
+          ? new Date(eventB.endDate as string)
+          : now;
+      return sortDateA - sortDateB;
+    });
+    return temporallySortedrelatedEvents;
+  }, [entity]);
+
   return (
     <div className="grid border border-neutral-200">
       <Collapsible>
-        <CollapsibleTrigger
-          as="div"
-          className="flex w-full flex-row items-center justify-between px-2 py-1 text-left hover:bg-neutral-200"
-          draggable
-          onDragStart={onDragStart}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-        >
-          <div className="flex flex-row items-center gap-2">
-            <div className="min-w-fit text-neutral-400">{icon}</div>
-            {entity.label != null && getTranslatedLabel(entity.label)}
-          </div>
-          {isHovered && <CursorClickIcon className="h-4 w-4 text-neutral-400" />}
-          <div className="min-w-fit">
-            <PlusSmIcon className="h-4 w-4 text-neutral-500" />
+        <CollapsibleTrigger asChild>
+          <div
+            className={cn(
+              'flex w-full flex-row items-center justify-between px-2 py-1 text-left cursor-pointer',
+              (hovered?.relatedEntities.includes(entity.id) === true ||
+                hovered?.entities.includes(entity.id) === true) &&
+                'bg-neutral-300',
+              isHovered && 'bg-neutral-300',
+            )}
+            draggable
+            onDragStart={onDragStart}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+            <div className="flex flex-row items-center gap-2">
+              <div className="min-w-fit text-neutral-400">{icon}</div>
+              {getTranslatedLabel(entity.label)}
+            </div>
+            <div className=" itmes-center flex min-w-fit flex-row gap-1">
+              {isHovered && targetHasVisualizations && (
+                <IconButton
+                  className="h-5 w-5"
+                  variant="outline"
+                  label="add"
+                  onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                    addEntityToVisualizations();
+                    e.preventDefault();
+                  }}
+                >
+                  <PlusSmIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
+                </IconButton>
+              )}
+            </div>
           </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <ul className="grid gap-2 text-sm" role="list">
+          <ul className="grid gap-0 text-sm" role="list">
             {entity.relations != null &&
-              entity.relations.map((relation) => {
-                const eventId = relation.event;
-                const event = _events[eventId];
-                if (event == null) return null;
-
-                function onDragStart(event: DragEvent<HTMLDivElement>) {
-                  const data: DataTransferData = {
-                    type: 'data',
-                    entities: [],
-                    events: [eventId],
-                    targetEntities: [entity.id],
-                  };
-                  event.dataTransfer.setData(mediaType, JSON.stringify(data));
-                }
-
-                // // FIXME:
-                // const place =
-                //   typeof entityEvent.place === 'string'
-                //     ? _entities[entityEvent.place]
-                //     : entityEvent.place;
-
+              relatedEvents.map((event, index) => {
                 return (
-                  <li key={`${eventId}-${relation.role}`}>
-                    <div className="cursor-default" draggable onDragStart={onDragStart}>
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs text-neutral-500">
-                          {[event.startDate, event.endDate].filter(Boolean).join(' - ')}
-                        </p>
-                        <p>{getTranslatedLabel(event.label, locale)}</p>
-                        <div className="text-xs text-neutral-500">
-                          {[
-                            vocabularies[event.kind] != null && 'label' in vocabularies[event.kind]
-                              ? getTranslatedLabel(vocabularies[event.kind].label)
-                              : null,
-                            // [event.startDate, event.endDate].filter(Boolean).join(' - '),
-                            // place != null ? getTranslatedLabel(place.label) : null,
-                          ]
-                            .filter(Boolean)
-                            .join(', ')}
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                  <EventItem
+                    key={index}
+                    event={event}
+                    targetEntities={[entity.id]}
+                    currentVisualizationIds={currentVisualizationIds}
+                    targetHasVisualizations={targetHasVisualizations}
+                  />
                 );
               })}
           </ul>

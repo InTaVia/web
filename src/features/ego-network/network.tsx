@@ -41,7 +41,7 @@ export function Network(props: NetworkProps): JSX.Element {
   useEffect(() => {
     // Force simulation
     const simulation = forceSimulation(animatedNodes)
-      .force('charge', forceManyBody().strength(-200))
+      .force('charge', forceManyBody().strength(-20))
       .force('link', forceLink(animatedLinks).distance(100))
       .force('collide', forceCollide(20))
       .force('center', forceCenter(width / 2, height / 2));

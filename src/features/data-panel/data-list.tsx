@@ -4,11 +4,10 @@ import { groupBy } from '@stefanprobst/group-by';
 import type { ReactNode } from 'react';
 import { Fragment, useMemo } from 'react';
 
-import { useI18n } from '@/app/i18n/use-i18n';
-
 export interface GroupData {
   label: string;
   children: ReactNode;
+  childrenIds: Array<Entity['id']> | Array<Event['id']>;
   count: number;
 }
 
@@ -27,8 +26,6 @@ interface DataListProps {
 // FIXME: should this be paginated?
 export function DataList(props: DataListProps): JSX.Element | null {
   const { items, children, groupedByProperty = undefined, orderGroupsByKeys = undefined } = props;
-
-  const { t } = useI18n<'common'>();
 
   const groupedItems = useMemo(() => {
     const _items = items as Array<any>;
@@ -65,6 +62,7 @@ export function DataList(props: DataListProps): JSX.Element | null {
         })
       : false;
 
+  // oderGroupsByKey
   if (
     groupedItems != null &&
     groupedByProperty != null &&
@@ -81,6 +79,9 @@ export function DataList(props: DataListProps): JSX.Element | null {
                 item: {
                   label: key,
                   children: getListItems(groupedItems[key]!),
+                  childrenIds: groupedItems[key]!.map((item) => {
+                    return item.id;
+                  }),
                   count: groupedItems[key]!.length,
                 },
                 type: 'group',
@@ -92,6 +93,7 @@ export function DataList(props: DataListProps): JSX.Element | null {
     );
   }
 
+  //no ordering of groups
   if (groupedItems != null && groupedByProperty != null && orderGroupsByKeys == null) {
     return (
       <ul role="list">
@@ -99,7 +101,14 @@ export function DataList(props: DataListProps): JSX.Element | null {
           return (
             <li key={i}>
               {children({
-                item: { label: key, children: getListItems(value), count: value.length },
+                item: {
+                  label: key,
+                  children: getListItems(value),
+                  childrenIds: value.map((item) => {
+                    return item.id;
+                  }),
+                  count: value.length,
+                },
                 type: 'group',
               })}
             </li>

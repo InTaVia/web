@@ -1,7 +1,6 @@
 import { XIcon } from '@heroicons/react/solid';
-import type { EntityKind, InternationalizedLabel, SearchEntities } from '@intavia/api-client';
+import type { EntityKind, InternationalizedLabel } from '@intavia/api-client';
 import {
-  Button,
   cn,
   ComboBox,
   ComboBoxButton,
@@ -32,41 +31,17 @@ import {
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectVocabularyEntries } from '@/app/store/intavia.slice';
-import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
-import { useSearchEntities } from '@/components/search/use-search-entities';
-import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 
 export function SearchFacets(): JSX.Element {
-  const searchFilters = useSearchEntitiesFilters();
-  const { search } = useSearchEntities();
-
-  function onSubmit(values: SearchEntities.SearchParams) {
-    search({
-      ...searchFilters,
-      ...values,
-      page: 1,
-    });
-  }
-
-  const formId = 'search-facets';
-
   return (
-    <div>
-      <Form id={formId} initialValues={searchFilters} onSubmit={onSubmit}>
-        <div className="grid gap-4">
-          <EntityKindFilter />
-          <RelationRoleFilter />
-          <RelatedEntityFilter />
-
-          <div className="flex justify-end">
-            <Button type="submit">Apply</Button>
-          </div>
-        </div>
-      </Form>
+    <div className="grid gap-4">
+      <EntityKindFilter />
+      <RelationRoleFilter />
+      <RelatedEntityFilter />
     </div>
   );
 }

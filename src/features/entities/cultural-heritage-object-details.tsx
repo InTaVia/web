@@ -6,6 +6,7 @@ import { EntityDescription } from '@/features/entities/entity-description';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
 import { EntityTitle } from '@/features/entities/entity-title';
+import { MediaViewer } from '@/features/media/media-viewer';
 
 interface CulturalHeritageObjectDetailsProps {
   entity: CulturalHeritageObject;
@@ -22,6 +23,8 @@ export function CulturalHeritageObjectDetails(
   });
 
   const hasRelations = cho.relations != null && cho.relations.length > 0;
+
+  const hasMedia = cho.media != null && cho.media.length > 0;
 
   return (
     <div className="mx-auto grid w-full max-w-6xl content-start gap-4 px-8 py-12">
@@ -44,6 +47,7 @@ export function CulturalHeritageObjectDetails(
           height={600}
         />
       ) : null}
+      {hasMedia ? <MediaViewer mediaResourceIds={cho.media!} /> : null}
     </div>
   );
 }

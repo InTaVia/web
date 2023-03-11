@@ -148,5 +148,7 @@ export interface Dictionary {
     submit: string;
     remove: string;
     add: string;
+    more: string;
+    clear: string;
   };
 }

@@ -323,7 +323,7 @@ export const visualizationSlice = createSlice({
       const { visId, targetEntities } = action.payload;
       const vis = state[visId];
       assert(vis != null);
-      vis.targetEntityIds = unique([...vis.entityIds, ...targetEntities]);
+      vis.targetEntityIds = unique([...vis.targetEntityIds, ...targetEntities]);
     },
     addEventsToVisualization: (
       state,
