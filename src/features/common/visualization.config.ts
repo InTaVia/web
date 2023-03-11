@@ -68,6 +68,7 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   Career: 'career',
   'Production (crm)': 'creation',
   'Event (crm)': 'default',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'creation', //Production (crm)
   'event-kind-birth': 'birth',
   'event-kind-death': 'death',
   'event-kind-creation': 'creation',
@@ -153,8 +154,8 @@ const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
   },
 };
 
-export function getEntityColorByKind(kind: EntityKind): string {
-  return entityKindProperties[kind].color.foreground;
+export function getEntityColorByKind(kind: EntityKind): KindColor {
+  return entityKindProperties[kind].color;
 }
 
 export function getEntityKindPropertiesByKind(kind: EntityKind): EntityKindProperties {

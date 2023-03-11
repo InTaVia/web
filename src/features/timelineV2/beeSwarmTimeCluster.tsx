@@ -2,13 +2,13 @@ import type { Event } from '@intavia/api-client/dist/models';
 import { extent, scaleTime } from 'd3';
 // @ts-expect-error Missing types
 import { beeswarm } from 'd3-beeswarm';
-import type { MouseEvent } from 'react';
-import { type LegacyRef, forwardRef, useMemo, useState } from 'react';
+import type { LegacyRef, MouseEvent } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
-import { getTemporalExtent, translateEventType } from '@/features/timelineV2/timeline';
+import { getTemporalExtent } from '@/features/timelineV2/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
 
@@ -123,7 +123,12 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               //@ts-ignore
               event={dot.datum}
               thickness={highlightedEvents.includes(dot.datum.id) ? 3 : 1}
-              hover={hovered?.events.includes(dot.datum.id) === true ? true : false}
+              hover={
+                hovered?.events.includes(dot.datum.id) === true ||
+                hovered?.relatedEvents.includes(dot.datum.id) === true
+                  ? true
+                  : false
+              }
             />
           </g>
         );

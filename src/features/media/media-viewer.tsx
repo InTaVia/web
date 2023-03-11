@@ -17,11 +17,18 @@ export function MediaViewer(props: MediaViewerProps): JSX.Element {
   if (status === 'success') {
     return (
       <div>
-        <p>Media</p>
+        <p className="text-xs font-medium uppercase tracking-wider text-neutral-700">Media</p>
         <div>
           {mediaResourceIds.map((mediaResourceId) => {
             const mediaResource = data.get(mediaResourceId);
-            return <img key={id} src={mediaResource!.url} alt={id} className="h-96" />;
+            return (
+              <img
+                key={`media-${mediaResourceId}-${id}`}
+                src={mediaResource!.url}
+                alt={id}
+                className="h-full w-full"
+              />
+            );
           })}
         </div>
       </div>

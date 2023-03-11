@@ -74,7 +74,8 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
       >
         {selected && <circle cx={12} cy={12} r={size / 1.4} fill={'blue'} />}
         <circle cx={12} cy={12} r={size / 2} fill={backgroundColor} />
-        {(hovered?.events.includes(feature.properties!.event.id) ?? false) && (
+        {(hovered?.relatedEvents.includes(feature.properties!.event.id) === true ||
+          hovered?.events.includes(feature.properties!.event.id) === true) && (
           <circle
             cx={12}
             cy={12}

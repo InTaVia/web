@@ -183,7 +183,13 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
             width={width}
             height={height}
             thickness={thickness}
-            hover={hover || hovered?.events.includes(event.id) === true ? true : false}
+            hover={
+              hover ||
+              hovered?.events.includes(event.id) === true ||
+              hovered?.relatedEvents.includes(event.id) === true
+                ? true
+                : false
+            }
           />
         </svg>
         <TimelineLabel
