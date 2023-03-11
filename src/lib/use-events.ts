@@ -7,12 +7,12 @@ import { getData } from '@/lib/get-data';
 
 type UseEventsResult =
   | {
-      data: Map<Event['id'], Event>;
-      status: 'success';
+      data: Map<Event['id'], Event> | undefined;
+      status: 'error' | 'pending';
     }
   | {
-      data: undefined;
-      status: 'error' | 'pending';
+      data: Map<Event['id'], Event>;
+      status: 'success';
     };
 
 export function useEvents(ids: Array<Event['id']>): UseEventsResult {
@@ -29,6 +29,5 @@ export function useEvents(ids: Array<Event['id']>): UseEventsResult {
     return { data, status: 'success' };
   }
 
-  // TODO: return data when isComplete: false?
-  return { data: undefined, status: query.isError ? 'error' : 'pending' };
+  return { data: data, status: query.isError ? 'error' : 'pending' };
 }

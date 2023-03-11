@@ -1,23 +1,21 @@
-import { CursorClickIcon, PlusSmIcon } from '@heroicons/react/outline';
-import { ChevronUpIcon } from '@heroicons/react/solid';
+import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
 import { cn, Collapsible, CollapsibleContent, CollapsibleTrigger, IconButton } from '@intavia/ui';
-import { dispatch } from 'd3';
 import type { DragEvent, MouseEvent, ReactNode } from 'react';
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
-import { PageContext } from '@/app/context/page.context';
 import { useLocale } from '@/app/route/use-locale';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
+import { selectEvents } from '@/app/store/intavia.slice';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
 import { type as mediaType } from '@/features/common/data-transfer.types';
 import type { Visualization } from '@/features/common/visualization.slice';
-import { addEntitiesToVisualization } from '@/features/common/visualization.slice';
+import {
+  addEntitiesToVisualization,
+  removeEntitiesFromVisualization,
+} from '@/features/common/visualization.slice';
 import { EventItem } from '@/features/data-panel/event-item';
-import { selectStories } from '@/features/storycreator/storycreator.slice';
-import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface EntityItemProps {
@@ -25,6 +23,8 @@ interface EntityItemProps {
   icon?: ReactNode;
   currentVisualizationIds?: Array<Visualization['id'] | null> | null;
   targetHasVisualizations?: boolean;
+  mode?: 'add' | 'remove';
+  context: 'collections' | 'visualized';
 }
 export function EntityItem(props: EntityItemProps): JSX.Element {
   const {
@@ -32,6 +32,8 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
     icon = null,
     currentVisualizationIds = null,
     targetHasVisualizations = false,
+    mode = 'add',
+    context,
   } = props;
 
   const dispatch = useAppDispatch();
@@ -58,12 +60,26 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
     }
   }
 
+  function removeEntityFromVisualizations() {
+    if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
+    for (const visualizationId of currentVisualizationIds) {
+      if (visualizationId != null) {
+        dispatch(
+          removeEntitiesFromVisualization({
+            visId: visualizationId,
+            entities: [entity.id],
+          }),
+        );
+      }
+    }
+  }
+
   function onDragStart(event: DragEvent<HTMLDivElement>) {
     const data: DataTransferData = { type: 'data', entities: [entity.id], events: [] };
     event.dataTransfer.setData(mediaType, JSON.stringify(data));
   }
 
-  function onMouseEnter(e) {
+  function onMouseEnter(e: MouseEvent) {
     updateHover({
       entities: [entity.id],
       events: [],
@@ -119,7 +135,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
                 'bg-neutral-300',
               isHovered && 'bg-neutral-300',
             )}
-            draggable
+            draggable={mode === 'add' ? true : false}
             onDragStart={onDragStart}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -129,7 +145,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
               {getTranslatedLabel(entity.label)}
             </div>
             <div className=" itmes-center flex min-w-fit flex-row gap-1">
-              {isHovered && targetHasVisualizations && (
+              {isHovered && targetHasVisualizations && mode === 'add' && (
                 <IconButton
                   className="h-5 w-5"
                   variant="outline"
@@ -140,6 +156,19 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
                   }}
                 >
                   <PlusSmIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
+                </IconButton>
+              )}
+              {isHovered && targetHasVisualizations && mode === 'remove' && (
+                <IconButton
+                  className="h-5 w-5"
+                  variant="destructive"
+                  label="remove"
+                  onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                    removeEntityFromVisualizations();
+                    e.preventDefault();
+                  }}
+                >
+                  <TrashIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
                 </IconButton>
               )}
             </div>
@@ -157,6 +186,8 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
                     targetEntities={[entity.id]}
                     currentVisualizationIds={currentVisualizationIds}
                     targetHasVisualizations={targetHasVisualizations}
+                    mode={context === 'collections' ? 'add' : 'none'}
+                    context={context}
                   />
                 );
               })}

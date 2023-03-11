@@ -10,9 +10,8 @@ import {
   Switch,
 } from '@intavia/ui';
 import Link from 'next/link';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { PageContext } from '@/app/context/page.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Collection } from '@/app/store/intavia-collections.slice';
@@ -27,11 +26,14 @@ import {
 } from '@/features/common/visualization.slice';
 import { CollectionSelect } from '@/features/data-panel/collection-select';
 import { DataView } from '@/features/data-panel/data-view';
-import type { Story } from '@/features/storycreator/storycreator.slice';
-import { selectStories } from '@/features/storycreator/storycreator.slice';
-import { selectAllWorkspaces } from '@/features/visualization-layouts/workspaces.slice';
 
-export function CollectionPanel(): JSX.Element {
+interface CollectionPanelProps {
+  targetHasVisualizations?: boolean;
+  currentVisualizationIds?: Array<Visualization['id'] | null> | null;
+}
+
+export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
+  const { currentVisualizationIds = null, targetHasVisualizations = false } = props;
   const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
   const [selectedCollection, setSelectedCollection] = useState<Collection['id']>('');
@@ -46,48 +48,6 @@ export function CollectionPanel(): JSX.Element {
   const onCollectionChange = (collection: Collection['id']) => {
     setSelectedCollection(collection);
   };
-
-  const pageContext = useContext(PageContext);
-
-  const workspaces = useAppSelector(selectAllWorkspaces);
-  const stories: Record<Story['id'], Story> = useAppSelector(selectStories);
-
-  const { currentVisualizationIds, targetHasVisualizations } = useMemo(() => {
-    const currentWorkspace = workspaces.workspaces[workspaces.currentWorkspace];
-
-    const currentSlide =
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      pageContext.page === 'story-creator' && stories != null
-        ? Object.values(stories[pageContext.storyId].slides).filter((slide) => {
-            return slide.selected;
-          })[0]
-        : null;
-
-    let currentVisualizationIds: Array<Visualization['id'] | null> | null = null;
-    let targetHasVisualizations = false;
-    switch (pageContext.page) {
-      case 'visual-analytics-studio':
-        currentVisualizationIds = Object.values(currentWorkspace!.visualizationSlots);
-        break;
-      case 'story-creator':
-        currentVisualizationIds = Object.values(currentSlide!.visualizationSlots);
-        break;
-    }
-
-    if (currentVisualizationIds != null) {
-      targetHasVisualizations = !currentVisualizationIds.every((visId) => {
-        return visId === null;
-      });
-    }
-
-    return { currentVisualizationIds, targetHasVisualizations };
-  }, [
-    pageContext.page,
-    pageContext.storyId,
-    stories,
-    workspaces.currentWorkspace,
-    workspaces.workspaces,
-  ]);
 
   const { entities, events } = useDataFromCollection({ collectionId: selectedCollection });
 
@@ -264,6 +224,7 @@ export function CollectionPanel(): JSX.Element {
           showChronolgyOnly={showChronolgyOnly}
           targetHasVisualizations={targetHasVisualizations}
           currentVisualizationIds={currentVisualizationIds}
+          context={'collections'}
         />
       )}
     </div>

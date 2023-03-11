@@ -1,4 +1,4 @@
-import { PlusSmIcon } from '@heroicons/react/outline';
+import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
 import { cn, Collapsible, CollapsibleContent, CollapsibleTrigger, IconButton } from '@intavia/ui';
 import type { DragEvent, MouseEvent, ReactNode } from 'react';
@@ -16,6 +16,7 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import {
   addEventsToVisualization,
   addTargetEntitiesToVisualization,
+  removeEventsFromVisualization,
 } from '@/features/common/visualization.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -25,6 +26,8 @@ interface EventItemProps {
   icon?: ReactNode;
   currentVisualizationIds?: Array<Visualization['id'] | null> | null;
   targetHasVisualizations?: boolean;
+  mode?: 'add' | 'none' | 'remove';
+  context: 'collections' | 'visualized';
 }
 export function EventItem(props: EventItemProps): JSX.Element {
   const {
@@ -33,6 +36,8 @@ export function EventItem(props: EventItemProps): JSX.Element {
     icon = null,
     currentVisualizationIds = null,
     targetHasVisualizations = false,
+    mode = 'add',
+    context,
   } = props;
   const dispatch = useAppDispatch();
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -91,7 +96,6 @@ export function EventItem(props: EventItemProps): JSX.Element {
 
   function addEventToVisualizations() {
     if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
-    console.log('ADD EVENT TO VIS');
     // console.log(currentVisualizationIds);
     for (const visualizationId of currentVisualizationIds) {
       if (visualizationId != null) {
@@ -117,6 +121,20 @@ export function EventItem(props: EventItemProps): JSX.Element {
     }
   }
 
+  function removeEventFromVisualizations() {
+    if (currentVisualizationIds == null || currentVisualizationIds.length === 0) return;
+    for (const visualizationId of currentVisualizationIds) {
+      if (visualizationId != null) {
+        dispatch(
+          removeEventsFromVisualization({
+            visId: visualizationId,
+            events: [event.id],
+          }),
+        );
+      }
+    }
+  }
+
   return (
     <div className="grid border border-neutral-200">
       <Collapsible>
@@ -129,7 +147,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
                 'bg-neutral-200',
               isHovered && 'bg-neutral-200',
             )}
-            draggable
+            draggable={mode === 'add' ? true : false}
             onDragStart={onDragStart}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -151,7 +169,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
               <p>{getTranslatedLabel(event.label)}</p>
             </div>
             <div className="flex min-w-fit flex-row items-center gap-1">
-              {isHovered && targetHasVisualizations && (
+              {isHovered && targetHasVisualizations && mode === 'add' && context === 'collections' && (
                 <IconButton
                   className="h-5 w-5"
                   variant="outline"
@@ -164,6 +182,22 @@ export function EventItem(props: EventItemProps): JSX.Element {
                   <PlusSmIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
                 </IconButton>
               )}
+              {isHovered &&
+                targetHasVisualizations &&
+                mode === 'remove' &&
+                context === 'visualized' && (
+                  <IconButton
+                    className="h-5 w-5"
+                    variant="destructive"
+                    label="remove"
+                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                      removeEventFromVisualizations();
+                      e.preventDefault();
+                    }}
+                  >
+                    <TrashIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
+                  </IconButton>
+                )}
             </div>
           </div>
         </CollapsibleTrigger>
@@ -187,7 +221,11 @@ export function EventItem(props: EventItemProps): JSX.Element {
 
                 return (
                   <li key={`${entityId}-${relation.role}`}>
-                    <div className="cursor-default" draggable onDragStart={onDragStart}>
+                    <div
+                      className="cursor-default"
+                      draggable={mode === 'add' ? true : false}
+                      onDragStart={onDragStart}
+                    >
                       <div className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500">
                         <div className="min-w-fit">
                           <EntityKindIcon kind={entity.kind} />
