@@ -349,7 +349,6 @@ export const storyCreatorSlice = createSlice({
     },
     setHighlighted: (state, action) => {
       const { visId, slide, events, entities } = action.payload;
-      console.log(visId, slide.story, slide.id, events, entities);
       const highlighted = state.stories[slide.story]!.slides[slide.id]!.highlighted;
       if (!(visId in highlighted)) {
         highlighted[visId] = { entities: [], events: [] };
