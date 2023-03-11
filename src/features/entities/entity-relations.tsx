@@ -1,4 +1,6 @@
 import type { Entity } from '@intavia/api-client';
+import { cn } from '@intavia/ui';
+import { useMemo } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { createKey } from '@/lib/create-key';
@@ -26,6 +28,26 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
     }),
   );
 
+  const eventsAsc = useMemo(() => {
+    const now = Date.now();
+    const eventsArr = Array.from(events.data.values());
+    return eventsArr.sort((eventA: Event, eventB: Event) => {
+      const sortDateA =
+        'startDate' in eventA
+          ? new Date(eventA.startDate as string)
+          : 'endDate' in eventA
+          ? new Date(eventA.endDate as string)
+          : now;
+      const sortDateB =
+        'startDate' in eventB
+          ? new Date(eventB.startDate as string)
+          : 'endDate' in eventB
+          ? new Date(eventB.endDate as string)
+          : now;
+      return sortDateA - sortDateB;
+    });
+  }, [events]);
+
   if (relations == null || relations.length === 0) return null;
 
   if (roles.status === 'error' || events.status === 'error') {
@@ -44,19 +66,24 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
     <div className="grid gap-1">
       <h2 className="text-xs font-medium uppercase tracking-wider text-neutral-700">Relations</h2>
       <ul role="list">
-        {relations.map((relation) => {
-          const key = createKey(relation.event, relation.role);
+        {eventsAsc.map((event, index) => {
+          const relation = relations.filter((relation) => {
+            return relation.event === event.id;
+          });
+          const key = createKey(relation[0].event, relation[0].role);
           // FIXME: temporary workaround
-          const role = roles.data ? roles.data.get(relation.role) : null;
-          const event = events.data.get(relation.event);
+          const role = roles.data ? roles.data.get(relation[0].role) : null;
+          // const event = events.data.get(relation[0].event);
 
           return (
-            <li key={key}>
-              <span className="flex justify-between gap-2">
+            <li key={key} className={cn('px-1', index % 2 && 'bg-neutral-100')}>
+              <span className="flex items-center justify-between gap-2">
                 <span>
-                  {getTranslatedLabel(event?.label)} ({getTranslatedLabel(role?.label)})
+                  {getTranslatedLabel(event.label)} ({getTranslatedLabel(role?.label)})
                 </span>
-                <EventDate start={event?.startDate} end={event?.endDate} />
+                <span className="text-right">
+                  <EventDate start={event.startDate} end={event.endDate} />
+                </span>
               </span>
             </li>
           );
