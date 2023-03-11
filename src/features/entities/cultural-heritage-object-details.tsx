@@ -29,7 +29,7 @@ export function CulturalHeritageObjectDetails(
   return (
     <div className="mx-auto grid w-full max-w-6xl content-start gap-4 px-8 py-12">
       <EntityTitle kind={cho.kind} label={cho.label} />
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-16">
         <div className="grid w-full content-start gap-4">
           <EntityAlternativeLabels labels={alternativeLabels} />
           <EntityLinkedIds links={cho.linkedIds} />
