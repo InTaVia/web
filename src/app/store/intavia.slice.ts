@@ -561,6 +561,23 @@ export function selectHasLocalEntity(state: RootState, id: Entity['id']) {
   return selectLocalEntityById(state, id) != null;
 }
 
+export function selectUpstreamMediaResources(state: RootState) {
+  return state.intavia.mediaResources.upstream.byId;
+}
+
+export function selectLocalediaResources(state: RootState) {
+  return state.intavia.mediaResources.local.byId;
+}
+
+export function selectMediaResources(state: RootState) {
+  const upstreamMediaResources = selectUpstreamMediaResources(state);
+  const localMediaResources = selectLocalediaResources(state);
+
+  const mediaResources = { ...upstreamMediaResources, ...localMediaResources };
+
+  return mediaResources;
+}
+
 export function selectUpstreamMediaResourceById(state: RootState, id: MediaResource['id']) {
   return state.intavia.mediaResources.upstream.byId[id];
 }

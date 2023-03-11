@@ -6,6 +6,7 @@ import { EntityDescription } from '@/features/entities/entity-description';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
 import { EntityTitle } from '@/features/entities/entity-title';
+import { MediaViewer } from '@/features/media/media-viewer';
 
 interface PersonDetailsProps {
   entity: Person;
@@ -20,6 +21,8 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
   });
 
   const hasRelations = person.relations != null && person.relations.length > 0;
+
+  const hasMedia = person.media != null && person.media.length > 0;
 
   return (
     <div className="mx-auto grid w-full max-w-6xl content-start gap-4 px-8 py-12">
@@ -43,6 +46,7 @@ export function PersonDetails(props: PersonDetailsProps): JSX.Element {
           height={600}
         />
       ) : null}
+      {hasMedia ? <MediaViewer mediaResourceIds={person.media!} /> : null}
     </div>
   );
 }
