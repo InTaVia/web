@@ -49,7 +49,7 @@ export default function HomePage(): JSX.Element {
       text: t(['common', 'home', 'card-stc', 'text']),
       href: { pathname: '/storycreator' },
       icon: <ChatIcon className="h-6 w-6" />,
-      img: { src: '/assets/images/teaser_stc.png', alt: 'Storytelling Creator' },
+      img: { src: '/assets/images/teaser_stc.png', alt: 'Story Creator' },
       button: t(['common', 'app-bar', 'story-creator']),
     },
   ];

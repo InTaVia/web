@@ -344,8 +344,6 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       }
     });
 
-    console.log('storyEventIds', storyEventIds, storyVisualizations);
-
     const slideOutput: Record<string, Slide> = Object.fromEntries(
       Object.values(story.slides).map((s) => {
         const ret = { ...s };
