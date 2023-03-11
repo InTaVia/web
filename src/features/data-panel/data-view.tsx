@@ -17,6 +17,8 @@ interface DataViewProps {
   showChronolgyOnly?: boolean;
   targetHasVisualizations?: boolean;
   currentVisualizationIds?: Array<Visualization['id'] | null> | null;
+  mode?: 'add' | 'remove';
+  context: 'collections' | 'visualized';
 }
 
 export function DataView(props: DataViewProps): JSX.Element {
@@ -27,6 +29,8 @@ export function DataView(props: DataViewProps): JSX.Element {
     showChronolgyOnly = false,
     targetHasVisualizations = false,
     currentVisualizationIds = null,
+    mode = 'add',
+    context,
   } = props;
   const { plural, t } = useI18n<'common'>();
   // PrepData / Sort
@@ -82,6 +86,8 @@ export function DataView(props: DataViewProps): JSX.Element {
                     icon={<EntityKindIcon kind={item.kind as EntityKind} />}
                     currentVisualizationIds={currentVisualizationIds}
                     targetHasVisualizations={targetHasVisualizations}
+                    mode={mode}
+                    context={context}
                   />
                 );
               case 'event':
@@ -90,6 +96,8 @@ export function DataView(props: DataViewProps): JSX.Element {
                     event={item}
                     currentVisualizationIds={currentVisualizationIds}
                     targetHasVisualizations={targetHasVisualizations}
+                    mode={mode}
+                    context={context}
                   />
                 );
               case 'group':
