@@ -26,6 +26,9 @@ export function BiographyViewer(props: BiographyViewerProps): JSX.Element {
             <div key={`bio-${biographyId}-${id}`}>
               <p className={'text-sm italic'}>{biography.abstract != null && biography.abstract}</p>
               <p className={'whitespace-pre-line'}>{biography.text != null && biography.text}</p>
+              <p className={'text-xs'}>
+                {biography.citation != null && `Citation: ${biography.citation}`}
+              </p>
             </div>
           );
         })}
