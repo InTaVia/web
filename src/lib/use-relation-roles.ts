@@ -7,12 +7,12 @@ import { getData } from '@/lib/get-data';
 
 type UseRelationRolesResult =
   | {
-      data: Map<EntityRelationRole['id'], EntityRelationRole>;
-      status: 'success';
+      data: Map<EntityRelationRole['id'], EntityRelationRole> | undefined;
+      status: 'error' | 'pending';
     }
   | {
-      data: undefined;
-      status: 'error' | 'pending';
+      data: Map<EntityRelationRole['id'], EntityRelationRole>;
+      status: 'success';
     };
 
 export function useRelationRoles(ids: Array<EntityRelationRole['id']>): UseRelationRolesResult {
@@ -29,6 +29,5 @@ export function useRelationRoles(ids: Array<EntityRelationRole['id']>): UseRelat
     return { data, status: 'success' };
   }
 
-  // TODO: return data when isComplete: false?
-  return { data: undefined, status: query.isError ? 'error' : 'pending' };
+  return { data: data, status: query.isError ? 'error' : 'pending' };
 }
