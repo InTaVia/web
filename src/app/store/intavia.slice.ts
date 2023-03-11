@@ -565,13 +565,13 @@ export function selectUpstreamMediaResources(state: RootState) {
   return state.intavia.mediaResources.upstream.byId;
 }
 
-export function selectLocalediaResources(state: RootState) {
+export function selectLocalMediaResources(state: RootState) {
   return state.intavia.mediaResources.local.byId;
 }
 
 export function selectMediaResources(state: RootState) {
   const upstreamMediaResources = selectUpstreamMediaResources(state);
-  const localMediaResources = selectLocalediaResources(state);
+  const localMediaResources = selectLocalMediaResources(state);
 
   const mediaResources = { ...upstreamMediaResources, ...localMediaResources };
 
@@ -610,6 +610,23 @@ export function selectMediaResourcesByIds(state: RootState, ids: [MediaResource[
   const mediaResources = ids.map((id) => {
     return selectLocalMediaResourceById(state, id) ?? selectUpstreamMediaResourceById(state, id);
   });
+
+  return mediaResources;
+}
+
+export function selectUpstreamBiographies(state: RootState) {
+  return state.intavia.biographies.upstream.byId;
+}
+
+export function selectLocalBiographies(state: RootState) {
+  return state.intavia.biographies.local.byId;
+}
+
+export function selectBiographies(state: RootState) {
+  const upstreamBiographies = selectUpstreamBiographies(state);
+  const localBiographies = selectLocalBiographies(state);
+
+  const mediaResources = { ...upstreamBiographies, ...localBiographies };
 
   return mediaResources;
 }

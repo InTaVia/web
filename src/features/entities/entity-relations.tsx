@@ -52,7 +52,7 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
 
           return (
             <li key={key}>
-              <span className="flex gap-2">
+              <span className="flex justify-between gap-2">
                 <span>
                   {getTranslatedLabel(event?.label)} ({getTranslatedLabel(role?.label)})
                 </span>
