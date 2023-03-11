@@ -1,6 +1,7 @@
 import type { Event } from '@intavia/api-client/dist/models';
 import { forwardRef } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
@@ -26,6 +27,8 @@ const groupBy = (items: Array<any>, key: string) => {
 
 const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.Element => {
   const { events, diameter, patisserieType } = props;
+
+  const { hovered } = useHoverState();
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
 
@@ -65,8 +68,23 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       <circle cx={r} cy={r} r={r - 1} fill="white" stroke="black"></circle>
       <g transform={'translate(1, 1)'}>
         {grouped.map((item: Array<Event>, index) => {
+          const allHighlighted = item.every((event) => {
+            console.log(event.id);
+            return (
+              hovered?.relatedEvents.includes(event.id) === true ||
+              hovered?.events.includes(event.id) === true
+            );
+          });
+
+          const someHighlighted = item.some((event) => {
+            return (
+              hovered?.relatedEvents.includes(event.id) === true ||
+              hovered?.events.includes(event.id) === true
+            );
+          });
+
           const type = getEventKindPropertiesById(item[0].kind).type;
-          const color = getEventKindPropertiesByType(type).color.background;
+          const color = getEventKindPropertiesByType(type).color;
 
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(
@@ -79,6 +97,8 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             color,
             patisserieType,
             `${index}${JSON.stringify(events)}segment`,
+            allHighlighted,
+            someHighlighted,
           );
         })}
       </g>
@@ -91,9 +111,11 @@ function donutSegment(
   i_end: number,
   r: number,
   r0: number,
-  color: string,
+  color: { foreground: string; background: string },
   patisserieType: 'donut' | 'pie',
   key: string,
+  allHighlighted: boolean,
+  someHighlighted: boolean,
 ) {
   let end = i_end;
   if (end - start === 1) end -= 0.00001;
@@ -114,7 +136,11 @@ function donutSegment(
         } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${r + r0 * x1} ${
           r + r0 * y1
         } A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${r + r0 * y0}`}
-        fill={`${color}`}
+        fill={someHighlighted || allHighlighted ? color.foreground : color.background}
+        strokeWidth={allHighlighted || someHighlighted ? 2 : 0}
+        stroke={allHighlighted || someHighlighted ? color.background : 'none'}
+        strokeLinecap="round"
+        strokeDasharray={!allHighlighted && someHighlighted ? '4' : 'none'}
       />
     );
   } else {
@@ -124,7 +150,11 @@ function donutSegment(
         d={`M ${r} ${r} L ${r + r * x0} ${r + r * y0} A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${
           r + r * y1
         } Z`}
-        fill={`${color}`}
+        fill={someHighlighted || allHighlighted ? color.foreground : color.background}
+        strokeWidth={allHighlighted || someHighlighted ? 2 : 0}
+        stroke={allHighlighted || someHighlighted ? color.background : 'none'}
+        strokeLinecap="round"
+        strokeDasharray={!allHighlighted && someHighlighted ? '4' : 'none'}
       />
     );
   }

@@ -171,11 +171,17 @@ export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
   }, []);
 
   const allHighlighted = segmentFeatureIds.every((featureId) => {
-    return hovered?.events.includes(featureId);
+    return (
+      hovered?.relatedEvents.includes(featureId) === true ||
+      hovered?.events.includes(featureId) === true
+    );
   });
 
   const someHighlighted = segmentFeatureIds.some((featureId) => {
-    return hovered?.events.includes(featureId);
+    return (
+      hovered?.relatedEvents.includes(featureId) === true ||
+      hovered?.events.includes(featureId) === true
+    );
   });
 
   let end_ = end;

@@ -114,7 +114,12 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               //@ts-ignore
               type={translateEventType(vocabularies[dot.datum.kind])}
               thickness={1}
-              hover={hovered?.events.includes(dot.datum.id) === true ? true : false}
+              hover={
+                hovered?.events.includes(dot.datum.id) === true ||
+                hovered?.relatedEvents.includes(dot.datum.id) === true
+                  ? true
+                  : false
+              }
             />
           </g>
         );

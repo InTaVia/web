@@ -181,7 +181,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
               r={circleRadius}
               fill={backgroundColor}
             />
-            {hovered?.events.includes(feature.id as string) === true && (
+            {(hovered?.relatedEvents.includes(feature.id as string) === true ||
+              hovered?.events.includes(feature.id as string) === true) && (
               <circle
                 className="cursor-pointer"
                 key={`hovered-${feature.id}`}
