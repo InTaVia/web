@@ -2,6 +2,7 @@ import type { Entity } from '@intavia/api-client';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { createKey } from '@/lib/create-key';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNotNullable } from '@/lib/is-not-nullable';
 import { useEvents } from '@/lib/use-events';
 import { useRelationRoles } from '@/lib/use-relation-roles';
@@ -33,7 +34,9 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
 
   // FIXME: Currently, this loading message is displayed forever, since the backend does not know
   // how to resolve all role ids, but returns 200 OK even if not all requested ids were resolved.
-  if (roles.status !== 'success' || events.status !== 'success') {
+
+  // roles.status !== 'success' || (temporarily removed from if statement because of aforementioned bug)
+  if (events.status !== 'success') {
     return <p>Loading relations...</p>;
   }
 
@@ -43,14 +46,15 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
       <ul role="list">
         {relations.map((relation) => {
           const key = createKey(relation.event, relation.role);
-          const role = roles.data.get(relation.role);
+          // FIXME: temporary workaround
+          const role = roles.data ? roles.data.get(relation.role) : null;
           const event = events.data.get(relation.event);
 
           return (
             <li key={key}>
               <span className="flex gap-2">
                 <span>
-                  {event?.label.default} ({role?.label.default})
+                  {getTranslatedLabel(event?.label)} ({getTranslatedLabel(role?.label)})
                 </span>
                 <EventDate start={event?.startDate} end={event?.endDate} />
               </span>
