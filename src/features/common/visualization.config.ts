@@ -57,6 +57,7 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth',
   'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'creation', //Production (crm)
   'event-kind-birth': 'birth',
   'event-kind-death': 'death',
   'event-kind-creation': 'creation',

@@ -1,6 +1,7 @@
-import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
+import { IdentificationIcon, PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
 import { cn, Collapsible, CollapsibleContent, CollapsibleTrigger, IconButton } from '@intavia/ui';
+import { useRouter } from 'next/router';
 import type { DragEvent, MouseEvent, ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 
@@ -37,6 +38,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
   } = props;
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { hovered, updateHover } = useHoverState();
@@ -145,6 +147,19 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
               {getTranslatedLabel(entity.label)}
             </div>
             <div className=" itmes-center flex min-w-fit flex-row gap-1">
+              {isHovered && (
+                <IconButton
+                  className="h-5 w-5"
+                  variant="default"
+                  label="details"
+                  onClick={() => {
+                    updateHover(null);
+                    void router.push(`/entities/${entity.id}`);
+                  }}
+                >
+                  <IdentificationIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
+                </IconButton>
+              )}
               {isHovered && targetHasVisualizations && mode === 'add' && (
                 <IconButton
                   className="h-5 w-5"
