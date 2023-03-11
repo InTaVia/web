@@ -166,7 +166,8 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
             width={width}
             height={height}
             properties={visualization.properties}
-            // onToggleHighlight={onToggleHighlight}
+            onToggleHighlight={onToggleHighlight}
+            highlightedByVis={highlightedByVis}
           />
         );
       case 'ego-network':

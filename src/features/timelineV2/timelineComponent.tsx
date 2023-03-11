@@ -13,10 +13,23 @@ interface TimelineProps {
   width?: number;
   height?: number;
   properties?: Record<string, ComponentProperty>;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 export function TimelineComponent(props: TimelineProps): JSX.Element {
-  const { events, entities, properties = {}, width = 0, height = 0 } = props;
+  const {
+    events,
+    entities,
+    properties = {},
+    width = 0,
+    height = 0,
+    onToggleHighlight,
+    highlightedByVis,
+  } = props;
 
   const [zoom, setZoom] = useState<number>(0);
 
@@ -48,6 +61,8 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         diameter={diameter}
         fontSize={fontSize}
         zoom={zoom}
+        onToggleHighlight={onToggleHighlight}
+        highlightedByVis={highlightedByVis}
       />
       <div className="absolute top-1 right-1 flex gap-2">
         <IconButton

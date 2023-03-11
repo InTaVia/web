@@ -2,19 +2,32 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { forwardRef } from 'react';
 
-import { getEventKindPropertiesByType } from '@/features/common/visualization.config';
+import { useAppSelector } from '@/app/store';
+import { selectVocabularyEntries } from '@/app/store/intavia.slice';
+import {
+  getEventKindPropertiesById,
+  getEventKindPropertiesByType,
+} from '@/features/common/visualization.config';
 import { TimelineColors } from '@/features/timelineV2/timeline';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface TimelineEventMarkerProps {
+  event: Event;
   width: number;
   height: number;
-  type?: 'birth' | 'creation' | 'death' | 'personplace';
   thickness: number;
   hover: boolean;
+  selected?: boolean;
 }
 
 const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): JSX.Element => {
-  const { width, height, type = '', thickness, hover = false } = props;
+  const { width, height, thickness, hover = false, event } = props;
+
+  const vocabularies = useAppSelector(selectVocabularyEntries);
+  const translatedEventKind =
+    event.kind in vocabularies ? getTranslatedLabel(vocabularies[event.kind].label) : event.kind;
+
+  const type = getEventKindPropertiesById(translatedEventKind).type;
 
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;

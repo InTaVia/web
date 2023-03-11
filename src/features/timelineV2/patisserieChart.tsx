@@ -13,6 +13,11 @@ interface PatisserieChartProperties {
   events: Array<Event>;
   diameter: number;
   patisserieType: 'donut' | 'pie';
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 const groupBy = (items: Array<any>, key: string) => {
@@ -60,7 +65,6 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       height={`${w}`}
       viewBox={`0 0 ${w} ${w}`}
       textAnchor="middle"
-      style={{ transform: 'translate(-50%, -50%)' }}
     >
       <circle cx={r} cy={r} r={r - 1} fill="white" stroke="black"></circle>
       <g transform={'translate(1, 1)'}>

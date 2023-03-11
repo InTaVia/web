@@ -39,7 +39,7 @@ interface VisualisationGroupProps {
     events: Array<Event['id'] | null>,
     visId: string,
   ) => void;
-  handleSaveComponent: (element: Visualization | SlideContent) => void;
+  handleSaveComponent: (element: SlideContent | Visualization) => void;
 }
 
 export interface LayoutPaneContent {

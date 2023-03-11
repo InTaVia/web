@@ -13,6 +13,7 @@ interface TimelineLabelProps {
   entityIndex?: number;
   fontSize?: number;
   showLabels?: boolean;
+  selected?: boolean;
 }
 
 export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
@@ -27,6 +28,7 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
     showLabels = false,
     entityIndex = 0,
     fontSize = 10,
+    selected = false,
   } = props;
 
   const textHeight = hover ? 12 : 10;
@@ -47,6 +49,9 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
         marginLeft = 0;
         marginRight = textOffset;
       }
+    } else if (mode === 'single') {
+      textAngle = 0;
+      textTranslateStr = `translate(${textOffset}px, -50%)`;
     }
   } else {
     if (mode === 'dual') {
@@ -70,9 +75,10 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
           left: posX,
           top: posY,
           fontSize: `${fontSize}px`,
-          maxWidth: '12em',
-          transformOrigin: 'left bottom',
+          maxWidth: mode === 'single' || selected ? 'unset' : '12em',
+          transformOrigin: 'left center',
           transform: `${textTranslateStr} rotate(${textAngle}deg) ${textTranslateStrAfter}`.trim(),
+          fontWeight: selected ? 'bold' : 'default',
         }}
         className={`timelineLabel ${
           showLabels || hover ? 'visible' : 'invisible'

@@ -38,8 +38,6 @@ export function Tooltip(): JSX.Element {
     );
   }
 
-  console.log(hovered);
-
   if (hovered?.events.length > 0 && hovered.entities.length === 0) {
     //HOVERED ENTITY
     /*  {

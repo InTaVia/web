@@ -1,6 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { Event } from '@intavia/api-client/dist/models';
+import type { Entity, Event } from '@intavia/api-client/dist/models';
 import type { MouseEvent } from 'react';
 import { type LegacyRef, forwardRef, useLayoutEffect, useRef, useState } from 'react';
 
@@ -31,6 +31,8 @@ type TimelineEventClusterProps = {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  onClickEvent?: (eventID: Event['id']) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 };
 
 const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref): JSX.Element => {
@@ -47,6 +49,8 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
     diameter = 14,
     fontSize = 10,
     mode = 'default',
+    onClickEvent,
+    highlightedByVis,
   } = props;
 
   const [hover, setHover] = useState(false);
@@ -79,20 +83,20 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
 
   const nodeRef = useRef<HTMLDivElement>(null);
 
-  const [clusterDimensions, setClusterDimensions] = useState([
+  /* const [clusterDimensions, setClusterDimensions] = useState([
     diameterWithStroke,
     diameterWithStroke,
   ]);
-
-  useLayoutEffect(() => {
+ */
+  /* useLayoutEffect(() => {
     if (nodeRef.current != null) {
       const { height, width } = nodeRef.current.getBoundingClientRect();
       setClusterDimensions([width, height]);
     }
-  }, []);
+  }, []); */
 
-  const clusterNodeWidth = clusterDimensions[0];
-  const clusterNodeHeight = clusterDimensions[1];
+  //const clusterNodeWidth = clusterDimensions[0];
+  //const clusterNodeHeight = clusterDimensions[1];
 
   const clusterPosX = posX; // - clusterNodeWidth / 2;
   const clusterPosY = posY; // - clusterNodeHeight / 2;
@@ -138,6 +142,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
           left: clusterPosX,
           top: clusterPosY,
           cursor: 'pointer',
+          transform: 'translate(-50%, -50%)',
         }}
         className={className}
         onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
@@ -164,6 +169,8 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             height={bbox.height}
             vertical={vertical}
             dotRadius={diameterWithStroke / 3}
+            onClickEvent={onClickEvent}
+            highlightedByVis={highlightedByVis}
           />
         ) : (
           <PatisserieChart
