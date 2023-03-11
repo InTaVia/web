@@ -186,19 +186,19 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
             hover={hover || hovered?.events.includes(event.id) === true ? true : false}
           />
         </svg>
+        <TimelineLabel
+          posX={posX + width / 2}
+          posY={posY + height / 2}
+          labelText={getTranslatedLabel(event.label)}
+          showLabels={hover ? true : showLabels}
+          entityIndex={entityIndex}
+          mode={mode}
+          thickness={thickness}
+          vertical={vertical}
+          fontSize={fontSize}
+          selected={selected}
+        />
       </div>
-      <TimelineLabel
-        posX={posX + width / 2}
-        posY={posY + height / 2}
-        labelText={getTranslatedLabel(event.label)}
-        showLabels={hover ? true : showLabels}
-        entityIndex={entityIndex}
-        mode={mode}
-        thickness={thickness}
-        vertical={vertical}
-        fontSize={fontSize}
-        selected={selected}
-      />
     </>
   );
 });

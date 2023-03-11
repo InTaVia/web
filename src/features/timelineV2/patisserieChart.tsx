@@ -18,6 +18,7 @@ interface PatisserieChartProperties {
     events: Array<Event['id'] | null>,
   ) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  hover?: boolean;
 }
 
 const groupBy = (items: Array<any>, key: string) => {
@@ -30,7 +31,7 @@ const groupBy = (items: Array<any>, key: string) => {
 };
 
 const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.Element => {
-  const { events, diameter, patisserieType } = props;
+  const { events, diameter, patisserieType, hover = false } = props;
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
 
@@ -70,7 +71,9 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       <g transform={'translate(1, 1)'}>
         {grouped.map((item: Array<Event>, index) => {
           const type = getEventKindPropertiesById(item[0].kind).type;
-          const color = getEventKindPropertiesByType(type).color.background;
+          const color = hover
+            ? getEventKindPropertiesByType(type).color.foreground
+            : getEventKindPropertiesByType(type).color.background;
 
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(

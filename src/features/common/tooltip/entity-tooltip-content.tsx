@@ -9,9 +9,9 @@ import { EntityKindIcon } from '@/features/common/entity-kind-icon';
 import { MediaThumbnail } from '@/features/common/tooltip/tooltip';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
-interface EventTooltipContentProps {
-  eventIDs: Array<Event['id']>;
-  relatedEntitiesIDs?: Array<Entity['id']>;
+interface EntityTooltipContentProps {
+  entityIDs: Array<Entity['id']>;
+  relatedEventIDs?: Array<Event['id']>;
 }
 
 const entityKindSorting: Record<Entity['kind'], number> = {
@@ -22,66 +22,66 @@ const entityKindSorting: Record<Entity['kind'], number> = {
   place: 5,
 };
 
-const EventTooltipContent = forwardRef(
-  (props: EventTooltipContentProps, ref: unknown): JSX.Element => {
-    const { eventIDs, relatedEntitiesIDs = [] } = props;
+const EntityTooltipContent = forwardRef(
+  (props: EntityTooltipContentProps, ref: unknown): JSX.Element => {
+    const { entityIDs, relatedEventIDs = [] } = props;
 
     const { locale } = useLocale();
 
     const _events = useAppSelector(selectEvents);
     const _entities = useAppSelector(selectEntities);
 
-    const events = Object.fromEntries(
-      eventIDs
+    const entitiesWithMedia: Array<Entity['id']> = [];
+
+    const entities = Object.fromEntries(
+      entityIDs
+        .filter((key) => {
+          return key in _entities;
+        })
+        .map((key) => {
+          if (_entities[key].media != null) {
+            entitiesWithMedia.push(key);
+          }
+          return [key, _entities[key]];
+        }),
+    ) as Record<Entity['id'], Entity>;
+
+    const relatedEvents = Object.fromEntries(
+      relatedEventIDs
         .filter((key) => {
           return key in _events;
         })
         .map((key) => {
           return [key, _events[key]];
         }),
-    );
+    ) as Record<Event['id'], Event>;
 
-    const relatedEntitiesWithMedia: Array<Entity['id']> = [];
-
-    const relatedEntities = Object.fromEntries(
-      relatedEntitiesIDs
-        .filter((key) => {
-          return key in _entities;
-        })
-        .map((key) => {
-          if (_entities[key].media != null) {
-            relatedEntitiesWithMedia.push(key);
-          }
-          return [key, _entities[key]];
-        }),
-    ) as Record<Entity['id'], Entity>;
-
-    const sortedEntities = Object.values(relatedEntities).sort((entityA, entityB) => {
+    const sortedEntities = Object.values(entities).sort((entityA, entityB) => {
       return entityKindSorting[entityA!.kind] - entityKindSorting[entityB!.kind];
     });
 
     return (
       <div ref={ref as LegacyRef<HTMLDivElement>}>
-        {Object.values(events).length < 6 ? (
-          Object.values(events).map((event) => {
-            return <div key={`event${event!.id}`}>- {getTranslatedLabel(event!.label)}</div>;
+        {/*  {Object.values(entities).length < 6 ? (
+          Object.values(entities).map((entity) => {
+            return <div key={`entity${entity!.id}`}>- {getTranslatedLabel(entity!.label)}</div>;
           })
         ) : (
-          <b>{Object.values(events).length} Events</b>
-        )}
+          <b>{Object.values(entities).length} Entities</b>
+        )} */}
         {sortedEntities.length < 6 ? (
           sortedEntities.map((entity) => {
             return (
               <>
-                <div className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500">
+                <div className="flex h-fit flex-row items-center gap-2 text-xs">
                   <div className="min-w-fit">
                     <EntityKindIcon kind={entity.kind} />
                   </div>
                   <p>{getTranslatedLabel(entity.label, locale)}</p>
                 </div>
                 {/* {relatedEntitiesWithMedia.includes(entity.id) && <img className="h-10" src={"TEST"} />} */}
-                {relatedEntitiesWithMedia.includes(entity.id) && (
-                  <div className="ml-3 h-40">
+                {entitiesWithMedia.includes(entity.id) && (
+                  <div className="h-40">
                     <MediaThumbnail mediaResourceId={entity!.media[0]} />
                   </div>
                 )}
@@ -96,5 +96,5 @@ const EventTooltipContent = forwardRef(
   },
 );
 
-EventTooltipContent.displayName = 'EventTooltipContent';
-export default EventTooltipContent;
+EntityTooltipContent.displayName = 'EntityTooltipContent';
+export default EntityTooltipContent;

@@ -1,8 +1,8 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event } from '@intavia/api-client/dist/models';
-import type { MouseEvent } from 'react';
-import { type LegacyRef, forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import type { LegacyRef, MouseEvent } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { type TimelineType, getTemporalExtent } from '@/features/timelineV2/timeline';
@@ -178,20 +178,22 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             events={events}
             diameter={diameterWithStroke}
             patisserieType={clusterMode}
+            highlightedByVis={highlightedByVis}
+            hover={hover || hovered?.events.includes(event.id) === true ? true : false}
           />
         )}
+        <TimelineLabel
+          posX={textPosX}
+          posY={textPosY}
+          labelText={`${events.length} Events`}
+          showLabels={showLabels}
+          entityIndex={entityIndex}
+          thickness={thickness}
+          vertical={vertical}
+          mode={mode}
+          fontSize={fontSize}
+        />
       </div>
-      <TimelineLabel
-        posX={textPosX}
-        posY={textPosY}
-        labelText={`${events.length} Events`}
-        showLabels={showLabels}
-        entityIndex={entityIndex}
-        thickness={thickness}
-        vertical={vertical}
-        mode={mode}
-        fontSize={fontSize}
-      />
     </>
   );
 });

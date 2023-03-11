@@ -1,4 +1,5 @@
-import { Button } from '@intavia/ui';
+import { AdjustmentsIcon } from '@heroicons/react/outline';
+import { Button, IconButton } from '@intavia/ui';
 import { useMemo } from 'react';
 
 import SlideLayoutButton from '@/features/storycreator/slide-layout-popover';
@@ -73,14 +74,15 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
         </Button>
       </div>
       <div className="flex gap-3">
-        <Button
+        <IconButton
           size={'xs'}
+          label="Edit Story"
           onClick={() => {
             onOpenSettingsDialog();
           }}
         >
-          Settings
-        </Button>
+          <AdjustmentsIcon className="h-5 w-5" />
+        </IconButton>
         <PaneToggle parentComponent="stc" orientation="right" />
       </div>
     </div>

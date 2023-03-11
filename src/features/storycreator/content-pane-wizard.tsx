@@ -22,7 +22,7 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
 
   let content;
 
-  if (!open) {
+  if (!open && mini) {
     content = (
       <Button
         onClick={() => {

@@ -258,7 +258,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     >
       <div style={{ position: 'relative' }}>
         <div
-          className="cursor-default"
+          className="cursor-pointer"
           style={{
             left: vertical ? midOffset : 0,
             top: vertical ? 0 : midOffset,
