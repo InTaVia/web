@@ -24,37 +24,49 @@ export function useDataFromCollection(
   const { collectionId } = params;
 
   const collection = useCollectionById({ collectionId });
-  const _entities: Record<Entity['id'], Entity> = useAppSelector(selectEntities);
+  const _entities = useAppSelector(selectEntities);
   const _events = useAppSelector(selectEvents);
-  // const vocabularies = useAppSelector(selectVocabularyEntries);
 
   const data =
     useMemo(() => {
       if (collection != null) {
         // Collection Entities
-
         const collectionEntities = collection.entities.map((entityId) => {
           return _entities[entityId];
         }) as Array<Entity>;
 
-        const relatedEventIds = collectionEntities.flatMap((entity: Entity) => {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          return entity.relations !== undefined
-            ? entity.relations.map((relation: EntityEventRelation) => {
-                return relation.event;
+        const relatedEventIds = unique(
+          collectionEntities.flatMap((entity: Entity) => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            return entity.relations !== undefined
+              ? entity.relations.map((relation: EntityEventRelation) => {
+                  return relation.event;
+                })
+              : ([] as Array<Event['id']>);
+          }),
+        );
+
+        // if collection.events is empty no filtering of related events
+        const relatedEventIdsForCollectionEvents =
+          collection.events.length > 0
+            ? collection.events.filter((x) => {
+                return relatedEventIds.includes(x);
               })
-            : ([] as Array<Event['id']>);
-        });
+            : relatedEventIds;
 
         // filter for just the events for which we still need the event details
-        const missingRelatedEventIds = relatedEventIds.filter((eventId: string) => {
-          return _events[eventId] === undefined;
-        });
+        const missingRelatedEventIds = relatedEventIdsForCollectionEvents.filter(
+          (eventId: string) => {
+            return _events[eventId] === undefined;
+          },
+        );
 
         // allready fetched and stored events
-        const fetchedRelatedEventIds = relatedEventIds.filter((eventId: string) => {
-          return _events[eventId] !== undefined;
-        });
+        const fetchedRelatedEventIds = relatedEventIdsForCollectionEvents.filter(
+          (eventId: string) => {
+            return _events[eventId] !== undefined;
+          },
+        );
         const fetchedRelatedEvents = fetchedRelatedEventIds.map((eventId) => {
           return _events[eventId];
         }) as Array<Event>;
@@ -96,6 +108,8 @@ export function useDataFromCollection(
         const missingRelatedEntityIds = relatedEntityIds.filter((entityId: string) => {
           return _entities[entityId] === undefined;
         });
+
+        //return fetchedRelated Events
 
         const result = {
           entities: collectionEntities,

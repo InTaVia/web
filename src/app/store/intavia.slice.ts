@@ -286,6 +286,44 @@ export const slice = createSlice({
       },
     );
 
+    builder.addMatcher(
+      intaviaApiService.endpoints.getMediaResourceById.matchFulfilled,
+      (state, action) => {
+        const mediaResource = action.payload;
+
+        state.mediaResources.upstream.byId[mediaResource.id] = mediaResource;
+      },
+    );
+    builder.addMatcher(
+      intaviaApiService.endpoints.retrieveMediaResourcesByIds.matchFulfilled,
+      (state, action) => {
+        const mediaResources = action.payload.results;
+
+        mediaResources.forEach((mediaResource) => {
+          state.mediaResources.upstream.byId[mediaResource.id] = mediaResource;
+        });
+      },
+    );
+
+    builder.addMatcher(
+      intaviaApiService.endpoints.getBiographyById.matchFulfilled,
+      (state, action) => {
+        const biography = action.payload;
+
+        state.biographies.upstream.byId[biography.id] = biography;
+      },
+    );
+    builder.addMatcher(
+      intaviaApiService.endpoints.retrieveBiographiesByIds.matchFulfilled,
+      (state, action) => {
+        const biographies = action.payload.results;
+
+        biographies.forEach((biography) => {
+          state.biographies.upstream.byId[biography.id] = biography;
+        });
+      },
+    );
+
     builder.addMatcher(intaviaApiService.endpoints.getEventById.matchFulfilled, (state, action) => {
       const event = action.payload;
       state.events.upstream.byId[event.id] = event;
@@ -521,6 +559,112 @@ export function selectEntityById(state: RootState, id: Entity['id']) {
 
 export function selectHasLocalEntity(state: RootState, id: Entity['id']) {
   return selectLocalEntityById(state, id) != null;
+}
+
+export function selectUpstreamMediaResources(state: RootState) {
+  return state.intavia.mediaResources.upstream.byId;
+}
+
+export function selectLocalMediaResources(state: RootState) {
+  return state.intavia.mediaResources.local.byId;
+}
+
+export function selectMediaResources(state: RootState) {
+  const upstreamMediaResources = selectUpstreamMediaResources(state);
+  const localMediaResources = selectLocalMediaResources(state);
+
+  const mediaResources = { ...upstreamMediaResources, ...localMediaResources };
+
+  return mediaResources;
+}
+
+export function selectUpstreamMediaResourceById(state: RootState, id: MediaResource['id']) {
+  return state.intavia.mediaResources.upstream.byId[id];
+}
+
+export function selectLocalMediaResourceById(state: RootState, id: MediaResource['id']) {
+  return state.intavia.mediaResources.local.byId[id];
+}
+
+export function selectMediaResourceById(state: RootState, id: MediaResource['id']) {
+  return selectLocalMediaResourceById(state, id) ?? selectUpstreamMediaResourceById(state, id);
+}
+
+export function selectUpstreamMediaResourcesByIds(state: RootState, ids: [MediaResource['id']]) {
+  const mediaResources = ids.map((id) => {
+    return state.intavia.mediaResources.upstream.byId[id];
+  });
+
+  return mediaResources;
+}
+
+export function selectLocalMediaResourcesByIds(state: RootState, ids: [MediaResource['id']]) {
+  const mediaResources = ids.map((id) => {
+    return state.intavia.mediaResources.local.byId[id];
+  });
+
+  return mediaResources;
+}
+
+export function selectMediaResourcesByIds(state: RootState, ids: [MediaResource['id']]) {
+  const mediaResources = ids.map((id) => {
+    return selectLocalMediaResourceById(state, id) ?? selectUpstreamMediaResourceById(state, id);
+  });
+
+  return mediaResources;
+}
+
+export function selectUpstreamBiographies(state: RootState) {
+  return state.intavia.biographies.upstream.byId;
+}
+
+export function selectLocalBiographies(state: RootState) {
+  return state.intavia.biographies.local.byId;
+}
+
+export function selectBiographies(state: RootState) {
+  const upstreamBiographies = selectUpstreamBiographies(state);
+  const localBiographies = selectLocalBiographies(state);
+
+  const mediaResources = { ...upstreamBiographies, ...localBiographies };
+
+  return mediaResources;
+}
+
+export function selectUpstreamBiographyById(state: RootState, id: Biography['id']) {
+  return state.intavia.biographies.upstream.byId[id];
+}
+
+export function selectLocalBiographyById(state: RootState, id: Biography['id']) {
+  return state.intavia.biographies.local.byId[id];
+}
+
+export function selectBiographyById(state: RootState, id: Biography['id']) {
+  return selectLocalBiographyById(state, id) ?? selectUpstreamBiographyById(state, id);
+}
+
+export function selectUpstreamBiographiesByIds(state: RootState, ids: [Biography['id']]) {
+  const biographies = ids.map((id) => {
+    return state.intavia.biographies.upstream.byId[id];
+  });
+
+  return biographies;
+}
+
+export function selectLocalBiographiesByIds(state: RootState, ids: [Biography['id']]) {
+  const biographies = ids.map((id) => {
+    return state.intavia.biographies.local.byId[id];
+  });
+
+  return biographies;
+}
+
+export function selectBiographiesByIds(state: RootState, ids: [Biography['id']]) {
+  const biographies = ids.map((id) => {
+    return selectLocalBiographyById(state, id) ?? selectUpstreamBiographyById(state, id);
+  });
+
+  return biographies;
 }
 
 export function selectUpstreamEvents(state: RootState) {

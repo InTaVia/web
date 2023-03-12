@@ -32,10 +32,12 @@ interface StoryContentPaneProps {
   onDrop?: (i_layout: any, i_layoutItem: any, event: any, targetPane: any) => void;
   onContentPaneWizard?: (i_layout: any, type: string, i_targetPane: any) => void;
   handleSaveComponent: (element: SlideContent | Visualization) => void;
+  singleContent?: boolean;
 }
 
 export function StoryContentPane(props: StoryContentPaneProps) {
-  const { id, setEditElement, onDrop, onContentPaneWizard, handleSaveComponent } = props;
+  const { id, setEditElement, onDrop, onContentPaneWizard, handleSaveComponent, singleContent } =
+    props;
 
   /* const myHeight =
     height !== undefined ? Math.floor((height + margin[1]) / (rowHeight + margin[1])) : 12; */
@@ -198,7 +200,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   };
 
   const myDrop = (i_layout: any, i_layoutItem: any, event: any) => {
-    if (onDrop !== undefined) onDrop(i_layout, i_layoutItem, event, id);
+    if (onDrop !== undefined && singleContent === false) onDrop(i_layout, i_layoutItem, event, id);
   };
 
   const createLayoutPane = (element: any) => {
@@ -279,7 +281,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   resizeMoveContent({
                     layout: dragged,
                     parentPane: id,
-                    content: element.i,
                     parentType: 'Content',
                   }),
                 );
@@ -288,21 +289,23 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               {contents.map((content) => {
                 return createLayoutPane(content);
               })}
-              <div key={'contentPaneWizard'}>
-                <ContentPaneWizard
-                  mini={contents.length > 0 ? true : false}
-                  onContentAddPerClick={(type: string) => {
-                    if (onContentPaneWizard !== undefined) {
-                      const maxLayoutY = Math.max(
-                        ...contents.map((content) => {
-                          return content.layout.y + content.layout.h;
-                        }),
-                      );
-                      onContentPaneWizard({ y: maxLayoutY > 0 ? maxLayoutY : 1, x: 1 }, type, id);
-                    }
-                  }}
-                />
-              </div>
+              {(singleContent === false || contents.length === 0) && (
+                <div key={'contentPaneWizard'}>
+                  <ContentPaneWizard
+                    mini={contents.length > 0 ? true : false}
+                    onContentAddPerClick={(type: string) => {
+                      if (onContentPaneWizard !== undefined) {
+                        const maxLayoutY = Math.max(
+                          ...contents.map((content) => {
+                            return content.layout.y + content.layout.h;
+                          }),
+                        );
+                        onContentPaneWizard({ y: maxLayoutY > 0 ? maxLayoutY : 1, x: 1 }, type, id);
+                      }
+                    }}
+                  />
+                </div>
+              )}
             </ReactGridLayout>
           );
         }}

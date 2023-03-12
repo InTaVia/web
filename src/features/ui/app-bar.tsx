@@ -51,8 +51,7 @@ export function AppBar(): JSX.Element {
           </div>
           <div className="flex h-16 flex-row items-center gap-3">
             {links.map((item) => {
-              const isCurrent = currentPath === item.href.pathname;
-
+              const isCurrent = currentPath.includes(item.href.pathname);
               return (
                 <Link key={item.id} href={item.href.pathname}>
                   <a

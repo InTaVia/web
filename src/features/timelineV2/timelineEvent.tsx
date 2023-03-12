@@ -2,9 +2,10 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { EntityRelationRole, Event } from '@intavia/api-client/dist/models';
 import type { MouseEvent } from 'react';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { PageContext } from '@/app/context/page.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
@@ -37,6 +38,8 @@ interface TimelineEventProps {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  onClick: () => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element => {
@@ -49,16 +52,16 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     midOffset,
     timeScaleOffset,
     entityIndex,
-    thickness = 1,
+    thickness: i_thickness = 1,
     showLabels,
     overlapIndex,
     overlap = false,
     mode = 'default',
     diameter = 16,
     fontSize = 10,
+    onClick,
+    highlightedByVis,
   } = props;
-
-  const vocabularies = useAppSelector(selectVocabularyEntries);
 
   const [hover, setHover] = useState(false);
 
@@ -67,6 +70,13 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
   const eventExtent = getTemporalExtent([[event]]);
   const extentDiffInYears = eventExtent[1].getUTCFullYear() - eventExtent[0].getUTCFullYear();
 
+  const selected = useMemo(() => {
+    if (highlightedByVis == null || highlightedByVis.events == null) return false;
+    return highlightedByVis.events.includes(event.id);
+  }, [event.id, highlightedByVis]);
+
+  const thickness = selected ? 2 * i_thickness : i_thickness;
+  //console.log(thickness, i_thickness, selected);
   const diameterWithStroke = diameter + thickness * 3;
 
   const overlapOffset = overlapIndex >= 0 ? overlapIndex * diameterWithStroke : 0;
@@ -124,7 +134,11 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
       }),
   ); */
 
-  const type = getEventKindPropertiesById(event.kind).type;
+  /*   function onClick() {
+    if (pageContext.page === 'story-creator') {
+      onToggleSelection?.([id as string]);
+    }
+  } */
 
   return (
     <>
@@ -157,28 +171,40 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
           updateHover(null);
           setHover(false);
         }}
+        /* onClick={() => {
+          updateHover(null);
+          void router.push(`/entities/${linkedEntityID}`);
+        }} */
+        onClick={onClick}
       >
         <svg style={{ width: `${width}px`, height: `${height}px` }} width={width} height={height}>
           <TimelineEventMarker
+            event={event}
             width={width}
             height={height}
-            type={type}
             thickness={thickness}
-            hover={hover || hovered?.events.includes(event.id) === true ? true : false}
+            hover={
+              hover ||
+              hovered?.events.includes(event.id) === true ||
+              hovered?.relatedEvents.includes(event.id) === true
+                ? true
+                : false
+            }
           />
         </svg>
+        <TimelineLabel
+          posX={posX + width / 2}
+          posY={posY + height / 2}
+          labelText={getTranslatedLabel(event.label)}
+          showLabels={hover ? true : showLabels}
+          entityIndex={entityIndex}
+          mode={mode}
+          thickness={thickness}
+          vertical={vertical}
+          fontSize={fontSize}
+          selected={selected}
+        />
       </div>
-      <TimelineLabel
-        posX={posX + width / 2}
-        posY={posY + height / 2}
-        labelText={getTranslatedLabel(event.label)}
-        showLabels={hover ? true : showLabels}
-        entityIndex={entityIndex}
-        mode={mode}
-        thickness={thickness}
-        vertical={vertical}
-        fontSize={fontSize}
-      />
     </>
   );
 });

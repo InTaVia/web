@@ -1,4 +1,6 @@
-import { Button } from '@intavia/ui';
+import { AdjustmentsIcon, DownloadIcon } from '@heroicons/react/outline';
+import { CloudUploadIcon, PlayIcon } from '@heroicons/react/solid';
+import { Button, IconButton } from '@intavia/ui';
 import { useMemo } from 'react';
 
 import SlideLayoutButton from '@/features/storycreator/slide-layout-popover';
@@ -43,7 +45,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
   }, [previewStatus]);
 
   return (
-    <div className="w-100 flex h-fit justify-between gap-2 bg-intavia-brand-100 p-2">
+    <div className="w-100 flex h-fit justify-between gap-2 bg-neutral-400 p-2 text-white">
       <div className="flex gap-3">
         <PaneToggle parentComponent="stc" orientation="left" />
         <SlideLayoutButton onLayoutSelected={props.onLayoutSelected} />
@@ -55,32 +57,61 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           {desktop ? 'Mobile' : 'Desktop'}
         </Button> */}
 
-        <Button
+        {/*  <Button
           size={'xs'}
           onClick={() => {
             onExportStory();
           }}
         >
-          Export
-        </Button>
-        <Button
+          Download
+        </Button> */}
+        {/* <Button
           size={'xs'}
           onClick={() => {
             onPreviewStory();
           }}
         >
           {previewStatusText}
-        </Button>
+        </Button> */}
       </div>
       <div className="flex gap-3">
-        <Button
+        <IconButton
+          className="p-1"
           size={'xs'}
+          label="Download"
+          onClick={() => {
+            onExportStory();
+          }}
+          variant={'ghost'}
+        >
+          <DownloadIcon className="h-6 w-6" />
+        </IconButton>
+        <IconButton
+          className="p-1"
+          size={'xs'}
+          label="Preview Story"
+          onClick={() => {
+            onPreviewStory();
+          }}
+          variant={'ghost'}
+        >
+          {previewStatus === 'loading' ? (
+            <CloudUploadIcon className="h-6 w-6" />
+          ) : (
+            <PlayIcon className="h-6 w-6" />
+          )}
+        </IconButton>
+        <IconButton
+          className="p-1"
+          size={'xs'}
+          label="Edit Story"
           onClick={() => {
             onOpenSettingsDialog();
           }}
+          variant={'ghost'}
         >
-          Settings
-        </Button>
+          <AdjustmentsIcon className="h-6 w-6" />
+        </IconButton>
         <PaneToggle parentComponent="stc" orientation="right" />
       </div>
     </div>

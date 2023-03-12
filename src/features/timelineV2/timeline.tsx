@@ -97,6 +97,11 @@ interface TimelineProps {
   diameter?: number;
   zoom?: number;
   fontSize?: number;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 export function Timeline(props: TimelineProps): JSX.Element {
@@ -118,6 +123,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
     diameter = 14,
     zoom = 0,
     fontSize = 10,
+    onToggleHighlight,
+    highlightedByVis,
   } = props;
 
   //const [unTimeableEvents, setUnTimeableEvents] = useState({});
@@ -338,6 +345,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
               mode={mode}
               diameter={mode === 'mass' ? scaleY.bandwidth() : diameter}
               fontSize={fontSize}
+              onToggleHighlight={onToggleHighlight}
+              highlightedByVis={highlightedByVis}
             />
           );
         })}

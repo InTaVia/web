@@ -33,7 +33,6 @@ export function IciclePlot<T extends { id: string }>(props: IciclePlotProps<T>):
   const nodes = layout(tree).descendants();
 
   const color = new Map();
-  // TODO: check this
   const palette = scaleSequential([0, tree.children!.length], interpolateRainbow);
   tree.children?.forEach((node, index) => {
     color.set(node.data.id, palette(index));
@@ -62,14 +61,14 @@ export function IciclePlot<T extends { id: string }>(props: IciclePlotProps<T>):
               ) : null}
               {height > fontSize ? (
                 <text dy="0.32em" fontSize={fontSize} x={4} y={Math.min(9, height / 2)}>
-                  <tspan>{node.data.id}</tspan>
+                  <tspan>{node.data.label}</tspan>
                   <tspan dx={3} fillOpacity={0.75}>
                     ({node.value})
                   </tspan>
                 </text>
               ) : null}
               <title>
-                {node.data.id} ({node.value})
+                {node.data.label} ({node.value})
               </title>
             </g>
           );
@@ -78,8 +77,3 @@ export function IciclePlot<T extends { id: string }>(props: IciclePlotProps<T>):
     </VisualizationRoot>
   );
 }
-
-// initialSelectedIds?
-// TODO: label color (with lch(bgcolor))
-// TODO: LeafSizing.QualitativeWithBar
-// FIXME: node labels

@@ -2,13 +2,13 @@ import type { Event } from '@intavia/api-client/dist/models';
 import { extent, scaleTime } from 'd3';
 // @ts-expect-error Missing types
 import { beeswarm } from 'd3-beeswarm';
-import type { MouseEvent } from 'react';
-import { type LegacyRef, forwardRef, useState } from 'react';
+import type { LegacyRef, MouseEvent } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
-import { getTemporalExtent, translateEventType } from '@/features/timelineV2/timeline';
+import { getTemporalExtent } from '@/features/timelineV2/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
 
@@ -26,10 +26,12 @@ interface BeeSwarmProperties {
   height: number;
   vertical: boolean;
   dotRadius?: number;
+  onClickEvent?: (eventID: Event['id']) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
-  const { events, width, vertical, dotRadius: i_dotRadius } = props;
+  const { events, width, vertical, dotRadius: i_dotRadius, onClickEvent, highlightedByVis } = props;
 
   const [hover, setHover] = useState(false);
   const { hovered, updateHover } = useHoverState();
@@ -78,6 +80,10 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
   const x0 = parseInt(xExtent[0]);
   const y0 = parseInt(yExtent[0]);
 
+  const highlightedEvents = useMemo(() => {
+    return highlightedByVis.events ?? [];
+  }, [highlightedByVis]);
+
   return (
     <svg
       ref={ref as LegacyRef<SVGSVGElement>}
@@ -106,15 +112,23 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               updateHover(null);
               setHover(false);
             }}
+            onClick={() => {
+              onClickEvent(dot.datum.id);
+            }}
           >
             <TimelineEventMarker
               width={dotRadius * 2}
               height={dotRadius * 2}
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-ignore
-              type={translateEventType(vocabularies[dot.datum.kind])}
-              thickness={1}
-              hover={hovered?.events.includes(dot.datum.id) === true ? true : false}
+              event={dot.datum}
+              thickness={highlightedEvents.includes(dot.datum.id) ? 3 : 1}
+              hover={
+                hovered?.events.includes(dot.datum.id) === true ||
+                hovered?.relatedEvents.includes(dot.datum.id) === true
+                  ? true
+                  : false
+              }
             />
           </g>
         );

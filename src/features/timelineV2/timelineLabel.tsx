@@ -13,6 +13,7 @@ interface TimelineLabelProps {
   entityIndex?: number;
   fontSize?: number;
   showLabels?: boolean;
+  selected?: boolean;
 }
 
 export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
@@ -27,17 +28,21 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
     showLabels = false,
     entityIndex = 0,
     fontSize = 10,
+    selected = false,
   } = props;
 
-  const textHeight = hover ? 12 : 10;
-  const diameter = (hover ? 10 + thickness : 7 + thickness) * 2;
+  const textHeight = hover ? fontSize + 2 : fontSize;
+  const diameter = (hover ? fontSize + thickness : 7 + thickness) * 2;
 
-  const textOffset = diameter + fontSize;
+  const textOffset = fontSize + 5;
   let textAngle = 45;
-  let textTranslateStr = '';
+  const textTranslateStr = '';
   let textTranslateStrAfter = '';
   let marginLeft = textOffset;
   let marginRight = 0;
+
+  let top: number | string = 0;
+  let left: number | string = 0;
 
   if (vertical) {
     if (mode === 'dual') {
@@ -47,16 +52,28 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
         marginLeft = 0;
         marginRight = textOffset;
       }
+    } else if (mode === 'single') {
+      textAngle = 0;
+      //textTranslateStr = `translate(${textOffset}px, -50%)`;
+      left = `calc(100% + ${fontSize}px)`;
+      top = '50%';
+      textTranslateStrAfter = 'translateY(-50%)';
+    } else {
+      left = `calc(100% + 5px)`;
+      top = '50%';
+      textTranslateStrAfter = 'translateY(-50%)';
     }
   } else {
+    textAngle = -45;
+    top = -textOffset;
+    left = '50%';
     if (mode === 'dual') {
-      if (entityIndex === 1) {
-        textAngle = -45;
+      if (entityIndex === 0) {
+        textAngle = 45;
+        top = '100%';
       }
-    } else {
-      textAngle = -45;
     }
-    textTranslateStr = `translate(${textOffset}px, ${-textOffset}px)`;
+    //textTranslateStr = `translate(50%, ${-textOffset}px)`;
   }
 
   return (
@@ -67,12 +84,14 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
           backgroundColor: 'white',
           borderRadius: '2px',
           position: 'absolute',
-          left: posX,
-          top: posY,
+          left: left,
+          top: top,
           fontSize: `${fontSize}px`,
-          maxWidth: '12em',
-          transformOrigin: 'left bottom',
-          transform: `${textTranslateStr} rotate(${textAngle}deg) ${textTranslateStrAfter}`.trim(),
+          maxWidth: mode === 'single' ? 'unset' : '12em',
+          transformOrigin: 'left center',
+          transform: `rotate(${textAngle}deg) ${textTranslateStrAfter}`.trim(),
+          //transform: `rotate(${textAngle}deg)`.trim(),
+          fontWeight: selected ? 'bold' : 'default',
         }}
         className={`timelineLabel ${
           showLabels || hover ? 'visible' : 'invisible'

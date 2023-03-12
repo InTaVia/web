@@ -216,7 +216,7 @@ export const visualizationSlice = createSlice({
               fontSize: {
                 type: 'number',
                 id: 'fontSize',
-                value: 10,
+                value: 12,
                 editable: true,
                 sort: 8,
                 label: 'Font Size',
@@ -243,8 +243,8 @@ export const visualizationSlice = createSlice({
                 label: 'Cluster Style',
                 sort: 4,
                 value: {
-                  name: 'Pie',
-                  value: 'pie',
+                  name: 'Donut',
+                  value: 'donut',
                 },
                 options: [
                   {
@@ -292,6 +292,7 @@ export const visualizationSlice = createSlice({
             },
             entityIds: [],
             targetEntityIds: [],
+            // eventIds: [],
           };
           break;
         }
@@ -323,7 +324,7 @@ export const visualizationSlice = createSlice({
       const { visId, targetEntities } = action.payload;
       const vis = state[visId];
       assert(vis != null);
-      vis.targetEntityIds = unique([...vis.entityIds, ...targetEntities]);
+      vis.targetEntityIds = unique([...vis.targetEntityIds, ...targetEntities]);
     },
     addEventsToVisualization: (
       state,
@@ -341,6 +342,85 @@ export const visualizationSlice = createSlice({
       if (!state[visId]!.eventIds.includes(event.id)) {
         state[visId]!.eventIds.push(event.id);
       }
+    },
+    removeEntityFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; entity: Entity['id'] }>,
+    ) => {
+      const { visId, entity } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      const index = vis.entityIds.indexOf(entity);
+      if (index >= 0) {
+        vis.entityIds.splice(index, 1);
+      }
+    },
+    removeEntitiesFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; entities: Array<Entity['id']> }>,
+    ) => {
+      const { visId, entities } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      entities.forEach((enitytId) => {
+        const index = vis.entityIds.indexOf(enitytId);
+        if (index >= 0) {
+          vis.entityIds.splice(index, 1);
+        }
+      });
+    },
+    removeEventFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; event: Event['id'] }>,
+    ) => {
+      const { visId, event } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      const index = vis.eventIds.indexOf(event);
+      if (index >= 0) {
+        vis.eventIds.splice(index, 1);
+      }
+    },
+    removeEventsFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id']; events: Array<Event['id']> }>,
+    ) => {
+      const { visId, events } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      events.forEach((eventId) => {
+        const index = vis.eventIds.indexOf(eventId);
+        if (index >= 0) {
+          vis.eventIds.splice(index, 1);
+        }
+      });
+    },
+    removeAllEntitiesFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id'] }>,
+    ) => {
+      const { visId } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.entityIds = [];
+    },
+    removeAllEventsFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id'] }>,
+    ) => {
+      const { visId } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.eventIds = [];
+    },
+    removeAllTargetEntitiesFromVisualization: (
+      state,
+      action: PayloadAction<{ visId: Visualization['id'] }>,
+    ) => {
+      const { visId } = action.payload;
+      const vis = state[visId];
+      assert(vis != null);
+      vis.targetEntityIds = [];
     },
     editVisualization: (state, action) => {
       const vis = action.payload as Visualization;
@@ -383,6 +463,11 @@ export const {
   addTargetEntitiesToVisualization,
   addEventToVisualization,
   addPersonToVisualization,
+  removeEntitiesFromVisualization,
+  removeAllEntitiesFromVisualization,
+  removeEventsFromVisualization,
+  removeAllEventsFromVisualization,
+  removeAllTargetEntitiesFromVisualization,
   editVisualization,
   setMapViewState,
   setMapStyle,

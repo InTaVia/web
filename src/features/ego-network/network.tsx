@@ -17,6 +17,7 @@ import { useHoverState } from '@/app/context/hover.context';
 import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export interface NetworkProps {
   nodes: Array<Node>;
@@ -25,6 +26,9 @@ export interface NetworkProps {
   height: number;
   visProperties: Visualization['properties'];
 }
+
+const nodeWidth = 15;
+const nodeHeight = 15;
 
 export function Network(props: NetworkProps): JSX.Element {
   const { nodes, links, width, height, visProperties } = props;
@@ -37,6 +41,14 @@ export function Network(props: NetworkProps): JSX.Element {
   const [animatedLinks, setAnimatedLinks] = useState(links);
 
   const svgRef = useRef<SVGSVGElement>(null);
+
+  const { hovered } = useHoverState();
+  const nodesWithLabels = showAllLabels
+    ? animatedNodes
+    : animatedNodes.filter((node) => {
+        //const isHovered = hovered?.entities.includes(node.entity.id) ?? false;
+        return node.isPrimary; // || isHovered;
+      });
 
   useEffect(() => {
     // Force simulation
@@ -72,6 +84,7 @@ export function Network(props: NetworkProps): JSX.Element {
     function zoomed(event: any) {
       transform = event.transform;
       svg.select('g#nodes').attr('transform', event.transform);
+      svg.select('g#lables').attr('transform', event.transform);
       svg.selectAll('line').attr('transform', event.transform);
     }
   }, [height, width]);
@@ -90,7 +103,12 @@ export function Network(props: NetworkProps): JSX.Element {
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
-            return <NodeView {...node} showAllLabels={showAllLabels} key={node.entity.id} />;
+            return <NodeView {...node} key={node.entity.id} />;
+          })}
+        </g>
+        <g id="lables">
+          {nodesWithLabels.map((node) => {
+            return <NodeLabelView {...node} key={`${node.entity.id}-label`} />;
           })}
         </g>
       </svg>
@@ -98,16 +116,14 @@ export function Network(props: NetworkProps): JSX.Element {
   );
 }
 
-function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
-  const { entity, x, y, isPrimary, showAllLabels } = props;
+function NodeView(props: Node): JSX.Element {
+  const { entity, x, y } = props;
 
   const router = useRouter();
 
   const { hovered, updateHover } = useHoverState();
   const isHovered = hovered?.entities.includes(entity.id) ?? false;
 
-  const width = 15;
-  const height = 15;
   const colors = getEntityColorByKind(entity.kind);
   const nodeProps = {
     fill: isHovered ? colors.foreground : colors.background,
@@ -120,7 +136,10 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
       updateHover({
         entities: [entity.id],
         events: [],
-        clientRect: e.currentTarget.getBoundingClientRect(),
+        clientRect: {
+          left: e.clientX,
+          top: e.clientY,
+        } as DOMRect,
       });
     },
     onMouseLeave: () => {
@@ -134,30 +153,40 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
 
   function renderPersonNode(): JSX.Element {
     // Draw circle with center at origin
-    return <circle r={width / 2} {...nodeProps} />;
+    return <circle r={nodeWidth / 2} {...nodeProps} />;
   }
 
   function renderObjectNode(): JSX.Element {
     // Draw square with center at origin
-    return <rect x={-width / 2} y={-height / 2} width={width} height={height} {...nodeProps} />;
+    return (
+      <rect
+        x={-nodeWidth / 2}
+        y={-nodeHeight / 2}
+        width={nodeWidth}
+        height={nodeHeight}
+        {...nodeProps}
+      />
+    );
   }
 
   function renderPlaceNode(): JSX.Element {
     // Draw triangle with center at origin
-    const p = `${-width / 2},${height / 2} ${width / 2},${height / 2} 0,${-height / 2}`;
+    const p = `${-nodeWidth / 2},${nodeHeight / 2} ${nodeWidth / 2},${nodeHeight / 2} 0,${
+      -nodeHeight / 2
+    }`;
     return <polygon points={p} {...nodeProps} />;
   }
 
   function renderGroupNode(): JSX.Element {
     // Draw ellipse with center at origin
-    const rx = width * (5 / 7);
-    const ry = height / 2;
+    const rx = nodeWidth * (5 / 7);
+    const ry = nodeHeight / 2;
     return <ellipse rx={rx} ry={ry} {...nodeProps} />;
   }
 
   function renderEventNode(): JSX.Element {
     // Draw rhombus wijth center at origin
-    const p = `${-width / 2},0 0,${height / 2} ${width / 2},0 0,${-height / 2}`;
+    const p = `${-nodeWidth / 2},0 0,${nodeHeight / 2} ${nodeWidth / 2},0 0,${-nodeHeight / 2}`;
     return <polygon points={p} {...nodeProps} />;
   }
 
@@ -176,15 +205,16 @@ function NodeView(props: Node & { showAllLabels: boolean }): JSX.Element {
     }
   }
 
+  return <g transform={`translate(${x}, ${y})`}>{renderNode()}</g>;
+}
+
+function NodeLabelView(props: Node): JSX.Element {
+  const { entity, x, y } = props;
+
   return (
-    <g transform={`translate(${x}, ${y})`} className="network-node">
-      {renderNode()}
-      {(showAllLabels || isPrimary || isHovered) && (
-        <text x={0} y={height + 12} textAnchor="middle" fill="black">
-          {entity.label.default}
-        </text>
-      )}
-    </g>
+    <text key={`${entity.id}-label`} x={x} y={y + nodeHeight + 12} textAnchor="middle" fill="black">
+      {getTranslatedLabel(entity.label)}
+    </text>
   );
 }
 
@@ -220,7 +250,10 @@ function LinkView(props: Link): JSX.Element {
             events: roles.map((event) => {
               return event.id;
             }),
-            clientRect: e.currentTarget.getBoundingClientRect(),
+            clientRect: {
+              left: e.clientX,
+              top: e.clientY,
+            } as DOMRect,
           });
         }}
         onMouseLeave={() => {

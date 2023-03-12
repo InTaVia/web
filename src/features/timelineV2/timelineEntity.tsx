@@ -2,10 +2,13 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
 import type { ScaleBand } from 'd3';
+import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
-import { useMemo, useRef, useState } from 'react';
+import { useContext, useMemo, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { PageContext } from '@/app/context/page.context';
+import { getEntityColorByKind } from '@/features/common/visualization.config';
 import {
   type TimelineType,
   getTemporalExtent,
@@ -32,6 +35,11 @@ interface TimelineEntityProps {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
@@ -50,12 +58,17 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     mode = 'default',
     diameter = 14,
     fontSize = 10,
+    onToggleHighlight,
+    highlightedByVis,
   } = props;
 
   // const itemsRef = useRef([]);
   const ref = useRef();
 
   const { hovered, updateHover } = useHoverState();
+
+  const pageContext = useContext(PageContext);
+  const router = useRouter();
 
   //const tmpInitEventsWithoutCluster = Object.keys(events);
 
@@ -220,6 +233,16 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
 
   const lineHeight = mode === 'mass' ? thickness : vertical ? width : height;
 
+  const onClickEvent = function (eventID: Event['id']) {
+    updateHover(null);
+    if (onToggleHighlight != null && pageContext.page === 'story-creator') {
+      //onToggleHighlight([entity.id], [event!.id]);
+      onToggleHighlight([], [eventID]);
+    }
+  };
+
+  const colors = getEntityColorByKind(entity.kind);
+
   return (
     <div
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -238,13 +261,14 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     >
       <div style={{ position: 'relative' }}>
         <div
-          className="cursor-default"
+          className="cursor-pointer"
           style={{
             left: vertical ? midOffset : 0,
             top: vertical ? 0 : midOffset,
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
-            backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
+            backgroundColor:
+              mode === 'mass' ? (hover ? colors.foreground : colors.background) : 'black',
             minHeight: `1px`,
             minWidth: `1px`,
             position: 'absolute',
@@ -264,13 +288,16 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             updateHover(null);
             setHover(false);
           }}
+          onClick={() => {
+            updateHover(null);
+            void router.push(`/entities/${entity.id}`);
+          }}
         >
           <TimelineEntityLabel
             vertical={vertical}
             lineHeight={lineHeight}
             mode={mode}
             entityIndex={entityIndex}
-            fontSize={fontSize}
           >
             {getTranslatedLabel(entity.label)}
           </TimelineEntityLabel>
@@ -315,6 +342,10 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   overlapIndex={0}
                   diameter={diameter}
                   fontSize={fontSize}
+                  highlightedByVis={highlightedByVis}
+                  onClick={() => {
+                    onClickEvent(event!.id);
+                  }}
                 />
               );
             })}
@@ -337,6 +368,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 diameter={diameter}
                 mode={mode}
                 fontSize={fontSize}
+                onClickEvent={onClickEvent}
+                highlightedByVis={highlightedByVis}
               />
             );
           })}

@@ -1,7 +1,10 @@
 import type { Entity } from '@intavia/api-client';
+import { cn } from '@intavia/ui';
+import { useMemo } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { createKey } from '@/lib/create-key';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNotNullable } from '@/lib/is-not-nullable';
 import { useEvents } from '@/lib/use-events';
 import { useRelationRoles } from '@/lib/use-relation-roles';
@@ -25,6 +28,26 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
     }),
   );
 
+  const eventsAsc = useMemo(() => {
+    const now = Date.now();
+    const eventsArr = Array.from(events.data.values());
+    return eventsArr.sort((eventA: Event, eventB: Event) => {
+      const sortDateA =
+        'startDate' in eventA
+          ? new Date(eventA.startDate as string)
+          : 'endDate' in eventA
+          ? new Date(eventA.endDate as string)
+          : now;
+      const sortDateB =
+        'startDate' in eventB
+          ? new Date(eventB.startDate as string)
+          : 'endDate' in eventB
+          ? new Date(eventB.endDate as string)
+          : now;
+      return sortDateA - sortDateB;
+    });
+  }, [events]);
+
   if (relations == null || relations.length === 0) return null;
 
   if (roles.status === 'error' || events.status === 'error') {
@@ -33,7 +56,9 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
 
   // FIXME: Currently, this loading message is displayed forever, since the backend does not know
   // how to resolve all role ids, but returns 200 OK even if not all requested ids were resolved.
-  if (roles.status !== 'success' || events.status !== 'success') {
+
+  // roles.status !== 'success' || (temporarily removed from if statement because of aforementioned bug)
+  if (events.status !== 'success') {
     return <p>Loading relations...</p>;
   }
 
@@ -41,18 +66,24 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
     <div className="grid gap-1">
       <h2 className="text-xs font-medium uppercase tracking-wider text-neutral-700">Relations</h2>
       <ul role="list">
-        {relations.map((relation) => {
-          const key = createKey(relation.event, relation.role);
-          const role = roles.data.get(relation.role);
-          const event = events.data.get(relation.event);
+        {eventsAsc.map((event, index) => {
+          const relation = relations.filter((relation) => {
+            return relation.event === event.id;
+          });
+          const key = createKey(relation[0].event, relation[0].role);
+          // FIXME: temporary workaround
+          const role = roles.data ? roles.data.get(relation[0].role) : null;
+          // const event = events.data.get(relation[0].event);
 
           return (
-            <li key={key}>
-              <span className="flex gap-2">
+            <li key={key} className={cn('px-1', index % 2 && 'bg-neutral-100')}>
+              <span className="flex items-center justify-between gap-2">
                 <span>
-                  {event?.label.default} ({role?.label.default})
+                  {getTranslatedLabel(event.label)} ({getTranslatedLabel(role?.label)})
                 </span>
-                <EventDate start={event?.startDate} end={event?.endDate} />
+                <span className="text-right">
+                  <EventDate start={event.startDate} end={event.endDate} />
+                </span>
               </span>
             </li>
           );

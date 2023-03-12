@@ -3,6 +3,7 @@ import '~/node_modules/react-resizable/css/styles.css';
 
 import type { Place } from '@intavia/api-client';
 
+import { ContentTypeTransferData } from '@/features/common/data-transfer.types';
 import { SlideContentTypes } from '@/features/storycreator/contentPane.slice';
 import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 
@@ -71,15 +72,14 @@ export function VisualizationDragger(): JSX.Element {
         className="droppable-element mb-1 w-full cursor-pointer rounded-md border-2 border-intavia-blue-500 p-2"
         draggable={true}
         unselectable="on"
-        onDragStart={(e) => {
-          return e.dataTransfer.setData(
-            'Text',
-            JSON.stringify({
-              type: type,
-              props: props,
-              content: '',
-            }),
-          );
+        onDragStart={(dragEvent) => {
+          const data: ContentTypeTransferData = {
+            type: 'contentType',
+            contentType: type,
+          };
+          return dragEvent.dataTransfer.setData(ContentTypeTransferData, JSON.stringify(data));
+          /* const data: ContentTypeTransferData = { type: type, props: props, content: '' };
+          return dragEvent.dataTransfer.setData(ContentTypeTransferData, JSON.stringify(data)); */
         }}
         /*  style={{
           border: 'solid 1px black',

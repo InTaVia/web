@@ -45,6 +45,12 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     color: { foreground: 'hsl(30, 100%, 75%)', background: 'hsl(30, 100%, 50%)' },
   },
+  career: {
+    label: 'Career',
+    type: 'career',
+    shape: 'dot',
+    color: { foreground: 'hsl(30, 100%, 75%)', background: 'hsl(30, 100%, 50%)' },
+  },
   default: {
     label: 'Unknown',
     type: 'default',
@@ -57,6 +63,12 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth',
   'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death',
+  'Death (crm)': 'death',
+  'Birth (crm)': 'birth',
+  Career: 'career',
+  'Production (crm)': 'creation',
+  'Event (crm)': 'default',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'creation', //Production (crm)
   'event-kind-birth': 'birth',
   'event-kind-death': 'death',
   'event-kind-creation': 'creation',
@@ -117,7 +129,7 @@ const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
     color: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
   },
   'cultural-heritage-object': {
-    label: 'Cultural Heritage Object',
+    label: 'CH-Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
     color: { foreground: 'hsl(208, 60%, 80%)', background: 'hsl(208, 100%, 35%)' },

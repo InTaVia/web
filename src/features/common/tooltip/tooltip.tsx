@@ -1,7 +1,34 @@
+import type { MediaResource } from '@intavia/api-client';
+import { LoadingIndicator } from '@intavia/ui';
+
 import { useHoverState } from '@/app/context/hover.context';
+import EntityTooltipContent from '@/features/common/tooltip/entity-tooltip-content';
 import EventTooltipContent from '@/features/common/tooltip/event-tooltip-content';
+import { useMediaResources } from '@/features/media/use-media-resources';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
+
+interface MediaThumbnailProps {
+  mediaResourceId: MediaResource['id'];
+}
+
+export function MediaThumbnail(props: MediaThumbnailProps): JSX.Element {
+  const { mediaResourceId } = props;
+
+  const { data, status } = useMediaResources([mediaResourceId]);
+
+  const mediaResource = data.get(mediaResourceId);
+
+  if (status === 'success') {
+    return <img className="h-full w-auto" alt={mediaResource?.id} src={mediaResource?.url} />;
+  }
+
+  return (
+    <div className="grid h-full w-full place-items-center bg-neutral-50">
+      <LoadingIndicator />
+    </div>
+  );
+}
 
 export function Tooltip(): JSX.Element {
   const { hovered } = useHoverState();
@@ -38,17 +65,15 @@ export function Tooltip(): JSX.Element {
     );
   }
 
-  console.log(hovered);
-
-  if (hovered?.events.length > 0 && hovered.entities.length === 0) {
+  if (hovered?.events.length === 0 && hovered.entities.length > 0) {
     //HOVERED ENTITY
-    /*  {
-      <EventTooltipContent
-      entityID={hovered.entities[0] as string}
-      relatedEvents={hovered.relatedEvents}
-      ref={setElement}
-    />;
-    } */
+    content = (
+      <EntityTooltipContent
+        entityIDs={hovered!.entities as Array<string>}
+        relatedEventIDs={hovered!.relatedEvents}
+        ref={setElement}
+      />
+    );
   }
 
   return (
