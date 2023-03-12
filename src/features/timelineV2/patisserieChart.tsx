@@ -8,7 +8,7 @@ import {
   getEventKindPropertiesById,
   getEventKindPropertiesByType,
 } from '@/features/common/visualization.config';
-import { TimelineColors as colors, translateEventType } from '@/features/timelineV2/timeline';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface PatisserieChartProperties {
   events: Array<Event>;
@@ -87,10 +87,15 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             );
           });
 
-          const type = getEventKindPropertiesById(item[0].kind).type;
-          const color = hover
-            ? getEventKindPropertiesByType(type).color.foreground
-            : getEventKindPropertiesByType(type).color.background;
+          const translatedEventKind =
+            item[0].kind in vocabularies
+              ? getTranslatedLabel(vocabularies[item[0].kind].label)
+              : item[0].kind;
+          const type = getEventKindPropertiesById(translatedEventKind).type;
+
+          const color = getEventKindPropertiesByType(type).color;
+
+          console.log(item[0].kind, type, translatedEventKind, color);
 
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(

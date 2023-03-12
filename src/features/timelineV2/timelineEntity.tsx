@@ -8,6 +8,7 @@ import { useContext, useMemo, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
+import { getEntityColorByKind } from '@/features/common/visualization.config';
 import {
   type TimelineType,
   getTemporalExtent,
@@ -240,6 +241,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   };
 
+  const colors = getEntityColorByKind(entity.kind);
+
   return (
     <div
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -264,7 +267,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             top: vertical ? 0 : midOffset,
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
-            backgroundColor: mode === 'mass' ? colors['birth'] : 'black',
+            backgroundColor:
+              mode === 'mass' ? (hover ? colors.foreground : colors.background) : 'black',
             minHeight: `1px`,
             minWidth: `1px`,
             position: 'absolute',
@@ -294,7 +298,6 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             lineHeight={lineHeight}
             mode={mode}
             entityIndex={entityIndex}
-            fontSize={fontSize}
           >
             {getTranslatedLabel(entity.label)}
           </TimelineEntityLabel>

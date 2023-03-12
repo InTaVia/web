@@ -13,7 +13,7 @@ export interface StoryMapMarker {
 export interface SlideContent {
   id: string;
   parentPane: string;
-  type: typeof SlideContentTypes[number];
+  type: (typeof SlideContentTypes)[number];
   layout: {
     x: number;
     y: number;
@@ -332,7 +332,6 @@ export const contentPaneSlice = createSlice({
           contentObject = new StoryQuizObject(content.id, content.contentPane, content.layout);
           break;
         case 'Title':
-          console.log(content.layout);
           contentObject = new StoryTitleObject(content.id, content.contentPane, content.layout);
           break;
         default:

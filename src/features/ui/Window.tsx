@@ -76,9 +76,9 @@ export function Window(props: WindowProps): JSX.Element {
           props.className !== undefined ? props.className : ''
         } grid h-full grid-rows-[29px_101px] overflow-hidden`}
       >
-        <div className="flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-brand-200 px-2 py-1 leading-7 text-white">
+        <div className="flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-neutral-400 px-2 py-1 leading-5 text-white ">
           <div>{props.title}</div>
-          <div className="sticky right-0 flex flex-nowrap gap-1 text-neutral-900">
+          <div className="sticky right-0 flex flex-nowrap gap-1 text-white">
             {onCopyWindow && (
               <button
                 aria-label="Copy window"

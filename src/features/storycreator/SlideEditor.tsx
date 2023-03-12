@@ -173,7 +173,6 @@ export function SlideEditor(props: SlideEditorProps) {
           events: Array<Event['id'] | null>,
           visId: string,
         ) => {
-          console.log('click', { entities, events, visId, slide });
           dispatch(setHighlighted({ entities, events, visId, slide }));
         }}
         handleSaveComponent={handleSave}

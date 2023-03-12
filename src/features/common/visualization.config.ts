@@ -129,7 +129,7 @@ const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
     color: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
   },
   'cultural-heritage-object': {
-    label: 'Cultural Heritage Object',
+    label: 'CH-Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
     color: { foreground: 'hsl(208, 60%, 80%)', background: 'hsl(208, 100%, 35%)' },

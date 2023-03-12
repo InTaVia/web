@@ -46,8 +46,8 @@ export function Network(props: NetworkProps): JSX.Element {
   const nodesWithLabels = showAllLabels
     ? animatedNodes
     : animatedNodes.filter((node) => {
-        const isHovered = hovered?.entities.includes(node.entity.id) ?? false;
-        return node.isPrimary || isHovered;
+        //const isHovered = hovered?.entities.includes(node.entity.id) ?? false;
+        return node.isPrimary; // || isHovered;
       });
 
   useEffect(() => {
@@ -136,7 +136,10 @@ function NodeView(props: Node): JSX.Element {
       updateHover({
         entities: [entity.id],
         events: [],
-        clientRect: e.currentTarget.getBoundingClientRect(),
+        clientRect: {
+          left: e.clientX,
+          top: e.clientY,
+        } as DOMRect,
       });
     },
     onMouseLeave: () => {
@@ -247,7 +250,10 @@ function LinkView(props: Link): JSX.Element {
             events: roles.map((event) => {
               return event.id;
             }),
-            clientRect: e.currentTarget.getBoundingClientRect(),
+            clientRect: {
+              left: e.clientX,
+              top: e.clientY,
+            } as DOMRect,
           });
         }}
         onMouseLeave={() => {

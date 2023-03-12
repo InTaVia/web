@@ -87,8 +87,8 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
   },
   'two-contents': {
     cols: [
-      { type: 'contentPane', id: 'cont-1' },
       { type: 'contentPane', id: 'cont-2' },
+      { type: 'contentPane', id: 'cont-1' },
     ],
   },
   'two-cols-content': {
@@ -294,6 +294,7 @@ export default function VisualisationGroup(props: VisualisationGroupProps): JSX.
                     onDrop={onDropContentPane}
                     onContentPaneWizard={onContentPaneWizard}
                     handleSaveComponent={handleSaveComponent}
+                    singleContent={content.id === 'cont-2'}
                   />
                 );
               }

@@ -17,22 +17,22 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
 
   const [answers, setAnswers] = useState([...answerList.answers]);
 
-  const onChange = (event: any) => {
+  const onChangeCheckbox = (checked: boolean, index: number) => {
     const newAnswers = [...answers];
-    const index = parseInt(event.target.name);
-
     const newAnswer = { ...newAnswers[index] } as StoryQuizAnswer;
 
-    switch (event.target.type) {
-      case 'checkbox':
-        newAnswer.correct = event.target.checked;
-        break;
-      case 'text':
-        newAnswer.text = event.target.value;
-        break;
-      default:
-        break;
-    }
+    newAnswer.correct = checked;
+
+    newAnswers[index] = newAnswer;
+    setAnswers(newAnswers);
+    setAnswerListForQuiz(newAnswers);
+  };
+
+  const onChangeAnswer = (event: any, index: number) => {
+    const newAnswers = [...answers];
+    const newAnswer = { ...newAnswers[index] } as StoryQuizAnswer;
+
+    newAnswer.text = event.target.value;
 
     newAnswers[index] = newAnswer;
     setAnswers(newAnswers);
@@ -69,14 +69,18 @@ export function StoryQuizAnswerList(props: StoryQuizAnswerListProps): JSX.Elemen
               id={`answer${index + 1}Checkbox`}
               name={`${index}`}
               checked={answer.correct}
-              onCheckedChange={onChange}
+              onCheckedChange={(checked) => {
+                onChangeCheckbox(checked, index);
+              }}
             />
             <Input
               key={`answer${index + 1}`}
               id={`answer${index + 1}`}
               name={`${index}`}
               value={answer.text}
-              onChange={onChange}
+              onChange={(event) => {
+                onChangeAnswer(event, index);
+              }}
               className="w-full"
             />
             <div className="flex items-center">

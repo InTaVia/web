@@ -111,8 +111,6 @@ export function useDataFromCollection(
 
         //return fetchedRelated Events
 
-        console.log('fetchedRelatedEvents', fetchedRelatedEvents);
-
         const result = {
           entities: collectionEntities,
           events: collectionEvents,

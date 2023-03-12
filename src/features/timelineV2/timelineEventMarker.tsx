@@ -8,7 +8,6 @@ import {
   getEventKindPropertiesById,
   getEventKindPropertiesByType,
 } from '@/features/common/visualization.config';
-import { TimelineColors } from '@/features/timelineV2/timeline';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface TimelineEventMarkerProps {
@@ -26,13 +25,11 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
   const vocabularies = useAppSelector(selectVocabularyEntries);
   const translatedEventKind =
     event.kind in vocabularies ? getTranslatedLabel(vocabularies[event.kind].label) : event.kind;
-
   const type = getEventKindPropertiesById(translatedEventKind).type;
+  const color = getEventKindPropertiesByType(type).color;
 
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;
-
-  const color = getEventKindPropertiesByType(type).color;
 
   switch (type) {
     case 'birth':

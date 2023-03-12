@@ -93,7 +93,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
 
   if (eventKindProperties.length > 0 || Object.keys(groupedEntities).length > 0) {
     return (
-      <div className="grid grid-cols-[min-content_auto] gap-2 border border-solid border-intavia-neutral-400 bg-white p-1">
+      <div className="grid cursor-default grid-cols-[min-content_auto] border border-solid border-intavia-neutral-400 bg-white p-1 text-sm">
         {eventKindProperties.map((eventKindProperties) => {
           return (
             <>
@@ -113,7 +113,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16}>
+                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
                   {createShapeSVG(eventKindProperties.shape, eventKindProperties.color.background)}
                 </svg>
               </div>
@@ -156,7 +156,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16}>
+                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
                   {createShapeSVG(
                     getEntityKindPropertiesByKind(entityKind).shape,
                     getEntityKindPropertiesByKind(entityKind).color.background,
