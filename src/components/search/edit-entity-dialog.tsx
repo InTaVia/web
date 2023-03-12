@@ -647,7 +647,7 @@ interface PaginationState {
 
 function usePaginationState(length = 0): PaginationState {
   const pageSize = 10;
-  const pages = Math.ceil(length / pageSize);
+  const pages = Math.ceil(length / pageSize) || 1;
   const [page, setPage] = useState(1);
 
   function onPreviousPage() {
@@ -684,7 +684,7 @@ function PaginatedFormFields(props: PaginatedFormFieldsProps): JSX.Element {
   const { t } = useI18n<'common'>();
   const { page, pages, onPreviousPage, onNextPage } = pagination;
 
-  if (pages === 1) return <Fragment>{children(pagination)}</Fragment>;
+  if (pages <= 1) return <Fragment>{children(pagination)}</Fragment>;
 
   return (
     <div className="grid gap-4 text-sm">
