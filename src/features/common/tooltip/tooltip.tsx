@@ -48,7 +48,7 @@ export function Tooltip(): JSX.Element {
     top = hovered.clientRect.top + offset;
     top = Math.min(
       top,
-      screen.innerHeight - (tooltipDimensions != null ? tooltipDimensions.height : 0) - offset,
+      window.innerHeight - (tooltipDimensions != null ? tooltipDimensions.height : 0) - offset,
     );
   }
 
