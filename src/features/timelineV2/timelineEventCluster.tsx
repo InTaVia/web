@@ -179,7 +179,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             diameter={diameterWithStroke}
             patisserieType={clusterMode}
             highlightedByVis={highlightedByVis}
-            hover={hover || hovered?.events.includes(event.id) === true ? true : false}
+            // hover={hover || hovered?.events.includes(event.id) === true ? true : false}
           />
         )}
         <TimelineLabel
