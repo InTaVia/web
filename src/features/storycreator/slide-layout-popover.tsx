@@ -11,7 +11,7 @@ export default function SlideLayoutButton(props: SlideLayoutButtonProps): JSX.El
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size={'xs'}>Slide Layout</Button>
+        <Button size={'xs'}>Layout</Button>
       </PopoverTrigger>
 
       <PopoverContent className="grid w-full">

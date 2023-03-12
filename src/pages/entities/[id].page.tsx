@@ -25,11 +25,9 @@ export default function EntityPage(): JSX.Element {
   const metadata = { title: t(['common', 'entity', 'metadata', 'title']) };
 
   return (
-    <HoverProvider>
-      <Fragment>
-        <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-        {id != null ? <EntityScreen id={id} /> : null}
-      </Fragment>
-    </HoverProvider>
+    <Fragment>
+      <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
+      {id != null ? <EntityScreen id={id} /> : null}
+    </Fragment>
   );
 }

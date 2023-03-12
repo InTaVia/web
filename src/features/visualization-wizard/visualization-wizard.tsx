@@ -52,8 +52,6 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     onAddVisualization(visualizationSlot, selectedVisualizationId);
   }
 
-  console.log(pageContext);
-
   return (
     <div className="grid h-full w-full place-content-center gap-5 p-5">
       <div className="grid gap-2 md:grid-cols-2">
@@ -72,13 +70,14 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
           Create Timeline Visualization
         </Button>
         {pageContext.page !== 'story-creator' && (
-        <Button
-          onClick={() => {
-            onButtonClick('ego-network');
-          }}
-        >
-          Create Network Visualization
-        </Button>)}
+          <Button
+            onClick={() => {
+              onButtonClick('ego-network');
+            }}
+          >
+            Create Network Visualization
+          </Button>
+        )}
       </div>
 
       {Object.keys(visualizations).length > 0 && (

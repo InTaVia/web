@@ -325,7 +325,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const createStoryObject = () => {
     const storyVisualizations: Record<string, Visualization> = {};
     const storyContentPanes: Record<string, ContentPane> = {};
-    const storyEntityIds = [];
+    const storyEntityIds = [] as Array<Entity['id']>;
     const storyEventIds: Array<string> = [];
 
     Object.values(story.slides).forEach((slide) => {
@@ -352,8 +352,16 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       }),
     );
 
+    const linkedEvents = storyEntityIds.flatMap((entityId: Entity['id']) => {
+      return allEntities[entityId]?.relations.map((relation) => {
+        return relation.event;
+      });
+    });
+
+    const combinedStoryEventIds = [...linkedEvents, ...storyEventIds];
+
     const storyEvents = Object.fromEntries(
-      storyEventIds
+      combinedStoryEventIds
         .filter((key) => {
           return key in allEvents;
         })

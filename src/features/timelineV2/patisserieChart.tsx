@@ -8,12 +8,18 @@ import {
   getEventKindPropertiesById,
   getEventKindPropertiesByType,
 } from '@/features/common/visualization.config';
-import { TimelineColors as colors, translateEventType } from '@/features/timelineV2/timeline';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface PatisserieChartProperties {
   events: Array<Event>;
   diameter: number;
   patisserieType: 'donut' | 'pie';
+  onToggleHighlight?: (
+    entities: Array<Entity['id'] | null>,
+    events: Array<Event['id'] | null>,
+  ) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  hover?: boolean;
 }
 
 const groupBy = (items: Array<any>, key: string) => {
@@ -26,7 +32,7 @@ const groupBy = (items: Array<any>, key: string) => {
 };
 
 const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.Element => {
-  const { events, diameter, patisserieType } = props;
+  const { events, diameter, patisserieType, hover = false } = props;
 
   const { hovered } = useHoverState();
 
@@ -63,13 +69,11 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
       height={`${w}`}
       viewBox={`0 0 ${w} ${w}`}
       textAnchor="middle"
-      style={{ transform: 'translate(-50%, -50%)' }}
     >
       <circle cx={r} cy={r} r={r - 1} fill="white" stroke="black"></circle>
       <g transform={'translate(1, 1)'}>
         {grouped.map((item: Array<Event>, index) => {
           const allHighlighted = item.every((event) => {
-            console.log(event.id);
             return (
               hovered?.relatedEvents.includes(event.id) === true ||
               hovered?.events.includes(event.id) === true
@@ -83,8 +87,15 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
             );
           });
 
-          const type = getEventKindPropertiesById(item[0].kind).type;
+          const translatedEventKind =
+            item[0].kind in vocabularies
+              ? getTranslatedLabel(vocabularies[item[0].kind].label)
+              : item[0].kind;
+          const type = getEventKindPropertiesById(translatedEventKind).type;
+
           const color = getEventKindPropertiesByType(type).color;
+
+          console.log(item[0].kind, type, translatedEventKind, color);
 
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(

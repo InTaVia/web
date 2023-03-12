@@ -138,7 +138,7 @@ export function StoryOverview(): JSX.Element {
 
   return (
     <>
-      <h1 className="text-5xl font-light">Storytelling Creator</h1>
+      <h1 className="text-5xl font-light">{t(['common', 'stories', 'metadata', 'title'])}</h1>
       <div className="flex h-full items-center">
         <ul className="divide-y divide-neutral-200">
           {Object.values(stories).map((story) => {

@@ -47,6 +47,7 @@ export function TimelineEntityLabel(props: TimelineEntityLabelProps): JSX.Elemen
         paddingLeft: vertical ? 0 : '5px',
         paddingTop: vertical ? '5px' : 0,
         lineHeight: `${lineHeight}px`,
+        fontSize: `${lineHeight}px`,
         writingMode: vertical ? 'vertical-rl' : '',
         textOrientation: vertical ? 'mixed' : '',
         marginTop: `${marginTop}px`,

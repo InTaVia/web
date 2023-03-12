@@ -2,10 +2,13 @@ import type { Entity, Event } from '@intavia/api-client';
 import type { MouseEvent } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { useAppSelector } from '@/app/store';
+import { clearVocabularies, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import {
   getEntityKindPropertiesByKind,
   getEventKindPropertiesById,
 } from '@/features/common/visualization.config';
+import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface VisualizationLegendProps {
   events: Record<Event['id'], Event>;
@@ -17,19 +20,24 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
 
   const { updateHover } = useHoverState();
 
-  const groupedEvents: Record<string, Array<Event['id']>> = {};
+  const vocabularies = useAppSelector(selectVocabularyEntries);
 
-  console.log('entities', entities);
+  const groupedEvents: Record<string, Array<Event['id']>> = {};
 
   const eventKinds = [
     ...new Set(
       Object.values(events).map((event: Event) => {
-        if (event.kind in groupedEvents) {
-          groupedEvents[event.kind]?.push(event.id);
+        const translatedEventKind =
+          event.kind in vocabularies
+            ? getTranslatedLabel(vocabularies[event.kind].label)
+            : event.kind;
+
+        if (translatedEventKind in groupedEvents) {
+          groupedEvents[translatedEventKind]?.push(event.id);
         } else {
-          groupedEvents[event.kind] = [event.id];
+          groupedEvents[translatedEventKind] = [event.id];
         }
-        return event.kind;
+        return translatedEventKind;
       }),
     ),
   ];
@@ -48,8 +56,6 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
       }),
     ),
   ];
-
-  console.log(groupedEntities);
 
   const eventPerEventKind: Record<string, Array<Event['id']>> = {};
 
@@ -70,8 +76,6 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
     ),
   ];
 
-  console.log(eventPerEventKind);
-
   const createShapeSVG = (shape, color) => {
     switch (shape) {
       case 'rectangle':
@@ -89,7 +93,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
 
   if (eventKindProperties.length > 0 || Object.keys(groupedEntities).length > 0) {
     return (
-      <div className="grid grid-cols-[min-content_auto] gap-2 border border-solid border-intavia-neutral-400 bg-white p-1">
+      <div className="grid cursor-default grid-cols-[min-content_auto] border border-solid border-intavia-neutral-400 bg-white p-1 text-sm">
         {eventKindProperties.map((eventKindProperties) => {
           return (
             <>
@@ -109,7 +113,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16}>
+                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
                   {createShapeSVG(eventKindProperties.shape, eventKindProperties.color.background)}
                 </svg>
               </div>
@@ -152,7 +156,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16}>
+                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
                   {createShapeSVG(
                     getEntityKindPropertiesByKind(entityKind).shape,
                     getEntityKindPropertiesByKind(entityKind).color.background,

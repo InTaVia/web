@@ -216,7 +216,7 @@ export const visualizationSlice = createSlice({
               fontSize: {
                 type: 'number',
                 id: 'fontSize',
-                value: 10,
+                value: 12,
                 editable: true,
                 sort: 8,
                 label: 'Font Size',
@@ -243,8 +243,8 @@ export const visualizationSlice = createSlice({
                 label: 'Cluster Style',
                 sort: 4,
                 value: {
-                  name: 'Pie',
-                  value: 'pie',
+                  name: 'Donut',
+                  value: 'donut',
                 },
                 options: [
                   {
