@@ -63,6 +63,13 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
     return layer;
   }, []);
 
+  const { current: map } = useMap();
+
+  useEffect(() => {
+    if (map == null) return;
+    map.triggerRepaint();
+  }, [map, clusterType, data]);
+
   // const onHover = useCallback((event: MapLayerMouseEvent) => {
   //   // console.log(event);
   // }, []);
