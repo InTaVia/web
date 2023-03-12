@@ -2,6 +2,7 @@ import type { Feature, Point } from 'geojson';
 import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DonutChart } from '@/features/visualizations/geo-map/donut-chart';
 import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
 import type {
@@ -60,6 +61,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
       })}
       {dotMarkers.map((marker) => {
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
+        const { shape } = getEventKindPropertiesById(eventKind);
         // workaround: if property key is object than stringified
         const feature = {
           ...marker.feature,
@@ -81,8 +83,9 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
             coordinates={marker.coordinates}
             // onToggleSelection={onToggleSelection}
             // highlightedByVis={highlightedByVis}
-            size={15}
+            size={14.8}
             feature={feature}
+            shape={shape}
           />
 
           // <Marker key={marker.id} {...marker.coordinates}>

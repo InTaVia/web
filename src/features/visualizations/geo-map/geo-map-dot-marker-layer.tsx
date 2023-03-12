@@ -3,7 +3,7 @@ import type { Feature, FeatureCollection, Geometry, Point, Position } from 'geoj
 import { Fragment, useEffect, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
-import { getColorsById } from '@/features/common/visualization.config';
+import { getColorsById, getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
 
 interface GeoMapMarkersLayerProps<T> {
@@ -39,18 +39,19 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         if (feature.geometry.type !== 'Point') return null;
 
         const coordinates = feature.geometry.coordinates;
-        const { foreground, background } = getColorsById(feature.properties.event.kind);
+        const { color, shape } = getEventKindPropertiesById(feature.properties.event.kind);
 
         return (
           <DotMarker
             key={feature.properties.event.id}
-            backgroundColor={background}
-            foregroundColor={foreground}
+            backgroundColor={color.background}
+            foregroundColor={color.foreground}
             coordinates={coordinates}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}
-            size={15}
+            size={14.8}
             feature={feature}
+            shape={shape}
           />
         );
       })}

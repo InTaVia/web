@@ -102,7 +102,7 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
       key={createKey(id, String(isCluster))}
       id={id}
       cluster={isCluster}
-      clusterRadius={50}
+      clusterRadius={clusterType === 'donut' ? 50 : 80}
       clusterProperties={clusterProperties}
       data={data}
       type="geojson"

@@ -16,6 +16,8 @@ interface DotMarkerProps {
   /** @default 16 */
   size?: number;
   feature: Feature;
+  // FIXME get shape type from actual interface
+  shape?: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
 }
 
 export function DotMarker(props: DotMarkerProps): JSX.Element {
@@ -24,9 +26,10 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
     foregroundColor,
     coordinates,
     onToggleSelection,
-    size = 16,
+    size = 12,
     feature,
     highlightedByVis,
+    shape = 'dot',
   } = props;
 
   const [lng, lat] = coordinates;
@@ -45,6 +48,14 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
       onToggleSelection?.([id as string]);
     }
   }
+
+  const selectedStrokeWidth = 4;
+  const hoverStrokeWidth = 2.5;
+  const svgWidthHight = size + hoverStrokeWidth + selectedStrokeWidth;
+
+  const isHovered =
+    hovered?.relatedEvents.includes(feature.properties!.event.id) === true ||
+    hovered?.events.includes(feature.properties!.event.id) === true;
 
   return (
     <Marker
@@ -70,19 +81,31 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
           updateHover(null);
         }}
         onClick={onClick}
-        viewBox="0 0 24 24"
+        viewBox={`0 0 ${svgWidthHight} ${svgWidthHight}`}
       >
-        {selected && <circle cx={12} cy={12} r={size / 1.4} fill={'blue'} />}
-        <circle cx={12} cy={12} r={size / 2} fill={backgroundColor} />
-        {(hovered?.relatedEvents.includes(feature.properties!.event.id) === true ||
-          hovered?.events.includes(feature.properties!.event.id) === true) && (
+        {/* {selected && shape === 'rectangle' ? (
+          <circle cx={svgWidthHight / 2} cy={svgWidthHight / 2} r={size / 1.4} fill={'blue'} />
+        ) : (
+          <circle cx={svgWidthHight / 2} cy={svgWidthHight / 2} r={size / 1.4} fill={'blue'} />
+        )} */}
+        {shape === 'rectangle' ? (
+          <rect
+            x={svgWidthHight / 2 - (size / 2) * 0.886}
+            y={svgWidthHight / 2 - (size / 2) * 0.886}
+            width={size * 0.886}
+            height={size * 0.886}
+            fill={isHovered || selected ? foregroundColor : backgroundColor}
+            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
+            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
+          />
+        ) : (
           <circle
-            cx={12}
-            cy={12}
+            cx={svgWidthHight / 2}
+            cy={svgWidthHight / 2}
             r={size / 2}
-            stroke={backgroundColor}
-            strokeWidth={3}
-            fill={foregroundColor}
+            fill={isHovered || selected ? foregroundColor : backgroundColor}
+            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
+            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
           />
         )}
       </svg>
