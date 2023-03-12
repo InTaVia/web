@@ -2,6 +2,7 @@ import type { Feature, Point } from 'geojson';
 import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DotCluster } from '@/features/visualizations/geo-map/dot-cluster';
 import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
 import type {
@@ -67,6 +68,7 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
           onChangeHover?.(null);
         }
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
+        const { shape } = getEventKindPropertiesById(eventKind);
 
         //Workaround to parse stringified property objects (event and place)
         const feature = {
@@ -89,8 +91,9 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
             coordinates={marker.coordinates}
             // onToggleSelection={onToggleSelection}
             // highlightedByVis={highlightedByVis}
-            size={15}
+            size={14.8}
             feature={feature}
+            shape={shape}
           />
         );
       })}

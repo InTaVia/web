@@ -43,7 +43,7 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     label: 'Travel',
     type: 'travel',
     shape: 'dot',
-    color: { foreground: 'hsl(30, 100%, 75%)', background: 'hsl(30, 100%, 50%)' },
+    color: { foreground: 'hsl(60, 100%, 55%)', background: 'hsl(60, 100%, 43%)' },
   },
   career: {
     label: 'Career',
@@ -63,16 +63,23 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth',
   'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death',
+  birth: 'birth',
+  death: 'death',
   'Death (crm)': 'death',
   'Birth (crm)': 'birth',
   Career: 'career',
+  professional: 'career',
+  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0NhcmVlcg==': 'career', // Career
   'Production (crm)': 'creation',
   'Event (crm)': 'default',
+  creation: 'creation',
+  travel: 'travel',
   'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'creation', //Production (crm)
   'event-kind-birth': 'birth',
   'event-kind-death': 'death',
   'event-kind-creation': 'creation',
   'event-kind-travel': 'travel',
+  'event-kind-professional': 'career',
 };
 
 export function getColorById(id: string): string {

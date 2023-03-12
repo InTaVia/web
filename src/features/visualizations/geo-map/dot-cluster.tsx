@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 
 interface DotClusterProps<T> {
   clusterByProperty: string;
@@ -21,6 +22,7 @@ interface Dot {
   foregroundColor: string;
   value: any;
   feature: Feature<Point, T>;
+  shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
 }
 
 export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
@@ -98,6 +100,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
             foregroundColor: clusterColors[clusterKey]!.foreground as string,
             value: clusterKey,
             feature: feature as Feature<Point, T>,
+            shape: getEventKindPropertiesById(feature.properties.event.kind).shape,
           });
           totalCount += 1;
         });
@@ -154,8 +157,12 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
       textAnchor="middle"
     >
       {/* <rect width={svgWidth} height={svgWidth} fill="rgba(200,0,0, 0.1)" /> */}
-      {dots.map(({ cx, cy, backgroundColor, foregroundColor, value, feature }) => {
+      {dots.map(({ cx, cy, backgroundColor, foregroundColor, value, feature, shape }) => {
         //TODO Make own component
+
+        const isHovered =
+          hovered?.relatedEvents.includes(feature.id as string) === true ||
+          hovered?.events.includes(feature.id as string) === true;
         return (
           <g
             key={`g-${feature.id}`}
@@ -173,15 +180,37 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
               updateHover(null);
             }}
           >
-            <circle
+            {shape === 'rectangle' ? (
+              <rect
+                className="cursor-pointer"
+                x={clusterWidth * cx + offset - circleRadius * 0.886}
+                y={clusterWidth * cy + offset - circleRadius * 0.886}
+                width={circleRadius * 2 * 0.886}
+                height={circleRadius * 2 * 0.886}
+                fill={isHovered ? foregroundColor : backgroundColor}
+                stroke={isHovered ? backgroundColor : 'none'}
+                strokeWidth={isHovered ? 2 : 0}
+              />
+            ) : (
+              <circle
+                className="cursor-pointer"
+                cx={clusterWidth * cx + offset}
+                cy={clusterWidth * cy + offset}
+                r={circleRadius}
+                fill={isHovered ? foregroundColor : backgroundColor}
+                stroke={isHovered ? backgroundColor : 'none'}
+                strokeWidth={isHovered ? 2 : 0}
+              />
+            )}
+            {/* <circle
               className="cursor-pointer"
               key={feature.id}
               cx={clusterWidth * cx + offset}
               cy={clusterWidth * cy + offset}
               r={circleRadius}
               fill={backgroundColor}
-            />
-            {(hovered?.relatedEvents.includes(feature.id as string) === true ||
+            /> */}
+            {/* {(hovered?.relatedEvents.includes(feature.id as string) === true ||
               hovered?.events.includes(feature.id as string) === true) && (
               <circle
                 className="cursor-pointer"
@@ -193,7 +222,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
                 strokeWidth={2}
                 fill={foregroundColor}
               />
-            )}
+            )} */}
           </g>
         );
       })}
