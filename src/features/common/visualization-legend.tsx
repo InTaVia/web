@@ -101,6 +101,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
           return (
             <>
               <div
+                key={`eventKind${eventKindProperties.label}`}
                 className="flex items-center justify-center"
                 style={{
                   opacity:
@@ -127,6 +128,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                 </svg>
               </div>
               <div
+                key={`eventKindLabel${eventKindProperties.label}`}
                 style={{
                   opacity:
                     hover != null ? (hover === eventKindProperties.label ? '100%' : '50%') : '100%',
@@ -156,6 +158,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
           return (
             <>
               <div
+                key={`entityKind${entityKind}`}
                 className="flex items-center justify-center"
                 style={{
                   opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
@@ -184,6 +187,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                 </svg>
               </div>
               <div
+                key={`entityKindLabel${entityKind}`}
                 style={{
                   opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
                 }}

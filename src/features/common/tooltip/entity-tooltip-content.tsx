@@ -73,7 +73,10 @@ const EntityTooltipContent = forwardRef(
           sortedEntities.map((entity) => {
             return (
               <>
-                <div className="flex h-fit flex-row items-center gap-2 text-xs">
+                <div
+                  key={`entityTootlipEntry${entity.id}`}
+                  className="flex h-fit flex-row items-center gap-2 text-xs"
+                >
                   <div className="min-w-fit">
                     <EntityKindIcon kind={entity.kind} />
                   </div>

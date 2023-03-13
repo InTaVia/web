@@ -41,19 +41,19 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
 
   if (status === 'success') {
     return (
-      <>
-      <Network
-        key={`network-${entityIds.join('-')}`}
-        nodes={nodes}
-        links={links}
-        width={width}
-        height={height}
-        visProperties={visualization.properties}
-      />
-      <div className="absolute bottom-0 right-0">
-        <VisualizationLegend events={{ events }} entities={entities} />
+      <div className="relative">
+        <Network
+          key={`network-${entityIds.join('-')}`}
+          nodes={nodes}
+          links={links}
+          width={width}
+          height={height}
+          visProperties={visualization.properties}
+        />
+        <div className="absolute bottom-0 right-0">
+          <VisualizationLegend events={{ events }} entities={entities} />
+        </div>
       </div>
-    </>
     );
   }
 
