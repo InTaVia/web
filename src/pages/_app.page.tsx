@@ -20,7 +20,7 @@ import { useCanonicalUrl } from '@/app/route/use-canonical-url';
 import { useLocale } from '@/app/route/use-locale';
 import { persistor, store } from '@/app/store';
 import { SetupStore } from '@/app/store/setup-store';
-import { Tooltip } from '@/features/common/tooltip/tooltip';
+import { TooltipProvider } from '@/features/common/tooltip/tooltip-provider';
 import { PageLayout } from '@/features/layouts/page-layout';
 import { createAppUrl } from '@/lib/create-app-url';
 import { createFaviconLink } from '@/lib/create-favicon-link';
@@ -74,16 +74,17 @@ export default function App(props: AppProps): JSX.Element {
         }}
         twitter={metadata.twitter}
       />
+
       <Provider store={store}>
         <I18nProvider dictionaries={dictionaries}>
           <PersistGate loading={null} persistor={persistor}>
             <ErrorBoundary fallback={<RootErrorBoundaryFallback />}>
               <HoverProvider>
+                <TooltipProvider />
                 <PageLayout>
                   <Component {...pageProps} />
                 </PageLayout>
                 <Toaster />
-                <Tooltip />
                 <SetupStore />
               </HoverProvider>
             </ErrorBoundary>

@@ -44,7 +44,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const fontSize = properties['fontSize']?.value ?? 10;
 
   return (
-    <>
+    <div className="relative">
       <Timeline
         events={events}
         entities={entities}
@@ -87,6 +87,6 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
       <div className="absolute bottom-0 right-0">
         <VisualizationLegend events={events} entities={entities} />
       </div>
-    </>
+    </div>
   );
 }

@@ -50,6 +50,10 @@ export function Tooltip(): JSX.Element {
       top,
       window.innerHeight - (tooltipDimensions != null ? tooltipDimensions.height : 0) - offset,
     );
+
+    if (left + (tooltipDimensions != null ? tooltipDimensions.width : 0) > window.innerWidth) {
+      left = left - (tooltipDimensions != null ? tooltipDimensions.width : 0) - 3 * offset;
+    }
   }
 
   let content = null;
@@ -67,6 +71,7 @@ export function Tooltip(): JSX.Element {
 
   if (hovered?.events.length === 0 && hovered.entities.length > 0) {
     //HOVERED ENTITY
+
     content = (
       <EntityTooltipContent
         entityIDs={hovered!.entities as Array<string>}
@@ -77,16 +82,21 @@ export function Tooltip(): JSX.Element {
   }
 
   return (
-    <div
-      style={{
-        left: left,
-        top: top,
-        border: '1px solid gray',
-        display: content != null ? 'block' : 'none',
-      }}
-      className="absolute z-50 rounded-sm bg-white p-1 drop-shadow-md"
-    >
-      {content}
-    </div>
+    <>
+      {content != null && (
+        <div
+          id="tooltipWrapper"
+          style={{
+            left: left,
+            top: top,
+            border: '1px solid gray',
+            visibility: 'visible',
+          }}
+          className="absolute z-50 rounded-sm bg-white p-1 drop-shadow-md"
+        >
+          {content}
+        </div>
+      )}
+    </>
   );
 }
