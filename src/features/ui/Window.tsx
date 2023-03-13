@@ -17,59 +17,8 @@ export interface WindowProps {
 export function Window(props: WindowProps): JSX.Element {
   const { children, id, onCopyWindow, onRemoveWindow, onEditContent } = props;
 
-  const buttonArea: Array<JSX.Element> = [];
-
-  if (onEditContent) {
-    buttonArea.push(
-      <button
-        key="editButton"
-        aria-label="Edit"
-        /* className={styles['button-area-button']} */
-        className={'h-full hover:text-intavia-green-800'}
-        onClick={() => {
-          onEditContent();
-        }}
-      >
-        <AdjustmentsIcon className="h-5 w-5" />
-      </button>,
-    );
-  }
-
-  if (onCopyWindow) {
-    buttonArea.push(
-      <button
-        key="copyButton"
-        aria-label="Copy"
-        /* className={styles['button-area-button']} */
-        className={'h-full hover:text-intavia-green-800'}
-        onClick={() => {
-          onCopyWindow(id);
-        }}
-      >
-        <DuplicateIcon className="h-5 w-5" />
-      </button>,
-    );
-  }
-
-  if (onRemoveWindow) {
-    buttonArea.push(
-      <button
-        key="closeButton"
-        aria-label="Close"
-        className={'h-full hover:text-intavia-red-500'}
-        /* className={styles['button-area-button']} */
-        onClick={() => {
-          onRemoveWindow(id);
-        }}
-      >
-        <XIcon className="h-5 w-5" />
-      </button>,
-    );
-  }
-
   return (
     // FIXME:
-
     <>
       <div
         className={`${

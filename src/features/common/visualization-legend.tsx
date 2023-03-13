@@ -1,5 +1,6 @@
 import type { Entity, Event } from '@intavia/api-client';
 import type { MouseEvent } from 'react';
+import { useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
@@ -19,6 +20,8 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
   const { events, entities } = props;
 
   const { updateHover } = useHoverState();
+
+  const [hover, setHover] = useState(null);
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
 
@@ -99,7 +102,12 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
             <>
               <div
                 className="flex items-center justify-center"
+                style={{
+                  opacity:
+                    hover != null ? (hover === eventKindProperties.label ? '100%' : '50%') : '100%',
+                }}
                 onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(eventKindProperties.label);
                   updateHover({
                     entities: [],
                     events: eventPerEventKind[eventKindProperties.label] as Array<Event['id']>,
@@ -110,6 +118,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   });
                 }}
                 onMouseLeave={() => {
+                  setHover(null);
                   updateHover(null);
                 }}
               >
@@ -118,7 +127,12 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                 </svg>
               </div>
               <div
+                style={{
+                  opacity:
+                    hover != null ? (hover === eventKindProperties.label ? '100%' : '50%') : '100%',
+                }}
                 onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(eventKindProperties.label);
                   updateHover({
                     entities: [],
                     events: eventPerEventKind[eventKindProperties.label] as Array<Event['id']>,
@@ -129,6 +143,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   });
                 }}
                 onMouseLeave={() => {
+                  setHover(null);
                   updateHover(null);
                 }}
               >
@@ -142,7 +157,11 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
             <>
               <div
                 className="flex items-center justify-center"
+                style={{
+                  opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
+                }}
                 onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(entityKind);
                   updateHover({
                     entities: groupedEntities[entityKind],
                     events: [],
@@ -153,6 +172,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   });
                 }}
                 onMouseLeave={() => {
+                  setHover(null);
                   updateHover(null);
                 }}
               >
@@ -164,7 +184,11 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                 </svg>
               </div>
               <div
+                style={{
+                  opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
+                }}
                 onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(entityKind);
                   updateHover({
                     entities: groupedEntities[entityKind],
                     events: [],
@@ -175,6 +199,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   });
                 }}
                 onMouseLeave={() => {
+                  setHover(null);
                   updateHover(null);
                 }}
               >

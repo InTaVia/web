@@ -15,7 +15,7 @@ export default function AllotmentHeader(props: AllotmentHeaderProps): JSX.Elemen
         <button className="h-full bg-transparent">
           <ChevronUpIcon
             onClick={onClick}
-            className={`${open === true ? 'rotate-180' : ''} h-5 w-5 text-intavia-brand-800`}
+            className={`${open === true ? 'rotate-180' : ''} h-5 w-5 text-white`}
           />
         </button>
       </div>
