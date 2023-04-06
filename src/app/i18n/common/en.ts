@@ -118,7 +118,7 @@ export const dictionary: Dictionary = {
       title: 'Search',
     },
     search: 'Search',
-    'search-term': 'Search term',
+    'search-term': 'Search for persons, cultural objects, or collective entities (e.g., Klimt)',
     'search-results-count': '{{count}} results',
     'search-history': 'Search history',
     'clear-search-history': 'Clear search history',
