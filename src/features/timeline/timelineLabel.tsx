@@ -1,6 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { TimelineType } from '@/features/timelineV2/timeline';
+import type { TimelineType } from '@/features/timeline/timeline';
 
 interface TimelineLabelProps {
   posX: number;

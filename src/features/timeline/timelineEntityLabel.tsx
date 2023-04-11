@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 
-import type { TimelineType } from '@/features/timelineV2/timeline';
+import type { TimelineType } from '@/features/timeline/timeline';
 
 export interface TimelineEntityLabelProps {
   children: ReactNode;

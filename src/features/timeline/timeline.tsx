@@ -9,8 +9,8 @@ import type {
 import { extent, scaleBand, scaleTime } from 'd3';
 import { useMemo } from 'react';
 
-import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
-import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
+import { TimelineAxis } from '@/features/timeline/timelineAxis';
+import { TimelineEntity } from '@/features/timeline/timelineEntity';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export const TimelineColors: Record<string, string> = {
@@ -163,6 +163,21 @@ export function Timeline(props: TimelineProps): JSX.Element {
               event.endDate = event.startDate;
             } else if (event.startDate === undefined && event.endDate !== undefined) {
               event.startDate = event.endDate;
+            }
+
+            if (
+              isNaN(new Date(event.startDate).getTime()) ||
+              isNaN(new Date(event.endDate).getTime())
+            ) {
+              tmpUnTimeableEvents[event.id] = event;
+            }
+
+            if (event.startDate?.toString().length <= 4) {
+              event.startDate = event.startDate?.toString() + '-01-01';
+            }
+
+            if (event.endDate?.toString().length <= 4) {
+              event.endDate = event.endDate?.toString() + '-01-01';
             }
 
             tmpPlotableEvents[event.id] = event;
