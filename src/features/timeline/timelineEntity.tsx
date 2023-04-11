@@ -13,9 +13,9 @@ import {
   type TimelineType,
   getTemporalExtent,
   TimelineColors as colors,
-} from '@/features/timelineV2/timeline';
-import { TimelineEntityLabel } from '@/features/timelineV2/timelineEntityLabel';
-import TimelineEvent from '@/features/timelineV2/timelineEvent';
+} from '@/features/timeline/timeline';
+import { TimelineEntityLabel } from '@/features/timeline/timelineEntityLabel';
+import TimelineEvent from '@/features/timeline/timelineEvent';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 import TimelineEventCluster from './timelineEventCluster';

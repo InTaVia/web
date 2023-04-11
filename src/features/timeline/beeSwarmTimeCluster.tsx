@@ -8,7 +8,7 @@ import { forwardRef, useMemo, useState } from 'react';
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
-import { getTemporalExtent } from '@/features/timelineV2/timeline';
+import { getTemporalExtent } from '@/features/timeline/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
 

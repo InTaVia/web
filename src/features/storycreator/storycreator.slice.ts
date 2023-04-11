@@ -178,7 +178,7 @@ export const storyCreatorSlice = createSlice({
           image: null,
           visualizationSlots: { 'vis-1': null, 'vis-2': null },
           contentPaneSlots: { 'cont-1': null, 'cont-2': null },
-          layout: 'single-vis',
+          layout: 'single-vis-content',
           highlighted: {},
         } as Slide,
       };
@@ -218,7 +218,7 @@ export const storyCreatorSlice = createSlice({
         //FIXME: Define default contentPanes and visualizationPanes
         visualizationSlots: { 'vis-1': null, 'vis-2': null },
         contentPaneSlots: { 'cont-1': null, 'cont-2': null },
-        layout: 'single-vis',
+        layout: 'single-vis-content',
         sort: counter,
         selected: true,
         highlighted: {},
