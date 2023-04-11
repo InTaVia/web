@@ -5,7 +5,7 @@ import type { LegacyRef, MouseEvent } from 'react';
 import { forwardRef, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
-import { type TimelineType, getTemporalExtent } from '@/features/timelineV2/timeline';
+import { type TimelineType, getTemporalExtent } from '@/features/timeline/timeline';
 
 import BeeSwarm from './beeSwarmTimeCluster';
 import PatisserieChart from './patisserieChart';
