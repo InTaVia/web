@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
-import { createPointFeature } from '@/features/visualizations/geo-map/lib/create-point-feature';
-import { isValidPoint } from '@/features/visualizations/geo-map/lib/is-valid-point';
+import { createPointFeature } from '@/features/geo-map/lib/create-point-feature';
+import { isValidPoint } from '@/features/geo-map/lib/is-valid-point';
 
 interface UsePointFeatureCollectionParams {
   events: Array<Event>;

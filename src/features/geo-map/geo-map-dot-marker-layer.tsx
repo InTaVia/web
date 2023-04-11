@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
 import { getColorsById, getEventKindPropertiesById } from '@/features/common/visualization.config';
-import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
+import { DotMarker } from '@/features/geo-map/dot-marker';
 
 interface GeoMapMarkersLayerProps<T> {
   autoFitBounds?: boolean;

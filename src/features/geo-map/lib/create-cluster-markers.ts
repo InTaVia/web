@@ -1,9 +1,6 @@
 import type { Feature } from 'geojson';
 
-import type {
-  ClusterMarker,
-  DotMarker,
-} from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
+import type { ClusterMarker, DotMarker } from '@/features/geo-map/geo-map-cluster-marker-layer';
 
 interface CreateClusterMarkersParams {
   features: Array<Feature>;

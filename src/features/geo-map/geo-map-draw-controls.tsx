@@ -1,5 +1,6 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
+import type { EmptyObject } from '@intavia/api-client';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import type { ControlPosition } from 'maplibre-gl';

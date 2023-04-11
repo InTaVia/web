@@ -3,13 +3,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
-import { DonutChart } from '@/features/visualizations/geo-map/donut-chart';
-import { DotMarker } from '@/features/visualizations/geo-map/dot-marker';
+import { DonutChart } from '@/features/geo-map/donut-chart';
+import { DotMarker } from '@/features/geo-map/dot-marker';
 import type {
   ClusterMarker,
   DotMarker as DotMarkerType,
-} from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
-import { createClusterMarkers } from '@/features/visualizations/geo-map/lib/create-cluster-markers';
+} from '@/features/geo-map/geo-map-cluster-marker-layer';
+import { createClusterMarkers } from '@/features/geo-map/lib/create-cluster-markers';
 
 interface DonutChartLayerProps<T> {
   colors: Record<string, Record<string, string>>;

@@ -6,9 +6,9 @@ import { useMemo } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectEntitiesByKind } from '@/app/store/intavia.slice';
-import { createLineFeature } from '@/features/visualizations/geo-map/lib/create-line-feature';
-import { isValidDate } from '@/features/visualizations/geo-map/lib/is-valid-date';
-import { isValidPoint } from '@/features/visualizations/geo-map/lib/is-valid-point';
+import { createLineFeature } from '@/features/geo-map/lib/create-line-feature';
+import { isValidDate } from '@/features/geo-map/lib/is-valid-date';
+import { isValidPoint } from '@/features/geo-map/lib/is-valid-point';
 
 interface UseLineStringFeatureCollectionParams {
   events: Array<Event>;
