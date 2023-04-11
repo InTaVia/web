@@ -16,7 +16,7 @@ import {
   type TimelineType,
   getTemporalExtent,
   translateEventType,
-} from '@/features/timelineV2/timeline';
+} from '@/features/timeline/timeline';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 import TimelineEventMarker from './timelineEventMarker';

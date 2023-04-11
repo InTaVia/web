@@ -9,8 +9,8 @@ import type {
 import { extent, scaleBand, scaleTime } from 'd3';
 import { useMemo } from 'react';
 
-import { TimelineAxis } from '@/features/timelineV2/timelineAxis';
-import { TimelineEntity } from '@/features/timelineV2/timelineEntity';
+import { TimelineAxis } from '@/features/timeline/timelineAxis';
+import { TimelineEntity } from '@/features/timeline/timelineEntity';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export const TimelineColors: Record<string, string> = {
