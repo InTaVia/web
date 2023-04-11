@@ -43,11 +43,17 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const diameter = properties['diameter']?.value ?? 14;
   const fontSize = properties['fontSize']?.value ?? 10;
 
+  const filteredEntities = Object.fromEntries(
+    Object.entries(entities).filter(([key, val]) => {
+      return val.kind !== 'place';
+    }),
+  );
+
   return (
     <>
       <Timeline
         events={events}
-        entities={entities}
+        entities={filteredEntities}
         width={width}
         height={height}
         vertical={vertical}
@@ -85,7 +91,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         </IconButton>
       </div>
       <div className="absolute bottom-0 right-0">
-        <VisualizationLegend events={events} entities={entities} />
+        <VisualizationLegend events={events} entities={filteredEntities} />
       </div>
     </>
   );
