@@ -1,10 +1,10 @@
+import type { EmptyObject } from '@intavia/api-client';
 import type { Feature, FeatureCollection, Point } from 'geojson';
-import type { Expression } from 'mapbox-gl';
-import { useCallback, useEffect, useMemo } from 'react';
-import { type LayerProps, type MapLayerMouseEvent, Layer, Source, useMap } from 'react-map-gl';
+import { useEffect, useMemo } from 'react';
+import { type LayerProps, Layer, Source, useMap } from 'react-map-gl';
 
-import { DonutChartLayer } from '@/features/visualizations/geo-map/donut-chart-layer';
-import { DotClusterLayer } from '@/features/visualizations/geo-map/dot-cluster-layer';
+import { DonutChartLayer } from '@/features/geo-map/donut-chart-layer';
+import { DotClusterLayer } from '@/features/geo-map/dot-cluster-layer';
 import { createKey } from '@/lib/create-key';
 
 export interface DotMarker<T> {

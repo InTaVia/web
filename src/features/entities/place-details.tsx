@@ -7,7 +7,7 @@ import { EntityDescription } from '@/features/entities/entity-description';
 import { EntityLinkedIds } from '@/features/entities/entity-linked-ids';
 import { EntityRelations } from '@/features/entities/entity-relations';
 import { EntityTitle } from '@/features/entities/entity-title';
-import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
+import { GeoMap } from '@/features/geo-map/geo-map';
 
 interface PlaceDetailsProps {
   entity: Place;

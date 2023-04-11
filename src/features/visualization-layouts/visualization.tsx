@@ -4,9 +4,8 @@ import { useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { NetworkComponent } from '@/features/ego-network/network-component';
-//import { StoryTimeline } from '@/features/storycreator/story-timeline';
+import { GeoMapWrapper } from '@/features/geo-map/geo-map-wrapper';
 import { TimelineComponent } from '@/features/timeline/timelineComponent';
-import { GeoMapWrapper } from '@/features/visualizations/geo-map/geo-map-wrapper';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import { useElementRef } from '@/lib/use-element-ref';
 

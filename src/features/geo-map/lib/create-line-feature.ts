@@ -2,7 +2,7 @@ import type { Entity, Event, Place } from '@intavia/api-client';
 import { assert } from '@stefanprobst/assert';
 import type { Feature, LineString } from 'geojson';
 
-import { isValidPoint } from '@/features/visualizations/geo-map/lib/is-valid-point';
+import { isValidPoint } from '@/features/geo-map/lib/is-valid-point';
 
 interface CreateLineFeatureParams {
   entity: Entity;

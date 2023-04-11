@@ -300,14 +300,6 @@ export const visualizationSlice = createSlice({
           break;
       }
     },
-    addPersonToVisualization: (state, action) => {
-      const person = action.payload.person as Person;
-      const visId = action.payload.visId;
-
-      if (!state[visId]!.entityIds.includes(person.id)) {
-        state[visId]!.entityIds.push(person.id);
-      }
-    },
     addEntitiesToVisualization: (
       state,
       action: PayloadAction<{ visId: Visualization['id']; entities: Array<Entity['id']> }>,
@@ -462,7 +454,6 @@ export const {
   addEventsToVisualization,
   addTargetEntitiesToVisualization,
   addEventToVisualization,
-  addPersonToVisualization,
   removeEntitiesFromVisualization,
   removeAllEntitiesFromVisualization,
   removeEventsFromVisualization,

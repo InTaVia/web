@@ -5,14 +5,14 @@ import { useDataFromVisualization } from '@/features/common/data/use-data-from-v
 import { getColorsById } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
-import { GeoMap } from '@/features/visualizations/geo-map/geo-map';
-import { base } from '@/features/visualizations/geo-map/geo-map.config';
-import { GeoMapClusterMarkerLayer } from '@/features/visualizations/geo-map/geo-map-cluster-marker-layer';
-import { GeoMapDotMarkerLayer } from '@/features/visualizations/geo-map/geo-map-dot-marker-layer';
-import { GeoMapLineLayer } from '@/features/visualizations/geo-map/geo-map-line-layer';
-import { useLineStringFeatureCollection } from '@/features/visualizations/geo-map/lib/use-line-string-feature-collection';
-import { useMarkerCluster } from '@/features/visualizations/geo-map/lib/use-marker-cluster';
-import { usePointFeatureCollection } from '@/features/visualizations/geo-map/lib/use-point-feature-collection';
+import { GeoMap } from '@/features/geo-map/geo-map';
+import { base } from '@/features/geo-map/geo-map.config';
+import { GeoMapClusterMarkerLayer } from '@/features/geo-map/geo-map-cluster-marker-layer';
+import { GeoMapDotMarkerLayer } from '@/features/geo-map/geo-map-dot-marker-layer';
+import { GeoMapLineLayer } from '@/features/geo-map/geo-map-line-layer';
+import { useLineStringFeatureCollection } from '@/features/geo-map/lib/use-line-string-feature-collection';
+import { useMarkerCluster } from '@/features/geo-map/lib/use-marker-cluster';
+import { usePointFeatureCollection } from '@/features/geo-map/lib/use-point-feature-collection';
 
 interface GeoMapWrapperProps {
   visualization: Visualization;

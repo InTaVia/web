@@ -1,3 +1,4 @@
+import type { EmptyObject } from '@intavia/api-client';
 import type { Feature, FeatureCollection, LineString } from 'geojson';
 import { type LayerProps, Layer, Source } from 'react-map-gl';
 

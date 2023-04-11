@@ -85,27 +85,6 @@ export default function VisualisationContainer(props: VisualisationContainerProp
     }
   }
 
-  // function onDrop(event: DragEvent) {
-  //   event.preventDefault();
-  //   const data = JSON.parse(event.dataTransfer.getData('Text'));
-
-  //   switch (data.type) {
-  //     case 'visualization':
-  //       onSwitchVisualization(visualizationSlot, data.props.id, data.parent, id);
-  //       break;
-  //     case 'Person':
-  //       dispatch(
-  //         addPersonToVisualization({ visId: visualization!.id, person: data.props as Person }),
-  //       );
-  //       break;
-  //     case 'Event':
-  //       dispatch(addEventToVisualization({ visId: visualization!.id, event: data.props as Event }));
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
   function onDrop(event: DragEvent<HTMLDivElement>) {
     const data = event.dataTransfer.getData(mediaType);
     // console.log(event);
