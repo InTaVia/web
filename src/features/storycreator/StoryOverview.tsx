@@ -1,4 +1,4 @@
-import { AdjustmentsIcon, TrashIcon } from '@heroicons/react/outline';
+import { AdjustmentsIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
@@ -23,8 +23,8 @@ import { importContentPane, selectAllConentPanes } from '@/features/storycreator
 import { LoadStory } from '@/features/storycreator/import/load-story';
 import type { Story } from '@/features/storycreator/storycreator.slice';
 import {
-  createStory,
   editStory,
+  emptyStory,
   importStory,
   removeStory,
   selectStories,
@@ -43,7 +43,15 @@ export function StoryOverview(): JSX.Element {
   const allContentPanes = useAppSelector(selectAllConentPanes);
 
   function onCreateStory() {
-    dispatch(createStory({}));
+    const oldIDs = Object.keys(stories);
+    let counter = oldIDs.length - 1;
+    let newID = null;
+    do {
+      counter = counter + 1;
+      newID = `st-${counter}`;
+    } while (oldIDs.includes(newID));
+
+    setPropertiesEditElement({ ...emptyStory, id: newID });
   }
 
   function onRemoveStory(id: Story['id']) {
@@ -139,42 +147,48 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <h1 className="text-5xl font-light">{t(['common', 'stories', 'metadata', 'title'])}</h1>
-      <div className="flex h-full items-center">
-        <ul className="divide-y divide-neutral-200">
-          {Object.values(stories).map((story) => {
-            const _name = story.properties.name?.value.trim();
-            const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
+      <div className="grid h-full grid-cols-[auto_auto_auto_auto]">
+        <b>Title</b>
+        <b>ID</b>
+        <b>Author</b>
+        <b>Actions</b>
+        {Object.values(stories).map((story) => {
+          const _name = story.properties.name?.value.trim();
+          const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
 
-            return (
-              <li className="flex items-center gap-8" key={story.id}>
+          return (
+            <>
+              <Link href={{ pathname: `/storycreator/${story.id}` }}>
+                <a>{name}</a>
+              </Link>
+              <div className="text-sm text-neutral-500">{story.id}</div>
+              <div>{story.properties.author?.value}</div>
+              <div>
                 <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                  <a>
-                    {name}
-                    <div className="text-sm text-neutral-500">{story.id}</div>
-                  </a>
+                  <IconButton label="Edit">
+                    <PencilAltIcon className="h-5 w-5" />
+                  </IconButton>
                 </Link>
-                <div className="flex gap-2">
-                  <IconButton
-                    label="Edit"
-                    onClick={() => {
-                      setPropertiesEditElement(story);
-                    }}
-                  >
-                    <AdjustmentsIcon className="h-5 w-5" />
-                  </IconButton>
-                  <IconButton
-                    label="Remove"
-                    onClick={() => {
-                      onRemoveStory(story.id);
-                    }}
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </IconButton>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                <IconButton
+                  label="Settings"
+                  onClick={() => {
+                    setPropertiesEditElement(story);
+                  }}
+                >
+                  <AdjustmentsIcon className="h-5 w-5" />
+                </IconButton>
+                <IconButton
+                  label="Remove"
+                  onClick={() => {
+                    onRemoveStory(story.id);
+                  }}
+                >
+                  <TrashIcon className="h-5 w-5" />
+                </IconButton>
+              </div>
+            </>
+          );
+        })}
       </div>
       <div className="grid justify-items-start gap-4">
         <Button type="submit" onClick={onCreateStory}>
