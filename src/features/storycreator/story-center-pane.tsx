@@ -18,6 +18,8 @@ import type { StringLiteral } from 'typescript';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
+import type { Collection } from '@/app/store/intavia-collections.slice';
+import { selectCollections } from '@/app/store/intavia-collections.slice';
 import type { ComponentProperty } from '@/features/common/component-property';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
@@ -70,6 +72,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const slides = useAppSelector((state) => {
     return selectSlidesByStoryID(state, story.id);
   });
+
+  const collections = useAppSelector(selectCollections);
 
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
@@ -388,6 +392,23 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+    const storyCollections = Object.fromEntries(
+      Object.keys(collections)
+        .filter((key) => {
+          return (
+            collections[key].entities.filter((value) => {
+              return Object.keys(storyEntities).includes(value);
+            }).length > 0 ||
+            collections[key].events.filter((value) => {
+              return Object.keys(storyEvents).includes(value);
+            }).length > 0
+          );
+        })
+        .map((key) => {
+          return [key, collections[key] as Collection];
+        }),
+    );
+
     return {
       ...story,
       slides: slideOutput,
@@ -395,6 +416,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       contentPanes: storyContentPanes,
       storyEntities: storyEntities,
       storyEvents: storyEvents,
+      collections: storyCollections,
     };
   };
 

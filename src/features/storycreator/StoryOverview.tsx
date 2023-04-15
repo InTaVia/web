@@ -12,6 +12,8 @@ import {
   selectEntities,
   selectEvents,
 } from '@/app/store/intavia.slice';
+import type { Collection } from '@/app/store/intavia-collections.slice';
+import { importCollection } from '@/app/store/intavia-collections.slice';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -79,6 +81,7 @@ export function StoryOverview(): JSX.Element {
 
     const entities = { ...storyObj.storyEntities };
     const events = { ...storyObj.storyEvents };
+    const collections = { ...storyObj.collections };
 
     delete storyObj.storyEntities;
     delete storyObj.storyEvents;
@@ -134,6 +137,11 @@ export function StoryOverview(): JSX.Element {
       } else {
         dispatch(addLocalEvent(event));
       }
+    }
+
+    for (const collection of Object.values(collections) as Array<Collection>) {
+      console.log(collection);
+      dispatch(importCollection(collection));
     }
 
     let newStoryStr = JSON.stringify(storyObj);
