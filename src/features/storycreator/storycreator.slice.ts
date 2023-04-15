@@ -50,7 +50,7 @@ export interface StoryCreatorState {
   stories: Record<Story['id'], Story>;
 }
 
-const emptyStory = {
+export const emptyStory = {
   slides: {},
   properties: {
     name: {
@@ -160,15 +160,8 @@ export const storyCreatorSlice = createSlice({
       const story = { ...emptyStory, ...action.payload };
 
       const newStories = { ...state.stories };
-      const oldIDs = Object.keys(newStories);
-      let counter = oldIDs.length - 1;
-      let newID = null;
-      do {
-        counter = counter + 1;
-        newID = `story${counter}`;
-      } while (oldIDs.includes(newID));
-      story.id = newID;
-      story.title = 'Story ' + counter;
+
+      story.title = story.id;
       story.slides = {
         '0': {
           id: '0',
