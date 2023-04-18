@@ -339,22 +339,7 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
             <Allotment.Pane preferredSize="60%">
               <ReactResizeDetector handleWidth handleHeight>
                 {() => {
-                  return (
-                    /*  <SlideEditor
-                      targetRef={targetRef as RefObject<HTMLDivElement>}
-                      width={width}
-                      height={height}
-                      slide={selectedSlide as Slide}
-                      takeScreenshot={takeScreenshot}
-                      numberOfVisPanes={numberOfVis}
-                      numberOfContentPanes={numberOfContentPanes}
-                      vertical={vertical}
-                      timescale={false}
-                      desktop={true}
-                      increaseNumberOfContentPanes={increaseNumberOfContentPanes}
-                    /> */
-                    <></>
-                  );
+                  return <></>;
                 }}
               </ReactResizeDetector>
             </Allotment.Pane>
