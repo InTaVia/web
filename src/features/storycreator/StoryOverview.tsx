@@ -2,7 +2,7 @@ import { AdjustmentsIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/outl
 import type { Entity, Event } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -140,7 +140,6 @@ export function StoryOverview(): JSX.Element {
     }
 
     for (const collection of Object.values(collections) as Array<Collection>) {
-      console.log(collection);
       dispatch(importCollection(collection));
     }
 
@@ -165,19 +164,20 @@ export function StoryOverview(): JSX.Element {
           const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
 
           return (
-            <>
+            <Fragment key={`${story.id}storyOverviewListEntry`}>
               <Link href={{ pathname: `/storycreator/${story.id}` }}>
                 <a>{name}</a>
               </Link>
               <div className="text-sm text-neutral-500">{story.id}</div>
               <div>{story.properties.author?.value}</div>
-              <div>
+              <div className="flex gap-2">
                 <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                  <IconButton label="Edit">
+                  <IconButton label="Edit" size="xs">
                     <PencilAltIcon className="h-5 w-5" />
                   </IconButton>
                 </Link>
                 <IconButton
+                  size="xs"
                   label="Settings"
                   onClick={() => {
                     setPropertiesEditElement(story);
@@ -187,6 +187,7 @@ export function StoryOverview(): JSX.Element {
                 </IconButton>
                 <IconButton
                   label="Remove"
+                  size="xs"
                   onClick={() => {
                     onRemoveStory(story.id);
                   }}
@@ -194,7 +195,7 @@ export function StoryOverview(): JSX.Element {
                   <TrashIcon className="h-5 w-5" />
                 </IconButton>
               </div>
-            </>
+            </Fragment>
           );
         })}
       </div>
