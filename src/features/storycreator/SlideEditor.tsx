@@ -1,7 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { Dialog } from '@intavia/ui';
 import type { DragEvent, RefObject } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
@@ -25,7 +25,9 @@ import {
   switchVisualizations,
 } from '@/features/storycreator/storycreator.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
-import VisualizationGroup from '@/features/visualization-layouts/visualization-group';
+import VisualizationGroup, {
+  layoutTemplates,
+} from '@/features/visualization-layouts/visualization-group';
 
 interface SlideEditorProps {
   width?: number | undefined;
@@ -58,6 +60,7 @@ export function SlideEditor(props: SlideEditorProps) {
     //desktop = false,
     increaseNumberOfContentPanes,
     addContent,
+    checkForEmptyContentPaneSlots,
   } = props;
 
   const [editElement, setEditElement] = useState<any | null>(null);
@@ -72,7 +75,6 @@ export function SlideEditor(props: SlideEditorProps) {
     return currSlide.id === slide.id;
   })[0];
   const highlighted = currentSlide?.highlighted ?? [];
-  // console.log(highlighted);
 
   const handleClose = () => {
     setEditElement(null);
@@ -106,12 +108,24 @@ export function SlideEditor(props: SlideEditorProps) {
   };
 
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
-    const data = event.dataTransfer.getData(ContentTypeTransferData);
-
     try {
+      const data = event.dataTransfer.getData(ContentTypeTransferData);
       const payload: DataTransferData = JSON.parse(data);
       addContent(payload.contentType, i_layoutItem, i_targetPane);
-    } catch {}
+    } catch {
+      try {
+        const data = event.dataTransfer.getData(mediaType);
+        const payload: DataTransferData = JSON.parse(data);
+        if (payload.type === 'data') {
+          console.log(payload);
+          if(payload.entities.length === 1 && payload.events.length === 0) {
+            addContent('entity', i_layoutItem, i_targetPane);
+          }
+        }
+      } catch {
+        /** Ignore invalid json. */
+      }
+    }
   };
 
   const onContentPaneWizard = (i_layout: any, type: string, i_targetPane: any) => {
@@ -137,6 +151,10 @@ export function SlideEditor(props: SlideEditorProps) {
       /** Ignore invalid json. */
     }
   };
+
+  useEffect(() => {
+    checkForEmptyContentPaneSlots(layoutTemplates[currentSlide.layout]);
+  }, [currentSlide]);
 
   return (
     <div ref={imageRef} onDrop={drop} onDragOver={allowDrop} className="h-full">

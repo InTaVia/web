@@ -17,7 +17,7 @@ import type { StringLiteral } from 'typescript';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
+import { selectEntities, selectEvents, selectMediaResources } from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
 import type { ComponentProperty } from '@/features/common/component-property';
@@ -35,6 +35,7 @@ import StroyCreatorToolbar from '@/features/storycreator/story-creator-toolbar';
 import { usePostStoryMutation } from '@/features/storycreator/story-suite-api.service';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
+  createSlide,
   editStory,
   selectSlidesByStoryID,
   setContentPaneToSlot,
@@ -74,6 +75,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   });
 
   const collections = useAppSelector(selectCollections);
+
+  const mediaRessources = useAppSelector(selectMediaResources);
 
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
@@ -190,15 +193,70 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         layoutItem['w'] = 1;
         break;
       case 'Quiz':
-        layoutItem['h'] = 2;
+        layoutItem['h'] = 3;
         layoutItem['w'] = 1;
         break;
       case 'Video/Audio':
-        layoutItem['h'] = 2;
+        layoutItem['h'] = 3;
         layoutItem['w'] = 1;
         break;
       case 'Title':
         layoutItem['h'] = 8;
+        layoutItem['w'] = 1;
+        break;
+      default:
+        layoutItem['h'] = 3;
+        layoutItem['w'] = 1;
+        break;
+    }
+
+    dispatch(
+      addContentToContentPane({
+        story: selectedSlide?.story,
+        slide: selectedSlide?.id,
+        contentPane: targetPane,
+        layout: {
+          x: layoutItem['x'],
+          y: layoutItem['y'],
+          w: layoutItem['w'],
+          h: layoutItem['h'],
+        },
+        type: layoutItem['type'],
+        key: newText,
+      }),
+    );
+  };
+
+  const addContentWithData = (
+    type: string,
+    data: any,
+    i_layoutItem: any,
+    i_targetPane: string | undefined,
+  ) => {
+    const layoutItem = i_layoutItem;
+
+    let targetPane = i_targetPane;
+    if (targetPane === undefined) {
+      targetPane = 'contentPane0';
+    }
+
+    const ids = windows.map((window: UiWindow) => {
+      return window.i;
+    });
+
+    let counter = 1;
+    const text = type;
+    let newText = text;
+    while (ids.includes(newText)) {
+      newText = text + ' (' + counter + ')';
+      counter++;
+    }
+    layoutItem['i'] = newText;
+    layoutItem['type'] = type;
+
+    switch (type) {
+      case 'Entity':
+        layoutItem['h'] = 4;
         layoutItem['w'] = 1;
         break;
       default:
@@ -351,7 +409,6 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     const slideOutput: Record<string, Slide> = Object.fromEntries(
       Object.values(story.slides).map((s) => {
         const ret = { ...s };
-        console.log('IMAGE', ret.image);
         return [ret.id, ret];
       }),
     );
@@ -409,6 +466,24 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+    const storyMediaIds = Object.values(storyEntities)
+      .filter((entity) => {
+        return entity.media != null && entity.media.length > 0;
+      })
+      .flatMap((entity) => {
+        return entity.media;
+      }) as Array<string>;
+
+    const storyMedias = Object.fromEntries(
+      storyMediaIds
+        .filter((key) => {
+          return key in mediaRessources;
+        })
+        .map((key) => {
+          return [key, mediaRessources[key] as MediaResource];
+        }),
+    );
+
     return {
       ...story,
       slides: slideOutput,
@@ -417,6 +492,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       storyEntities: storyEntities,
       storyEvents: storyEvents,
       collections: storyCollections,
+      media: storyMedias,
     };
   };
 
@@ -474,6 +550,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                     timescale={timescale}
                     increaseNumberOfContentPanes={increaseNumberOfContentPanes}
                     addContent={addContent}
+                    checkForEmptyContentPaneSlots={checkForEmptyContentPaneSlots}
                   />
                 ) : (
                   <div className="flex justify-center">Please add at least one slide!</div>

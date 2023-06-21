@@ -129,21 +129,6 @@ export function StoryGUICreator(props: StoryGUICreatorProps): JSX.Element {
   });
   const selectedSlide = filteredSlides.length > 0 ? filteredSlides[0] : slides[0];
 
-  /*  const ref = useRef<HTMLDivElement>(null);
-     const takeScreenshot = function () {
-    if (ref.current === null) {
-      return;
-    }
-
-    toPng(ref.current, { cacheBust: true })
-      .then((dataUrl) => {
-        dispatch(setImage({ slide: selectedSlide, image: dataUrl }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }; */
-
   const entitiesByKind = useAppSelector(selectEntitiesByKind);
   const persons = Object.values(entitiesByKind.person).slice(-1);
 

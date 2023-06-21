@@ -1,5 +1,5 @@
 import { AdjustmentsIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
-import type { Entity, Event } from '@intavia/api-client';
+import type { Entity, Event, MediaResource } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addLocalEntity,
   addLocalEvent,
+  addLocalMediaResource,
   selectEntities,
   selectEvents,
 } from '@/app/store/intavia.slice';
@@ -23,7 +24,7 @@ import {
 import type { ContentPane } from '@/features/storycreator/contentPane.slice';
 import { importContentPane, selectAllConentPanes } from '@/features/storycreator/contentPane.slice';
 import { LoadStory } from '@/features/storycreator/import/load-story';
-import type { Story } from '@/features/storycreator/storycreator.slice';
+import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
   editStory,
   emptyStory,
@@ -53,7 +54,23 @@ export function StoryOverview(): JSX.Element {
       newID = `st-${counter}`;
     } while (oldIDs.includes(newID));
 
-    setPropertiesEditElement({ ...emptyStory, id: newID });
+    setPropertiesEditElement({
+      ...emptyStory,
+      id: newID,
+      slides: {
+        '0': {
+          id: '0',
+          sort: 0,
+          story: newID,
+          selected: true,
+          image: null,
+          visualizationSlots: { 'vis-1': null, 'vis-2': null },
+          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
+          layout: 'single-vis-content',
+          highlighted: {},
+        } as Slide,
+      },
+    });
   }
 
   function onRemoveStory(id: Story['id']) {
@@ -82,6 +99,7 @@ export function StoryOverview(): JSX.Element {
     const entities = { ...storyObj.storyEntities };
     const events = { ...storyObj.storyEvents };
     const collections = { ...storyObj.collections };
+    const mediaRessources = { ...storyObj.media };
 
     delete storyObj.storyEntities;
     delete storyObj.storyEvents;
@@ -139,6 +157,10 @@ export function StoryOverview(): JSX.Element {
       }
     }
 
+    for (const media of Object.values(mediaRessources) as Array<MediaResource>) {
+      dispatch(addLocalMediaResource(media));
+    }
+
     for (const collection of Object.values(collections) as Array<Collection>) {
       dispatch(importCollection(collection));
     }
@@ -154,9 +176,10 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <h1 className="text-5xl font-light">{t(['common', 'stories', 'metadata', 'title'])}</h1>
-      <div className="grid h-full grid-cols-[auto_auto_auto_auto]">
-        <b>Title</b>
+      <div className="grid h-full grid-cols-[auto_auto_auto_auto_auto] gap-2">
         <b>ID</b>
+        <b>Title</b>
+        <b>Subtitle</b>
         <b>Author</b>
         <b>Actions</b>
         {Object.values(stories).map((story) => {
@@ -166,11 +189,14 @@ export function StoryOverview(): JSX.Element {
           return (
             <Fragment key={`${story.id}storyOverviewListEntry`}>
               <Link href={{ pathname: `/storycreator/${story.id}` }}>
+                <a>{story.id}</a>
+              </Link>
+              <Link href={{ pathname: `/storycreator/${story.id}` }}>
                 <a>{name}</a>
               </Link>
-              <div className="text-sm text-neutral-500">{story.id}</div>
+              <div>{story.properties.subtitle?.value}</div>
               <div>{story.properties.author?.value}</div>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <Link href={{ pathname: `/storycreator/${story.id}` }}>
                   <IconButton label="Edit" size="xs">
                     <PencilAltIcon className="h-5 w-5" />

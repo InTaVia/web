@@ -2,6 +2,8 @@ import {
   CalendarIcon as EventIcon,
   ChartBarIcon,
   ChatIcon,
+  CodeIcon,
+  CubeIcon,
   DocumentTextIcon,
   MapIcon,
   PhotographIcon,
@@ -24,6 +26,10 @@ function getIcon(type: string) {
       return <MapIcon className={classStr} />;
     case 'Text':
       return <DocumentTextIcon className={classStr} />;
+    case 'HTML':
+      return <CodeIcon className={classStr} />;
+    case '3D':
+      return <CubeIcon className={classStr} />;
     case 'Image':
       return <PhotographIcon className={classStr} />;
     case 'Video/Audio':
