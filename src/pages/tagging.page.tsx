@@ -26,7 +26,7 @@ import { useEvents } from '@/lib/use-events';
 
 export const getStaticProps = withDictionaries(['common']);
 
-export default function SearchPage(): JSX.Element {
+export default function TaggingPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const tags = useAppSelector(selectTags);
