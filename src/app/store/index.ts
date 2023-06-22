@@ -20,6 +20,7 @@ import { service as intaviaApiService } from '@/api/intavia.service';
 import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
+import { slice as intaviaTaggingSlice } from '@/app/store/intavia-tagging.slice';
 import { visualizationSlice } from '@/features/common/visualization.slice';
 import { contentPaneSlice } from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
@@ -34,6 +35,7 @@ const persistConfig: PersistConfig<RootState> = {
   version: 1,
   whitelist: [
     intaviaCollectionsSlice.name /** Collections. */,
+    intaviaTaggingSlice.name /** Tagging */,
     intaviaDataSlice.name /** Entities, events. */,
     workspacesSlice.name,
     storyCreatorSlice.name,
@@ -46,6 +48,7 @@ const rootReducer = combineReducers({
   [intaviaApiService.reducerPath]: intaviaApiService.reducer,
   [intaviaStoryApiService.reducerPath]: intaviaStoryApiService.reducer,
   [intaviaCollectionsSlice.name]: intaviaCollectionsSlice.reducer,
+  [intaviaTaggingSlice.name]: intaviaTaggingSlice.reducer,
   [intaviaDataSlice.name]: intaviaDataSlice.reducer,
   [visualQueryingSlice.name]: visualQueryingSlice.reducer,
   //

@@ -20,6 +20,7 @@ import {
   addLocalVocabulary,
 } from '@/app/store/intavia.slice';
 import { addCollection, createCollection } from '@/app/store/intavia-collections.slice';
+import { addTag, createTag } from '@/app/store/intavia-tagging.slice';
 import { LoadData } from '@/features/data-import/load-data';
 
 interface DataImportDialogProps {
@@ -64,6 +65,14 @@ export function DataImportDialog(props: DataImportDialogProps): JSX.Element {
           const collection = createCollection(data.collections[collectionCandidate]!);
           dispatch(addCollection(collection));
         }
+      }
+    }
+
+    // add tagging
+    if (data?.tags != null) {
+      for (const tagCandidate of data.tags) {
+        const tag = createTag({ readonly: true, ...tagCandidate });
+        dispatch(addTag(tag));
       }
     }
 
