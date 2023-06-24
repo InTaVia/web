@@ -6,8 +6,9 @@ import { forwardRef } from 'react';
 import {
   CollectionSvgGroup,
   CulturalHeritageObjectSvgGroup,
+  EventCircleSvgGroup,
+  EventRectSvgGroup,
   GroupSvgGroup,
-  HistoricalEventSvgGroup,
   MapSvgGroup,
   NetworkSvgGroup,
   PersonSvgGroup,
@@ -15,7 +16,7 @@ import {
   TimelineSvgGroup,
 } from '@/features/common/icons/intavia-icon-shapes';
 
-type IconTypes = 'collection' | 'map' | 'network' | 'timeline';
+type IconTypes = 'collection' | 'event-circle' | 'event-rect' | 'map' | 'network' | 'timeline';
 type IntaviaIconTypes = EntityKind | IconTypes;
 
 interface IntaviaIconVariant {
@@ -25,13 +26,15 @@ interface IntaviaIconVariant {
 const icons: Record<IntaviaIconTypes, FC<ComponentPropsWithoutRef<'g'>>> = {
   'cultural-heritage-object': CulturalHeritageObjectSvgGroup,
   group: GroupSvgGroup,
-  'historical-event': HistoricalEventSvgGroup,
+  'historical-event': CulturalHeritageObjectSvgGroup, // TODO To be removed
   person: PersonSvgGroup,
   place: PlaceSvgGroup,
   map: MapSvgGroup,
   timeline: TimelineSvgGroup,
   network: NetworkSvgGroup,
   collection: CollectionSvgGroup,
+  'event-circle': EventCircleSvgGroup,
+  'event-rect': EventRectSvgGroup,
 };
 
 type IntaviaIconProps = ComponentPropsWithoutRef<'svg'> & IntaviaIconVariant;

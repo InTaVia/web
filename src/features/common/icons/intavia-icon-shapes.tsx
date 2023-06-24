@@ -6,8 +6,8 @@ export const PersonSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutR
     const { className, ...rest } = props;
     return (
       <g ref={forwardedRef} className={className} {...rest}>
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2z" />
-        <circle cx="12" cy="7" r="4" />
+        <circle cx="12" cy="8" r="5" />
+        <path d="M 3 21 L 3 18 A 8 4 0 1 1 21 18 L 21 21 z" />
       </g>
     );
   },
@@ -20,7 +20,7 @@ export const CulturalHeritageObjectSvgGroup = forwardRef<
   const { className, ...rest } = props;
   return (
     <g ref={forwardedRef} className={className} {...rest}>
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+      <rect width="18" height="18" x="3" y="3" rx="0" ry="0" />
     </g>
   );
 });
@@ -30,18 +30,7 @@ export const GroupSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRe
     const { className, ...rest } = props;
     return (
       <g ref={forwardedRef} className={className} {...rest}>
-        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-      </g>
-    );
-  },
-);
-
-export const HistoricalEventSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRef<'g'>>(
-  function HistoricalEventSvgGroup(props, forwardedRef): JSX.Element {
-    const { className, ...rest } = props;
-    return (
-      <g ref={forwardedRef} className={className} {...rest}>
-        <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        <path d="M 3 8 12 3 21 8 V 21 H 3 z"></path>
       </g>
     );
   },
@@ -52,11 +41,29 @@ export const PlaceSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRe
     const { className, ...rest } = props;
     return (
       <g ref={forwardedRef} className={className} {...rest}>
-        <path
-          className="st0"
-          d="M2.2,6l8,14c0.5,1,1.8,1.3,2.7,0.8c0.3-0.2,0.6-0.4,0.8-0.8l8-14C22.3,5,22,3.8,21,3.3C20.7,3.1,20.3,3,20,3H4
-	C2.9,3,2,3.9,2,5C2,5.3,2.1,5.7,2.2,6z"
-        />
+        <path d="M 2 3 22 3 12 21 z" />
+      </g>
+    );
+  },
+);
+
+export const EventCircleSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRef<'g'>>(
+  function EventCircleSvgGroup(props, forwardedRef): JSX.Element {
+    const { className, ...rest } = props;
+    return (
+      <g ref={forwardedRef} className={className} {...rest}>
+        <circle cx="12" cy="12" r="9" />
+      </g>
+    );
+  },
+);
+
+export const EventRectSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRef<'g'>>(
+  function EventRectSvgGroup(props, forwardedRef): JSX.Element {
+    const { className, ...rest } = props;
+    return (
+      <g ref={forwardedRef} className={className} {...rest}>
+        <rect width="18" height="18" x="3" y="3" rx="0" ry="0" />
       </g>
     );
   },
@@ -72,7 +79,6 @@ export const TimelineSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithou
         <circle cx="19" cy="12" r="2" />
         <polyline points="7,12 10,12"></polyline>
         <polyline points="14,12 17,12"></polyline>
-        {/* <path d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" /> */}
       </g>
     );
   },
@@ -102,7 +108,7 @@ export const NetworkSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithout
         <circle cx="19" cy="19" r="2" />
         <circle cx="8" cy="5" r="2" />
         <circle cx="5" cy="19" r="2" />
-        <circle className="st0" cx="12" cy="12" r="3" />
+        <circle cx="12" cy="12" r="3" />
       </g>
     );
   },
