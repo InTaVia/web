@@ -1,12 +1,10 @@
-import { Button, cn, Label } from '@intavia/ui';
+import { cn, Label } from '@intavia/ui';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
-import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
-import { GroupSvgGroup, PersonSvgGroup } from '@/features/common/icons/intavia-icon-shapes';
 
 export const getStaticProps = withDictionaries(['common']);
 
@@ -61,11 +59,11 @@ export default function IconsPage(): JSX.Element {
           />
           <IntaviaIcon
             icon="cultural-heritage-object"
-            className="h-8 w-8 fill-intavia-sulu-400 stroke-intavia-sulu-500"
+            className="h-8 w-8 fill-intavia-conifer-400 stroke-intavia-conifer-500"
           />
           <IntaviaIcon
             icon="cultural-heritage-object"
-            className="h-8 w-8 fill-intavia-sulu-400 stroke-stone-800"
+            className="h-8 w-8 fill-intavia-conifer-400 stroke-stone-800"
           />
           <Label className="text-sm">
             <span className="font-thin">entity-kind </span>cultural-heritage-object
@@ -95,9 +93,9 @@ export default function IconsPage(): JSX.Element {
           <IntaviaIcon icon="place" className="h-8 w-8 fill-stone-400 stroke-stone-500" />
           <IntaviaIcon
             icon="place"
-            className="h-8 w-8 fill-intavia-place-400 stroke-intavia-place-500"
+            className="h-8 w-8 fill-intavia-wistful-400 stroke-intavia-wistful-500"
           />
-          <IntaviaIcon icon="place" className="h-8 w-8 fill-intavia-place-400 stroke-stone-800" />
+          <IntaviaIcon icon="place" className="h-8 w-8 fill-intavia-wistful-400 stroke-stone-800" />
           <Label className="text-sm">
             <span className="font-thin">entity-kind </span>place
           </Label>
@@ -132,11 +130,11 @@ export default function IconsPage(): JSX.Element {
         <div className="flex flex-row items-center gap-x-2">
           <IntaviaIcon
             icon="event-rect"
-            className="h-8 w-8 fill-intavia-sulu-400 stroke-intavia-sulu-500"
+            className="h-8 w-8 fill-intavia-conifer-400 stroke-intavia-conifer-500"
           />
           <IntaviaIcon
             icon="event-rect"
-            className="h-8 w-8 fill-intavia-sulu-400 stroke-stone-800"
+            className="h-8 w-8 fill-intavia-conifer-400 stroke-stone-800"
           />
           <Label className="text-sm">
             <span className="font-thin">event-kind </span>production
