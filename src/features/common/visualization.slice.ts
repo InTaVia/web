@@ -39,6 +39,12 @@ export const visualizationSlice = createSlice({
       const id = action.payload;
       delete state[id];
     },
+    copyVisualization: (state, action) => {
+      const visID = action.payload.visID;
+      const newVisID = action.payload.newVisID;
+
+      state[newVisID] = { ...state[visID], id: newVisID, name: newVisID } as Visualization;
+    },
     createVisualization: (state, action: PayloadAction<Visualization>) => {
       const vis = action.payload;
 
@@ -449,6 +455,7 @@ export const visualizationSlice = createSlice({
 
 export const {
   removeVisualization,
+  copyVisualization,
   createVisualization,
   addEntitiesToVisualization,
   addEventsToVisualization,

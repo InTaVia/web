@@ -131,7 +131,7 @@ export class StoryTextObject implements StoryText {
         id: 'title',
         editable: true,
         label: 'Title',
-        value: 'Title',
+        value: '',
         sort: 0,
       } as ComponentProperty,
       text: {
@@ -139,7 +139,7 @@ export class StoryTextObject implements StoryText {
         id: 'text',
         editable: true,
         label: 'Text',
-        value: 'Text',
+        value: '',
         sort: 1,
       } as ComponentProperty,
     };
@@ -346,6 +346,12 @@ export const contentPaneSlice = createSlice({
   name: 'contentPane',
   initialState,
   reducers: {
+    copyContentPane: (state, action) => {
+      const id = action.payload.id;
+      const newId = action.payload.newId;
+
+      state[id] = { ...state[id], id: newId } as ContentPane;
+    },
     createContentPane: (state, action) => {
       const id = action.payload.id;
 
@@ -476,6 +482,7 @@ export const contentPaneSlice = createSlice({
 
 export const {
   createContentPane,
+  copyContentPane,
   addContentToContentPane,
   resizeMoveContent,
   editSlideContent,

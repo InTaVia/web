@@ -267,6 +267,8 @@ export const storyCreatorSlice = createSlice({
     copySlide: (state, action) => {
       const slide = action.payload.slide;
       const story = action.payload.story;
+      const visualizationSlots = action.payload.visualizationSlots;
+      const contentPaneSlots = action.payload.contentPaneSlots;
 
       const newStories = { ...state.stories };
       const oldStory = { ...newStories[story] };
@@ -276,7 +278,12 @@ export const storyCreatorSlice = createSlice({
       });
 
       const s = oldStory.slides![slide];
-      const newSlide = { ...s };
+
+      const newSlide = {
+        ...s,
+        visualizationSlots: visualizationSlots,
+        contentPaneSlots: contentPaneSlots,
+      };
       let counter = 0;
       let newID;
       do {

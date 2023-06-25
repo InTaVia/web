@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import { nanoid } from '@reduxjs/toolkit';
 import type { RefObject } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 import { useAppDispatch } from '@/app/store';
+import { copyVisualization } from '@/features/common/visualization.slice';
+import { copyContentPane } from '@/features/storycreator/contentPane.slice';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
   copySlide,
@@ -66,7 +69,46 @@ export function StoryFlow(props: StoryFlowProps) {
   }
 
   function onCopy(slideID: Slide['id']) {
-    dispatch(copySlide({ story: story.id, slide: slideID }));
+    const visReplacements = {};
+    const newVis = {};
+    const contentReplacements = {};
+    const newContents = {};
+    const slide = slides[slideID];
+
+    for (const slotId of Object.keys(slide.visualizationSlots)) {
+      if (slide.visualizationSlots[slotId] != null) {
+        visReplacements[slide.visualizationSlots[slotId]] = `visualization-${nanoid(5)}`;
+        newVis[slotId] = visReplacements[slide.visualizationSlots[slotId]];
+      } else {
+        newVis[slotId] = null;
+      }
+    }
+
+    for (const slotId of Object.keys(slide?.contentPaneSlots)) {
+      if (slide?.contentPaneSlots[slotId] != null) {
+        contentReplacements[slide.contentPaneSlots[slotId]] = `contentPane-${nanoid(5)}`;
+        newContents[slotId] = contentReplacements[slide.contentPaneSlots[slotId]];
+      } else {
+        newContents[slotId] = null;
+      }
+    }
+
+    dispatch(
+      copySlide({
+        story: story.id,
+        slide: slideID,
+        visualizationSlots: newVis,
+        contentPaneSlots: newContents,
+      }),
+    );
+
+    for (const oldId of Object.keys(visReplacements)) {
+      dispatch(copyVisualization({ visID: oldId, newVisID: visReplacements[oldId] }));
+    }
+
+    for (const oldId of Object.keys(contentReplacements)) {
+      dispatch(copyContentPane({ id: oldId, newId: contentReplacements[oldId] }));
+    }
   }
 
   function onLayoutChange(layout: any) {
