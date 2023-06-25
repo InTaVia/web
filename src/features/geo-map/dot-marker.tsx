@@ -95,8 +95,8 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
             width={size * 0.886}
             height={size * 0.886}
             fill={isHovered || selected ? foregroundColor : backgroundColor}
-            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
-            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
+            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'white'}
+            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 1}
           />
         ) : (
           <circle
@@ -104,8 +104,8 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
             cy={svgWidthHight / 2}
             r={size / 2}
             fill={isHovered || selected ? foregroundColor : backgroundColor}
-            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
-            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
+            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'white'}
+            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 1}
           />
         )}
       </svg>

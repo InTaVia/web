@@ -161,7 +161,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
         //TODO Make own component
 
         const isHovered =
-          hovered?.relatedEvents.includes(feature.id as string) === true ||
+          hovered?.relatedEvents!.includes(feature.id as string) === true ||
           hovered?.events.includes(feature.id as string) === true;
         return (
           <g
@@ -188,8 +188,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
                 width={circleRadius * 2 * 0.886}
                 height={circleRadius * 2 * 0.886}
                 fill={isHovered ? foregroundColor : backgroundColor}
-                stroke={isHovered ? backgroundColor : 'none'}
-                strokeWidth={isHovered ? 2 : 0}
+                stroke={isHovered ? backgroundColor : 'white'}
+                strokeWidth={isHovered ? 2 : 1}
               />
             ) : (
               <circle
@@ -198,8 +198,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
                 cy={clusterWidth * cy + offset}
                 r={circleRadius}
                 fill={isHovered ? foregroundColor : backgroundColor}
-                stroke={isHovered ? backgroundColor : 'none'}
-                strokeWidth={isHovered ? 2 : 0}
+                stroke={isHovered ? backgroundColor : 'white'}
+                strokeWidth={isHovered ? 2 : 1}
               />
             )}
             {/* <circle
