@@ -6,7 +6,6 @@ import type { DragEvent, MouseEvent, ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
-import { useLocale } from '@/app/route/use-locale';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEvents } from '@/app/store/intavia.slice';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
@@ -43,7 +42,6 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { hovered, updateHover } = useHoverState();
 
-  const { locale } = useLocale();
   const _events = useAppSelector(selectEvents);
   // const vocabularies = useAppSelector(selectVocabularyEntries);
 
@@ -77,7 +75,12 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
   }
 
   function onDragStart(event: DragEvent<HTMLDivElement>) {
-    const data: DataTransferData = { type: 'data', entities: [entity.id], events: [] };
+    const data: DataTransferData = {
+      type: 'data',
+      entities: [entity.id],
+      events: [],
+      targetEntities: [],
+    };
     event.dataTransfer.setData(mediaType, JSON.stringify(data));
   }
 
