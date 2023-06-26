@@ -1,5 +1,4 @@
 import type { EntityKind, EventKind } from '@intavia/api-client';
-import { hsl } from 'd3';
 
 interface KindColor {
   foreground: string;
@@ -25,61 +24,85 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     label: 'Birth',
     type: 'birth',
     shape: 'dot',
-    color: { foreground: 'hsl(202,60%,80%)', background: 'hsl(202,100%,35%)' },
+    color: { foreground: '#ffd5c8', background: '#fc9272' },
   },
   death: {
     label: 'Death',
     type: 'death',
     shape: 'dot',
-    color: { foreground: 'hsl(350,60%,80%)', background: 'hsl(350,100%,40%)' },
+    color: { foreground: '#e4e4e4', background: '#27000d' },
   },
-  creation: {
-    label: 'Creation',
-    type: 'creation',
+  production: {
+    label: 'Production',
+    type: 'production',
     shape: 'rectangle',
-    color: { foreground: 'hsl(180,60%,80%)', background: 'hsl(180,100%,25%)' },
+    color: { foreground: '#ceeda9', background: '#92d050' },
   },
-  travel: {
+  movement: {
     label: 'Travel',
     type: 'travel',
     shape: 'dot',
-    color: { foreground: 'hsl(60, 100%, 55%)', background: 'hsl(60, 100%, 43%)' },
+    color: { foreground: '#c5d9f8', background: '#6d9eeb' },
   },
   career: {
     label: 'Career',
     type: 'career',
     shape: 'dot',
-    color: { foreground: 'hsl(30, 100%, 75%)', background: 'hsl(30, 100%, 50%)' },
+    color: { foreground: '#abefcd', background: '#78e2b4' },
+  },
+  honour: {
+    label: 'Honour',
+    type: 'honour',
+    shape: 'dot',
+    color: { foreground: '#b7e3cc', background: '#52b087' },
   },
   default: {
-    label: 'Unknown',
+    label: 'Event',
     type: 'default',
     shape: 'dot',
-    color: { foreground: 'hsl(300,60%,80%)', background: 'hsl(300,100%,25%)' },
+    color: { foreground: '#c2dac0', background: '#639c65' },
   },
 };
 
 export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['type']> = {
-  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth',
-  'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
-  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death',
+  //TODO: check if labels of upstream event-kinds still used within code to access colors/shapes
+  //birth
   birth: 'birth',
-  death: 'death',
-  'Death (crm)': 'death',
   'Birth (crm)': 'birth',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjdfQmlydGg=': 'birth', // Birth (crm)
+  'event-kind-birth': 'birth',
+
+  //event/default
+  'Event (crm)': 'default',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNV9FdmVudA==': 'default', // Event (crm)
+
+  //production
+  'Production (crm)': 'production',
+  creation: 'production',
+  production: 'production',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'production', // Production (crm)
+  'event-kind-production': 'production',
+  'event-kind-creation': 'production',
+
+  //career
   Career: 'career',
   professional: 'career',
-  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0NhcmVlcg==': 'career', // Career
-  'Production (crm)': 'creation',
-  'Event (crm)': 'default',
-  creation: 'creation',
-  travel: 'travel',
-  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FMTJfUHJvZHVjdGlvbg==': 'creation', //Production (crm)
-  'event-kind-birth': 'birth',
-  'event-kind-death': 'death',
-  'event-kind-creation': 'creation',
-  'event-kind-travel': 'travel',
+  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0NhcmVlcg==': 'career', // Career (idm-core)
   'event-kind-professional': 'career',
+
+  //honour
+  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0hvbm91cg==': 'honour', // Honour (idm-core)
+
+  //movement
+  travel: 'movement',
+  'event-kind-travel': 'movement',
+
+  //death
+  death: 'death',
+  'Death (crm)': 'death',
+  'aHR0cDovL2RhdGEuYmlvZ3JhcGh5bmV0Lm5sL3JkZi9EZWF0aA==': 'death',
+  'aHR0cDovL3d3dy5jaWRvYy1jcm0ub3JnL2NpZG9jLWNybS9FNjlfRGVhdGg=': 'death', // Death (crm)
+  'event-kind-death': 'death',
 };
 
 export function getColorById(id: string): string {
@@ -117,41 +140,30 @@ export function getEventKindPropertiesByType(type: string): EventKindProperties 
   }
 }
 
-// const entityColorByKind: Record<EntityKind, KindColor> = {
-//   person: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
-//   'cultural-heritage-object': {
-//     foreground: 'hsl(208, 60%, 80%)',
-//     background: 'hsl(208, 100%, 35%)',
-//   },
-//   place: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
-//   group: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
-//   'historical-event': { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
-// };
-
 const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
   person: {
     label: 'Person',
     kind: 'person',
     shape: 'dot',
-    color: { foreground: 'hsl(116, 60%, 80%)', background: 'hsl(116, 100%, 35%)' },
+    color: { foreground: '#c2dac0', background: '#639c65' },
   },
   'cultural-heritage-object': {
     label: 'CH-Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
-    color: { foreground: 'hsl(208, 60%, 80%)', background: 'hsl(208, 100%, 35%)' },
+    color: { foreground: '#ceeda9', background: '#92d050' },
   },
   place: {
     label: 'Place',
     kind: 'place',
     shape: 'triangle',
-    color: { foreground: 'hsl(3, 60%, 80%)', background: 'hsl(3, 100%, 35%)' },
+    color: { foreground: '#e5e2f2', background: '#b4a7d6' },
   },
   group: {
     label: 'Group',
     kind: 'group',
     shape: 'ellipse',
-    color: { foreground: 'hsl(0, 0%, 80%)', background: 'hsl(0, 0%, 35%)' },
+    color: { foreground: '#ecd3bc', background: '#dbac85' },
   },
   'historical-event': {
     label: 'Historical Event',
