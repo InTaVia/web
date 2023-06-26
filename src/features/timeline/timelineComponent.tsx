@@ -50,7 +50,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   );
 
   return (
-    <div className="relative">
+    <>
       <Timeline
         events={events}
         entities={filteredEntities}
@@ -67,6 +67,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         diameter={diameter}
         fontSize={fontSize}
         zoom={zoom}
+        setZoom={setZoom}
         onToggleHighlight={onToggleHighlight}
         highlightedByVis={highlightedByVis}
       />
@@ -93,6 +94,6 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
       <div className="absolute bottom-0 right-0">
         <VisualizationLegend events={events} entities={filteredEntities} />
       </div>
-    </div>
+    </>
   );
 }

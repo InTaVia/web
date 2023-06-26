@@ -13,7 +13,7 @@ export interface StoryMapMarker {
 export interface SlideContent {
   id: string;
   parentPane: string;
-  type: (typeof SlideContentTypes)[number];
+  type: typeof SlideContentTypes[number];
   layout: {
     x: number;
     y: number;
@@ -23,7 +23,7 @@ export interface SlideContent {
   properties?: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
-export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio']; //, 'Title'];
+export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio', 'HTML']; //, 'Title'];
 
 export interface ContentPane {
   id: string;
@@ -53,6 +53,16 @@ export interface StoryVideoAudio extends SlideContent {
 
 export interface StoryText extends SlideContent {
   type: 'Text';
+  properties: Record<string, ComponentProperty>;
+}
+
+export interface Story3D extends SlideContent {
+  type: '3D';
+  properties: Record<string, ComponentProperty>;
+}
+
+export interface StoryHTML extends SlideContent {
+  type: 'HTML';
   properties: Record<string, ComponentProperty>;
 }
 
@@ -104,6 +114,68 @@ export class StoryQuizObject implements StoryQuiz {
 
 export class StoryTextObject implements StoryText {
   type: 'Text' = 'Text';
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  properties: Record<string, ComponentProperty>;
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.layout = layout;
+    this.parentPane = parentPane;
+    this.properties = {
+      title: {
+        type: 'text',
+        id: 'title',
+        editable: true,
+        label: 'Title',
+        value: '',
+        sort: 0,
+      } as ComponentProperty,
+      text: {
+        type: 'textarea',
+        id: 'text',
+        editable: true,
+        label: 'Text',
+        value: '',
+        sort: 1,
+      } as ComponentProperty,
+    };
+  }
+  parentPane: string;
+}
+
+export class StoryHTMLObject implements StoryText {
+  type: 'HTML' = 'HTML';
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  properties: Record<string, ComponentProperty>;
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.layout = layout;
+    this.parentPane = parentPane;
+    this.properties = {
+      text: {
+        type: 'textarea',
+        id: 'text',
+        editable: true,
+        label: 'Content',
+        value: 'Content',
+        sort: 0,
+      } as ComponentProperty,
+    };
+  }
+  parentPane: string;
+}
+
+export class Story3DObject implements StoryText {
+  type: '3D' = '3D';
   id: string;
   layout: { x: number; y: number; w: number; h: number };
   properties: Record<string, ComponentProperty>;
@@ -195,7 +267,7 @@ export class StoryImageObject implements StoryImage {
         sort: 1,
       } as ComponentProperty,
       text: {
-        type: 'text',
+        type: 'textarea',
         id: 'text',
         editable: true,
         label: 'Text',
@@ -203,7 +275,7 @@ export class StoryImageObject implements StoryImage {
         sort: 2,
       } as ComponentProperty,
       link: {
-        type: 'text',
+        type: 'textarea',
         id: 'link',
         editable: true,
         label: 'Link',
@@ -239,7 +311,7 @@ export class StoryVideoAudioObject implements StoryVideoAudio {
         sort: 1,
       } as ComponentProperty,
       caption: {
-        type: 'text',
+        type: 'textarea',
         id: 'caption',
         editable: true,
         label: 'Caption',
@@ -247,7 +319,7 @@ export class StoryVideoAudioObject implements StoryVideoAudio {
         sort: 2,
       } as ComponentProperty,
       link: {
-        type: 'text',
+        type: 'textarea',
         id: 'link',
         editable: true,
         label: 'Link',
@@ -274,6 +346,12 @@ export const contentPaneSlice = createSlice({
   name: 'contentPane',
   initialState,
   reducers: {
+    copyContentPane: (state, action) => {
+      const id = action.payload.id;
+      const newId = action.payload.newId;
+
+      state[id] = { ...state[id], id: newId } as ContentPane;
+    },
     createContentPane: (state, action) => {
       const id = action.payload.id;
 
@@ -328,6 +406,9 @@ export const contentPaneSlice = createSlice({
         case 'Text':
           contentObject = new StoryTextObject(content.id, content.contentPane, content.layout);
           break;
+        case 'HTML':
+          contentObject = new StoryHTMLObject(content.id, content.contentPane, content.layout);
+          break;
         case 'Quiz':
           contentObject = new StoryQuizObject(content.id, content.contentPane, content.layout);
           break;
@@ -363,8 +444,29 @@ export const contentPaneSlice = createSlice({
     },
     editSlideContent: (state, action) => {
       const content = action.payload.content;
+      const tmpContents = { ...state[content.parentPane]!.contents, [content.id]: { ...content } };
+      const tmpContentPane = { ...state[content.parentPane], contents: tmpContents };
 
-      state[content.parentPane]!.contents[content.id] = content;
+      return { ...state, [content.parentPane]: tmpContentPane };
+    },
+    editSlideContentProperty: (state, action) => {
+      const content = action.payload.content;
+      const property = action.payload.property;
+      const value = action.payload.value;
+
+      const tmpContent = state[content.parentPane]?.contents[content.id];
+      const tmpProperties = {
+        ...tmpContent.properties,
+        [property]: { ...tmpContent.properties[property], value: value },
+      };
+      const tmpContents = {
+        ...state[tmpContent.parentPane]!.contents,
+        [tmpContent.id]: { ...tmpContent, properties: { ...tmpProperties } },
+      };
+
+      const tmpContentPane = { ...state[tmpContent.parentPane], contents: tmpContents };
+
+      return { ...state, [tmpContent.parentPane]: tmpContentPane };
     },
     removeSlideContent: (state, action) => {
       const content = action.payload.content;
@@ -380,11 +482,13 @@ export const contentPaneSlice = createSlice({
 
 export const {
   createContentPane,
+  copyContentPane,
   addContentToContentPane,
   resizeMoveContent,
   editSlideContent,
   removeSlideContent,
   importContentPane,
+  editSlideContentProperty,
 } = contentPaneSlice.actions;
 
 export const selectContentPaneByID = createSelector(
@@ -396,6 +500,21 @@ export const selectContentPaneByID = createSelector(
   },
   (contentPanes, id) => {
     return contentPanes[id];
+  },
+);
+
+export const selectContentByID = createSelector(
+  (state: RootState) => {
+    return state.contentPane;
+  },
+  (state: RootState, parentPane: string) => {
+    return parentPane;
+  },
+  (state: RootState, parentPane: string, id: string) => {
+    return id;
+  },
+  (contentPanes, parentPane, id) => {
+    return contentPanes[parentPane]?.contents[id];
   },
 );
 
