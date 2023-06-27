@@ -452,7 +452,7 @@ export const contentPaneSlice = createSlice({
     editSlideContent: (state, action) => {
       const content = action.payload.content;
       const tmpContents = { ...state[content.parentPane]!.contents, [content.id]: { ...content } };
-      const tmpContentPane = { ...state[content.parentPane], contents: tmpContents } as ContentPane;
+      const tmpContentPane = { ...state[content.parentPane], contents: tmpContents } as Content;
 
       const parentPane = content!.parentPane;
 
@@ -504,19 +504,19 @@ export const {
 
 export const selectContentPaneByID = createSelector(
   (state: RootState) => {
-    return state;
+    return state.contentPane;
   },
   (state: RootState, id: string) => {
     return id;
   },
-  (state, id) => {
-    return state[id];
+  (contentPanes, id) => {
+    return contentPanes[id];
   },
 );
 
 export const selectContentByID = createSelector(
   (state: RootState) => {
-    return state;
+    return state.contentPane;
   },
   (state: RootState, parentPane: string) => {
     return parentPane;
@@ -524,25 +524,25 @@ export const selectContentByID = createSelector(
   (state: RootState, parentPane: string, id: string) => {
     return id;
   },
-  (state, parentPane, id) => {
-    return state[parentPane]?.contents[id];
+  (contentPanes, parentPane, id) => {
+    return contentPanes[parentPane]?.contents[id];
   },
 );
 
 export const selectStoryByContentPaneByID = createSelector(
   (state: RootState) => {
-    return state;
+    return state.contentPane;
   },
   (state: RootState, id: string) => {
     return id;
   },
-  (state, id) => {
-    return state[id];
+  (contentPanes, id) => {
+    return contentPanes[id];
   },
 );
 
 export const selectAllConentPanes = (state: RootState) => {
-  return state;
+  return state.contentPane;
 };
 
 export default contentPaneSlice.reducer;

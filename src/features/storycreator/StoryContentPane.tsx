@@ -77,12 +77,10 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     switch (element.type) {
       case 'Text':
         return (
-          <>
-            <StoryContentText
-              key={`${contentPane.id}-${element.id}-${element.parentPane}`}
-              i_content={element}
-            />
-          </>
+          <StoryContentText
+            key={`${contentPane.id}-${element.id}-${element.parentPane}`}
+            i_content={element}
+          />
         );
       case 'HTML':
         return (
