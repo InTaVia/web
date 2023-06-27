@@ -76,7 +76,14 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   const createWindowContent = (element: SlideContent) => {
     switch (element.type) {
       case 'Text':
-        return <StoryContentText i_content={element} />;
+        return (
+          <>
+            <StoryContentText
+              key={`${contentPane.id}-${element.id}-${element.parentPane}`}
+              i_content={element}
+            />
+          </>
+        );
       case 'HTML':
         return (
           <div style={{ height: '100%' }}>
@@ -321,6 +328,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   resizeMoveContent({
                     layout: dragged,
                     parentPane: id,
+                    content: element.i,
                     parentType: 'Content',
                   }),
                 );

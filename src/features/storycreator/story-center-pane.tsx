@@ -522,7 +522,6 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
               setPreviewStatus('default');
             })
             .catch((rejected: unknown) => {
-              console.error(rejected);
               setPreviewStatus('error');
             });
         }}
