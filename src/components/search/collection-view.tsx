@@ -23,13 +23,14 @@ import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
+import { selectSelectedCollection } from '@/features/ui/ui.slice';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export function CollectionView(): JSX.Element {
   const { t } = useI18n<'common'>();
 
   const _collections = useAppSelector(selectCollections);
-  const { currentCollection } = useCollection();
+  const currentCollection = useAppSelector(selectSelectedCollection);
 
   const [isDialogOpen, setDialogOpen] = useState(false);
 
