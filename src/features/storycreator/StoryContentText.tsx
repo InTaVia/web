@@ -47,7 +47,7 @@ export function StoryContentText(props: StoryContentTextProps) {
               setContent={(text) => {
                 dispatch(
                   editSlideContentProperty({
-                    content: content,
+                    content: { ...content },
                     property: 'title',
                     value: text === 'Title' ? '' : text,
                   }),

@@ -349,8 +349,17 @@ export const contentPaneSlice = createSlice({
     copyContentPane: (state, action) => {
       const id = action.payload.id;
       const newId = action.payload.newId;
+      const oldContentPane = state[id];
+      const newContents = {};
 
-      state[id] = { ...state[id], id: newId } as ContentPane;
+      for (const oldContentKey of Object.keys(oldContentPane!.contents)) {
+        newContents[oldContentKey] = {
+          ...oldContentPane!.contents[oldContentKey],
+          parentPane: newId,
+        };
+      }
+
+      state[newId] = { ...oldContentPane, id: newId, contents: newContents } as ContentPane;
     },
     createContentPane: (state, action) => {
       const id = action.payload.id;
@@ -433,11 +442,9 @@ export const contentPaneSlice = createSlice({
       if (type === 'Content') {
         objectToChange = state[parentPane]!.contents[content];
         if (objectToChange !== undefined) {
-          objectToChange.layout = {
-            x: layout.x,
-            y: layout.y,
-            w: layout.w,
-            h: layout.h,
+          state[parentPane]!.contents[content] = {
+            ...objectToChange,
+            layout: { x: layout.x, y: layout.y, w: layout.w, h: layout.h },
           };
         }
       }
@@ -445,9 +452,13 @@ export const contentPaneSlice = createSlice({
     editSlideContent: (state, action) => {
       const content = action.payload.content;
       const tmpContents = { ...state[content.parentPane]!.contents, [content.id]: { ...content } };
-      const tmpContentPane = { ...state[content.parentPane], contents: tmpContents };
+      const tmpContentPane = { ...state[content.parentPane], contents: tmpContents } as ContentPane;
 
-      return { ...state, [content.parentPane]: tmpContentPane };
+      const parentPane = content!.parentPane;
+
+      if (parentPane != null) {
+        state[parentPane] = tmpContentPane;
+      }
     },
     editSlideContentProperty: (state, action) => {
       const content = action.payload.content;
@@ -493,19 +504,19 @@ export const {
 
 export const selectContentPaneByID = createSelector(
   (state: RootState) => {
-    return state.contentPane;
+    return state;
   },
   (state: RootState, id: string) => {
     return id;
   },
-  (contentPanes, id) => {
-    return contentPanes[id];
+  (state, id) => {
+    return state[id];
   },
 );
 
 export const selectContentByID = createSelector(
   (state: RootState) => {
-    return state.contentPane;
+    return state;
   },
   (state: RootState, parentPane: string) => {
     return parentPane;
@@ -513,25 +524,25 @@ export const selectContentByID = createSelector(
   (state: RootState, parentPane: string, id: string) => {
     return id;
   },
-  (contentPanes, parentPane, id) => {
-    return contentPanes[parentPane]?.contents[id];
+  (state, parentPane, id) => {
+    return state[parentPane]?.contents[id];
   },
 );
 
 export const selectStoryByContentPaneByID = createSelector(
   (state: RootState) => {
-    return state.contentPane;
+    return state;
   },
   (state: RootState, id: string) => {
     return id;
   },
-  (contentPanes, id) => {
-    return contentPanes[id];
+  (state, id) => {
+    return state[id];
   },
 );
 
 export const selectAllConentPanes = (state: RootState) => {
-  return state.contentPane;
+  return state;
 };
 
 export default contentPaneSlice.reducer;
