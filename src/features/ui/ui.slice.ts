@@ -137,5 +137,3 @@ export const selectPaneOpen = createSelector(
     }
   },
 );
-
-export default uiSlice.reducer;
