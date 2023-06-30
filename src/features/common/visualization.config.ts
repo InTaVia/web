@@ -50,12 +50,6 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     color: { foreground: '#abefcd', background: '#78e2b4' },
   },
-  honour: {
-    label: 'Honour',
-    type: 'honour',
-    shape: 'dot',
-    color: { foreground: '#b7e3cc', background: '#52b087' },
-  },
   default: {
     label: 'Event',
     type: 'default',
@@ -91,7 +85,7 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'event-kind-professional': 'career',
 
   //honour
-  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0hvbm91cg==': 'honour', // Honour (idm-core)
+  'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0hvbm91cg==': 'career', // Honour (idm-core)
 
   //movement
   travel: 'movement',
