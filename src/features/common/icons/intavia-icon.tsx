@@ -7,6 +7,7 @@ import {
   CollectionSvgGroup,
   CulturalHeritageObjectSvgGroup,
   EventCircleSvgGroup,
+  EventDiamondSvgGroup,
   EventRectSvgGroup,
   GroupSvgGroup,
   MapSvgGroup,
@@ -16,8 +17,15 @@ import {
   TimelineSvgGroup,
 } from '@/features/common/icons/intavia-icon-shapes';
 
-type IconTypes = 'collection' | 'event-circle' | 'event-rect' | 'map' | 'network' | 'timeline';
-type IntaviaIconTypes = EntityKind | IconTypes;
+type IconTypes =
+  | 'collection'
+  | 'event-circle'
+  | 'event-diamond'
+  | 'event-rectangle'
+  | 'map'
+  | 'network'
+  | 'timeline';
+export type IntaviaIconTypes = EntityKind | IconTypes;
 
 interface IntaviaIconVariant {
   icon: IntaviaIconTypes;
@@ -34,7 +42,8 @@ const icons: Record<IntaviaIconTypes, FC<ComponentPropsWithoutRef<'g'>>> = {
   network: NetworkSvgGroup,
   collection: CollectionSvgGroup,
   'event-circle': EventCircleSvgGroup,
-  'event-rect': EventRectSvgGroup,
+  'event-rectangle': EventRectSvgGroup,
+  'event-diamond': EventDiamondSvgGroup,
 };
 
 type IntaviaIconProps = ComponentPropsWithoutRef<'svg'> & IntaviaIconVariant;

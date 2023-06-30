@@ -69,6 +69,18 @@ export const EventRectSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWitho
   },
 );
 
+export const EventDiamondSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRef<'g'>>(
+  function EventRectSvgGroup(props, forwardedRef): JSX.Element {
+    const { className, ...rest } = props;
+
+    return (
+      <g ref={forwardedRef} className={className} {...rest}>
+        <polygon points="2 12 12 2 22 12 12 22" />;
+      </g>
+    );
+  },
+);
+
 export const TimelineSvgGroup = forwardRef<ElementRef<'g'>, ComponentPropsWithoutRef<'g'>>(
   function TimelineSvgGroup(props, forwardedRef): JSX.Element {
     const { className, ...rest } = props;
