@@ -110,23 +110,23 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
         return _events[relation.event];
       })
       .filter(Boolean);
-    const temporallySortedrelatedEvents = relatedEvents.sort((eventA: Event, eventB: Event) => {
+    const temporallySortedRelatedEvents = relatedEvents.sort((eventA: Event, eventB: Event) => {
       const sortDateA =
         'startDate' in eventA
-          ? new Date(eventA.startDate as string)
+          ? new Date(eventA.startDate as string).getTime()
           : 'endDate' in eventA
-          ? new Date(eventA.endDate as string)
+          ? new Date(eventA.endDate as string).getTime()
           : now;
       const sortDateB =
         'startDate' in eventB
-          ? new Date(eventB.startDate as string)
+          ? new Date(eventB.startDate as string).getTime()
           : 'endDate' in eventB
-          ? new Date(eventB.endDate as string)
+          ? new Date(eventB.endDate as string).getTime()
           : now;
       return sortDateA - sortDateB;
     });
-    return temporallySortedrelatedEvents;
-  }, [entity]);
+    return temporallySortedRelatedEvents;
+  }, [_events, entity.relations]);
 
   return (
     <div className="grid border border-neutral-200">
