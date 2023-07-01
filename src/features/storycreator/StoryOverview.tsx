@@ -1,4 +1,4 @@
-import { AdjustmentsIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import { AdjustmentsIcon, PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event, MediaResource } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
@@ -44,6 +44,8 @@ export function StoryOverview(): JSX.Element {
   const allEntities = useAppSelector(selectEntities);
   const allEvents = useAppSelector(selectEvents);
   const allContentPanes = useAppSelector(selectAllConentPanes);
+
+  const [hover, setHover] = useState<number | null>(null);
 
   function onCreateStory() {
     const oldIDs = Object.keys(stories);
@@ -176,23 +178,23 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <h1 className="text-5xl font-light">{t(['common', 'stories', 'metadata', 'title'])}</h1>
-      <div className="grid h-full grid-cols-[auto_auto_auto_auto_auto] gap-2">
+      <div className="grid h-full grid-cols-[auto_auto_auto_auto_auto]">
         <b>ID</b>
         <b>Title</b>
         <b>Subtitle</b>
         <b>Author</b>
         <b>Actions</b>
-        {Object.values(stories).map((story) => {
+        {Object.values(stories).map((story, i) => {
           const _name = story.properties.name?.value.trim();
           const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
 
           return (
-            <Fragment key={`${story.id}storyOverviewListEntry`}>
+            <div className="overview-table-row contents" key={`${story.id}storyOverviewListEntry`}>
               <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                <a>{story.id}</a>
+                <a className="underline decoration-solid hover:font-bold">{story.id}</a>
               </Link>
               <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                <a>{name}</a>
+                <a className="underline decoration-solid hover:font-bold">{name}</a>
               </Link>
               <div>{story.properties.subtitle?.value}</div>
               <div>{story.properties.author?.value}</div>
@@ -221,13 +223,13 @@ export function StoryOverview(): JSX.Element {
                   <TrashIcon className="h-5 w-5" />
                 </IconButton>
               </div>
-            </Fragment>
+            </div>
           );
         })}
       </div>
-      <div className="grid justify-items-start gap-4">
-        <Button type="submit" onClick={onCreateStory}>
-          Create new story
+      <div className="grid w-fit grid-cols-2 justify-items-start gap-4">
+        <Button className="col-span-2" type="submit" onClick={onCreateStory}>
+          <PlusIcon className="h-5 w-5" /> Create New Story
         </Button>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
       </div>

@@ -22,7 +22,7 @@ export function CollectionSelect(): JSX.Element {
     <Select
       disabled={collections.length === 0}
       onValueChange={onSelectionChange}
-      value={currentCollection ?? undefined}
+      value={currentCollection}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={t(['common', 'collections', 'select-collection'])} />
