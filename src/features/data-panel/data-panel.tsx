@@ -3,6 +3,7 @@ import { useContext, useMemo } from 'react';
 
 import { PageContext } from '@/app/context/page.context';
 import { useAppSelector } from '@/app/store';
+import { CollectionProvider } from '@/components/search/collection.context';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { CollectionPanel } from '@/features/data-panel/collection-panel';
 import { VisualizedPanel } from '@/features/data-panel/visualized-panel';
@@ -58,10 +59,12 @@ export function DataPanel(): JSX.Element {
     collections: {
       label: 'Collections',
       panel: (
-        <CollectionPanel
-          currentVisualizationIds={currentVisualizationIds}
-          targetHasVisualizations={targetHasVisualizations}
-        />
+        <CollectionProvider>
+          <CollectionPanel
+            currentVisualizationIds={currentVisualizationIds}
+            targetHasVisualizations={targetHasVisualizations}
+          />
+        </CollectionProvider>
       ),
     },
     visualised: {

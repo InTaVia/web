@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollectionsCount } from '@/app/store/intavia-collections.slice';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
+import { useCollection } from '@/components/search/collection.context';
 import { useDataFromCollection } from '@/features/common/data/use-data-from-collection';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -36,7 +37,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
   const { currentVisualizationIds = null, targetHasVisualizations = false } = props;
   const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
-  const [selectedCollection, setSelectedCollection] = useState<Collection['id']>('');
+  const { currentCollection, setCurrentCollection } = useCollection();
 
   const [settingsOpen, setSettingsOpen] = useState(true);
 
@@ -46,10 +47,10 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
   const collectionsCount = useAppSelector(selectCollectionsCount);
 
   const onCollectionChange = (collection: Collection['id']) => {
-    setSelectedCollection(collection);
+    setCurrentCollection(collection);
   };
 
-  const { entities, events } = useDataFromCollection({ collectionId: selectedCollection });
+  const { entities, events } = useDataFromCollection({ collectionId: currentCollection });
 
   useEffect(() => {
     if (events.length === 0) {
@@ -123,7 +124,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
         <CollectionSelect onChange={onCollectionChange} />
       </div>
 
-      {entities.length === 0 && selectedCollection !== '' && (
+      {entities.length === 0 && currentCollection != null && (
         <div className="flex h-full w-full flex-col place-items-center justify-start bg-neutral-50">
           <NothingFoundMessage>
             {t(['common', 'collections', 'empty-collection'])}
@@ -144,7 +145,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
       )}
 
       {/**Toolbar */}
-      {entities.length > 0 && selectedCollection !== '' && targetHasVisualizations && (
+      {entities.length > 0 && currentCollection != null && targetHasVisualizations && (
         <div className="bg-neutral-100 p-2">
           {!showChronolgyOnly && (
             <Button variant={'outline'} size={'xs'} onClick={addAllEntitiesToVisualizations}>
@@ -160,7 +161,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
       )}
 
       {/**Settings */}
-      {entities.length > 0 && selectedCollection !== '' && (
+      {entities.length > 0 && currentCollection != null && (
         <div className="bg-neutral-100 px-3 py-2">
           <Collapsible
             defaultOpen={settingsOpen}
@@ -216,7 +217,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
         </div>
       )}
 
-      {entities.length > 0 && selectedCollection !== '' && (
+      {entities.length > 0 && currentCollection != null && (
         <DataView
           entities={entities}
           events={events}

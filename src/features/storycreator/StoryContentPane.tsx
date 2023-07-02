@@ -1,6 +1,7 @@
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import { Button, IconButton } from '@intavia/ui';
+import parse from 'html-react-parser';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -16,13 +17,16 @@ import type {
   StoryTitle,
 } from '@/features/storycreator/contentPane.slice';
 import {
+  editSlideContentProperty,
   removeSlideContent,
   resizeMoveContent,
   selectContentPaneByID,
 } from '@/features/storycreator/contentPane.slice';
 import { StoryTitleSlide } from '@/features/storycreator/story-title-slide';
+import { StoryContentText } from '@/features/storycreator/StoryContentText';
 import { selectStoryByID } from '@/features/storycreator/storycreator.slice';
 import { StoryVideoAudio } from '@/features/storycreator/StoryVideoAudio';
+import { EditableText } from '@/features/ui/editable-text';
 
 const margin: [number, number] = [0, 0];
 
@@ -73,6 +77,13 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     switch (element.type) {
       case 'Text':
         return (
+          <StoryContentText
+            key={`${contentPane.id}-${element.id}-${element.parentPane}`}
+            i_content={element}
+          />
+        );
+      case 'HTML':
+        return (
           <div style={{ height: '100%' }}>
             <div
               style={{
@@ -84,7 +95,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 fontFamily: fontFamily,
               }}
             >
-              {(Boolean(element!.properties!.title!.value) ||
+              {/* {(Boolean(element!.properties!.title!.value) ||
                 Boolean(element!.properties!.text!.value)) && (
                 <div className="p-2">
                   {Boolean(element!.properties!.title!.value) && (
@@ -94,6 +105,9 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                     <p>{element!.properties!.text!.value}</p>
                   )}
                 </div>
+              )} */}
+              {Boolean(element!.properties!.text!.value) && (
+                <div>{parse(element!.properties!.text!.value)}</div>
               )}
             </div>
           </div>
@@ -185,9 +199,39 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               element.properties!.text!.value !== '') && (
               <div className="absolute bottom-0 w-full bg-white p-2">
                 {element.properties!.title!.value !== '' && (
-                  <p className="mb-1 text-xl">{element.properties!.title!.value}</p>
+                  <p className="mb-1 text-xl">
+                    <EditableText
+                      key={`${element.properties.id}Editable`}
+                      content={`${element.properties!.title!.value}`}
+                      setContent={(text) => {
+                        dispatch(
+                          editSlideContentProperty({
+                            content: element,
+                            property: 'title',
+                            value: text,
+                          }),
+                        );
+                      }}
+                    />
+                  </p>
                 )}
-                {element.properties!.text!.value !== '' && <p>{element.properties!.text!.value}</p>}
+                {element.properties!.text!.value !== '' && (
+                  <p>
+                    <EditableText
+                      key={`${element.properties.id}Editable`}
+                      content={`${element.properties!.text!.value}`}
+                      setContent={(text) => {
+                        dispatch(
+                          editSlideContentProperty({
+                            content: element,
+                            property: 'text',
+                            value: text,
+                          }),
+                        );
+                      }}
+                    />
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -206,7 +250,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
   const createLayoutPane = (element: any) => {
     return (
       <div key={element.id} className={'overflow-hidden'}>
-        <div className="flex flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
+        <div className="dragHandler flex cursor-grab flex-row flex-nowrap justify-between gap-2 truncate bg-intavia-blue-400 px-2 py-1 text-white">
           <div className="truncate">{element.type}</div>
           <div className="sticky right-0 flex flex-nowrap gap-1">
             <button
@@ -259,6 +303,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               compactType={'vertical'}
               useCSSTransforms={true}
               isDraggable={true}
+              draggableHandle=".dragHandler"
               style={{
                 width: '100%',
                 height: '100%',
@@ -281,6 +326,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   resizeMoveContent({
                     layout: dragged,
                     parentPane: id,
+                    content: element.i,
                     parentType: 'Content',
                   }),
                 );

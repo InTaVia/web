@@ -1,3 +1,4 @@
+import { ArrowUpIcon } from '@heroicons/react/outline';
 import { FileInput, FileInputTrigger, useToast } from '@intavia/ui';
 
 interface LoadStoryProps {
@@ -44,12 +45,15 @@ export function LoadStory(props: LoadStoryProps): JSX.Element {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <FileInput accept=".json" onValueChange={onChangeFileInput}>
-        <FileInputTrigger>Import story</FileInputTrigger>
+    <>
+      <FileInput className="w-36" accept=".json" onValueChange={onChangeFileInput}>
+        <FileInputTrigger>
+          <ArrowUpIcon className="h-5 w-5" />
+          Import Story
+        </FileInputTrigger>
       </FileInput>
 
       <p>Please select an InTaVia Story Configuration File</p>
-    </div>
+    </>
   );
 }

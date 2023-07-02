@@ -31,13 +31,19 @@ export function useDataFromCollection(
     useMemo(() => {
       if (collection != null) {
         // Collection Entities
-        const collectionEntities = collection.entities.map((entityId) => {
-          return _entities[entityId];
-        }) as Array<Entity>;
+        const collectionEntities = collection.entities
+          .filter((entityKey) => {
+            return Object.keys(_entities).includes(entityKey);
+          })
+          .map((entityId) => {
+            return _entities[entityId];
+          }) as Array<Entity>;
+
+        console.log(collectionEntities);
 
         const relatedEventIds = unique(
           collectionEntities.flatMap((entity: Entity) => {
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            console.log(entity);
             return entity.relations !== undefined
               ? entity.relations.map((relation: EntityEventRelation) => {
                   return relation.event;
@@ -86,9 +92,13 @@ export function useDataFromCollection(
           },
         );
 
-        const collectionEvents = collection.events.map((id) => {
-          return _events[id];
-        }) as Array<Event>;
+        const collectionEvents = collection.events
+          .filter((eventKey) => {
+            return Object.keys(_events).includes(eventKey);
+          })
+          .map((id) => {
+            return _events[id];
+          }) as Array<Event>;
 
         const relatedEntityIds = collectionEvents.flatMap((event: Event) => {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

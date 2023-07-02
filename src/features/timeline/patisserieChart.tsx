@@ -95,8 +95,6 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
 
           const color = getEventKindPropertiesByType(type).color;
 
-          console.log(item[0].kind, type, translatedEventKind, color);
-
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(
             offset / total,

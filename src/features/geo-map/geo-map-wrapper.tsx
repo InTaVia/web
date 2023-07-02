@@ -48,7 +48,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const isCluster = visualization.properties!.cluster!.value ?? false;
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
-  // console.log(clusterMode);
+  const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -82,6 +82,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     <>
       <GeoMap
         {...base}
+        mapStyle={mapStyle}
         // onMove={onMove}
       >
         {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}

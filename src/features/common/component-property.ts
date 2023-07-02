@@ -1,5 +1,13 @@
 export interface ComponentProperty {
-  type: 'answerlist' | 'boolean' | 'entitiesAndEvents' | 'number' | 'select' | 'text' | 'textarea';
+  type:
+    | 'answerlist'
+    | 'boolean'
+    | 'editable'
+    | 'entitiesAndEvents'
+    | 'number'
+    | 'select'
+    | 'text'
+    | 'textarea';
   id: string;
   label: string;
   value?: any;

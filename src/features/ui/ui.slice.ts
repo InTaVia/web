@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
+import type { Collection } from '@/app/store/intavia-collections.slice';
 
 export interface UiWindow {
   i: string;
@@ -30,6 +31,7 @@ interface UiState {
       rightPaneOpen: boolean;
     };
   };
+  selectedCollection: Collection['id'] | null;
 }
 
 const initialState: UiState = {
@@ -48,6 +50,7 @@ const initialState: UiState = {
       rightPaneOpen: true,
     },
   },
+  selectedCollection: null,
 };
 
 export const uiSlice = createSlice({
@@ -90,13 +93,25 @@ export const uiSlice = createSlice({
         }
       }
     },
+    setSelectedCollection: (state, action: PayloadAction<string | null>) => {
+      const tmpCollection = action.payload;
+
+      if (tmpCollection != null) {
+        state.selectedCollection = tmpCollection;
+      }
+    },
   },
 });
 
-export const { addWindow, editWindow, removeWindow, setSidePane } = uiSlice.actions;
+export const { addWindow, editWindow, removeWindow, setSidePane, setSelectedCollection } =
+  uiSlice.actions;
 
 export function selectWindows(state: RootState): Array<UiWindow> {
   return state.ui.windows;
+}
+
+export function selectSelectedCollection(state: RootState): Collection['id'] | null {
+  return state.ui.selectedCollection;
 }
 
 export const selectPaneOpen = createSelector(
@@ -122,5 +137,3 @@ export const selectPaneOpen = createSelector(
     }
   },
 );
-
-export default uiSlice.reducer;

@@ -97,6 +97,10 @@ export const slice = createSlice({
         return !remove.has(id);
       });
     },
+    importCollection(state, action: PayloadAction<Collection>) {
+      const collection = action.payload;
+      state.collections.byId[collection.id] = collection;
+    },
     clear() {
       return initialState;
     },
@@ -115,6 +119,7 @@ export const {
   removeEntitiesFromCollection,
   addEventsToCollection,
   removeEventsFromCollection,
+  importCollection,
   clear,
 } = slice.actions;
 

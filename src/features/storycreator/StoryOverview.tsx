@@ -1,17 +1,20 @@
-import { AdjustmentsIcon, TrashIcon } from '@heroicons/react/outline';
-import type { Entity, Event } from '@intavia/api-client';
+import { AdjustmentsIcon, PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import type { Entity, Event, MediaResource } from '@intavia/api-client';
 import { Button, Dialog, IconButton } from '@intavia/ui';
 import Link from 'next/link';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addLocalEntity,
   addLocalEvent,
+  addLocalMediaResource,
   selectEntities,
   selectEvents,
 } from '@/app/store/intavia.slice';
+import type { Collection } from '@/app/store/intavia-collections.slice';
+import { importCollection } from '@/app/store/intavia-collections.slice';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -21,10 +24,10 @@ import {
 import type { ContentPane } from '@/features/storycreator/contentPane.slice';
 import { importContentPane, selectAllConentPanes } from '@/features/storycreator/contentPane.slice';
 import { LoadStory } from '@/features/storycreator/import/load-story';
-import type { Story } from '@/features/storycreator/storycreator.slice';
+import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
-  createStory,
   editStory,
+  emptyStory,
   importStory,
   removeStory,
   selectStories,
@@ -42,8 +45,34 @@ export function StoryOverview(): JSX.Element {
   const allEvents = useAppSelector(selectEvents);
   const allContentPanes = useAppSelector(selectAllConentPanes);
 
+  const [hover, setHover] = useState<number | null>(null);
+
   function onCreateStory() {
-    dispatch(createStory({}));
+    const oldIDs = Object.keys(stories);
+    let counter = oldIDs.length - 1;
+    let newID = null;
+    do {
+      counter = counter + 1;
+      newID = `st-${counter}`;
+    } while (oldIDs.includes(newID));
+
+    setPropertiesEditElement({
+      ...emptyStory,
+      id: newID,
+      slides: {
+        '0': {
+          id: '0',
+          sort: 0,
+          story: newID,
+          selected: true,
+          image: null,
+          visualizationSlots: { 'vis-1': null, 'vis-2': null },
+          contentPaneSlots: { 'cont-1': null, 'cont-2': null },
+          layout: 'single-vis-content',
+          highlighted: {},
+        } as Slide,
+      },
+    });
   }
 
   function onRemoveStory(id: Story['id']) {
@@ -71,6 +100,8 @@ export function StoryOverview(): JSX.Element {
 
     const entities = { ...storyObj.storyEntities };
     const events = { ...storyObj.storyEvents };
+    const collections = { ...storyObj.collections };
+    const mediaRessources = { ...storyObj.media };
 
     delete storyObj.storyEntities;
     delete storyObj.storyEvents;
@@ -128,6 +159,14 @@ export function StoryOverview(): JSX.Element {
       }
     }
 
+    for (const media of Object.values(mediaRessources) as Array<MediaResource>) {
+      dispatch(addLocalMediaResource(media));
+    }
+
+    for (const collection of Object.values(collections) as Array<Collection>) {
+      dispatch(importCollection(collection));
+    }
+
     let newStoryStr = JSON.stringify(storyObj);
     Object.entries(dictionary).forEach((dictEntry) => {
       newStoryStr = newStoryStr.replaceAll(dictEntry[0], dictEntry[1]);
@@ -139,46 +178,58 @@ export function StoryOverview(): JSX.Element {
   return (
     <>
       <h1 className="text-5xl font-light">{t(['common', 'stories', 'metadata', 'title'])}</h1>
-      <div className="flex h-full items-center">
-        <ul className="divide-y divide-neutral-200">
-          {Object.values(stories).map((story) => {
-            const _name = story.properties.name?.value.trim();
-            const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
+      <div className="grid h-full grid-cols-[auto_auto_auto_auto_auto]">
+        <b>ID</b>
+        <b>Title</b>
+        <b>Subtitle</b>
+        <b>Author</b>
+        <b>Actions</b>
+        {Object.values(stories).map((story, i) => {
+          const _name = story.properties.name?.value.trim();
+          const name = isNonEmptyString(_name) ? _name : 'Nameless Story';
 
-            return (
-              <li className="flex items-center gap-8" key={story.id}>
+          return (
+            <div className="overview-table-row contents" key={`${story.id}storyOverviewListEntry`}>
+              <Link href={{ pathname: `/storycreator/${story.id}` }}>
+                <a className="underline decoration-solid hover:font-bold">{story.id}</a>
+              </Link>
+              <Link href={{ pathname: `/storycreator/${story.id}` }}>
+                <a className="underline decoration-solid hover:font-bold">{name}</a>
+              </Link>
+              <div>{story.properties.subtitle?.value}</div>
+              <div>{story.properties.author?.value}</div>
+              <div className="flex gap-1">
                 <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                  <a>
-                    {name}
-                    <div className="text-sm text-neutral-500">{story.id}</div>
-                  </a>
+                  <IconButton label="Edit" size="xs">
+                    <PencilAltIcon className="h-5 w-5" />
+                  </IconButton>
                 </Link>
-                <div className="flex gap-2">
-                  <IconButton
-                    label="Edit"
-                    onClick={() => {
-                      setPropertiesEditElement(story);
-                    }}
-                  >
-                    <AdjustmentsIcon className="h-5 w-5" />
-                  </IconButton>
-                  <IconButton
-                    label="Remove"
-                    onClick={() => {
-                      onRemoveStory(story.id);
-                    }}
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </IconButton>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                <IconButton
+                  size="xs"
+                  label="Settings"
+                  onClick={() => {
+                    setPropertiesEditElement(story);
+                  }}
+                >
+                  <AdjustmentsIcon className="h-5 w-5" />
+                </IconButton>
+                <IconButton
+                  label="Remove"
+                  size="xs"
+                  onClick={() => {
+                    onRemoveStory(story.id);
+                  }}
+                >
+                  <TrashIcon className="h-5 w-5" />
+                </IconButton>
+              </div>
+            </div>
+          );
+        })}
       </div>
-      <div className="grid justify-items-start gap-4">
-        <Button type="submit" onClick={onCreateStory}>
-          Create new story
+      <div className="grid w-fit grid-cols-2 justify-items-start gap-4">
+        <Button className="col-span-2" type="submit" onClick={onCreateStory}>
+          <PlusIcon className="h-5 w-5" /> Create New Story
         </Button>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
       </div>

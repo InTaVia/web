@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type {
@@ -7,7 +8,7 @@ import type {
   VocabularyEntry,
 } from '@intavia/api-client/dist/models';
 import { extent, scaleBand, scaleTime } from 'd3';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { TimelineAxis } from '@/features/timeline/timelineAxis';
 import { TimelineEntity } from '@/features/timeline/timelineEntity';
@@ -102,6 +103,7 @@ interface TimelineProps {
     events: Array<Event['id'] | null>,
   ) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  setZoom: (newZoom: number) => void;
 }
 
 export function Timeline(props: TimelineProps): JSX.Element {
@@ -125,6 +127,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     fontSize = 10,
     onToggleHighlight,
     highlightedByVis,
+    setZoom,
   } = props;
 
   //const [unTimeableEvents, setUnTimeableEvents] = useState({});
@@ -316,15 +319,59 @@ export function Timeline(props: TimelineProps): JSX.Element {
       ? true
       : false;
 
+  const [isPaning, setIsPaning] = useState(false);
+  const ref = useRef(null);
+
+  const [translateX, setTranslateX] = useState(0);
+  const [translateY, setTranslateY] = useState(0);
+
   return (
     <>
       <div
-        className="relative"
+        className="relative overflow-hidden"
         style={{
           width: `${width}px`,
           height: `${height}px`,
+          cursor: isPaning ? 'grabbing' : 'grab',
+          transform: `translate(${translateX}px, ${translateY}px)`,
         }}
         key={`timeline${amount}${vertical}`}
+        ref={ref}
+        onWheel={(event) => {
+          if (event.deltaY > 0) {
+            setZoom(Math.max(zoom - 1, 0));
+          } else if (event.deltaX < 0) {
+            setZoom(Math.min(zoom + 1, 10));
+          }
+        }}
+        onMouseDown={() => {
+          setIsPaning(true);
+        }}
+        onMouseUp={() => {
+          setIsPaning(false);
+        }}
+        onMouseLeave={() => {
+          setIsPaning(false);
+        }}
+        onMouseMove={(event) => {
+          if (isPaning) {
+            if (vertical) {
+              if (event.movementY > 0) {
+                /* if (ref.current) ref.current.scroll({ left: 100, behavior: 'smooth' }); */
+                setTranslateY(Math.min(0, translateY + event.movementY));
+              } else if (event.movementY < 0) {
+                setTranslateY(Math.max(translateY + event.movementY, -height + i_height));
+              }
+            } else {
+              if (event.movementX > 0) {
+                /* if (ref.current) ref.current.scroll({ left: 100, behavior: 'smooth' }); */
+                setTranslateX(Math.min(0, translateX + event.movementX));
+              } else if (event.movementX < 0) {
+                setTranslateX(Math.max(translateX + event.movementX, -width + i_width));
+              }
+            }
+          }
+        }}
       >
         <TimelineAxis
           width={vertical ? padding : width}
