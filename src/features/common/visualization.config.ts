@@ -31,7 +31,7 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-diamond',
     iconStyle: 'fill-[#EFEFEF] stroke-[#333333] stroke-2',
-    color: { foreground: '#ffd5c8', background: '#fc9272' },
+    color: { foreground: '#333333', background: '#EFEFEF' },
   },
   death: {
     label: 'Death',
@@ -39,7 +39,7 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-diamond',
     iconStyle: 'fill-[#333333] stroke-[#AAAAAA] stroke-2',
-    color: { foreground: '#e4e4e4', background: '#27000d' },
+    color: { foreground: '#AAAAAA', background: '#333333' },
   },
   production: {
     label: 'Production',
@@ -47,11 +47,11 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'rectangle',
     icon: 'event-rectangle',
     iconStyle: 'fill-intavia-conifer-400 stroke-intavia-conifer-600',
-    color: { foreground: '#ceeda9', background: '#92d050' },
+    color: { foreground: '#568f21', background: '#92d050' },
   },
   movement: {
     label: 'Travel',
-    type: 'travel',
+    type: 'movement',
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-cornflower-400 stroke-intavia-cornflower-600',
@@ -63,7 +63,7 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-downy-400 stroke-intavia-downy-600',
-    color: { foreground: '#abefcd', background: '#78e2b4' },
+    color: { foreground: '#b1e9cb', background: '#65c99e' },
   },
   default: {
     label: 'Event',
@@ -71,7 +71,7 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-apple-500 stroke-intavia-apple-700',
-    color: { foreground: '#c2dac0', background: '#639c65' },
+    color: { foreground: '#b2d79e', background: '#639c45' },
   },
 };
 
@@ -100,6 +100,8 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   professional: 'career',
   'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0NhcmVlcg==': 'career', // Career (idm-core)
   'event-kind-professional': 'career',
+  education: 'career',
+  'event-kind-education': 'career',
 
   //honour
   'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0hvbm91cg==': 'career', // Honour (idm-core)
