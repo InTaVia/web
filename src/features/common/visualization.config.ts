@@ -1,5 +1,7 @@
 import type { EntityKind, EventKind } from '@intavia/api-client';
 
+import type { IntaviaIconTypes } from '@/features/common/icons/intavia-icon';
+
 interface KindColor {
   foreground: string;
   background: string;
@@ -9,6 +11,8 @@ interface EventKindProperties {
   type: string;
   label: string;
   shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
+  icon: IntaviaIconTypes;
+  iconStyle: string;
   color: KindColor;
 }
 
@@ -16,6 +20,7 @@ interface EntityKindProperties {
   kind: string;
   label: string;
   shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
+  icon: IntaviaIconTypes;
   color: KindColor;
 }
 
@@ -24,36 +29,48 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     label: 'Birth',
     type: 'birth',
     shape: 'dot',
+    icon: 'event-diamond',
+    iconStyle: 'fill-[#EFEFEF] stroke-[#333333] stroke-2',
     color: { foreground: '#ffd5c8', background: '#fc9272' },
   },
   death: {
     label: 'Death',
     type: 'death',
     shape: 'dot',
+    icon: 'event-diamond',
+    iconStyle: 'fill-[#333333] stroke-[#AAAAAA] stroke-2',
     color: { foreground: '#e4e4e4', background: '#27000d' },
   },
   production: {
     label: 'Production',
     type: 'production',
     shape: 'rectangle',
+    icon: 'event-rectangle',
+    iconStyle: 'fill-intavia-conifer-400 stroke-intavia-conifer-600',
     color: { foreground: '#ceeda9', background: '#92d050' },
   },
   movement: {
     label: 'Travel',
     type: 'travel',
     shape: 'dot',
+    icon: 'event-circle',
+    iconStyle: 'fill-intavia-cornflower-400 stroke-intavia-cornflower-600',
     color: { foreground: '#c5d9f8', background: '#6d9eeb' },
   },
   career: {
     label: 'Career',
     type: 'career',
     shape: 'dot',
+    icon: 'event-circle',
+    iconStyle: 'fill-intavia-downy-400 stroke-intavia-downy-600',
     color: { foreground: '#abefcd', background: '#78e2b4' },
   },
   default: {
     label: 'Event',
     type: 'default',
     shape: 'dot',
+    icon: 'event-circle',
+    iconStyle: 'fill-intavia-apple-500 stroke-intavia-apple-700',
     color: { foreground: '#c2dac0', background: '#639c65' },
   },
 };
@@ -139,30 +156,35 @@ const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
     label: 'Person',
     kind: 'person',
     shape: 'dot',
+    icon: 'person',
     color: { foreground: '#c2dac0', background: '#639c65' },
   },
   'cultural-heritage-object': {
     label: 'CH-Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
+    icon: 'cultural-heritage-object',
     color: { foreground: '#ceeda9', background: '#92d050' },
   },
   place: {
     label: 'Place',
     kind: 'place',
     shape: 'triangle',
+    icon: 'place',
     color: { foreground: '#e5e2f2', background: '#b4a7d6' },
   },
   group: {
     label: 'Group',
     kind: 'group',
     shape: 'ellipse',
+    icon: 'group',
     color: { foreground: '#ecd3bc', background: '#dbac85' },
   },
   'historical-event': {
     label: 'Historical Event',
     kind: 'historical-event',
     shape: 'dot',
+    icon: 'historical-event',
     color: { foreground: 'hsl(297, 60%, 80%)', background: 'hsl(297, 100%, 35%)' },
   },
 };
