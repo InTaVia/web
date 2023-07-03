@@ -11,7 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@intavia/ui';
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { Form } from '@/components/form';
@@ -22,8 +22,6 @@ import { useSearchEntitiesFilters } from '@/components/search/use-search-entitie
 import { VisualQuerying as VisualQueryBuilder } from '@/features/visual-querying/VisualQuerying';
 
 export function SearchForm(): JSX.Element {
-  const { t } = useI18n<'common'>();
-
   const searchFilters = useSearchEntitiesFilters();
   const { search } = useSearchEntities();
 
@@ -34,53 +32,76 @@ export function SearchForm(): JSX.Element {
   return (
     <div className="mx-auto w-full max-w-7xl py-4 px-8">
       <Form initialValues={searchFilters} name="search" onSubmit={onSubmit} role="search">
-        <Collapsible>
-          <div className="grid gap-2">
-            <div className="grid grid-cols-[1fr_auto_auto] gap-2">
-              <SearchInput />
-
-              <Button type="submit">{t(['common', 'search', 'search'])}</Button>
-
-              <CollapsibleTrigger asChild>
-                <Button variant="outline">
-                  {t(['common', 'search', 'advanced-search'])}
-                  <ChevronDownIcon className="h-4 w-4 shrink-0" />
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-
-            <CollapsibleContent>
-              <Tabs defaultValue="search-facets">
-                <TabsList>
-                  <TabsTrigger value="search-facets">
-                    {t(['common', 'search', 'adjust-search-filters'])}
-                  </TabsTrigger>
-                  <TabsTrigger value="visual-query-builder">
-                    {t(['common', 'search', 'visual-query-builder'])}
-                  </TabsTrigger>
-                  <TabsTrigger value="search-statistics">
-                    {t(['common', 'search', 'search-statistics'])}
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="search-facets">
-                  <SearchFacets />
-                </TabsContent>
-                <TabsContent value="visual-query-builder">
-                  <div className="relative h-[420px]">
-                    <VisualQueryBuilder />
-                  </div>
-                </TabsContent>
-                <TabsContent value="search-statistics">
-                  <div className="relative h-[420px]">
-                    <SearchResultsStatistics />
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </CollapsibleContent>
-          </div>
-        </Collapsible>
+        <SearchPanelForm />
       </Form>
     </div>
+  );
+}
+
+function SearchPanelForm(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const { search } = useSearchEntities();
+  const form = useForm();
+
+  function onClear() {
+    const fields = form.getRegisteredFields();
+    fields.forEach((field) => {
+      form.change(field, undefined);
+    });
+    search({});
+  }
+
+  return (
+    <Collapsible>
+      <div className="grid gap-2">
+        <div className="grid grid-cols-[1fr_auto_auto] gap-2">
+          <SearchInput />
+
+          <Button type="submit">{t(['common', 'search', 'search'])}</Button>
+
+          <CollapsibleTrigger asChild>
+            <Button variant="outline">
+              {t(['common', 'search', 'advanced-search'])}
+              <ChevronDownIcon className="h-4 w-4 shrink-0" />
+            </Button>
+          </CollapsibleTrigger>
+        </div>
+
+        <CollapsibleContent>
+          <div className="grid gap-2">
+            <Tabs defaultValue="search-facets">
+              <TabsList>
+                <TabsTrigger value="search-facets">
+                  {t(['common', 'search', 'adjust-search-filters'])}
+                </TabsTrigger>
+                <TabsTrigger value="visual-query-builder">
+                  {t(['common', 'search', 'visual-query-builder'])}
+                </TabsTrigger>
+                <TabsTrigger value="search-statistics">
+                  {t(['common', 'search', 'search-statistics'])}
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="search-facets">
+                <SearchFacets />
+              </TabsContent>
+              <TabsContent value="visual-query-builder">
+                <div className="relative h-[420px]">
+                  <VisualQueryBuilder />
+                </div>
+              </TabsContent>
+              <TabsContent value="search-statistics">
+                <div className="relative h-[420px]">
+                  <SearchResultsStatistics />
+                </div>
+              </TabsContent>
+            </Tabs>
+            <Button onClick={onClear} variant="destructive" className="w-fit">
+              {t(['common', 'form', 'clear'])}
+            </Button>
+          </div>
+        </CollapsibleContent>
+      </div>
+    </Collapsible>
   );
 }
 
