@@ -31,10 +31,6 @@ export function SearchForm(): JSX.Element {
     search({ ...searchFilters, ...values, q: values.q, page: 1 });
   }
 
-  function onClear() {
-    search({});
-  }
-
   return (
     <div className="mx-auto w-full max-w-7xl py-4 px-8">
       <Form initialValues={searchFilters} name="search" onSubmit={onSubmit} role="search">
@@ -45,18 +41,12 @@ export function SearchForm(): JSX.Element {
 
               <Button type="submit">{t(['common', 'search', 'search'])}</Button>
 
-              <div className="flex gap-2">
-                <CollapsibleTrigger asChild>
-                  <Button variant="outline">
-                    {t(['common', 'form', 'more'])}
-                    <ChevronDownIcon className="h-4 w-4 shrink-0" />
-                  </Button>
-                </CollapsibleTrigger>
-
-                <Button onClick={onClear} variant="destructive">
-                  {t(['common', 'form', 'clear'])}
+              <CollapsibleTrigger asChild>
+                <Button variant="outline">
+                  {t(['common', 'search', 'advanced-search'])}
+                  <ChevronDownIcon className="h-4 w-4 shrink-0" />
                 </Button>
-              </div>
+              </CollapsibleTrigger>
             </div>
 
             <CollapsibleContent>

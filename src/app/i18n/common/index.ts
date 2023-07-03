@@ -112,6 +112,7 @@ export interface Dictionary {
     'search-results-count': string;
     'search-history': string;
     'clear-search-history': string;
+    'advanced-search': string;
     'nothing-found': string;
     'show-details': string;
     'edit-item': string;

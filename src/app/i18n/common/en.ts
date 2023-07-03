@@ -122,6 +122,7 @@ export const dictionary: Dictionary = {
     'search-results-count': '{{count}} results',
     'search-history': 'Search history',
     'clear-search-history': 'Clear search history',
+    'advanced-search': 'Advanced Search',
     'nothing-found': 'Nothing found',
     'show-details': 'Show details',
     'edit-item': 'Edit item',

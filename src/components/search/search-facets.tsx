@@ -1,6 +1,7 @@
 import { XIcon } from '@heroicons/react/solid';
 import type { EntityKind, InternationalizedLabel } from '@intavia/api-client';
 import {
+  Button,
   cn,
   ComboBox,
   ComboBoxButton,
@@ -20,7 +21,7 @@ import {
 import { keyBy } from '@stefanprobst/key-by';
 import type { ChangeEvent } from 'react';
 import { useId, useMemo, useState } from 'react';
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 
 import {
   useGetEntityByIdQuery,
@@ -32,16 +33,32 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { FormField } from '@/components/form-field';
+import { useSearchEntities } from '@/components/search/use-search-entities';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 
 export function SearchFacets(): JSX.Element {
+  const { t } = useI18n<'common'>();
+  const { search } = useSearchEntities();
+  const form = useForm();
+
+  function onClear() {
+    const fields = form.getRegisteredFields();
+    fields.forEach((field) => {
+      form.change(field, undefined);
+    });
+    search({});
+  }
+
   return (
     <div className="grid gap-4">
       <EntityKindFilter />
       <RelationRoleFilter />
       <RelatedEntityFilter />
+      <Button onClick={onClear} variant="destructive" className="w-fit">
+        {t(['common', 'form', 'clear'])}
+      </Button>
     </div>
   );
 }
