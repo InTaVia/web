@@ -11,10 +11,18 @@ interface GeoMapMarkersLayerProps<T> {
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   onToggleSelection?: (ids: Array<string>) => void;
   data: FeatureCollection<Point, T>;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
 }
 
 export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.Element {
-  const { autoFitBounds = true, onChangeHover, onToggleSelection, data, highlightedByVis } = props;
+  const {
+    autoFitBounds = true,
+    onChangeHover,
+    onToggleSelection,
+    data,
+    highlightedByVis,
+    colorBy,
+  } = props;
 
   const { current: map } = useMap();
   // const [isHovered, setIsHovered] = useState<Point<T>['id'] | null>(null);
@@ -41,11 +49,19 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         const coordinates = feature.geometry.coordinates;
         const { color, shape } = getEventKindPropertiesById(feature.properties.event.kind);
 
+        const dateString =
+          feature.properties.event.startDate ?? feature.properties.event.endDate ?? null;
+        // console.log(feature.properties.event.id, hasDate);
+
         return (
           <DotMarker
             key={feature.properties.event.id}
-            backgroundColor={color.background}
-            foregroundColor={color.foreground}
+            backgroundColor={
+              colorBy === 'event-kind' ? color.background : dateString == null ? '#999999' : 'red'
+            }
+            foregroundColor={
+              colorBy === 'event-kind' ? color.foreground : dateString == null ? '#CCCCCC' : 'pink'
+            }
             coordinates={coordinates}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}
