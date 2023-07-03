@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
-import type { Entity, EntityKind } from '@intavia/api-client';
+import type { EntityKind } from '@intavia/api-client';
 import {
   Button,
   cn,
@@ -10,11 +10,6 @@ import {
   ComboBoxInput,
   ComboBoxItem,
   ComboBoxTrigger,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   IconButton,
   Input,
   Label,
@@ -40,83 +35,15 @@ import {
   useSearchRelationRolesQuery,
 } from '@/api/intavia.service';
 import { useI18n } from '@/app/i18n/use-i18n';
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { addLocalEntity, selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
-import { Form } from '@/components/form';
+import { useAppSelector } from '@/app/store';
+import { selectEvents, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import { FormField } from '@/components/form-field';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 
-interface EditEntityDialogProps<T extends Entity> {
-  entity: T;
-  onClose: () => void;
-}
-
-export function EditEntityDialog<T extends Entity>(props: EditEntityDialogProps<T>): JSX.Element {
-  const { entity, onClose } = props;
-
-  const formId = 'edit-entity';
-
-  const { t } = useI18n<'common'>();
-
-  const dispatch = useAppDispatch();
-
-  function onSubmit(values: T) {
-    onClose();
-
-    const sanitized = {
-      ...values,
-      relations: values.relations.filter((relation) => {
-        return isNonEmptyString(relation.event) && isNonEmptyString(relation.role);
-      }),
-    };
-
-    if (sanitized.kind === 'person' && Array.isArray(sanitized.occupations)) {
-      sanitized.occupations = sanitized.occupations.filter((occupation) => {
-        return isNonEmptyString(occupation.id);
-      });
-    }
-
-    dispatch(addLocalEntity(sanitized));
-  }
-
-  const label = t(['common', 'entity', 'edit-entity'], {
-    values: { kind: t(['common', 'entity', 'kinds', entity.kind, 'one']) },
-  });
-
-  return (
-    <DialogContent className="sm:max-w-[620px]">
-      <DialogHeader>
-        <DialogTitle>{label}</DialogTitle>
-        <DialogDescription>
-          Edit entity details. Click save when you&apos;re done.
-        </DialogDescription>
-      </DialogHeader>
-
-      <div className="-mx-4 grid gap-4 overflow-y-auto p-4">
-        <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
-          <div className="grid gap-4">
-            <EntityLabelTextField />
-            <EntityDescriptionTextField />
-            <EntityFormFields kind={entity.kind} />
-            <hr />
-            <RelationsFormFields />
-          </div>
-        </Form>
-      </div>
-
-      <DialogFooter>
-        <Button form={formId} type="submit">
-          {t(['common', 'form', 'save'])}
-        </Button>
-      </DialogFooter>
-    </DialogContent>
-  );
-}
-
-function EntityLabelTextField(): JSX.Element {
+export function EntityLabelTextField(): JSX.Element {
   const name = 'label.default';
 
   const { t } = useI18n<'common'>();
@@ -133,7 +60,7 @@ function EntityLabelTextField(): JSX.Element {
   );
 }
 
-function EntityDescriptionTextField(): JSX.Element {
+export function EntityDescriptionTextField(): JSX.Element {
   const name = 'description';
 
   const { t } = useI18n<'common'>();
@@ -154,7 +81,8 @@ interface EntityFormFieldsProps {
   kind: EntityKind;
 }
 
-function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
+export function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
+  6;
   const { kind } = props;
 
   switch (kind) {
@@ -177,7 +105,7 @@ function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
   }
 }
 
-function GenderSelect(): JSX.Element {
+export function GenderSelect(): JSX.Element {
   const name = 'gender';
 
   const { t } = useI18n<'common'>();
@@ -397,7 +325,7 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
   );
 }
 
-function RelationsFormFields(): JSX.Element {
+export function RelationsFormFields(): JSX.Element {
   const name = 'relations';
 
   const { t } = useI18n<'common'>();

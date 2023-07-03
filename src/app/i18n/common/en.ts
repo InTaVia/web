@@ -74,6 +74,11 @@ export const dictionary: Dictionary = {
     event: { one: 'Event', other: 'Events' },
     relation: { one: 'Relation', other: 'Relations' },
   },
+  'entity-edit': {
+    metadata: {
+      title: 'Edit entity',
+    },
+  },
   geomap: {
     metadata: {
       title: 'Map',

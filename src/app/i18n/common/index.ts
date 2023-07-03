@@ -64,6 +64,11 @@ export interface Dictionary {
     event: Plurals;
     relation: Plurals;
   };
+  'entity-edit': {
+    metadata: {
+      title: string;
+    };
+  };
   geomap: {
     metadata: {
       title: string;
