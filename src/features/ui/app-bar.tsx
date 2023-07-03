@@ -56,8 +56,8 @@ export function AppBar(): JSX.Element {
                 <Link key={item.id} href={item.href.pathname}>
                   <a
                     className={cn(
-                      'px-3 text-base transition hover:text-neutral-700',
-                      isCurrent && 'text-neutral-700',
+                      'px-3 text-base transition hover:text-intavia-brand-900',
+                      isCurrent && 'text-intavia-brand-900',
                     )}
                     aria-current={isCurrent ? 'page' : undefined}
                   >
@@ -68,7 +68,7 @@ export function AppBar(): JSX.Element {
             })}
           </div>
         </div>
-        <div className="flex h-16 flex-row items-center gap-6 pr-6">
+        <div className="flex h-16 flex-row items-center gap-6 pr-6 hover:text-intavia-brand-900">
           <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger>Import data</DialogTrigger>
             <DataImportDialog
