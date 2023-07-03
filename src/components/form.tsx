@@ -78,7 +78,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
             id={id}
             method={method}
             name={name}
-            noValidate
+            noValidate={validate != null}
             onSubmit={handleSubmit}
           >
             {children}
