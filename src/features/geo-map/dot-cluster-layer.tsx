@@ -68,7 +68,7 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
           onChangeHover?.(null);
         }
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
-        const { shape } = getEventKindPropertiesById(eventKind);
+        const { color, shape, strokeWidth } = getEventKindPropertiesById(eventKind);
 
         //Workaround to parse stringified property objects (event and place)
         const feature = {
@@ -82,6 +82,7 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
         return (
           <DotMarker
             key={marker.id}
+            color={color}
             backgroundColor={
               eventKind in colors ? colors[eventKind].background : colors.default.background
             }
@@ -94,6 +95,7 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
             size={14.8}
             feature={feature}
             shape={shape}
+            strokeWidth={strokeWidth}
           />
         );
       })}

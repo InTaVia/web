@@ -18,6 +18,7 @@ interface DotClusterProps<T> {
 interface Dot {
   cx: number;
   cy: number;
+  color: Record<string, string>;
   backgroundColor: string;
   foregroundColor: string;
   value: any;
@@ -93,9 +94,11 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
         features.forEach((feature) => {
           const { cx, cy } = calculateDotPosition(totalCount + 0.5, circleRadius);
           const clusterKey = get(feature.properties, clusterByProperty.split('.'));
+          const colors = clusterColors[clusterKey] as unknown as Record<string, string>;
           _dots.push({
             cx: cx,
             cy: cy,
+            color: colors,
             backgroundColor: clusterColors[clusterKey]!.background as string,
             foregroundColor: clusterColors[clusterKey]!.foreground as string,
             value: clusterKey,
@@ -157,7 +160,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
       textAnchor="middle"
     >
       {/* <rect width={svgWidth} height={svgWidth} fill="rgba(200,0,0, 0.1)" /> */}
-      {dots.map(({ cx, cy, backgroundColor, foregroundColor, value, feature, shape }) => {
+      {dots.map(({ cx, cy, color, backgroundColor, foregroundColor, value, feature, shape }) => {
         //TODO Make own component
 
         const isHovered =
@@ -187,8 +190,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
                 y={clusterWidth * cy + offset - circleRadius * 0.886}
                 width={circleRadius * 2 * 0.886}
                 height={circleRadius * 2 * 0.886}
-                fill={isHovered ? foregroundColor : backgroundColor}
-                stroke={isHovered ? backgroundColor : 'white'}
+                fill={isHovered ? color.light : color.main}
+                stroke={isHovered ? color.main : color.dark}
                 strokeWidth={isHovered ? 2 : 1}
               />
             ) : (
@@ -197,8 +200,8 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
                 cx={clusterWidth * cx + offset}
                 cy={clusterWidth * cy + offset}
                 r={circleRadius}
-                fill={isHovered ? foregroundColor : backgroundColor}
-                stroke={isHovered ? backgroundColor : 'white'}
+                fill={isHovered ? color.light : color.main}
+                stroke={isHovered ? color.main : color.dark}
                 strokeWidth={isHovered ? 2 : 1}
               />
             )}

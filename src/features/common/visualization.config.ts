@@ -5,6 +5,9 @@ import type { IntaviaIconTypes } from '@/features/common/icons/intavia-icon';
 interface KindColor {
   foreground: string;
   background: string;
+  main?: string;
+  light?: string;
+  dark?: string;
 }
 
 interface EventKindProperties {
@@ -14,6 +17,7 @@ interface EventKindProperties {
   icon: IntaviaIconTypes;
   iconStyle: string;
   color: KindColor;
+  strokeWidth: number;
 }
 
 interface EntityKindProperties {
@@ -21,6 +25,7 @@ interface EntityKindProperties {
   label: string;
   shape: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
   icon: IntaviaIconTypes;
+  iconStyle: string;
   color: KindColor;
 }
 
@@ -29,17 +34,31 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     label: 'Birth',
     type: 'birth',
     shape: 'dot',
-    icon: 'event-diamond',
-    iconStyle: 'fill-[#EFEFEF] stroke-[#333333] stroke-2',
-    color: { foreground: '#333333', background: '#EFEFEF' },
+    icon: 'event-circle', //event-diamond
+    iconStyle: 'fill-[#EFEFEF] stroke-[#333333]',
+    color: {
+      foreground: '#333333',
+      background: '#EFEFEF',
+      main: '#EFEFEF',
+      light: '#333333',
+      dark: '#333333',
+    },
+    strokeWidth: 2,
   },
   death: {
     label: 'Death',
     type: 'death',
     shape: 'dot',
-    icon: 'event-diamond',
-    iconStyle: 'fill-[#333333] stroke-[#AAAAAA] stroke-2',
-    color: { foreground: '#AAAAAA', background: '#333333' },
+    icon: 'event-circle', //event-diamond
+    iconStyle: 'fill-[#333333] stroke-[#AAAAAA',
+    color: {
+      foreground: '#AAAAAA',
+      background: '#333333',
+      main: '#333333',
+      light: '#AAAAAA',
+      dark: '#111111',
+    },
+    strokeWidth: 2,
   },
   production: {
     label: 'Production',
@@ -47,7 +66,14 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'rectangle',
     icon: 'event-rectangle',
     iconStyle: 'fill-intavia-conifer-400 stroke-intavia-conifer-600',
-    color: { foreground: '#568f21', background: '#92d050' },
+    color: {
+      foreground: '#ceeda9',
+      background: '#92d050',
+      main: '#92d050',
+      light: '#ceeda9',
+      dark: '#568f21',
+    },
+    strokeWidth: 1,
   },
   movement: {
     label: 'Travel',
@@ -55,7 +81,14 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-cornflower-400 stroke-intavia-cornflower-600',
-    color: { foreground: '#c5d9f8', background: '#6d9eeb' },
+    color: {
+      foreground: '#c5d9f8',
+      background: '#6d9eeb',
+      main: '#6d9eeb',
+      light: '#c5d9f8',
+      dark: '#3861d8',
+    },
+    strokeWidth: 1,
   },
   career: {
     label: 'Career',
@@ -63,7 +96,14 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-downy-400 stroke-intavia-downy-600',
-    color: { foreground: '#b1e9cb', background: '#65c99e' },
+    color: {
+      foreground: '#b1e9cb',
+      background: '#65c99e',
+      main: '#65c99e',
+      light: '#b1e9cb',
+      dark: '#17845b',
+    },
+    strokeWidth: 1,
   },
   default: {
     label: 'Event',
@@ -71,7 +111,14 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     shape: 'dot',
     icon: 'event-circle',
     iconStyle: 'fill-intavia-apple-500 stroke-intavia-apple-700',
-    color: { foreground: '#b2d79e', background: '#639c45' },
+    color: {
+      foreground: '#b2d79e',
+      background: '#639c45',
+      main: '#639c45',
+      light: '#b2d79e',
+      dark: '#41682d',
+    },
+    strokeWidth: 1,
   },
 };
 
@@ -159,28 +206,56 @@ const entityKindProperties: Record<EntityKind, EntityKindProperties> = {
     kind: 'person',
     shape: 'dot',
     icon: 'person',
-    color: { foreground: '#c2dac0', background: '#639c65' },
+    iconStyle: 'fill-intavia-apple-500 stroke-intavia-apple-700',
+    color: {
+      foreground: '#b2d79e',
+      background: '#639c45',
+      main: '#639c45',
+      light: '#b2d79e',
+      dark: '#41682d',
+    },
   },
   'cultural-heritage-object': {
     label: 'CH-Object',
     kind: 'cultural-heritage-object',
     shape: 'rectangle',
     icon: 'cultural-heritage-object',
-    color: { foreground: '#ceeda9', background: '#92d050' },
+    iconStyle: 'fill-intavia-conifer-400 stroke-intavia-conifer-600',
+    color: {
+      foreground: '#ceeda9',
+      background: '#92d050',
+      main: '#92d050',
+      light: '#ceeda9',
+      dark: '#568f21',
+    },
   },
   place: {
     label: 'Place',
     kind: 'place',
     shape: 'triangle',
     icon: 'place',
-    color: { foreground: '#e5e2f2', background: '#b4a7d6' },
+    iconStyle: 'fill-intavia-wistful-400 stroke-intavia-wistful-600',
+    color: {
+      foreground: '#e5e2f2',
+      background: '#b4a7d6',
+      main: '#b4a7d6',
+      light: '#e5e2f2',
+      dark: '#8c70b7',
+    },
   },
   group: {
     label: 'Group',
     kind: 'group',
     shape: 'ellipse',
     icon: 'group',
-    color: { foreground: '#ecd3bc', background: '#dbac85' },
+    iconStyle: 'fill-intavia-tumbleweed-400 stroke-intavia-tumbleweed-600',
+    color: {
+      foreground: '#ecd3bc',
+      background: '#d19066',
+      main: '#d19066',
+      light: '#ecd3bc',
+      dark: '#b9603d',
+    },
   },
   'historical-event': {
     label: 'Historical Event',
