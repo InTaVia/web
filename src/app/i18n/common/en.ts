@@ -32,6 +32,11 @@ export const dictionary: Dictionary = {
     'collection-name': 'Collection name',
     'empty-collection': 'This collection is empty.',
     'remove-item': 'Remove item',
+    'delete-alert-title': 'Delete collection',
+    'delete-alert-description':
+      'Are you sure that you want to delete "{{collectionLabel}}" containing {{collectionEntityCount}} entities?',
+    'delete-alert-description-warning': 'This action cannot be reversed.',
+    'delete-alert-action': 'Delete collection',
   },
   coordination: {
     metadata: {

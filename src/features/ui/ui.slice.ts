@@ -94,11 +94,7 @@ export const uiSlice = createSlice({
       }
     },
     setSelectedCollection: (state, action: PayloadAction<string | null>) => {
-      const tmpCollection = action.payload;
-
-      if (tmpCollection != null) {
-        state.selectedCollection = tmpCollection;
-      }
+      state.selectedCollection = action.payload;
     },
   },
 });
