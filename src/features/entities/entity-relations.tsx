@@ -1,11 +1,17 @@
-import type { Entity } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
 import { cn } from '@intavia/ui';
+import type { MouseEvent } from 'react';
 import { useMemo } from 'react';
 
+import { useHoverState } from '@/app/context/hover.context';
 import { useI18n } from '@/app/i18n/use-i18n';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { createKey } from '@/lib/create-key';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNotNullable } from '@/lib/is-not-nullable';
+import { unique } from '@/lib/unique';
+import { useEventKinds } from '@/lib/use-event-kinds';
 import { useEvents } from '@/lib/use-events';
 import { useRelationRoles } from '@/lib/use-relation-roles';
 
@@ -15,6 +21,8 @@ interface RelationsProps {
 
 export function EntityRelations(props: RelationsProps): JSX.Element | null {
   const { relations } = props;
+
+  const { hovered, updateHover } = useHoverState();
 
   const roles = useRelationRoles(
     relations.map((relation) => {
@@ -28,21 +36,29 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
     }),
   );
 
+  const eventKinds = useEventKinds(
+    unique(
+      Array.from(events.data!.values(), (event) => {
+        return event.kind;
+      }),
+    ),
+  );
+
   const eventsAsc = useMemo(() => {
     const now = Date.now();
     const eventsArr = Array.from(events.data.values());
     return eventsArr.sort((eventA: Event, eventB: Event) => {
       const sortDateA =
         'startDate' in eventA
-          ? new Date(eventA.startDate as string)
+          ? new Date(eventA.startDate as string).getTime()
           : 'endDate' in eventA
-          ? new Date(eventA.endDate as string)
+          ? new Date(eventA.endDate as string).getTime()
           : now;
       const sortDateB =
         'startDate' in eventB
-          ? new Date(eventB.startDate as string)
+          ? new Date(eventB.startDate as string).getTime()
           : 'endDate' in eventB
-          ? new Date(eventB.endDate as string)
+          ? new Date(eventB.endDate as string).getTime()
           : now;
       return sortDateA - sortDateB;
     });
@@ -70,19 +86,60 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
           const relation = relations.filter((relation) => {
             return relation.event === event.id;
           });
+
+          const isHovered = hovered?.events.includes(event.id) ?? false;
+
           const key = createKey(relation[0].event, relation[0].role);
           // FIXME: temporary workaround
           const role = roles.data ? roles.data.get(relation[0].role) : null;
           // const event = events.data.get(relation[0].event);
 
+          const eventKind = eventKinds.data ? eventKinds.data.get(event.kind) : null;
+
+          const eventKindProperties = getEventKindPropertiesById(event.kind);
+
           return (
-            <li key={key} className={cn('px-1', index % 2 && 'bg-neutral-100')}>
-              <span className="flex items-center justify-between gap-2">
-                <span>
-                  {getTranslatedLabel(event.label)} ({getTranslatedLabel(role?.label)})
-                </span>
-                <span className="text-right">
+            <li
+              key={key}
+              className={cn('px-1', index % 2 && 'bg-neutral-100', isHovered && 'bg-neutral-200')}
+              onMouseEnter={(e: MouseEvent<HTMLLIElement>) => {
+                updateHover({
+                  entities: event.relations.map((relation) => {
+                    return relation.entity;
+                  }),
+                  events: [event.id],
+                  clientRect: {
+                    left: e.clientX,
+                    top: e.clientY,
+                  } as DOMRect,
+                });
+              }}
+              onMouseLeave={() => {
+                updateHover(null);
+              }}
+            >
+              <span className="flex items-start gap-2 pt-1">
+                <span className="shrink-0 grow-0 basis-40 whitespace-nowrap text-right text-xs">
                   <EventDate start={event.startDate} end={event.endDate} />
+                </span>
+                <span className="">
+                  <IntaviaIcon
+                    icon={eventKindProperties.icon}
+                    className={cn(
+                      'h-4 w-4',
+                      'fill-none stroke-black',
+                      eventKindProperties.iconStyle,
+                    )}
+                  />
+                </span>
+                <span className="flex flex-col gap-y-0">
+                  <span className="text-xs text-slate-400">
+                    {/* {getTranslatedLabel(eventKind?.label)} */}
+                    {eventKindProperties.label}
+                    &nbsp;|&nbsp;
+                    {getTranslatedLabel(role?.label)}
+                  </span>
+                  <span className="text-left">{getTranslatedLabel(event.label)}</span>
                 </span>
               </span>
             </li>
@@ -104,16 +161,42 @@ function EventDate(props: EventDateProps): JSX.Element {
   const { formatDateTime } = useI18n();
 
   const dates = [start, end].filter(isNotNullable).map((date) => {
-    return formatDateTime(new Date(date));
+    // return formatDateTime(new Date(date), 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const formatter = new Intl.DateTimeFormat('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const formattedDate = formatter.format(new Date(date));
+    return formattedDate;
   }) as [string, string] | [string];
 
   if (dates.length === 2) {
     const [startDate, endDate] = dates;
 
+    //FIXME: all the comparissions probably should be based on Dates and not strings!?
+    if (startDate === endDate) {
+      return <time dateTime={start}>{startDate}</time>;
+    }
+
+    if (startDate.startsWith('01.01.') && endDate.startsWith('31.12.')) {
+      if (startDate.substring(6) === endDate.substring(6)) {
+        return <time dateTime={start}>{startDate.substring(6)}</time>;
+      }
+
+      return (
+        <span>
+          <time dateTime={start}>{startDate.substring(6)}</time>
+          &nbsp;&ndash;&nbsp;
+          <time dateTime={end}>{endDate.substring(6)}</time>
+        </span>
+      );
+    }
+
     return (
       <span>
         <time dateTime={start}>{startDate}</time>
-        &mdash;
+        &nbsp;&ndash;&nbsp;
         <time dateTime={end}>{endDate}</time>
       </span>
     );

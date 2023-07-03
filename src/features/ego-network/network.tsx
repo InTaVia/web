@@ -14,6 +14,12 @@ import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import {
+  CulturalHeritageObjectSvgGroup,
+  GroupSvgGroup,
+  PersonSvgGroup,
+  PlaceSvgGroup,
+} from '@/features/common/icons/intavia-icon-shapes';
 import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
@@ -152,36 +158,25 @@ function NodeView(props: Node): JSX.Element {
   };
 
   function renderPersonNode(): JSX.Element {
-    // Draw circle with center at origin
-    return <circle r={nodeWidth / 2} {...nodeProps} />;
+    // Draw PersonIcon with center at origin
+    return <PersonSvgGroup {...nodeProps} transform="scale(0.8) translate(-12 -12)" />;
   }
 
   function renderObjectNode(): JSX.Element {
-    // Draw square with center at origin
+    // Draw CH-ObjectIcon with center at origin
     return (
-      <rect
-        x={-nodeWidth / 2}
-        y={-nodeHeight / 2}
-        width={nodeWidth}
-        height={nodeHeight}
-        {...nodeProps}
-      />
+      <CulturalHeritageObjectSvgGroup {...nodeProps} transform="scale(0.6) translate(-12 -12)" />
     );
   }
 
   function renderPlaceNode(): JSX.Element {
-    // Draw triangle with center at origin
-    const p = `${-nodeWidth / 2},${nodeHeight / 2} ${nodeWidth / 2},${nodeHeight / 2} 0,${
-      -nodeHeight / 2
-    }`;
-    return <polygon points={p} {...nodeProps} />;
+    // Draw PlaceIcon with center at origin
+    return <PlaceSvgGroup {...nodeProps} transform=" scale(0.8) translate(-12 -12)" />;
   }
 
   function renderGroupNode(): JSX.Element {
-    // Draw ellipse with center at origin
-    const rx = nodeWidth * (5 / 7);
-    const ry = nodeHeight / 2;
-    return <ellipse rx={rx} ry={ry} {...nodeProps} />;
+    // Draw Group/InstituionIconwith center at origin
+    return <GroupSvgGroup {...nodeProps} transform="scale(0.7) translate(-12 -12)" />;
   }
 
   function renderEventNode(): JSX.Element {

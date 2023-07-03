@@ -39,11 +39,11 @@ export function useDataFromCollection(
             return _entities[entityId];
           }) as Array<Entity>;
 
-        console.log(collectionEntities);
+        // console.log(collectionEntities);
 
         const relatedEventIds = unique(
           collectionEntities.flatMap((entity: Entity) => {
-            console.log(entity);
+            // console.log(entity);
             return entity.relations !== undefined
               ? entity.relations.map((relation: EntityEventRelation) => {
                   return relation.event;

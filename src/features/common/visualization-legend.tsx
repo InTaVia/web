@@ -1,10 +1,12 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { cn } from '@intavia/ui';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { clearVocabularies, selectVocabularyEntries } from '@/app/store/intavia.slice';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import {
   getEntityKindPropertiesByKind,
   getEventKindPropertiesById,
@@ -79,21 +81,6 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
     ),
   ];
 
-  const createShapeSVG = (shape, color) => {
-    switch (shape) {
-      case 'rectangle':
-        return <rect width={16} height={16} fill={color} />;
-      case 'dot':
-        return <circle r={8} cx={8} cy={8} fill={color} />;
-      case 'triangle':
-        return <polygon points="0,16 8,0 16,16" fill={color} />;
-      case 'ellipse':
-        return <ellipse rx={12 * (5 / 7)} ry={12 / 2} cy={8} cx={8} fill={color} />;
-      default:
-        break;
-    }
-  };
-
   if (eventKindProperties.length > 0 || Object.keys(groupedEntities).length > 0) {
     return (
       <div className="grid cursor-default grid-cols-[min-content_auto] border border-solid border-intavia-neutral-400 bg-white p-1 text-sm">
@@ -123,9 +110,11 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
-                  {createShapeSVG(eventKindProperties.shape, eventKindProperties.color.background)}
-                </svg>
+                <IntaviaIcon
+                  icon={eventKindProperties.icon}
+                  className={cn('h-3 w-3', eventKindProperties.iconStyle)}
+                  strokeWidth={eventKindProperties.strokeWidth}
+                />
               </div>
               <div
                 key={`eventKindLabel${eventKindProperties.label}`}
@@ -155,6 +144,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
           );
         })}
         {Object.keys(groupedEntities).map((entityKind) => {
+          const entityKindProperties = getEntityKindPropertiesByKind(entityKind);
           return (
             <>
               <div
@@ -179,12 +169,10 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                   updateHover(null);
                 }}
               >
-                <svg width={16} height={16} style={{ transform: 'scale(0.6)' }}>
-                  {createShapeSVG(
-                    getEntityKindPropertiesByKind(entityKind).shape,
-                    getEntityKindPropertiesByKind(entityKind).color.background,
-                  )}
-                </svg>
+                <IntaviaIcon
+                  icon={entityKindProperties.icon}
+                  className={cn('w-4 h-4', entityKindProperties.iconStyle)}
+                />
               </div>
               <div
                 key={`entityKindLabel${entityKind}`}

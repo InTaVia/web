@@ -64,6 +64,7 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
         </g>
       );
     case 'creation':
+    case 'production':
       return (
         <rect
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
