@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 import { useLocale } from '@/app/route/use-locale';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
-import { EntityKindIcon } from '@/features/common/entity-kind-icon';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { MediaThumbnail } from '@/features/common/tooltip/tooltip';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -78,7 +78,7 @@ const EventTooltipContent = forwardRef(
                   key={`entityTootlipEntryEvent${entity.id}`}
                 >
                   <div className="min-w-fit">
-                    <EntityKindIcon kind={entity.kind} />
+                    <IntaviaIcon icon={entity.kind} className="fill-none stroke-2" />
                   </div>
                   <p>{getTranslatedLabel(entity.label, locale)}</p>
                 </div>

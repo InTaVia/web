@@ -59,17 +59,39 @@ export const visualizationSlice = createSlice({
                 id: 'mapStyle',
                 label: 'Map Style',
                 value: {
-                  name: 'Default',
-                  value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+                  name: 'Dataviz (Light Gray)',
+                  value:
+                    'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
                 },
                 options: [
                   {
-                    name: 'Default',
+                    name: 'Positron (Carto)',
                     value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
                   },
                   {
-                    name: 'Alternative',
-                    value: 'https://demotiles.maplibre.org/style.json',
+                    name: 'Topography (Gray)',
+                    value:
+                      'https://api.maptiler.com/maps/backdrop/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+                  },
+                  {
+                    name: 'Dataviz (Color)',
+                    value:
+                      'https://api.maptiler.com/maps/dataviz/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+                  },
+                  {
+                    name: 'Dataviz (Light Gray)',
+                    value:
+                      'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+                  },
+                  {
+                    name: 'Positron (Maptiler)',
+                    value:
+                      'https://api.maptiler.com/maps/positron/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+                  },
+                  {
+                    name: 'InTaVia - Monochrome',
+                    value:
+                      'https://api.maptiler.com/maps/2acdf330-b7de-4851-aab6-88360063ae35/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
                   },
                 ],
                 editable: true,

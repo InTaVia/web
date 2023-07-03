@@ -61,7 +61,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
       })}
       {dotMarkers.map((marker) => {
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
-        const { shape } = getEventKindPropertiesById(eventKind);
+        const { color, shape, strokeWidth } = getEventKindPropertiesById(eventKind);
         // workaround: if property key is object than stringified
         const feature = {
           ...marker.feature,
@@ -74,6 +74,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
         return (
           <DotMarker
             key={marker.id}
+            color={color}
             backgroundColor={
               eventKind in colors ? colors[eventKind].background : colors.default.background
             }
@@ -86,6 +87,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
             size={14.8}
             feature={feature}
             shape={shape}
+            strokeWidth={strokeWidth}
           />
 
           // <Marker key={marker.id} {...marker.coordinates}>

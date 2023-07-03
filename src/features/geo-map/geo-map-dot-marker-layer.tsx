@@ -47,7 +47,9 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         if (feature.geometry.type !== 'Point') return null;
 
         const coordinates = feature.geometry.coordinates;
-        const { color, shape } = getEventKindPropertiesById(feature.properties.event.kind);
+        const { color, shape, strokeWidth } = getEventKindPropertiesById(
+          feature.properties.event.kind,
+        );
 
         const dateString =
           feature.properties.event.startDate ?? feature.properties.event.endDate ?? null;
@@ -56,6 +58,7 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         return (
           <DotMarker
             key={feature.properties.event.id}
+            color={color}
             backgroundColor={
               colorBy === 'event-kind' ? color.background : dateString == null ? '#999999' : 'red'
             }
@@ -68,6 +71,7 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
             size={14.8}
             feature={feature}
             shape={shape}
+            strokeWidth={strokeWidth}
           />
         );
       })}

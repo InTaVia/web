@@ -31,6 +31,10 @@ export interface Dictionary {
     'collection-name': string;
     'empty-collection': string;
     'remove-item': string;
+    'delete-alert-title': string;
+    'delete-alert-description': string;
+    'delete-alert-description-warning': string;
+    'delete-alert-action': string;
   };
   coordination: {
     metadata: {
@@ -112,6 +116,7 @@ export interface Dictionary {
     'search-results-count': string;
     'search-history': string;
     'clear-search-history': string;
+    'advanced-search': string;
     'nothing-found': string;
     'show-details': string;
     'edit-item': string;
