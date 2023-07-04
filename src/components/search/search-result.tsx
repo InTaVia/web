@@ -10,7 +10,7 @@ import {
 import { MenuIcon } from 'lucide-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { type MouseEvent, useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -18,6 +18,7 @@ import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface SearchResultProps<T extends Entity> {
@@ -40,7 +41,6 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const dispatch = useAppDispatch();
   const { currentCollection } = useCollection();
 
-  const [isHovered, setHovered] = useState(false);
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   function onShowDetails() {
@@ -56,24 +56,23 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
     dispatch(addEntitiesToCollection({ id: currentCollection, entities: [id] }));
   }
 
+  function onClick(e: MouseEvent) {
+    e.stopPropagation();
+  }
+
   return (
     <NextLink href={detailsUrl}>
-      <article
-        onMouseEnter={() => {
-          setHovered(true);
-        }}
-        onMouseLeave={() => {
-          setHovered(false);
-        }}
-        className="flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100"
-      >
-        <div className="grid gap-1 leading-tight">
-          <a className={isHovered ? 'underline' : ''}>
-            <span>{getTranslatedLabel(entity.label)}</span>
-            {hasLocalEntity ? <span> (edited locally)</span> : null}
-          </a>
-          <div className="text-xs text-neutral-500">
-            {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100">
+        <div className="flex flex-row items-center justify-start gap-6">
+          <IntaviaIcon className="h-6 w-6 fill-none" icon={entity.kind} />
+          <div className="grid gap-1 leading-tight">
+            <a className="group-hover:underline">
+              <span>{getTranslatedLabel(entity.label)}</span>
+              {hasLocalEntity ? <span> (edited locally)</span> : null}
+            </a>
+            <div className="text-xs text-neutral-500">
+              {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+            </div>
           </div>
         </div>
 
@@ -86,13 +85,17 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-56">
-            <DropdownMenuItem onSelect={onShowDetails}>
+            <DropdownMenuItem onClick={onClick} onSelect={onShowDetails}>
               {t(['common', 'search', 'show-details'])}
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={onEditItem}>
+            <DropdownMenuItem onClick={onClick} onSelect={onEditItem}>
               {t(['common', 'search', 'edit-item'])}
             </DropdownMenuItem>
-            <DropdownMenuItem disabled={currentCollection == null} onSelect={onAddToCollection}>
+            <DropdownMenuItem
+              disabled={currentCollection == null}
+              onClick={onClick}
+              onSelect={onAddToCollection}
+            >
               {t(['common', 'search', 'add-to-collection'])}
             </DropdownMenuItem>
           </DropdownMenuContent>
