@@ -1,15 +1,8 @@
 import type { Entity } from '@intavia/api-client';
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@intavia/ui';
-import { MenuIcon } from 'lucide-react';
+import { Button, Dialog, DialogTrigger, IconButton } from '@intavia/ui';
+import { Edit2Icon, XIcon } from 'lucide-react';
 import NextLink from 'next/link';
+import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -23,6 +16,7 @@ import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export function CollectionView(): JSX.Element {
@@ -75,7 +69,7 @@ export function CollectionView(): JSX.Element {
           );
         })}
       </ul>
-      <footer className="border-t border-neutral-200 py-10 px-8">
+      <footer className="border-t border-neutral-200 py-4 px-8">
         {collection?.entities.length} Entities
       </footer>
     </div>
@@ -107,55 +101,68 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
-  function onEditItem() {
+  function onEditItem(e: MouseEvent) {
+    e.stopPropagation();
+
     setDialogOpen(true);
   }
 
-  function onRemoveItem() {
+  function onRemoveItem(e: MouseEvent) {
+    e.stopPropagation();
+
     if (currentCollection == null) return;
     dispatch(removeEntitiesFromCollection({ id: currentCollection, entities: [id] }));
   }
 
   return (
-    <article className="flex items-center justify-between gap-8 px-8 py-2.5">
-      <div className="grid gap-1 leading-tight">
-        <NextLink href={detailsUrl}>
-          <a>
-            <span>{getTranslatedLabel(entity.label)}</span>
-            {hasLocalEntity ? <span> (edited locally)</span> : null}
-          </a>
-        </NextLink>
-        <div className="text-xs text-neutral-500">
-          {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+    <NextLink href={detailsUrl}>
+      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-1 hover:bg-slate-100">
+        <div className="flex flex-row items-center justify-start gap-6">
+          <IntaviaIcon
+            className="h-5 w-5 fill-none group-hover:fill-intavia-neutral-200"
+            icon={entity.kind}
+          />
+          <div className="grid gap-0 leading-tight">
+            <a className="group-hover:underline">
+              <span>{getTranslatedLabel(entity.label)}</span>
+              {hasLocalEntity ? <span> (edited locally)</span> : null}
+            </a>
+            <div className="text-xs text-neutral-500">
+              {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button className="h-8 w-8 p-1" variant="outline">
-            <span className="sr-only">Menu</span>
-            <MenuIcon className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
+        <div className="flex flex-row items-center justify-end gap-2">
+          <IconButton
+            className="h-7 w-7 p-1"
+            variant="outline"
+            label="t(['common', 'search', 'edit-item'])"
+            onClick={onEditItem}
+            title={t(['common', 'search', 'edit-item'])}
+          >
+            <Edit2Icon className="h-4 w-4 shrink-0" />
+          </IconButton>
+          <IconButton
+            className="h-7 w-7 p-1"
+            variant="outline"
+            label="t(['common', 'collections', 'remove-item'])"
+            onClick={onRemoveItem}
+            title={t(['common', 'collections', 'remove-item'])}
+          >
+            <XIcon className="h-4 w-4 shrink-0" />
+          </IconButton>
+        </div>
 
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuItem disabled={currentCollection == null} onSelect={onEditItem}>
-            {t(['common', 'search', 'edit-item'])}
-          </DropdownMenuItem>
-          <DropdownMenuItem disabled={currentCollection == null} onSelect={onRemoveItem}>
-            {t(['common', 'collections', 'remove-item'])}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-        <EditEntityDialog
-          entity={entity}
-          onClose={() => {
-            setDialogOpen(false);
-          }}
-        />
-      </Dialog>
-    </article>
+        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+          <EditEntityDialog
+            entity={entity}
+            onClose={() => {
+              setDialogOpen(false);
+            }}
+          />
+        </Dialog>
+      </article>
+    </NextLink>
   );
 }

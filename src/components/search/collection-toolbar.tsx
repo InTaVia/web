@@ -1,4 +1,3 @@
-import { TrashIcon } from '@heroicons/react/outline';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,6 +12,7 @@ import {
   DialogTrigger,
   IconButton,
 } from '@intavia/ui';
+import { Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -46,7 +46,7 @@ export function CollectionToolbar(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-4 lg:flex-row">
+    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-3 lg:flex-row">
       <CollectionSelect />
 
       <div className="flex items-center justify-between gap-2">
@@ -69,7 +69,7 @@ export function CollectionToolbar(): JSX.Element {
               label="Delete collection"
               variant="destructive"
             >
-              <TrashIcon className="h-5 w-5 shrink-0" />
+              <Trash2Icon className="h-5 w-5 shrink-0" />
             </IconButton>
           </AlertDialogTrigger>
           <AlertDialogContent className="sm:max-w-[425px]">

@@ -5,6 +5,7 @@ import { type ScaleBand, color } from 'd3';
 import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useContext, useMemo, useRef, useState } from 'react';
+import { StringMappingType } from 'typescript';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
@@ -17,6 +18,7 @@ import {
 import { TimelineEntityLabel } from '@/features/timeline/timelineEntityLabel';
 import TimelineEvent from '@/features/timeline/timelineEvent';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { colorScale, timeScale as timeScaleNormalized } from '@/lib/temporal-coloring';
 
 import TimelineEventCluster from './timelineEventCluster';
 
@@ -77,6 +79,14 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   //const tmpInitEventsWithoutCluster = Object.keys(events);
 
   const entityExtent = getTemporalExtent([Object.values(events)]);
+
+  const timeScaleForColoring = timeScaleNormalized(entityExtent[0], entityExtent[1]);
+  console.log(timeScaleForColoring(entityExtent[0]), colorScale(0), colorScale(0.5), colorScale(1));
+
+  const timeColorScale = (date: Date) => {
+    //return ;
+    return { background: colorScale(timeScaleForColoring(date)), foreground: 'white' };
+  };
 
   const height = vertical ? timeScale(entityExtent[1]) - timeScale(entityExtent[0]) : diameter;
 
@@ -266,6 +276,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   timeScaleOffset={timeScale(entityExtent[0])}
                   midOffset={midOffset}
                   event={event}
+                  timeColorScale={timeColorScale}
                   roles={event?.relations
                     .filter((rel: EventEntityRelation) => {
                       return rel.entity === entity.id;

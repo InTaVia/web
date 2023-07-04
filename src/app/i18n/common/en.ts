@@ -31,7 +31,7 @@ export const dictionary: Dictionary = {
     'create-collection': 'Create collection',
     'collection-name': 'Collection name',
     'empty-collection': 'This collection is empty.',
-    'remove-item': 'Remove item',
+    'remove-item': 'Remove from collection',
     'delete-alert-title': 'Delete collection',
     'delete-alert-description':
       'Are you sure that you want to delete "{{collectionLabel}}" containing {{collectionEntityCount}} entities?',

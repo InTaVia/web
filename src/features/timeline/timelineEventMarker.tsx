@@ -17,20 +17,17 @@ interface TimelineEventMarkerProps {
   thickness: number;
   hover: boolean;
   selected?: boolean;
-  colorBy: 'entity-identity' | 'event-kind' | 'time';
+  color?: string;
 }
 
 const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): JSX.Element => {
-  const { width, height, thickness, hover = false, event, colorBy = 'event-kind' } = props;
+  const { width, height, thickness, hover = false, event, color: i_color } = props;
 
   const vocabularies = useAppSelector(selectVocabularyEntries);
   const translatedEventKind =
     event.kind in vocabularies ? getTranslatedLabel(vocabularies[event.kind].label) : event.kind;
   const type = getEventKindPropertiesById(translatedEventKind).type;
-  const color =
-    colorBy === 'time'
-      ? { foreground: 'red', background: 'red' }
-      : getEventKindPropertiesByType(type).color;
+  const color = i_color != null ? i_color : getEventKindPropertiesByType(type).color;
 
   const strokeWidth = 512 / (width / thickness);
   const scale = (width - thickness) / 512;

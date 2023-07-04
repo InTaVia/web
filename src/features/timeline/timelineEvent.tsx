@@ -41,6 +41,7 @@ interface TimelineEventProps {
   colorBy: 'entity-identity' | 'event-kind' | 'time';
   onClick: () => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  timeColorScale: (date: Date) => string;
 }
 
 const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element => {
@@ -63,6 +64,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     fontSize = 10,
     onClick,
     highlightedByVis,
+    timeColorScale,
   } = props;
 
   const [hover, setHover] = useState(false);
@@ -71,6 +73,10 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
 
   const eventExtent = getTemporalExtent([[event]]);
   const extentDiffInYears = eventExtent[1].getUTCFullYear() - eventExtent[0].getUTCFullYear();
+
+  const eventMidDate = new Date(eventExtent[0].getTime() + eventExtent[1].getTime()) / 2;
+
+  const color = timeColorScale(eventMidDate);
 
   const selected = useMemo(() => {
     if (highlightedByVis == null || highlightedByVis.events == null) return false;
@@ -186,6 +192,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
             height={height}
             colorBy={colorBy}
             thickness={thickness}
+            color={color}
             hover={
               hover ||
               hovered?.events.includes(event.id) === true ||

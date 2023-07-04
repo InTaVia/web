@@ -16,7 +16,7 @@ export function SearchResultsView(): JSX.Element {
   }
 
   return (
-    <div className="grid h-full min-h-0 grid-rows-[1fr_auto] overflow-auto bg-neutral-50">
+    <div className="min-h-0 overflow-auto bg-neutral-50">
       <SearchResultsList />
       <SearchPageFooter />
     </div>

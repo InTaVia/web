@@ -1,6 +1,4 @@
-import type { Entity, EntityEventRelation, Event, Place } from '@intavia/api-client';
-import { assert } from '@stefanprobst/assert';
-import { keyBy } from '@stefanprobst/key-by';
+import type { Entity, Event, Place } from '@intavia/api-client';
 import type { Feature, FeatureCollection, LineString } from 'geojson';
 import { useMemo } from 'react';
 
@@ -15,11 +13,17 @@ interface UseLineStringFeatureCollectionParams {
   entities: Array<Entity>;
 }
 
+type LineFeatureCollection = FeatureCollection<
+  LineString,
+  { entity: Entity; events: Array<Event>; places: Array<Place> }
+>;
+
 interface UseLineStringFeatureCollectionResult {
-  lines: FeatureCollection<
-    LineString,
-    { entity: Entity; events: Array<Event>; places: Array<Place> }
-  >;
+  lines: LineFeatureCollection;
+  spatioTemporalEvents: Array<Event>;
+  spatialEvents: Array<Event>;
+  temporalEvents: Array<Event>;
+  noneEvents: Array<Event>;
 }
 
 export function useLineStringFeatureCollection(
@@ -28,11 +32,8 @@ export function useLineStringFeatureCollection(
   const { events, entities } = params;
 
   const places = useAppSelector(selectEntitiesByKind).place;
-
-  const lines: FeatureCollection<
-    LineString,
-    { entity: Entity; events: Array<Event>; places: Array<Place> }
-  > = useMemo(() => {
+  // : FeatureCollection<LineString, { entity: Entity; events: Array<Event>; places: Array<Place> }>
+  const [lines, spatioTemporalEvents, spatialEvents, temporalEvents, noneEvents] = useMemo(() => {
     function getRelatedPlaces(event: Event): Array<Place> | null {
       const relatedPlaces: Array<Place> = [];
 
@@ -41,6 +42,7 @@ export function useLineStringFeatureCollection(
 
       event.relations.forEach((relation) => {
         if (relation.entity in places) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const place = places[relation.entity]!;
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (place.kind !== 'place') return null;
@@ -62,6 +64,7 @@ export function useLineStringFeatureCollection(
     const spatialEvents: Array<Event> = [];
     const temporalEvents: Array<Event> = [];
     const noneEvents: Array<Event> = [];
+
     events.forEach((event) => {
       const hasDate =
         ('startDate' in event && isValidDate(new Date(event.startDate as string))) ||
@@ -131,13 +134,23 @@ export function useLineStringFeatureCollection(
       // }
     }
 
-    return {
-      type: 'FeatureCollection',
-      features,
-    };
+    return [
+      {
+        type: 'FeatureCollection',
+        features,
+      } as LineFeatureCollection,
+      spatioTemporalEvents,
+      spatialEvents,
+      temporalEvents,
+      noneEvents,
+    ];
   }, [events, places, entities]);
 
   return {
     lines,
+    spatioTemporalEvents,
+    spatialEvents,
+    temporalEvents,
+    noneEvents,
   };
 }
