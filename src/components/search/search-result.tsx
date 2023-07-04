@@ -40,6 +40,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const dispatch = useAppDispatch();
   const { currentCollection } = useCollection();
 
+  const [isHovered, setHovered] = useState(false);
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   function onShowDetails() {
@@ -56,48 +57,56 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   }
 
   return (
-    <article className="flex items-center justify-between gap-8 px-8 py-2.5">
-      <div className="grid gap-1 leading-tight">
-        <NextLink href={detailsUrl}>
-          <a>
+    <NextLink href={detailsUrl}>
+      <article
+        onMouseEnter={() => {
+          setHovered(true);
+        }}
+        onMouseLeave={() => {
+          setHovered(false);
+        }}
+        className="flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100"
+      >
+        <div className="grid gap-1 leading-tight">
+          <a className={isHovered ? 'underline' : ''}>
             <span>{getTranslatedLabel(entity.label)}</span>
             {hasLocalEntity ? <span> (edited locally)</span> : null}
           </a>
-        </NextLink>
-        <div className="text-xs text-neutral-500">
-          {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+          <div className="text-xs text-neutral-500">
+            {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+          </div>
         </div>
-      </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button className="h-8 w-8 p-1" variant="outline">
-            <span className="sr-only">Menu</span>
-            <MenuIcon className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="h-8 w-8 p-1" variant="outline">
+              <span className="sr-only">Menu</span>
+              <MenuIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuItem onSelect={onShowDetails}>
-            {t(['common', 'search', 'show-details'])}
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={onEditItem}>
-            {t(['common', 'search', 'edit-item'])}
-          </DropdownMenuItem>
-          <DropdownMenuItem disabled={currentCollection == null} onSelect={onAddToCollection}>
-            {t(['common', 'search', 'add-to-collection'])}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuItem onSelect={onShowDetails}>
+              {t(['common', 'search', 'show-details'])}
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={onEditItem}>
+              {t(['common', 'search', 'edit-item'])}
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled={currentCollection == null} onSelect={onAddToCollection}>
+              {t(['common', 'search', 'add-to-collection'])}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-        <EditEntityDialog
-          entity={entity}
-          onClose={() => {
-            setDialogOpen(false);
-          }}
-        />
-      </Dialog>
-    </article>
+        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+          <EditEntityDialog
+            entity={entity}
+            onClose={() => {
+              setDialogOpen(false);
+            }}
+          />
+        </Dialog>
+      </article>
+    </NextLink>
   );
 }
