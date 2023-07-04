@@ -64,7 +64,10 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
     <NextLink href={detailsUrl}>
       <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
-          <IntaviaIcon className="h-6 w-6 fill-none" icon={entity.kind} />
+          <IntaviaIcon
+            className="h-6 w-6 fill-none group-hover:fill-intavia-neutral-200"
+            icon={entity.kind}
+          />
           <div className="grid gap-1 leading-tight">
             <a className="group-hover:underline">
               <span>{getTranslatedLabel(entity.label)}</span>
