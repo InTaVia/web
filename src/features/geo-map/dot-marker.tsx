@@ -6,6 +6,7 @@ import { Marker } from 'react-map-gl';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
+import { highlight } from '@/features/common/visualization.config';
 
 interface DotMarkerProps {
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
@@ -14,7 +15,7 @@ interface DotMarkerProps {
   backgroundColor: string;
   foregroundColor: string;
   onToggleSelection?: (ids: Array<string>) => void;
-  /** @default 16 */
+  /** @default 12 */
   size?: number;
   feature: Feature;
   // FIXME get shape type from actual interface
@@ -53,9 +54,11 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
     }
   }
 
-  const selectedStrokeWidth = 4;
+  const selectedStrokeWidth = 3;
   const hoverStrokeWidth = 2.5;
-  const svgWidthHight = size + hoverStrokeWidth + selectedStrokeWidth;
+  // const emphSize = size + 4;
+  // const svgWidthHight = max(size, emphSize) + hoverStrokeWidth + selectedStrokeWidth;
+  const svgWidthHight = size + selectedStrokeWidth;
 
   const isHovered =
     hovered?.relatedEvents.includes(feature.properties!.event.id) === true ||
@@ -71,6 +74,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
       <svg
         className="cursor-pointer"
         height={size}
+        transform={selected ? `scale(${highlight.scale})` : 'scale(1)'}
         onMouseEnter={(event: MouseEvent<SVGElement>) => {
           updateHover({
             entities: [],
@@ -98,8 +102,8 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
             y={svgWidthHight / 2 - (size / 2) * 0.886}
             width={size * 0.886}
             height={size * 0.886}
-            fill={isHovered || selected ? color.light : color.main}
-            stroke={selected ? color.dark : isHovered ? color.main : color.dark}
+            fill={isHovered ? color.dark : color.main}
+            stroke={selected ? highlight.color : color.dark}
             strokeWidth={
               selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth
             }
@@ -109,8 +113,8 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
             cx={svgWidthHight / 2}
             cy={svgWidthHight / 2}
             r={size / 2}
-            fill={isHovered || selected ? color.light : color.main}
-            stroke={selected ? color.dark : isHovered ? color.main : color.dark}
+            fill={isHovered ? color.dark : color.main}
+            stroke={selected ? highlight.color : color.dark}
             strokeWidth={
               selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth
             }
