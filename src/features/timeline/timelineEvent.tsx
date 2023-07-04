@@ -38,6 +38,7 @@ interface TimelineEventProps {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
   onClick: () => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
@@ -55,6 +56,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     thickness: i_thickness = 1,
     showLabels,
     overlapIndex,
+    colorBy = 'event-kind',
     overlap = false,
     mode = 'default',
     diameter = 16,
@@ -75,9 +77,9 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     return highlightedByVis.events.includes(event.id);
   }, [event.id, highlightedByVis]);
 
-  const thickness = selected ? 2 * i_thickness : i_thickness;
+  const thickness = 1;
   //console.log(thickness, i_thickness, selected);
-  const diameterWithStroke = diameter + thickness * 3;
+  const diameterWithStroke = diameter; // + thickness * 3;
 
   const overlapOffset = overlapIndex >= 0 ? overlapIndex * diameterWithStroke : 0;
 
@@ -182,6 +184,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
             event={event}
             width={width}
             height={height}
+            colorBy={colorBy}
             thickness={thickness}
             hover={
               hover ||

@@ -249,7 +249,7 @@ export const visualizationSlice = createSlice({
                 sort: 8,
                 label: 'Font Size',
               },
-              /* thickness: {
+              thickness: {
                 type: 'number',
                 id: 'thickness',
                 value: 1,
@@ -257,7 +257,32 @@ export const visualizationSlice = createSlice({
                 sort: 8,
                 label: 'Thickness',
               },
-              diameter: {
+              colorBy: {
+                type: 'select',
+                id: 'colorBy',
+                label: 'Color events by',
+                sort: 3,
+                value: {
+                  name: 'Event-kind',
+                  value: 'event-kind',
+                },
+                options: [
+                  {
+                    name: 'Event kind',
+                    value: 'event-kind',
+                  },
+                  {
+                    name: 'Time',
+                    value: 'time',
+                  },
+                  {
+                    name: 'Entity identity',
+                    value: 'entity-identity',
+                  },
+                ],
+                editable: true,
+              },
+              /*diameter: {
                 type: 'number',
                 id: 'diameter',
                 value: 14,

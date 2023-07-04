@@ -1,7 +1,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
-import type { ScaleBand } from 'd3';
+import { type ScaleBand, color } from 'd3';
 import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useContext, useMemo, useRef, useState } from 'react';
@@ -35,6 +35,7 @@ interface TimelineEntityProps {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
   onToggleHighlight?: (
     entities: Array<Entity['id'] | null>,
     events: Array<Event['id'] | null>,
@@ -50,7 +51,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     timeScale,
     scaleY,
     entityIndex,
-    thickness = 1,
+    thickness: i_thickness,
     showLabels,
     overlap = false,
     cluster = false,
@@ -60,10 +61,13 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     fontSize = 10,
     onToggleHighlight,
     highlightedByVis,
+    colorBy = 'event-kind',
   } = props;
 
   // const itemsRef = useRef([]);
   const ref = useRef();
+
+  const thickness = colorBy === 'time' ? diameter : i_thickness;
 
   const { hovered, updateHover } = useHoverState();
 
@@ -93,78 +97,10 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     } else if (mode === 'single') {
       midOffset = scaleY.bandwidth();
     } else {
-      midOffset = scaleY.bandwidth();
+      //midOffset = scaleY.bandwidth();
+      midOffset = height / 2;
     }
   }
-
-  /*   const clusterArrayCopy = useMemo(() => {
-    return [...clusterArray];
-  }, [clusterArray]); */
-
-  /* useEffect(() => {
-    const allTheItems = itemsRef.current;
-
-    const tmpClusterArray = [] as Array<Set<string>>;
-
-    const callback = (entries: any) => {
-      entries.forEach((entry: any, index: any) => {
-        if (entry.isIntersecting === null || entry.isIntersecting === undefined) {
-          return;
-        }
-        entries.forEach((otherEntry: any, otherIndex: any) => {
-          if (otherIndex >= index) {
-            return;
-          }
-
-          const domRect1 = entry.boundingClientRect;
-          const domRect2 = otherEntry.boundingClientRect;
-
-          const noOverlap =
-            domRect1.top > domRect2.bottom ||
-            domRect1.right < domRect2.left ||
-            domRect1.bottom < domRect2.top ||
-            domRect1.left > domRect2.right;
-
-          const id = entry.target.id;
-          const otherId = otherEntry.target.id;
-          if (!noOverlap) {
-            let hit = false;
-            for (const cluster of tmpClusterArray) {
-              if (!cluster.has(id)) {
-                if (cluster.has(otherId)) {
-                  cluster.add(id);
-                  hit = true;
-                }
-              } else {
-                cluster.add(otherId);
-                hit = true;
-              }
-            }
-
-            if (!hit) {
-              tmpClusterArray.push(new Set([id, otherId]));
-            }
-          }
-        });
-      });
-
-      setClusterArray(tmpClusterArray);
-    };
-
-    const io = new IntersectionObserver(callback, { root: ref.current });
-
-    allTheItems.forEach((target: any) => {
-      if (target !== null) io.observe(target);
-    });
-
-    return () => {
-      allTheItems.forEach((target: any) => {
-        if (target !== null) {
-          io.unobserve(target);
-        }
-      });
-    };
-  }, [itemsRef, width, height]); */
 
   const clusterArray = useMemo(() => {
     if (cluster !== true) {
@@ -241,22 +177,24 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   };
 
-  const colors = getEntityColorByKind(entity.kind);
+  const colors =
+    colorBy === 'time'
+      ? { foreground: 'red', background: 'red' }
+      : getEntityColorByKind(entity.kind);
 
   return (
     <div
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comament
       //@ts-ignore
       ref={ref}
-      key={`${entity.id}Entity${cluster}${clusterMode}${vertical}`}
+      key={`${entity.id}Entity${cluster}${clusterMode}${vertical}${colorBy}`}
       style={{
         position: 'absolute',
         width: `${width}px`,
         height: `${height}px`,
         left: vertical ? y + (mode === 'mass' ? 0 : diameter / 2) : timeScale(entityExtent[0]),
-        top: vertical
-          ? timeScale(entityExtent[0])
-          : y - (mode === 'mass' ? thickness : diameter / 2),
+        top: vertical ? timeScale(entityExtent[0]) : y - thickness,
+        //: y - (mode === 'mass' ? thickness : diameter / 2),
       }}
     >
       <div style={{ position: 'relative' }}>
@@ -264,11 +202,11 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
           className="cursor-pointer"
           style={{
             left: vertical ? midOffset : 0,
-            top: vertical ? 0 : midOffset,
+            top: vertical ? 0 : midOffset - thickness / 2,
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
             backgroundColor:
-              mode === 'mass' ? (hover ? colors.foreground : colors.background) : 'black',
+              mode === 'mass' ? (hover ? colors.foreground : colors.background) : 'black', //hover ? colors.foreground : colors.background,
             minHeight: `1px`,
             minWidth: `1px`,
             position: 'absolute',
@@ -323,6 +261,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   //   return itemsRef.current.push(el);
                   // }}
                   vertical={vertical}
+                  colorBy={colorBy}
                   timeScale={timeScale}
                   timeScaleOffset={timeScale(entityExtent[0])}
                   midOffset={midOffset}
