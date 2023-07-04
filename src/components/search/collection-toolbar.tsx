@@ -46,7 +46,7 @@ export function CollectionToolbar(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-4 lg:flex-row">
+    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-3 lg:flex-row">
       <CollectionSelect />
 
       <div className="flex items-center justify-between gap-2">

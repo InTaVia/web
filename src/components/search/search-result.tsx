@@ -64,13 +64,13 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
   return (
     <NextLink href={detailsUrl}>
-      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100">
+      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-1 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
           <IntaviaIcon
-            className="h-6 w-6 fill-none group-hover:fill-intavia-neutral-200"
+            className="h-5 w-5 fill-none group-hover:fill-intavia-neutral-200"
             icon={entity.kind}
           />
-          <div className="grid gap-1 leading-tight">
+          <div className="grid gap-0 leading-tight">
             <a className="group-hover:underline">
               <span>{getTranslatedLabel(entity.label)}</span>
               {hasLocalEntity ? <span> (edited locally)</span> : null}
@@ -83,7 +83,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
         <div className="flex flex-row items-center justify-end gap-2">
           <IconButton
-            className="h-8 w-8 p-1"
+            className="h-7 w-7 p-1"
             variant="outline"
             label="t(['common', 'search', 'edit-item'])"
             onClick={onEditItem}
@@ -92,7 +92,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             <Edit2Icon className="h-4 w-4 shrink-0" />
           </IconButton>
           <IconButton
-            className="h-8 w-8 p-1 aria-disabled:cursor-default aria-disabled:text-neutral-200 aria-disabled:focus:ring-0"
+            className="h-7 w-7 p-1 aria-disabled:cursor-default aria-disabled:text-neutral-200 aria-disabled:focus:ring-0"
             variant="outline"
             label="t(['common', 'search', 'add-to-collection'])"
             aria-disabled={isAddToCollectionDisabled()}
