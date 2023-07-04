@@ -1,21 +1,13 @@
 import type { Entity } from '@intavia/api-client';
-import {
-  Button,
-  Dialog,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@intavia/ui';
-import { MenuIcon } from 'lucide-react';
+import { Dialog, IconButton } from '@intavia/ui';
+import { Edit2Icon, PlusIcon } from 'lucide-react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { type MouseEvent, useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
-import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
+import { addEntitiesToCollection, selectCollections } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
@@ -35,36 +27,49 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const hasLocalEntity = id in localEntities;
   const entity = hasLocalEntity ? (localEntities[id] as T) : upstreamEntity;
 
-  const router = useRouter();
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
   const dispatch = useAppDispatch();
+  const collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
 
   const [isDialogOpen, setDialogOpen] = useState(false);
 
-  function onShowDetails() {
-    void router.push(detailsUrl);
-  }
+  function onEditItem(e: MouseEvent) {
+    e.stopPropagation();
 
-  function onEditItem() {
     setDialogOpen(true);
   }
 
-  function onAddToCollection() {
+  function onAddToCollection(e: MouseEvent) {
+    e.stopPropagation();
+
     if (currentCollection == null) return;
     dispatch(addEntitiesToCollection({ id: currentCollection, entities: [id] }));
   }
 
-  function onClick(e: MouseEvent) {
-    e.stopPropagation();
+  function isAddToCollectionDisabled(): boolean {
+    if (currentCollection == null) return true;
+
+    const collection = collections[currentCollection];
+    if (
+      collection &&
+      collection.entities.filter((entityId) => {
+        return entityId === entity.id;
+      }).length > 0
+    )
+      return true;
+    return false;
   }
 
   return (
     <NextLink href={detailsUrl}>
       <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
-          <IntaviaIcon className="h-6 w-6 fill-none" icon={entity.kind} />
+          <IntaviaIcon
+            className="h-6 w-6 fill-none group-hover:fill-intavia-neutral-200"
+            icon={entity.kind}
+          />
           <div className="grid gap-1 leading-tight">
             <a className="group-hover:underline">
               <span>{getTranslatedLabel(entity.label)}</span>
@@ -76,30 +81,27 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
           </div>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 p-1" variant="outline">
-              <span className="sr-only">Menu</span>
-              <MenuIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuItem onClick={onClick} onSelect={onShowDetails}>
-              {t(['common', 'search', 'show-details'])}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={onClick} onSelect={onEditItem}>
-              {t(['common', 'search', 'edit-item'])}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              disabled={currentCollection == null}
-              onClick={onClick}
-              onSelect={onAddToCollection}
-            >
-              {t(['common', 'search', 'add-to-collection'])}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex flex-row items-center justify-end gap-2">
+          <IconButton
+            className="h-8 w-8 p-1"
+            variant="outline"
+            label="t(['common', 'search', 'edit-item'])"
+            onClick={onEditItem}
+            title={t(['common', 'search', 'edit-item'])}
+          >
+            <Edit2Icon className="h-4 w-4 shrink-0" />
+          </IconButton>
+          <IconButton
+            className="h-8 w-8 p-1 aria-disabled:cursor-default aria-disabled:text-neutral-200 aria-disabled:focus:ring-0"
+            variant="outline"
+            label="t(['common', 'search', 'add-to-collection'])"
+            aria-disabled={isAddToCollectionDisabled()}
+            onClick={onAddToCollection}
+            title={t(['common', 'search', 'add-to-collection'])}
+          >
+            <PlusIcon className="h-4 w-4 shrink-0" />
+          </IconButton>
+        </div>
 
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <EditEntityDialog

@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogTrigger, useToast } from '@intavia/ui';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
@@ -54,6 +55,7 @@ function AddQueryToCollectionButton(): JSX.Element {
 
   return (
     <Button disabled={currentCollection == null} onClick={onAddQueryToCollection}>
+      <PlusIcon className="h-4 w-4 shrink-0" />
       Add query to collection
     </Button>
   );
