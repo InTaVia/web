@@ -3,7 +3,7 @@ import { ScrollArea } from '@intavia/ui';
 import { useMemo } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
-import { EntityKindIcon } from '@/features/common/entity-kind-icon';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { DataList } from '@/features/data-panel/data-list';
 import { EntityItem } from '@/features/data-panel/entity-item';
@@ -83,7 +83,9 @@ export function DataView(props: DataViewProps): JSX.Element {
                 return (
                   <EntityItem
                     entity={item}
-                    icon={<EntityKindIcon kind={item.kind as EntityKind} />}
+                    icon={
+                      <IntaviaIcon icon={item.kind as EntityKind} fill="none" strokeWidth="1.5" />
+                    }
                     currentVisualizationIds={currentVisualizationIds}
                     targetHasVisualizations={targetHasVisualizations}
                     mode={mode}
@@ -107,7 +109,9 @@ export function DataView(props: DataViewProps): JSX.Element {
                       ...item,
                       label: t(['common', 'entity', 'kinds', item.label, plural(item.count)]),
                     }}
-                    icon={<EntityKindIcon kind={item.label as EntityKind} />}
+                    icon={
+                      <IntaviaIcon icon={item.label as EntityKind} fill="none" strokeWidth="1.5" />
+                    }
                     currentVisualizationIds={currentVisualizationIds}
                     targetHasVisualizations={targetHasVisualizations}
                   />

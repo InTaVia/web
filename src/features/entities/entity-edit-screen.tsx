@@ -1,5 +1,5 @@
 import type { Entity } from '@intavia/api-client';
-import { Button } from '@intavia/ui';
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger, useToast } from '@intavia/ui';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
@@ -31,11 +31,7 @@ export function EntityEditScreen(props: EntityEditScreenProps): JSX.Element {
     return <p>Loading...</p>;
   }
 
-  return (
-    <main>
-      <EntityEditForm entity={entityQuery.data} />
-    </main>
-  );
+  return <EntityEditForm entity={entityQuery.data} />;
 }
 
 interface EntityEditFormProps {
@@ -49,6 +45,7 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
   formatDateTime(new Date(), { dateStyle: 'full' });
 
   const dispatch = useAppDispatch();
+  const { toast } = useToast();
 
   function onSubmit(values: Entity) {
     const sanitized = {
@@ -65,6 +62,11 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
     }
 
     dispatch(addLocalEntity(sanitized));
+
+    toast({
+      title: 'Success',
+      description: 'Successfully updated entity',
+    });
   }
 
   const label = t(['common', 'entity', 'edit-entity'], {
@@ -74,14 +76,58 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
   const formId = 'edit-entity';
 
   return (
-    <Form id={formId} initialValues={entity} onSubmit={onSubmit}>
-      <EntityLabelTextField />
-      <EntityDescriptionTextField />
-      <EntityFormFields kind={entity.kind} />
-      <hr />
-      <RelationsFormFields />
+    <Form
+      className="grid min-h-full sm:grid-cols-[384px_1px_1fr]"
+      id={formId}
+      initialValues={entity}
+      onSubmit={onSubmit}
+    >
+      <div className="grid content-start gap-4 p-4">
+        <h2>{label}</h2>
+        <EntityLabelTextField />
+        <EntityDescriptionTextField />
+        <EntityFormFields kind={entity.kind} />
 
-      <Button type="submit">{t(['common', 'form', 'save'])}</Button>
+        <hr />
+
+        <div className="justify-self-end">
+          <Button type="submit">{t(['common', 'form', 'save'])}</Button>
+        </div>
+      </div>
+
+      <div className="bg-neutral-200" role="separator" />
+
+      <div className="grid content-start gap-4 p-4">
+        <Tabs defaultValue="relations">
+          <TabsList>
+            <TabsTrigger value="relations">
+              {t(['common', 'entity', 'relation', 'other'])}
+            </TabsTrigger>
+            <TabsTrigger value="media">{t(['common', 'entity', 'media', 'other'])}</TabsTrigger>
+            <TabsTrigger value="biographies">
+              {t(['common', 'entity', 'biography', 'other'])}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="relations">
+            <RelationsFormFields />
+          </TabsContent>
+
+          <TabsContent value="media">
+            <div>Media</div>
+          </TabsContent>
+
+          <TabsContent value="biographies">
+            <div>Biographies</div>
+          </TabsContent>
+        </Tabs>
+
+        <hr />
+
+        <div className="justify-self-end">
+          <Button type="submit">{t(['common', 'form', 'save'])}</Button>
+        </div>
+      </div>
     </Form>
   );
 }

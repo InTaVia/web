@@ -95,7 +95,7 @@ export function useLineStringFeatureCollection(
         'startDate' in eventB
           ? new Date(eventB.startDate as string)
           : new Date(eventB.endDate as string);
-      return sortDateA - sortDateB;
+      return sortDateA.getTime() - sortDateB.getTime();
     });
 
     // console.log('sortedEvents', sortedEvents);

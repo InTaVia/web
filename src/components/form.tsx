@@ -10,7 +10,10 @@ const decorators = [focusOnFirstError()];
 const mutators = { ...arrayMutators };
 
 export interface FormProps<T>
-  extends Pick<ComponentPropsWithoutRef<'form'>, 'action' | 'id' | 'method' | 'name' | 'role'>,
+  extends Pick<
+      ComponentPropsWithoutRef<'form'>,
+      'action' | 'className' | 'id' | 'method' | 'name' | 'role'
+    >,
     Pick<
       FinalFormProps<T>,
       | 'initialValues'
@@ -35,6 +38,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
   const {
     action,
     children,
+    className,
     id,
     initialValues,
     initialValuesEqual,
@@ -75,10 +79,11 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
         return (
           <form
             action={action}
+            className={className}
             id={id}
             method={method}
             name={name}
-            noValidate
+            noValidate={validate != null}
             onSubmit={handleSubmit}
           >
             {children}

@@ -10,6 +10,7 @@ import { PageContext } from '@/app/context/page.context';
 interface DotMarkerProps {
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   coordinates: Position;
+  color: Record<string, string>;
   backgroundColor: string;
   foregroundColor: string;
   onToggleSelection?: (ids: Array<string>) => void;
@@ -18,10 +19,12 @@ interface DotMarkerProps {
   feature: Feature;
   // FIXME get shape type from actual interface
   shape?: 'dot' | 'ellipse' | 'rectangle' | 'triangle';
+  strokeWidth?: number;
 }
 
 export function DotMarker(props: DotMarkerProps): JSX.Element {
   const {
+    color,
     backgroundColor,
     foregroundColor,
     coordinates,
@@ -30,6 +33,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
     feature,
     highlightedByVis,
     shape = 'dot',
+    strokeWidth = 1,
   } = props;
 
   const [lng, lat] = coordinates;
@@ -94,18 +98,22 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
             y={svgWidthHight / 2 - (size / 2) * 0.886}
             width={size * 0.886}
             height={size * 0.886}
-            fill={isHovered || selected ? foregroundColor : backgroundColor}
-            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
-            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
+            fill={isHovered || selected ? color.light : color.main}
+            stroke={selected ? color.dark : isHovered ? color.main : color.dark}
+            strokeWidth={
+              selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth
+            }
           />
         ) : (
           <circle
             cx={svgWidthHight / 2}
             cy={svgWidthHight / 2}
             r={size / 2}
-            fill={isHovered || selected ? foregroundColor : backgroundColor}
-            stroke={selected ? backgroundColor : isHovered ? backgroundColor : 'none'}
-            strokeWidth={selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : 0}
+            fill={isHovered || selected ? color.light : color.main}
+            stroke={selected ? color.dark : isHovered ? color.main : color.dark}
+            strokeWidth={
+              selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth
+            }
           />
         )}
       </svg>

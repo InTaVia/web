@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectEntities, selectVocabularyEntries } from '@/app/store/intavia.slice';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
 import { type as mediaType } from '@/features/common/data-transfer.types';
-import { EntityKindIcon } from '@/features/common/entity-kind-icon';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getColorsById } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import {
@@ -227,8 +227,8 @@ export function EventItem(props: EventItemProps): JSX.Element {
                       onDragStart={onDragStart}
                     >
                       <div className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500">
-                        <div className="min-w-fit">
-                          <EntityKindIcon kind={entity.kind} />
+                        <div className="min-w-fit pl-2">
+                          <IntaviaIcon icon={entity.kind} className="h-4 w-4 fill-none" />
                         </div>
                         <p>{getTranslatedLabel(entity.label, locale)}</p>
                         <p>

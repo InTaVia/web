@@ -32,6 +32,11 @@ export const dictionary: Dictionary = {
     'collection-name': 'Collection name',
     'empty-collection': 'This collection is empty.',
     'remove-item': 'Remove item',
+    'delete-alert-title': 'Delete collection',
+    'delete-alert-description':
+      'Are you sure that you want to delete "{{collectionLabel}}" containing {{collectionEntityCount}} entities?',
+    'delete-alert-description-warning': 'This action cannot be reversed.',
+    'delete-alert-action': 'Delete collection',
   },
   coordination: {
     metadata: {
@@ -73,6 +78,8 @@ export const dictionary: Dictionary = {
     role: { one: 'Role', other: 'Roles' },
     event: { one: 'Event', other: 'Events' },
     relation: { one: 'Relation', other: 'Relations' },
+    media: { one: 'Medium', other: 'Media' },
+    biography: { one: 'Biography', other: 'Biographies' },
   },
   'entity-edit': {
     metadata: {
@@ -127,6 +134,7 @@ export const dictionary: Dictionary = {
     'search-results-count': '{{count}} results',
     'search-history': 'Search history',
     'clear-search-history': 'Clear search history',
+    'advanced-search': 'Advanced Search',
     'nothing-found': 'Nothing found',
     'show-details': 'Show details',
     'edit-item': 'Edit item',
