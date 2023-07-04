@@ -154,32 +154,6 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
           </IconButton>
         </div>
 
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 p-1" variant="outline">
-              <span className="sr-only">Menu</span>
-              <MenuIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuItem
-              disabled={currentCollection == null}
-              onClick={onClick}
-              onSelect={onEditItem}
-            >
-              {t(['common', 'search', 'edit-item'])}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              disabled={currentCollection == null}
-              onClick={onClick}
-              onSelect={onRemoveItem}
-            >
-              {t(['common', 'collections', 'remove-item'])}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <EditEntityDialog
             entity={entity}

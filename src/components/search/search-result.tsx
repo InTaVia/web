@@ -7,7 +7,7 @@ import { type MouseEvent, useState } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
-import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
+import { addEntitiesToCollection, selectCollections } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
@@ -30,6 +30,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
   const dispatch = useAppDispatch();
+  const collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
 
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -45,6 +46,20 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
     if (currentCollection == null) return;
     dispatch(addEntitiesToCollection({ id: currentCollection, entities: [id] }));
+  }
+
+  function isAddToCollectionDisabled(): boolean {
+    if (currentCollection == null) return true;
+
+    const collection = collections[currentCollection];
+    if (
+      collection &&
+      collection.entities.filter((entityId) => {
+        return entityId === entity.id;
+      }).length > 0
+    )
+      return true;
+    return false;
   }
 
   return (
@@ -77,10 +92,10 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             <Edit2Icon className="h-4 w-4 shrink-0" />
           </IconButton>
           <IconButton
-            className="h-8 w-8 p-1"
+            className="h-8 w-8 p-1 aria-disabled:cursor-default aria-disabled:text-neutral-200 aria-disabled:focus:ring-0"
             variant="outline"
-            label="Add to collection"
-            disabled={currentCollection == null}
+            label="t(['common', 'search', 'add-to-collection'])"
+            aria-disabled={isAddToCollectionDisabled()}
             onClick={onAddToCollection}
             title={t(['common', 'search', 'add-to-collection'])}
           >
