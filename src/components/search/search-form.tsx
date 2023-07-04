@@ -30,7 +30,7 @@ export function SearchForm(): JSX.Element {
   }
 
   return (
-    <div className="mx-auto w-full max-w-7xl py-4 px-8">
+    <div className="mx-auto w-full max-w-7xl py-3 px-8">
       <Form initialValues={searchFilters} name="search" onSubmit={onSubmit} role="search">
         <SearchPanelForm />
       </Form>

@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogTrigger, useToast } from '@intavia/ui';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/app/store';
@@ -9,7 +10,7 @@ import { useAllSearchResults } from '@/components/search/use-all-search-results'
 
 export function SearchResultsToolbar(): JSX.Element {
   return (
-    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-4 lg:flex-row">
+    <div className="flex flex-col justify-between gap-2 border-b border-neutral-200 px-8 py-3 lg:flex-row">
       <SaveQueryAsCollectionButton />
       <AddQueryToCollectionButton />
     </div>
@@ -54,6 +55,7 @@ function AddQueryToCollectionButton(): JSX.Element {
 
   return (
     <Button disabled={currentCollection == null} onClick={onAddQueryToCollection}>
+      <PlusIcon className="h-4 w-4 shrink-0" />
       Add query to collection
     </Button>
   );
