@@ -1,14 +1,6 @@
 import type { Entity } from '@intavia/api-client';
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@intavia/ui';
-import { MenuIcon } from 'lucide-react';
+import { Button, Dialog, DialogTrigger, IconButton } from '@intavia/ui';
+import { Edit2Icon, XIcon } from 'lucide-react';
 import NextLink from 'next/link';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
@@ -109,17 +101,17 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
-  function onEditItem() {
+  function onEditItem(e: MouseEvent) {
+    e.stopPropagation();
+
     setDialogOpen(true);
   }
 
-  function onRemoveItem() {
+  function onRemoveItem(e: MouseEvent) {
+    e.stopPropagation();
+
     if (currentCollection == null) return;
     dispatch(removeEntitiesFromCollection({ id: currentCollection, entities: [id] }));
-  }
-
-  function onClick(e: MouseEvent) {
-    e.stopPropagation();
   }
 
   return (
@@ -141,7 +133,28 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
           </div>
         </div>
 
-        <DropdownMenu>
+        <div className="flex flex-row items-center justify-end gap-2">
+          <IconButton
+            className="h-8 w-8 p-1"
+            variant="outline"
+            label="t(['common', 'search', 'edit-item'])"
+            onClick={onEditItem}
+            title={t(['common', 'search', 'edit-item'])}
+          >
+            <Edit2Icon className="h-4 w-4 shrink-0" />
+          </IconButton>
+          <IconButton
+            className="h-8 w-8 p-1"
+            variant="outline"
+            label="t(['common', 'collections', 'remove-item'])"
+            onClick={onRemoveItem}
+            title={t(['common', 'collections', 'remove-item'])}
+          >
+            <XIcon className="h-4 w-4 shrink-0" />
+          </IconButton>
+        </div>
+
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="h-8 w-8 p-1" variant="outline">
               <span className="sr-only">Menu</span>
@@ -165,7 +178,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
               {t(['common', 'collections', 'remove-item'])}
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <EditEntityDialog
