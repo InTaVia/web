@@ -69,7 +69,7 @@ export function CollectionView(): JSX.Element {
           );
         })}
       </ul>
-      <footer className="border-t border-neutral-200 py-10 px-8">
+      <footer className="border-t border-neutral-200 py-4 px-8">
         {collection?.entities.length} Entities
       </footer>
     </div>
@@ -116,13 +116,13 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   return (
     <NextLink href={detailsUrl}>
-      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-2.5 hover:bg-slate-100">
+      <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-1 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
           <IntaviaIcon
-            className="h-6 w-6 fill-none group-hover:fill-intavia-neutral-200"
+            className="h-5 w-5 fill-none group-hover:fill-intavia-neutral-200"
             icon={entity.kind}
           />
-          <div className="grid gap-1 leading-tight">
+          <div className="grid gap-0 leading-tight">
             <a className="group-hover:underline">
               <span>{getTranslatedLabel(entity.label)}</span>
               {hasLocalEntity ? <span> (edited locally)</span> : null}
@@ -135,7 +135,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
         <div className="flex flex-row items-center justify-end gap-2">
           <IconButton
-            className="h-8 w-8 p-1"
+            className="h-7 w-7 p-1"
             variant="outline"
             label="t(['common', 'search', 'edit-item'])"
             onClick={onEditItem}
@@ -144,7 +144,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
             <Edit2Icon className="h-4 w-4 shrink-0" />
           </IconButton>
           <IconButton
-            className="h-8 w-8 p-1"
+            className="h-7 w-7 p-1"
             variant="outline"
             label="t(['common', 'collections', 'remove-item'])"
             onClick={onRemoveItem}
