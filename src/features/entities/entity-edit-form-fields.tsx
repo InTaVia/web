@@ -1018,6 +1018,14 @@ function MediaResourcePreview(props: MediaResourcePreview): JSX.Element {
           <div>{media.attribution}</div>
         </div>
       ) : null}
+      {media.kind === 'link' ? (
+        <div>
+          <a href={media.url} target="_blank" rel="noreferrer">
+            {label}
+          </a>
+          <div>{media.attribution}</div>
+        </div>
+      ) : null}
       <div>{media.description}</div>
     </article>
   );
@@ -1102,7 +1110,7 @@ function MediaResourceKindSelect(props: MediaResourceKindSelectProps): JSX.Eleme
 
   const field = useField(name);
 
-  const kinds = ['image', 'document', 'video', 'embed'] as const;
+  const kinds = ['image', 'document', 'video', 'embed', 'link'] as const;
 
   return (
     <FormField>

@@ -84,6 +84,7 @@ export interface Dictionary {
     image: Plurals;
     document: Plurals;
     embed: Plurals;
+    link: Plurals;
     video: Plurals;
   };
   geomap: {

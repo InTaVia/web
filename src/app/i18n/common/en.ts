@@ -95,6 +95,7 @@ export const dictionary: Dictionary = {
     image: { one: 'Image', other: 'Images' },
     document: { one: 'Document', other: 'Documents' },
     embed: { one: 'Embedded resource', other: 'Embedded resources' },
+    link: { one: 'Link', other: 'Links' },
     video: { one: 'Video', other: 'Videos' },
   },
   geomap: {
