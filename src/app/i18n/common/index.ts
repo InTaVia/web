@@ -56,6 +56,8 @@ export interface Dictionary {
     'all-kinds': string;
     kinds: Record<EntityKind, Plurals>;
     label: string;
+    'alternative-label': Plurals;
+    'linked-url': Plurals;
     description: string;
     gender: Plurals;
     occupation: Plurals;
@@ -67,6 +69,21 @@ export interface Dictionary {
     role: Plurals;
     event: Plurals;
     relation: Plurals;
+    media: Plurals;
+    biography: Plurals;
+    'media-resource-kind': Plurals;
+    'select-media-resource-kind': string;
+  };
+  'entity-edit': {
+    metadata: {
+      title: string;
+    };
+    'edit-entity': string;
+  };
+  'media-resource-kind': {
+    image: Plurals;
+    document: Plurals;
+    video: Plurals;
   };
   geomap: {
     metadata: {
@@ -149,11 +166,14 @@ export interface Dictionary {
   };
   form: {
     save: string;
+    'save-entity': string;
+    'save-relations': string;
     cancel: string;
     submit: string;
     remove: string;
     add: string;
     more: string;
     clear: string;
+    edit: string;
   };
 }

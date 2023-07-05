@@ -1,15 +1,17 @@
 import type { Entity } from '@intavia/api-client';
-import { Dialog, IconButton } from '@intavia/ui';
+import {  Button, IconButton } from '@intavia/ui';
+import { MenuIcon } from 'lucide-react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { type MouseEvent } from 'react';
 import { Edit2Icon, PlusIcon } from 'lucide-react';
 import NextLink from 'next/link';
-import { type MouseEvent, useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { addEntitiesToCollection, selectCollections } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
-import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -33,12 +35,10 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
   const collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
 
-  const [isDialogOpen, setDialogOpen] = useState(false);
-
   function onEditItem(e: MouseEvent) {
     e.stopPropagation();
 
-    setDialogOpen(true);
+    void router.push(`/entities/${id}/edit`);
   }
 
   function onAddToCollection(e: MouseEvent) {
@@ -80,7 +80,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             </div>
           </div>
         </div>
-
+        
         <div className="flex flex-row items-center justify-end gap-2">
           <IconButton
             className="h-7 w-7 p-1"
@@ -102,15 +102,6 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             <PlusIcon className="h-4 w-4 shrink-0" />
           </IconButton>
         </div>
-
-        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-          <EditEntityDialog
-            entity={entity}
-            onClose={() => {
-              setDialogOpen(false);
-            }}
-          />
-        </Dialog>
       </article>
     </NextLink>
   );
