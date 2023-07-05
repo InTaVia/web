@@ -67,6 +67,8 @@ export const dictionary: Dictionary = {
       place: { one: 'Place', other: 'Places' },
     },
     label: 'Label',
+    'alternative-label': { one: 'Alternative label', other: 'Alternative labels' },
+    'linked-url': { one: 'Linked URL', other: 'Linked URLs' },
     description: 'Description',
     gender: { one: 'Gender', other: 'Genders' },
     occupation: { one: 'Occupation', other: 'Occupations' },
@@ -78,6 +80,23 @@ export const dictionary: Dictionary = {
     role: { one: 'Role', other: 'Roles' },
     event: { one: 'Event', other: 'Events' },
     relation: { one: 'Relation', other: 'Relations' },
+    media: { one: 'Medium', other: 'Media' },
+    biography: { one: 'Biography', other: 'Biographies' },
+    'media-resource-kind': { one: 'Media resource kind', other: 'Media resource kinds' },
+    'select-media-resource-kind': 'Select media resource kind',
+  },
+  'entity-edit': {
+    metadata: {
+      title: 'Edit entity',
+    },
+    'edit-entity': 'Edit entity',
+  },
+  'media-resource-kind': {
+    image: { one: 'Image', other: 'Images' },
+    document: { one: 'Document', other: 'Documents' },
+    embed: { one: 'Embedded resource', other: 'Embedded resources' },
+    link: { one: 'Link', other: 'Links' },
+    video: { one: 'Video', other: 'Videos' },
   },
   geomap: {
     metadata: {
@@ -160,11 +179,14 @@ export const dictionary: Dictionary = {
   },
   form: {
     save: 'Save',
+    'save-entity': 'Save entity',
+    'save-relations': 'Save relations',
     cancel: 'Cancel',
     submit: 'Submit',
     remove: 'Remove',
     add: 'Add',
     more: 'More',
     clear: 'Clear',
+    edit: 'Edit',
   },
 };

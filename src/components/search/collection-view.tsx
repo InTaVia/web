@@ -2,6 +2,7 @@ import type { Entity } from '@intavia/api-client';
 import { Button, Dialog, DialogTrigger, IconButton } from '@intavia/ui';
 import { Edit2Icon, XIcon } from 'lucide-react';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
@@ -15,7 +16,6 @@ import {
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
-import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
@@ -85,6 +85,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const { t } = useI18n<'common'>();
 
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { currentCollection } = useCollection();
@@ -95,16 +96,14 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
   const _localEntities = useAppSelector(selectLocalEntities);
   const hasLocalEntity = id in _localEntities;
 
-  const [isDialogOpen, setDialogOpen] = useState(false);
-
   if (entity == null) return null;
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
-
+  
   function onEditItem(e: MouseEvent) {
     e.stopPropagation();
 
-    setDialogOpen(true);
+    void router.push(`/entities/${id}/edit`);
   }
 
   function onRemoveItem(e: MouseEvent) {
@@ -153,15 +152,6 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
             <XIcon className="h-4 w-4 shrink-0" />
           </IconButton>
         </div>
-
-        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-          <EditEntityDialog
-            entity={entity}
-            onClose={() => {
-              setDialogOpen(false);
-            }}
-          />
-        </Dialog>
       </article>
     </NextLink>
   );
