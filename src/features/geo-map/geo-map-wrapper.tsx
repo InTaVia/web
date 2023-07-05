@@ -1,4 +1,5 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { keyBy } from '@stefanprobst/key-by';
 
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
@@ -37,11 +38,12 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const data = useDataFromVisualization({ visualization });
   // console.log(data);
 
-  const { lines } = useLineStringFeatureCollection({
-    events: data.events,
-    entities: data.entities,
-  });
-  // console.log(lines);
+  const { lines, spatioTemporalEvents, spatialEvents, temporalEvents, noneEvents } =
+    useLineStringFeatureCollection({
+      events: data.events,
+      entities: data.entities,
+    });
+  // console.log(temporalEvents, noneEvents);
 
   const { points } = usePointFeatureCollection({ events: data.events, entities: data.entities });
 
@@ -49,6 +51,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
+  const colorBy = visualization.properties!.colorBy!.value.value ?? 'event-kind';
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -95,6 +98,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
             data={points}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}
+            colorBy={colorBy}
           />
         )}
 
@@ -109,7 +113,14 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         )}
       </GeoMap>
       <div className="absolute bottom-5 right-0">
-        <VisualizationLegend events={data.events} entities={data.entities} />
+        <VisualizationLegend
+          events={keyBy(data.events, (e) => {
+            return e.id;
+          })}
+          entities={keyBy(data.entities, (e) => {
+            return e.id;
+          })}
+        />
       </div>
     </>
   );

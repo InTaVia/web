@@ -29,6 +29,15 @@ interface EntityKindProperties {
   color: KindColor;
 }
 
+export const highlight = {
+  color: '#ffdf00',
+  scale: 1.6,
+};
+
+export const temporalColorScales = {
+  reds: ['#fc9272', '#fb6a4a', '#ef3b2c', '#cb181d', '#a50f15', '#67000d', '#27000d'],
+};
+
 const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindProperties> = {
   birth: {
     label: 'Birth',
@@ -41,20 +50,20 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
       background: '#EFEFEF',
       main: '#EFEFEF',
       light: '#333333',
-      dark: '#333333',
+      dark: '#888888',
     },
-    strokeWidth: 2,
+    strokeWidth: 3,
   },
   death: {
     label: 'Death',
     type: 'death',
     shape: 'dot',
     icon: 'event-circle', //event-diamond
-    iconStyle: 'fill-[#333333] stroke-[#AAAAAA',
+    iconStyle: 'fill-[#333333] stroke-[#AAAAAA]',
     color: {
       foreground: '#AAAAAA',
       background: '#333333',
-      main: '#333333',
+      main: '#666666',
       light: '#AAAAAA',
       dark: '#111111',
     },

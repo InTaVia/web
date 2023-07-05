@@ -19,7 +19,7 @@ interface UsePointFeatureCollectionResult {
 export function usePointFeatureCollection(
   params: UsePointFeatureCollectionParams,
 ): UsePointFeatureCollectionResult {
-  const { events, entities } = params;
+  const { events } = params;
 
   const places = useAppSelector(selectEntitiesByKind).place;
 
@@ -64,7 +64,7 @@ export function usePointFeatureCollection(
       type: 'FeatureCollection',
       features,
     };
-  }, [events, entities]);
+  }, [events, places]);
 
   return {
     points,

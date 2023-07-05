@@ -105,19 +105,44 @@ export const visualizationSlice = createSlice({
                 editable: true,
                 sort: 1,
               },
+              colorBy: {
+                type: 'select',
+                id: 'colorBy',
+                label: 'Color events by',
+                sort: 3,
+                value: {
+                  name: 'Event-kind',
+                  value: 'event-kind',
+                },
+                options: [
+                  {
+                    name: 'Event kind',
+                    value: 'event-kind',
+                  },
+                  {
+                    name: 'Time',
+                    value: 'time',
+                  },
+                  {
+                    name: 'Entity identity',
+                    value: 'entity-identity',
+                  },
+                ],
+                editable: true,
+              },
               cluster: {
                 type: 'boolean',
                 id: 'cluster',
                 value: false,
                 editable: true,
-                sort: 3,
+                sort: 4,
                 label: 'Cluster',
               },
               clusterMode: {
                 type: 'select',
                 id: 'clusterMode',
                 label: 'Cluster Style',
-                sort: 4,
+                sort: 5,
                 value: {
                   name: 'Donut',
                   value: 'donut',
@@ -139,7 +164,7 @@ export const visualizationSlice = createSlice({
                 id: 'renderLines',
                 value: false,
                 editable: true,
-                sort: 5,
+                sort: 6,
                 label: 'Connect events chronologically with lines (for each entity)',
               },
             },
