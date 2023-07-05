@@ -59,10 +59,10 @@ const eventKindPropertiesByType: Record<EventKindProperties['type'], EventKindPr
     type: 'death',
     shape: 'dot',
     icon: 'event-circle', //event-diamond
-    iconStyle: 'fill-[#333333] stroke-[#AAAAAA]',
+    iconStyle: 'fill-[#666666] stroke-[#111111]',
     color: {
-      foreground: '#AAAAAA',
-      background: '#333333',
+      foreground: '#111111',
+      background: '#666666',
       main: '#666666',
       light: '#AAAAAA',
       dark: '#111111',
