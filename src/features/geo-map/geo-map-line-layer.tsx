@@ -11,15 +11,6 @@ import type { SpaceTime } from '@/features/geo-map/lib/use-line-string-feature-c
 import { getTemporalExtent } from '@/features/timeline/timeline';
 import { colorScale, timeScale } from '@/lib/temporal-coloring';
 
-// const layer: LineLayer = {
-//   type: 'line',
-//   paint: {
-//     'line-color': '#666',
-//     'line-opacity': 0.3,
-//     'line-width': 10,
-//   },
-// };
-
 export interface GeoMapLineLayerProps<T extends EmptyObject = EmptyObject> {
   id: string;
   data: FeatureCollection<LineString, T>;
