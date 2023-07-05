@@ -1,5 +1,5 @@
 import type { Entity, Event, Place } from '@intavia/api-client';
-import type { Feature, FeatureCollection, LineString } from 'geojson';
+import type { Feature, FeatureCollection, LineString, Position } from 'geojson';
 import { useMemo } from 'react';
 
 import { useAppSelector } from '@/app/store';
@@ -26,10 +26,17 @@ interface UseLineStringFeatureCollectionResult {
   noneEvents: Array<Event>;
 }
 
+export interface SpaceTime {
+  position: Position;
+  date: Date;
+}
+
 export function useLineStringFeatureCollection(
   params: UseLineStringFeatureCollectionParams,
 ): UseLineStringFeatureCollectionResult {
   const { events, entities } = params;
+
+  // console.log(events);
 
   const places = useAppSelector(selectEntitiesByKind).place;
   // : FeatureCollection<LineString, { entity: Entity; events: Array<Event>; places: Array<Place> }>
@@ -42,7 +49,6 @@ export function useLineStringFeatureCollection(
 
       event.relations.forEach((relation) => {
         if (relation.entity in places) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const place = places[relation.entity]!;
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (place.kind !== 'place') return null;
@@ -53,6 +59,30 @@ export function useLineStringFeatureCollection(
       });
 
       return relatedPlaces;
+    }
+
+    function getSpaceTime(event: Event): Array<SpaceTime> | null {
+      const spaceTime: Array<SpaceTime> = [];
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (event.relations == null) return null;
+
+      event.relations.forEach((relation) => {
+        if (relation.entity in places) {
+          const place = places[relation.entity]!;
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (place.kind !== 'place') return null;
+          if (place.geometry == null) return null;
+          if (!isValidPoint(place.geometry)) return null;
+          const date: string = event.startDate ?? event.endDate;
+          spaceTime.push({
+            position: place.geometry.coordinates,
+            date: new Date(date),
+          });
+        }
+      });
+
+      return spaceTime;
     }
 
     const features: Array<
@@ -67,10 +97,12 @@ export function useLineStringFeatureCollection(
 
     events.forEach((event) => {
       const hasDate =
-        ('startDate' in event && isValidDate(new Date(event.startDate as string))) ||
+        ('startDate' in event &&
+          event.startDate != null &&
+          isValidDate(new Date(event.startDate as string))) ||
         ('endDate' in event && isValidDate(new Date(event.endDate as string)));
 
-      const relatedPlaces = getRelatedPlaces(event);
+      const relatedPlaces = getRelatedPlaces(event, hasDate);
 
       if (relatedPlaces == null || relatedPlaces.length === 0) {
         if (hasDate) {
@@ -114,6 +146,9 @@ export function useLineStringFeatureCollection(
           })
           .includes(entity.id);
       });
+
+      if (relatedEvents.length === 0) continue;
+
       features.push(
         createLineFeature({
           entity,
@@ -122,6 +157,11 @@ export function useLineStringFeatureCollection(
           places: relatedEvents
             .flatMap((event) => {
               return getRelatedPlaces(event);
+            })
+            .filter(Boolean),
+          spaceTime: relatedEvents
+            .flatMap((event) => {
+              return getSpaceTime(event);
             })
             .filter(Boolean),
         }),

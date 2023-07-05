@@ -45,6 +45,8 @@
     "@stefanprobst/next-page-metadata": "2.0.5-legacy",
     "@stefanprobst/pagination": "^1.0.0",
     "@stefanprobst/request": "^0.1.10",
+    "@turf/helpers": "^6.5.0",
+    "@turf/length": "^6.5.0",
     "@types/sanitize-html": "^2.9.0",
     "allotment": "^1.14.2",
     "d3": "^7.0.0",

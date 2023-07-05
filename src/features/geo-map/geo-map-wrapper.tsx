@@ -38,6 +38,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const data = useDataFromVisualization({ visualization });
   // console.log(data);
 
+  // functions
   const { lines, spatioTemporalEvents, spatialEvents, temporalEvents, noneEvents } =
     useLineStringFeatureCollection({
       events: data.events,
@@ -59,9 +60,8 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     data: points,
   });
 
-  function onToggleSelection(ids) {
-    // console.log(ids);
-    onToggleHighlight([], ids as Array<Event['id']>);
+  function onToggleSelection(ids: Array<Event['id']>) {
+    onToggleHighlight!([], ids);
   }
 
   // function onMoveEnd(event: ViewStateChangeEvent) {
@@ -73,14 +73,6 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
   // }, []);
 
-  // const sortEntities = properties['sort']?.value ?? false;
-  // const clusterMode = properties['clusterMode']?.value.value ?? 'pie';
-
-  // const stackEntities = properties['stackEntities']?.value ?? false;
-  // const showLabels = properties['showLabels']?.value ?? false;
-  // const thickness = properties['thickness']?.value ?? 1;
-  // const vertical = properties['vertical']?.value.value ?? false;
-
   return (
     <>
       <GeoMap
@@ -90,7 +82,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       >
         {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
         {renderLines === true && isCluster === false && lines.features.length > 0 && (
-          <GeoMapLineLayer data={lines} />
+          <GeoMapLineLayer data={lines} id={visualization.id} colorMode={colorBy} />
         )}
 
         {isCluster === false && points.features.length > 0 && (
@@ -109,6 +101,8 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
             {...cluster}
             isCluster={isCluster}
             clusterType={clusterMode}
+            onToggleSelection={onToggleSelection}
+            highlightedByVis={highlightedByVis}
           />
         )}
       </GeoMap>
