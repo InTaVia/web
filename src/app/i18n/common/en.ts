@@ -94,6 +94,7 @@ export const dictionary: Dictionary = {
   'media-resource-kind': {
     image: { one: 'Image', other: 'Images' },
     document: { one: 'Document', other: 'Documents' },
+    embed: { one: 'Embedded resource', other: 'Embedded resources' },
     video: { one: 'Video', other: 'Videos' },
   },
   geomap: {
