@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import type { EntityKind, MediaResource } from '@intavia/api-client';
+import type { Biography, EntityKind, MediaResource } from '@intavia/api-client';
 import {
   Button,
   cn,
@@ -35,6 +35,7 @@ import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
 
 import {
+  useGetBiographyByIdQuery,
   useGetEventByIdQuery,
   useGetMediaResourceByIdQuery,
   useGetRelationRoleByIdQuery,
@@ -45,7 +46,9 @@ import {
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
+  addLocalBiography,
   addLocalMediaResource,
+  selectBiographyById,
   selectEvents,
   selectMediaResourceById,
   selectVocabularyEntries,
@@ -994,7 +997,16 @@ function MediaResourcePreview(props: MediaResourcePreview): JSX.Element {
       ) : null}
       {media.kind === 'embed' ? (
         <figure>
-          <iframe className="h-56 w-full object-contain" src={media.url} title={label} />
+          <iframe
+            className="h-56 w-full object-contain"
+            src={media.url}
+            title={label}
+            frameBorder={0}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer"
+          />
           <figcaption>{media.attribution}</figcaption>
         </figure>
       ) : null}
@@ -1090,7 +1102,7 @@ function MediaResourceKindSelect(props: MediaResourceKindSelectProps): JSX.Eleme
 
   const field = useField(name);
 
-  const kinds = ['image', 'document', 'video'] as const;
+  const kinds = ['image', 'document', 'video', 'embed'] as const;
 
   return (
     <FormField>
@@ -1110,5 +1122,223 @@ function MediaResourceKindSelect(props: MediaResourceKindSelectProps): JSX.Eleme
         </SelectContent>
       </Select>
     </FormField>
+  );
+}
+
+export function BiographiesFormFields(): JSX.Element {
+  const name = 'biographies';
+
+  const { t } = useI18n<'common'>();
+  const fieldArray = useFieldArray(name);
+  const id = useId();
+
+  const dialog = useDialogState();
+
+  return (
+    <div aria-labelledby={id} role="group" className="grid gap-3">
+      {fieldArray.fields.length === 0 ? (
+        <div className="grid place-items-center py-2">
+          <NothingFoundMessage className="text-sm" />
+        </div>
+      ) : (
+        <ul className="grid divide-y" role="list">
+          {fieldArray.fields.map((name, index) => {
+            function onRemove() {
+              fieldArray.fields.remove(index);
+            }
+
+            return <BiographyListItem key={name} name={name} onRemove={onRemove} />;
+          })}
+        </ul>
+      )}
+
+      <hr />
+
+      <div className="flex items-center justify-end">
+        <Button onClick={dialog.open} variant="default">
+          <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
+          <span>{t(['common', 'form', 'add'])}</span>
+        </Button>
+
+        <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
+          <BiographyFormDialog
+            onClose={dialog.close}
+            onSubmit={(values) => {
+              fieldArray.fields.push(values.id);
+            }}
+          />
+        </Dialog>
+      </div>
+    </div>
+  );
+}
+
+interface BiographyFormProps {
+  id: string;
+  initialValues?: Biography;
+  onSubmit: (values: Biography) => void;
+}
+
+function BiographyForm(props: BiographyFormProps): JSX.Element {
+  const { id, initialValues, onSubmit } = props;
+
+  return (
+    <Form className="grid gap-2" id={id} initialValues={initialValues} onSubmit={onSubmit}>
+      <FormTextField id={useId()} label="Title" name="title" />
+      <FormTextField id={useId()} label="Abstract" name="abstract" />
+      <FormTextAreaField id={useId()} label="Text" name="text" required />
+      <FormTextField id={useId()} label="Citation" name="citation" />
+    </Form>
+  );
+}
+
+interface BiographyFormDialogProps {
+  id?: string;
+  onClose: () => void;
+  onSubmit: (values: Biography) => void;
+}
+
+function BiographyFormDialog(props: BiographyFormDialogProps): JSX.Element {
+  const { id, onClose } = props;
+
+  const { t } = useI18n<'common'>();
+  const dispatch = useAppDispatch();
+
+  function onSubmit(values: Biography) {
+    onClose();
+
+    // @ts-expect-error It's ok to overwrite id if there is none.
+    const biography = { id: nanoid(), ...values };
+
+    dispatch(addLocalBiography(biography));
+
+    props.onSubmit(biography);
+  }
+
+  const formId = 'entity-edit';
+
+  const label = t(['common', 'entity', 'biography', 'one']);
+
+  const initialValues = useBiography(id).data;
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{label}</DialogTitle>
+      </DialogHeader>
+
+      <BiographyForm id={formId} initialValues={initialValues} onSubmit={onSubmit} />
+
+      <DialogFooter>
+        <Button form={formId} type="submit">
+          {t(['common', 'form', 'save'])}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  );
+}
+
+interface BiographyListItemProps {
+  name: string;
+  onRemove: () => void;
+}
+
+function BiographyListItem(props: BiographyListItemProps): JSX.Element {
+  const { name, onRemove } = props;
+
+  const { t } = useI18n<'common'>();
+
+  const field = useField(name);
+  const id = field.input.value;
+
+  const dialog = useDialogState();
+
+  return (
+    <li className="py-6 first-of-type:pt-0 last-of-type:pb-0" key={name}>
+      <div className="grid grid-cols-[1fr_auto] items-end gap-2">
+        <BiographyPreview name={name} />
+        <div className="flex gap-2">
+          <IconButton
+            className="h-10 w-10"
+            label={t(['common', 'form', 'edit'])}
+            onClick={dialog.open}
+            variant="outline"
+          >
+            <PencilIcon className="h-5 w-5 shrink-0" />
+          </IconButton>
+          <IconButton
+            className="h-10 w-10"
+            label={t(['common', 'form', 'remove'])}
+            onClick={onRemove}
+            variant="outline"
+          >
+            <XIcon className="h-5 w-5 shrink-0" />
+          </IconButton>
+        </div>
+      </div>
+
+      <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
+        <BiographyFormDialog
+          id={id}
+          onClose={dialog.close}
+          onSubmit={(values) => {
+            field.input.onChange(values);
+          }}
+        />
+      </Dialog>
+    </li>
+  );
+}
+
+function useBiography(id: string | undefined) {
+  const _bio = useAppSelector((state) => {
+    if (id == null) return null;
+    return selectBiographyById(state, id);
+  });
+  const query = useGetBiographyByIdQuery({ id: id! }, { skip: _bio != null || id == null });
+
+  if (id == null) return { status: 'idle', data: undefined };
+
+  if (_bio != null) return { status: 'success', data: _bio };
+
+  return { status: query.status, data: query.data };
+}
+
+interface BiographyPreview {
+  name: string;
+}
+
+function BiographyPreview(props: BiographyPreview): JSX.Element {
+  const { name } = props;
+
+  const field = useField(name);
+  const id = field.input.value;
+
+  const query = useBiography(id);
+  const bio = query.data;
+
+  if (query.status === 'fetching') {
+    return (
+      <div>
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (bio == null) {
+    return (
+      <div>
+        <NothingFoundMessage />
+      </div>
+    );
+  }
+
+  return (
+    <article className="grid gap-2">
+      <div>{bio.title}</div>
+      <div>{bio.abstract}</div>
+      <div>{bio.text}</div>
+      <div>{bio.citation}</div>
+    </article>
   );
 }

@@ -83,6 +83,7 @@ export interface Dictionary {
   'media-resource-kind': {
     image: Plurals;
     document: Plurals;
+    embed: Plurals;
     video: Plurals;
   };
   geomap: {

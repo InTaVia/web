@@ -1,11 +1,9 @@
 import type { Entity } from '@intavia/api-client';
-import {  Button, IconButton } from '@intavia/ui';
-import { MenuIcon } from 'lucide-react';
+import { IconButton } from '@intavia/ui';
+import { Edit2Icon, PlusIcon } from 'lucide-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { type MouseEvent } from 'react';
-import { Edit2Icon, PlusIcon } from 'lucide-react';
-import NextLink from 'next/link';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -31,6 +29,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const collections = useAppSelector(selectCollections);
   const { currentCollection } = useCollection();
@@ -80,7 +79,7 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             </div>
           </div>
         </div>
-        
+
         <div className="flex flex-row items-center justify-end gap-2">
           <IconButton
             className="h-7 w-7 p-1"

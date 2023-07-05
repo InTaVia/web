@@ -7,6 +7,7 @@ import { addLocalEntity } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import {
+  BiographiesFormFields,
   EntityAlternativeLabelFormFields,
   EntityDescriptionTextField,
   EntityFormFields,
@@ -111,16 +112,17 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
       <div className="bg-neutral-200" role="separator" />
 
       <div className="grid content-start gap-4 p-4">
-        {/* FIXME: every tab should be a separate form */}
         <Tabs defaultValue="relations">
           <TabsList>
             <TabsTrigger value="relations">
               {t(['common', 'entity', 'relation', 'other'])}
             </TabsTrigger>
             <TabsTrigger value="media">{t(['common', 'entity', 'media', 'other'])}</TabsTrigger>
-            <TabsTrigger value="biographies">
-              {t(['common', 'entity', 'biography', 'other'])}
-            </TabsTrigger>
+            {entity.kind === 'person' ? (
+              <TabsTrigger value="biographies">
+                {t(['common', 'entity', 'biography', 'other'])}
+              </TabsTrigger>
+            ) : null}
           </TabsList>
 
           <TabsContent value="relations">
@@ -131,9 +133,11 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
             <MediaFormFields />
           </TabsContent>
 
-          <TabsContent value="biographies">
-            <div>Biographies</div>
-          </TabsContent>
+          {entity.kind === 'person' ? (
+            <TabsContent value="biographies">
+              <BiographiesFormFields />
+            </TabsContent>
+          ) : null}
         </Tabs>
 
         <hr />
