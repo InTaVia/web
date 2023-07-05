@@ -16,7 +16,7 @@ export function BiographyViewer(props: BiographyViewerProps): JSX.Element {
   if (status === 'success') {
     return (
       <div>
-        <p className="text-xs font-medium uppercase tracking-wider text-neutral-700">Biography</p>
+        <h2 className="pb-1 font-bold uppercase text-neutral-700">Biography</h2>
         {biographyIds.map((biographyId) => {
           const biography = data.get(biographyId);
 

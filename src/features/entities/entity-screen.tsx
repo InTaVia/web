@@ -1,10 +1,6 @@
 import type { Entity } from '@intavia/api-client';
 
-import { CulturalHeritageObjectDetails } from '@/features/entities/cultural-heritage-object-details';
-import { GroupDetails } from '@/features/entities/group-details';
-import { HistoricalEventDetails } from '@/features/entities/historical-event-details';
-import { PersonDetails } from '@/features/entities/person-details';
-import { PlaceDetails } from '@/features/entities/place-details';
+import { EntityDetails } from '@/features/entities/entity-details';
 import { useEntity } from '@/lib/use-entity';
 
 interface EntityScreenProps {
@@ -29,25 +25,4 @@ export function EntityScreen(props: EntityScreenProps): JSX.Element {
       <EntityDetails entity={entityQuery.data} />
     </main>
   );
-}
-
-interface EntityDetailsProps {
-  entity: Entity;
-}
-
-function EntityDetails(props: EntityDetailsProps): JSX.Element {
-  const { entity } = props;
-
-  switch (entity.kind) {
-    case 'cultural-heritage-object':
-      return <CulturalHeritageObjectDetails entity={entity} />;
-    case 'group':
-      return <GroupDetails entity={entity} />;
-    case 'historical-event':
-      return <HistoricalEventDetails entity={entity} />;
-    case 'person':
-      return <PersonDetails entity={entity} />;
-    case 'place':
-      return <PlaceDetails entity={entity} />;
-  }
 }

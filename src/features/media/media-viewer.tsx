@@ -1,6 +1,8 @@
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 import type { MediaResource } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
-import { useId } from 'react';
+import ImageGallery from 'react-image-gallery';
 
 import { useMediaResources } from '@/features/media/use-media-resources';
 
@@ -10,29 +12,33 @@ interface MediaViewerProps {
 
 export function MediaViewer(props: MediaViewerProps): JSX.Element {
   const { mediaResourceIds } = props;
-
   const { data, status } = useMediaResources(mediaResourceIds);
 
-  const id = useId();
   if (status === 'success') {
-    return (
-      <div>
-        <p className="text-xs font-medium uppercase tracking-wider text-neutral-700">Media</p>
+    const images = mediaResourceIds
+      .filter((mediaResourceId) => {
+        const mediaResource = data.get(mediaResourceId);
+        return mediaResource!.kind === 'image';
+      })
+      .map((mediaResourceId) => {
+        const mediaResource = data.get(mediaResourceId);
+        return { original: mediaResource!.url };
+      });
+
+    if (images.length > 0) {
+      return (
         <div>
-          {mediaResourceIds.map((mediaResourceId) => {
-            const mediaResource = data.get(mediaResourceId);
-            return (
-              <img
-                key={`media-${mediaResourceId}-${id}`}
-                src={mediaResource!.url}
-                alt={id}
-                className="h-full w-full"
-              />
-            );
-          })}
+          <ImageGallery
+            items={images}
+            useBrowserFullscreen={false}
+            showPlayButton={false}
+            showIndex={true}
+          />
         </div>
-      </div>
-    );
+      );
+    }
+
+    return <></>;
   }
 
   return (

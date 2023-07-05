@@ -119,7 +119,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
       <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-1 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
           <IntaviaIcon
-            className="h-5 w-5 fill-none group-hover:fill-intavia-neutral-200"
+            className="h-5 w-5 shrink-0 fill-none group-hover:fill-intavia-neutral-200"
             icon={entity.kind}
           />
           <div className="grid gap-0 leading-tight">
