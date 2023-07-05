@@ -1,6 +1,6 @@
 import type { Entity, Event } from '@intavia/api-client';
 import type { LegacyRef } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, Fragment } from 'react';
 
 import { useLocale } from '@/app/route/use-locale';
 import { useAppSelector } from '@/app/store';
@@ -72,11 +72,8 @@ const EventTooltipContent = forwardRef(
         {sortedEntities.length < 6 ? (
           sortedEntities.map((entity) => {
             return (
-              <>
-                <div
-                  className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500"
-                  key={`entityTootlipEntryEvent${entity.id}`}
-                >
+              <Fragment key={`entityTootlipEntryEvent${entity.id}`}>
+                <div className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500">
                   <div className="min-w-fit">
                     <IntaviaIcon icon={entity.kind} className="fill-none stroke-2" />
                   </div>
@@ -88,7 +85,7 @@ const EventTooltipContent = forwardRef(
                     <MediaThumbnail mediaResourceId={entity!.media[0]} />
                   </div>
                 )}
-              </>
+              </Fragment>
             );
           })
         ) : (
