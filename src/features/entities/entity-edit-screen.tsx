@@ -5,10 +5,14 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
 import { addLocalEntity } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
+import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import {
+  EntityAlternativeLabelFormFields,
   EntityDescriptionTextField,
   EntityFormFields,
   EntityLabelTextField,
+  EntityLinkedUriFormFields,
+  MediaFormFields,
   RelationsFormFields,
 } from '@/features/entities/entity-edit-form-fields';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
@@ -77,27 +81,37 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
 
   return (
     <Form
-      className="grid min-h-full sm:grid-cols-[384px_1px_1fr]"
+      className="grid h-full sm:grid-cols-[384px_1px_1fr]"
       id={formId}
       initialValues={entity}
       onSubmit={onSubmit}
     >
-      <div className="grid content-start gap-4 p-4">
-        <h2>{label}</h2>
-        <EntityLabelTextField />
-        <EntityDescriptionTextField />
-        <EntityFormFields kind={entity.kind} />
-
-        <hr />
-
+      <div className="grid grid-rows-[auto_1fr_auto] gap-4 p-4">
+        <h2 className="flex items-center gap-2 font-bold">
+          <IntaviaIcon className="h-5 w-5 fill-none stroke-2" icon={entity.kind} />
+          {label}
+        </h2>
+        <div className="grid content-start gap-4">
+          <EntityLabelTextField />
+          <hr />
+          <EntityAlternativeLabelFormFields />
+          <hr />
+          <EntityDescriptionTextField />
+          <hr />
+          <EntityFormFields kind={entity.kind} />
+          <hr />
+          <EntityLinkedUriFormFields />
+          <hr />
+        </div>
         <div className="justify-self-end">
-          <Button type="submit">{t(['common', 'form', 'save'])}</Button>
+          <Button type="submit">{t(['common', 'form', 'save-entity'])}</Button>
         </div>
       </div>
 
       <div className="bg-neutral-200" role="separator" />
 
       <div className="grid content-start gap-4 p-4">
+        {/* FIXME: every tab should be a separate form */}
         <Tabs defaultValue="relations">
           <TabsList>
             <TabsTrigger value="relations">
@@ -114,7 +128,7 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
           </TabsContent>
 
           <TabsContent value="media">
-            <div>Media</div>
+            <MediaFormFields />
           </TabsContent>
 
           <TabsContent value="biographies">
@@ -125,7 +139,7 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
         <hr />
 
         <div className="justify-self-end">
-          <Button type="submit">{t(['common', 'form', 'save'])}</Button>
+          <Button type="submit">{t(['common', 'form', 'save-entity'])}</Button>
         </div>
       </div>
     </Form>
