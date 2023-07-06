@@ -1,5 +1,6 @@
 import type { Entity } from '@intavia/api-client';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger, useToast } from '@intavia/ui';
+import { useRouter } from 'next/router';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
@@ -50,6 +51,7 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
   formatDateTime(new Date(), { dateStyle: 'full' });
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { toast } = useToast();
 
   function onSubmit(values: Entity) {
@@ -72,6 +74,8 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
       title: 'Success',
       description: 'Successfully updated entity',
     });
+
+    void router.push(`/entities/${sanitized.id}`);
   }
 
   const label = t(['common', 'entity', 'edit-entity'], {
