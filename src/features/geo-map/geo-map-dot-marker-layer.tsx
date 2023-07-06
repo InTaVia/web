@@ -16,21 +16,30 @@ interface GeoMapMarkersLayerProps<T> {
 }
 
 export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.Element {
-  const { autoFitBounds = true, onToggleSelection, data, highlightedByVis, colorBy } = props;
+  const {
+    autoFitBounds = false,
+    onChangeHover,
+    onToggleSelection,
+    data,
+    highlightedByVis,
+    colorBy,
+  } = props;
 
-  // const { current: map } = useMap();
-  // useEffect(() => {
-  //   if (map == null || autoFitBounds !== true) return;
+  const { current: map } = useMap();
+  // const [isHovered, setIsHovered] = useState<Point<T>['id'] | null>(null);
 
-  //   map.fitBounds(
-  //     calculateBounds(
-  //       data.features.map((feature) => {
-  //         return feature.geometry.coordinates;
-  //       }),
-  //     ),
-  //     { padding: 50, duration: 100 },
-  //   );
-  // }, [autoFitBounds, data.features, map]);
+  useEffect(() => {
+    if (map == null || autoFitBounds !== true) return;
+
+    map.fitBounds(
+      calculateBounds(
+        data.features.map((feature) => {
+          return feature.geometry.coordinates;
+        }),
+      ),
+      { padding: 50, duration: 100 },
+    );
+  }, [autoFitBounds, data.features, map]);
   const timeScaleNormalized = useMemo(() => {
     const events = data.features.map((feature) => {
       return feature.properties.event;

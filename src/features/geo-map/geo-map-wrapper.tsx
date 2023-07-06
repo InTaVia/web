@@ -1,5 +1,4 @@
 import type { Entity, Event } from '@intavia/api-client';
-import { keyBy } from '@stefanprobst/key-by';
 
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
@@ -17,6 +16,7 @@ import { usePointFeatureCollection } from '@/features/geo-map/lib/use-point-feat
 
 interface GeoMapWrapperProps {
   visualization: Visualization;
+  autoFitBounds?: boolean;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   events?: Record<Event['id'], Event>;
   entities?: Record<Entity['id'], Entity>;
@@ -30,7 +30,7 @@ interface GeoMapWrapperProps {
 }
 
 export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
-  const { visualization, onToggleHighlight, highlightedByVis } = props;
+  const { visualization, onToggleHighlight, highlightedByVis, autoFitBounds = false } = props;
 
   // const dispatch = useAppDispatch();
 
@@ -52,7 +52,6 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
-  const colorBy = visualization.properties!.colorBy!.value.value ?? 'event-kind';
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -87,10 +86,10 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
         {isCluster === false && points.features.length > 0 && (
           <GeoMapDotMarkerLayer
+            autoFitBounds={autoFitBounds}
             data={points}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}
-            colorBy={colorBy}
           />
         )}
 
@@ -107,14 +106,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         )}
       </GeoMap>
       <div className="absolute bottom-5 right-0">
-        <VisualizationLegend
-          events={keyBy(data.events, (e) => {
-            return e.id;
-          })}
-          entities={keyBy(data.entities, (e) => {
-            return e.id;
-          })}
-        />
+        <VisualizationLegend events={data.events} entities={data.entities} />
       </div>
     </>
   );
