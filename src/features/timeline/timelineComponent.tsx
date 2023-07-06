@@ -42,6 +42,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const vertical = properties['vertical']?.value.value ?? undefined;
   const diameter = properties['diameter']?.value ?? 14;
   const fontSize = properties['fontSize']?.value ?? 10;
+  const colorBy = properties['colorBy']?.value.value ?? 'event-kind';
 
   const filteredEntities = Object.fromEntries(
     Object.entries(entities).filter(([key, val]) => {
@@ -66,12 +67,13 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         clusterMode={clusterMode}
         diameter={diameter}
         fontSize={fontSize}
+        colorBy={colorBy}
         zoom={zoom}
         setZoom={setZoom}
         onToggleHighlight={onToggleHighlight}
         highlightedByVis={highlightedByVis}
       />
-      <div className="absolute top-1 right-1 flex gap-1">
+      <div className="absolute right-1 top-1 flex gap-1">
         <IconButton
           size="xs"
           label="Zoom in"

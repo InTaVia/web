@@ -31,13 +31,21 @@ interface BeeSwarmProperties {
 }
 
 const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
-  const { events, width, vertical, dotRadius: i_dotRadius, onClickEvent, highlightedByVis } = props;
+  const {
+    events,
+    width,
+    height,
+    vertical,
+    dotRadius: i_dotRadius,
+    onClickEvent,
+    highlightedByVis,
+  } = props;
 
   const [hover, setHover] = useState(false);
   const { hovered, updateHover } = useHoverState();
 
   const total = events.length;
-  const dotRadius = total >= 100 ? 2 : total >= 50 ? 3 : total >= 10 ? 4 : i_dotRadius ?? 5;
+  const dotRadius = total >= 100 ? 2 : total >= 50 ? 3 : i_dotRadius ?? 4;
 
   const eventsExtent = getTemporalExtent([events]);
 

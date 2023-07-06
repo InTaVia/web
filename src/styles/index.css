@@ -42,3 +42,9 @@ body,
 .fullscreen .image-gallery-slide img {
   max-height: 100vh;
 }
+
+[contenteditable='true']:empty::before {
+  content: attr(placeholder);
+  display: block;
+  color: #aaa;
+}

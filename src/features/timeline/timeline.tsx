@@ -7,6 +7,7 @@ import type {
   Event,
   VocabularyEntry,
 } from '@intavia/api-client/dist/models';
+import { groupBy } from '@stefanprobst/group-by';
 import { extent, scaleBand, scaleTime } from 'd3';
 import { useMemo, useRef, useState } from 'react';
 
@@ -96,6 +97,7 @@ interface TimelineProps {
   stackEntities: boolean;
   sortEntities: boolean;
   diameter?: number;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
   zoom?: number;
   fontSize?: number;
   onToggleHighlight?: (
@@ -128,6 +130,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
     onToggleHighlight,
     highlightedByVis,
     setZoom,
+    colorBy = 'event-kind',
   } = props;
 
   //const [unTimeableEvents, setUnTimeableEvents] = useState({});
@@ -405,6 +408,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
               cluster={cluster}
               clusterMode={clusterMode}
               mode={mode}
+              colorBy={colorBy}
               diameter={mode === 'mass' ? scaleY.bandwidth() : diameter}
               fontSize={fontSize}
               onToggleHighlight={onToggleHighlight}
