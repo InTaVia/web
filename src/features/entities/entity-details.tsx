@@ -87,7 +87,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
             )}
           </div>
           {hasRelations && (
-            <div className={cn('relative w-full border', `h-[250px]`)}>
+            <div className={cn('relative w-full border overflow-y-hidden', `h-[250px]`)}>
               <VisualisationComponent
                 visualization={timelineVisualization}
                 highlightedByVis={{
