@@ -40,15 +40,11 @@ export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
 
         let paint: LinePaint = {};
         if (colorMode === 'time') {
+          const gradient = generateGradient(feature);
           paint = {
             'line-width': 4,
             'line-opacity': 1,
-            'line-gradient': [
-              'interpolate',
-              ['linear'],
-              ['line-progress'],
-              ...generateGradient(feature),
-            ],
+            'line-gradient': ['interpolate', ['linear'], ['line-progress'], ...gradient],
           };
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         } else if (colorMode === 'entity-identity') {
@@ -92,10 +88,16 @@ function generateGradient(feature: Feature) {
         distanceNormalized(accumulatedLength + segmentLength) -
         distanceNormalized(accumulatedLength);
 
+      let correctionOffset = 0;
+      if (spatialDelta === 0) {
+        correctionOffset = 0.00000000001;
+      }
+
       const additionalStops = [];
 
       const temporalDelta =
         timeScaleNormalized(positionDate.date) - timeScaleNormalized(spaceTime[index - 1]!.date);
+
       //FIXME: 1/7 depends on colorscheme time curves red because there are 7 stops!
       if (temporalDelta > 1 / 7) {
         const additionalStopCount = Math.floor(temporalDelta / (1 / 7) - 2);
@@ -103,7 +105,9 @@ function generateGradient(feature: Feature) {
           const spatialStep = spatialDelta / (additionalStopCount + 1);
           const temporalStep = temporalDelta / (additionalStopCount + 1);
           for (let i = 1; i <= additionalStopCount; i++) {
-            additionalStops.push(distanceNormalized(accumulatedLength) + spatialStep * i);
+            additionalStops.push(
+              distanceNormalized(accumulatedLength) + spatialStep * i + correctionOffset * i,
+            );
             additionalStops.push(
               colorScale(timeScaleNormalized(spaceTime[index - 1]!.date) + temporalStep * i),
             );
@@ -111,7 +115,7 @@ function generateGradient(feature: Feature) {
         }
       }
 
-      accumulatedLength = accumulatedLength + segmentLength;
+      accumulatedLength = accumulatedLength + segmentLength + correctionOffset;
 
       return [
         ...additionalStops,

@@ -35,8 +35,7 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
     const events = data.features.map((feature) => {
       return feature.properties.event;
     });
-    const temporalExtent = getTemporalExtent([events]);
-    return timeScale(temporalExtent[0], temporalExtent[1]);
+    return timeScale(...getTemporalExtent([events]));
   }, [data.features]);
 
   return (

@@ -147,7 +147,7 @@ export function useLineStringFeatureCollection(
           .includes(entity.id);
       });
 
-      if (relatedEvents.length === 0) continue;
+      if (relatedEvents.length <= 1) continue;
 
       features.push(
         createLineFeature({
