@@ -66,6 +66,16 @@ export function useVisualizationSetup(
         },
         editable: false,
       },
+      colorBy: {
+        type: 'select',
+        id: 'colorBy',
+        label: 'Color events by',
+        value: {
+          name: 'Event-kind',
+          value: 'event-kind',
+        },
+        editable: false,
+      },
     },
   };
 
