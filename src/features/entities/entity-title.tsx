@@ -1,5 +1,5 @@
 import { type Entity } from '@intavia/api-client';
-import { Button, cn, Dialog, IconButton } from '@intavia/ui';
+import { Button, cn, Dialog, IconButton, useToast } from '@intavia/ui';
 import { Edit2Icon, PlusIcon, Share2Icon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -21,10 +21,32 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
   const { t } = useI18n<'common'>();
 
   const localEntities = useAppSelector(selectLocalEntities);
-  const hasLocalEntity = entity.id in localEntities;
+  const isLocalEntity = entity.id in localEntities;
 
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);
   const [isAddToCollectionDialogOpen, setAddToCollectionDialogOpen] = useState(false);
+
+  const { toast } = useToast();
+
+  function onCopyUrl() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(
+      () => {
+        // Success
+        toast({
+          title: 'Copied URL to clipboard',
+          variant: 'default',
+        });
+      },
+      () => {
+        toast({
+          title: 'Error',
+          description: 'Copying URL to clipboard not possible',
+          variant: 'destructive',
+        });
+      },
+    );
+  }
 
   // TODO: Clicking the share button should open some kind of share dialog
   return (
@@ -45,7 +67,7 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
             </h1>
             <p className="text-neutral-400">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
-              {hasLocalEntity ? <span> - edited locally</span> : null}
+              {isLocalEntity ? <span> - edited locally</span> : null}
             </p>
           </div>
         </div>
@@ -70,9 +92,11 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
           >
             <Edit2Icon className="h-5 w-5 shrink-0" />
           </IconButton>
-          <IconButton variant="outline" label="Share">
-            <Share2Icon className="h-5 w-5 shrink-0" />
-          </IconButton>
+          {!isLocalEntity && (
+            <IconButton variant="outline" label="Share" onClick={onCopyUrl}>
+              <Share2Icon className="h-5 w-5 shrink-0" />
+            </IconButton>
+          )}
         </div>
       </div>
 
