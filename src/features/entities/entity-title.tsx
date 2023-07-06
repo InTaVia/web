@@ -1,12 +1,12 @@
 import { type Entity } from '@intavia/api-client';
 import { Button, cn, Dialog, IconButton, useToast } from '@intavia/ui';
 import { Edit2Icon, PlusIcon, Share2Icon } from 'lucide-react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppSelector } from '@/app/store';
 import { selectLocalEntities } from '@/app/store/intavia.slice';
-import { EditEntityDialog } from '@/components/search/edit-entity-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
 import { getEntityKindPropertiesByKind } from '@/features/common/visualization.config';
 import { AddToCollectionDialog } from '@/features/entities/add-to-collection-dialog';
@@ -19,11 +19,11 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
   const { entity } = props;
 
   const { t } = useI18n<'common'>();
+  const router = useRouter();
 
   const localEntities = useAppSelector(selectLocalEntities);
   const isLocalEntity = entity.id in localEntities;
 
-  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
   const [isAddToCollectionDialogOpen, setAddToCollectionDialogOpen] = useState(false);
 
   const { toast } = useToast();
@@ -86,7 +86,7 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
             variant="outline"
             label="t(['common', 'search', 'edit-item'])"
             onClick={() => {
-              setEditDialogOpen(true);
+              void router.push(`/entities/${entity.id}/edit`);
             }}
             title={t(['common', 'search', 'edit-item'])}
           >
@@ -99,15 +99,6 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
           )}
         </div>
       </div>
-
-      <Dialog open={isEditDialogOpen} onOpenChange={setEditDialogOpen}>
-        <EditEntityDialog
-          entity={entity}
-          onClose={() => {
-            setEditDialogOpen(false);
-          }}
-        />
-      </Dialog>
 
       <Dialog open={isAddToCollectionDialogOpen} onOpenChange={setAddToCollectionDialogOpen}>
         <AddToCollectionDialog
