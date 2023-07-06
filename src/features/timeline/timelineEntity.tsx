@@ -9,7 +9,7 @@ import { StringMappingType } from 'typescript';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
-import { getEntityColorByKind } from '@/features/common/visualization.config';
+import { getEntityColorByKind, temporalColorScales } from '@/features/common/visualization.config';
 import {
   type TimelineType,
   getTemporalExtent,
@@ -81,11 +81,10 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
   const entityExtent = getTemporalExtent([Object.values(events)]);
 
   const timeScaleForColoring = timeScaleNormalized(entityExtent[0], entityExtent[1]);
-  console.log(timeScaleForColoring(entityExtent[0]), colorScale(0), colorScale(0.5), colorScale(1));
 
   const timeColorScale = (date: Date) => {
     //return ;
-    return { background: colorScale(timeScaleForColoring(date)), foreground: 'white' };
+    return { main: colorScale(timeScaleForColoring(date)), dark: 'white' };
   };
 
   const height = vertical ? timeScale(entityExtent[1]) - timeScale(entityExtent[0]) : diameter;
@@ -211,12 +210,22 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
         <div
           className="cursor-pointer"
           style={{
-            left: vertical ? midOffset : 0,
+            left: vertical ? midOffset - thickness / 2 : 0,
             top: vertical ? 0 : midOffset - thickness / 2,
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
-            backgroundColor:
-              mode === 'mass' ? (hover ? colors.foreground : colors.background) : 'black', //hover ? colors.foreground : colors.background,
+            background:
+              colorBy === 'time'
+                ? `linear-gradient(${vertical ? 180 : 90}deg, ${temporalColorScales.reds
+                    .map((entry, i) => {
+                      return `${entry} ${i / (temporalColorScales.reds.length / 100)}%`;
+                    })
+                    .join(', ')})`
+                : mode === 'mass'
+                ? hover
+                  ? colors.foreground
+                  : colors.background
+                : 'black',
             minHeight: `1px`,
             minWidth: `1px`,
             position: 'absolute',
@@ -276,7 +285,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                   timeScaleOffset={timeScale(entityExtent[0])}
                   midOffset={midOffset}
                   event={event}
-                  timeColorScale={timeColorScale}
+                  timeColorScale={colorBy === 'time' ? timeColorScale : null}
                   roles={event?.relations
                     .filter((rel: EventEntityRelation) => {
                       return rel.entity === entity.id;

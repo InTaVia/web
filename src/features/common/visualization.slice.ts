@@ -277,7 +277,7 @@ export const visualizationSlice = createSlice({
               thickness: {
                 type: 'number',
                 id: 'thickness',
-                value: 1,
+                value: 2,
                 editable: true,
                 sort: 8,
                 label: 'Thickness',

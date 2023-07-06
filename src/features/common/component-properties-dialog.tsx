@@ -107,7 +107,6 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                 ];
 
               case 'number':
-                console.log('HERE', property);
                 return [
                   <div key={`${property.id}Label`}>{property.label}</div>,
                   <Input
@@ -115,7 +114,6 @@ export function ComponentPropertiesDialog(props: ComponentPropertiesDialogProps)
                     value={property.value}
                     type="number"
                     onChange={(event: any) => {
-                      console.log(event.target.value);
                       const newProps = {
                         ...tmpProperties,
                       };
