@@ -67,13 +67,13 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
 
   const bbox: ClusterBoundingBox = { x: 0, y: 0, width: 0, height: 0 };
   if (vertical) {
-    bbox.x = midOffset + Math.floor(thickness / 2) - diameterWithStroke / 2;
+    bbox.x = midOffset - diameterWithStroke / 2;
     bbox.y = timeScale(eventsExtent[0]) - timeScaleOffset;
     bbox.width = diameterWithStroke;
     bbox.height = timeScale(eventsExtent[1]) - timeScaleOffset - bbox.y;
   } else {
     bbox.x = timeScale(eventsExtent[0]) - timeScaleOffset;
-    bbox.y = midOffset + Math.floor(thickness / 2) - diameterWithStroke / 2;
+    bbox.y = midOffset - diameterWithStroke / 2;
     bbox.width = timeScale(eventsExtent[1]) - timeScaleOffset - bbox.x;
     bbox.height = diameterWithStroke;
   }
@@ -168,7 +168,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             width={bbox.width}
             height={bbox.height}
             vertical={vertical}
-            dotRadius={diameterWithStroke / 3}
+            dotRadius={5}
             onClickEvent={onClickEvent}
             highlightedByVis={highlightedByVis}
           />

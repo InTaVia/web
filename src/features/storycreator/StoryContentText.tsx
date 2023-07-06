@@ -32,18 +32,11 @@ export function StoryContentText(props: StoryContentTextProps) {
         }}
       >
         <div className="p-2">
-          <p
-            className={`mb-1 text-xl ${
-              content!.properties!.title!.value === '' ? 'text-slate-300' : ''
-            }`}
-          >
+          <p className={`mb-1 text-xl`}>
             <EditableText
               key={`${content.properties.id}Editable`}
-              content={
-                content!.properties!.title!.value === ''
-                  ? 'Title'
-                  : content!.properties!.title!.value
-              }
+              content={content!.properties!.title!.value}
+              dataPlaceholder={'Title'}
               setContent={(text) => {
                 dispatch(
                   editSlideContentProperty({
@@ -55,12 +48,11 @@ export function StoryContentText(props: StoryContentTextProps) {
               }}
             />
           </p>
-          <p className={`${content!.properties!.text!.value === '' ? 'text-slate-300' : ''}`}>
+          <p>
             <EditableText
               key={`${content.properties.id}Editable`}
-              content={
-                content!.properties!.text!.value === '' ? 'Text' : content!.properties!.text!.value
-              }
+              content={content!.properties!.text!.value}
+              dataPlaceholder={'Text'}
               setContent={(text) => {
                 dispatch(
                   editSlideContentProperty({

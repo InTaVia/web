@@ -38,6 +38,7 @@ interface TimelineEventProps {
   mode?: TimelineType;
   diameter?: number;
   fontSize?: number;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
   onClick: () => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   timeColorScale: (date: Date) => string;
@@ -56,6 +57,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     thickness: i_thickness = 1,
     showLabels,
     overlapIndex,
+    colorBy = 'event-kind',
     overlap = false,
     mode = 'default',
     diameter = 16,
@@ -74,16 +76,20 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
 
   const eventMidDate = new Date(eventExtent[0].getTime() + eventExtent[1].getTime()) / 2;
 
-  const color = timeColorScale(eventMidDate);
+  const color = timeColorScale != null ? timeColorScale(eventMidDate) : undefined;
 
   const selected = useMemo(() => {
     if (highlightedByVis == null || highlightedByVis.events == null) return false;
     return highlightedByVis.events.includes(event.id);
   }, [event.id, highlightedByVis]);
 
-  const thickness = selected ? 2 * i_thickness : i_thickness;
+  const thickness = 1;
   //console.log(thickness, i_thickness, selected);
-  const diameterWithStroke = diameter + thickness * 3;
+  let diameterWithStroke = diameter; // + thickness * 3;
+
+  if (selected) {
+    diameterWithStroke = diameterWithStroke * 1.5;
+  }
 
   const overlapOffset = overlapIndex >= 0 ? overlapIndex * diameterWithStroke : 0;
 
@@ -185,11 +191,12 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
       >
         <svg style={{ width: `${width}px`, height: `${height}px` }} width={width} height={height}>
           <TimelineEventMarker
+            //key={`${JSON.stringify(event)}${colorBy}${selected}`}
             event={event}
             width={width}
             height={height}
             thickness={thickness}
-            color={color}
+            color={colorBy === 'time' ? color : undefined}
             hover={
               hover ||
               hovered?.events.includes(event.id) === true ||
@@ -197,11 +204,12 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
                 ? true
                 : false
             }
+            selected={selected}
           />
         </svg>
         <TimelineLabel
-          posX={posX + width / 2}
-          posY={posY + height / 2}
+          posX={posX}
+          posY={posY}
           labelText={getTranslatedLabel(event.label)}
           showLabels={hover ? true : showLabels}
           entityIndex={entityIndex}

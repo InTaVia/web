@@ -80,49 +80,50 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
 
   return (
     <div className="grid gap-1">
-      <h2 className="text-xs font-medium uppercase tracking-wider text-neutral-700">Relations</h2>
-      <ul role="list">
-        {eventsAsc.map((event, index) => {
-          const relation = relations.filter((relation) => {
-            return relation.event === event.id;
-          });
+      <h2 className="pb-1 font-bold uppercase text-neutral-700">Relations</h2>
+      <table role="table">
+        <tbody>
+          {eventsAsc.map((event, index) => {
+            const relation = relations.filter((relation) => {
+              return relation.event === event.id;
+            });
 
-          const isHovered = hovered?.events.includes(event.id) ?? false;
+            const isHovered = hovered?.events.includes(event.id) ?? false;
 
-          const key = createKey(relation[0].event, relation[0].role);
-          // FIXME: temporary workaround
-          const role = roles.data ? roles.data.get(relation[0].role) : null;
-          // const event = events.data.get(relation[0].event);
+            const key = createKey(relation[0].event, relation[0].role);
+            // FIXME: temporary workaround
+            const role = roles.data ? roles.data.get(relation[0].role) : null;
+            // const event = events.data.get(relation[0].event);
 
-          const eventKind = eventKinds.data ? eventKinds.data.get(event.kind) : null;
+            const eventKind = eventKinds.data ? eventKinds.data.get(event.kind) : null;
 
-          const eventKindProperties = getEventKindPropertiesById(event.kind);
+            const eventKindProperties = getEventKindPropertiesById(event.kind);
 
-          return (
-            <li
-              key={key}
-              className={cn('px-1', index % 2 && 'bg-neutral-100', isHovered && 'bg-neutral-200')}
-              onMouseEnter={(e: MouseEvent<HTMLLIElement>) => {
-                updateHover({
-                  entities: event.relations.map((relation) => {
-                    return relation.entity;
-                  }),
-                  events: [event.id],
-                  clientRect: {
-                    left: e.clientX,
-                    top: e.clientY,
-                  } as DOMRect,
-                });
-              }}
-              onMouseLeave={() => {
-                updateHover(null);
-              }}
-            >
-              <span className="flex items-start gap-2 pt-1">
-                <span className="shrink-0 grow-0 basis-40 whitespace-nowrap text-right text-xs">
+            return (
+              <tr
+                key={key}
+                className={cn('px-1', index % 2 && 'bg-neutral-100', isHovered && 'bg-neutral-200')}
+                onMouseEnter={(e: MouseEvent<HTMLTableRowElement>) => {
+                  updateHover({
+                    entities: event.relations.map((relation) => {
+                      return relation.entity;
+                    }),
+                    events: [event.id],
+                    clientRect: {
+                      left: e.clientX,
+                      top: e.clientY,
+                    } as DOMRect,
+                  });
+                }}
+                onMouseLeave={() => {
+                  updateHover(null);
+                }}
+              >
+                {/* <span className="flex items-start gap-2 pt-1"> */}
+                <td className="whitespace-nowrap p-2 text-right align-top text-xs">
                   <EventDate start={event.startDate} end={event.endDate} />
-                </span>
-                <span className="">
+                </td>
+                <td className=" py-2 align-top">
                   <IntaviaIcon
                     icon={eventKindProperties.icon}
                     className={cn(
@@ -131,8 +132,8 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
                       eventKindProperties.iconStyle,
                     )}
                   />
-                </span>
-                <span className="flex flex-col gap-y-0">
+                </td>
+                <td className="flex flex-col gap-y-0 p-2">
                   <span className="text-xs text-slate-400">
                     {/* {getTranslatedLabel(eventKind?.label)} */}
                     {eventKindProperties.label}
@@ -140,12 +141,13 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
                     {getTranslatedLabel(role?.label)}
                   </span>
                   <span className="text-left">{getTranslatedLabel(event.label)}</span>
-                </span>
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+                </td>
+                {/* </span> */}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
