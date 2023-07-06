@@ -18,7 +18,7 @@ interface GeoMapMarkersLayerProps<T> {
 
 export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.Element {
   const {
-    autoFitBounds = true,
+    autoFitBounds = false,
     onChangeHover,
     onToggleSelection,
     data,
@@ -29,18 +29,18 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
   const { current: map } = useMap();
   // const [isHovered, setIsHovered] = useState<Point<T>['id'] | null>(null);
 
-  // useEffect(() => {
-  //   if (map == null || autoFitBounds !== true) return;
+  useEffect(() => {
+    if (map == null || autoFitBounds !== true) return;
 
-  //   map.fitBounds(
-  //     calculateBounds(
-  //       data.features.map((feature) => {
-  //         return feature.geometry.coordinates;
-  //       }),
-  //     ),
-  //     { padding: 50, duration: 100 },
-  //   );
-  // }, [autoFitBounds, data.features, map]);
+    map.fitBounds(
+      calculateBounds(
+        data.features.map((feature) => {
+          return feature.geometry.coordinates;
+        }),
+      ),
+      { padding: 50, duration: 100 },
+    );
+  }, [autoFitBounds, data.features, map]);
   const timeScaleNormalized = useMemo(() => {
     const events = data.features.map((feature) => {
       return feature.properties.event;
