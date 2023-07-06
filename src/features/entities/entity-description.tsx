@@ -7,5 +7,5 @@ interface EntityDescriptionProps {
 export function EntityDescription(props: EntityDescriptionProps): JSX.Element {
   const { description } = props;
 
-  return <div>{description}</div>;
+  return <>{description}</>;
 }

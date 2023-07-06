@@ -69,6 +69,8 @@ export interface Dictionary {
     role: Plurals;
     event: Plurals;
     relation: Plurals;
+    'add-to-collection-title': string;
+    'add-to-collection-description': string;
     media: Plurals;
     biography: Plurals;
     'media-resource-kind': Plurals;

@@ -80,6 +80,8 @@ export const dictionary: Dictionary = {
     role: { one: 'Role', other: 'Roles' },
     event: { one: 'Event', other: 'Events' },
     relation: { one: 'Relation', other: 'Relations' },
+    'add-to-collection-title': 'Add to collection',
+    'add-to-collection-description': 'Add {{label}} to an existing collection.',
     media: { one: 'Medium', other: 'Media' },
     biography: { one: 'Biography', other: 'Biographies' },
     'media-resource-kind': { one: 'Media resource kind', other: 'Media resource kinds' },

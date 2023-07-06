@@ -59,8 +59,10 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
 
   return (
     <div className="grid h-full w-full place-items-center bg-neutral-50">
-      <LoadingIndicator />
-      <p>Loading network</p>
+      <div className="flex flex-col items-center">
+        <LoadingIndicator />
+        <p>Loading network</p>
+      </div>
     </div>
   );
 }

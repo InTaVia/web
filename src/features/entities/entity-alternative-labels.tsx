@@ -11,14 +11,14 @@ export function EntityAlternativeLabels(props: AlternativeLabelsProps): JSX.Elem
 
   return (
     <div className="grid gap-1">
-      <h2 className="text-xs font-medium uppercase tracking-wider text-neutral-700">
-        Alternative labels
-      </h2>
-      <ul role="list">
-        {labels.map((label, index) => {
-          return <li key={index}>{label.default}</li>;
-        })}
-      </ul>
+      <dt className="font-bold uppercase text-neutral-700">Alternative labels</dt>
+      <dd>
+        <ul role="list">
+          {labels.map((label, index) => {
+            return <li key={index}>{label.default}</li>;
+          })}
+        </ul>
+      </dd>
     </div>
   );
 }

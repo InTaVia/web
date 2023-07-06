@@ -98,6 +98,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   if (entity == null) return null;
 
+  const label = `${getTranslatedLabel(entity.label)} ${hasLocalEntity ? ' (edited locally)' : ''}`;
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
   
   function onEditItem(e: MouseEvent) {
@@ -118,13 +119,15 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
       <article className="group flex cursor-pointer items-center justify-between gap-8 px-8 py-1 hover:bg-slate-100">
         <div className="flex flex-row items-center justify-start gap-6">
           <IntaviaIcon
-            className="h-5 w-5 fill-none group-hover:fill-intavia-neutral-200"
+            className="h-5 w-5 shrink-0 fill-none group-hover:fill-intavia-neutral-200"
             icon={entity.kind}
           />
           <div className="grid gap-0 leading-tight">
-            <a className="group-hover:underline">
-              <span>{getTranslatedLabel(entity.label)}</span>
-              {hasLocalEntity ? <span> (edited locally)</span> : null}
+            <a
+              className="overflow-hidden text-ellipsis whitespace-nowrap group-hover:underline"
+              title={label}
+            >
+              <span>{label}</span>
             </a>
             <div className="text-xs text-neutral-500">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
