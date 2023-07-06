@@ -38,7 +38,11 @@ export function MediaViewer(props: MediaViewerProps): JSX.Element {
       );
     }
 
-    return <></>;
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-neutral-200">
+        <p className="text-neutral-600">Sorry, this media type is not yet supported :(</p>
+      </div>
+    );
   }
 
   return (

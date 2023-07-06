@@ -99,6 +99,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   if (entity == null) return null;
 
+  const label = `${getTranslatedLabel(entity.label)} ${hasLocalEntity ? ' (edited locally)' : ''}`;
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
 
   function onEditItem(e: MouseEvent) {
@@ -123,9 +124,11 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
             icon={entity.kind}
           />
           <div className="grid gap-0 leading-tight">
-            <a className="group-hover:underline">
-              <span>{getTranslatedLabel(entity.label)}</span>
-              {hasLocalEntity ? <span> (edited locally)</span> : null}
+            <a
+              className="overflow-hidden text-ellipsis whitespace-nowrap group-hover:underline"
+              title={label}
+            >
+              <span>{label}</span>
             </a>
             <div className="text-xs text-neutral-500">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}

@@ -35,6 +35,8 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
 
   const [isDialogOpen, setDialogOpen] = useState(false);
 
+  const label = `${getTranslatedLabel(entity.label)} ${hasLocalEntity ? ' (edited locally)' : ''}`;
+
   function onEditItem(e: MouseEvent) {
     e.stopPropagation();
 
@@ -71,9 +73,11 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             icon={entity.kind}
           />
           <div className="grid gap-0 leading-tight">
-            <a className="group-hover:underline">
-              <span>{getTranslatedLabel(entity.label)}</span>
-              {hasLocalEntity ? <span> (edited locally)</span> : null}
+            <a
+              className="overflow-hidden text-ellipsis whitespace-nowrap group-hover:underline"
+              title={label}
+            >
+              <span>{label}</span>
             </a>
             <div className="text-xs text-neutral-500">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}

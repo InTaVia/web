@@ -49,7 +49,7 @@ export function EntityTitle(props: EntityTitleProps): JSX.Element {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex shrink-0 items-center justify-end gap-2">
           <Button
             variant="outline"
             onClick={() => {

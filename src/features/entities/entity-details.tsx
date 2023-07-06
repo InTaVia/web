@@ -22,7 +22,6 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
   const networkParent = useRef<HTMLDivElement>(null);
   const [halfWidth, _] = useResizeObserverDeprecated(networkParent);
   const networkMapHeight = 400;
-  const timelineHeight = 250;
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const hasRelations = entity.relations != null && entity.relations.length > 0;
@@ -60,7 +59,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
                   eventIds: [],
                 }}
                 width={halfWidth}
-                height={400}
+                height={networkMapHeight}
               />{' '}
             </div>
           ) : null}
@@ -130,7 +129,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
             />
           </div>
         </div>
-        <div className={cn('relative w-full border h-64', `h-[${timelineHeight}px]`)}>
+        <div className={cn('relative w-full border h-64', `h-[250px]`)}>
           <VisualisationComponent
             visualization={{
               id: `ego-timeline-${entity.id}`,
