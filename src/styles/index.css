@@ -26,3 +26,9 @@ body,
 .overview-table-row:hover > * {
   background-color: theme(colors.intavia-brand.100);
 }
+
+[contenteditable='true']:empty::before {
+  content: attr(placeholder);
+  display: block;
+  color: #aaa;
+}

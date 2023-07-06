@@ -118,7 +118,7 @@ export function SlideEditor(props: SlideEditorProps) {
         const payload: DataTransferData = JSON.parse(data);
         if (payload.type === 'data') {
           console.log(payload);
-          if(payload.entities.length === 1 && payload.events.length === 0) {
+          if (payload.entities.length === 1 && payload.events.length === 0) {
             addContent('entity', i_layoutItem, i_targetPane);
           }
         }
@@ -153,7 +153,9 @@ export function SlideEditor(props: SlideEditorProps) {
   };
 
   useEffect(() => {
-    checkForEmptyContentPaneSlots(layoutTemplates[currentSlide.layout]);
+    if (currentSlide != null) {
+      checkForEmptyContentPaneSlots(layoutTemplates[currentSlide.layout]);
+    }
   }, [currentSlide]);
 
   return (
