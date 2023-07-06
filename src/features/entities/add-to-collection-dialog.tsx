@@ -31,8 +31,8 @@ interface AddToCollectionDialogProps {
 export function AddToCollectionDialog(props: AddToCollectionDialogProps): JSX.Element {
   const { entity, onClose } = props;
 
+  const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
-
   const formId = 'add-to-collection';
 
   function onSubmit(values: { collection: Collection['id'] }) {
@@ -44,8 +44,12 @@ export function AddToCollectionDialog(props: AddToCollectionDialogProps): JSX.El
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Add to collection</DialogTitle>
-        <DialogDescription>Add {entity.label.default} to a collection.</DialogDescription>
+        <DialogTitle>{t(['common', 'entity', 'add-to-collection-title'])}</DialogTitle>
+        <DialogDescription>
+          {t(['common', 'entity', 'add-to-collection-description'], {
+            values: { label: entity.label.default },
+          })}
+        </DialogDescription>
       </DialogHeader>
 
       <div className="grid gap-4 py-4">
@@ -55,7 +59,7 @@ export function AddToCollectionDialog(props: AddToCollectionDialogProps): JSX.El
       </div>
       <DialogFooter>
         <Button form={formId} type="submit">
-          Add
+          {t(['common', 'form', 'add'])}
         </Button>
       </DialogFooter>
     </DialogContent>
@@ -82,7 +86,7 @@ function CollectionSelectField(): JSX.Element {
     <FormField>
       <Label htmlFor={id}>Collection</Label>
       <Select {...field.input} value={value} onValueChange={onSelectionChange}>
-        <SelectTrigger id={id} className="w-[180px]">
+        <SelectTrigger id={id} className="w-full">
           <SelectValue placeholder={t(['common', 'collections', 'select-collection'])} />
         </SelectTrigger>
         <SelectContent>
