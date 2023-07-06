@@ -54,7 +54,7 @@ export function LoadData(props: LoadDataProps): JSX.Element {
         <FileInputTrigger>{t(['common', 'data-import', 'ui', 'load-data'])}</FileInputTrigger>
       </FileInput>
 
-      <p>{file ? file.name : 'Please select a template file'}</p>
+      <p>{file ? file.name : 'Please select a template or IDM-JSON file'}</p>
     </div>
   );
 }
