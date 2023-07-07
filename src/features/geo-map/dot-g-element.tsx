@@ -32,6 +32,7 @@ export function DotGElement(props: DotGElementProps): JSX.Element {
             left: event.clientX,
             top: event.clientY,
           } as DOMRect,
+          pageRect: { left: event.pageX, top: event.pageY } as DOMRect,
         });
       }}
       onMouseLeave={() => {

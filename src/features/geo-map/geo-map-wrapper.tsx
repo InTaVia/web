@@ -145,7 +145,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         )}
       </GeoMap>
       <div className="absolute bottom-5 right-0">
-        <VisualizationLegend events={data.events} entities={data.entities} />
+        <VisualizationLegend events={data.events} entities={{}} />
       </div>
     </>
   );

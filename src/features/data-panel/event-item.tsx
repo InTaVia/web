@@ -72,6 +72,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
         left: e.clientX,
         top: e.clientY,
       } as DOMRect,
+      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
     });
     setIsHovered(true);
     //update workspace hovered
@@ -144,8 +145,8 @@ export function EventItem(props: EventItemProps): JSX.Element {
               'flex w-full flex-row items-left justify-between px-2 py-1 text-left',
               (hovered?.relatedEvents.includes(event.id) === true ||
                 hovered?.events.includes(event.id) === true) &&
-                'bg-neutral-200',
-              isHovered && 'bg-neutral-200',
+                'bg-slate-100',
+              isHovered && 'bg-slate-100',
             )}
             draggable={mode === 'add' ? true : false}
             onDragStart={onDragStart}

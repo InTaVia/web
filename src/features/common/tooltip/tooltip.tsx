@@ -43,16 +43,28 @@ export function Tooltip(): JSX.Element {
   let left = 0;
   let top = 0;
 
-  if (hovered?.clientRect) {
+  if (hovered?.clientRect && hovered.pageRect) {
     left = hovered.clientRect.left + offset;
-    top = hovered.clientRect.top + offset;
-    top = Math.min(
-      top,
-      window.innerHeight - (tooltipDimensions != null ? tooltipDimensions.height : 0) - offset,
-    );
 
-    if (left + (tooltipDimensions != null ? tooltipDimensions.width : 0) > window.innerWidth) {
-      left = left - (tooltipDimensions != null ? tooltipDimensions.width : 0) - 3 * offset;
+    if (tooltipDimensions != null) {
+      if (hovered.clientRect.top + tooltipDimensions.height > window.innerHeight) {
+        const diff = hovered.clientRect.top + tooltipDimensions.height - window.innerHeight;
+        top = hovered.pageRect.top - diff - offset;
+      } else {
+        top = hovered.pageRect.top + offset;
+      }
+    } else {
+      top = hovered.pageRect.top + offset;
+    }
+
+    if (tooltipDimensions != null) {
+      if (hovered.clientRect.left + tooltipDimensions.width > window.innerWidth) {
+        left = hovered.pageRect.left - tooltipDimensions.width - 2 * offset;
+      } else {
+        left = hovered.pageRect.left + offset;
+      }
+    } else {
+      left = hovered.pageRect.left + offset;
     }
   }
 

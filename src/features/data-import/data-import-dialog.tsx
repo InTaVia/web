@@ -81,7 +81,8 @@ export function DataImportDialog(props: DataImportDialogProps): JSX.Element {
       <DialogHeader>
         <DialogTitle>Import data</DialogTitle>
         <DialogDescription>
-          Please select an InTaVia Excel template, and press &quot;Import data&quot;.
+          Please select an InTaVia Excel template or an IDM-JSON file, and press &quot;Import
+          data&quot;.
         </DialogDescription>
       </DialogHeader>
 

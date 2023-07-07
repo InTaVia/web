@@ -127,6 +127,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
               left: e.clientX,
               top: e.clientY,
             } as DOMRect,
+            pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
           });
           setHover(true);
         }}
@@ -153,6 +154,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
               left: e.clientX,
               top: e.clientY,
             } as DOMRect,
+            pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
           });
           setHover(true);
         }}

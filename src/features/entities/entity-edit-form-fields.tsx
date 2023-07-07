@@ -1,9 +1,19 @@
 import { ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import type { Biography, EntityKind, MediaResource } from '@intavia/api-client';
+import type {
+  Biography,
+  EntityEventRelation,
+  EntityKind,
+  EntityRelationRole,
+  Event,
+  MediaResource,
+} from '@intavia/api-client';
 import {
   Button,
   cn,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
   ComboBox,
   ComboBoxButton,
   ComboBoxContent,
@@ -37,8 +47,11 @@ import { useFieldArray } from 'react-final-form-arrays';
 import {
   useGetBiographyByIdQuery,
   useGetEventByIdQuery,
+  useGetEventKindByIdQuery,
   useGetMediaResourceByIdQuery,
   useGetRelationRoleByIdQuery,
+  useSearchEntitiesQuery,
+  useSearchEventKindsQuery,
   useSearchEventsQuery,
   useSearchOccupationsQuery,
   useSearchRelationRolesQuery,
@@ -47,11 +60,15 @@ import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addLocalBiography,
+  addLocalEntity,
+  addLocalEvent,
   addLocalMediaResource,
+  addLocalVocabulary,
   selectBiographyById,
-  selectEvents,
+  selectEntities,
+  selectEventById,
   selectMediaResourceById,
-  selectVocabularyEntries,
+  selectVocabularyEntryById,
 } from '@/app/store/intavia.slice';
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
@@ -60,6 +77,10 @@ import { useDialogState } from '@/features/ui/use-dialog-state';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
+import { useEntities } from '@/lib/use-entities';
+import { useEntity } from '@/lib/use-entity';
+import { useEntityEvent } from '@/lib/use-entity-event';
+import { useRelationRoles } from '@/lib/use-relation-roles';
 
 interface FormTextFieldProps {
   id: string;
@@ -518,76 +539,296 @@ export function RelationsFormFields(): JSX.Element {
   const fieldArray = useFieldArray(name);
   const id = useId();
 
-  const label = t(['common', 'entity', 'relation', 'other']);
+  const dialog = useDialogState();
 
-  function onAdd() {
-    fieldArray.fields.push({ event: undefined, role: undefined });
-  }
-
-  const pagination = usePaginationState(fieldArray.fields.length);
+  const dispatch = useAppDispatch();
 
   return (
     <div aria-labelledby={id} role="group" className="grid gap-3">
-      <span className="text-sm font-medium" id={id}>
-        {label}
-      </span>
       {fieldArray.fields.length === 0 ? (
         <div className="grid place-items-center py-2">
           <NothingFoundMessage className="text-sm" />
         </div>
       ) : (
-        <PaginatedFormFields pagination={pagination}>
-          {({ page, pageSize }) => {
-            const start = (page - 1) * pageSize;
-            const end = page * pageSize;
+        <ul className="grid divide-y" role="list">
+          {fieldArray.fields.map((name, index) => {
+            function onRemove() {
+              fieldArray.fields.remove(index);
+            }
 
-            return (
-              <ul className="grid gap-3" role="list">
-                {fieldArray.fields.map((name, index) => {
-                  if (index < start || index >= end) return null;
-
-                  function onRemove() {
-                    fieldArray.fields.remove(index);
-                  }
-
-                  const role = [name, 'role'].join('.');
-                  const event = [name, 'event'].join('.');
-
-                  return (
-                    <li key={name}>
-                      <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
-                        <RelationRoleComboBox name={role} />
-                        <RelationEventComboBox name={event} />
-                        <IconButton
-                          className="h-10 w-10"
-                          label={t(['common', 'form', 'remove'])}
-                          onClick={onRemove}
-                          variant="outline"
-                        >
-                          <XIcon className="h-5 w-5 shrink-0" />
-                        </IconButton>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            );
-          }}
-        </PaginatedFormFields>
+            return <RelationListItem key={name} name={name} onRemove={onRemove} />;
+          })}
+        </ul>
       )}
+
+      <hr />
+
       <div className="flex items-center justify-end">
-        <Button
-          onClick={() => {
-            pagination.onLastPage();
-            onAdd();
-          }}
-          variant="default"
-        >
+        <Button onClick={dialog.open} variant="default">
           <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
           <span>{t(['common', 'form', 'add'])}</span>
         </Button>
+
+        <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
+          <RelationFormDialog
+            onClose={dialog.close}
+            onSubmit={(values) => {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+              if (!values.event?.id || !values.role?.id) return;
+
+              dispatch(addLocalEvent(values.event));
+              dispatch(addLocalVocabulary({ id: 'role', entries: [values.role] }));
+              fieldArray.fields.push({ event: values.event.id, role: values.role.id });
+            }}
+          />
+        </Dialog>
       </div>
     </div>
+  );
+}
+
+interface RelationListItemProps {
+  name: string;
+  onRemove: () => void;
+}
+
+function RelationListItem(props: RelationListItemProps): JSX.Element {
+  const { name, onRemove } = props;
+
+  const { t } = useI18n<'common'>();
+
+  const field = useField(name);
+  const relation = field.input.value as EntityEventRelation;
+
+  const dialog = useDialogState();
+  const dispatch = useAppDispatch();
+
+  return (
+    <li className="py-6 first-of-type:pt-0 last-of-type:pb-0" key={name}>
+      <div className="grid grid-cols-[1fr_auto] items-start gap-2">
+        <RelationPreview name={name} />
+        <div className="flex gap-2">
+          <IconButton
+            className="h-10 w-10"
+            label={t(['common', 'form', 'edit'])}
+            onClick={dialog.open}
+            variant="outline"
+          >
+            <PencilIcon className="h-5 w-5 shrink-0" />
+          </IconButton>
+          <IconButton
+            className="h-10 w-10"
+            label={t(['common', 'form', 'remove'])}
+            onClick={onRemove}
+            variant="outline"
+          >
+            <XIcon className="h-5 w-5 shrink-0" />
+          </IconButton>
+        </div>
+      </div>
+
+      <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
+        <RelationFormDialog
+          relation={relation}
+          onClose={dialog.close}
+          onSubmit={(values) => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (!values.event?.id || !values.role?.id) return;
+
+            dispatch(addLocalEvent(values.event));
+            dispatch(addLocalVocabulary({ id: 'role', entries: [values.role] }));
+            field.input.onChange({ event: values.event.id, role: values.role.id });
+          }}
+        />
+      </Dialog>
+    </li>
+  );
+}
+
+function useRelationRole(id: string | undefined) {
+  const _role = useAppSelector((state) => {
+    if (id == null) return null;
+    return selectVocabularyEntryById(state, id);
+  });
+  const query = useGetRelationRoleByIdQuery({ id: id! }, { skip: _role != null || id == null });
+
+  if (id == null) return { status: 'idle', data: undefined };
+
+  if (_role != null) return { status: 'success', data: _role };
+
+  return { status: query.status, data: query.data };
+}
+
+function useEvent(id: string | undefined) {
+  const _event = useAppSelector((state) => {
+    if (id == null) return null;
+    return selectEventById(state, id);
+  });
+  const query = useGetEventByIdQuery({ id: id! }, { skip: _event != null || id == null });
+
+  if (id == null) return { status: 'idle', data: undefined };
+
+  if (_event != null) return { status: 'success', data: _event };
+
+  return { status: query.status, data: query.data };
+}
+
+function useEventKind(id: string | undefined) {
+  const _kind = useAppSelector((state) => {
+    if (id == null) return null;
+    return selectVocabularyEntryById(state, id);
+  });
+  const query = useGetEventKindByIdQuery({ id: id! }, { skip: _kind != null || id == null });
+
+  if (id == null) return { status: 'idle', data: undefined };
+
+  if (_kind != null) return { status: 'success', data: _kind };
+
+  return { status: query.status, data: query.data };
+}
+
+interface RelationFormDialogProps {
+  relation?: EntityEventRelation;
+  onClose: () => void;
+  onSubmit: (values: { event: Event; role: EntityRelationRole }) => void;
+}
+
+function RelationFormDialog(props: RelationFormDialogProps): JSX.Element {
+  const { relation, onClose } = props;
+
+  const { t } = useI18n<'common'>();
+  const dispatch = useAppDispatch();
+
+  function onSubmit(values: { event: Event; role: EntityRelationRole }) {
+    onClose();
+
+    // @ts-expect-error It's ok to overwrite id if there is none.
+    dispatch(addLocalEvent({ id: nanoid(), ...event }));
+    // @ts-expect-error It's ok to overwrite id if there is none.
+    dispatch(addLocalVocabulary({ id: 'role', entries: [{ id: nanoid(), ...role }] }));
+
+    props.onSubmit(values);
+  }
+
+  const formId = 'entity-edit';
+
+  const label = t(['common', 'entity', 'relation', 'one']);
+
+  const event = useEvent(relation?.event).data;
+  const role = useRelationRole(relation?.role).data;
+  const initialValues = event == null || role == null ? undefined : { event, role };
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{label}</DialogTitle>
+      </DialogHeader>
+
+      <RelationForm id={formId} initialValues={initialValues} onSubmit={onSubmit} />
+
+      <DialogFooter>
+        <Button form={formId} type="submit">
+          {t(['common', 'form', 'save'])}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  );
+}
+
+interface RelationFormProps {
+  id: string;
+  initialValues?: { event: Event; role: EntityRelationRole };
+  onSubmit: (values: { event: Event; role: EntityRelationRole }) => void;
+}
+
+function RelationForm(props: RelationFormProps): JSX.Element {
+  const { id, initialValues, onSubmit } = props;
+
+  return (
+    <Form className="grid gap-2" id={id} initialValues={initialValues} onSubmit={onSubmit}>
+      <EventKindComboBox name="event.kind" />
+      <RelationRoleComboBox name="role.id" />
+      <FormTextField id={useId()} label="Label" name="event.label.default" />
+      <FormTextField id={useId()} label="Start date" name="event.startDate" />
+      <FormTextField id={useId()} label="End date" name="event.endDate" />
+      {/* <EventRelatedEntities name="event.relations" /> */}
+    </Form>
+  );
+}
+
+interface EventKindComboBoxProps {
+  name: string;
+}
+
+function EventKindComboBox(props: EventKindComboBoxProps) {
+  const { name } = props;
+
+  const field = useField(name);
+  const selectedId = field.input.value as string | undefined;
+  const id = useId();
+
+  const selected = useGetEventKindByIdQuery(
+    { id: selectedId! },
+    { skip: selectedId == null || selectedId === '' },
+  ).data;
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const q = useDebouncedValue(searchTerm.trim());
+  const { data, isLoading, isFetching } = useSearchEventKindsQuery({ q });
+  const kinds = useMemo(() => {
+    const kinds = keyBy(data?.results ?? [], (kind) => {
+      return kind.id;
+    });
+    if (selected != null) {
+      kinds[selected.id] = selected;
+    }
+    return kinds;
+  }, [data, selected]);
+
+  function onInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
+  function getDisplayLabel(id: string) {
+    const kind = kinds[id];
+    if (kind == null) return '';
+    return getTranslatedLabel(kind.label);
+  }
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>Event kind</Label>
+      <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder="Select event kind"
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
+        <ComboBoxContent>
+          {Object.values(kinds).map((kind) => {
+            return (
+              <ComboBoxItem
+                key={kind.id}
+                value={kind.id}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
+              >
+                {getTranslatedLabel(kind.label)}
+              </ComboBoxItem>
+            );
+          })}
+          {data?.results.length === 0 ? (
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
+              Nothing found
+            </ComboBoxEmpty>
+          ) : null}
+        </ComboBoxContent>
+      </ComboBox>
+    </FormField>
   );
 }
 
@@ -599,16 +840,13 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   const { name } = props;
 
   const field = useField(name);
+  const selectedId = field.input.value as string | undefined;
   const id = useId();
 
-  const hasSelection = isNonEmptyString(field.input.value);
-  const storedRoles = useAppSelector(selectVocabularyEntries);
-  const selectedRoleFromStore = hasSelection ? storedRoles[field.input.value] : undefined;
-  const { data: selectedRoleFrombackend } = useGetRelationRoleByIdQuery(
-    { id: field.input.value },
-    { skip: !hasSelection || selectedRoleFromStore != null },
-  );
-  const selected = selectedRoleFromStore ?? selectedRoleFrombackend;
+  const selected = useGetRelationRoleByIdQuery(
+    { id: selectedId! },
+    { skip: selectedId == null || selectedId === '' },
+  ).data;
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -670,24 +908,18 @@ function RelationRoleComboBox(props: RelationRoleComboBoxProps) {
   );
 }
 
-interface RelationEventComboBoxProps {
+interface RelatedEventComboBoxProps {
   name: string;
 }
 
-function RelationEventComboBox(props: RelationEventComboBoxProps) {
+function RelatedEventComboBox(props: RelatedEventComboBoxProps) {
   const { name } = props;
 
   const field = useField(name);
+  const selectedId = field.input.value as string | undefined;
   const id = useId();
 
-  const hasSelection = isNonEmptyString(field.input.value);
-  const storedEvents = useAppSelector(selectEvents);
-  const selectedEventFromStore = hasSelection ? storedEvents[field.input.value] : undefined;
-  const { data: selectedEventFromBackend } = useGetEventByIdQuery(
-    { id: field.input.value },
-    { skip: !hasSelection || selectedEventFromStore != null },
-  );
-  const selected = selectedEventFromStore ?? selectedEventFromBackend;
+  const selected = useEntityEvent(selectedId).data;
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
@@ -746,6 +978,285 @@ function RelationEventComboBox(props: RelationEventComboBoxProps) {
         </ComboBoxContent>
       </ComboBox>
     </FormField>
+  );
+}
+
+interface RelatedEntityComboBoxProps {
+  name: string;
+}
+
+function RelatedEntityComboBox(props: RelatedEntityComboBoxProps) {
+  const { name } = props;
+
+  const field = useField(name);
+  const selectedId = field.input.value as string | undefined;
+  const id = useId();
+
+  const selected = useEntity(selectedId).data;
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const q = useDebouncedValue(searchTerm.trim());
+  const { data, isLoading, isFetching } = useSearchEntitiesQuery({ q });
+  const entities = useMemo(() => {
+    const entities = keyBy(data?.results ?? [], (event) => {
+      return event.id;
+    });
+    if (selected != null) {
+      entities[selected.id] = selected;
+    }
+    return entities;
+  }, [data, selected]);
+
+  function onInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
+  function getDisplayLabel(id: string) {
+    const entity = entities[id];
+    if (entity == null) return '';
+    return getTranslatedLabel(entity.label);
+  }
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>Entity</Label>
+      <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
+        <ComboBoxTrigger>
+          <ComboBoxInput
+            displayValue={getDisplayLabel}
+            id={id}
+            onChange={onInputChange}
+            placeholder="Select entity"
+          />
+          {isFetching ? <LoadingIndicator className="mr-4 text-neutral-500" size="sm" /> : null}
+          <ComboBoxButton />
+        </ComboBoxTrigger>
+        <ComboBoxContent>
+          {Object.values(entities).map((entity) => {
+            return (
+              <ComboBoxItem
+                key={entity.id}
+                value={entity.id}
+                className={cn(isFetching && 'opacity-50 neutralscale')}
+              >
+                {getTranslatedLabel(entity.label)}
+              </ComboBoxItem>
+            );
+          })}
+          {data?.results.length === 0 ? (
+            <ComboBoxEmpty className={cn(isFetching && 'opacity-50 neutralscale')}>
+              Nothing found
+            </ComboBoxEmpty>
+          ) : null}
+        </ComboBoxContent>
+      </ComboBox>
+    </FormField>
+  );
+}
+
+interface RelationPreview {
+  name: string;
+}
+
+function RelationPreview(props: RelationPreview): JSX.Element {
+  const { name } = props;
+
+  const dialog = useDialogState();
+  const dispatch = useAppDispatch();
+
+  const sourceEntityId = useField('id').input.value;
+
+  const field = useField(name);
+  const relation = field.input.value as EntityEventRelation;
+
+  const eventQuery = useEvent(relation.event);
+  const roleQuery = useRelationRole(relation.role);
+
+  const event = eventQuery.data;
+  const role = roleQuery.data;
+
+  const kindQuery = useEventKind(event?.kind);
+  const kind = kindQuery.data;
+
+  const relatedEntitesQuery = useEntities(
+    event?.relations.map((r) => {
+      return r.entity;
+    }) ?? [],
+  );
+  const relatedEntites = relatedEntitesQuery.data;
+
+  const relationRolesQuery = useRelationRoles(
+    event?.relations.map((r) => {
+      return r.role;
+    }) ?? [],
+  );
+  const relationRoles = relationRolesQuery.data;
+
+  const _entites = useAppSelector(selectEntities);
+
+  if (
+    eventQuery.status === 'fetching' ||
+    roleQuery.status === 'fetching' ||
+    kindQuery.status === 'fetching' ||
+    // relationRolesQuery.status === 'pending' || // FIXME: unfortunately backend does not resolve all ids
+    relatedEntitesQuery.status === 'pending'
+  ) {
+    return (
+      <div>
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (
+    event == null ||
+    role == null ||
+    kind == null ||
+    // relationRoles == null ||
+    relatedEntites == null
+  ) {
+    return (
+      <div>
+        <NothingFoundMessage />
+      </div>
+    );
+  }
+
+  const relations = event.relations.filter((r) => {
+    return r.entity !== sourceEntityId;
+  });
+
+  return (
+    <article className="grid gap-2">
+      <div className="text-sm">
+        <EventDate start={event.startDate} end={event.endDate} />
+      </div>
+      <span className="text-neutral-500">
+        {getTranslatedLabel(kind.label)} | {getTranslatedLabel(role.label)}
+      </span>
+      <span>{getTranslatedLabel(event.label)}</span>
+
+      {relations.length > 0 ? (
+        <Collapsible>
+          <CollapsibleTrigger className="group flex items-center gap-1">
+            <ChevronRightIcon className="h-4 w-4 shrink-0 transition group-data-[state=open]:rotate-90" />
+            <span>Related entities ({relations.length})</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <ul role="list" className="grid gap-2 py-1">
+              {relations.map((r) => {
+                const entity = relatedEntites.get(r.entity);
+                const role = relationRoles?.get(r.role);
+
+                if (entity == null || role == null) return null;
+
+                return (
+                  <li key={[r.role, r.entity].join('+')}>
+                    <span>{getTranslatedLabel(entity.label)}</span>
+                    <span> ({getTranslatedLabel(role.label)})</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </CollapsibleContent>
+        </Collapsible>
+      ) : null}
+
+      <Button onClick={dialog.open} size="sm" variant="outline">
+        <PlusIcon className="h-4 w-4" />
+        <span>Add related entity</span>
+      </Button>
+
+      <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
+        <AddEntityToRelationFormDialog
+          onClose={dialog.close}
+          onSubmit={(values: { entity: string; role: string }) => {
+            const targetEntity = _entites[values.entity];
+
+            if (targetEntity) {
+              dispatch(addLocalEvent({ ...event, relations: [...event.relations, values] }));
+
+              dispatch(
+                addLocalEntity({
+                  ...targetEntity,
+                  relations: [...targetEntity.relations, { role: values.role, event: event.id }],
+                }),
+              );
+            }
+          }}
+        />
+      </Dialog>
+    </article>
+  );
+}
+
+function AddEntityToRelationFormDialog({
+  onClose,
+  onSubmit: _onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (values: { entity: string; role: string }) => void;
+}): JSX.Element {
+  const { t } = useI18n<'common'>();
+
+  const formId = 'add-related-entity';
+
+  function onSubmit(values: { entity: string; role: string }) {
+    onClose();
+
+    _onSubmit(values);
+  }
+
+  const initialValues = undefined; // TODO:
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Add related entity</DialogTitle>
+      </DialogHeader>
+
+      <Form className="grid gap-2" id={formId} initialValues={initialValues} onSubmit={onSubmit}>
+        <RelationRoleComboBox name="role" />
+        <RelatedEntityComboBox name="entity" />
+      </Form>
+
+      <DialogFooter>
+        <Button form={formId} type="submit">
+          {t(['common', 'form', 'save'])}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  );
+}
+
+interface EventDateProps {
+  start: string | undefined;
+  end: string | undefined;
+}
+
+function formatDateTime(date: string) {
+  return Intl.DateTimeFormat('en-GB', { dateStyle: 'short' }).format(new Date(date));
+}
+
+function EventDate(props: EventDateProps) {
+  const { start, end } = props;
+
+  const dates = [start, end].filter(isNonEmptyString).map(formatDateTime);
+
+  if (dates.length === 0) return null;
+
+  if (dates.length === 1) {
+    const [date] = dates;
+    return <time dateTime={date}>{date}</time>;
+  }
+
+  const [startDate, endDate] = dates;
+  return (
+    <span>
+      <time dateTime={startDate}>{startDate}</time>
+      <span> &ndash; </span>
+      <time dateTime={endDate}>{endDate}</time>
+    </span>
   );
 }
 

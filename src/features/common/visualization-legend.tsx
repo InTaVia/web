@@ -102,6 +102,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                       left: e.clientX,
                       top: e.clientY,
                     } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
                   });
                 }}
                 onMouseLeave={() => {
@@ -130,6 +131,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                       left: e.clientX,
                       top: e.clientY,
                     } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
                   });
                 }}
                 onMouseLeave={() => {
@@ -160,6 +162,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                       left: e.clientX,
                       top: e.clientY,
                     } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
                   });
                 }}
                 onMouseLeave={() => {
@@ -186,6 +189,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                       left: e.clientX,
                       top: e.clientY,
                     } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
                   });
                 }}
                 onMouseLeave={() => {

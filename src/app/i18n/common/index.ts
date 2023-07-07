@@ -150,6 +150,10 @@ export interface Dictionary {
     metadata: {
       title: string;
     };
+    'delete-alert-title': string;
+    'delete-alert-description': string;
+    'delete-alert-description-warning': string;
+    'delete-alert-action': string;
   };
   story: {
     metadata: {

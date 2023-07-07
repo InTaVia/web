@@ -80,10 +80,8 @@ export function VisualizedPanel(props: VisualizedPanelProps): JSX.Element {
 
   if (!targetHasVisualizations) {
     return (
-      <div className="p-3">
-        <Button className="flex w-full place-content-center gap-2" type="button" variant="outline">
-          Please add a visualization
-        </Button>
+      <div className="grid h-full w-full place-items-center p-3">
+        <span className="flex w-full place-content-center gap-2">Please add a visualization</span>
       </div>
     );
   }
