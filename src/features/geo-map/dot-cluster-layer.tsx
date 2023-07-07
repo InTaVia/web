@@ -62,6 +62,7 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
           </Marker>
         );
       })}
+
       {dotMarkers.map((marker) => {
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
         const { color, shape, strokeWidth } = getEventKindPropertiesById(eventKind);
@@ -79,12 +80,6 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
           <DotMarker
             key={marker.id}
             color={color}
-            backgroundColor={
-              eventKind in colors ? colors[eventKind].background : colors.default.background
-            }
-            foregroundColor={
-              eventKind in colors ? colors[eventKind].foreground : colors.default.foreground
-            }
             coordinates={marker.coordinates}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}

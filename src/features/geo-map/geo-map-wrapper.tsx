@@ -1,4 +1,6 @@
 import type { Entity, Event } from '@intavia/api-client';
+import { keyBy } from '@stefanprobst/key-by';
+import { schemeTableau10 as identityColors } from 'd3-scale-chromatic';
 
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
@@ -36,22 +38,52 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
   //fetch all required data
   const data = useDataFromVisualization({ visualization });
-  // console.log(data);
+
+  //TODO: use groupByEntities to generate only line features for those
 
   // functions
-  const { lines, spatioTemporalEvents, spatialEvents, temporalEvents, noneEvents } =
-    useLineStringFeatureCollection({
-      events: data.events,
-      entities: data.entities,
-    });
-  // console.log(temporalEvents, noneEvents);
+  const {
+    lines,
+    spatioTemporalEvents,
+    spatialEvents,
+    temporalEvents,
+    noneEvents,
+    timeScaleNormalizedByEntities,
+  } = useLineStringFeatureCollection({
+    events: data.events,
+    entities: data.entities,
+    groupByEntities: data.groupByEntities,
+  });
 
-  const { points } = usePointFeatureCollection({ events: data.events, entities: data.entities });
+  const { points } = usePointFeatureCollection({
+    events: data.events,
+    entities: data.entities,
+  });
+
+  const entityIdentities = keyBy(
+    data.groupByEntities.map((entityId, index) => {
+      return {
+        id: entityId,
+        color: identityColors[index > 9 ? 9 : index],
+        entity: data.entities.filter((entity) => {
+          return entity.id === entityId;
+        })[0],
+        timeScaleNormalized:
+          timeScaleNormalizedByEntities[entityId] != null
+            ? timeScaleNormalizedByEntities[entityId].timeScaleNormalized
+            : null,
+      };
+    }),
+    (item) => {
+      return item.id;
+    },
+  );
 
   const isCluster = visualization.properties!.cluster!.value ?? false;
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
+  const colorBy = visualization.properties!.colorBy!.value.value ?? 'event-kind';
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -81,7 +113,12 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       >
         {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
         {renderLines === true && isCluster === false && lines.features.length > 0 && (
-          <GeoMapLineLayer data={lines} id={visualization.id} colorMode={colorBy} />
+          <GeoMapLineLayer
+            data={lines}
+            id={visualization.id}
+            colorBy={colorBy}
+            entityIdentities={entityIdentities}
+          />
         )}
 
         {isCluster === false && points.features.length > 0 && (
@@ -90,6 +127,8 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
             data={points}
             onToggleSelection={onToggleSelection}
             highlightedByVis={highlightedByVis}
+            colorBy={colorBy}
+            entityIdentities={entityIdentities}
           />
         )}
 

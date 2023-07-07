@@ -1,4 +1,5 @@
 import type { Entity, Event, Place } from '@intavia/api-client';
+import { keyBy } from '@stefanprobst/key-by';
 import type { Feature, FeatureCollection, LineString, Position } from 'geojson';
 import { useMemo } from 'react';
 
@@ -7,10 +8,13 @@ import { selectEntitiesByKind } from '@/app/store/intavia.slice';
 import { createLineFeature } from '@/features/geo-map/lib/create-line-feature';
 import { isValidDate } from '@/features/geo-map/lib/is-valid-date';
 import { isValidPoint } from '@/features/geo-map/lib/is-valid-point';
+import { getTemporalExtent } from '@/features/timeline/timeline';
+import { timeScale } from '@/lib/temporal-coloring';
 
 interface UseLineStringFeatureCollectionParams {
   events: Array<Event>;
   entities: Array<Entity>;
+  groupByEntities: Array<Entity['id']>;
 }
 
 type LineFeatureCollection = FeatureCollection<
@@ -24,6 +28,7 @@ interface UseLineStringFeatureCollectionResult {
   spatialEvents: Array<Event>;
   temporalEvents: Array<Event>;
   noneEvents: Array<Event>;
+  timeScaleNormalizedByEntities: Record<Entity['id'], any>;
 }
 
 export interface SpaceTime {
@@ -34,13 +39,21 @@ export interface SpaceTime {
 export function useLineStringFeatureCollection(
   params: UseLineStringFeatureCollectionParams,
 ): UseLineStringFeatureCollectionResult {
-  const { events, entities } = params;
+  const { events, entities, groupByEntities } = params;
+  const entitiesById = keyBy(entities, (entity) => {
+    return entity.id;
+  });
 
-  // console.log(events);
+  const places: Record<Place['id'], Place> = useAppSelector(selectEntitiesByKind).place;
 
-  const places = useAppSelector(selectEntitiesByKind).place;
-  // : FeatureCollection<LineString, { entity: Entity; events: Array<Event>; places: Array<Place> }>
-  const [lines, spatioTemporalEvents, spatialEvents, temporalEvents, noneEvents] = useMemo(() => {
+  const [
+    lines,
+    spatioTemporalEvents,
+    spatialEvents,
+    temporalEvents,
+    noneEvents,
+    timeScaleNormalizedByEntities,
+  ] = useMemo(() => {
     function getRelatedPlaces(event: Event): Array<Place> | null {
       const relatedPlaces: Array<Place> = [];
 
@@ -50,6 +63,7 @@ export function useLineStringFeatureCollection(
       event.relations.forEach((relation) => {
         if (relation.entity in places) {
           const place = places[relation.entity]!;
+
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (place.kind !== 'place') return null;
           if (place.geometry == null) return null;
@@ -70,11 +84,13 @@ export function useLineStringFeatureCollection(
       event.relations.forEach((relation) => {
         if (relation.entity in places) {
           const place = places[relation.entity]!;
+
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (place.kind !== 'place') return null;
           if (place.geometry == null) return null;
           if (!isValidPoint(place.geometry)) return null;
-          const date: string = event.startDate ?? event.endDate;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const date: string = (event.startDate ?? event.endDate)!;
           spaceTime.push({
             position: place.geometry.coordinates,
             date: new Date(date),
@@ -102,7 +118,7 @@ export function useLineStringFeatureCollection(
           isValidDate(new Date(event.startDate as string))) ||
         ('endDate' in event && isValidDate(new Date(event.endDate as string)));
 
-      const relatedPlaces = getRelatedPlaces(event, hasDate);
+      const relatedPlaces = getRelatedPlaces(event);
 
       if (relatedPlaces == null || relatedPlaces.length === 0) {
         if (hasDate) {
@@ -134,8 +150,11 @@ export function useLineStringFeatureCollection(
     });
 
     // console.log('sortedEvents', sortedEvents);
-
-    for (const entity of entities) {
+    // console.log(groupByEntities);
+    const timeScaleNormalizedByEntities = [];
+    for (const entityId of groupByEntities) {
+      const entity = entitiesById[entityId];
+      if (entity == null) continue;
       if (entity.kind === 'place') continue;
 
       // Option A: one line string per entity
@@ -147,7 +166,20 @@ export function useLineStringFeatureCollection(
           .includes(entity.id);
       });
 
-      if (relatedEvents.length <= 1) continue;
+      if (relatedEvents.length <= 1) {
+        if (relatedEvents.length === 1) {
+          // const date: string = (relatedEvents[0]!.startDate ?? relatedEvents[0]!.endDate)!;
+          console.log(relatedEvents[0]!.id, atob(relatedEvents[0]!.id));
+          timeScaleNormalizedByEntities.push({
+            id: entity.id,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            timeScaleNormalized: (date: Date) => {
+              return 0;
+            },
+          });
+        }
+        continue;
+      }
 
       features.push(
         createLineFeature({
@@ -166,6 +198,12 @@ export function useLineStringFeatureCollection(
             .filter(Boolean),
         }),
       );
+
+      timeScaleNormalizedByEntities.push({
+        id: entity.id,
+        timeScaleNormalized: timeScale(...getTemporalExtent([relatedEvents])),
+      });
+
       // Option B: multiple line strings per entity
 
       // console.log('entity', entity.id);
@@ -183,8 +221,11 @@ export function useLineStringFeatureCollection(
       spatialEvents,
       temporalEvents,
       noneEvents,
+      keyBy(timeScaleNormalizedByEntities, (item) => {
+        return item.id;
+      }),
     ];
-  }, [events, places, entities]);
+  }, [events, places, groupByEntities, entitiesById]);
 
   return {
     lines,
@@ -192,5 +233,6 @@ export function useLineStringFeatureCollection(
     spatialEvents,
     temporalEvents,
     noneEvents,
+    timeScaleNormalizedByEntities,
   };
 }

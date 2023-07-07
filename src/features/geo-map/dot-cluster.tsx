@@ -188,7 +188,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
         const shapePropsBase = {
           className: 'cursor-pointer',
           fill: isHovered ? color.dark : color.main,
-          stroke: selected ? highlight.color : color.dark,
+          stroke: isHovered ? color.main : selected ? highlight.color : color.dark,
           strokeWidth: selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth,
         };
 

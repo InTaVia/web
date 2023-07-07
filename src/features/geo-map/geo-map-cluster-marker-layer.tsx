@@ -84,10 +84,17 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
       data={data}
       type="geojson"
     >
+      {/* Workaround for clusters to work  */}
       <Layer {...layer} />
 
       {isCluster && clusterType === 'donut' ? (
-        <DonutChartLayer colors={colors} id={id} clusterByProperty={clusterByProperty!} />
+        <DonutChartLayer
+          colors={colors}
+          id={id}
+          clusterByProperty={clusterByProperty!}
+          onToggleSelection={onToggleSelection}
+          highlightedByVis={highlightedByVis}
+        />
       ) : null}
       {isCluster && clusterType === 'dot' ? (
         <DotClusterLayer

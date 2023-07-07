@@ -15,7 +15,8 @@ export interface GeoMapLineLayerProps<T extends EmptyObject = EmptyObject> {
   id: string;
   data: FeatureCollection<LineString, T>;
   onChangeHover?: (feature: Feature<LineString, T> | null) => void;
-  colorMode: 'entity-identity' | 'time';
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
+  entityIdentities: Record<string, any>;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface GeoMapLineLayerProps<T extends EmptyObject = EmptyObject> {
 export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
   props: GeoMapLineLayerProps<T>,
 ): JSX.Element {
-  const { id, data, colorMode } = props;
+  const { id, data, colorBy, entityIdentities } = props;
 
   return (
     <Source id={`LineSource${id}`} data={data} type="geojson" lineMetrics={true}>
@@ -39,17 +40,16 @@ export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
         };
 
         let paint: LinePaint = {};
-        if (colorMode === 'time') {
+        if (colorBy === 'time') {
           const gradient = generateGradient(feature);
           paint = {
             'line-width': 4,
             'line-opacity': 1,
             'line-gradient': ['interpolate', ['linear'], ['line-progress'], ...gradient],
           };
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        } else if (colorMode === 'entity-identity') {
+        } else if (colorBy === 'entity-identity') {
           paint = {
-            'line-color': colors[index > 9 ? 9 : index],
+            'line-color': entityIdentities[feature.id].color,
             'line-opacity': 0.6,
             'line-width': 4,
           };

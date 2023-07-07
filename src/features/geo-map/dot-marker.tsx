@@ -11,8 +11,6 @@ interface DotMarkerProps {
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   coordinates: Position;
   color: Record<string, string>;
-  backgroundColor: string;
-  foregroundColor: string;
   onToggleSelection?: (ids: Array<string>) => void;
   /** @default 12 */
   size?: number;
@@ -25,8 +23,6 @@ interface DotMarkerProps {
 export function DotMarker(props: DotMarkerProps): JSX.Element {
   const {
     color,
-    backgroundColor,
-    foregroundColor,
     coordinates,
     onToggleSelection,
     size = 12,
@@ -61,7 +57,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
   const shapePropsBase = {
     className: 'cursor-pointer',
     fill: isHovered ? color.dark : color.main,
-    stroke: selected ? highlight.color : color.dark,
+    stroke: isHovered ? color.main : selected ? highlight.color : color.dark,
     strokeWidth: selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth,
   };
 
