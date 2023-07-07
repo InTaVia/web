@@ -86,7 +86,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
               </div>
             )}
           </div>
-          {hasRelations && (
+          {hasRelations && entity.kind !== 'place' && (
             <div className={cn('relative w-full border overflow-y-hidden', `h-[250px]`)}>
               <VisualisationComponent
                 visualization={timelineVisualization}
