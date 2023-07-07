@@ -29,8 +29,12 @@ export function StoryVideoAudio(props: StoryVideoAudioProps): JSX.Element {
       {url !== '' && <ReactPlayer width="100%" height="100%" controls url={url} />}
       {(title !== '' || text !== '') && (
         <div className="absolute bottom-0 w-full bg-white p-2">
-          {title !== '' && <p className="mb-1 text-xl">{title}</p>}
-          {text !== '' && <p>{text}</p>}
+          {title !== '' && (
+            <p className="mb-1 text-xl" style={{ fontFamily: 'Libre Baskerville' }}>
+              {title}
+            </p>
+          )}
+          {text !== '' && <p style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>{text}</p>}
         </div>
       )}
     </div>

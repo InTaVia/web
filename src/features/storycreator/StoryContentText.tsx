@@ -32,7 +32,7 @@ export function StoryContentText(props: StoryContentTextProps) {
         }}
       >
         <div className="p-2">
-          <p className={`mb-1 text-xl`}>
+          <p className={`mb-1 text-xl`} style={{ fontFamily: 'Libre Baskerville' }}>
             <EditableText
               key={`${content.properties.id}Editable`}
               content={content!.properties!.title!.value}
@@ -48,7 +48,7 @@ export function StoryContentText(props: StoryContentTextProps) {
               }}
             />
           </p>
-          <p>
+          <p style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>
             <EditableText
               key={`${content.properties.id}Editable`}
               content={content!.properties!.text!.value}

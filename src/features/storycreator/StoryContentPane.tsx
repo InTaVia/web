@@ -58,8 +58,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
     return selectStoryByID(state, storyID);
   });
 
-  const fontFamily = story.properties.font.value.value;
-
   let contents: Array<SlideContent>;
   if (contentPane !== undefined) {
     contents = Object.values(contentPane.contents).map((content) => {
@@ -92,7 +90,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 position: 'relative',
                 backgroundColor: 'white',
                 padding: 0,
-                fontFamily: fontFamily,
               }}
             >
               {/* {(Boolean(element!.properties!.title!.value) ||
@@ -127,9 +124,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             quizContent.push(
               <div
                 className="grid grid-cols-[auto] gap-1"
-                style={{
-                  fontFamily: fontFamily,
-                }}
+                style={{ fontFamily: "'Source Sans Pro', sans-serif" }}
               >
                 {(element.properties.answerlist as AnswerList).answers.map(
                   (answer: QuizAnswer, index: number) => {
@@ -163,7 +158,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
             >
               <div className="p-2">
                 {Boolean(element.properties!.question!.value) && (
-                  <p className="mb-1 text-lg" style={{ fontFamily }}>
+                  <p className="mb-1 text-lg" style={{ fontFamily: 'Libre Baskerville' }}>
                     {element.properties!.question!.value}
                   </p>
                 )}
@@ -181,7 +176,6 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               maxHeight: '100%',
               backgroundColor: 'white',
               padding: 0,
-              fontFamily: fontFamily,
             }}
           >
             <div style={{ height: '100%' }}>
@@ -199,7 +193,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
               element.properties!.text!.value !== '') && (
               <div className="absolute bottom-0 w-full bg-white p-2">
                 {element.properties!.title!.value !== '' && (
-                  <p className="mb-1 text-xl">
+                  <p className="mb-1 text-xl" style={{ fontFamily: 'Libre Baskerville' }}>
                     <EditableText
                       key={`${element.properties.id}Editable`}
                       content={`${element.properties!.title!.value}`}
@@ -216,7 +210,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                   </p>
                 )}
                 {element.properties!.text!.value !== '' && (
-                  <p>
+                  <p style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>
                     <EditableText
                       key={`${element.properties.id}Editable`}
                       content={`${element.properties!.text!.value}`}
@@ -237,7 +231,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
           </div>
         );
       case 'Video/Audio':
-        return <StoryVideoAudio content={element} fontFamily={fontFamily} />;
+        return <StoryVideoAudio content={element} />;
       default:
         return [];
     }

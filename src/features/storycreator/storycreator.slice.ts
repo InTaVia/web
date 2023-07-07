@@ -106,7 +106,7 @@ export const emptyStory = {
       ],
       editable: true,
     },
-    font: {
+    /* font: {
       type: 'select',
       id: 'font',
       label: 'Font',
@@ -144,7 +144,7 @@ export const emptyStory = {
         },
       ],
       editable: true,
-    },
+    }, */
   },
 };
 
