@@ -1,6 +1,6 @@
-import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import type { Entity, Event } from '@intavia/api-client';
+import { Settings2Icon } from 'lucide-react';
 import type { DragEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -175,7 +175,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
               }
             }}
           >
-            <AdjustmentsIcon className="h-4 w-4" />
+            <Settings2Icon className="h-4 w-4" />
           </button>
           <button
             aria-label="Remove"
