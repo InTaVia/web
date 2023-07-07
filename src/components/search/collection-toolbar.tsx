@@ -52,7 +52,7 @@ export function CollectionToolbar(): JSX.Element {
       <div className="flex items-center justify-between gap-2">
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button>{t(['common', 'collections', 'create-collection'])}</Button>
+            <Button variant="subtle">{t(['common', 'collections', 'create-collection'])}</Button>
           </DialogTrigger>
           <CreateCollectionDialog
             onClose={() => {

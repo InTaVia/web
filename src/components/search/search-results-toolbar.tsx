@@ -23,7 +23,7 @@ function SaveQueryAsCollectionButton() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button>Create new collection from query</Button>
+        <Button variant="subtle">Create new collection from query</Button>
       </DialogTrigger>
       <SaveQueryAsCollectionDialog
         onClose={() => {
@@ -54,7 +54,7 @@ function AddQueryToCollectionButton(): JSX.Element {
   }
 
   return (
-    <Button disabled={currentCollection == null} onClick={onAddQueryToCollection}>
+    <Button disabled={currentCollection == null} variant="subtle" onClick={onAddQueryToCollection}>
       <PlusIcon className="h-4 w-4 shrink-0" />
       Add query to collection
     </Button>
