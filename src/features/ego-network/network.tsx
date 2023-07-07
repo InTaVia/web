@@ -143,9 +143,10 @@ function NodeView(props: Node): JSX.Element {
         entities: [entity.id],
         events: [],
         clientRect: {
-          left: e.clientX,
-          top: e.clientY,
+          left: e.pageX,
+          top: e.pageY,
         } as DOMRect,
+        pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
       });
     },
     onMouseLeave: () => {
@@ -249,6 +250,7 @@ function LinkView(props: Link): JSX.Element {
               left: e.clientX,
               top: e.clientY,
             } as DOMRect,
+            pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
           });
         }}
         onMouseLeave={() => {

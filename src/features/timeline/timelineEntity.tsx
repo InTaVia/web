@@ -238,6 +238,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 left: e.clientX,
                 top: e.clientY,
               } as DOMRect,
+              pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
             });
             setHover(true);
           }}

@@ -92,6 +92,7 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
         left: e.clientX,
         top: e.clientY,
       } as DOMRect,
+      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
     });
     setIsHovered(true);
     //update workspace hovered
