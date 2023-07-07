@@ -51,7 +51,7 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
           visProperties={visualization.properties}
         />
         <div className="absolute bottom-0 right-0">
-          <VisualizationLegend events={{}} entities={entities} />
+          <VisualizationLegend events={{ events }} entities={entities} />
         </div>
       </div>
     );

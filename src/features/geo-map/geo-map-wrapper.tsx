@@ -50,6 +50,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
+  const colorBy = visualization.properties!.colorBy!.value.value ?? null;
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -111,7 +112,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         )}
       </GeoMap>
       <div className="absolute bottom-5 right-0">
-        <VisualizationLegend events={data.events} entities={{}} />
+        <VisualizationLegend events={data.events} entities={{}} colorBy={colorBy} />
       </div>
     </>
   );

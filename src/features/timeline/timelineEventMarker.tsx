@@ -8,13 +8,13 @@ import { getEventKindPropertiesById, highlight } from '@/features/common/visuali
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface TimelineEventMarkerProps {
-  event: Event;
   width: number;
   height: number;
   thickness: number;
   hover: boolean;
   selected?: boolean;
   color?: string;
+  shape?: string;
 }
 
 const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): JSX.Element => {
@@ -23,29 +23,14 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
     height,
     thickness,
     hover = false,
-    event,
+    shape,
     color: i_color,
     selected = false,
   } = props;
 
-  const vocabularies = useAppSelector(selectVocabularyEntries);
-  event.kind in vocabularies ? getTranslatedLabel(vocabularies[event.kind].label) : event.kind;
-  const {
-    color: eventKindColor,
-    shape,
-    strokeWidth: eventKindStrokeWidth,
-  } = getEventKindPropertiesById(event.kind);
+  const strokeWidth = thickness;
 
-  const color = i_color !== undefined ? i_color : eventKindColor;
-
-  const selectedStrokeWidth = 3;
-  const hoverStrokeWidth = 2.5;
-
-  const strokeWidth = selected
-    ? selectedStrokeWidth
-    : hover
-    ? hoverStrokeWidth
-    : eventKindStrokeWidth;
+  const color = i_color != null ? i_color : { main: 'gray', dark: 'black' };
 
   switch (shape) {
     case 'dot':
@@ -58,7 +43,7 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           cy={height / 2}
           r={(width - strokeWidth) / 2}
           fill={hover ? color.dark : color.main}
-          stroke={selected ? highlight.color : color.dark}
+          stroke={hover ? color.main : selected ? highlight.color : color.dark}
           strokeWidth={strokeWidth}
         />
       );
@@ -73,7 +58,7 @@ const TimelineEventMarker = forwardRef((props: TimelineEventMarkerProps, ref): J
           width={width - thickness}
           height={height - thickness}
           fill={hover ? color.dark : color.main}
-          stroke={selected ? highlight.color : color.dark}
+          stroke={hover ? color.main : selected ? highlight.color : color.dark}
           strokeWidth={strokeWidth}
         />
       );
