@@ -1,7 +1,7 @@
-import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
 import { Button, IconButton } from '@intavia/ui';
 import parse from 'html-react-parser';
+import { Settings2Icon } from 'lucide-react';
 import ReactGridLayout from 'react-grid-layout';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -262,7 +262,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 }
               }}
             >
-              <AdjustmentsIcon className="h-4 w-4" />
+              <Settings2Icon className="h-4 w-4" />
             </button>
             <button
               aria-label="Remove"
