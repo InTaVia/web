@@ -81,8 +81,8 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
   return (
     <div className="grid gap-1">
       <h2 className="pb-1 font-bold uppercase text-neutral-700">Relations</h2>
-      <table role="table">
-        <tbody>
+      <table role="table" className="border">
+        <tbody className="divide-y">
           {eventsAsc.map((event, index) => {
             const relation = relations.filter((relation) => {
               return relation.event === event.id;
@@ -102,7 +102,7 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
             return (
               <tr
                 key={key}
-                className={cn('px-1', index % 2 && 'bg-neutral-100', isHovered && 'bg-neutral-200')}
+                className={cn('px-1', index % 2 && 'bg-neutral-100', isHovered && 'bg-slate-100')}
                 onMouseEnter={(e: MouseEvent<HTMLTableRowElement>) => {
                   updateHover({
                     entities: event.relations.map((relation) => {

@@ -100,7 +100,7 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
 
   const label = `${getTranslatedLabel(entity.label)} ${hasLocalEntity ? ' (edited locally)' : ''}`;
   const detailsUrl = { pathname: `/entities/${encodeURIComponent(entity.id)}` };
-  
+
   function onEditItem(e: MouseEvent) {
     e.stopPropagation();
 

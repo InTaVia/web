@@ -20,11 +20,14 @@ body,
 }
 
 .overview-table-row > * {
-  padding: 2px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 2px;
+  padding-left: 2px;
 }
 
 .overview-table-row:hover > * {
-  background-color: theme(colors.intavia-brand.100);
+  background-color: theme(colors.slate.100);
 }
 
 .image-gallery {

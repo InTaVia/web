@@ -1,4 +1,5 @@
-import { LoginIcon } from '@heroicons/react/outline';
+import { Button } from '@intavia/ui';
+import { ChevronFirstIcon } from 'lucide-react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { ComponentName, PaneOrientation } from '@/features/ui/ui.slice';
@@ -19,7 +20,10 @@ export function PaneToggle(props: PaneToggleProps): JSX.Element {
 
   if (orientation === 'left') {
     return (
-      <button
+      <Button
+        variant="ghost"
+        className="hover:bg-neutral-200"
+        size="xs"
         onClick={() => {
           dispatch(
             setSidePane({
@@ -30,12 +34,15 @@ export function PaneToggle(props: PaneToggleProps): JSX.Element {
           );
         }}
       >
-        <LoginIcon className={`${!isOpen ? 'rotate-180' : ''} h-5 w-5 text-white`} />
-      </button>
+        <ChevronFirstIcon className={`${!isOpen ? 'rotate-180' : ''} h-5 w-5 `} />
+      </Button>
     );
   } else {
     return (
-      <button
+      <Button
+        variant="ghost"
+        className="hover:bg-neutral-200"
+        size="xs"
         onClick={() => {
           dispatch(
             setSidePane({
@@ -46,8 +53,8 @@ export function PaneToggle(props: PaneToggleProps): JSX.Element {
           );
         }}
       >
-        <LoginIcon className={`${isOpen ? 'rotate-180' : ''} h-5 w-5 text-white`} />
-      </button>
+        <ChevronFirstIcon className={`${isOpen ? 'rotate-180' : ''} h-5 w-5`} />
+      </Button>
     );
   }
 }

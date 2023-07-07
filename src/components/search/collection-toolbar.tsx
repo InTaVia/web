@@ -1,11 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
   Button,
   Dialog,
@@ -21,6 +15,7 @@ import { removeCollection, selectCollections } from '@/app/store/intavia-collect
 import { useCollection } from '@/components/search/collection.context';
 import { CollectionSelect } from '@/components/search/collection-select';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
+import { DeleteCollectionAlertDialog } from '@/components/search/delete-collection-alert';
 
 export function CollectionToolbar(): JSX.Element {
   const { t } = useI18n<'common'>();
@@ -52,7 +47,7 @@ export function CollectionToolbar(): JSX.Element {
       <div className="flex items-center justify-between gap-2">
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button>{t(['common', 'collections', 'create-collection'])}</Button>
+            <Button variant="subtle">{t(['common', 'collections', 'create-collection'])}</Button>
           </DialogTrigger>
           <CreateCollectionDialog
             onClose={() => {
@@ -72,33 +67,12 @@ export function CollectionToolbar(): JSX.Element {
               <Trash2Icon className="h-5 w-5 shrink-0" />
             </IconButton>
           </AlertDialogTrigger>
-          <AlertDialogContent className="sm:max-w-[425px]">
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                {t(['common', 'collections', 'delete-alert-title'])}
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                <p>
-                  {t(['common', 'collections', 'delete-alert-description'], {
-                    values: {
-                      collectionLabel: currentCollectionLabel ?? '',
-                      collectionEntityCount: String(currentCollectionEntityCount),
-                    },
-                  })}
-                </p>
-                <br />
-                <p>This action cannot be reversed.</p>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel asChild>
-                <Button>{t(['common', 'form', 'cancel'])}</Button>
-              </AlertDialogCancel>
-              <Button variant="destructive" onClick={onDeleteCollection}>
-                {t(['common', 'collections', 'delete-alert-action'])}
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
+
+          <DeleteCollectionAlertDialog
+            onDelete={onDeleteCollection}
+            label={currentCollectionLabel ?? ''}
+            count={String(currentCollectionEntityCount)}
+          />
         </AlertDialog>
       </div>
     </div>
