@@ -213,7 +213,7 @@ export function DonutSegment<T>(props: DonutSegmentProps<T>): JSX.Element {
             left: event.clientX,
             top: event.clientY,
           } as DOMRect,
-          pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
+          pageRect: { left: event.pageX, top: event.pageY } as DOMRect,
         });
         setIsHoverd(true);
       }}
