@@ -83,6 +83,7 @@ export function DotMarker(props: DotMarkerProps): JSX.Element {
               left: event.clientX,
               top: event.clientY,
             } as DOMRect,
+            pageRect: { left: event.pageX, top: event.pageY } as DOMRect,
           });
         }}
         onMouseLeave={() => {

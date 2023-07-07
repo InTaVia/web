@@ -13,6 +13,7 @@ interface Hover {
   events: Array<Event['id']>;
   relatedEvents?: Array<Event['id']>;
   clientRect: DOMRect | null;
+  pageRect: DOMRect | null;
 }
 
 interface HoverContextType {
@@ -39,7 +40,7 @@ export function HoverProvider(props: HoverProviderProps): JSX.Element {
         setHovered(null);
         return;
       }
-      const { entities, events, clientRect = null } = hover;
+      const { entities, events, clientRect = null, pageRect = null } = hover;
 
       const hoveredEntities = entities.map((entityId) => {
         return _entities[entityId];
@@ -81,6 +82,7 @@ export function HoverProvider(props: HoverProviderProps): JSX.Element {
         events: unique([...hover.events]),
         relatedEvents: unique([...relatedEvents]),
         clientRect,
+        pageRect
       });
     };
     return { hovered, updateHover };

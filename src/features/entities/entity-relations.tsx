@@ -113,6 +113,7 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
                       left: e.clientX,
                       top: e.clientY,
                     } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
                   });
                 }}
                 onMouseLeave={() => {

@@ -72,6 +72,7 @@ export function EventItem(props: EventItemProps): JSX.Element {
         left: e.clientX,
         top: e.clientY,
       } as DOMRect,
+      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
     });
     setIsHovered(true);
     //update workspace hovered
@@ -169,19 +170,22 @@ export function EventItem(props: EventItemProps): JSX.Element {
               <p>{getTranslatedLabel(event.label)}</p>
             </div>
             <div className="flex min-w-fit flex-row items-center gap-1">
-              {isHovered && targetHasVisualizations && mode === 'add' && context === 'collections' && (
-                <IconButton
-                  className="h-5 w-5"
-                  variant="outline"
-                  label="add"
-                  onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                    addEventToVisualizations();
-                    e.preventDefault();
-                  }}
-                >
-                  <PlusSmIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
-                </IconButton>
-              )}
+              {isHovered &&
+                targetHasVisualizations &&
+                mode === 'add' &&
+                context === 'collections' && (
+                  <IconButton
+                    className="h-5 w-5"
+                    variant="outline"
+                    label="add"
+                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                      addEventToVisualizations();
+                      e.preventDefault();
+                    }}
+                  >
+                    <PlusSmIcon aria-hidden="true" className="h-3 w-3 shrink-0" />
+                  </IconButton>
+                )}
               {isHovered &&
                 targetHasVisualizations &&
                 mode === 'remove' &&
