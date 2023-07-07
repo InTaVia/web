@@ -342,11 +342,11 @@ export function Timeline(props: TimelineProps): JSX.Element {
         key={`timeline${amount}${vertical}`}
         ref={ref}
         onWheel={(event) => {
-          if (event.deltaY > 0) {
+          /* if (event.deltaY > 0) {
             setZoom(Math.max(zoom - 1, 0));
           } else if (event.deltaX < 0) {
             setZoom(Math.min(zoom + 1, 10));
-          }
+          } */
         }}
         onMouseDown={() => {
           setIsPaning(true);
