@@ -18,6 +18,7 @@ interface TimelineProps {
     events: Array<Event['id'] | null>,
   ) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  entitySorting?: Array<Entity['id']>;
 }
 
 export function TimelineComponent(props: TimelineProps): JSX.Element {
@@ -29,6 +30,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
     height = 0,
     onToggleHighlight,
     highlightedByVis,
+    entitySorting: i_entitySorting,
   } = props;
 
   const [zoom, setZoom] = useState<number>(0);
@@ -43,6 +45,8 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
   const diameter = properties['diameter']?.value ?? 14;
   const fontSize = properties['fontSize']?.value ?? 10;
   const colorBy = properties['colorBy']?.value.value ?? 'event-kind';
+
+  const entitySorting = i_entitySorting != null ? i_entitySorting : Object.keys(entities).sort();
 
   const filteredEntities = Object.fromEntries(
     Object.entries(entities).filter(([key, val]) => {
@@ -72,6 +76,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         setZoom={setZoom}
         onToggleHighlight={onToggleHighlight}
         highlightedByVis={highlightedByVis}
+        entitySorting={entitySorting}
       />
       <div className="absolute right-1 top-1 flex gap-1">
         <IconButton
@@ -94,7 +99,12 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         </IconButton>
       </div>
       <div className="absolute bottom-0 right-0">
-        <VisualizationLegend events={events} entities={{}} />
+        <VisualizationLegend
+          events={events}
+          entities={{}}
+          colorBy={colorBy}
+          entitySorting={entitySorting}
+        />
       </div>
     </>
   );

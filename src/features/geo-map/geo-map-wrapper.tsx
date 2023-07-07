@@ -1,6 +1,6 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { keyBy } from '@stefanprobst/key-by';
-import { schemeTableau10 as identityColors } from 'd3-scale-chromatic';
+import { schemePaired as identityColors } from 'd3-scale-chromatic';
 
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
@@ -64,7 +64,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     data.groupByEntities.map((entityId, index) => {
       return {
         id: entityId,
-        color: identityColors[index > 9 ? 9 : index],
+        color: index < 10 ? identityColors[index] : 'gray',
         entity: data.entities.filter((entity) => {
           return entity.id === entityId;
         })[0],
@@ -145,7 +145,12 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         )}
       </GeoMap>
       <div className="absolute bottom-5 right-0">
-        <VisualizationLegend events={data.events} entities={{}} />
+        <VisualizationLegend
+          events={data.events}
+          entities={{}}
+          colorBy={colorBy}
+          entitySorting={data.groupByEntities}
+        />
       </div>
     </>
   );

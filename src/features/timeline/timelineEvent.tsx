@@ -39,6 +39,7 @@ interface TimelineEventProps {
   diameter?: number;
   fontSize?: number;
   colorBy: 'entity-identity' | 'event-kind' | 'time';
+  color?: string;
   onClick: () => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   timeColorScale: (date: Date) => string;
@@ -65,6 +66,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
     onClick,
     highlightedByVis,
     timeColorScale,
+    color: i_color,
   } = props;
 
   const [hover, setHover] = useState(false);
@@ -76,16 +78,34 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
 
   const eventMidDate = new Date(eventExtent[0].getTime() + eventExtent[1].getTime()) / 2;
 
-  const color = timeColorScale != null ? timeColorScale(eventMidDate) : undefined;
+  const {
+    color: eventKindColor,
+    shape,
+    strokeWidth: eventKindStrokeWidth,
+  } = getEventKindPropertiesById(event.kind);
+
+  const color = useMemo(() => {
+    if (colorBy === 'time') {
+      if (timeColorScale != null) {
+        return timeColorScale(eventMidDate);
+      }
+    } else if (colorBy === 'entity-identity') {
+      if (i_color != null) {
+        return i_color;
+      }
+    } else {
+      return eventKindColor;
+    }
+  }, [eventKindColor, colorBy, i_color, eventMidDate, timeColorScale]);
 
   const selected = useMemo(() => {
     if (highlightedByVis == null || highlightedByVis.events == null) return false;
     return highlightedByVis.events.includes(event.id);
   }, [event.id, highlightedByVis]);
 
-  const thickness = 1;
+  const thickness = 2;
   //console.log(thickness, i_thickness, selected);
-  let diameterWithStroke = diameter; // + thickness * 3;
+  let diameterWithStroke = diameter + thickness * 2;
 
   if (selected) {
     diameterWithStroke = diameterWithStroke * 1.5;
@@ -97,7 +117,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
   let className = 'timeline-event';
 
   if (vertical) {
-    posX = midOffset + Math.floor(thickness / 2) - overlapOffset;
+    posX = midOffset - overlapOffset;
     posY =
       timeScale(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -111,7 +131,7 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         //@ts-ignore
         new Date(eventExtent[0].getTime() + eventExtent[1].getTime()) / 2,
       ) - timeScaleOffset;
-    posY = midOffset + Math.floor(thickness / 2) - overlapOffset;
+    posY = midOffset - overlapOffset;
   }
 
   let width, height;
@@ -193,11 +213,11 @@ const TimelineEvent = forwardRef((props: TimelineEventProps, ref): JSX.Element =
         <svg style={{ width: `${width}px`, height: `${height}px` }} width={width} height={height}>
           <TimelineEventMarker
             //key={`${JSON.stringify(event)}${colorBy}${selected}`}
-            event={event}
             width={width}
             height={height}
             thickness={thickness}
-            color={colorBy === 'time' ? color : undefined}
+            color={color}
+            shape={shape}
             hover={
               hover ||
               hovered?.events.includes(event.id) === true ||

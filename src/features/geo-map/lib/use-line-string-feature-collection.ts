@@ -169,7 +169,6 @@ export function useLineStringFeatureCollection(
       if (relatedEvents.length <= 1) {
         if (relatedEvents.length === 1) {
           // const date: string = (relatedEvents[0]!.startDate ?? relatedEvents[0]!.endDate)!;
-          console.log(relatedEvents[0]!.id, atob(relatedEvents[0]!.id));
           timeScaleNormalizedByEntities.push({
             id: entity.id,
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

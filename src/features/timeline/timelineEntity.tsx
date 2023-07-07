@@ -9,7 +9,11 @@ import { StringMappingType } from 'typescript';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { PageContext } from '@/app/context/page.context';
-import { getEntityColorByKind, temporalColorScales } from '@/features/common/visualization.config';
+import {
+  getEntityColorByKind,
+  highlight,
+  temporalColorScales,
+} from '@/features/common/visualization.config';
 import {
   type TimelineType,
   getTemporalExtent,
@@ -43,6 +47,7 @@ interface TimelineEntityProps {
     events: Array<Event['id'] | null>,
   ) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  color: string;
 }
 
 export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
@@ -64,6 +69,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     onToggleHighlight,
     highlightedByVis,
     colorBy = 'event-kind',
+    color: i_color,
   } = props;
 
   // const itemsRef = useRef([]);
@@ -186,10 +192,28 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
     }
   };
 
-  const colors =
-    colorBy === 'time'
-      ? { foreground: 'red', background: 'red' }
-      : getEntityColorByKind(entity.kind);
+  const [colors, background] = useMemo(() => {
+    if (colorBy === 'time') {
+      return [
+        {},
+        {
+          main: `linear-gradient(${vertical ? 180 : 90}deg, ${temporalColorScales.reds
+            .map((entry, i) => {
+              return `${entry} ${i / (temporalColorScales.reds.length / 100)}%`;
+            })
+            .join(', ')})`,
+        },
+      ];
+    } else if (colorBy === 'entity-identity') {
+      return [
+        { main: i_color, dark: 'black' },
+        { main: i_color, dark: 'black' },
+      ];
+    } else {
+      return [getEntityColorByKind(entity.kind), { main: 'black' }];
+    }
+  }, [colorBy, entity.kind, i_color, vertical]);
+  //colorBy === 'time' ? { foreground: 'red', background: 'red' } : getEntityColorByKind(entity.kind);
 
   return (
     <div
@@ -214,18 +238,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
             top: vertical ? 0 : midOffset - thickness / 2,
             width: `${vertical ? thickness : width}px`,
             height: `${vertical ? height : thickness}px`,
-            background:
-              colorBy === 'time'
-                ? `linear-gradient(${vertical ? 180 : 90}deg, ${temporalColorScales.reds
-                    .map((entry, i) => {
-                      return `${entry} ${i / (temporalColorScales.reds.length / 100)}%`;
-                    })
-                    .join(', ')})`
-                : mode === 'mass'
-                ? hover
-                  ? colors.foreground
-                  : colors.background
-                : 'black',
+            border: hover ? `2px solid ${highlight.color}` : 'none',
+            background: background.main,
             minHeight: `1px`,
             minWidth: `1px`,
             position: 'absolute',
@@ -294,6 +308,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                     .map((rel: EventEntityRelation) => {
                       return rel.role;
                     })}
+                  color={colorBy === 'entity-identity' ? colors : null}
                   entityIndex={entityIndex}
                   thickness={thickness}
                   showLabels={showLabels}

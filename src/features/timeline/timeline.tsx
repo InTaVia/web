@@ -9,6 +9,7 @@ import type {
 } from '@intavia/api-client/dist/models';
 import { groupBy } from '@stefanprobst/group-by';
 import { extent, scaleBand, scaleTime } from 'd3';
+import { schemePaired } from 'd3-scale-chromatic';
 import { useMemo, useRef, useState } from 'react';
 
 import { TimelineAxis } from '@/features/timeline/timelineAxis';
@@ -383,7 +384,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
           /* timeDomain={timeDomain} */
           vertical={vertical}
         />
-        {lanes.map((entry: LaneEntry) => {
+        {lanes.map((entry: LaneEntry, index: number) => {
           const Events = Object.fromEntries(
             entry.events
               .map((event: Event) => {
@@ -395,7 +396,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
           );
           return (
             <TimelineEntity
-              key={`${entry.entity.id}${cluster}${clusterMode}${vertical}${mode}${diameter}${thickness}${showLabels}${sortEntities}${stackEntities}`}
+              key={`${entry.entity.id}${cluster}${clusterMode}${vertical}${mode}${diameter}${thickness}${showLabels}${sortEntities}${stackEntities}${colorBy}`}
               entity={entry.entity}
               events={Events}
               timeScale={timeScale}
@@ -413,6 +414,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
               fontSize={fontSize}
               onToggleHighlight={onToggleHighlight}
               highlightedByVis={highlightedByVis}
+              color={index < 10 ? schemePaired[index] : '#333'}
             />
           );
         })}
