@@ -138,8 +138,8 @@ export function EntityItem(props: EntityItemProps): JSX.Element {
               'flex w-full flex-row items-center justify-between px-2 py-1 text-left cursor-pointer',
               (hovered?.relatedEntities.includes(entity.id) === true ||
                 hovered?.entities.includes(entity.id) === true) &&
-                'bg-neutral-300',
-              isHovered && 'bg-neutral-300',
+                'bg-slate-100',
+              isHovered && 'bg-slate-100',
             )}
             draggable={mode === 'add' ? true : false}
             onDragStart={onDragStart}
