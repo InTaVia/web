@@ -24,7 +24,7 @@ const initialState: Workspaces = {
   workspaces: [
     {
       id: 'workspace-1',
-      label: 'New Workspace',
+      label: 'Workspace',
       layoutOption: 'single-vis',
       visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
     },
