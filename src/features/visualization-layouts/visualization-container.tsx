@@ -139,7 +139,7 @@ export default function VisualisationContainer(props: VisualisationContainerProp
 
   return (
     <div
-      className="grid h-full w-full grid-cols-[100%] grid-rows-[29px_1fr]"
+      className="grid h-full w-full grid-cols-[100%] grid-rows-[32px_1fr]"
       onDragOver={onDragOver}
       onDrop={onDrop}
     >

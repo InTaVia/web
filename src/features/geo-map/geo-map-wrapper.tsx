@@ -148,7 +148,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
         <VisualizationLegend
           events={data.events}
           entities={{}}
-          colorBy={colorBy}
+          colorBy={isCluster ? 'event-kind' : colorBy}
           entitySorting={data.groupByEntities}
         />
       </div>
