@@ -1,7 +1,18 @@
-import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { MenuIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event, MediaResource } from '@intavia/api-client';
-import { AlertDialog, AlertDialogTrigger, Button, Dialog, IconButton } from '@intavia/ui';
-import { Settings2Icon } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  Button,
+  Dialog,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  IconButton,
+  useToast,
+} from '@intavia/ui';
+import { PlayIcon, Settings2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -40,6 +51,8 @@ export function StoryOverview(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const { t } = useI18n<'common'>();
+
+  const { toast } = useToast();
 
   const stories = useAppSelector(selectStories);
   const allVisualizations = useAppSelector(selectAllVisualizations);
@@ -89,6 +102,21 @@ export function StoryOverview(): JSX.Element {
 
   const handleSaveEdit = (newStory: Story) => {
     dispatch(editStory(newStory));
+  };
+
+  const onLoadDuerer = () => {
+    fetch('./AlbrechtDuerersBiography.json')
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        onStoryImport(json);
+        toast({
+          title: 'Success',
+          description: 'Successfully imported story.',
+          variant: 'default',
+        });
+      });
   };
 
   const onStoryImport = (data: Record<string, any>) => {
@@ -218,15 +246,37 @@ export function StoryOverview(): JSX.Element {
                   }}
                   label={name}
                 />
+                {story.id === 'example-story-1' && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=509"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}
               </div>
             </div>
           );
         })}
       </div>
       <div className="grid w-fit grid-cols-2 justify-items-start gap-4">
-        <Button className="col-span-2" type="submit" onClick={onCreateStory}>
+        <Button type="submit" onClick={onCreateStory}>
           <PlusIcon className="h-5 w-5" /> Create New Story
         </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="submit" onClick={onLoadDuerer}>
+              <PlusIcon className="h-5 w-5" /> Load Example Story
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuItem onSelect={onLoadDuerer}>Albrecht Dürer</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
       </div>
 
