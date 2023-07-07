@@ -37,7 +37,7 @@ export default function Workspaces(): JSX.Element {
       //FIXME get template from config (not in store, because can be used to programmatically add a preconfigured workspace)
       addWorkspace({
         id: '',
-        label: 'New Workspace',
+        label: `Workspace`,
         layoutOption: 'single-vis',
         visualizationSlots: { 'vis-1': null, 'vis-2': null, 'vis-3': null, 'vis-4': null },
       }),
