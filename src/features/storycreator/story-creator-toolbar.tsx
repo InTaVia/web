@@ -1,6 +1,7 @@
-import { AdjustmentsIcon, DownloadIcon } from '@heroicons/react/outline';
-import { CloudUploadIcon, PlayIcon } from '@heroicons/react/solid';
-import { Button, IconButton } from '@intavia/ui';
+import { DownloadIcon } from '@heroicons/react/outline';
+import { CloudUploadIcon } from '@heroicons/react/solid';
+import { IconButton } from '@intavia/ui';
+import { PlayIcon, Settings2Icon } from 'lucide-react';
 import { useMemo } from 'react';
 
 import SlideLayoutButton from '@/features/storycreator/slide-layout-popover';
@@ -45,7 +46,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
   }, [previewStatus]);
 
   return (
-    <div className="w-100 flex h-fit justify-between gap-2 bg-neutral-400 p-2 text-white">
+    <div className="flex h-fit justify-between gap-2 bg-neutral-100 p-2">
       <div className="flex gap-3">
         <PaneToggle parentComponent="stc" orientation="left" />
         <SlideLayoutButton onLayoutSelected={props.onLayoutSelected} />
@@ -76,7 +77,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
       </div>
       <div className="flex gap-3">
         <IconButton
-          className="p-1"
+          className="p-1 hover:bg-neutral-200"
           size={'xs'}
           label="Download"
           onClick={() => {
@@ -84,10 +85,10 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           }}
           variant={'ghost'}
         >
-          <DownloadIcon className="h-6 w-6" />
+          <DownloadIcon className="h-5 w-5" />
         </IconButton>
         <IconButton
-          className="p-1"
+          className="p-1 hover:bg-neutral-200"
           size={'xs'}
           label="Preview Story"
           onClick={() => {
@@ -96,13 +97,13 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           variant={'ghost'}
         >
           {previewStatus === 'loading' ? (
-            <CloudUploadIcon className="h-6 w-6" />
+            <CloudUploadIcon className="h-5 w-5" />
           ) : (
-            <PlayIcon className="h-6 w-6" />
+            <PlayIcon className="h-5 w-5" />
           )}
         </IconButton>
         <IconButton
-          className="p-1"
+          className="p-1 hover:bg-neutral-200"
           size={'xs'}
           label="Edit Story"
           onClick={() => {
@@ -110,7 +111,7 @@ export default function StroyCreatorToolbar(props: StroyCreatorToolbarProps): JS
           }}
           variant={'ghost'}
         >
-          <AdjustmentsIcon className="h-6 w-6" />
+          <Settings2Icon className="h-5 w-5" />
         </IconButton>
         <PaneToggle parentComponent="stc" orientation="right" />
       </div>

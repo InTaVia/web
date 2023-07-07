@@ -1,8 +1,9 @@
-import { AdjustmentsIcon, PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import type { Entity, Event, MediaResource } from '@intavia/api-client';
-import { Button, Dialog, IconButton } from '@intavia/ui';
+import { AlertDialog, AlertDialogTrigger, Button, Dialog, IconButton } from '@intavia/ui';
+import { Settings2Icon } from 'lucide-react';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
@@ -23,6 +24,7 @@ import {
 } from '@/features/common/visualization.slice';
 import type { ContentPane } from '@/features/storycreator/contentPane.slice';
 import { importContentPane, selectAllConentPanes } from '@/features/storycreator/contentPane.slice';
+import { DeleteStoryAlertDialog } from '@/features/storycreator/delete-story-alert';
 import { LoadStory } from '@/features/storycreator/import/load-story';
 import type { Slide, Story } from '@/features/storycreator/storycreator.slice';
 import {
@@ -199,29 +201,23 @@ export function StoryOverview(): JSX.Element {
               <div>{story.properties.subtitle?.value}</div>
               <div>{story.properties.author?.value}</div>
               <div className="flex gap-1">
-                <Link href={{ pathname: `/storycreator/${story.id}` }}>
-                  <IconButton label="Edit" size="xs">
-                    <PencilAltIcon className="h-5 w-5" />
-                  </IconButton>
-                </Link>
                 <IconButton
-                  size="xs"
-                  label="Settings"
+                  variant="subtle"
+                  size="sm"
+                  label="Edit story properties"
                   onClick={() => {
                     setPropertiesEditElement(story);
                   }}
                 >
-                  <AdjustmentsIcon className="h-5 w-5" />
+                  <Settings2Icon className="h-5 w-5" />
                 </IconButton>
-                <IconButton
-                  label="Remove"
-                  size="xs"
-                  onClick={() => {
+
+                <RemoveStoryButton
+                  onDelete={() => {
                     onRemoveStory(story.id);
                   }}
-                >
-                  <TrashIcon className="h-5 w-5" />
-                </IconButton>
+                  label={name}
+                />
               </div>
             </div>
           );
@@ -244,5 +240,23 @@ export function StoryOverview(): JSX.Element {
         </Dialog>
       )}
     </>
+  );
+}
+
+function RemoveStoryButton(props: { onDelete: () => void; label: string }): JSX.Element {
+  const [isAlertDialogOpen, setAlertDialogOpen] = useState<boolean>(false);
+
+  const { onDelete, label } = props;
+
+  return (
+    <AlertDialog open={isAlertDialogOpen} onOpenChange={setAlertDialogOpen}>
+      <AlertDialogTrigger asChild>
+        <IconButton label="Remove" variant="destructive" size="sm">
+          <TrashIcon className="h-5 w-5" />
+        </IconButton>
+      </AlertDialogTrigger>
+
+      <DeleteStoryAlertDialog onDelete={onDelete} label={label} />
+    </AlertDialog>
   );
 }

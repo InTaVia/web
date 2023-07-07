@@ -9,13 +9,16 @@ export interface AllotmentHeaderProps {
 export default function AllotmentHeader(props: AllotmentHeaderProps): JSX.Element {
   const { title, onClick, open } = props;
   return (
-    <div className="flex h-6 w-full items-center justify-between bg-neutral-400 p-2 text-white">
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+    <div
+      onClick={onClick}
+      className="flex h-6 w-full cursor-pointer items-center justify-between border-b bg-neutral-100 p-2 text-neutral-700"
+    >
       <div>{title}</div>
       <div className="flex">
         <button className="h-full bg-transparent">
           <ChevronUpIcon
-            onClick={onClick}
-            className={`${open === true ? 'rotate-180' : ''} h-5 w-5 text-white`}
+            className={`${open === true ? 'rotate-180' : ''} h-5 w-5 text-neutral-700`}
           />
         </button>
       </div>
