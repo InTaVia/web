@@ -15,7 +15,8 @@ export function useVisualizationSetup(
   };
 
   const mapVisualization: Visualization = {
-    id: `ego-map-${entityId}`,
+    // id: `ego-map-${entityId}`,
+    id: `ego-map`,
     type: 'map',
     name: `ego-map-${entityId}`,
     entityIds: [entityId],

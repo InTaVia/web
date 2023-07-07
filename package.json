@@ -332,10 +332,6 @@
     "tabWidth": 2,
     "trailingComma": "all"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
-    "pre-push": "npm run validate"
-  },
   "stylelint": {
     "extends": [
       "stylelint-config-standard",
