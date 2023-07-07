@@ -83,7 +83,7 @@ export function DataPanel(): JSX.Element {
       <TabsList className="w-full">
         {Object.entries(tabs).map(([id, tab]) => {
           return (
-            <TabsTrigger key={id} value={id} className="grow">
+            <TabsTrigger key={id} value={id} className="grow py-2">
               {tab.label}
             </TabsTrigger>
           );

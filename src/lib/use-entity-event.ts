@@ -1,12 +1,12 @@
-import type { Entity } from '@intavia/api-client';
+import type { Event } from '@intavia/api-client';
 
-import { useGetEntityByIdQuery } from '@/api/intavia.service';
+import { useGetEventByIdQuery } from '@/api/intavia.service';
 import { useAppSelector } from '@/app/store';
-import { selectEntities } from '@/app/store/intavia.slice';
+import { selectEvents } from '@/app/store/intavia.slice';
 
-type UseEntityResult =
+type UseEventResult =
   | {
-      data: Entity;
+      data: Event;
       status: 'success';
     }
   | {
@@ -14,11 +14,11 @@ type UseEntityResult =
       status: 'error' | 'pending';
     };
 
-export function useEntity(id: Entity['id'] | undefined): UseEntityResult {
-  const entities = useAppSelector(selectEntities);
+export function useEntityEvent(id: Event['id'] | undefined): UseEventResult {
+  const entities = useAppSelector(selectEvents);
   const stored = id != null ? entities[id] : null;
 
-  const query = useGetEntityByIdQuery(
+  const query = useGetEventByIdQuery(
     { id: id! },
     { skip: id == null || id === '' || stored != null },
   );

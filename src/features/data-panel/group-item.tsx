@@ -50,7 +50,7 @@ export function GroupItem(props: GroupItemProps): JSX.Element {
       <Collapsible>
         <CollapsibleTrigger asChild className="cursor-pointer">
           <div
-            className="flex w-full  flex-row items-center justify-between p-2 text-left hover:bg-neutral-200"
+            className="flex w-full  flex-row items-center justify-between p-2 text-left hover:bg-slate-100"
             onMouseEnter={() => {
               setIsHovered(true);
             }}

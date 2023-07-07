@@ -161,6 +161,10 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Story Creator',
     },
+    'delete-alert-title': 'Delete story',
+    'delete-alert-description': 'Are you sure that you want to delete "{{storyLabel}}?"',
+    'delete-alert-description-warning': 'This action cannot be reversed.',
+    'delete-alert-action': 'Delete story',
   },
   story: {
     metadata: {

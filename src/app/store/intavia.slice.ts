@@ -724,3 +724,11 @@ export function selectLocalVocabularyById(state: RootState, id: string) {
 export function selectLocalVocabularyEntryById(state: RootState, id: VocabularyEntry['id']) {
   return state.intavia.vocabularies.local.byVocabularyEntryId[id];
 }
+
+export function selectUpstreamVocabularyEntryById(state: RootState, id: VocabularyEntry['id']) {
+  return state.intavia.vocabularies.upstream.byVocabularyEntryId[id];
+}
+
+export function selectVocabularyEntryById(state: RootState, id: VocabularyEntry['id']) {
+  return selectLocalVocabularyEntryById(state, id) ?? selectUpstreamVocabularyEntryById(state, id);
+}

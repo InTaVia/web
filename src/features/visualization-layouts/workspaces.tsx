@@ -114,7 +114,7 @@ export default function Workspaces(): JSX.Element {
           })}
         </div>
 
-        <div className="relative flex w-full flex-row items-center justify-between overflow-hidden bg-neutral-200 p-1">
+        <div className="relative flex w-full flex-row items-center justify-between overflow-hidden bg-neutral-100 p-1">
           <div className="pr-1">
             <IconButton
               size="sm"

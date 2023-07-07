@@ -94,7 +94,7 @@ export function TimelineComponent(props: TimelineProps): JSX.Element {
         </IconButton>
       </div>
       <div className="absolute bottom-0 right-0">
-        <VisualizationLegend events={events} entities={filteredEntities} />
+        <VisualizationLegend events={events} entities={{}} />
       </div>
     </>
   );

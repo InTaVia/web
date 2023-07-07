@@ -1,5 +1,6 @@
 import type { Entity } from '@intavia/api-client';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger, useToast } from '@intavia/ui';
+import { compareAsc } from 'date-fns';
 import { useRouter } from 'next/router';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -18,7 +19,11 @@ import {
   RelationsFormFields,
 } from '@/features/entities/entity-edit-form-fields';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
+import { unique } from '@/lib/unique';
 import { useEntity } from '@/lib/use-entity';
+import { useEventKinds } from '@/lib/use-event-kinds';
+import { useEvents } from '@/lib/use-events';
+import { useRelationRoles } from '@/lib/use-relation-roles';
 
 interface EntityEditScreenProps {
   id: Entity['id'];
@@ -84,11 +89,41 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
 
   const formId = 'edit-entity';
 
+  // bulk prefetch
+  const _roles = useRelationRoles(
+    entity.relations.map((relation) => {
+      return relation.role;
+    }),
+  );
+  const events = useEvents(
+    entity.relations.map((relation) => {
+      return relation.event;
+    }),
+  );
+  const _eventKinds = useEventKinds(
+    unique(
+      Array.from(events.data!.values(), (event) => {
+        return event.kind;
+      }),
+    ),
+  );
+
+  const entityWithSortedRelations = {
+    ...entity,
+    relations: [...entity.relations].sort((_a, _z) => {
+      const a = events.data?.get(_a.event)?.startDate ?? events.data?.get(_a.event)?.endDate;
+      const z = events.data?.get(_z.event)?.startDate ?? events.data?.get(_z.event)?.endDate;
+      if (a == null || a === '') return -1;
+      if (z == null || z === '') return 1;
+      return compareAsc(new Date(a), new Date(z));
+    }),
+  };
+
   return (
     <Form
       className="grid h-full sm:grid-cols-[384px_1px_1fr]"
       id={formId}
-      initialValues={entity}
+      initialValues={entityWithSortedRelations}
       onSubmit={onSubmit}
     >
       <div className="grid grid-rows-[auto_1fr_auto] gap-4 p-4">
