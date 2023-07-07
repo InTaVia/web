@@ -46,13 +46,12 @@ export function useMarkerCluster<T>(params: UseMarkerClusterParams<T>): UseMarke
       colors[value] = color;
     });
 
-    const defaultColor = getColors('default');
-    colors['default'] = defaultColor;
+    colors['default'] = getColors('default');
 
     return {
       // accumulator expression
       clusterProperties,
-      // cluster attribute/property used for clustering
+      // cluster attribute/property used for grouping within clustering
       clusterByProperty,
       colors,
     };

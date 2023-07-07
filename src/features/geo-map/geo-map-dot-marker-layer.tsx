@@ -1,12 +1,12 @@
-import type { Entity, Event } from '@intavia/api-client';
-import type { Feature, FeatureCollection, Geometry, Point, Position } from 'geojson';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
+import type { FeatureCollection, Point, Position } from 'geojson';
+import { Fragment, useEffect } from 'react';
 import { useMap } from 'react-map-gl';
 
-import { getColorsById, getEventKindPropertiesById } from '@/features/common/visualization.config';
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DotMarker } from '@/features/geo-map/dot-marker';
-import { getTemporalExtent } from '@/features/timeline/timeline';
-import { colorScale, timeScale } from '@/lib/temporal-coloring';
+import { colorScale } from '@/lib/temporal-coloring';
+import { unique } from '@/lib/unique';
 
 interface GeoMapMarkersLayerProps<T> {
   autoFitBounds?: boolean;
@@ -14,20 +14,20 @@ interface GeoMapMarkersLayerProps<T> {
   onToggleSelection?: (ids: Array<string>) => void;
   data: FeatureCollection<Point, T>;
   colorBy: 'entity-identity' | 'event-kind' | 'time';
+  entityIdentities: Record<string, any>;
 }
 
 export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.Element {
   const {
     autoFitBounds = false,
-    onChangeHover,
     onToggleSelection,
     data,
     highlightedByVis,
-    colorBy,
+    colorBy = 'event-kind',
+    entityIdentities,
   } = props;
 
   const { current: map } = useMap();
-  // const [isHovered, setIsHovered] = useState<Point<T>['id'] | null>(null);
 
   useEffect(() => {
     if (map == null || autoFitBounds !== true) return;
@@ -41,13 +41,14 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
       { padding: 50, duration: 100 },
     );
   }, [autoFitBounds, data.features, map]);
-  const timeScaleNormalized = useMemo(() => {
-    const events = data.features.map((feature) => {
-      return feature.properties.event;
-    });
-    const temporalExtent = getTemporalExtent([events]);
-    return timeScale(temporalExtent[0], temporalExtent[1]);
-  }, [data.features]);
+
+  //TODO : FOR ABSOLUTE COLORING
+  // const timeScaleNormalized = useMemo(() => {
+  //   const events = data.features.map((feature) => {
+  //     return feature.properties.event;
+  //   });
+  //   return timeScale(...getTemporalExtent([events]));
+  // }, [data.features]);
 
   return (
     <Fragment>
@@ -63,30 +64,51 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         const dateString =
           feature.properties.event.startDate ?? feature.properties.event.endDate ?? null;
 
-        const tempColor = {
-          main: colorScale(timeScaleNormalized(new Date(feature.properties.event.startDate))),
-          dark: 'black',
-        };
+        // Define entity Colors! using targetEntities
 
-        // const dateString =
-        //   feature.properties.event.startDate ?? feature.properties.event.endDate ?? null;
-        // console.log(feature.properties.event.id, dateString);
+        const candidateEntities = unique(
+          feature.properties.event.relations.map((relation: EventEntityRelation) => {
+            return relation.entity;
+          }),
+        );
+
+        const targetEntities = candidateEntities.filter((x: Entity['id']) => {
+          return Object.keys(entityIdentities).includes(x);
+        });
+
+        const entityColor =
+          targetEntities.length > 1 || entityIdentities[targetEntities[0]] == null
+            ? { main: '#cccccc', dark: '#666666' }
+            : { main: entityIdentities[targetEntities[0]].color, dark: '#666666' };
+
+        if (targetEntities.length > 1) {
+          console.log(candidateEntities, Object.keys(entityIdentities));
+        }
+
+        const tempColor =
+          targetEntities.length > 1 ||
+          entityIdentities[targetEntities[0]] == null ||
+          dateString == null
+            ? { main: '#cccccc', dark: '#666666' }
+            : {
+                main: colorScale(
+                  entityIdentities[targetEntities[0]].timeScaleNormalized(new Date(dateString)),
+                ),
+                dark: '#FFF',
+              };
 
         return (
           <DotMarker
-            key={feature.properties.event.id}
+            key={feature.id}
             color={
               colorBy === 'event-kind'
                 ? color
-                : dateString == null
-                ? { main: '#cccccc', dark: '#333333' }
-                : tempColor
-            }
-            backgroundColor={
-              colorBy === 'event-kind' ? color.background : dateString == null ? '#999999' : 'red'
-            }
-            foregroundColor={
-              colorBy === 'event-kind' ? color.foreground : dateString == null ? '#CCCCCC' : 'pink'
+                : colorBy === 'time'
+                ? tempColor
+                : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                colorBy === 'entity-identity'
+                ? entityColor
+                : { main: '#cccccc', dark: '#333333' }
             }
             coordinates={coordinates}
             onToggleSelection={onToggleSelection}

@@ -1,4 +1,4 @@
-import type { EmptyObject } from '@intavia/api-client';
+import type { EmptyObject, Entity, Event } from '@intavia/api-client';
 import type { Feature, FeatureCollection, Point } from 'geojson';
 import { useEffect, useMemo } from 'react';
 import { type LayerProps, Layer, Source, useMap } from 'react-map-gl';
@@ -29,6 +29,8 @@ export interface GeoMapClusterLayerProps<T extends EmptyObject = EmptyObject> {
   data: FeatureCollection<Point, T>;
   /** @default false */
   isCluster?: boolean;
+  onToggleSelection?: (ids: Array<string>) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 /**
@@ -45,6 +47,8 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
     colors,
     data,
     isCluster = false,
+    onToggleSelection,
+    highlightedByVis,
   } = props;
 
   const layer = useMemo(() => {
@@ -70,33 +74,6 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
     map.triggerRepaint();
   }, [map, clusterType, data]);
 
-  // const onHover = useCallback((event: MapLayerMouseEvent) => {
-  //   // console.log(event);
-  // }, []);
-
-  // const { current: map } = useMap();
-  // // mapRef?.on('mousemove', onHover)
-  // useEffect(() => {
-  //   if (map == null) return;
-
-  //   map.on('mousemove', onHover);
-
-  //   // cleanup this component
-  //   return () => {
-  //     map.off('mousemove', onHover);
-  //   };
-  // }, [map, onHover]);
-
-  // function addLayer(map: mapboxgl.Map, gl: WebGLRenderingContext) {
-  //   console.log('ADD', map, gl)
-  //   // // Retrieve the current list of interactivelayerids
-  //   // const interactiveLayerIds = mapRef?.getInteractiveLayerIds()
-  //   // // Modify the list by adding a new layer id
-  //   // interactiveLayerIds.push('my-new-layer')
-  //   // // Update the map with the modified list of interactivelayerids
-  //   // map.setInteractiveLayerIds(interactiveLayerIds)
-  // }
-
   return (
     <Source
       key={createKey(id, String(isCluster))}
@@ -107,13 +84,26 @@ export function GeoMapClusterMarkerLayer<T extends EmptyObject = EmptyObject>(
       data={data}
       type="geojson"
     >
+      {/* Workaround for clusters to work  */}
       <Layer {...layer} />
 
       {isCluster && clusterType === 'donut' ? (
-        <DonutChartLayer colors={colors} id={id} clusterByProperty={clusterByProperty!} />
+        <DonutChartLayer
+          colors={colors}
+          id={id}
+          clusterByProperty={clusterByProperty!}
+          onToggleSelection={onToggleSelection}
+          highlightedByVis={highlightedByVis}
+        />
       ) : null}
       {isCluster && clusterType === 'dot' ? (
-        <DotClusterLayer colors={colors} id={id} clusterByProperty={clusterByProperty!} />
+        <DotClusterLayer
+          colors={colors}
+          id={id}
+          clusterByProperty={clusterByProperty!}
+          onToggleSelection={onToggleSelection}
+          highlightedByVis={highlightedByVis}
+        />
       ) : null}
     </Source>
   );

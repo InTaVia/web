@@ -1,11 +1,12 @@
+import type { Entity, Event } from '@intavia/api-client';
 import type { Feature, Point } from 'geojson';
 import get from 'lodash.get';
-import type { MouseEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-map-gl';
 
 import { useHoverState } from '@/app/context/hover.context';
-import { getEventKindPropertiesById } from '@/features/common/visualization.config';
+import { getEventKindPropertiesById, highlight } from '@/features/common/visualization.config';
+import { DotGElement } from '@/features/geo-map/dot-g-element';
 
 interface DotClusterProps<T> {
   clusterByProperty: string;
@@ -13,6 +14,8 @@ interface DotClusterProps<T> {
   clusterId: number;
   clusterProperties: any;
   sourceId: string;
+  onToggleSelection?: (ids: Array<string>) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 interface Dot {
@@ -27,7 +30,15 @@ interface Dot {
 }
 
 export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
-  const { clusterByProperty, clusterColors, clusterId, clusterProperties, sourceId } = props;
+  const {
+    clusterByProperty,
+    clusterColors,
+    clusterId,
+    clusterProperties,
+    sourceId,
+    onToggleSelection,
+    highlightedByVis,
+  } = props;
 
   const [dots, setDots] = useState<Array<Dot>>([]);
   const [clusterWidth, setClusterWidth] = useState<number>(0);
@@ -38,7 +49,7 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
     };
   }, []);
 
-  const { hovered, updateHover } = useHoverState();
+  const { hovered } = useHoverState();
 
   const { current: mapRef } = useMap();
 
@@ -67,9 +78,9 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
       };
     };
 
-    const clusterByPropertyDomain = Object.keys(clusterProperties).filter((key) => {
-      return !internal.includes(key);
-    });
+    // const clusterByPropertyDomain = Object.keys(clusterProperties).filter((key) => {
+    //   return !internal.includes(key);
+    // });
 
     if (source.type === 'geojson') {
       source.getClusterLeaves(clusterId, Infinity, 0, (error, features) => {
@@ -150,8 +161,11 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
   }, [clusterByProperty, clusterColors, clusterId, clusterProperties, mapRef, sourceId]);
 
   const strokeWidth = 1.5;
-  const svgWidth = clusterWidth + 2 * circleRadius + 2 * strokeWidth;
-  const offset = circleRadius + strokeWidth;
+  const selectedStrokeWidth = 3;
+  const hoverStrokeWidth = 2.5;
+  const svgWidth = clusterWidth + 2 * circleRadius * highlight.scale + 2 * selectedStrokeWidth;
+  const offset = circleRadius * highlight.scale + selectedStrokeWidth;
+
   return (
     <svg
       width={svgWidth}
@@ -160,72 +174,67 @@ export function DotCluster<T>(props: DotClusterProps<T>): JSX.Element {
       textAnchor="middle"
     >
       {/* <rect width={svgWidth} height={svgWidth} fill="rgba(200,0,0, 0.1)" /> */}
-      {dots.map(({ cx, cy, color, backgroundColor, foregroundColor, value, feature, shape }) => {
-        //TODO Make own component
+      {dots.map(({ cx, cy, color, feature, shape }) => {
+        const selected =
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          highlightedByVis == null || highlightedByVis.events == null
+            ? false
+            : highlightedByVis.events.includes(feature.properties!.event.id);
 
         const isHovered =
           hovered?.relatedEvents!.includes(feature.id as string) === true ||
           hovered?.events.includes(feature.id as string) === true;
+
+        const shapePropsBase = {
+          className: 'cursor-pointer',
+          fill: isHovered ? color.dark : color.main,
+          stroke: isHovered ? color.main : selected ? highlight.color : color.dark,
+          strokeWidth: selected ? selectedStrokeWidth : isHovered ? hoverStrokeWidth : strokeWidth,
+        };
+
+        const shapeProperties =
+          shape === 'rectangle'
+            ? {
+                x: clusterWidth * cx + offset - circleRadius * 0.886,
+                y: clusterWidth * cy + offset - circleRadius * 0.886,
+                width: circleRadius * 2 * 0.886,
+                height: circleRadius * 2 * 0.886,
+                ...shapePropsBase,
+              }
+            : {
+                cx: clusterWidth * cx + offset,
+                cy: clusterWidth * cy + offset,
+                r: circleRadius,
+                ...shapePropsBase,
+              };
+
+        const deltaX =
+          shape === 'rectangle'
+            ? shapeProperties.x + shapeProperties.width / 2
+            : shapeProperties.cx;
+
+        const deltaY =
+          shape === 'rectangle'
+            ? shapeProperties.y + shapeProperties.height / 2
+            : shapeProperties.cy;
+
         return (
           <g
             key={`g-${feature.id}`}
-            onMouseEnter={(event: MouseEvent<SVGGElement>) => {
-              updateHover({
-                entities: [],
-                events: [feature.id as string],
-                clientRect: {
-                  left: event.clientX,
-                  top: event.clientY,
-                } as DOMRect,
-              });
-            }}
-            onMouseLeave={() => {
-              updateHover(null);
-            }}
+            transform={
+              selected
+                ? `translate(${deltaX}, ${deltaY}) scale(${
+                    highlight.scale
+                  }) translate(${-deltaX}, ${-deltaY})`
+                : 'scale(1)'
+            }
           >
-            {shape === 'rectangle' ? (
-              <rect
-                className="cursor-pointer"
-                x={clusterWidth * cx + offset - circleRadius * 0.886}
-                y={clusterWidth * cy + offset - circleRadius * 0.886}
-                width={circleRadius * 2 * 0.886}
-                height={circleRadius * 2 * 0.886}
-                fill={isHovered ? color.light : color.main}
-                stroke={isHovered ? color.main : color.dark}
-                strokeWidth={isHovered ? 2 : 1}
-              />
-            ) : (
-              <circle
-                className="cursor-pointer"
-                cx={clusterWidth * cx + offset}
-                cy={clusterWidth * cy + offset}
-                r={circleRadius}
-                fill={isHovered ? color.light : color.main}
-                stroke={isHovered ? color.main : color.dark}
-                strokeWidth={isHovered ? 2 : 1}
-              />
-            )}
-            {/* <circle
-              className="cursor-pointer"
-              key={feature.id}
-              cx={clusterWidth * cx + offset}
-              cy={clusterWidth * cy + offset}
-              r={circleRadius}
-              fill={backgroundColor}
-            /> */}
-            {/* {(hovered?.relatedEvents.includes(feature.id as string) === true ||
-              hovered?.events.includes(feature.id as string) === true) && (
-              <circle
-                className="cursor-pointer"
-                key={`hovered-${feature.id}`}
-                cx={clusterWidth * cx + offset}
-                cy={clusterWidth * cy + offset}
-                r={circleRadius}
-                stroke={backgroundColor}
-                strokeWidth={2}
-                fill={foregroundColor}
-              />
-            )} */}
+            <DotGElement
+              id={feature.id as string}
+              shape={shape}
+              shapeProperties={shapeProperties}
+              onToggleSelection={onToggleSelection}
+            />
           </g>
         );
       })}

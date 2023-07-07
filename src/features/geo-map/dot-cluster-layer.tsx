@@ -1,4 +1,4 @@
-import type { Feature, Point } from 'geojson';
+import type { Entity, Event } from '@intavia/api-client';
 import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
@@ -14,12 +14,13 @@ import { createClusterMarkers } from '@/features/geo-map/lib/create-cluster-mark
 interface DotClusterLayerProps<T> {
   colors: Record<string, string>;
   id: string;
-  onChangeHover?: (feature: Feature<Point, T> | null) => void;
   clusterByProperty: string;
+  onToggleSelection?: (ids: Array<string>) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element {
-  const { colors, id, onChangeHover, clusterByProperty } = props;
+  const { colors, id, clusterByProperty, onToggleSelection, highlightedByVis } = props;
 
   const { current: map } = useMap();
 
@@ -55,18 +56,14 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
               clusterId={marker.id}
               sourceId={id}
               clusterByProperty={clusterByProperty}
+              onToggleSelection={onToggleSelection}
+              highlightedByVis={highlightedByVis}
             />
           </Marker>
         );
       })}
-      {dotMarkers.map((marker) => {
-        function onHoverStart() {
-          onChangeHover?.(marker.feature);
-        }
 
-        function onHoverEnd() {
-          onChangeHover?.(null);
-        }
+      {dotMarkers.map((marker) => {
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
         const { color, shape, strokeWidth } = getEventKindPropertiesById(eventKind);
 
@@ -83,15 +80,9 @@ export function DotClusterLayer<T>(props: DotClusterLayerProps<T>): JSX.Element 
           <DotMarker
             key={marker.id}
             color={color}
-            backgroundColor={
-              eventKind in colors ? colors[eventKind].background : colors.default.background
-            }
-            foregroundColor={
-              eventKind in colors ? colors[eventKind].foreground : colors.default.foreground
-            }
             coordinates={marker.coordinates}
-            // onToggleSelection={onToggleSelection}
-            // highlightedByVis={highlightedByVis}
+            onToggleSelection={onToggleSelection}
+            highlightedByVis={highlightedByVis}
             size={14.8}
             feature={feature}
             shape={shape}

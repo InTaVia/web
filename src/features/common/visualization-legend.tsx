@@ -1,7 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { cn } from '@intavia/ui';
 import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
@@ -86,9 +86,8 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
       <div className="grid cursor-default grid-cols-[min-content_auto] border border-solid border-intavia-neutral-400 bg-white p-1 text-sm">
         {eventKindProperties.map((eventKindProperties) => {
           return (
-            <>
+            <Fragment key={`eventKind${eventKindProperties.label}`}>
               <div
-                key={`eventKind${eventKindProperties.label}`}
                 className="flex items-center justify-center"
                 style={{
                   opacity:
@@ -142,15 +141,14 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
               >
                 {eventKindProperties.label}
               </div>
-            </>
+            </Fragment>
           );
         })}
         {Object.keys(groupedEntities).map((entityKind) => {
           const entityKindProperties = getEntityKindPropertiesByKind(entityKind);
           return (
-            <>
+            <Fragment key={`entityKind${entityKind}`}>
               <div
-                key={`entityKind${entityKind}`}
                 className="flex items-center justify-center"
                 style={{
                   opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
@@ -201,7 +199,7 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
               >
                 {getEntityKindPropertiesByKind(entityKind).label}
               </div>
-            </>
+            </Fragment>
           );
         })}
       </div>

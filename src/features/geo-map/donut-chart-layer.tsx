@@ -1,4 +1,4 @@
-import type { Feature, Point } from 'geojson';
+import type { Entity, Event } from '@intavia/api-client';
 import { Fragment, useEffect, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
@@ -15,10 +15,12 @@ interface DonutChartLayerProps<T> {
   colors: Record<string, Record<string, string>>;
   clusterByProperty: string;
   id: string;
+  onToggleSelection?: (ids: Array<string>) => void;
+  highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
 }
 
 export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element {
-  const { colors, clusterByProperty, id } = props;
+  const { colors, clusterByProperty, id, onToggleSelection, highlightedByVis } = props;
 
   const { current: map } = useMap();
 
@@ -42,14 +44,13 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
     };
   }, [id, map]);
 
-  // console.log(colors);
-
   return (
     <Fragment>
       {clusterMarkers.map((marker) => {
         return (
           <Marker key={marker.id} {...marker.coordinates}>
             <DonutChart
+              //TODO > Selecting for Donut Clusters / Donut Cluster Segements
               clusterByProperty={clusterByProperty}
               clusterProperties={marker.properties}
               clusterColors={colors}
@@ -59,6 +60,7 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
           </Marker>
         );
       })}
+
       {dotMarkers.map((marker) => {
         const eventKind = JSON.parse(marker.feature.properties.event).kind;
         const { color, shape, strokeWidth } = getEventKindPropertiesById(eventKind);
@@ -75,37 +77,14 @@ export function DonutChartLayer<T>(props: DonutChartLayerProps<T>): JSX.Element 
           <DotMarker
             key={marker.id}
             color={color}
-            backgroundColor={
-              eventKind in colors ? colors[eventKind].background : colors.default.background
-            }
-            foregroundColor={
-              eventKind in colors ? colors[eventKind].foreground : colors.default.foreground
-            }
             coordinates={marker.coordinates}
-            // onToggleSelection={onToggleSelection}
-            // highlightedByVis={highlightedByVis}
+            onToggleSelection={onToggleSelection}
+            highlightedByVis={highlightedByVis}
             size={14.8}
             feature={feature}
             shape={shape}
             strokeWidth={strokeWidth}
           />
-
-          // <Marker key={marker.id} {...marker.coordinates}>
-          //   <svg
-          //     className="cursor-pointer"
-          //     height={size}
-          //     onMouseEnter={onHoverStart}
-          //     onMouseLeave={onHoverEnd}
-          //     viewBox="0 0 24 24"
-          //   >
-          //     <circle
-          //       cx={12}
-          //       cy={12}
-          //       r={size / 2}
-          //       fill={eventKind in colors ? colors[eventKind] : colors.default}
-          //     />
-          //   </svg>
-          // </Marker>
         );
       })}
     </Fragment>

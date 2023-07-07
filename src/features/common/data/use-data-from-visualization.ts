@@ -16,6 +16,7 @@ interface UseDataFromVisualizationResult {
   events: Array<Event>;
   missingEntityIds: Array<Entity['id']>;
   missingEventIds: Array<Event['id']>;
+  groupByEntities: Array<Entity['id']>;
 }
 export function useDataFromVisualization(
   params: UseDataFromVisualizationParams,
@@ -121,6 +122,10 @@ export function useDataFromVisualization(
           events: fetchedEvents,
           missingEventIds,
           missingEntityIds,
+          groupByEntities: unique([
+            ...visualization.entityIds,
+            ...visualization.targetEntityIds,
+          ]).sort(),
         } as UseDataFromVisualizationResult;
         return result;
       }
@@ -130,6 +135,7 @@ export function useDataFromVisualization(
       events: [],
       missingEventIds: [],
       missingEntityIds: [],
+      groupByEntities: [],
     } as UseDataFromVisualizationResult);
 
   const missingEventsQuery = useRetrieveEventsByIdsQuery(
