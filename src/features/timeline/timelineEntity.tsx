@@ -103,6 +103,8 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
       midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = 0;
+    } else if (mode === 'mass') {
+      midOffset = width / 2;
     } else {
       midOffset = 0;
     }
@@ -111,9 +113,11 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
       midOffset = entityIndex * scaleY.bandwidth();
     } else if (mode === 'single') {
       midOffset = scaleY.bandwidth();
+    } else if (mode === 'mass') {
+      midOffset = height * 1.5;
     } else {
-      //midOffset = scaleY.bandwidth();
-      midOffset = height / 2;
+      midOffset = scaleY.bandwidth();
+      //midOffset = height / 2;
     }
   }
 
@@ -210,7 +214,7 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
         { main: i_color, dark: 'black' },
       ];
     } else {
-      return [getEntityColorByKind(entity.kind), { main: 'black' }];
+      return [getEntityColorByKind(entity.kind), { main: '#AAA', dark: 'black' }];
     }
   }, [colorBy, entity.kind, i_color, vertical]);
   //colorBy === 'time' ? { foreground: 'red', background: 'red' } : getEntityColorByKind(entity.kind);
@@ -345,6 +349,9 @@ export function TimelineEntity(props: TimelineEntityProps): JSX.Element {
                 fontSize={fontSize}
                 onClickEvent={onClickEvent}
                 highlightedByVis={highlightedByVis}
+                timeColorScale={colorBy === 'time' ? timeColorScale : null}
+                color={colorBy === 'entity-identity' ? colors : null}
+                colorBy={colorBy}
               />
             );
           })}

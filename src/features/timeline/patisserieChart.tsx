@@ -20,6 +20,7 @@ interface PatisserieChartProperties {
   ) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
   hover?: boolean;
+  color?: Record<string, string>;
 }
 
 const groupBy = (items: Array<any>, key: string) => {
@@ -32,7 +33,7 @@ const groupBy = (items: Array<any>, key: string) => {
 };
 
 const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.Element => {
-  const { events, diameter, patisserieType, hover = false } = props;
+  const { events, diameter, patisserieType, hover = false, color: i_color } = props;
 
   const { hovered } = useHoverState();
 
@@ -93,7 +94,7 @@ const PatisserieChart = forwardRef((props: PatisserieChartProperties, ref): JSX.
               : item[0].kind;
           const type = getEventKindPropertiesById(translatedEventKind).type;
 
-          const color = getEventKindPropertiesByType(type).color;
+          const color = i_color != null ? i_color : getEventKindPropertiesByType(type).color;
 
           const offset = (offsets[index] != null ? offsets[index] : 0) as number;
           return donutSegment(
@@ -145,9 +146,9 @@ function donutSegment(
         } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${r + r0 * x1} ${
           r + r0 * y1
         } A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${r + r0 * y0}`}
-        fill={someHighlighted || allHighlighted ? color.foreground : color.background}
+        fill={someHighlighted || allHighlighted ? color.dark : color.main}
         strokeWidth={allHighlighted || someHighlighted ? 2 : 0}
-        stroke={allHighlighted || someHighlighted ? color.background : 'none'}
+        stroke={allHighlighted || someHighlighted ? color.dark : 'none'}
         strokeLinecap="round"
         strokeDasharray={!allHighlighted && someHighlighted ? '4' : 'none'}
       />
@@ -159,9 +160,9 @@ function donutSegment(
         d={`M ${r} ${r} L ${r + r * x0} ${r + r * y0} A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${
           r + r * y1
         } Z`}
-        fill={someHighlighted || allHighlighted ? color.foreground : color.background}
+        fill={someHighlighted || allHighlighted ? color.dark : color.main}
         strokeWidth={allHighlighted || someHighlighted ? 2 : 0}
-        stroke={allHighlighted || someHighlighted ? color.background : 'none'}
+        stroke={allHighlighted || someHighlighted ? color.dark : 'none'}
         strokeLinecap="round"
         strokeDasharray={!allHighlighted && someHighlighted ? '4' : 'none'}
       />

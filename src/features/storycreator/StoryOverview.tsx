@@ -249,7 +249,7 @@ export function StoryOverview(): JSX.Element {
                 {story.id === 'example-story-1' && (
                   <a
                     target="_blank"
-                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=509"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=525"
                     rel="noreferrer"
                   >
                     <IconButton variant="subtle" size="sm" label="Play Example Story">
@@ -262,7 +262,7 @@ export function StoryOverview(): JSX.Element {
           );
         })}
       </div>
-      <div className="grid w-fit grid-cols-2 justify-items-start gap-4">
+      <div className="grid w-fit grid-cols-[auto_auto] justify-items-start gap-4">
         <Button type="submit" onClick={onCreateStory}>
           <PlusIcon className="h-5 w-5" /> Create New Story
         </Button>

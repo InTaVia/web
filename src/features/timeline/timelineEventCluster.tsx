@@ -33,6 +33,9 @@ type TimelineEventClusterProps = {
   fontSize?: number;
   onClickEvent?: (eventID: Event['id']) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  color?: Record<string, string>;
+  timeColorScale: (date: Date) => string;
+  colorBy: 'entity-identity' | 'event-kind' | 'time';
 };
 
 const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref): JSX.Element => {
@@ -51,10 +54,13 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
     mode = 'default',
     onClickEvent,
     highlightedByVis,
+    color: i_color,
+    colorBy = 'event-kind',
+    timeColorScale,
   } = props;
 
   const [hover, setHover] = useState(false);
-  const diameterWithStroke = diameter + thickness * 3;
+  const diameterWithStroke = diameter;
   const { hovered, updateHover } = useHoverState();
 
   const eventIDs = events.map((event: Event) => {
@@ -64,6 +70,15 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
   let className = 'timeline-event';
 
   const eventsExtent = getTemporalExtent([events]);
+
+  const eventMidDate = new Date(eventsExtent[0].getTime() + eventsExtent[1].getTime()) / 2;
+
+  const color =
+    i_color != null
+      ? i_color
+      : colorBy === 'time' && timeColorScale != null
+      ? timeColorScale(eventMidDate)
+      : null;
 
   const bbox: ClusterBoundingBox = { x: 0, y: 0, width: 0, height: 0 };
   if (vertical) {
@@ -173,6 +188,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             dotRadius={5}
             onClickEvent={onClickEvent}
             highlightedByVis={highlightedByVis}
+            color={color}
           />
         ) : (
           <PatisserieChart
@@ -181,6 +197,7 @@ const TimelineEventCluster = forwardRef((props: TimelineEventClusterProps, ref):
             diameter={diameterWithStroke}
             patisserieType={clusterMode}
             highlightedByVis={highlightedByVis}
+            color={color}
             // hover={hover || hovered?.events.includes(event.id) === true ? true : false}
           />
         )}

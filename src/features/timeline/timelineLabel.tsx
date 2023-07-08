@@ -90,6 +90,8 @@ export function TimelineLabel(props: TimelineLabelProps): JSX.Element {
           maxWidth: mode === 'single' ? 'unset' : '12em',
           transformOrigin: 'left center',
           transform: `rotate(${textAngle}deg) ${textTranslateStrAfter}`.trim(),
+          marginLeft: marginLeft,
+          marginRight: marginRight,
           //transform: `rotate(${textAngle}deg)`.trim(),
           fontWeight: selected ? 'bold' : 'default',
         }}

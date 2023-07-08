@@ -8,6 +8,7 @@ import { forwardRef, useMemo, useState } from 'react';
 import { useHoverState } from '@/app/context/hover.context';
 import { useAppSelector } from '@/app/store';
 import { selectVocabularyEntries } from '@/app/store/intavia.slice';
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { getTemporalExtent } from '@/features/timeline/timeline';
 
 import TimelineEventMarker from './timelineEventMarker';
@@ -28,6 +29,7 @@ interface BeeSwarmProperties {
   dotRadius?: number;
   onClickEvent?: (eventID: Event['id']) => void;
   highlightedByVis: never | { entities: Array<Entity['id']>; events: Array<Event['id']> };
+  color?: Record<string, string>;
 }
 
 const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
@@ -39,6 +41,7 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
     dotRadius: i_dotRadius,
     onClickEvent,
     highlightedByVis,
+    color: i_color,
   } = props;
 
   const [hover, setHover] = useState(false);
@@ -101,6 +104,12 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
       textAnchor="middle"
     >
       {swarm.map((dot: Bee) => {
+        const {
+          color: eventKindColor,
+          shape,
+          strokeWidth: eventKindStrokeWidth,
+        } = getEventKindPropertiesById(dot.datum.kind);
+
         return (
           <g
             key={`${JSON.stringify(dot.datum)}TimelineClusterEventMarker`}
@@ -130,7 +139,8 @@ const BeeSwarm = forwardRef((props: BeeSwarmProperties, ref): JSX.Element => {
               height={dotRadius * 2}
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-ignore
-              event={dot.datum}
+              color={i_color ? i_color : eventKindColor}
+              shape={shape}
               thickness={highlightedEvents.includes(dot.datum.id) ? 3 : 1}
               hover={
                 hovered?.events.includes(dot.datum.id) === true ||

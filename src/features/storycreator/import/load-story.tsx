@@ -53,7 +53,7 @@ export function LoadStory(props: LoadStoryProps): JSX.Element {
         </FileInputTrigger>
       </FileInput>
 
-      <p>Please select an InTaVia Story Configuration File</p>
+      <div className="flex items-center">Please select an InTaVia Story Configuration File</div>
     </>
   );
 }

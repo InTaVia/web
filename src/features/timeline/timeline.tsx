@@ -414,7 +414,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
               fontSize={fontSize}
               onToggleHighlight={onToggleHighlight}
               highlightedByVis={highlightedByVis}
-              color={index < 10 ? schemePaired[index] : '#333'}
+              color={index < 10 ? schemePaired[index] : '#AAA'}
             />
           );
         })}
