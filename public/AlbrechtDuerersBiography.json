@@ -1585,7 +1585,7 @@
       "description": "In 1500, 29-year-old Dürer paints himself in an unprecendented Christ-like manner. The fur coat also refers to his social status as renowned artist and well-situated citizen of Nuremberg.    ",
       "attribution": "https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_1500_self-portrait_(High_resolution_and_detail).jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Albrecht_D%C3%BCrer_-_1500_self-portrait_%28High_resolution_and_detail%29.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-005": {
       "id": "data-duerer_english-m-005",
@@ -1595,7 +1595,7 @@
       "description": "\"Agnes Dürerin in niederländischer Tracht\", Metallstiftzeichnung von Albrecht Dürer.",
       "attribution": "https://en.wikipedia.org/wiki/File:Agnes_Duerer_1521.jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Agnes_Duerer_1521.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-034": {
       "id": "data-duerer_english-m-034",
@@ -1605,7 +1605,7 @@
       "description": "The \"Young Hare\", dated 1502, counts among Dürer's most famous works. The highly detailed drawing of the animal still fascinates today.",
       "attribution": "https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_Hare,_1502_-_Google_Art_Project.jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/4/44/Albrecht_D%C3%BCrer_-_Hare%2C_1502_-_Google_Art_Project.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-038": {
       "id": "data-duerer_english-m-038",
@@ -1614,7 +1614,7 @@
       },
       "attribution": "https://commons.wikimedia.org/wiki/File:Albrecht-D%C3%BCrer-Haus_i_N%C3%BCrnberg_-_TEK_-_TEKA0115528.tif",
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Albrecht-D%C3%BCrer-Haus_i_N%C3%BCrnberg_-_TEK_-_TEKA0115528.tif/lossy-page1-775px-Albrecht-D%C3%BCrer-Haus_i_N%C3%BCrnberg_-_TEK_-_TEKA0115528.tif.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-035": {
       "id": "data-duerer_english-m-035",
@@ -1623,7 +1623,7 @@
       },
       "attribution": "https://commons.wikimedia.org/wiki/File:Duerer_-_Ritter,_Tod_und_Teufel_(Der_Reuther).jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Duerer_-_Ritter%2C_Tod_und_Teufel_%28Der_Reuther%29.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-036": {
       "id": "data-duerer_english-m-036",
@@ -1632,7 +1632,7 @@
       },
       "attribution": "https://commons.wikimedia.org/wiki/File:D%C3%BCrer-Hieronymus-im-Geh%C3%A4us.jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/D%C3%BCrer-Hieronymus-im-Geh%C3%A4us.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-037": {
       "id": "data-duerer_english-m-037",
@@ -1642,7 +1642,7 @@
       "description": "Dürer's \"Melancholia\" (1514) is his best known master engraving. The winged female figure of melancholy, deep in her thoughts, is surrounded by meticulously rendered objects related to geometry, astrology and mathematics. The scribbling putto adds a playful note to this enigmatic scene which culminates in the cry of the beat-like creature. ",
       "attribution": "https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_Melencolia_I_-_Google_Art_Project_(_AGDdr3EHmNGyA).jpg",
       "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Albrecht_D%C3%BCrer_-_Melencolia_I_-_Google_Art_Project_%28_AGDdr3EHmNGyA%29.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-029": {
       "id": "data-duerer_english-m-029",
@@ -1652,7 +1652,7 @@
       "description": "Christian II of Denmark, who is married to Charles' V sister and stays at the court of Brussels, commissions Dürer to paint his portrait. The painting is lost, but a drawing gives an impression of Dürer's work.",
       "attribution": "https://www.britishmuseum.org/collection/object/P_SL-5218-48",
       "url": "https://media.britishmuseum.org/media/Repository/Documents/2014_10/4_14/3d509415_1836_4b7b_8cb5_a3ba00f4062f/mid_00238245_001.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     },
     "data-duerer_english-m-043": {
       "id": "data-duerer_english-m-043",
@@ -1672,7 +1672,7 @@
       "description": "Dürer's grave is an iconic site since the 16th century. In the 17th century, the painter and founder of the Nuremberg art academy, Joachim von Sandrart, donated a bronze plate in veneration of his hero, and other artists strove to be buried next to Dürer in the Frey family's gravesite. ",
       "attribution": "https://www.nuernberg.museum/projects/show/1132-albrecht-duerer-grabstaette",
       "url": "https://www.nuernberg.museum/img/duerer_epitaph_foto_theo-noll_2021--1-_.jpg",
-      "kind": "media-kind-image"
+      "kind": "image"
     }
   },
   "visualizations": {
