@@ -183,6 +183,26 @@ export const dictionary: Dictionary = {
       title: 'Visual query',
     },
   },
+  visualizations: {
+    timeline: {
+      label: { one: 'Timeline', other: 'Timelines' },
+    },
+    map: {
+      label: { one: 'Map', other: 'Maps' },
+    },
+    'ego-network': {
+      label: { one: 'Network', other: 'Networks' },
+    },
+    network: {
+      label: { one: 'Network', other: 'Networks' },
+    },
+    empty: 'no data',
+    'delete-alert-title': 'Delete Visualization',
+    'delete-alert-description':
+      'Are you sure that you want to delete the {{visualizationType}}: "{{visualizationId}}"?',
+    'delete-alert-description-warning': 'This action cannot be reversed.',
+    'delete-alert-action': 'Delete visualization',
+  },
   form: {
     save: 'Save',
     'save-entity': 'Save entity',
@@ -194,5 +214,10 @@ export const dictionary: Dictionary = {
     more: 'More',
     clear: 'Clear',
     edit: 'Edit',
+    load: 'Load',
+    copy: 'Copy',
+    create: 'Create',
+    open: 'Open',
+    new: 'New',
   },
 };

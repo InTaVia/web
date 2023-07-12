@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { LayoutOptionData } from '@/features/ui/analyse-page-toolbar/layout-popover';
+import { unique } from '@/lib/unique';
 
 export type SlotId = 'vis-1' | 'vis-2' | 'vis-3' | 'vis-4';
 
@@ -96,6 +97,14 @@ export const {
 
 export const selectAllWorkspaces = (state: RootState) => {
   return state.workspaces;
+};
+
+export const selectUsedVisualizations = (state: RootState) => {
+  return state.workspaces.workspaces
+    .flatMap((workspace) => {
+      return unique(Object.values(workspace.visualizationSlots));
+    })
+    .filter(Boolean);
 };
 
 export default workspacesSlice.reducer;
