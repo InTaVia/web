@@ -172,6 +172,25 @@ export interface Dictionary {
       title: string;
     };
   };
+  visualizations: {
+    timeline: {
+      label: Plurals;
+    };
+    map: {
+      label: Plurals;
+    };
+    'ego-network': {
+      label: Plurals;
+    };
+    network: {
+      label: Plurals;
+    };
+    empty: string;
+    'delete-alert-title': string;
+    'delete-alert-description': string;
+    'delete-alert-description-warning': string;
+    'delete-alert-action': string;
+  };
   form: {
     save: string;
     'save-entity': string;
@@ -183,5 +202,10 @@ export interface Dictionary {
     more: string;
     clear: string;
     edit: string;
+    load: string;
+    copy: string;
+    create: string;
+    open: string;
+    new: string;
   };
 }

@@ -7,6 +7,7 @@ import type { ComponentProperty } from '@/features/common/component-property';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { PanelLayout } from '@/features/ui/analyse-page-toolbar/layout-popover';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
+import { unique } from '@/lib/unique';
 
 type DataUrlString = string;
 
@@ -448,6 +449,14 @@ export const selectSlidesByStoryID = createSelector(
 
 export const selectStories = (state: RootState) => {
   return state.storycreator.stories;
+};
+
+export const selectUsedVisualizations = (state: RootState) => {
+  return Object.values(state.storycreator.stories).flatMap((story) => {
+    return Object.values(story.slides).flatMap((slide) => {
+      return unique(Object.values(slide.visualizationSlots));
+    });
+  });
 };
 
 export default storyCreatorSlice.reducer;
