@@ -15,6 +15,8 @@ export const visLayout = [
   'three-rows',
   'two-rows-one-left',
   'two-rows-one-right',
+  'two-cols-one-top',
+  'two-cols-one-bottom',
   'grid-2x2',
 ] as const;
 
@@ -95,6 +97,18 @@ export const layoutOptions: Record<PanelLayout, LayoutOptionData> = {
     symbol: 'M0 0H1V1H0zM0.5 0.5H1M0.5 0V1',
     title: 'Two rows, one left',
     description: 'Three vis, two rows right, one large left.',
+  },
+  'two-cols-one-top': {
+    key: 'two-cols-one-top',
+    symbol: 'M0 0H1V0.5H0z M0 0.5H1V1H0z M0.5 0.5 V1',
+    title: 'Two columns, one top',
+    description: 'Three vis, two columns bottom, one large top.',
+  },
+  'two-cols-one-bottom': {
+    key: 'two-cols-one-bottom',
+    symbol: 'M0 0H1V0.5H0z M0 0.5H1V1H0z M0.5 0V0.5',
+    title: 'Two columns, one bottom',
+    description: 'Three vis, two columns top, one large bottom.',
   },
   'grid-2x2': {
     key: 'grid-2x2',
