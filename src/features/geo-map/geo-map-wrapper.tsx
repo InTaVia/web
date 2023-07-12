@@ -83,7 +83,10 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
-  const colorBy = visualization.properties!.colorBy!.value.value ?? 'event-kind';
+  const colorBy =
+    visualization.properties.colorBy != null
+      ? visualization.properties.colorBy!.value.value
+      : 'event-kind';
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',

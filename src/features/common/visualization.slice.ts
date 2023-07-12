@@ -1,4 +1,4 @@
-import type { Entity, Event, Person } from '@intavia/api-client';
+import type { Entity, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { assert } from '@stefanprobst/assert';
@@ -31,6 +31,294 @@ const defaultMapState = {
   },
 };
 
+const emptyTimelineVis = {
+  properties: {
+    /*  entities: {
+      type: 'entitiesAndEvents',
+      id: 'entities',
+      label: 'Entities',
+      editable: true,
+      sort: 4,
+    }, */
+    name: {
+      type: 'text',
+      id: 'name',
+      value: '',
+      label: 'Name',
+      editable: true,
+      sort: 1,
+    },
+    sort: {
+      type: 'boolean',
+      id: 'sort',
+      value: false,
+      editable: true,
+      sort: 2,
+      label: 'Sort Entities',
+    },
+    cluster: {
+      type: 'boolean',
+      id: 'cluster',
+      value: true,
+      editable: true,
+      sort: 3,
+      label: 'Cluster',
+    },
+    showLabels: {
+      type: 'select',
+      id: 'showLabels',
+      value: {
+        name: 'Automatic',
+        value: undefined,
+      },
+      options: [
+        {
+          name: 'Off',
+          value: false,
+        },
+        {
+          name: 'On',
+          value: true,
+        },
+        {
+          name: 'Automatic',
+          value: undefined,
+        },
+      ],
+      editable: true,
+      sort: 5,
+      label: 'Show Labels',
+    },
+    vertical: {
+      type: 'select',
+      id: 'vertical',
+      label: 'Orientation',
+      sort: 6,
+      value: {
+        name: 'Automatic',
+        value: undefined,
+      },
+      options: [
+        {
+          name: 'Automatic',
+          value: undefined,
+        },
+        {
+          name: 'Vertical',
+          value: true,
+        },
+        {
+          name: 'Horizontal',
+          value: false,
+        },
+      ],
+      editable: true,
+    },
+    stackEntities: {
+      type: 'boolean',
+      id: 'stackEntities',
+      value: false,
+      editable: true,
+      sort: 7,
+      label: 'Stack Entities',
+    },
+    fontSize: {
+      type: 'number',
+      id: 'fontSize',
+      value: 12,
+      editable: true,
+      sort: 8,
+      label: 'Font Size',
+    },
+    thickness: {
+      type: 'number',
+      id: 'thickness',
+      value: 2,
+      editable: true,
+      sort: 8,
+      label: 'Thickness',
+    },
+    colorBy: {
+      type: 'select',
+      id: 'colorBy',
+      label: 'Color events by',
+      sort: 3,
+      value: {
+        name: 'Event-kind',
+        value: 'event-kind',
+      },
+      options: [
+        {
+          name: 'Event kind',
+          value: 'event-kind',
+        },
+        {
+          name: 'Time',
+          value: 'time',
+        },
+        {
+          name: 'Entity identity',
+          value: 'entity-identity',
+        },
+      ],
+      editable: true,
+    },
+    /*diameter: {
+      type: 'number',
+      id: 'diameter',
+      value: 14,
+      editable: true,
+      sort: 9,
+      label: 'Diameter',
+    }, */
+    clusterMode: {
+      type: 'select',
+      id: 'clusterMode',
+      label: 'Cluster Style',
+      sort: 4,
+      value: {
+        name: 'Donut',
+        value: 'donut',
+      },
+      options: [
+        {
+          name: 'Pie',
+          value: 'pie',
+        },
+        {
+          name: 'Donut',
+          value: 'donut',
+        },
+        {
+          name: 'Bee',
+          value: 'bee',
+        },
+      ],
+      editable: true,
+    },
+  },
+  entityIds: [],
+  targetEntityIds: [],
+  eventIds: [],
+};
+
+const emptyMapVis = {
+  mapState: defaultMapState,
+  properties: {
+    mapStyle: {
+      type: 'select',
+      id: 'mapStyle',
+      label: 'Map Style',
+      value: {
+        name: 'Dataviz (Light Gray)',
+        value: 'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+      },
+      options: [
+        {
+          name: 'Positron (Carto)',
+          value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+        },
+        {
+          name: 'Topography (Gray)',
+          value: 'https://api.maptiler.com/maps/backdrop/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+        },
+        {
+          name: 'Dataviz (Color)',
+          value: 'https://api.maptiler.com/maps/dataviz/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+        },
+        {
+          name: 'Dataviz (Light Gray)',
+          value: 'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+        },
+        {
+          name: 'Positron (Maptiler)',
+          value: 'https://api.maptiler.com/maps/positron/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+        },
+        {
+          name: 'InTaVia - Monochrome',
+          value:
+            'https://api.maptiler.com/maps/2acdf330-b7de-4851-aab6-88360063ae35/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
+        },
+      ],
+      editable: true,
+      sort: 2,
+    },
+    name: {
+      type: 'text',
+      id: 'name',
+      value: '',
+      label: 'Name',
+      editable: true,
+      sort: 1,
+    },
+    colorBy: {
+      type: 'select',
+      id: 'colorBy',
+      label: 'Color events by',
+      sort: 3,
+      value: {
+        name: 'Event-kind',
+        value: 'event-kind',
+      },
+      options: [
+        {
+          name: 'Event kind',
+          value: 'event-kind',
+        },
+        {
+          name: 'Time',
+          value: 'time',
+        },
+        {
+          name: 'Entity identity',
+          value: 'entity-identity',
+        },
+      ],
+      editable: true,
+    },
+    cluster: {
+      type: 'boolean',
+      id: 'cluster',
+      value: false,
+      editable: true,
+      sort: 4,
+      label: 'Cluster',
+    },
+    clusterMode: {
+      type: 'select',
+      id: 'clusterMode',
+      label: 'Cluster Style',
+      sort: 5,
+      value: {
+        name: 'Donut',
+        value: 'donut',
+      },
+      options: [
+        {
+          name: 'Donut',
+          value: 'donut',
+        },
+        {
+          name: 'Dot',
+          value: 'dot',
+        },
+      ],
+      editable: true,
+    },
+    renderLines: {
+      type: 'boolean',
+      id: 'renderLines',
+      value: false,
+      editable: true,
+      sort: 6,
+      label: 'Connect events chronologically with lines (for each entity)',
+    },
+  },
+  entityIds: [],
+  targetEntityIds: [],
+  eventIds: [],
+};
+
 export const visualizationSlice = createSlice({
   name: 'visualization',
   initialState,
@@ -51,300 +339,15 @@ export const visualizationSlice = createSlice({
       switch (vis.type) {
         case 'map':
           state[vis['id']] = {
+            ...emptyMapVis,
             ...vis,
-            mapState: defaultMapState,
-            properties: {
-              mapStyle: {
-                type: 'select',
-                id: 'mapStyle',
-                label: 'Map Style',
-                value: {
-                  name: 'Dataviz (Light Gray)',
-                  value:
-                    'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                },
-                options: [
-                  {
-                    name: 'Positron (Carto)',
-                    value: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-                  },
-                  {
-                    name: 'Topography (Gray)',
-                    value:
-                      'https://api.maptiler.com/maps/backdrop/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                  },
-                  {
-                    name: 'Dataviz (Color)',
-                    value:
-                      'https://api.maptiler.com/maps/dataviz/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                  },
-                  {
-                    name: 'Dataviz (Light Gray)',
-                    value:
-                      'https://api.maptiler.com/maps/dataviz-light/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                  },
-                  {
-                    name: 'Positron (Maptiler)',
-                    value:
-                      'https://api.maptiler.com/maps/positron/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                  },
-                  {
-                    name: 'InTaVia - Monochrome',
-                    value:
-                      'https://api.maptiler.com/maps/2acdf330-b7de-4851-aab6-88360063ae35/style.json?key=Z2X5tY0jlK44wsp6Kl4i',
-                  },
-                ],
-                editable: true,
-                sort: 2,
-              },
-              name: {
-                type: 'text',
-                id: 'name',
-                value: '',
-                label: 'Name',
-                editable: true,
-                sort: 1,
-              },
-              colorBy: {
-                type: 'select',
-                id: 'colorBy',
-                label: 'Color events by',
-                sort: 3,
-                value: {
-                  name: 'Event-kind',
-                  value: 'event-kind',
-                },
-                options: [
-                  {
-                    name: 'Event kind',
-                    value: 'event-kind',
-                  },
-                  {
-                    name: 'Time',
-                    value: 'time',
-                  },
-                  {
-                    name: 'Entity identity',
-                    value: 'entity-identity',
-                  },
-                ],
-                editable: true,
-              },
-              cluster: {
-                type: 'boolean',
-                id: 'cluster',
-                value: false,
-                editable: true,
-                sort: 4,
-                label: 'Cluster',
-              },
-              clusterMode: {
-                type: 'select',
-                id: 'clusterMode',
-                label: 'Cluster Style',
-                sort: 5,
-                value: {
-                  name: 'Donut',
-                  value: 'donut',
-                },
-                options: [
-                  {
-                    name: 'Donut',
-                    value: 'donut',
-                  },
-                  {
-                    name: 'Dot',
-                    value: 'dot',
-                  },
-                ],
-                editable: true,
-              },
-              renderLines: {
-                type: 'boolean',
-                id: 'renderLines',
-                value: false,
-                editable: true,
-                sort: 6,
-                label: 'Connect events chronologically with lines (for each entity)',
-              },
-            },
-            entityIds: [],
-            targetEntityIds: [],
-            eventIds: [],
-          };
+          } as Visualization;
           break;
         case 'timeline': {
           state[vis['id']] = {
+            ...emptyTimelineVis,
             ...vis,
-            properties: {
-              /*  entities: {
-                type: 'entitiesAndEvents',
-                id: 'entities',
-                label: 'Entities',
-                editable: true,
-                sort: 4,
-              }, */
-              name: {
-                type: 'text',
-                id: 'name',
-                value: '',
-                label: 'Name',
-                editable: true,
-                sort: 1,
-              },
-              sort: {
-                type: 'boolean',
-                id: 'sort',
-                value: false,
-                editable: true,
-                sort: 2,
-                label: 'Sort Entities',
-              },
-              cluster: {
-                type: 'boolean',
-                id: 'cluster',
-                value: true,
-                editable: true,
-                sort: 3,
-                label: 'Cluster',
-              },
-              showLabels: {
-                type: 'select',
-                id: 'showLabels',
-                value: {
-                  name: 'Automatic',
-                  value: undefined,
-                },
-                options: [
-                  {
-                    name: 'Off',
-                    value: false,
-                  },
-                  {
-                    name: 'On',
-                    value: true,
-                  },
-                  {
-                    name: 'Automatic',
-                    value: undefined,
-                  },
-                ],
-                editable: true,
-                sort: 5,
-                label: 'Show Labels',
-              },
-              vertical: {
-                type: 'select',
-                id: 'vertical',
-                label: 'Orientation',
-                sort: 6,
-                value: {
-                  name: 'Automatic',
-                  value: undefined,
-                },
-                options: [
-                  {
-                    name: 'Automatic',
-                    value: undefined,
-                  },
-                  {
-                    name: 'Vertical',
-                    value: true,
-                  },
-                  {
-                    name: 'Horizontal',
-                    value: false,
-                  },
-                ],
-                editable: true,
-              },
-              stackEntities: {
-                type: 'boolean',
-                id: 'stackEntities',
-                value: false,
-                editable: true,
-                sort: 7,
-                label: 'Stack Entities',
-              },
-              fontSize: {
-                type: 'number',
-                id: 'fontSize',
-                value: 12,
-                editable: true,
-                sort: 8,
-                label: 'Font Size',
-              },
-              thickness: {
-                type: 'number',
-                id: 'thickness',
-                value: 2,
-                editable: true,
-                sort: 8,
-                label: 'Thickness',
-              },
-              colorBy: {
-                type: 'select',
-                id: 'colorBy',
-                label: 'Color events by',
-                sort: 3,
-                value: {
-                  name: 'Event-kind',
-                  value: 'event-kind',
-                },
-                options: [
-                  {
-                    name: 'Event kind',
-                    value: 'event-kind',
-                  },
-                  {
-                    name: 'Time',
-                    value: 'time',
-                  },
-                  {
-                    name: 'Entity identity',
-                    value: 'entity-identity',
-                  },
-                ],
-                editable: true,
-              },
-              /*diameter: {
-                type: 'number',
-                id: 'diameter',
-                value: 14,
-                editable: true,
-                sort: 9,
-                label: 'Diameter',
-              }, */
-              clusterMode: {
-                type: 'select',
-                id: 'clusterMode',
-                label: 'Cluster Style',
-                sort: 4,
-                value: {
-                  name: 'Donut',
-                  value: 'donut',
-                },
-                options: [
-                  {
-                    name: 'Pie',
-                    value: 'pie',
-                  },
-                  {
-                    name: 'Donut',
-                    value: 'donut',
-                  },
-                  {
-                    name: 'Bee',
-                    value: 'bee',
-                  },
-                ],
-                editable: true,
-              },
-            },
-            entityIds: [],
-            targetEntityIds: [],
-            eventIds: [],
-          };
+          } as Visualization;
           break;
         }
         case 'ego-network': {
@@ -520,7 +523,20 @@ export const visualizationSlice = createSlice({
     },
     importVisualization: (state, action) => {
       const vis = action.payload as Visualization;
-      state[vis.id] = vis;
+
+      let emptyVis;
+      if (vis.type === 'timeline') {
+        emptyVis = { ...emptyTimelineVis };
+      } else if (vis.type === 'map') {
+        emptyVis = { ...emptyMapVis };
+      } else {
+        emptyVis = { properties: {} };
+      }
+
+      state[vis.id] = {
+        ...vis,
+        properties: { ...emptyVis.properties, ...vis.properties },
+      } as Visualization;
     },
   },
 });
