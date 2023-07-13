@@ -236,7 +236,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
                           className="shrink-0 fill-none"
                         />
                         <span className="flex-nowrap">
-                          {t(['common', 'form', 'create'])}{' '}
+                          {t(['common', 'form', 'turn'])}{' '}
                           {t(['common', 'visualizations', visType, 'label', plural(1)])}
                         </span>
                       </Button>
