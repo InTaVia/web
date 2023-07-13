@@ -145,7 +145,7 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
       },
     ],
   },
-  /* 'two-cols-one-bottom': {
+  'two-cols-one-bottom': {
     rows: [
       {
         cols: [
@@ -155,8 +155,8 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
       },
       { type: 'visualization', id: 'vis-3' },
     ],
-  }, */
-  /*  'two-cols-one-top': {
+  },
+  'two-cols-one-top': {
     rows: [
       { type: 'visualization', id: 'vis-1' },
       {
@@ -166,7 +166,7 @@ export const layoutTemplates: Record<PanelLayout, LayoutTemplateItem> = {
         ],
       },
     ],
-  }, */
+  },
   // FIXME: remove grid-2x2; equals grid-2x2-cols
   'grid-2x2': {
     cols: [
