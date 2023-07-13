@@ -107,7 +107,7 @@ export const emptyStory = {
       ],
       editable: true,
     },
-    /* font: {
+    font: {
       type: 'select',
       id: 'font',
       label: 'Font',
@@ -145,7 +145,7 @@ export const emptyStory = {
         },
       ],
       editable: true,
-    }, */
+    },
   },
 };
 
@@ -397,7 +397,14 @@ export const storyCreatorSlice = createSlice({
     },
     importStory: (state, action) => {
       const story = action.payload.story;
-      state.stories[story.id] = story;
+
+      const newStory = {
+        ...emptyStory,
+        ...story,
+        properties: { ...emptyStory.properties, ...story.properties },
+      };
+
+      state.stories[story.id] = newStory as Story;
     },
   },
 });

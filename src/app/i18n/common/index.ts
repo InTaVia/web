@@ -207,5 +207,6 @@ export interface Dictionary {
     create: string;
     open: string;
     new: string;
+    turn: string;
   };
 }
