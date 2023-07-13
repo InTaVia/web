@@ -207,6 +207,10 @@ export interface Dictionary {
     create: string;
     open: string;
     new: string;
+<<<<<<< HEAD
     turn: string;
+=======
+    transform: string;
+>>>>>>> a8fe2718834b9b75d08f30fac922ded71bf8fa84
   };
 }
