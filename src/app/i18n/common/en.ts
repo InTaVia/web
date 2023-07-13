@@ -219,5 +219,6 @@ export const dictionary: Dictionary = {
     create: 'Create',
     open: 'Open',
     new: 'New',
+    transform: 'Transform into',
   },
 };
