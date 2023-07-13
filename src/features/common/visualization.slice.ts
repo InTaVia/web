@@ -20,6 +20,9 @@ export interface Visualization {
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
 }
 
+export const visualizationTypes: Array<Visualization['type']> = ['timeline', 'map', 'ego-network'];
+export const visualizationTypesStoryCreator: Array<Visualization['type']> = ['timeline', 'map'];
+
 const initialState: Record<Visualization['id'], Visualization> = {};
 
 const defaultMapState = {
