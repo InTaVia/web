@@ -219,10 +219,6 @@ export const dictionary: Dictionary = {
     create: 'Create',
     open: 'Open',
     new: 'New',
-<<<<<<< HEAD
     turn: 'Turn into',
-=======
-    transform: 'Transform into',
->>>>>>> a8fe2718834b9b75d08f30fac922ded71bf8fa84
   },
 };
