@@ -11,6 +11,13 @@ export interface Node {
   x: number;
   y: number;
   isPrimary: boolean;
+  adjacency: {
+    person: number;
+    'cultural-heritage-object': number;
+    place: number;
+    group: number;
+    'historical-event': number;
+  };
 }
 
 export interface Link {

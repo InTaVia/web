@@ -47,7 +47,14 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   const entitiesResponse = useEntities(uniqueEntityIds);
 
   // || events.keys.length <= 0?
-  if (!entitiesResponse.data) return { nodes: nodes, links: links, events: {}, entities: {},status: entitiesResponse.status };
+  if (!entitiesResponse.data)
+    return {
+      nodes: nodes,
+      links: links,
+      events: {},
+      entities: {},
+      status: entitiesResponse.status,
+    };
   const relatedEntities = entitiesResponse.data;
 
   // Add related entities to node array
@@ -57,6 +64,13 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       x: 0,
       y: 0,
       isPrimary: ids.includes(entity.id),
+      adjacency: {
+        person: 0,
+        'cultural-heritage-object': 0,
+        group: 0,
+        place: 0,
+        'historical-event': 0,
+      },
     });
   });
 
@@ -101,6 +115,13 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
           target: targetNode,
           roles: [event],
         });
+
+        // Update sourceNode adjacency statistics
+        sourceNode.adjacency[targetNode.entity.kind]++;
+        // targetNode.adjacency[sourceNode.entity.kind]++;
+
+        // if (sourceNode.entity.label.default !== 'Mahler, Gustav')
+        //   console.log(sourceNode.entity.label.default);
       }
     });
   });
@@ -112,6 +133,22 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
     status = 'error';
   }
 
-  return { nodes: nodes, links: links, status: status, events: events.data != null ? Object.fromEntries(events.data) : {},
-  entities: Object.fromEntries(relatedEntities), };
+  nodes.forEach((node) => {
+    const total =
+      node.adjacency.person +
+      node.adjacency['cultural-heritage-object'] +
+      node.adjacency.group +
+      node.adjacency['historical-event'] +
+      node.adjacency.place;
+    const numRelations = node.entity.relations.length;
+    console.log(node.entity.kind, node.entity.label.default, total, numRelations);
+  });
+
+  return {
+    nodes: nodes,
+    links: links,
+    status: status,
+    events: events.data != null ? Object.fromEntries(events.data) : {},
+    entities: Object.fromEntries(relatedEntities),
+  };
 }
