@@ -5,13 +5,15 @@ import {
   forceLink,
   forceManyBody,
   forceSimulation,
+  forceX,
+  forceY,
   select,
   zoom,
-  zoomIdentity,
 } from 'd3';
 import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { node } from 'webpack';
 
 import { useHoverState } from '@/app/context/hover.context';
 import {
@@ -48,21 +50,27 @@ export function Network(props: NetworkProps): JSX.Element {
 
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const { hovered } = useHoverState();
   const nodesWithLabels = showAllLabels
     ? animatedNodes
     : animatedNodes.filter((node) => {
         //const isHovered = hovered?.entities.includes(node.entity.id) ?? false;
-        return node.isPrimary; // || isHovered;
+        return node.is_primary; // || isHovered;
       });
 
   useEffect(() => {
     // Force simulation
     const simulation = forceSimulation(animatedNodes)
-      .force('charge', forceManyBody().strength(-20))
-      .force('link', forceLink(animatedLinks).distance(100))
+      .force(
+        'charge',
+        forceManyBody()
+          .strength(-150)
+          .distanceMax(nodeWidth * 20),
+      )
+      .force('link', forceLink(animatedLinks))
       .force('collide', forceCollide(20))
-      .force('center', forceCenter(width / 2, height / 2));
+      .force('center', forceCenter(width / 2, height / 2))
+      .force('forceX', forceX(width / 2).strength(0.07))
+      .force('forceY', forceY(height / 2).strength(0.07));
 
     simulation.alpha(1).restart();
 
@@ -79,7 +87,6 @@ export function Network(props: NetworkProps): JSX.Element {
 
   useEffect(() => {
     // Zoom
-    let transform = zoomIdentity;
     const svg = select(svgRef.current);
     const myZoom = zoom<SVGSVGElement, unknown>()
       .scaleExtent([1 / 10, 8])
@@ -87,13 +94,34 @@ export function Network(props: NetworkProps): JSX.Element {
     // FIXME: Fix zoomBehavior type error
     svg.call(myZoom).call(myZoom.translateTo, width / 2, height / 2);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function zoomed(event: any) {
-      transform = event.transform;
       svg.select('g#nodes').attr('transform', event.transform);
       svg.select('g#lables').attr('transform', event.transform);
       svg.selectAll('line').attr('transform', event.transform);
     }
   }, [height, width]);
+
+  function addAdjacentNodesToNetwork(node: Node) {
+    const connectedLinks = animatedLinks.filter((link) => {
+      return link.source === node;
+    });
+    const adjacentNodes = connectedLinks.map((link) => {
+      return link.target;
+    });
+
+    adjacentNodes.forEach((node) => {
+      node.state = 'visible';
+    });
+
+    // give nodes IDs and retrieve them with that??
+
+    console.log(node);
+    console.log(connectedLinks);
+    console.log(adjacentNodes);
+
+    setAnimatedNodes(animatedNodes);
+  }
 
   return (
     <div style={{ width: `${width}px`, height: `${height}px` }}>
@@ -105,11 +133,19 @@ export function Network(props: NetworkProps): JSX.Element {
         cursor="grab"
       >
         {animatedLinks.map((link) => {
-          return <LinkView {...link} key={`${link.source.entity.id}-${link.target.entity.id}`} />;
+          if (link.target.state === 'visible' && link.source.state === 'visible')
+            return <LinkView {...link} key={`${link.source.entity.id}-${link.target.entity.id}`} />;
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
-            return <NodeView {...node} key={node.entity.id} />;
+            if (node.state === 'visible')
+              return (
+                <NodeView
+                  {...node}
+                  addAdjacentNodesToNetwork={addAdjacentNodesToNetwork}
+                  key={node.entity.id}
+                />
+              );
           })}
         </g>
         <g id="lables">
@@ -122,8 +158,8 @@ export function Network(props: NetworkProps): JSX.Element {
   );
 }
 
-function NodeView(props: Node): JSX.Element {
-  const { entity, x, y } = props;
+function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => void }): JSX.Element {
+  const { entity, x, y, addAdjacentNodesToNetwork } = props;
 
   const router = useRouter();
 
@@ -154,7 +190,8 @@ function NodeView(props: Node): JSX.Element {
     },
     onClick: () => {
       updateHover(null);
-      void router.push(`/entities/${entity.id}`);
+      // void router.push(`/entities/${entity.id}`);
+      addAdjacentNodesToNetwork(props);
     },
   };
 

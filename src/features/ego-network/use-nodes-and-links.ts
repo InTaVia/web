@@ -63,7 +63,8 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       entity: entity,
       x: 0,
       y: 0,
-      isPrimary: ids.includes(entity.id),
+      is_primary: ids.includes(entity.id),
+      state: ids.includes(entity.id) ? 'visible' : 'one_hop',
       adjacency: {
         person: 0,
         'cultural-heritage-object': 0,
@@ -118,10 +119,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
 
         // Update sourceNode adjacency statistics
         sourceNode.adjacency[targetNode.entity.kind]++;
-        // targetNode.adjacency[sourceNode.entity.kind]++;
-
-        // if (sourceNode.entity.label.default !== 'Mahler, Gustav')
-        //   console.log(sourceNode.entity.label.default);
+        targetNode.adjacency[sourceNode.entity.kind]++;
       }
     });
   });
@@ -133,16 +131,16 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
     status = 'error';
   }
 
-  nodes.forEach((node) => {
-    const total =
-      node.adjacency.person +
-      node.adjacency['cultural-heritage-object'] +
-      node.adjacency.group +
-      node.adjacency['historical-event'] +
-      node.adjacency.place;
-    const numRelations = node.entity.relations.length;
-    console.log(node.entity.kind, node.entity.label.default, total, numRelations);
-  });
+  // nodes.forEach((node) => {
+  //   const total =
+  //     node.adjacency.person +
+  //     node.adjacency['cultural-heritage-object'] +
+  //     node.adjacency.group +
+  //     node.adjacency['historical-event'] +
+  //     node.adjacency.place;
+  //   const numRelations = node.entity.relations.length;
+  //   console.log(node.entity.kind, node.entity.label.default, total, numRelations, node.state);
+  // });
 
   return {
     nodes: nodes,

@@ -10,7 +10,8 @@ export interface Node {
   entity: Entity;
   x: number;
   y: number;
-  isPrimary: boolean;
+  is_primary: boolean;
+  state: NodeState;
   adjacency: {
     person: number;
     'cultural-heritage-object': number;
@@ -19,6 +20,8 @@ export interface Node {
     'historical-event': number;
   };
 }
+
+type NodeState = 'one_hop' | 'visible';
 
 export interface Link {
   source: Node;
