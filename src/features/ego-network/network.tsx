@@ -5,6 +5,8 @@ import {
   forceLink,
   forceManyBody,
   forceSimulation,
+  forceX,
+  forceY,
   select,
   zoom,
   zoomIdentity,
@@ -59,10 +61,17 @@ export function Network(props: NetworkProps): JSX.Element {
   useEffect(() => {
     // Force simulation
     const simulation = forceSimulation(animatedNodes)
-      .force('charge', forceManyBody().strength(-20))
-      .force('link', forceLink(animatedLinks).distance(100))
+      .force(
+        'charge',
+        forceManyBody()
+          .strength(-150)
+          .distanceMax(nodeWidth * 20),
+      )
+      .force('link', forceLink(animatedLinks))
       .force('collide', forceCollide(20))
-      .force('center', forceCenter(width / 2, height / 2));
+      .force('center', forceCenter(width / 2, height / 2))
+      .force('forceX', forceX(width / 2).strength(0.07))
+      .force('forceY', forceY(height / 2).strength(0.07));
 
     simulation.alpha(1).restart();
 
