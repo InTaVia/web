@@ -26,6 +26,7 @@ import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { useEntity } from '@/lib/use-entity';
 
 export interface NetworkProps {
   nodes: Array<Node>;
@@ -50,7 +51,6 @@ export function Network(props: NetworkProps): JSX.Element {
 
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const { hovered } = useHoverState();
   const nodesWithLabels = showAllLabels
     ? animatedNodes
     : animatedNodes.filter((node) => {
@@ -67,7 +67,12 @@ export function Network(props: NetworkProps): JSX.Element {
           .strength(-150)
           .distanceMax(nodeWidth * 20),
       )
-      .force('link', forceLink(animatedLinks))
+      .force(
+        'link',
+        forceLink(animatedLinks).id((d) => {
+          return (d as Node).entityId;
+        }),
+      )
       .force('collide', forceCollide(20))
       .force('center', forceCenter(width / 2, height / 2))
       .force('forceX', forceX(width / 2).strength(0.07))
@@ -77,7 +82,7 @@ export function Network(props: NetworkProps): JSX.Element {
 
     simulation.on('tick', () => {
       setAnimatedNodes([...simulation.nodes()]);
-      setAnimatedLinks([...animatedLinks]);
+      // setAnimatedLinks([...animatedLinks]);
     });
 
     return () => {
@@ -114,16 +119,16 @@ export function Network(props: NetworkProps): JSX.Element {
         cursor="grab"
       >
         {animatedLinks.map((link) => {
-          return <LinkView {...link} key={`${link.source.entity.id}-${link.target.entity.id}`} />;
+          return <LinkView {...link} key={`${link.source}-${link.target}`} />;
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
-            return <NodeView {...node} key={node.entity.id} />;
+            return <NodeView {...node} key={node.entityId} />;
           })}
         </g>
         <g id="lables">
           {nodesWithLabels.map((node) => {
-            return <NodeLabelView {...node} key={`${node.entity.id}-label`} />;
+            return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
           })}
         </g>
       </svg>
@@ -132,14 +137,16 @@ export function Network(props: NetworkProps): JSX.Element {
 }
 
 function NodeView(props: Node): JSX.Element {
-  const { entity, x, y } = props;
+  const { entityId, x, y } = props;
+
+  const entity = useEntity(entityId).data;
 
   const router = useRouter();
 
   const { hovered, updateHover } = useHoverState();
-  const isHovered = hovered?.entities.includes(entity.id) ?? false;
+  const isHovered = hovered?.entities.includes(entityId) ?? false;
 
-  const colors = getEntityColorByKind(entity.kind);
+  const colors = getEntityColorByKind(entity ? entity.kind : 'person');
   const nodeProps = {
     fill: isHovered ? colors.foreground : colors.background,
     stroke: isHovered ? colors.background : 'white',
@@ -149,7 +156,7 @@ function NodeView(props: Node): JSX.Element {
       e: MouseEvent<SVGCircleElement | SVGEllipseElement | SVGPolygonElement | SVGRectElement>,
     ) => {
       updateHover({
-        entities: [entity.id],
+        entities: [entityId],
         events: [],
         clientRect: {
           left: e.pageX,
@@ -163,7 +170,7 @@ function NodeView(props: Node): JSX.Element {
     },
     onClick: () => {
       updateHover(null);
-      void router.push(`/entities/${entity.id}`);
+      void router.push(`/entities/${entityId}`);
     },
   };
 
@@ -196,6 +203,7 @@ function NodeView(props: Node): JSX.Element {
   }
 
   function renderNode(): JSX.Element {
+    if (!entity) return <></>;
     switch (entity.kind) {
       case 'person':
         return renderPersonNode();
@@ -214,13 +222,25 @@ function NodeView(props: Node): JSX.Element {
 }
 
 function NodeLabelView(props: Node): JSX.Element {
-  const { entity, x, y } = props;
+  const { entityId, x, y } = props;
 
-  return (
-    <text key={`${entity.id}-label`} x={x} y={y + nodeHeight + 12} textAnchor="middle" fill="black">
-      {getTranslatedLabel(entity.label)}
-    </text>
-  );
+  const entity = useEntity(entityId).data;
+
+  if (entity) {
+    return (
+      <text
+        key={`${entityId}-label`}
+        x={x}
+        y={y + nodeHeight + 12}
+        textAnchor="middle"
+        fill="black"
+      >
+        {getTranslatedLabel(entity.label)}
+      </text>
+    );
+  }
+
+  return <></>;
 }
 
 function LinkView(props: Link): JSX.Element {
@@ -228,17 +248,12 @@ function LinkView(props: Link): JSX.Element {
 
   const { hovered, updateHover } = useHoverState();
 
-  const hoveredEvents = new Array<Event>();
+  const hoveredEvents = new Array<Event['id']>();
   hovered?.events.forEach((id) => {
-    roles.forEach((event) => {
-      if (event.id === id) hoveredEvents.push(event);
+    roles.forEach((eventId) => {
+      if (eventId === id) hoveredEvents.push(eventId);
     });
   });
-
-  // const labelX =
-  //   Math.min(source.x, target.x) + (Math.max(source.x, target.x) - Math.min(source.x, target.x));
-  // const labelY =
-  //   Math.min(source.y, target.y) + (Math.max(source.y, target.y) - Math.min(source.y, target.y));
 
   return (
     <g>
@@ -252,8 +267,8 @@ function LinkView(props: Link): JSX.Element {
         onMouseEnter={(e) => {
           updateHover({
             entities: [],
-            events: roles.map((event) => {
-              return event.id;
+            events: roles.map((eventId) => {
+              return eventId;
             }),
             clientRect: {
               left: e.clientX,
@@ -266,15 +281,6 @@ function LinkView(props: Link): JSX.Element {
           updateHover(null);
         }}
       />
-      {/* {hoveredEvents.length > 0 && (
-        <text x={labelX} y={labelY} textAnchor="middle" fill="black">
-          {hoveredEvents
-            .map((event) => {
-              return event.label.default;
-            })
-            .toString()}
-        </text>
-      )} */}
     </g>
   );
 }

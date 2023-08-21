@@ -1,13 +1,15 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
+import type { SimulationNodeDatum } from 'd3-force';
 
-import type { Visualization } from '@/features/common/visualization.slice';
+import { useAppDispatch } from '@/app/store';
+import { type Visualization, setNetworkState } from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Network } from '@/features/ego-network/network';
 import { useNodesAndLinks } from '@/features/ego-network/use-nodes-and-links';
 
-export interface Node {
-  entity: Entity;
+export interface Node extends SimulationNodeDatum {
+  entityId: Entity['id'];
   x: number;
   y: number;
   isPrimary: boolean;
@@ -16,7 +18,7 @@ export interface Node {
 export interface Link {
   source: Node;
   target: Node;
-  roles: Array<Event>;
+  roles: Array<Event['id']>;
 }
 
 interface NetworkComponentProps {
@@ -28,8 +30,22 @@ interface NetworkComponentProps {
 export function NetworkComponent(props: NetworkComponentProps): JSX.Element | null {
   const { visualization, width, height } = props;
 
+  const dispatch = useAppDispatch();
+
   const entityIds = visualization.entityIds;
   const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
+
+  // Write nodes, links, and entities in store => create separate network/export slice to prevent loop because visualization is in props
+  // dispatch(
+  //   setNetworkState({
+  //     visId: visualization.id,
+  //     networkState: {
+  //       nodes: nodes,
+  //       links: links,
+  //       entities: Object.keys(entities),
+  //     },
+  //   }),
+  // );
 
   if (nodes.length === 0) {
     return (
