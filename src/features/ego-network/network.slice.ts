@@ -60,4 +60,8 @@ export const selectNetworkById = createSelector(
   },
 );
 
+export const selectAllNetworks = (state: RootState) => {
+  return state.network;
+};
+
 export default networkSlice.reducer;
