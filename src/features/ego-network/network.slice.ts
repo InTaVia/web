@@ -22,9 +22,7 @@ export const networkSlice = createSlice({
       state,
       action: PayloadAction<{ id: Visualization['id']; networkState: NetworkState }>,
     ) => {
-      console.log('addNetwork reducer called');
       const { id, networkState } = action.payload;
-      // FIXME: existing networks with same id are overridden
       state[id] = networkState;
     },
     removeNetwork: (state, action: PayloadAction<Visualization['id']>) => {

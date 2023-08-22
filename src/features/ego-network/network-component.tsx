@@ -38,17 +38,20 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
 
   useEffect(() => {
+    // Save network state in store for story export
     if (status !== 'success') {
       return;
     }
 
-    // Write nodes, links, and entities in store => create separate network/export slice to prevent loop because visualization is in props
+    const nodesCopy = JSON.parse(JSON.stringify(nodes));
+    const linksCopy = JSON.parse(JSON.stringify(links));
+
     dispatch(
       addNetwork({
-        id: 'test',
+        id: visualization.id,
         networkState: {
-          nodes: nodes,
-          links: links,
+          nodes: nodesCopy,
+          links: linksCopy,
           entities: Object.keys(entities),
         },
       }),
@@ -67,14 +70,14 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   if (status === 'success') {
     return (
       <div className="relative">
-        {/* <Network
+        <Network
           key={`network-${entityIds.join('-')}`}
           nodes={nodes}
           links={links}
           width={width}
           height={height}
           visProperties={visualization.properties}
-        /> */}
+        />
         <div className="absolute bottom-0 right-0">
           <VisualizationLegend events={{ events }} entities={entities} />
         </div>
