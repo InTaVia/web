@@ -6,6 +6,7 @@ import type { ViewState } from 'react-map-gl';
 
 import type { RootState } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
+import type { Link, Node } from '@/features/ego-network/network-component';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -18,10 +19,21 @@ export interface Visualization {
   properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
+  // networkState?: NetworkState;
 }
 
+// interface NetworkState {
+//   nodes: Array<Node>;
+//   links: Array<Link>;
+//   entities: Array<Entity['id']>;
+// }
+
 export const visualizationTypes: Array<Visualization['type']> = ['timeline', 'map', 'ego-network'];
-export const visualizationTypesStoryCreator: Array<Visualization['type']> = ['timeline', 'map'];
+export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
+  'timeline',
+  'map',
+  'ego-network',
+];
 
 const initialState: Record<Visualization['id'], Visualization> = {};
 
@@ -322,6 +334,28 @@ const emptyMapVis = {
   eventIds: [],
 };
 
+const emptyNetworkVis = {
+  // networkState: { nodes: [], links: [], entities: [] },
+  properties: {
+    name: {
+      type: 'text',
+      id: 'name',
+      value: '',
+      label: 'Name',
+      editable: true,
+      sort: 1,
+    },
+    showAllLabels: {
+      type: 'boolean',
+      id: 'showAllLabels',
+      value: false,
+      label: 'Show all labels',
+      editable: true,
+      sort: 2,
+    },
+  },
+};
+
 export const visualizationSlice = createSlice({
   name: 'visualization',
   initialState,
@@ -355,29 +389,12 @@ export const visualizationSlice = createSlice({
         }
         case 'ego-network': {
           state[vis['id']] = {
+            ...emptyNetworkVis,
             ...vis,
-            properties: {
-              name: {
-                type: 'text',
-                id: 'name',
-                value: '',
-                label: 'Name',
-                editable: true,
-                sort: 1,
-              },
-              showAllLabels: {
-                type: 'boolean',
-                id: 'showAllLabels',
-                value: false,
-                label: 'Show all labels',
-                editable: true,
-                sort: 2,
-              },
-            },
             entityIds: [],
             targetEntityIds: [],
             // eventIds: [],
-          };
+          } as Visualization;
           break;
         }
         default:
@@ -524,6 +541,16 @@ export const visualizationSlice = createSlice({
       assert(vis.mapState != null);
       vis.mapState.mapStyle = mapStyle;
     },
+    // setNetworkState: (
+    //   state,
+    //   action: PayloadAction<{ visId: Visualization['id']; networkState: NetworkState }>,
+    // ) => {
+    //   const visId = action.payload.visId;
+    //   const networkState = action.payload.networkState;
+    //   const vis = state[visId];
+    //   assert(vis != null);
+    //   vis.networkState = networkState;
+    // },
     importVisualization: (state, action) => {
       const vis = action.payload as Visualization;
 
@@ -560,6 +587,7 @@ export const {
   editVisualization,
   setMapViewState,
   setMapStyle,
+  // setNetworkState,
   importVisualization,
 } = visualizationSlice.actions;
 

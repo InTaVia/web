@@ -1,13 +1,17 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
+import type { SimulationNodeDatum } from 'd3-force';
+import { useEffect } from 'react';
 
-import type { Visualization } from '@/features/common/visualization.slice';
+import { useAppDispatch } from '@/app/store';
+import { type Visualization } from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { Network } from '@/features/ego-network/network';
+import { addNetwork } from '@/features/ego-network/network.slice';
 import { useNodesAndLinks } from '@/features/ego-network/use-nodes-and-links';
 
 export interface Node {
-  entity: Entity;
+  entityId: Entity['id'];
   x: number;
   y: number;
   isPrimary: boolean;
@@ -16,7 +20,7 @@ export interface Node {
 export interface Link {
   source: Node;
   target: Node;
-  roles: Array<Event>;
+  roles: Array<Event['id']>;
 }
 
 interface NetworkComponentProps {
@@ -28,8 +32,29 @@ interface NetworkComponentProps {
 export function NetworkComponent(props: NetworkComponentProps): JSX.Element | null {
   const { visualization, width, height } = props;
 
+  const dispatch = useAppDispatch();
+
   const entityIds = visualization.entityIds;
   const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
+
+  useEffect(() => {
+    // Save network state in store for story export
+    if (status !== 'success') {
+      return;
+    }
+
+    const nodesCopy = JSON.parse(JSON.stringify(nodes));
+    const linksCopy = JSON.parse(JSON.stringify(links));
+
+    dispatch(
+      addNetwork({
+        id: visualization.id,
+        nodes: nodesCopy,
+        links: linksCopy,
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, nodes.length, links.length]);
 
   if (nodes.length === 0) {
     return (

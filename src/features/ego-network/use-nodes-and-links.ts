@@ -47,13 +47,20 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   const entitiesResponse = useEntities(uniqueEntityIds);
 
   // || events.keys.length <= 0?
-  if (!entitiesResponse.data) return { nodes: nodes, links: links, events: {}, entities: {},status: entitiesResponse.status };
+  if (!entitiesResponse.data)
+    return {
+      nodes: nodes,
+      links: links,
+      events: {},
+      entities: {},
+      status: entitiesResponse.status,
+    };
   const relatedEntities = entitiesResponse.data;
 
   // Add related entities to node array
   relatedEntities.forEach((entity) => {
     nodes.push({
-      entity: entity,
+      entityId: entity.id,
       x: 0,
       y: 0,
       isPrimary: ids.includes(entity.id),
@@ -79,18 +86,19 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
 
       // Check if link between nodes already exists
       const existingLink = links.find((link) => {
-        return link.source.entity.id === sourceEntityId && link.target.entity.id === targetEntityId;
+        // FIXME: only works if node.id === node.entity.id
+        return link.source.entityId === sourceEntityId && link.target.entityId === targetEntityId;
       });
       if (existingLink) {
         // Update existing link with additional role
-        if (!existingLink.roles.includes(event)) existingLink.roles.push(event);
+        if (!existingLink.roles.includes(event.id)) existingLink.roles.push(event.id);
       } else {
         // Create new link
         const sourceNode = nodes.find((node) => {
-          return node.entity.id === sourceEntityId;
+          return node.entityId === sourceEntityId;
         });
         const targetNode = nodes.find((node) => {
-          return node.entity.id === targetEntityId;
+          return node.entityId === targetEntityId;
         });
 
         // This only happens because backend is stupid: https://github.com/InTaVia/InTaVia-Backend/issues/137
@@ -99,7 +107,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
         links.push({
           source: sourceNode,
           target: targetNode,
-          roles: [event],
+          roles: [event.id],
         });
       }
     });
@@ -112,6 +120,11 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
     status = 'error';
   }
 
-  return { nodes: nodes, links: links, status: status, events: events.data != null ? Object.fromEntries(events.data) : {},
-  entities: Object.fromEntries(relatedEntities), };
+  return {
+    nodes: nodes,
+    links: links,
+    status: status,
+    events: events.data != null ? Object.fromEntries(events.data) : {},
+    entities: Object.fromEntries(relatedEntities),
+  };
 }

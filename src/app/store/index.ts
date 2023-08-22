@@ -21,6 +21,7 @@ import errorMiddleware from '@/app/store/error.middleware';
 import { slice as intaviaDataSlice } from '@/app/store/intavia.slice';
 import { slice as intaviaCollectionsSlice } from '@/app/store/intavia-collections.slice';
 import { visualizationSlice } from '@/features/common/visualization.slice';
+import { networkSlice } from '@/features/ego-network/network.slice';
 import { contentPaneSlice } from '@/features/storycreator/contentPane.slice';
 import { story_api as intaviaStoryApiService } from '@/features/storycreator/story-suite-api.service';
 import { storyCreatorSlice } from '@/features/storycreator/storycreator.slice';
@@ -37,6 +38,7 @@ const persistConfig: PersistConfig<RootState> = {
     intaviaDataSlice.name /** Entities, events. */,
     workspacesSlice.name,
     storyCreatorSlice.name,
+    networkSlice.name,
     visualizationSlice.name,
     contentPaneSlice.name,
     uiSlice.name,
@@ -53,6 +55,7 @@ const rootReducer = combineReducers({
   [storyCreatorSlice.name]: storyCreatorSlice.reducer,
   [uiSlice.name]: uiSlice.reducer,
   [visualizationSlice.name]: visualizationSlice.reducer,
+  [networkSlice.name]: networkSlice.reducer,
   [contentPaneSlice.name]: contentPaneSlice.reducer,
   [workspacesSlice.name]: workspacesSlice.reducer,
 });
