@@ -64,6 +64,8 @@ export function Network(props: NetworkProps): JSX.Element {
 
   useEffect(() => {
     // Force simulation
+    setSimulationRunning(true);
+
     const simulation = forceSimulation(animatedNodes)
       .force(
         'charge',
@@ -120,33 +122,40 @@ export function Network(props: NetworkProps): JSX.Element {
     }
   }, [height, width]);
 
+  if (isPartOfStory && isSimulationRunning) {
+    return (
+      <div
+        style={{ width: `${width}px`, height: `${height}px` }}
+        className="grid place-items-center"
+      >
+        <p>Loading network ...</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: `${width}px`, height: `${height}px` }}>
-      {isPartOfStory && isSimulationRunning ? (
-        <p>Loading ...</p>
-      ) : (
-        <svg
-          viewBox={`0 0 ${width} ${height}`}
-          width={width}
-          height={height}
-          ref={svgRef}
-          cursor="grab"
-        >
-          {animatedLinks.map((link) => {
-            return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        width={width}
+        height={height}
+        ref={svgRef}
+        cursor="grab"
+      >
+        {animatedLinks.map((link) => {
+          return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
+        })}
+        <g id="nodes">
+          {animatedNodes.map((node) => {
+            return <NodeView {...node} key={node.entityId} />;
           })}
-          <g id="nodes">
-            {animatedNodes.map((node) => {
-              return <NodeView {...node} key={node.entityId} />;
-            })}
-          </g>
-          <g id="lables">
-            {nodesWithLabels.map((node) => {
-              return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
-            })}
-          </g>
-        </svg>
-      )}
+        </g>
+        <g id="lables">
+          {nodesWithLabels.map((node) => {
+            return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
+          })}
+        </g>
+      </svg>
     </div>
   );
 }
