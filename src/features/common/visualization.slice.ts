@@ -19,14 +19,14 @@ export interface Visualization {
   properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
-  networkState?: NetworkState;
+  // networkState?: NetworkState;
 }
 
-interface NetworkState {
-  nodes: Array<Node>;
-  links: Array<Link>;
-  entities: Array<Entity['id']>;
-}
+// interface NetworkState {
+//   nodes: Array<Node>;
+//   links: Array<Link>;
+//   entities: Array<Entity['id']>;
+// }
 
 export const visualizationTypes: Array<Visualization['type']> = ['timeline', 'map', 'ego-network'];
 export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
@@ -335,7 +335,7 @@ const emptyMapVis = {
 };
 
 const emptyNetworkVis = {
-  networkState: { nodes: [], links: [], entities: [] },
+  // networkState: { nodes: [], links: [], entities: [] },
   properties: {
     name: {
       type: 'text',
@@ -541,16 +541,16 @@ export const visualizationSlice = createSlice({
       assert(vis.mapState != null);
       vis.mapState.mapStyle = mapStyle;
     },
-    setNetworkState: (
-      state,
-      action: PayloadAction<{ visId: Visualization['id']; networkState: NetworkState }>,
-    ) => {
-      const visId = action.payload.visId;
-      const networkState = action.payload.networkState;
-      const vis = state[visId];
-      assert(vis != null);
-      vis.networkState = networkState;
-    },
+    // setNetworkState: (
+    //   state,
+    //   action: PayloadAction<{ visId: Visualization['id']; networkState: NetworkState }>,
+    // ) => {
+    //   const visId = action.payload.visId;
+    //   const networkState = action.payload.networkState;
+    //   const vis = state[visId];
+    //   assert(vis != null);
+    //   vis.networkState = networkState;
+    // },
     importVisualization: (state, action) => {
       const vis = action.payload as Visualization;
 
@@ -587,7 +587,7 @@ export const {
   editVisualization,
   setMapViewState,
   setMapStyle,
-  setNetworkState,
+  // setNetworkState,
   importVisualization,
 } = visualizationSlice.actions;
 

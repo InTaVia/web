@@ -16,6 +16,7 @@ import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { useAppDispatch } from '@/app/store';
 import {
   CulturalHeritageObjectSvgGroup,
   GroupSvgGroup,
@@ -24,6 +25,7 @@ import {
 } from '@/features/common/icons/intavia-icon-shapes';
 import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
+import { addNetwork } from '@/features/ego-network/network.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { useEntity } from '@/lib/use-entity';
@@ -119,7 +121,7 @@ export function Network(props: NetworkProps): JSX.Element {
         cursor="grab"
       >
         {animatedLinks.map((link) => {
-          return <LinkView {...link} key={`${link.source}-${link.target}`} />;
+          return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
