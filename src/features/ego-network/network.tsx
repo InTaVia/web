@@ -64,6 +64,8 @@ export function Network(props: NetworkProps): JSX.Element {
 
   useEffect(() => {
     // Force simulation
+    setSimulationRunning(true);
+
     const simulation = forceSimulation(animatedNodes)
       .force(
         'charge',
