@@ -52,7 +52,6 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
         networkState: {
           nodes: nodesCopy,
           links: linksCopy,
-          entities: Object.keys(entities),
         },
       }),
     );

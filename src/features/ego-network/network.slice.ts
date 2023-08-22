@@ -1,4 +1,3 @@
-import type { Entity } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
@@ -9,7 +8,6 @@ import type { Link, Node } from '@/features/ego-network/network-component';
 export interface NetworkState {
   nodes: Array<Node>;
   links: Array<Link>;
-  entities: Array<Entity['id']>;
 }
 
 const initialState: Record<Visualization['id'], NetworkState> = {};

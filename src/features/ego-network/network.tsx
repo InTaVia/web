@@ -16,7 +16,7 @@ import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
-import { useAppDispatch } from '@/app/store';
+import { usePathname } from '@/app/route/use-pathname';
 import {
   CulturalHeritageObjectSvgGroup,
   GroupSvgGroup,
@@ -25,7 +25,6 @@ import {
 } from '@/features/common/icons/intavia-icon-shapes';
 import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
-import { addNetwork } from '@/features/ego-network/network.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { useEntity } from '@/lib/use-entity';
@@ -44,10 +43,13 @@ const nodeHeight = 15;
 export function Network(props: NetworkProps): JSX.Element {
   const { nodes, links, width, height, visProperties } = props;
 
+  const isPartOfStory = usePathname().includes('storycreator');
+
   const showAllLabels: boolean = visProperties
     ? visProperties['showAllLabels']?.value ?? false
     : false;
 
+  const [isSimulationRunning, setSimulationRunning] = useState(true);
   const [animatedNodes, setAnimatedNodes] = useState(nodes);
   const [animatedLinks, setAnimatedLinks] = useState(links);
 
@@ -82,9 +84,16 @@ export function Network(props: NetworkProps): JSX.Element {
 
     simulation.alpha(1).restart();
 
-    simulation.on('tick', () => {
+    if (!isPartOfStory) {
+      simulation.on('tick', () => {
+        setAnimatedNodes([...simulation.nodes()]);
+        // setAnimatedLinks([...animatedLinks]);
+      });
+    }
+
+    simulation.on('end', () => {
       setAnimatedNodes([...simulation.nodes()]);
-      // setAnimatedLinks([...animatedLinks]);
+      setSimulationRunning(false);
     });
 
     return () => {
@@ -113,27 +122,31 @@ export function Network(props: NetworkProps): JSX.Element {
 
   return (
     <div style={{ width: `${width}px`, height: `${height}px` }}>
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        width={width}
-        height={height}
-        ref={svgRef}
-        cursor="grab"
-      >
-        {animatedLinks.map((link) => {
-          return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
-        })}
-        <g id="nodes">
-          {animatedNodes.map((node) => {
-            return <NodeView {...node} key={node.entityId} />;
+      {isPartOfStory && isSimulationRunning ? (
+        <p>Loading ...</p>
+      ) : (
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          width={width}
+          height={height}
+          ref={svgRef}
+          cursor="grab"
+        >
+          {animatedLinks.map((link) => {
+            return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
           })}
-        </g>
-        <g id="lables">
-          {nodesWithLabels.map((node) => {
-            return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
-          })}
-        </g>
-      </svg>
+          <g id="nodes">
+            {animatedNodes.map((node) => {
+              return <NodeView {...node} key={node.entityId} />;
+            })}
+          </g>
+          <g id="lables">
+            {nodesWithLabels.map((node) => {
+              return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
+            })}
+          </g>
+        </svg>
+      )}
     </div>
   );
 }
@@ -144,6 +157,7 @@ function NodeView(props: Node): JSX.Element {
   const entity = useEntity(entityId).data;
 
   const router = useRouter();
+  const isPartOfStory = usePathname().includes('storycreator');
 
   const { hovered, updateHover } = useHoverState();
   const isHovered = hovered?.entities.includes(entityId) ?? false;
@@ -171,8 +185,12 @@ function NodeView(props: Node): JSX.Element {
       updateHover(null);
     },
     onClick: () => {
-      updateHover(null);
-      void router.push(`/entities/${entityId}`);
+      if (isPartOfStory) {
+        // TODO: add story highlighting
+      } else {
+        updateHover(null);
+        void router.push(`/entities/${entityId}`);
+      }
     },
   };
 
