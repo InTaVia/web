@@ -10,7 +10,7 @@ import { Network } from '@/features/ego-network/network';
 import { addNetwork } from '@/features/ego-network/network.slice';
 import { useNodesAndLinks } from '@/features/ego-network/use-nodes-and-links';
 
-export interface Node extends SimulationNodeDatum {
+export interface Node {
   entityId: Entity['id'];
   x: number;
   y: number;
@@ -49,10 +49,8 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
     dispatch(
       addNetwork({
         id: visualization.id,
-        networkState: {
-          nodes: nodesCopy,
-          links: linksCopy,
-        },
+        nodes: nodesCopy,
+        links: linksCopy,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

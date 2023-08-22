@@ -1,3 +1,4 @@
+import type { Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
@@ -6,9 +7,16 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 
 export interface NetworkState {
-  nodes: Array<Node>;
-  links: Array<Link>;
+  nodes: Array<StoredNode>;
+  links: Array<StoredLink>;
 }
+
+type StoredNode = Omit<Node, 'x' | 'y'>;
+type StoredLink = {
+  source: Node['entityId'];
+  target: Node['entityId'];
+  roles: Array<Event['id']>;
+};
 
 const initialState: Record<Visualization['id'], NetworkState> = {};
 
@@ -18,26 +26,27 @@ export const networkSlice = createSlice({
   reducers: {
     addNetwork: (
       state,
-      action: PayloadAction<{ id: Visualization['id']; networkState: NetworkState }>,
+      action: PayloadAction<{ id: Visualization['id']; nodes: Array<Node>; links: Array<Link> }>,
     ) => {
-      const { id, networkState } = action.payload;
-      state[id] = networkState;
+      const { id, nodes, links } = action.payload;
+
+      const sanitizedNodes = nodes.map((node) => {
+        return { entityId: node.entityId, isPrimary: node.isPrimary };
+      });
+      const sanitizedLinks = links.map((link) => {
+        return { source: link.source.entityId, target: link.target.entityId, roles: link.roles };
+      });
+
+      state[id] = { nodes: sanitizedNodes, links: sanitizedLinks };
     },
     removeNetwork: (state, action: PayloadAction<Visualization['id']>) => {
       const id = action.payload;
       delete state[id];
     },
-    updateNetwork: (
-      state,
-      action: PayloadAction<{ id: Visualization['id']; networkState: NetworkState }>,
-    ) => {
-      const { id, networkState } = action.payload;
-      state[id] = networkState;
-    },
   },
 });
 
-export const { addNetwork, removeNetwork, updateNetwork } = networkSlice.actions;
+export const { addNetwork, removeNetwork } = networkSlice.actions;
 
 export const selectNetworkById = createSelector(
   (state: RootState) => {
