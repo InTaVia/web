@@ -109,7 +109,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     if (ref.current === null || selectedSlide === null) {
       return;
     }
-    return;
+
     toPng(ref.current, { cacheBust: true, canvasWidth: 200, canvasHeight: 100 })
       .then((dataUrl) => {
         dispatch(setImage({ slide: selectedSlide, image: dataUrl }));
@@ -403,8 +403,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           const networkEntityIds: Array<Entity['id']> = [];
           const networkState: NetworkState = { nodes: [], links: [] };
           if (vis.type === 'ego-network' && vis.id in networkStates) {
-            networkState.nodes.push(...networkStates[vis.id].nodes);
-            networkState.links.push(...networkStates[vis.id].links);
+            networkState.nodes.push(...networkStates[vis.id]!.nodes);
+            networkState.links.push(...networkStates[vis.id]!.links);
 
             networkState.nodes.forEach((node) => {
               networkEntityIds.push(node.entityId);
