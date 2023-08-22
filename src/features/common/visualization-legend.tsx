@@ -109,213 +109,22 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
       );
     } else if (colorBy === 'entity-identity') {
       return (
-        <>
+        <div className="flex flex-col">
           {entitySorting?.slice(0, 10).map((entityId, index) => {
             if (entityId in storedEntities) {
               const entityKind = storedEntities[entityId]?.kind;
               const entityKindProperties = getEntityKindPropertiesByKind(entityKind);
               return (
-                <>
-                  <div
-                    key={`entityKind${entityKind}`}
-                    className="flex items-center justify-center"
-                    style={{
-                      opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
-                    }}
-                    onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                      setHover(entityId);
-                      updateHover({
-                        entities: [entityId],
-                        events: [],
-                        clientRect: {
-                          left: e.clientX,
-                          top: e.clientY,
-                        } as DOMRect,
-                        pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                      });
-                    }}
-                    onMouseLeave={() => {
-                      setHover(null);
-                      updateHover(null);
-                    }}
-                  >
-                    <IntaviaIcon
-                      icon={entityKindProperties.icon}
-                      className={cn('w-4 h-4')}
-                      fill={index < 10 ? schemePaired[index] : 'gray'}
-                      stroke={index < 10 ? schemePaired[index] : 'gray'}
-                    />
-                  </div>
-                  <div
-                    key={`eventKindLabel${eventKindProperties.label}`}
-                    style={{
-                      opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
-                    }}
-                    onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                      setHover(entityId);
-                      updateHover({
-                        entities: [entityId],
-                        events: [],
-                        clientRect: {
-                          left: e.clientX,
-                          top: e.clientY,
-                        } as DOMRect,
-                        pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                      });
-                    }}
-                    onMouseLeave={() => {
-                      setHover(null);
-                      updateHover(null);
-                    }}
-                  >
-                    {storedEntities[entityId]?.label.default}
-                  </div>
-                </>
-              );
-            }
-          })}
-
-          {entitySorting?.length > 10 && (
-            <>
-              <div
-                key={`entityKindOthers`}
-                className="flex items-center justify-center"
-                /* style={{
-              opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
-            }} */
-                onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                  entitySorting.slice(10);
-                  updateHover({
-                    entities: entitySorting.slice(10),
-                    events: [],
-                    clientRect: {
-                      left: e.clientX,
-                      top: e.clientY,
-                    } as DOMRect,
-                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                  });
-                }}
-                onMouseLeave={() => {
-                  setHover(null);
-                  updateHover(null);
-                }}
-              >
-                <div>...</div>
-              </div>
-              <div
-                key={`eventKindLabelOthers`}
-                /* style={{
-              opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
-            }} */
-                onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                  setHover(entitySorting.slice(10));
-                  updateHover({
-                    entities: entitySorting.slice(10),
-                    events: [],
-                    clientRect: {
-                      left: e.clientX,
-                      top: e.clientY,
-                    } as DOMRect,
-                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                  });
-                }}
-                onMouseLeave={() => {
-                  setHover(null);
-                  updateHover(null);
-                }}
-              >
-                Others
-              </div>
-            </>
-          )}
-        </>
-      );
-    } else {
-      return (
-        <>
-          {eventKindProperties.map((eventKindProperties) => {
-            return (
-              <>
                 <div
-                  key={`eventKind${eventKindProperties.label}`}
-                  className="flex items-center justify-center"
+                  key={`entityIdentity${entityId}`}
+                  className="flex items-center gap-1"
                   style={{
-                    opacity:
-                      hover != null
-                        ? hover === eventKindProperties.label
-                          ? '100%'
-                          : '50%'
-                        : '100%',
+                    opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
                   }}
                   onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                    setHover(eventKindProperties.label);
+                    setHover(entityId);
                     updateHover({
-                      entities: [],
-                      events: eventPerEventKind[eventKindProperties.label] as Array<Event['id']>,
-                      clientRect: {
-                        left: e.clientX,
-                        top: e.clientY,
-                      } as DOMRect,
-                      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    setHover(null);
-                    updateHover(null);
-                  }}
-                >
-                  <IntaviaIcon
-                    icon={eventKindProperties.icon}
-                    className={cn('h-3 w-3', eventKindProperties.iconStyle)}
-                    strokeWidth={eventKindProperties.strokeWidth}
-                  />
-                </div>
-                <div
-                  key={`eventKindLabel${eventKindProperties.label}`}
-                  style={{
-                    opacity:
-                      hover != null
-                        ? hover === eventKindProperties.label
-                          ? '100%'
-                          : '50%'
-                        : '100%',
-                  }}
-                  onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                    setHover(eventKindProperties.label);
-                    updateHover({
-                      entities: [],
-                      events: eventPerEventKind[eventKindProperties.label] as Array<Event['id']>,
-                      clientRect: {
-                        left: e.clientX,
-                        top: e.clientY,
-                      } as DOMRect,
-                      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    setHover(null);
-                    updateHover(null);
-                  }}
-                >
-                  {eventKindProperties.label}
-                </div>
-              </>
-            );
-          })}
-          {Object.keys(groupedEntities).map((entityKind) => {
-            const entityKindProperties = getEntityKindPropertiesByKind(entityKind);
-            return (
-              <>
-                <div
-                  key={`entityKind${entityKind}`}
-                  className="flex items-center justify-center"
-                  style={{
-                    opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
-                  }}
-                  onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                    setHover(entityKind);
-                    updateHover({
-                      entities: groupedEntities[entityKind],
+                      entities: [entityId],
                       events: [],
                       clientRect: {
                         left: e.clientX,
@@ -331,37 +140,119 @@ export function VisualizationLegend(props: VisualizationLegendProps): JSX.Elemen
                 >
                   <IntaviaIcon
                     icon={entityKindProperties.icon}
-                    className={cn('w-4 h-4', entityKindProperties.iconStyle)}
+                    className={cn('w-4 h-4')}
+                    fill={index < 10 ? schemePaired[index] : 'gray'}
+                    stroke={index < 10 ? schemePaired[index] : 'gray'}
                   />
+                  <span>{storedEntities[entityId]?.label.default}</span>
                 </div>
-                <div
-                  key={`entityKindLabel${entityKind}`}
-                  style={{
-                    opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
-                  }}
-                  onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
-                    setHover(entityKind);
-                    updateHover({
-                      entities: groupedEntities[entityKind],
-                      events: [],
-                      clientRect: {
-                        left: e.clientX,
-                        top: e.clientY,
-                      } as DOMRect,
-                      pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    setHover(null);
-                    updateHover(null);
-                  }}
-                >
-                  {getEntityKindPropertiesByKind(entityKind).label}
-                </div>
-              </>
+              );
+            }
+          })}
+
+          {entitySorting?.length > 10 && (
+            <div
+              key={`entityKindOthers`}
+              className="flex items-center gap-1"
+              /* style={{
+              opacity: hover != null ? (hover === entityId ? '100%' : '50%') : '100%',
+            }} */
+              onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                entitySorting.slice(10);
+                updateHover({
+                  entities: entitySorting.slice(10),
+                  events: [],
+                  clientRect: {
+                    left: e.clientX,
+                    top: e.clientY,
+                  } as DOMRect,
+                  pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
+                });
+              }}
+              onMouseLeave={() => {
+                setHover(null);
+                updateHover(null);
+              }}
+            >
+              <span>...</span>
+              <span>Others</span>
+            </div>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex flex-col">
+          {eventKindProperties.map((eventKindProperties) => {
+            return (
+              <div
+                key={`eventKind${eventKindProperties.label}`}
+                className="flex items-center gap-1"
+                style={{
+                  opacity:
+                    hover != null ? (hover === eventKindProperties.label ? '100%' : '50%') : '100%',
+                }}
+                onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(eventKindProperties.label);
+                  updateHover({
+                    entities: [],
+                    events: eventPerEventKind[eventKindProperties.label] as Array<Event['id']>,
+                    clientRect: {
+                      left: e.clientX,
+                      top: e.clientY,
+                    } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
+                  });
+                }}
+                onMouseLeave={() => {
+                  setHover(null);
+                  updateHover(null);
+                }}
+              >
+                <IntaviaIcon
+                  icon={eventKindProperties.icon}
+                  className={cn('h-3 w-3', eventKindProperties.iconStyle)}
+                  strokeWidth={eventKindProperties.strokeWidth}
+                />
+                <span>{eventKindProperties.label}</span>
+              </div>
             );
           })}
-        </>
+          {Object.keys(groupedEntities).map((entityKind) => {
+            const entityKindProperties = getEntityKindPropertiesByKind(entityKind);
+            return (
+              <div
+                key={`entityKind${entityKind}`}
+                className="flex items-center gap-1"
+                style={{
+                  opacity: hover != null ? (hover === entityKind ? '100%' : '50%') : '100%',
+                }}
+                onMouseEnter={(e: MouseEvent<HTMLDivElement>) => {
+                  setHover(entityKind);
+                  updateHover({
+                    entities: groupedEntities[entityKind],
+                    events: [],
+                    clientRect: {
+                      left: e.clientX,
+                      top: e.clientY,
+                    } as DOMRect,
+                    pageRect: { left: e.pageX, top: e.pageY } as DOMRect,
+                  });
+                }}
+                onMouseLeave={() => {
+                  setHover(null);
+                  updateHover(null);
+                }}
+              >
+                <IntaviaIcon
+                  icon={entityKindProperties.icon}
+                  className={cn('w-4 h-4', entityKindProperties.iconStyle)}
+                />
+                <span>{getEntityKindPropertiesByKind(entityKind).label}</span>
+              </div>
+            );
+          })}
+        </div>
       );
     }
   }, [colorBy, eventKindProperties, eventPerEventKind, groupedEntities, hover, updateHover]);
