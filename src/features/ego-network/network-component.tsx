@@ -1,6 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
 import type { SimulationNodeDatum } from 'd3-force';
+import { useEffect } from 'react';
 
 import { useAppDispatch } from '@/app/store';
 import { type Visualization } from '@/features/common/visualization.slice';
@@ -36,7 +37,11 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const entityIds = visualization.entityIds;
   const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
 
-  if (status === 'success') {
+  useEffect(() => {
+    if (status !== 'success') {
+      return;
+    }
+
     // Write nodes, links, and entities in store => create separate network/export slice to prevent loop because visualization is in props
     dispatch(
       addNetwork({
@@ -48,7 +53,8 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
         },
       }),
     );
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, nodes.length, links.length]);
 
   if (nodes.length === 0) {
     return (
@@ -61,14 +67,14 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   if (status === 'success') {
     return (
       <div className="relative">
-        <Network
+        {/* <Network
           key={`network-${entityIds.join('-')}`}
           nodes={nodes}
           links={links}
           width={width}
           height={height}
           visProperties={visualization.properties}
-        />
+        /> */}
         <div className="absolute bottom-0 right-0">
           <VisualizationLegend events={{ events }} entities={entities} />
         </div>
