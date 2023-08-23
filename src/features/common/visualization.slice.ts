@@ -207,6 +207,7 @@ const emptyTimelineVis = {
 
 const emptyMapVis = {
   mapState: defaultMapState,
+  zoomLevel: 2.0,
   properties: {
     mapStyle: {
       type: 'select',
@@ -315,6 +316,14 @@ const emptyMapVis = {
       editable: true,
       sort: 6,
       label: 'Connect events chronologically with lines (for each entity)',
+    },
+    zoomlevel: {
+      type: 'number',
+      id: 'zoomlevel',
+      value: 2.0,
+      editable: true,
+      sort: 7,
+      label: 'Zoom level for the map',
     },
   },
   entityIds: [],
@@ -511,7 +520,7 @@ export const visualizationSlice = createSlice({
       const vis = state[visId];
       assert(vis != null);
       assert(vis.mapState != null);
-      vis.mapState.viewState = viewState;
+      vis.mapState.viewState = { ...vis.mapState.viewState, ...viewState };
     },
     setMapStyle: (
       state,

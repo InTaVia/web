@@ -17,11 +17,17 @@ import type { StringLiteral } from 'typescript';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { selectEntities, selectEvents, selectMediaResources } from '@/app/store/intavia.slice';
+import {
+  selectEntities,
+  selectEvents,
+  selectMediaResources,
+  selectVocabularyEntries,
+} from '@/app/store/intavia.slice';
 import type { Collection } from '@/app/store/intavia-collections.slice';
 import { selectCollections } from '@/app/store/intavia-collections.slice';
 import type { ComponentProperty } from '@/features/common/component-property';
 import { PropertiesDialog } from '@/features/common/properties-dialog';
+import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
@@ -73,6 +79,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const slides = useAppSelector((state) => {
     return selectSlidesByStoryID(state, story.id);
   });
+
+  const vocabularies = useAppSelector(selectVocabularyEntries);
 
   const collections = useAppSelector(selectCollections);
 
@@ -384,7 +392,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     storyEvents: Record<string, Event>;
   }>();
 
-  const createStoryObject = () => {
+  const createStoryObject = (preview: boolean) => {
     const storyVisualizations: Record<string, Visualization> = {};
     const storyContentPanes: Record<string, ContentPane> = {};
     const storyEntityIds = [] as Array<Entity['id']>;
@@ -409,6 +417,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     const slideOutput: Record<string, Slide> = Object.fromEntries(
       Object.values(story.slides).map((s) => {
         const ret = { ...s };
+        if (preview) {
+          delete ret.image;
+        }
         return [ret.id, ret];
       }),
     );
@@ -484,6 +495,42 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+    const storyVocabulary = {};
+    const storyEventLocations = {};
+
+    for (const event of Object.values(storyEvents) as Array<Event>) {
+      // event.kind
+      storyVocabulary[event.kind] = getEventKindPropertiesById(event.kind);
+
+      //relation roles
+      for (const rel of event.relations) {
+        if (rel.role in vocabularies) {
+          storyVocabulary[rel.role] = vocabularies[rel.role]?.label.default;
+        }
+
+        // related event might be a place
+        if (allEntities[rel.entity] != null && allEntities[rel.entity]?.kind === 'place') {
+          console.log(allEntities[rel.entity], allEntities[rel.entity].geometry);
+          if (allEntities[rel.entity].geometry != null) {
+            console.log('found', allEntities[rel.entity]);
+            if (event.id in storyEventLocations) {
+              storyEventLocations[event.id].push({
+                geometry: allEntities[rel.entity].geometry,
+                label: allEntities[rel.entity]?.label.default,
+              });
+            } else {
+              storyEventLocations[event.id] = [
+                {
+                  geometry: allEntities[rel.entity].geometry,
+                  label: allEntities[rel.entity]?.label.default,
+                },
+              ];
+            }
+          }
+        }
+      }
+    }
+
     return {
       ...story,
       slides: slideOutput,
@@ -493,6 +540,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       storyEvents: storyEvents,
       collections: storyCollections,
       media: storyMedias,
+      vocabulary: storyVocabulary,
+      storyEventLocations: storyEventLocations,
     };
   };
 
@@ -513,7 +562,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }}
         onPreviewStory={() => {
           setPreviewStatus('loading');
-          postStory(createStoryObject())
+          postStory(createStoryObject(true))
             .unwrap()
             .then((fulfilled: any) => {
               const response = { ...fulfilled } as StoryViewerResponse;

@@ -1,11 +1,14 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { keyBy } from '@stefanprobst/key-by';
 import { schemePaired as identityColors } from 'd3-scale-chromatic';
+import { useCallback } from 'react';
+import type { ViewState, ViewStateChangeEvent } from 'react-map-gl';
 
+import { useAppDispatch } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
 import { getColorsById } from '@/features/common/visualization.config';
-import type { Visualization } from '@/features/common/visualization.slice';
+import { type Visualization, setMapViewState } from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { GeoMap } from '@/features/geo-map/geo-map';
 import { base } from '@/features/geo-map/geo-map.config';
@@ -34,7 +37,7 @@ interface GeoMapWrapperProps {
 export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   const { visualization, onToggleHighlight, highlightedByVis, autoFitBounds = false } = props;
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   //fetch all required data
   const data = useDataFromVisualization({ visualization });
@@ -88,6 +91,8 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       ? visualization.properties.colorBy!.value.value
       : 'event-kind';
 
+  const viewState = visualization.mapState.viewState;
+
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
     getColors: getColorsById,
@@ -98,10 +103,9 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     onToggleHighlight!([], ids);
   }
 
-  // function onMoveEnd(event: ViewStateChangeEvent) {
-  //   console.log(event);
-  //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
-  // }
+  function onMoveEnd(event: ViewStateChangeEvent) {
+    dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
+  }
 
   // const onMove = useCallback((event: ViewStateChangeEvent) => {
   //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
@@ -109,11 +113,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
 
   return (
     <>
-      <GeoMap
-        {...base}
-        mapStyle={mapStyle}
-        // onMove={onMove}
-      >
+      <GeoMap {...base} initialViewState={viewState} mapStyle={mapStyle} onMoveEnd={onMoveEnd}>
         {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
         {renderLines === true && isCluster === false && lines.features.length > 0 && (
           <GeoMapLineLayer
