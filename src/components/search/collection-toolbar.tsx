@@ -6,7 +6,7 @@ import {
   DialogTrigger,
   IconButton,
 } from '@intavia/ui';
-import { Trash2Icon } from 'lucide-react';
+import { FilePlus2Icon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -47,7 +47,10 @@ export function CollectionToolbar(): JSX.Element {
       <div className="flex items-center justify-between gap-2">
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="subtle">{t(['common', 'collections', 'create-collection'])}</Button>
+            <Button variant="subtle">
+              <FilePlus2Icon className="h-4 w-4 shrink-0" />
+              {t(['common', 'collections', 'create-collection'])}
+            </Button>
           </DialogTrigger>
           <CreateCollectionDialog
             onClose={() => {
