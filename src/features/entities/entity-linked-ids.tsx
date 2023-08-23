@@ -15,12 +15,12 @@ export function EntityLinkedIds(props: EntityLinkedIdsProps): JSX.Element | null
       <dd>
         <ul role="list">
           {links.map((link) => {
-            const url = String(new URL(link.id, link.provider?.baseUrl));
+            const url = String(new URL(link.url));
 
             return (
-              <li key={link.id}>
+              <li key={link.url}>
                 <a className="underline" href={url}>
-                  {link.provider?.label ?? url}
+                  {link.label}
                 </a>
               </li>
             );

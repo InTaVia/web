@@ -30,6 +30,8 @@ import { PropertiesDialog } from '@/features/common/properties-dialog';
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
+import type { NetworkState } from '@/features/ego-network/network.slice';
+import { selectAllNetworks } from '@/features/ego-network/network.slice';
 import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
@@ -56,6 +58,7 @@ import type {
   LayoutTemplateItem,
 } from '@/features/visualization-layouts/visualization-group';
 import { layoutTemplates } from '@/features/visualization-layouts/visualization-group';
+import { unique } from '@/lib/unique';
 
 interface StoryCenterPaneProps {
   story: Story;
@@ -85,6 +88,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const collections = useAppSelector(selectCollections);
 
   const mediaRessources = useAppSelector(selectMediaResources);
+
+  const networkStates = useAppSelector(selectAllNetworks);
 
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
@@ -392,8 +397,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     storyEvents: Record<string, Event>;
   }>();
 
+  type ExportVisualization = Visualization & { network?: NetworkState };
   const createStoryObject = (preview: boolean) => {
-    const storyVisualizations: Record<string, Visualization> = {};
+    const storyVisualizations: Record<string, ExportVisualization> = {};
     const storyContentPanes: Record<string, ContentPane> = {};
     const storyEntityIds = [] as Array<Entity['id']>;
     const storyEventIds: Array<string> = [];
@@ -402,8 +408,19 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       for (const visID of Object.values(slide.visualizationSlots)) {
         if (visID != null) {
           const vis = allVisualizations[visID] as Visualization;
-          storyVisualizations[visID] = vis;
-          storyEntityIds.push(...vis.entityIds);
+          const networkEntityIds: Array<Entity['id']> = [];
+          const networkState: NetworkState = { nodes: [], links: [] };
+          if (vis.type === 'ego-network' && vis.id in networkStates) {
+            networkState.nodes.push(...networkStates[vis.id]!.nodes);
+            networkState.links.push(...networkStates[vis.id]!.links);
+
+            networkState.nodes.forEach((node) => {
+              networkEntityIds.push(node.entityId);
+            });
+          }
+
+          storyVisualizations[visID] = { ...vis, network: networkState };
+          storyEntityIds.push(...vis.entityIds, ...networkEntityIds);
           storyEventIds.push(...vis.eventIds);
         }
       }
@@ -451,7 +468,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     storyEntityIds.push(...linkedEntities);
 
     const storyEntities = Object.fromEntries(
-      storyEntityIds
+      unique(storyEntityIds)
         .filter((key) => {
           return key in allEntities;
         })
@@ -554,7 +571,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         timescale={timescale}
         onTimescaleChange={onTimescaleChange}
         onExportStory={() => {
-          setStoryExportObject(createStoryObject());
+          setStoryExportObject(createStoryObject(false));
           setDialogOpen(true);
         }}
         onOpenSettingsDialog={() => {
