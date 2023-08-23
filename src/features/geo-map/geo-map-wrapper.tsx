@@ -91,7 +91,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       ? visualization.properties.colorBy!.value.value
       : 'event-kind';
 
-  const viewState = visualization.mapState.viewState;
+  const viewState = visualization.mapState != null ? visualization.mapState.viewState : null;
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -104,7 +104,9 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
   }
 
   function onMoveEnd(event: ViewStateChangeEvent) {
-    dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
+    if (visualization.id !== 'ego-map') {
+      dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
+    }
   }
 
   // const onMove = useCallback((event: ViewStateChangeEvent) => {
