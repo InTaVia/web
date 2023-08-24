@@ -1,6 +1,7 @@
 import type {
   BirthStatisticsSearch,
   DeathStatisticsSearch,
+  EntityTypeStatisticsSearch,
   GetBiographyById,
   GetEntityById,
   GetEventById,
@@ -40,6 +41,7 @@ import {
   searchBirthStatistics,
   searchDeathStatistics,
   searchEntities,
+  searchEntityTypeStatistics,
   searchEventKinds,
   searchEvents,
   searchOccupations,
@@ -286,12 +288,23 @@ export const service = createApi({
       }),
       searchOccupationStatistics: builder.query<
         OccupationStatisticsSearch.Response,
-        DeathStatisticsSearch.SearchParams
+        OccupationStatisticsSearch.SearchParams
       >({
         query(params) {
           return {
             url: searchOccupationStatistics.url(params),
             options: searchOccupationStatistics.options(),
+          };
+        },
+      }),
+      searchEntityTypeStatistics: builder.query<
+        EntityTypeStatisticsSearch.Response,
+        EntityTypeStatisticsSearch.SearchParams
+      >({
+        query(params) {
+          return {
+            url: searchEntityTypeStatistics.url(params),
+            options: searchEntityTypeStatistics.options(),
           };
         },
       }),
@@ -330,4 +343,5 @@ export const {
   useSearchBirthStatisticsQuery,
   useSearchDeathStatisticsQuery,
   useSearchOccupationStatisticsQuery,
+  useSearchEntityTypeStatisticsQuery,
 } = service;
