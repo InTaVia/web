@@ -12,7 +12,7 @@ export function SearchResultsPanel(): JSX.Element {
   const [showList, setShowList] = useState(true);
 
   return (
-    <div className="grid h-full min-h-0 grid-flow-col grid-cols-2 grid-rows-[auto_1fr] divide-x divide-neutral-200">
+    <div className="grid h-full min-h-0 w-full grid-flow-col grid-cols-2 grid-rows-[auto_1fr] divide-x divide-neutral-200">
       <CollectionProvider>
         <SearchResultsToolbar
           onTriggerList={() => {
