@@ -15,8 +15,8 @@ export const VisualizationRoot = forwardRef(function VisualisationRoot(
   const { children, dimensions } = props;
 
   return (
-    <div ref={ref} className="h-full w-full">
-      <svg height={dimensions.height} width={dimensions.width}>
+    <div ref={ref} className="relative h-full w-full">
+      <svg className="absolute inset-0" height={dimensions.height} width={dimensions.width}>
         <g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>{children}</g>
       </svg>
     </div>

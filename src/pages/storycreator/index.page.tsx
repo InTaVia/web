@@ -17,7 +17,9 @@ export default function StoriesPage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      <StoriesScreen />
+      <main>
+        <StoriesScreen />
+      </main>
     </Fragment>
   );
 }

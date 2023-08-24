@@ -60,15 +60,17 @@ export function CollectionView(): JSX.Element {
 
   return (
     <div className="min-h-0 overflow-auto bg-neutral-50">
-      <ul role="list" className="divide-y divide-neutral-200">
-        {collection?.entities.map((id) => {
-          return (
-            <li key={id} className="odd:bg-white">
-              <CollectionEntity id={id} />
-            </li>
-          );
-        })}
-      </ul>
+      <div className="relative">
+        <ul role="list" className="divide-y divide-neutral-200">
+          {collection?.entities.map((id) => {
+            return (
+              <li key={id} className="odd:bg-white">
+                <CollectionEntity id={id} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <footer className="border-t border-neutral-200 py-4 px-8">
         {collection?.entities.length} Entities
       </footer>
