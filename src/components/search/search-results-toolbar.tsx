@@ -103,7 +103,14 @@ function AddQueryToCollectionMenuItem(): JSX.Element {
   const { toast } = useToast();
 
   async function onAddQueryToCollection() {
-    if (currentCollection == null) return;
+    if (currentCollection == null) {
+      toast({
+        title: 'No collection selected',
+        description: 'Select or create a collection to add entities',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     const { dismiss } = toast({
       title: 'Fetching entities',
