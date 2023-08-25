@@ -157,11 +157,9 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
               {t(['common', 'entity', 'relation', 'other'])}
             </TabsTrigger>
             <TabsTrigger value="media">{t(['common', 'entity', 'media', 'other'])}</TabsTrigger>
-            {entity.kind === 'person' ? (
-              <TabsTrigger value="biographies">
-                {t(['common', 'entity', 'biography', 'other'])}
-              </TabsTrigger>
-            ) : null}
+            <TabsTrigger value="biographies">
+              {t(['common', 'entity', 'biography', 'other'])}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="relations">
@@ -172,11 +170,9 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
             <MediaFormFields />
           </TabsContent>
 
-          {entity.kind === 'person' ? (
-            <TabsContent value="biographies">
-              <BiographiesFormFields />
-            </TabsContent>
-          ) : null}
+          <TabsContent value="biographies">
+            <BiographiesFormFields />
+          </TabsContent>
         </Tabs>
 
         <hr />
