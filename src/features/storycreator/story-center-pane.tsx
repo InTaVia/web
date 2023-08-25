@@ -447,7 +447,29 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       });
     });
 
-    const combinedStoryEventIds = [...linkedEvents, ...storyEventIds];
+    const entityIdsInCollections = [];
+    const eventIdsInCollections = [];
+
+    const storyCollections = Object.fromEntries(
+      Object.keys(collections)
+        .filter((key) => {
+          return (
+            collections[key].entities.filter((value) => {
+              return storyEntityIds.includes(value);
+            }).length > 0 ||
+            collections[key].events.filter((value) => {
+              return storyEventIds.includes(value);
+            }).length > 0
+          );
+        })
+        .map((key) => {
+          entityIdsInCollections.push(...collections[key].entities);
+          eventIdsInCollections.push(...collections[key].events);
+          return [key, collections[key] as Collection];
+        }),
+    );
+
+    const combinedStoryEventIds = [...linkedEvents, ...storyEventIds, ...eventIdsInCollections];
 
     const storyEvents = Object.fromEntries(
       combinedStoryEventIds
@@ -466,6 +488,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     });
 
     storyEntityIds.push(...linkedEntities);
+    storyEntityIds.push(...entityIdsInCollections);
 
     const storyEntities = Object.fromEntries(
       unique(storyEntityIds)
@@ -474,23 +497,6 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         })
         .map((key) => {
           return [key, allEntities[key] as Entity];
-        }),
-    );
-
-    const storyCollections = Object.fromEntries(
-      Object.keys(collections)
-        .filter((key) => {
-          return (
-            collections[key].entities.filter((value) => {
-              return Object.keys(storyEntities).includes(value);
-            }).length > 0 ||
-            collections[key].events.filter((value) => {
-              return Object.keys(storyEvents).includes(value);
-            }).length > 0
-          );
-        })
-        .map((key) => {
-          return [key, collections[key] as Collection];
         }),
     );
 
@@ -527,9 +533,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
         // related event might be a place
         if (allEntities[rel.entity] != null && allEntities[rel.entity]?.kind === 'place') {
-          console.log(allEntities[rel.entity], allEntities[rel.entity].geometry);
           if (allEntities[rel.entity].geometry != null) {
-            console.log('found', allEntities[rel.entity]);
             if (event.id in storyEventLocations) {
               storyEventLocations[event.id].push({
                 geometry: allEntities[rel.entity].geometry,
@@ -673,7 +677,13 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 )}`}
                 download={`${story.properties.name?.value ?? story.id}.istory.json`}
               >
-                <Button>Download</Button>
+                <Button
+                  onClick={() => {
+                    setDialogOpen(false);
+                  }}
+                >
+                  Download
+                </Button>
               </a>
             </DialogFooter>
           </DialogContent>
