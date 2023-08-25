@@ -69,6 +69,7 @@ export const dictionary: Dictionary = {
     label: 'Label',
     'alternative-label': { one: 'Alternative label', other: 'Alternative labels' },
     'linked-url': { one: 'Linked URL', other: 'Linked URLs' },
+    'linked-url-label': { one: 'Provider', other: 'Providers' },
     description: 'Description',
     gender: { one: 'Gender', other: 'Genders' },
     occupation: { one: 'Occupation', other: 'Occupations' },

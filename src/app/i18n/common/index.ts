@@ -58,6 +58,7 @@ export interface Dictionary {
     label: string;
     'alternative-label': Plurals;
     'linked-url': Plurals;
+    'linked-url-label': Plurals;
     description: string;
     gender: Plurals;
     occupation: Plurals;

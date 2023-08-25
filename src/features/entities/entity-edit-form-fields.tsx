@@ -229,13 +229,22 @@ export function EntityLinkedUriFormFields(): JSX.Element {
               fieldArray.fields.remove(index);
             }
 
+            const url = [name, 'url'].join('.');
+            const label = [name, 'label'].join('.');
+
             return (
               <li key={name}>
-                <div className="grid grid-cols-[1fr_auto] items-end gap-2">
+                <div className="grid grid-cols-[1fr_1fr_auto] items-end gap-2">
                   <FormTextField
                     id={id}
                     label={t(['common', 'entity', 'linked-url', 'one'])}
-                    name={name}
+                    name={url}
+                    required
+                  />
+                  <FormTextField
+                    id={id}
+                    label={t(['common', 'entity', 'linked-url-label', 'one'])}
+                    name={label}
                     required
                   />
                   <IconButton
@@ -255,7 +264,7 @@ export function EntityLinkedUriFormFields(): JSX.Element {
       <div className="flex items-center justify-end">
         <Button
           onClick={() => {
-            onAdd();
+            onAdd({ url: null, label: null });
           }}
           variant="default"
         >
