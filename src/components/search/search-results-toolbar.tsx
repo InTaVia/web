@@ -11,29 +11,30 @@ import {
   useToast,
 } from '@intavia/ui';
 import { FilePlus2Icon, ListIcon, PieChartIcon, PlusIcon } from 'lucide-react';
-import type { MouseEvent } from 'react';
 import { useState } from 'react';
 
-import { useAppDispatch } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 import { addEntitiesToCollection } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { SaveQueryAsCollectionDialog } from '@/components/search/save-query-as-collection-dialog';
 import { useAllSearchResults } from '@/components/search/use-all-search-results';
+import { selectSearchResultTab, setSearchResultTab } from '@/features/ui/ui.slice';
 
-export function SearchResultsToolbar(props: {
-  onTriggerList: (e: MouseEvent) => void;
-  onTriggerOverview: (e: MouseEvent) => void;
-}): JSX.Element {
-  const { onTriggerList, onTriggerOverview } = props;
+export function SearchResultsToolbar(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const searchResultTab = useAppSelector(selectSearchResultTab);
+
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   return (
     <>
       <div className="flex flex-col items-center justify-between gap-2 border-b border-neutral-200 px-8 py-2 lg:flex-row">
-        <Tabs id="result-tabs" defaultValue="result-list">
+        <Tabs id="result-tabs" defaultValue={searchResultTab} value={searchResultTab}>
           <TabsList>
             <TabsTrigger
-              onClick={onTriggerList}
+              onClick={() => {
+                dispatch(setSearchResultTab('result-list'));
+              }}
               value="result-list"
               className="flex gap-2 py-2 px-4"
             >
@@ -41,7 +42,9 @@ export function SearchResultsToolbar(props: {
               Result list
             </TabsTrigger>
             <TabsTrigger
-              onClick={onTriggerOverview}
+              onClick={() => {
+                dispatch(setSearchResultTab('result-overview'));
+              }}
               value="result-overview"
               className="flex gap-2 py-2 px-4"
             >
