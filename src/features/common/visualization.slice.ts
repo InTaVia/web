@@ -37,7 +37,7 @@ export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
 
 const initialState: Record<Visualization['id'], Visualization> = {};
 
-const defaultMapState = {
+export const defaultMapState = {
   mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
   viewState: {
     latitude: 9.902056,

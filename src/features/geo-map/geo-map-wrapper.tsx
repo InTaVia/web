@@ -109,13 +109,21 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     }
   }
 
+  console.log(visualization.id, viewState);
+
   // const onMove = useCallback((event: ViewStateChangeEvent) => {
   //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
   // }, []);
 
   return (
     <>
-      <GeoMap {...base} initialViewState={viewState} mapStyle={mapStyle} onMoveEnd={onMoveEnd}>
+      <GeoMap
+        key={visualization.id + 'GeoMap'}
+        {...base}
+        i_initialViewState={viewState}
+        mapStyle={mapStyle}
+        onMoveEnd={onMoveEnd}
+      >
         {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
         {renderLines === true && isCluster === false && lines.features.length > 0 && (
           <GeoMapLineLayer
