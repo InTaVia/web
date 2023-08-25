@@ -14,11 +14,13 @@ export interface UiWindow {
 
 export type ComponentName = 'dcl' | 'stc' | 'vas';
 export type PaneOrientation = 'left' | 'right';
+export type SearchResultTab = 'result-list' | 'result-overview';
 
 interface UiState {
   windows: Array<UiWindow>;
   components: {
     dcl: {
+      searchResultTab: SearchResultTab;
       leftPaneOpen: boolean;
       rightPaneOpen: boolean;
     };
@@ -38,6 +40,7 @@ const initialState: UiState = {
   windows: [],
   components: {
     dcl: {
+      searchResultTab: 'result-list',
       leftPaneOpen: true,
       rightPaneOpen: true,
     },
@@ -96,11 +99,21 @@ export const uiSlice = createSlice({
     setSelectedCollection: (state, action: PayloadAction<string | null>) => {
       state.selectedCollection = action.payload;
     },
+    setSearchResultTab: (state, action: PayloadAction<SearchResultTab>) => {
+      const searchResultTab = action.payload;
+      state.components.dcl.searchResultTab = searchResultTab;
+    },
   },
 });
 
-export const { addWindow, editWindow, removeWindow, setSidePane, setSelectedCollection } =
-  uiSlice.actions;
+export const {
+  addWindow,
+  editWindow,
+  removeWindow,
+  setSidePane,
+  setSelectedCollection,
+  setSearchResultTab,
+} = uiSlice.actions;
 
 export function selectWindows(state: RootState): Array<UiWindow> {
   return state.ui.windows;
@@ -133,3 +146,7 @@ export const selectPaneOpen = createSelector(
     }
   },
 );
+
+export function selectSearchResultTab(state: RootState): SearchResultTab {
+  return state.ui.components.dcl.searchResultTab;
+}
