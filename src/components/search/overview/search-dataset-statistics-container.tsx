@@ -1,14 +1,13 @@
 import { LoadingIndicator } from '@intavia/ui';
 
-import { useSearchEntityTypeStatisticsQuery } from '@/api/intavia.service';
 import { BarChart } from '@/components/search/overview/bar-chart';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 
-export function SearchEntityTypeStatisticsContainer(): JSX.Element {
+export function SearchDatasetStatisticsContainer(): JSX.Element {
   const searchEntitiesFilters = useSearchEntitiesFilters();
-  const entityTypeQuery = useSearchEntityTypeStatisticsQuery(searchEntitiesFilters);
+  const datasetQuery = useSearchDatasetStatisticsQuery(searchEntitiesFilters);
 
-  const isFetching = entityTypeQuery.isFetching;
+  const isFetching = datasetQuery.isFetching;
 
   function containerContent(): JSX.Element {
     if (isFetching) {
@@ -19,7 +18,7 @@ export function SearchEntityTypeStatisticsContainer(): JSX.Element {
       );
     }
 
-    if (entityTypeQuery.data === undefined) {
+    if (datasetQuery.data === undefined) {
       return (
         <div className="grid place-items-center items-center">
           <p>No entity type statistical data available :(</p>
@@ -27,12 +26,12 @@ export function SearchEntityTypeStatisticsContainer(): JSX.Element {
       );
     }
 
-    return <BarChart kind="entity-type" data={entityTypeQuery.data} />;
+    return <BarChart kind="dataset" data={datasetQuery.data} />;
   }
 
   return (
     <div className="grid h-64 w-full grid-rows-[auto_1fr] gap-2 bg-white p-6">
-      <h2 className="font-bold">Entity Types</h2>
+      <h2 className="font-bold">Datasets</h2>
       {containerContent()}
     </div>
   );
