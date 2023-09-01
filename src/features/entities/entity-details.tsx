@@ -78,7 +78,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
               <div
                 className={cn(
                   'relative border',
-                  `h-[${networkMapHeight}px]`,
+                  'h-[400px]',
                   `${hasRelations ? 'w-1/2' : 'w-full'}`,
                 )}
               >
