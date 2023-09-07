@@ -1,5 +1,4 @@
 import type { EntityKind, InternationalizedLabel, VocabularyEntry } from '@intavia/api-client';
-import type { Feature } from 'geojson';
 
 export interface ConstraintKindType {
   id: string;
@@ -11,10 +10,10 @@ export interface DateRangeConstraintKind {
   value: [IsoDateTimestamp, IsoDateTimestamp] | null;
 }
 
-export interface GeometryConstraintKind {
-  kind: { id: 'geometry'; label: { default: 'Places' } };
-  value: Array<Feature> | null;
-}
+// export interface GeometryConstraintKind {
+//   kind: { id: 'geometry'; label: { default: 'Places' } };
+//   value: Array<Feature> | null;
+// }
 
 export interface LabelConstraintKind {
   kind: { id: 'label'; label: { default: 'Labels' } };
@@ -26,27 +25,27 @@ export interface VocabularyConstraintKind<T extends { id: string } = { id: strin
   value: Array<T['id']> | null;
 }
 
+export interface TypeConstraintKind {
+  kind: { id: 'type'; label: { default: 'Types' } };
+  value: string | null;
+}
+
 export type ConstraintKind =
   | DateRangeConstraintKind
-  // | GeometryConstraintKind
   | LabelConstraintKind
+  | TypeConstraintKind
   | VocabularyConstraintKind;
 
 export type ConstraintKindId = ConstraintKind['kind']['id'];
 export type ConstraintKindLabel = ConstraintKind['kind']['label'];
 
-export const constraintKindIds: Array<ConstraintKindId> = [
-  'date-range',
-  // 'geometry',
-  'label',
-  'vocabulary',
-];
+export const ringConstraintKindIds: Array<ConstraintKindId> = ['date-range', 'label', 'vocabulary'];
 
 export const constraintKindLabelById: Record<ConstraintKindId, ConstraintKindLabel> = {
   'date-range': { default: 'Dates' },
-  // geometry: { default: 'Places' },
   label: { default: 'Labels' },
   vocabulary: { default: 'Attributes' },
+  type: { default: 'Types' },
 };
 
 export interface ConstraintBase {
@@ -60,24 +59,29 @@ export interface PersonBirthDateConstraint extends ConstraintBase, DateRangeCons
   entityKinds: ['person'];
 }
 
-export interface PersonBirthPlaceConstraint extends ConstraintBase, GeometryConstraintKind {
-  id: 'person-birth-place';
-  entityKinds: ['person'];
-}
+// export interface PersonBirthPlaceConstraint extends ConstraintBase, GeometryConstraintKind {
+//   id: 'person-birth-place';
+//   entityKinds: ['person'];
+// }
 
 export interface PersonDeathDateConstraint extends ConstraintBase, DateRangeConstraintKind {
   id: 'person-death-date';
   entityKinds: ['person'];
 }
 
-export interface PersonDeathPlaceConstraint extends ConstraintBase, GeometryConstraintKind {
-  id: 'person-death-place';
-  entityKinds: ['person'];
-}
+// export interface PersonDeathPlaceConstraint extends ConstraintBase, GeometryConstraintKind {
+//   id: 'person-death-place';
+//   entityKinds: ['person'];
+// }
 
 export interface PersonNameConstraint extends ConstraintBase, LabelConstraintKind {
   id: 'person-name';
   entityKinds: ['person'];
+}
+
+export interface EntityKindConstraint extends ConstraintBase, TypeConstraintKind {
+  id: 'entity-kind';
+  entityKinds: ['person', 'cultural-heritage-object', 'place', 'group'];
 }
 
 export interface PersonOccupationConstraint
@@ -96,9 +100,8 @@ export interface ContraintGroup {
 }
 
 export type Constraint =
+  | EntityKindConstraint
   | PersonBirthDateConstraint
-  // | PersonBirthPlaceConstraint
   | PersonDeathDateConstraint
-  // | PersonDeathPlaceConstraint
   | PersonNameConstraint
   | PersonOccupationConstraint;

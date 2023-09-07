@@ -1,3 +1,4 @@
+import type { EntityKind } from '@intavia/api-client';
 import {
   Button,
   Dialog,
@@ -8,12 +9,18 @@ import {
 } from '@intavia/ui';
 import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
+import { NonNullExpression } from 'typescript';
 
+import { ChartContext } from '@/app/context/chart.context';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useSearchEntities } from '@/components/search/use-search-entities';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
-import type { Constraint } from '@/features/visual-querying/constraints.types';
+import type {
+  Constraint,
+  EntityKindConstraint,
+} from '@/features/visual-querying/constraints.types';
 import { DateConstraintWidget } from '@/features/visual-querying/DateConstraintWidget';
+import { EntityTypeConstraintWidget } from '@/features/visual-querying/EntityTypeConstraintWidget';
 import { ProfessionConstraintWidget } from '@/features/visual-querying/ProfessionConstraintWidget';
 import { TextConstraintWidget } from '@/features/visual-querying/TextConstraintWidget';
 import {
@@ -39,16 +46,18 @@ export function VisualQuerying(): JSX.Element {
   }
 
   return (
-    <div className="absolute inset-0 grid h-full w-full overflow-hidden" ref={parent}>
-      <VisualQueryingSvg
-        parentWidth={width}
-        parentHeight={height}
-        selectedConstraint={selectedConstraint}
-        setSelectedConstraint={setSelectedConstraint}
-      />
+    <ChartContext.Provider value={'visual-querying'}>
+      <div className="absolute inset-0 grid h-full w-full overflow-hidden" ref={parent}>
+        <VisualQueryingSvg
+          parentWidth={width}
+          parentHeight={height}
+          selectedConstraint={selectedConstraint}
+          setSelectedConstraint={setSelectedConstraint}
+        />
 
-      <ConstraintDialog constraint={selected} onClose={onClose} />
-    </div>
+        <ConstraintDialog constraint={selected} onClose={onClose} />
+      </div>
+    </ChartContext.Provider>
   );
 }
 
@@ -242,6 +251,43 @@ function ConstraintDialogContent(props: ConstraintDialogContentProps): JSX.Eleme
           <ConstraintDialogHeader>Add occupation constraint</ConstraintDialogHeader>
           <div className="grid h-96 w-full place-items-center">
             <ProfessionConstraintWidget constraint={constraint as any} />
+          </div>
+          <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
+        </DialogContent>
+      );
+    }
+
+    case 'type': {
+      // eslint-disable-next-line no-inner-declarations
+      function onClear() {
+        dispatch(
+          setConstraintValue({
+            ...constraint,
+            value: null,
+            id: 'entity-kind',
+          }),
+        );
+
+        search({ ...searchFilters, page: 1, kind: undefined });
+
+        onClose();
+      }
+
+      // eslint-disable-next-line no-inner-declarations
+      function onSubmit() {
+        const entityKind = constraints['entity-kind'].value as EntityKind | null;
+
+        if (entityKind) search({ ...searchFilters, page: 1, kind: [entityKind] });
+        else search({ ...searchFilters, page: 1, kind: undefined });
+
+        onClose();
+      }
+
+      return (
+        <DialogContent>
+          <ConstraintDialogHeader>Add entity type constraint</ConstraintDialogHeader>
+          <div className="grid h-96 w-full place-items-center">
+            <EntityTypeConstraintWidget constraint={constraint as EntityKindConstraint} />
           </div>
           <ConstraintDialogFooter onClear={onClear} onSubmit={onSubmit} />
         </DialogContent>

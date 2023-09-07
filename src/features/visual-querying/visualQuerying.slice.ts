@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
 import type { Constraint } from '@/features/visual-querying/constraints.types';
@@ -55,6 +55,13 @@ const initialState: VisualQueryBuilderState = {
       label: { default: 'Occupation' },
       value: null,
     },
+    'entity-kind': {
+      entityKinds: ['person', 'cultural-heritage-object', 'place', 'group'],
+      id: 'entity-kind',
+      kind: { id: 'type', label: { default: 'Types' } },
+      label: { default: 'Entity Type' },
+      value: null,
+    },
   },
 };
 
@@ -79,6 +86,14 @@ export function selectConstraints(state: RootState) {
   return state.visualQueryBuilder.constraints;
 }
 
-export function selectConstraintById(state: RootState, id: Constraint['id']) {
-  return state.visualQueryBuilder.constraints[id];
-}
+export const selectConstraintById = createSelector(
+  (state: RootState) => {
+    return state.visualQueryBuilder;
+  },
+  (state: RootState, constraintId: Constraint['id']) => {
+    return constraintId;
+  },
+  (visualQueryBuilderState, constraintId) => {
+    return visualQueryBuilderState.constraints[constraintId];
+  },
+);

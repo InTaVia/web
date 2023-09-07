@@ -1,13 +1,16 @@
 import type { EntityKind } from '@intavia/api-client';
 import { useToast } from '@intavia/ui';
 import { axisBottom, axisLeft, format, scaleBand, scaleLinear, select } from 'd3';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
+import { ChartContext } from '@/app/context/chart.context';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch } from '@/app/store';
 import { useSearchEntities } from '@/components/search/use-search-entities';
 import { useSearchEntitiesFilters } from '@/components/search/use-search-entities-filters';
 import { setSearchResultTab } from '@/features/ui/ui.slice';
+import type { EntityKindConstraint } from '@/features/visual-querying/constraints.types';
+import { setConstraintValue } from '@/features/visual-querying/visualQuerying.slice';
 import type { VisualizationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { useVisualisationDimensions } from '@/features/visualizations/use-visualization-dimensions';
 import { VisualizationRoot } from '@/features/visualizations/visualization-root';
@@ -18,10 +21,11 @@ export type BarChartKind = 'dataset' | 'entity-type' | 'gender' | 'object-type';
 interface BarChartProps {
   kind: BarChartKind;
   data: Record<string, number>;
+  constraint?: EntityKindConstraint;
 }
 
 export function BarChart(props: BarChartProps): JSX.Element {
-  const { kind, data } = props;
+  const { kind, data, constraint } = props;
 
   const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
@@ -30,6 +34,8 @@ export function BarChart(props: BarChartProps): JSX.Element {
   const { search } = useSearchEntities();
 
   const { toast } = useToast();
+
+  const chartContext = useContext(ChartContext);
 
   const labels = Object.keys(data);
   const counts = Object.values(data);
@@ -75,13 +81,17 @@ export function BarChart(props: BarChartProps): JSX.Element {
 
   function applySearchFilter(label: string) {
     if (kind === 'entity-type') {
-      search({ ...searchFilters, kind: [label as EntityKind], page: 1 });
-      toast({
-        title: 'Search filter applied',
-        description: `Only showing entities of type ${label}`,
-        variant: 'default',
-      });
-      dispatch(setSearchResultTab('result-list'));
+      if (chartContext === 'visual-querying' && constraint) {
+        dispatch(setConstraintValue({ id: constraint.id, value: label }));
+      } else {
+        search({ ...searchFilters, kind: [label as EntityKind], page: 1 });
+        toast({
+          title: 'Search filter applied',
+          description: `Only showing entities of type ${label}`,
+          variant: 'default',
+        });
+        dispatch(setSearchResultTab('result-list'));
+      }
     }
     // TODO: implement filter for other bar chart kinds
   }
@@ -109,6 +119,7 @@ export function BarChart(props: BarChartProps): JSX.Element {
               h={h}
               dimensions={dimensions}
               onClick={applySearchFilter}
+              isSelected={label === constraint?.value}
             />
           );
         })}
@@ -131,12 +142,15 @@ interface BarProps {
   h: number;
   dimensions: VisualizationDimensions;
   onClick: (label: string) => void;
+  isSelected: boolean;
 }
 
 function Bar(props: BarProps): JSX.Element {
-  const { label, count, x, y, w, h, dimensions, onClick } = props;
+  const { label, count, x, y, w, h, dimensions, onClick, isSelected } = props;
 
   const [isHovered, setHovered] = useState(false);
+
+  const isHighlighted = isHovered || isSelected;
 
   return (
     <g
@@ -156,16 +170,16 @@ function Bar(props: BarProps): JSX.Element {
         height={dimensions.boundedHeight}
         x={x}
         y={0}
-        fill={isHovered ? '#ECECEC' : 'white'}
+        fill={isHighlighted ? '#ECECEC' : 'white'}
       />
-      <rect width={w} height={h} x={x} y={y} fill={isHovered ? '#7A95B3' : '#cbd5e1'} />
+      <rect width={w} height={h} x={x} y={y} fill={isHighlighted ? '#7A95B3' : '#cbd5e1'} />
       <text
-        fontSize={isHovered ? '0.9em' : '0.75em'}
+        fontSize={isHighlighted ? '0.9em' : '0.75em'}
         x={x! + w / 2}
         y={y - 12}
         alignmentBaseline="central"
         textAnchor="middle"
-        fontWeight={isHovered ? 'bold' : 'normal'}
+        fontWeight={isHighlighted ? 'bold' : 'normal'}
       >
         {count}
       </text>
