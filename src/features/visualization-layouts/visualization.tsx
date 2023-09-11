@@ -152,6 +152,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
       case 'map':
         return (
           <GeoMapWrapper
+            key={visualization.id + 'GeoMapWrapper'}
             visualization={visualization}
             onToggleHighlight={onToggleHighlight}
             highlightedByVis={highlightedByVis}

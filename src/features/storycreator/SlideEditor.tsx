@@ -74,7 +74,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const currentSlide = slides.filter((currSlide) => {
     return currSlide.id === slide.id;
   })[0];
-  const highlighted = currentSlide?.highlighted ?? [];
+  const highlighted = currentSlide?.highlighted ?? {};
 
   const handleClose = () => {
     setEditElement(null);
@@ -117,7 +117,6 @@ export function SlideEditor(props: SlideEditorProps) {
         const data = event.dataTransfer.getData(mediaType);
         const payload: DataTransferData = JSON.parse(data);
         if (payload.type === 'data') {
-          console.log(payload);
           if (payload.entities.length === 1 && payload.events.length === 0) {
             addContent('entity', i_layoutItem, i_targetPane);
           }

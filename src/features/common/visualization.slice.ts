@@ -37,12 +37,12 @@ export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
 
 const initialState: Record<Visualization['id'], Visualization> = {};
 
-const defaultMapState = {
+export const defaultMapState = {
   mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
   viewState: {
-    latitude: 37.8,
-    longitude: -122.4,
-    zoom: 14,
+    latitude: 9.902056,
+    longitude: 49.843,
+    zoom: 2,
   },
 };
 
@@ -218,7 +218,7 @@ const emptyTimelineVis = {
 };
 
 const emptyMapVis = {
-  mapState: defaultMapState,
+  mapState: { ...defaultMapState },
   zoomLevel: 2.0,
   properties: {
     mapStyle: {
@@ -538,6 +538,7 @@ export const visualizationSlice = createSlice({
       assert(vis != null);
       assert(vis.mapState != null);
       vis.mapState.viewState = { ...vis.mapState.viewState, ...viewState };
+      state[visId] = vis;
     },
     setMapStyle: (
       state,
