@@ -8,7 +8,11 @@ import { useAppDispatch } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
 import { getColorsById } from '@/features/common/visualization.config';
-import { type Visualization, setMapViewState } from '@/features/common/visualization.slice';
+import {
+  type Visualization,
+  defaultMapState,
+  setMapViewState,
+} from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { GeoMap } from '@/features/geo-map/geo-map';
 import { base } from '@/features/geo-map/geo-map.config';
@@ -91,7 +95,8 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       ? visualization.properties.colorBy!.value.value
       : 'event-kind';
 
-  const viewState = visualization.mapState != null ? visualization.mapState.viewState : null;
+  const viewState =
+    visualization.mapState != null ? visualization.mapState.viewState : defaultMapState.viewState;
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -108,8 +113,6 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
     }
   }
-
-  console.log(visualization.id, viewState);
 
   // const onMove = useCallback((event: ViewStateChangeEvent) => {
   //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
