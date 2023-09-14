@@ -39,7 +39,7 @@ const EntityTooltipContent = forwardRef(
           return key in _entities;
         })
         .map((key) => {
-          if (_entities[key].media != null) {
+          if (_entities[key].media != null && _entities[key].media.length > 0) {
             entitiesWithMedia.push(key);
           }
           return [key, _entities[key]];

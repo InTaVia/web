@@ -20,6 +20,7 @@ import {
   visualizationTypes,
   visualizationTypesStoryCreator,
 } from '@/features/common/visualization.slice';
+import { removeNetwork } from '@/features/ego-network/network.slice';
 import { selectUsedVisualizations as selectUsedVisualizationsSC } from '@/features/storycreator/storycreator.slice';
 import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 import { selectUsedVisualizations as selectUsedVisualizationsVAS } from '@/features/visualization-layouts/workspaces.slice';
@@ -107,6 +108,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
     setSelectedVisualizationId(null);
     if (id != null) {
       dispatch(removeVisualization(id));
+      dispatch(removeNetwork(id));
     }
 
     setAlertDialogOpen(false);

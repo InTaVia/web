@@ -26,7 +26,7 @@ export default function EntityPage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      {id != null ? <EntityScreen id={id} /> : null}
+      <main>{id != null ? <EntityScreen id={id} /> : null}</main>
     </Fragment>
   );
 }

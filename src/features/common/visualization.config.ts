@@ -158,13 +158,16 @@ export const eventKindByEventId: Record<EventKind['id'], EventKindProperties['ty
   'event-kind-professional': 'career',
   education: 'career',
   'event-kind-education': 'career',
+  'event-kind-career': 'career',
 
   //honour
   'aHR0cDovL3d3dy5pbnRhdmlhLmV1L2lkbS1jb3JlL0hvbm91cg==': 'career', // Honour (idm-core)
+  'event-kind-honour': 'career',
 
   //movement
   travel: 'movement',
   'event-kind-travel': 'movement',
+  'event-kind-movement': 'movement',
 
   //death
   death: 'death',

@@ -56,69 +56,70 @@ export default function HomePage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-
-      <div className="flex h-full w-full flex-col justify-between">
-        <section className="flex max-h-[500px] min-h-[400px] flex-col place-content-center items-center gap-10 bg-gradient-to-r from-intavia-brand-400 to-intavia-green-400">
-          <div className="flex flex-row items-center gap-8">
-            <div className="relative h-28 w-32">
-              <Link href="/">
-                <a>
-                  <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
-                </a>
-              </Link>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-neutral-600">
-                {t(['common', 'home', 'hero', 'title'])}
-              </h1>
-              <h2 className="text-2xl text-neutral-600">
-                {t(['common', 'home', 'hero', 'subtitle'])}
-              </h2>
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-3xl px-8">
-            <SearchForm />
-          </div>
-        </section>
-
-        <section className="my-10 flex flex-wrap justify-center gap-10">
-          {cards.map((card) => {
-            return (
-              <div
-                key={card.title}
-                className="dark:border-neutral-700 dark:bg-neutral-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md"
-              >
-                <Link href={card.href.pathname}>
-                  <a className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
-                    <div>{card.icon}</div>
-                    <div className="dark:text-white text-lg font-medium">{card.title}</div>
-                  </a>
-                </Link>
-
-                <p className="dark:text-neutral-400 h-full px-5 py-2 text-justify font-normal text-neutral-700">
-                  {card.text}
-                </p>
-                <Link href={card.href.pathname} className="">
-                  <a className="flex w-full place-content-end items-center gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
-                    {card.button}
-                    <ChevronRightIcon className="h-5 w-5" />
+      <main>
+        <div className="flex h-full w-full flex-col justify-between">
+          <section className="flex max-h-[500px] min-h-[400px] flex-col place-content-center items-center gap-10 bg-gradient-to-r from-intavia-brand-400 to-intavia-green-400">
+            <div className="flex flex-row items-center gap-8">
+              <div className="relative h-28 w-32">
+                <Link href="/">
+                  <a>
+                    <Image src={IntaviaLogo} layout="fill" objectFit="contain" />
                   </a>
                 </Link>
               </div>
-            );
-          })}
-        </section>
+              <div>
+                <h1 className="text-2xl font-bold text-neutral-600">
+                  {t(['common', 'home', 'hero', 'title'])}
+                </h1>
+                <h2 className="text-2xl text-neutral-600">
+                  {t(['common', 'home', 'hero', 'subtitle'])}
+                </h2>
+              </div>
+            </div>
+            <div className="mx-auto w-full max-w-3xl px-8">
+              <SearchForm />
+            </div>
+          </section>
 
-        <footer className="flex h-16 place-content-center items-center gap-4 bg-neutral-200 px-20 text-sm text-neutral-900">
-          <Image src="/assets/images/EC_logo_s.png" alt="EC Logo" width={55} height={36} />
-          <p>
-            This project has received funding from the European Union&apos;s Horizon 2020 research
-            and innovation programme under grant agreement No. 101004825. This website reflects only
-            the authors&apos; views and the European Union is not liable for any use that may be
-            made of the information contained therein.
-          </p>
-        </footer>
-      </div>
+          <section className="my-10 flex flex-wrap justify-center gap-10">
+            {cards.map((card) => {
+              return (
+                <div
+                  key={card.title}
+                  className="dark:border-neutral-700 dark:bg-neutral-800 flex w-96 max-w-sm flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md"
+                >
+                  <Link href={card.href.pathname}>
+                    <a className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
+                      <div>{card.icon}</div>
+                      <div className="dark:text-white text-lg font-medium">{card.title}</div>
+                    </a>
+                  </Link>
+
+                  <p className="dark:text-neutral-400 h-full px-5 py-2 text-justify font-normal text-neutral-700">
+                    {card.text}
+                  </p>
+                  <Link href={card.href.pathname} className="">
+                    <a className="flex w-full place-content-end items-center gap-2 rounded-b-lg bg-intavia-green-50 px-5 py-3 font-medium">
+                      {card.button}
+                      <ChevronRightIcon className="h-5 w-5" />
+                    </a>
+                  </Link>
+                </div>
+              );
+            })}
+          </section>
+
+          <footer className="flex h-16 place-content-center items-center gap-4 bg-neutral-200 px-20 text-sm text-neutral-900">
+            <Image src="/assets/images/EC_logo_s.png" alt="EC Logo" width={55} height={36} />
+            <p>
+              This project has received funding from the European Union&apos;s Horizon 2020 research
+              and innovation programme under grant agreement No. 101004825. This website reflects
+              only the authors&apos; views and the European Union is not liable for any use that may
+              be made of the information contained therein.
+            </p>
+          </footer>
+        </div>
+      </main>
     </Fragment>
   );
 }

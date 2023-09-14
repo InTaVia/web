@@ -18,11 +18,12 @@ export default function SearchPage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-
-      <div className="grid h-full grid-rows-[auto_1fr] divide-y divide-neutral-200">
-        <SearchPanel />
-        <SearchResultsPanel />
-      </div>
+      <main className="h-full overflow-hidden">
+        <div className="grid h-full grid-rows-[auto_1fr] divide-y divide-neutral-200">
+          <SearchPanel />
+          <SearchResultsPanel />
+        </div>
+      </main>
     </Fragment>
   );
 }

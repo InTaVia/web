@@ -20,9 +20,5 @@ export function EntityScreen(props: EntityScreenProps): JSX.Element {
     return <p>Loading...</p>;
   }
 
-  return (
-    <main>
-      <EntityDetails entity={entityQuery.data} />
-    </main>
-  );
+  return <EntityDetails entity={entityQuery.data} />;
 }

@@ -13,9 +13,9 @@ import {
 import { useRouter } from 'next/router';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { node } from 'webpack';
 
 import { useHoverState } from '@/app/context/hover.context';
+import { usePathname } from '@/app/route/use-pathname';
 import {
   CulturalHeritageObjectSvgGroup,
   GroupSvgGroup,
@@ -26,6 +26,7 @@ import { getEntityColorByKind } from '@/features/common/visualization.config';
 import type { Visualization } from '@/features/common/visualization.slice';
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
+import { useEntity } from '@/lib/use-entity';
 
 export interface NetworkProps {
   nodes: Array<Node>;
@@ -41,10 +42,13 @@ const nodeHeight = 15;
 export function Network(props: NetworkProps): JSX.Element {
   const { nodes, links, width, height, visProperties } = props;
 
+  const isPartOfStory = usePathname().includes('storycreator');
+
   const showAllLabels: boolean = visProperties
     ? visProperties['showAllLabels']?.value ?? false
     : false;
 
+  const [isSimulationRunning, setSimulationRunning] = useState(true);
   const [animatedNodes, setAnimatedNodes] = useState(nodes);
   const [animatedLinks, setAnimatedLinks] = useState(links);
 
@@ -59,6 +63,8 @@ export function Network(props: NetworkProps): JSX.Element {
 
   useEffect(() => {
     // Force simulation
+    setSimulationRunning(true);
+
     const simulation = forceSimulation(animatedNodes)
       .force(
         'charge',
@@ -66,7 +72,12 @@ export function Network(props: NetworkProps): JSX.Element {
           .strength(-150)
           .distanceMax(nodeWidth * 20),
       )
-      .force('link', forceLink(animatedLinks))
+      .force(
+        'link',
+        forceLink(animatedLinks).id((d) => {
+          return (d as Node).entityId;
+        }),
+      )
       .force('collide', forceCollide(20))
       .force('center', forceCenter(width / 2, height / 2))
       .force('forceX', forceX(width / 2).strength(0.07))
@@ -74,9 +85,16 @@ export function Network(props: NetworkProps): JSX.Element {
 
     simulation.alpha(1).restart();
 
-    simulation.on('tick', () => {
+    if (!isPartOfStory) {
+      simulation.on('tick', () => {
+        setAnimatedNodes([...simulation.nodes()]);
+        // setAnimatedLinks([...animatedLinks]);
+      });
+    }
+
+    simulation.on('end', () => {
       setAnimatedNodes([...simulation.nodes()]);
-      setAnimatedLinks([...animatedLinks]);
+      setSimulationRunning(false);
     });
 
     return () => {
@@ -123,6 +141,17 @@ export function Network(props: NetworkProps): JSX.Element {
     setAnimatedNodes(animatedNodes);
   }
 
+  if (isPartOfStory && isSimulationRunning) {
+    return (
+      <div
+        style={{ width: `${width}px`, height: `${height}px` }}
+        className="grid place-items-center"
+      >
+        <p>Loading network ...</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: `${width}px`, height: `${height}px` }}>
       <svg
@@ -134,7 +163,7 @@ export function Network(props: NetworkProps): JSX.Element {
       >
         {animatedLinks.map((link) => {
           if (link.target.state === 'visible' && link.source.state === 'visible')
-            return <LinkView {...link} key={`${link.source.entity.id}-${link.target.entity.id}`} />;
+            return <LinkView {...link} key={`${link.source.entityId}-${link.target.entityId}`} />;
         })}
         <g id="nodes">
           {animatedNodes.map((node) => {
@@ -143,14 +172,14 @@ export function Network(props: NetworkProps): JSX.Element {
                 <NodeView
                   {...node}
                   addAdjacentNodesToNetwork={addAdjacentNodesToNetwork}
-                  key={node.entity.id}
+                  key={node.entityId}
                 />
               );
           })}
         </g>
         <g id="lables">
           {nodesWithLabels.map((node) => {
-            return <NodeLabelView {...node} key={`${node.entity.id}-label`} />;
+            return <NodeLabelView {...node} key={`${node.entityId}-label`} />;
           })}
         </g>
       </svg>
@@ -159,14 +188,17 @@ export function Network(props: NetworkProps): JSX.Element {
 }
 
 function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => void }): JSX.Element {
-  const { entity, x, y, addAdjacentNodesToNetwork } = props;
+  const { entityId, x, y, addAdjacentNodesToNetwork } = props;
 
-  const router = useRouter();
+  const entity = useEntity(entityId).data;
+
+  // const router = useRouter();
+  const isPartOfStory = usePathname().includes('storycreator');
 
   const { hovered, updateHover } = useHoverState();
-  const isHovered = hovered?.entities.includes(entity.id) ?? false;
+  const isHovered = hovered?.entities.includes(entityId) ?? false;
 
-  const colors = getEntityColorByKind(entity.kind);
+  const colors = getEntityColorByKind(entity ? entity.kind : 'person');
   const nodeProps = {
     fill: isHovered ? colors.foreground : colors.background,
     stroke: isHovered ? colors.background : 'white',
@@ -176,7 +208,7 @@ function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => voi
       e: MouseEvent<SVGCircleElement | SVGEllipseElement | SVGPolygonElement | SVGRectElement>,
     ) => {
       updateHover({
-        entities: [entity.id],
+        entities: [entityId],
         events: [],
         clientRect: {
           left: e.pageX,
@@ -189,9 +221,13 @@ function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => voi
       updateHover(null);
     },
     onClick: () => {
-      updateHover(null);
-      // void router.push(`/entities/${entity.id}`);
-      addAdjacentNodesToNetwork(props);
+      if (isPartOfStory) {
+        // TODO: add story highlighting
+      } else {
+        updateHover(null);
+        // void router.push(`/entities/${entityId}`);
+        addAdjacentNodesToNetwork(props);
+      }
     },
   };
 
@@ -224,6 +260,7 @@ function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => voi
   }
 
   function renderNode(): JSX.Element {
+    if (!entity) return <></>;
     switch (entity.kind) {
       case 'person':
         return renderPersonNode();
@@ -242,13 +279,25 @@ function NodeView(props: Node & { addAdjacentNodesToNetwork: (node: Node) => voi
 }
 
 function NodeLabelView(props: Node): JSX.Element {
-  const { entity, x, y } = props;
+  const { entityId, x, y } = props;
 
-  return (
-    <text key={`${entity.id}-label`} x={x} y={y + nodeHeight + 12} textAnchor="middle" fill="black">
-      {getTranslatedLabel(entity.label)}
-    </text>
-  );
+  const entity = useEntity(entityId).data;
+
+  if (entity) {
+    return (
+      <text
+        key={`${entityId}-label`}
+        x={x}
+        y={y + nodeHeight + 12}
+        textAnchor="middle"
+        fill="black"
+      >
+        {getTranslatedLabel(entity.label)}
+      </text>
+    );
+  }
+
+  return <></>;
 }
 
 function LinkView(props: Link): JSX.Element {
@@ -256,17 +305,12 @@ function LinkView(props: Link): JSX.Element {
 
   const { hovered, updateHover } = useHoverState();
 
-  const hoveredEvents = new Array<Event>();
+  const hoveredEvents = new Array<Event['id']>();
   hovered?.events.forEach((id) => {
-    roles.forEach((event) => {
-      if (event.id === id) hoveredEvents.push(event);
+    roles.forEach((eventId) => {
+      if (eventId === id) hoveredEvents.push(eventId);
     });
   });
-
-  // const labelX =
-  //   Math.min(source.x, target.x) + (Math.max(source.x, target.x) - Math.min(source.x, target.x));
-  // const labelY =
-  //   Math.min(source.y, target.y) + (Math.max(source.y, target.y) - Math.min(source.y, target.y));
 
   return (
     <g>
@@ -280,8 +324,8 @@ function LinkView(props: Link): JSX.Element {
         onMouseEnter={(e) => {
           updateHover({
             entities: [],
-            events: roles.map((event) => {
-              return event.id;
+            events: roles.map((eventId) => {
+              return eventId;
             }),
             clientRect: {
               left: e.clientX,
@@ -294,15 +338,6 @@ function LinkView(props: Link): JSX.Element {
           updateHover(null);
         }}
       />
-      {/* {hoveredEvents.length > 0 && (
-        <text x={labelX} y={labelY} textAnchor="middle" fill="black">
-          {hoveredEvents
-            .map((event) => {
-              return event.label.default;
-            })
-            .toString()}
-        </text>
-      )} */}
     </g>
   );
 }

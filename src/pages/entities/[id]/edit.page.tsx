@@ -20,7 +20,7 @@ export default function EntityEditPage(): JSX.Element {
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
-      {id != null ? <EntityEditScreen id={id} /> : null}
+      <main>{id != null ? <EntityEditScreen id={id} /> : null}</main>
     </Fragment>
   );
 }

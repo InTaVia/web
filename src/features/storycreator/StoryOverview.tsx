@@ -12,7 +12,7 @@ import {
   IconButton,
   useToast,
 } from '@intavia/ui';
-import { PlayIcon, Settings2Icon } from 'lucide-react';
+import { FilePlus2Icon, PlayIcon, Settings2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -264,7 +264,7 @@ export function StoryOverview(): JSX.Element {
       </div>
       <div className="grid w-fit grid-cols-[auto_auto] justify-items-start gap-4">
         <Button type="submit" onClick={onCreateStory}>
-          <PlusIcon className="h-5 w-5" /> Create New Story
+          <FilePlus2Icon className="h-5 w-5" /> Create New Story
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
