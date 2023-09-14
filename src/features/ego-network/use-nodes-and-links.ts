@@ -1,4 +1,4 @@
-import type { Entity, Event } from '@intavia/api-client';
+import type { Entity, EntityKind, Event } from '@intavia/api-client';
 
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { unique } from '@/lib/unique';
@@ -78,8 +78,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   // Add links
   events.data?.forEach((event) => {
     event.relations.forEach((relation) => {
-      const targetEntityId = relation.entity;
-      const sourceEntityId = Array.from(relatedEntities.values()).filter((entity) => {
+      const sourceEntity = Array.from(relatedEntities.values()).filter((entity) => {
         // FIXME: This (unecessary) conditional only exists because some places don't have a relations attribute :(
         if (entity.relations === undefined) return false;
         return (
@@ -87,7 +86,12 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
             return relation.event === event.id;
           }).length > 0
         );
-      })[0]!.id;
+      })[0]!;
+      const targetEntity = Array.from(relatedEntities.values()).find((entity) => {
+        if (relation.entity === entity.id) return entity;
+      })!;
+      const sourceEntityId = sourceEntity.id;
+      const targetEntityId = targetEntity.id;
 
       // Return if source and target entity are the same
       if (sourceEntityId === targetEntityId) return;
@@ -119,8 +123,8 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
         });
 
         // Update sourceNode adjacency statistics
-        sourceNode.adjacency[targetNode.entity.kind]++;
-        targetNode.adjacency[sourceNode.entity.kind]++;
+        sourceNode.adjacency[targetEntity.kind]++;
+        targetNode.adjacency[sourceEntity.kind]++;
       }
     });
   });
@@ -131,17 +135,6 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   } else if (events.status === 'error' || entitiesResponse.status === 'error') {
     status = 'error';
   }
-
-  // nodes.forEach((node) => {
-  //   const total =
-  //     node.adjacency.person +
-  //     node.adjacency['cultural-heritage-object'] +
-  //     node.adjacency.group +
-  //     node.adjacency['historical-event'] +
-  //     node.adjacency.place;
-  //   const numRelations = node.entity.relations.length;
-  //   console.log(node.entity.kind, node.entity.label.default, total, numRelations, node.state);
-  // });
 
   return {
     nodes: nodes,

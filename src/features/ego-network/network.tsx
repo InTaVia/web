@@ -122,23 +122,30 @@ export function Network(props: NetworkProps): JSX.Element {
 
   function addAdjacentNodesToNetwork(node: Node) {
     const connectedLinks = animatedLinks.filter((link) => {
-      return link.source === node;
+      return link.source.entityId === node.entityId;
     });
-    const adjacentNodes = connectedLinks.map((link) => {
-      return link.target;
+    const adjacentNodeIds = connectedLinks.map((link) => {
+      return link.target.entityId;
     });
 
-    adjacentNodes.forEach((node) => {
-      node.state = 'visible';
+    let nodes: Array<Node> = JSON.parse(JSON.stringify(animatedNodes));
+    nodes = nodes.map((node) => {
+      return {
+        ...node,
+        state:
+          node.state === 'visible' || adjacentNodeIds.includes(node.entityId)
+            ? 'visible'
+            : node.state,
+      };
     });
 
     // give nodes IDs and retrieve them with that??
 
     console.log(node);
     console.log(connectedLinks);
-    console.log(adjacentNodes);
+    console.log(nodes);
 
-    setAnimatedNodes(animatedNodes);
+    setAnimatedNodes(nodes);
   }
 
   if (isPartOfStory && isSimulationRunning) {
