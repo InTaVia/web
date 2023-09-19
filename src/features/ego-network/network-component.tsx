@@ -14,7 +14,7 @@ export interface Node {
   entityId: Entity['id'];
   x: number;
   y: number;
-  is_primary: boolean;
+  isPrimary: boolean;
   state: NodeState;
   adjacency: {
     person: number;
@@ -47,24 +47,25 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const entityIds = visualization.entityIds;
   const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
 
-  useEffect(() => {
-    // Save network state in store for story export
-    if (status !== 'success') {
-      return;
-    }
+  // TODO: make that shit work again later
+  // useEffect(() => {
+  //   // Save network state in store for story export
+  //   if (status !== 'success') {
+  //     return;
+  //   }
 
-    const nodesCopy = JSON.parse(JSON.stringify(nodes));
-    const linksCopy = JSON.parse(JSON.stringify(links));
+  //   const nodesCopy = JSON.parse(JSON.stringify(nodes));
+  //   const linksCopy = JSON.parse(JSON.stringify(links));
 
-    dispatch(
-      addNetwork({
-        id: visualization.id,
-        nodes: nodesCopy,
-        links: linksCopy,
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, nodes.length, links.length]);
+  //   dispatch(
+  //     addNetwork({
+  //       id: visualization.id,
+  //       nodes: nodesCopy,
+  //       links: linksCopy,
+  //     }),
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [status, nodes.length, links.length]);
 
   if (nodes.length === 0) {
     return (

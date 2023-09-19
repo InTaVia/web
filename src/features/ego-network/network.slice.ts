@@ -11,7 +11,7 @@ export interface NetworkState {
   links: Array<StoredLink>;
 }
 
-type StoredNode = Omit<Node, 'x' | 'y'>;
+type StoredNode = Omit<Node, 'adjacency' | 'state' | 'x' | 'y'>;
 type StoredLink = {
   source: Node['entityId'];
   target: Node['entityId'];

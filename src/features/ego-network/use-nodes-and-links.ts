@@ -63,7 +63,7 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       entityId: entity.id,
       x: 0,
       y: 0,
-      is_primary: ids.includes(entity.id),
+      isPrimary: ids.includes(entity.id),
       state: ids.includes(entity.id) ? 'visible' : 'one_hop',
       adjacency: {
         person: 0,

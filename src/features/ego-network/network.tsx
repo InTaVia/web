@@ -58,7 +58,7 @@ export function Network(props: NetworkProps): JSX.Element {
     ? animatedNodes
     : animatedNodes.filter((node) => {
         //const isHovered = hovered?.entities.includes(node.entity.id) ?? false;
-        return node.is_primary; // || isHovered;
+        return node.isPrimary; // || isHovered;
       });
 
   useEffect(() => {
