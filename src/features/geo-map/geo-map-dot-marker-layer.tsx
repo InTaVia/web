@@ -88,7 +88,8 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         const tempColor =
           targetEntities.length > 1 ||
           entityIdentities[targetEntities[0]] == null ||
-          dateString == null
+          dateString == null ||
+          entityIdentities[targetEntities[0]].timeScaleNormalized == null
             ? { main: '#cccccc', dark: '#666666' }
             : {
                 main: colorScale(
