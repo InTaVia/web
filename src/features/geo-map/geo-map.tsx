@@ -16,13 +16,13 @@ export type GeoMapProps = Omit<MapProps, 'mapLib'>;
  * Geo-visualisation.
  */
 export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref): JSX.Element {
-  const { children, i_initialViewState } = props;
+  const { children, initialViewState } = props;
 
   const [element, setElement] = useElementRef();
 
-  const [viewState, setViewState] = useState(i_initialViewState ?? defaultMapState);
+  const [viewState, setViewState] = useState(initialViewState ?? defaultMapState);
   const [zoomLevel, setZoomlevel] = useState(
-    i_initialViewState != null ? i_initialViewState.zoom : 2.0,
+    initialViewState != null ? initialViewState.zoom : 2.0,
   );
 
   return (

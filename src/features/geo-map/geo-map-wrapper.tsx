@@ -123,7 +123,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       <GeoMap
         key={visualization.id + 'GeoMap'}
         {...base}
-        i_initialViewState={viewState}
+        initialViewState={viewState}
         mapStyle={mapStyle}
         onMoveEnd={onMoveEnd}
       >
