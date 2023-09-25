@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { PURGE } from 'redux-persist';
 
 import type { RootState } from '@/app/store';
+import { importAdamicCollections } from '@/app/store/adamic-example';
 import { unique } from '@/lib/unique';
 
 export interface QueryMetadata {
@@ -37,9 +38,11 @@ interface EntitiesState {
   };
 }
 
+const collectionsById = importAdamicCollections();
+
 const initialState: EntitiesState = {
   collections: {
-    byId: {},
+    byId: collectionsById,
   },
 };
 
