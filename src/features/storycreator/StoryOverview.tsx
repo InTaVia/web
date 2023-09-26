@@ -116,6 +116,9 @@ export function StoryOverview(): JSX.Element {
       case 'Ernest Adamič':
         fileName = './adamicBiography.json';
         break;
+      case 'Tuusula Lake':
+        fileName = './tuusulaLake.json';
+        break;
       default:
         break;
     }
@@ -294,6 +297,17 @@ export function StoryOverview(): JSX.Element {
                     </IconButton>
                   </a>
                 )}
+                {story.id.includes('example-story-4') && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=970"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}
               </div>
             </div>
           );
@@ -331,6 +345,13 @@ export function StoryOverview(): JSX.Element {
               }}
             >
               Ernest Adamič
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Tuusula Lake');
+              }}
+            >
+              Tuusula Lake
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
