@@ -104,8 +104,23 @@ export function StoryOverview(): JSX.Element {
     dispatch(editStory(newStory));
   };
 
-  const onLoadDuerer = () => {
-    fetch('./AlbrechtDuerersBiography.json')
+  const onLoadStory = (useCaseName: string) => {
+    let fileName = '';
+    switch (useCaseName) {
+      case 'Albrecht Dürer':
+        fileName = './AlbrechtDuerersBiography.json';
+        break;
+      case 'Pier Paolo Vergerio':
+        fileName = './vergerioBiography.json';
+        break;
+      case 'Ernest Adamič':
+        fileName = './adamicBiography.json';
+        break;
+      default:
+        break;
+    }
+
+    fetch(fileName)
       .then((response) => {
         return response.json();
       })
@@ -246,10 +261,32 @@ export function StoryOverview(): JSX.Element {
                   }}
                   label={name}
                 />
-                {story.id === 'example-story-1' && (
+                {story.id.includes('example-story-1') && (
                   <a
                     target="_blank"
-                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=525"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=951"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}
+                {story.id.includes('example-story-2') && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=968"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}
+                {story.id.includes('example-story-3') && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=969"
                     rel="noreferrer"
                   >
                     <IconButton variant="subtle" size="sm" label="Play Example Story">
@@ -268,13 +305,33 @@ export function StoryOverview(): JSX.Element {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button type="submit" onClick={onLoadDuerer}>
+            <Button type="submit">
               <PlusIcon className="h-5 w-5" /> Load Example Story
             </Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-56">
-            <DropdownMenuItem onSelect={onLoadDuerer}>Albrecht Dürer</DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Albrecht Dürer');
+              }}
+            >
+              Albrecht Dürer
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Pier Paolo Vergerio');
+              }}
+            >
+              Pier Paolo Vergerio
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Ernest Adamič');
+              }}
+            >
+              Ernest Adamič
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <LoadStory onStoryImport={onStoryImport}></LoadStory>
