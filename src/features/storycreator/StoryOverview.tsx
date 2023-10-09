@@ -119,6 +119,12 @@ export function StoryOverview(): JSX.Element {
       case 'Tuusula Lake':
         fileName = './tuusulaLake.json';
         break;
+      case 'Herwig Zens':
+        fileName = './HerwigZens.json';
+        break;
+      case 'Hofburg Construction History':
+        fileName = './HofburgConstruction.json';
+        break;
       default:
         break;
     }
@@ -257,7 +263,6 @@ export function StoryOverview(): JSX.Element {
                 >
                   <Settings2Icon className="h-5 w-5" />
                 </IconButton>
-
                 <RemoveStoryButton
                   onDelete={() => {
                     onRemoveStory(story.id);
@@ -301,6 +306,28 @@ export function StoryOverview(): JSX.Element {
                   <a
                     target="_blank"
                     href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=970"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}
+                {story.id.includes('example-story-5') && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=1012"
+                    rel="noreferrer"
+                  >
+                    <IconButton variant="subtle" size="sm" label="Play Example Story">
+                      <PlayIcon className="h-5 w-5" />
+                    </IconButton>
+                  </a>
+                )}{' '}
+                {story.id.includes('example-story-6') && (
+                  <a
+                    target="_blank"
+                    href="https://intavia.fluxguide.com/fluxguide/public/content/fluxguide/exhibitions/1/system/app/dist/index.html?storyId=960"
                     rel="noreferrer"
                   >
                     <IconButton variant="subtle" size="sm" label="Play Example Story">
@@ -352,6 +379,20 @@ export function StoryOverview(): JSX.Element {
               }}
             >
               Tuusula Lake
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Herwig Zens');
+              }}
+            >
+              Herwig Zens
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Hofburg Construction History');
+              }}
+            >
+              Hofburg Construction History
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
