@@ -2,7 +2,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import { keyBy } from '@stefanprobst/key-by';
 import { schemePaired as identityColors } from 'd3-scale-chromatic';
 import { useCallback } from 'react';
-import type { ViewState, ViewStateChangeEvent } from 'react-map-gl';
+import type { ViewState, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import { useAppDispatch } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';

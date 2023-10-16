@@ -2,7 +2,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { assert } from '@stefanprobst/assert';
-import type { ViewState } from 'react-map-gl';
+import type { ViewState } from 'react-map-gl/maplibre';
 
 import type { RootState } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';

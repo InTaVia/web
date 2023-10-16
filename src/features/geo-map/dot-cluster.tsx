@@ -2,7 +2,7 @@ import type { Entity, Event } from '@intavia/api-client';
 import type { Feature, Point } from 'geojson';
 import get from 'lodash.get';
 import { useEffect, useMemo, useState } from 'react';
-import { useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { getEventKindPropertiesById, highlight } from '@/features/common/visualization.config';

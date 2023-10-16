@@ -1,7 +1,7 @@
 import type { EmptyObject, Entity, Event } from '@intavia/api-client';
 import type { Feature, FeatureCollection, Point } from 'geojson';
 import { useEffect, useMemo } from 'react';
-import { type LayerProps, Layer, Source, useMap } from 'react-map-gl';
+import { type LayerProps, Layer, Source, useMap } from 'react-map-gl/maplibre';
 
 import { DonutChartLayer } from '@/features/geo-map/donut-chart-layer';
 import { DotClusterLayer } from '@/features/geo-map/dot-cluster-layer';

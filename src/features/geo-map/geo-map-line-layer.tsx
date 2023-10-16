@@ -5,7 +5,7 @@ import { scaleLinear } from 'd3-scale';
 import { schemeTableau10 as colors } from 'd3-scale-chromatic';
 import type { Feature, FeatureCollection, LineString } from 'geojson';
 import type { LinePaint } from 'mapbox-gl';
-import { type LayerProps, Layer, Source } from 'react-map-gl';
+import { type LayerProps, Layer, Source } from 'react-map-gl/maplibre';
 
 import type { SpaceTime } from '@/features/geo-map/lib/use-line-string-feature-collection';
 import { getTemporalExtent } from '@/features/timeline/timeline';
