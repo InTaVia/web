@@ -5,7 +5,7 @@ import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import type { ControlPosition } from 'maplibre-gl';
 import { useEffect } from 'react';
-import { useControl } from 'react-map-gl';
+import { useControl } from 'react-map-gl/maplibre';
 
 import { noop } from '@/lib/noop';
 import { useInitialValue } from '@/lib/use-initial-value';

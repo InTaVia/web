@@ -26,7 +26,7 @@ export function createLineFeature(
 
   const line: Feature<
     LineString,
-    { entity: Entity; events: Array<Event>; places: Array<Place>; spaceTime: Array[SpaceTime] }
+    { entity: Entity; events: Array<Event>; places: Array<Place>; spaceTime: Array<SpaceTime> }
   > = {
     id: id,
     type: 'Feature',

@@ -1,9 +1,8 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import maplibregl from 'maplibre-gl';
 import { forwardRef, useState } from 'react';
-import type { MapProps, MapRef } from 'react-map-gl';
-import { Map, NavigationControl, ScaleControl, useMap } from 'react-map-gl';
+import type { MapProps, MapRef } from 'react-map-gl/maplibre';
+import { Map, NavigationControl, ScaleControl, useMap } from 'react-map-gl/maplibre';
 
 import { defaultMapState } from '@/features/common/visualization.slice';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
@@ -30,8 +29,10 @@ export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref
       {/* @ts-expect-error Type mismatch between `maplibre-gl` and `mapbox-gl`. */}
       <Map
         ref={ref}
+        antialias
         {...props}
-        mapLib={maplibregl}
+        minPitch={0}
+        maxPitch={85}
         reuseMaps
         onZoom={(e) => {
           setZoomlevel(e.viewState.zoom);

@@ -1,7 +1,7 @@
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
 import type { FeatureCollection, Point, Position } from 'geojson';
 import { Fragment, useEffect } from 'react';
-import { useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DotMarker } from '@/features/geo-map/dot-marker';

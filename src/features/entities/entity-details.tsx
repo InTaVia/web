@@ -1,7 +1,7 @@
 import type { Entity } from '@intavia/api-client';
 import { cn } from '@intavia/ui';
 import { useRef } from 'react';
-import { Marker } from 'react-map-gl';
+import { Marker } from 'react-map-gl/maplibre';
 
 import { BiographyViewer } from '@/features/biography/biography-viewer';
 import { NetworkComponent } from '@/features/ego-network/network-component';
