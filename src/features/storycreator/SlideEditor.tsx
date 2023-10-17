@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
-import { ContentTypeTransferData, type as mediaType } from '@/features/common/data-transfer.types';
+import {
+  type ContentTypeTransferData,
+  type as mediaType,
+} from '@/features/common/data-transfer.types';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
@@ -109,7 +112,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     try {
-      const data = event.dataTransfer.getData(ContentTypeTransferData);
+      const data = event.dataTransfer.getData(mediaType);
       const payload: DataTransferData = JSON.parse(data);
       addContent(payload.contentType, i_layoutItem, i_targetPane);
     } catch {
@@ -138,7 +141,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const drop = (event: DragEvent) => {
     event.preventDefault();
 
-    const data = event.dataTransfer.getData(ContentTypeTransferData);
+    const data = event.dataTransfer.getData(mediaType);
     try {
       const payload: DataTransferData = JSON.parse(data);
       if (payload.type === 'contentType') {
