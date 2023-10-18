@@ -107,45 +107,6 @@ export const emptyStory = {
       ],
       editable: true,
     },
-    font: {
-      type: 'select',
-      id: 'font',
-      label: 'Font',
-      sort: 3,
-      value: {
-        name: 'Sans Serif',
-        value: 'Verdana, Arial, Helvetica, sans-serif',
-        font: 'Verdana, Arial, Helvetica, sans-serif',
-      },
-      options: [
-        {
-          name: 'Serif',
-          value: 'Times, "Times New Roman", Georgia, serif',
-          font: 'Times, "Times New Roman", Georgia, serif',
-        },
-        {
-          name: 'Sans Serif',
-          value: 'Verdana, Arial, Helvetica, sans-serif',
-          font: 'Verdana, Arial, Helvetica, sans-serif',
-        },
-        {
-          name: 'Monospace',
-          value: '"Lucida Console", Courier, monospace',
-          font: '"Lucida Console", Courier, monospace',
-        },
-        {
-          name: 'Cursive',
-          value: 'cursive',
-          font: 'cursive',
-        },
-        {
-          name: 'Fantasy',
-          value: 'fantasy',
-          font: 'fantasy',
-        },
-      ],
-      editable: true,
-    },
   },
 };
 
