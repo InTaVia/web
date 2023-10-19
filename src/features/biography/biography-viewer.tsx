@@ -1,5 +1,6 @@
 import type { Biography } from '@intavia/api-client';
 import { LoadingIndicator } from '@intavia/ui';
+import parse from 'html-react-parser';
 import { useId } from 'react';
 
 import { useBiographies } from '@/features/biography/use-biographies';
@@ -25,7 +26,10 @@ export function BiographyViewer(props: BiographyViewerProps): JSX.Element {
           return (
             <div key={`bio-${biographyId}-${id}`}>
               <p className={'text-sm italic'}>{biography.abstract != null && biography.abstract}</p>
-              <p className={'whitespace-pre-line'}>{biography.text != null && biography.text}</p>
+              {Boolean(biography.text) && (
+                //<div>{parse(element!.properties!.text!.value)}</div>
+                <p className={'whitespace-pre-line'}>{parse(biography.text)}</p>
+              )}
               <p className={'text-xs'}>
                 {biography.citation != null && `Citation: ${biography.citation}`}
               </p>
