@@ -6,7 +6,6 @@ import type { ViewState } from 'react-map-gl/maplibre';
 
 import type { RootState } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
-import type { Link, Node } from '@/features/ego-network/network-component';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -19,14 +18,7 @@ export interface Visualization {
   properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
-  // networkState?: NetworkState;
 }
-
-// interface NetworkState {
-//   nodes: Array<Node>;
-//   links: Array<Link>;
-//   entities: Array<Entity['id']>;
-// }
 
 export const visualizationTypes: Array<Visualization['type']> = ['timeline', 'map', 'ego-network'];
 export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
@@ -344,7 +336,6 @@ const emptyMapVis = {
 };
 
 const emptyNetworkVis = {
-  // networkState: { nodes: [], links: [], entities: [] },
   properties: {
     name: {
       type: 'text',
@@ -361,6 +352,38 @@ const emptyNetworkVis = {
       label: 'Show all labels',
       editable: true,
       sort: 2,
+    },
+    showPersons: {
+      type: 'boolean',
+      id: 'showPersons',
+      value: true,
+      label: 'Show persons',
+      editable: true,
+      sort: 3,
+    },
+    showObjects: {
+      type: 'boolean',
+      id: 'showObjects',
+      value: true,
+      label: 'Show objects',
+      editable: true,
+      sort: 4,
+    },
+    showGroups: {
+      type: 'boolean',
+      id: 'showGroups',
+      value: true,
+      label: 'Show groups',
+      editable: true,
+      sort: 5,
+    },
+    showPlaces: {
+      type: 'boolean',
+      id: 'showPlaces',
+      value: true,
+      label: 'Show places',
+      editable: true,
+      sort: 6,
     },
   },
 };

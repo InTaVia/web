@@ -12,6 +12,40 @@ export function useVisualizationSetup(
     entityIds: [entityId],
     targetEntityIds: [],
     eventIds: [],
+    properties: {
+      showPersons: {
+        type: 'boolean',
+        id: 'showPersons',
+        value: true,
+        label: 'Show persons',
+        editable: true,
+        sort: 3,
+      },
+      showObjects: {
+        type: 'boolean',
+        id: 'showObjects',
+        value: true,
+        label: 'Show objects',
+        editable: true,
+        sort: 4,
+      },
+      showGroups: {
+        type: 'boolean',
+        id: 'showGroups',
+        value: true,
+        label: 'Show groups',
+        editable: true,
+        sort: 5,
+      },
+      showPlaces: {
+        type: 'boolean',
+        id: 'showPlaces',
+        value: true,
+        label: 'Show places',
+        editable: true,
+        sort: 6,
+      },
+    },
   };
 
   const mapVisualization: Visualization = {

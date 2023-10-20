@@ -35,7 +35,9 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
   const dispatch = useAppDispatch();
 
   const entityIds = visualization.entityIds;
-  const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds);
+  const visProperties = visualization.properties;
+
+  const { nodes, links, entities, events, status } = useNodesAndLinks(entityIds, visProperties!);
 
   useEffect(() => {
     // Save network state in store for story export
@@ -68,7 +70,11 @@ export function NetworkComponent(props: NetworkComponentProps): JSX.Element | nu
     return (
       <div className="relative">
         <Network
-          key={`network-${entityIds.join('-')}`}
+          key={`network-${nodes
+            .map((node) => {
+              return node.entityId;
+            })
+            .toString()}`}
           nodes={nodes}
           links={links}
           width={width}
