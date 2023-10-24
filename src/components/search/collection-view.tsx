@@ -17,6 +17,7 @@ import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { CreateCollectionDialog } from '@/components/search/create-collection-dialog';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
+import { EntityQualityIndicator } from '@/features/common/quality-indicators';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 export function CollectionView(): JSX.Element {
@@ -131,8 +132,9 @@ function CollectionEntity(props: CollectionEntityProps): JSX.Element | null {
             >
               <span>{label}</span>
             </a>
-            <div className="text-xs text-neutral-500">
+            <div className="flex flex-row gap-x-2 text-xs text-neutral-500">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+              <EntityQualityIndicator entity={entity} />
             </div>
           </div>
         </div>
