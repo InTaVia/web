@@ -73,6 +73,7 @@ import {
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
+import { NoDateQualityIndicator } from '@/features/common/quality-indicators';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 import { isNonEmptyString } from '@/lib/is-nonempty-string';
@@ -1252,7 +1253,7 @@ function EventDate(props: EventDateProps) {
 
   const dates = [start, end].filter(isNonEmptyString).map(formatDateTime);
 
-  if (dates.length === 0) return null;
+  if (dates.length === 0) return <NoDateQualityIndicator />;
 
   if (dates.length === 1) {
     const [date] = dates;

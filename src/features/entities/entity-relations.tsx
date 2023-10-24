@@ -1,11 +1,16 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { cn } from '@intavia/ui';
+import NextLink from 'next/link';
 import type { MouseEvent } from 'react';
 import { useMemo } from 'react';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { useI18n } from '@/app/i18n/use-i18n';
+import { useLocale } from '@/app/route/use-locale';
+import { useAppSelector } from '@/app/store';
+import { selectEntities } from '@/app/store/intavia.slice';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
+import { NoDateQualityIndicator } from '@/features/common/quality-indicators';
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { createKey } from '@/lib/create-key';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
@@ -17,10 +22,13 @@ import { useRelationRoles } from '@/lib/use-relation-roles';
 
 interface RelationsProps {
   relations: Entity['relations'];
+  mainEntity: Entity['id'];
 }
 
 export function EntityRelations(props: RelationsProps): JSX.Element | null {
-  const { relations } = props;
+  const { relations, mainEntity } = props;
+  const _entities = useAppSelector(selectEntities);
+  const { locale } = useLocale();
 
   const { hovered, updateHover } = useHoverState();
 
@@ -142,6 +150,41 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
                     {getTranslatedLabel(role?.label)}
                   </span>
                   <span className="text-left">{getTranslatedLabel(event.label)}</span>
+                  <div className="text-xs text-slate-400">
+                    <ul className="grid gap-0 text-sm" role="list">
+                      {event.relations != null &&
+                        event.relations.map((relation) => {
+                          const entityId = relation.entity;
+                          if (entityId === mainEntity) return null;
+                          const entity = _entities[entityId];
+                          if (entity == null) return null;
+
+                          return (
+                            <li key={`${entityId}-${relation.role}`}>
+                              <div className="cursor-pointer">
+                                <div className="flex h-fit flex-row items-center gap-2 text-xs text-neutral-500">
+                                  <NextLink
+                                    href={{
+                                      pathname: `/entities/${encodeURIComponent(entityId)}`,
+                                    }}
+                                  >
+                                    <div className="flex flex-row gap-x-2 hover:underline">
+                                      <div className="min-w-fit">
+                                        <IntaviaIcon
+                                          icon={entity.kind}
+                                          className="h-4 w-4 fill-none"
+                                        />
+                                      </div>
+                                      <p>{getTranslatedLabel(entity.label, locale)}</p>
+                                    </div>
+                                  </NextLink>
+                                </div>
+                              </div>
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </div>
                 </td>
                 {/* </span> */}
               </tr>
@@ -162,6 +205,10 @@ function EventDate(props: EventDateProps): JSX.Element {
   const { start, end } = props;
 
   const { formatDateTime } = useI18n();
+
+  if (start == null && end == null) {
+    return <NoDateQualityIndicator />;
+  }
 
   const dates = [start, end].filter(isNotNullable).map((date) => {
     // return formatDateTime(new Date(date), 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });

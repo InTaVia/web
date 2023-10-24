@@ -101,7 +101,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
       )}
       {(hasRelations || hasBiographies) && (
         <div className="grid grid-cols-2 items-start gap-4 pt-4">
-          {hasRelations && <EntityRelations relations={entity.relations} />}
+          {hasRelations && <EntityRelations relations={entity.relations} mainEntity={entity.id} />}
           {hasBiographies && <BiographyViewer biographyIds={entity.biographies!} />}
         </div>
       )}
