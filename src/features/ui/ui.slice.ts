@@ -103,6 +103,9 @@ export const uiSlice = createSlice({
       const searchResultTab = action.payload;
       state.components.dcl.searchResultTab = searchResultTab;
     },
+    replaceWith: (state, action: PayloadAction<UiState>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -113,6 +116,7 @@ export const {
   setSidePane,
   setSelectedCollection,
   setSearchResultTab,
+  replaceWith,
 } = uiSlice.actions;
 
 export function selectWindows(state: RootState): Array<UiWindow> {

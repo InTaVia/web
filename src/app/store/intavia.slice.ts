@@ -252,6 +252,9 @@ export const slice = createSlice({
     clear() {
       return initialState;
     },
+    replaceWith(state, action: PayloadAction<IntaviaState>) {
+      return action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
@@ -492,6 +495,7 @@ export const {
   clearEvents,
   clearVocabularies,
   clear,
+  replaceWith,
 } = slice.actions;
 
 export function selectUpstreamEntities(state: RootState) {

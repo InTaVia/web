@@ -82,6 +82,9 @@ export const workspacesSlice = createSlice({
       state.workspaces[workspace]!.visualizationSlots[targetSlot as SlotId] = targetVis;
       state.workspaces[workspace]!.visualizationSlots[sourceSlot as SlotId] = sourceVis;
     },
+    replaceWith: (state, action: PayloadAction<Workspaces>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -93,6 +96,7 @@ export const {
   setVisualizationForVisualizationSlotForCurrentWorkspace,
   releaseVisualizationForVisualizationSlotForCurrentWorkspace,
   switchVisualizationsInWorkspace,
+  replaceWith,
 } = workspacesSlice.actions;
 
 export const selectAllWorkspaces = (state: RootState) => {

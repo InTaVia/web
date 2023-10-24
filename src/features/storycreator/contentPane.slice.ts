@@ -1,3 +1,4 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store';
@@ -488,6 +489,9 @@ export const contentPaneSlice = createSlice({
       const contentPane = action.payload;
       state[contentPane.id] = contentPane;
     },
+    replaceWith(state, action: PayloadAction<Record<ContentPane['id'], ContentPane>>) {
+      return action.payload;
+    },
   },
 });
 
@@ -500,6 +504,7 @@ export const {
   removeSlideContent,
   importContentPane,
   editSlideContentProperty,
+  replaceWith,
 } = contentPaneSlice.actions;
 
 export const selectContentPaneByID = createSelector(

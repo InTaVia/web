@@ -107,6 +107,9 @@ export const slice = createSlice({
     clear() {
       return initialState;
     },
+    replaceWith(state, action: PayloadAction<EntitiesState>) {
+      return action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(PURGE, () => {
@@ -124,6 +127,7 @@ export const {
   removeEventsFromCollection,
   importCollection,
   clear,
+  replaceWith,
 } = slice.actions;
 
 export function selectCollections(state: RootState) {
