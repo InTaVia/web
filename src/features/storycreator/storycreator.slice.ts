@@ -367,6 +367,9 @@ export const storyCreatorSlice = createSlice({
 
       state.stories[story.id] = newStory as Story;
     },
+    replaceWith: (state, action: PayloadAction<StoryCreatorState>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -389,6 +392,7 @@ export const {
   setContentPaneToSlot,
   switchVisualizations,
   moveSlides,
+  replaceWith,
 } = storyCreatorSlice.actions;
 
 export const selectStoryByID = createSelector(

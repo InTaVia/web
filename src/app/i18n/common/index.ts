@@ -17,6 +17,7 @@ export interface Dictionary {
     'data-curation-lab': string;
     'visual-analytics-studio': string;
     'story-creator': string;
+    'import-export': string;
   };
   collections: {
     metadata: {
@@ -114,6 +115,11 @@ export interface Dictionary {
     'card-stc': {
       title: string;
       text: string;
+    };
+  };
+  io: {
+    metadata: {
+      title: string;
     };
   };
   imprint: {

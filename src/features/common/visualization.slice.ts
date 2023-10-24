@@ -284,19 +284,27 @@ const emptyMapVis = {
       ],
       editable: true,
     },
+    spaceTimeCubeMode: {
+      type: 'boolean',
+      id: 'spaceTimeCubeMode',
+      value: false,
+      editable: true,
+      sort: 4,
+      label: 'Space-Time-Cube (experimental)',
+    },
     cluster: {
       type: 'boolean',
       id: 'cluster',
       value: false,
       editable: true,
-      sort: 4,
+      sort: 5,
       label: 'Cluster',
     },
     clusterMode: {
       type: 'select',
       id: 'clusterMode',
       label: 'Cluster Style',
-      sort: 5,
+      sort: 6,
       value: {
         name: 'Donut',
         value: 'donut',
@@ -318,16 +326,8 @@ const emptyMapVis = {
       id: 'renderLines',
       value: false,
       editable: true,
-      sort: 6,
-      label: 'Connect events chronologically with lines (for each entity)',
-    },
-    zoomlevel: {
-      type: 'number',
-      id: 'zoomlevel',
-      value: 2.0,
-      editable: true,
       sort: 7,
-      label: 'Zoom level for the map',
+      label: 'Connect events chronologically with lines (for each entity)',
     },
   },
   entityIds: [],
@@ -601,6 +601,9 @@ export const visualizationSlice = createSlice({
         properties: { ...emptyVis.properties, ...vis.properties },
       } as Visualization;
     },
+    replaceWith: (state, action: PayloadAction<Record<Visualization['id'], Visualization>>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -622,6 +625,7 @@ export const {
   setMapStyle,
   // setNetworkState,
   importVisualization,
+  replaceWith,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

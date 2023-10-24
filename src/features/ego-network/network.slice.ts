@@ -43,10 +43,13 @@ export const networkSlice = createSlice({
       const id = action.payload;
       delete state[id];
     },
+    replaceWith: (state, action: PayloadAction<Record<Visualization['id'], NetworkState>>) => {
+      return action.payload;
+    },
   },
 });
 
-export const { addNetwork, removeNetwork } = networkSlice.actions;
+export const { addNetwork, removeNetwork, replaceWith } = networkSlice.actions;
 
 export const selectNetworkById = createSelector(
   (state: RootState) => {

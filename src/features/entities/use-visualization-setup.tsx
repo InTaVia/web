@@ -57,6 +57,13 @@ export function useVisualizationSetup(
     targetEntityIds: [],
     eventIds: [],
     properties: {
+      spaceTimeCubeMode: {
+        type: 'boolean',
+        id: 'spaceTimeCubeMode',
+        value: false,
+        editable: false,
+        label: 'Space Time Cube Mode',
+      },
       cluster: {
         type: 'boolean',
         id: 'cluster',
