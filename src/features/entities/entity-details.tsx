@@ -34,8 +34,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
   const hasRelations = entity.relations != null && entity.relations.length > 0;
   const hasPlaceGeometry = entity.kind === 'place' && entity.geometry !== undefined;
   const hasEventGeometry = useEntityHasGeometry(entity);
-  const hasBiographies =
-    entity.kind === 'person' && entity.biographies != null && entity.biographies.length > 0;
+  const hasBiographies = entity.biographies != null && entity.biographies.length > 0;
 
   const [networkVisualization, mapVisualization, timelineVisualization] = useVisualizationSetup(
     entity.id,
