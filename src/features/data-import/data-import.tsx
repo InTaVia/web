@@ -15,6 +15,7 @@ import {
   ScrollArea,
   useToast,
 } from '@intavia/ui';
+import { ChevronsRightIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
@@ -94,8 +95,21 @@ export function DataImport(): JSX.Element {
 
   return (
     <>
-      Please select an InTaVia Excel template or an IDM-JSON file, and press &quot;Import
-      data&quot;.
+      <a
+        target="_blank"
+        href="https://github.com/InTaVia/data-import/tree/main/public/data"
+        rel="noreferrer"
+        className="hover:underline hover:underline-offset-2"
+      >
+        <p className="flex flex-row gap-2">
+          <ChevronsRightIcon /> Learn how to use the template!
+        </p>
+      </a>
+      <p>
+        Please select an InTaVia Excel template or an IDM-JSON file, and press &quot;Import
+        data&quot;.
+      </p>
+
       <LoadData data={data} onLoadData={setData} />
       {data != null ? (
         <div className="flex flex-col gap-y-2">
