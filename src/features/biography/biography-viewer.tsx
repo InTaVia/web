@@ -18,24 +18,29 @@ export function BiographyViewer(props: BiographyViewerProps): JSX.Element {
     return (
       <div>
         <h2 className="pb-1 font-bold uppercase text-neutral-700">Biography</h2>
-        {biographyIds.map((biographyId) => {
-          const biography = data.get(biographyId);
+        <div className="flex flex-col gap-4 divide-y">
+          {biographyIds.map((biographyId, index) => {
+            const biography = data.get(biographyId);
 
-          if (biography == null) return;
+            if (biography == null) return;
 
-          return (
-            <div key={`bio-${biographyId}-${id}`}>
-              <p className={'text-sm italic'}>{biography.abstract != null && biography.abstract}</p>
-              {Boolean(biography.text) && (
-                //<div>{parse(element!.properties!.text!.value)}</div>
-                <p className={'whitespace-pre-line'}>{parse(biography.text)}</p>
-              )}
-              <p className={'text-xs'}>
-                {biography.citation != null && `Citation: ${biography.citation}`}
-              </p>
-            </div>
-          );
-        })}
+            return (
+              <div key={`bio-${biographyId}-${id}`} className={index > 0 ? 'pt-4' : 'pt-0'}>
+                <p className={'font-bold'}>{biography.title != null && biography.title}</p>
+                <p className={'text-sm font-light'}>
+                  {biography.abstract != null && biography.abstract}
+                </p>
+                {Boolean(biography.text) && (
+                  //<div>{parse(element!.properties!.text!.value)}</div>
+                  <p className={'whitespace-pre-line'}>{parse(biography.text)}</p>
+                )}
+                <p className={'text-xs font-light'}>
+                  {biography.citation != null && `Citation: ${biography.citation}`}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
