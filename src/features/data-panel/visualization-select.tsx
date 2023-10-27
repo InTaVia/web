@@ -42,7 +42,7 @@ export function VisualizationSelect(props: VisualizationSelectProps): JSX.Elemen
   }
   return (
     <FormField>
-      <Label htmlFor="visualization">Visualiztions:</Label>
+      <Label htmlFor="visualization">Visualizations:</Label>
       <Select name="visualization" onValueChange={onValueChange} defaultValue={'all'}>
         <SelectTrigger>
           <SelectValue placeholder="Select a visualization" />
