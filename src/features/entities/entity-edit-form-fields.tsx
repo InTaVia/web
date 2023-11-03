@@ -41,7 +41,7 @@ import { keyBy } from '@stefanprobst/key-by';
 import { nanoid } from 'nanoid';
 import type { ChangeEvent, ReactNode } from 'react';
 import { Fragment, useId, useMemo, useState } from 'react';
-import { FormSpy, useField } from 'react-final-form';
+import { useField } from 'react-final-form';
 import { useFieldArray } from 'react-final-form-arrays';
 
 import {
@@ -801,11 +801,6 @@ function RelationForm(props: RelationFormProps): JSX.Element {
       <FormTextField id={useId()} label="Start date" name="event.startDate" />
       <FormTextField id={useId()} label="End date" name="event.endDate" />
       {/* <EventRelatedEntities name="event.relations" /> */}
-      <FormSpy subscription={{ values: true }}>
-        {({ values }) => {
-          return <pre>{JSON.stringify(values, null, 2)}</pre>;
-        }}
-      </FormSpy>
     </Form>
   );
 }
