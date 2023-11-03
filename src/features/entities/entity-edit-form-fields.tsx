@@ -910,7 +910,7 @@ function RelationForm(props: RelationFormProps): JSX.Element {
           errors['role.id'] = 'Required';
         }
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (values.event?.label.default == null) {
+        if (values.event?.label?.default == null) {
           errors['event.label.default'] = 'Required';
         }
 
@@ -936,7 +936,7 @@ function EventKindComboBox(props: EventKindComboBoxProps) {
   const { name } = props;
 
   const field = useField(name);
-  const root = useField(props.root);
+  // const root = useField(props.root);
   const selectedId = field.input.value as string | undefined;
   const id = useId();
 
@@ -994,11 +994,11 @@ function EventKindComboBox(props: EventKindComboBoxProps) {
     const id = nanoid();
     const entry = { id, label: { default: searchTerm } };
     dispatch(addLocalVocabulary({ id: 'event-kind', entries: [entry] }));
-    root.input.onChange(entry);
+    field.input.onChange(id);
   }
 
   function onValueChange(id: string) {
-    root.input.onChange(kinds[id]);
+    field.input.onChange(id);
   }
 
   return (
