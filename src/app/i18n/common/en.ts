@@ -77,6 +77,7 @@ export const dictionary: Dictionary = {
     location: { one: 'Location', other: 'Locations' },
     'edit-entity': 'Edit {{kind}}',
     'missing-entity': 'Missing entity',
+    'select-kind': 'Select entity kind',
     'select-gender': 'Select gender',
     'select-occupations': 'Select occupations',
     role: { one: 'Role', other: 'Roles' },
@@ -227,5 +228,7 @@ export const dictionary: Dictionary = {
     open: 'Open',
     new: 'New',
     turn: 'Turn into',
+    'add-relation': 'Add relation',
+    'create-entity': 'Create new entity',
   },
 };

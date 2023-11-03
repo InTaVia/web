@@ -66,6 +66,7 @@ export interface Dictionary {
     location: Plurals;
     'edit-entity': string;
     'missing-entity': string;
+    'select-kind': string;
     'select-gender': string;
     'select-occupations': string;
     role: Plurals;
@@ -215,5 +216,7 @@ export interface Dictionary {
     open: string;
     new: string;
     turn: string;
+    'add-relation': string;
+    'create-entity': string;
   };
 }

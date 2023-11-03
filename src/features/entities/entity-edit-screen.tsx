@@ -138,7 +138,7 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
           <hr />
           <EntityDescriptionTextField />
           <hr />
-          <EntityFormFields kind={entity.kind} />
+          <EntityFormFields />
           <hr />
           <EntityLinkedUriFormFields />
           <hr />

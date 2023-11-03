@@ -2,12 +2,14 @@ import { ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusIcon } from '@heroic
 import { XIcon } from '@heroicons/react/solid';
 import type {
   Biography,
+  Entity,
   EntityEventRelation,
   EntityKind,
   EntityRelationRole,
   Event,
   MediaResource,
 } from '@intavia/api-client';
+import { entityKinds } from '@intavia/api-client';
 import {
   Button,
   cn,
@@ -67,6 +69,7 @@ import {
   selectBiographyById,
   selectEntities,
   selectEventById,
+  selectLocalEntities,
   selectLocalVocabularyById,
   selectMediaResourceById,
   selectVocabularyEntryById,
@@ -295,13 +298,11 @@ export function EntityDescriptionTextField(): JSX.Element {
   );
 }
 
-interface EntityFormFieldsProps {
-  kind: EntityKind;
-}
+export function EntityFormFields(): JSX.Element | null {
+  const name = 'kind';
 
-export function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
-  6;
-  const { kind } = props;
+  const field = useField(name);
+  const kind = field.input.value as EntityKind | undefined;
 
   switch (kind) {
     case 'cultural-heritage-object':
@@ -320,7 +321,42 @@ export function EntityFormFields(props: EntityFormFieldsProps): JSX.Element {
       );
     case 'place':
       return <Fragment></Fragment>;
+    default:
+      return null;
   }
+}
+
+function EntityKindSelect(): JSX.Element {
+  const name = 'kind';
+
+  const { t } = useI18n<'common'>();
+  const field = useField(name);
+  const id = useId();
+
+  const label = t(['common', 'entity', 'kind']);
+  const placeholder = t(['common', 'entity', 'select-kind']);
+
+  const kinds = entityKinds;
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>{label}</Label>
+      <Select {...field.input} value={field.input.value} onValueChange={field.input.onChange}>
+        <SelectTrigger id={id}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {kinds.map((id) => {
+            return (
+              <SelectItem key={id} value={id}>
+                {t(['common', 'entity', 'kinds', id, 'one'])}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
+    </FormField>
+  );
 }
 
 export function GenderSelect(): JSX.Element {
@@ -552,6 +588,7 @@ export function RelationsFormFields(): JSX.Element {
   const id = useId();
 
   const dialog = useDialogState();
+  const entityDialog = useDialogState();
 
   const dispatch = useAppDispatch();
 
@@ -575,10 +612,14 @@ export function RelationsFormFields(): JSX.Element {
 
       <hr />
 
-      <div className="flex items-center justify-end">
+      <div className="grid justify-end gap-2">
         <Button onClick={dialog.open} variant="default">
           <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
-          <span>{t(['common', 'form', 'add'])}</span>
+          <span>{t(['common', 'form', 'add-relation'])}</span>
+        </Button>
+        <Button onClick={entityDialog.open} variant="default">
+          <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
+          <span>{t(['common', 'form', 'create-entity'])}</span>
         </Button>
 
         <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
@@ -605,8 +646,89 @@ export function RelationsFormFields(): JSX.Element {
             }}
           />
         </Dialog>
+
+        <Dialog open={entityDialog.isOpen} onOpenChange={entityDialog.toggle}>
+          <CreateEntityDialog
+            onClose={entityDialog.close}
+            onSubmit={(values) => {
+              // @ts-expect-error It's ok.
+              const entity = { id: nanoid(), ...values };
+              dispatch(addLocalEntity(entity));
+            }}
+          />
+        </Dialog>
       </div>
     </div>
+  );
+}
+
+interface CreateEntityDialogProps {
+  onClose: () => void;
+  onSubmit: (values: Entity) => void;
+}
+
+function CreateEntityDialog(props: CreateEntityDialogProps): JSX.Element {
+  const { onClose } = props;
+
+  const { t } = useI18n<'common'>();
+
+  function onSubmit(values: Entity) {
+    onClose();
+
+    props.onSubmit(values);
+  }
+
+  const formId = 'create-entity';
+
+  const label = t(['common', 'form', 'create-entity']);
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{label}</DialogTitle>
+      </DialogHeader>
+
+      <Form
+        id={formId}
+        onSubmit={onSubmit}
+        validate={(values) => {
+          const errors: Record<string, string> = {};
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (values.kind == null || values.kind.trim() === '') {
+            errors['kind'] = 'Required';
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (values.label?.default == null || values.label.default.trim() === '') {
+            errors['label.default'] = 'Required';
+          }
+
+          return errors;
+        }}
+      >
+        <div className="grid content-start gap-4">
+          <EntityKindSelect />
+          <hr />
+          <EntityLabelTextField />
+          <hr />
+          <EntityAlternativeLabelFormFields />
+          <hr />
+          <EntityDescriptionTextField />
+          <hr />
+          <EntityFormFields />
+          <hr />
+          <EntityLinkedUriFormFields />
+          <hr />
+        </div>
+      </Form>
+
+      <DialogFooter>
+        <Button form={formId} type="submit">
+          {t(['common', 'form', 'save'])}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
   );
 }
 
@@ -1120,29 +1242,44 @@ function _RelatedEventComboBox(props: RelatedEventComboBoxProps) {
 
 interface RelatedEntityComboBoxProps {
   name: string;
+  root: string;
 }
 
 function RelatedEntityComboBox(props: RelatedEntityComboBoxProps) {
   const { name } = props;
 
   const field = useField(name);
+  const root = useField(props.root);
   const selectedId = field.input.value as string | undefined;
   const id = useId();
+
+  const localEntities = useAppSelector(selectLocalEntities);
 
   const selected = useEntity(selectedId).data;
 
   const [searchTerm, setSearchTerm] = useState('');
   const q = useDebouncedValue(searchTerm.trim());
+
+  const localMatches = useMemo(() => {
+    const _searchTerm = searchTerm.toLowerCase().trim();
+    if (_searchTerm.length === 0) return Object.values(localEntities).slice(0, 25);
+    return Object.values(localEntities)
+      .filter((entry) => {
+        return entry.label.default.toLowerCase().includes(_searchTerm);
+      })
+      .slice(0, 25);
+  }, [localEntities, searchTerm]);
+
   const { data, isLoading, isFetching } = useSearchEntitiesQuery({ q });
   const entities = useMemo(() => {
-    const entities = keyBy(data?.results ?? [], (event) => {
+    const entities = keyBy((data?.results ?? []).concat(localMatches), (event) => {
       return event.id;
     });
     if (selected != null) {
       entities[selected.id] = selected;
     }
     return entities;
-  }, [data, selected]);
+  }, [data, selected, localMatches]);
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.currentTarget.value);
@@ -1154,10 +1291,14 @@ function RelatedEntityComboBox(props: RelatedEntityComboBoxProps) {
     return getTranslatedLabel(entity.label);
   }
 
+  function onValueChange(id: string) {
+    root.input.onChange(entities[id]);
+  }
+
   return (
     <FormField>
       <Label htmlFor={id}>Entity</Label>
-      <ComboBox disabled={isLoading} onValueChange={field.input.onChange} value={field.input.value}>
+      <ComboBox disabled={isLoading} onValueChange={onValueChange} value={field.input.value}>
         <ComboBoxTrigger>
           <ComboBoxInput
             displayValue={getDisplayLabel}
@@ -1180,7 +1321,7 @@ function RelatedEntityComboBox(props: RelatedEntityComboBoxProps) {
               </ComboBoxItem>
             );
           })}
-          {data?.results.length === 0 ? (
+          {Object.keys(entities).length === 0 ? (
             <ComboBoxEmpty className={cn(isFetching && 'opacity-50 grayscale')}>
               Nothing found
             </ComboBoxEmpty>
@@ -1307,19 +1448,33 @@ function RelationPreview(props: RelationPreview): JSX.Element {
       <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
         <AddEntityToRelationFormDialog
           onClose={dialog.close}
-          onSubmit={(values: { entity: string; role: string }) => {
-            const targetEntity = _entites[values.entity];
+          onSubmit={(values: { entity: Entity; role: EntityRelationRole }) => {
+            const targetEntity = values.entity;
 
-            if (targetEntity) {
-              dispatch(addLocalEvent({ ...event, relations: [...event.relations, values] }));
+            dispatch(
+              addLocalEvent({
+                ...event,
+                relations: [
+                  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                  ...(event.relations ?? []),
+                  {
+                    entity: values.entity.id,
+                    role: values.role.id,
+                  },
+                ],
+              }),
+            );
 
-              dispatch(
-                addLocalEntity({
-                  ...targetEntity,
-                  relations: [...targetEntity.relations, { role: values.role, event: event.id }],
-                }),
-              );
-            }
+            dispatch(
+              addLocalEntity({
+                ...targetEntity,
+                relations: [
+                  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                  ...(targetEntity.relations ?? []),
+                  { role: values.role.id, event: event.id },
+                ],
+              }),
+            );
           }}
         />
       </Dialog>
@@ -1332,13 +1487,13 @@ function AddEntityToRelationFormDialog({
   onSubmit: _onSubmit,
 }: {
   onClose: () => void;
-  onSubmit: (values: { entity: string; role: string }) => void;
+  onSubmit: (values: { entity: Entity; role: EntityRelationRole }) => void;
 }): JSX.Element {
   const { t } = useI18n<'common'>();
 
   const formId = 'add-related-entity';
 
-  function onSubmit(values: { entity: string; role: string }) {
+  function onSubmit(values: { entity: Entity; role: EntityRelationRole }) {
     onClose();
 
     _onSubmit(values);
@@ -1352,9 +1507,29 @@ function AddEntityToRelationFormDialog({
         <DialogTitle>Add related entity</DialogTitle>
       </DialogHeader>
 
-      <Form className="grid gap-2" id={formId} initialValues={initialValues} onSubmit={onSubmit}>
-        <RelationRoleComboBox name="role" />
-        <RelatedEntityComboBox name="entity" />
+      <Form
+        className="grid gap-2"
+        id={formId}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validate={(values) => {
+          const errors: Record<string, string> = {};
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (values.role?.id == null || values.role.id.trim() === '') {
+            errors['role.id'] = 'Required';
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (values.entity?.id == null || values.entity.id.trim() === '') {
+            errors['entity.id'] = 'Required';
+          }
+
+          return errors;
+        }}
+      >
+        <RelationRoleComboBox name="role.id" root="role" />
+        <RelatedEntityComboBox name="entity.id" root="entity" />
       </Form>
 
       <DialogFooter>
