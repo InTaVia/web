@@ -77,6 +77,7 @@ import {
 import { Form } from '@/components/form';
 import { FormField } from '@/components/form-field';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
+import { CollectionSelect } from '@/components/search/collection-select';
 import { NoDateQualityIndicator } from '@/features/common/quality-indicators';
 import { useDialogState } from '@/features/ui/use-dialog-state';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
@@ -588,7 +589,6 @@ export function RelationsFormFields(): JSX.Element {
   const id = useId();
 
   const dialog = useDialogState();
-  const entityDialog = useDialogState();
 
   const dispatch = useAppDispatch();
 
@@ -617,10 +617,6 @@ export function RelationsFormFields(): JSX.Element {
           <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
           <span>{t(['common', 'form', 'add-relation'])}</span>
         </Button>
-        <Button onClick={entityDialog.open} variant="default">
-          <PlusIcon className="mr-1 h-4 w-4 shrink-0" />
-          <span>{t(['common', 'form', 'create-entity'])}</span>
-        </Button>
 
         <Dialog open={dialog.isOpen} onOpenChange={dialog.toggle}>
           <RelationFormDialog
@@ -646,17 +642,6 @@ export function RelationsFormFields(): JSX.Element {
             }}
           />
         </Dialog>
-
-        <Dialog open={entityDialog.isOpen} onOpenChange={entityDialog.toggle}>
-          <CreateEntityDialog
-            onClose={entityDialog.close}
-            onSubmit={(values) => {
-              // @ts-expect-error It's ok.
-              const entity = { id: nanoid(), ...values, relations: [] };
-              dispatch(addLocalEntity(entity));
-            }}
-          />
-        </Dialog>
       </div>
     </div>
   );
@@ -667,7 +652,7 @@ interface CreateEntityDialogProps {
   onSubmit: (values: Entity) => void;
 }
 
-function CreateEntityDialog(props: CreateEntityDialogProps): JSX.Element {
+export function CreateEntityDialog(props: CreateEntityDialogProps): JSX.Element {
   const { onClose } = props;
 
   const { t } = useI18n<'common'>();
@@ -723,7 +708,11 @@ function CreateEntityDialog(props: CreateEntityDialogProps): JSX.Element {
         </div>
       </Form>
 
-      <DialogFooter>
+      <DialogFooter className="flex items-end justify-between">
+        <FormField>
+          <Label>Save entity to collection</Label>
+          <CollectionSelect />
+        </FormField>
         <Button form={formId} type="submit">
           {t(['common', 'form', 'save'])}
         </Button>
