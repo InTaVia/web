@@ -73,6 +73,15 @@ function EntityEditForm(props: EntityEditFormProps): JSX.Element {
       });
     }
 
+    if (
+      sanitized.kind === 'place' &&
+      sanitized.geometry != null &&
+      Array.isArray(sanitized.geometry.coordinates)
+    ) {
+      sanitized.geometry.coordinates[0] = Number(sanitized.geometry.coordinates[0]);
+      sanitized.geometry.coordinates[1] = Number(sanitized.geometry.coordinates[1]);
+    }
+
     dispatch(addLocalEntity(sanitized));
 
     toast({

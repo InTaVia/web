@@ -108,6 +108,28 @@ function FormTextField(props: FormTextFieldProps): JSX.Element {
   );
 }
 
+interface FormNumberFieldProps {
+  id: string;
+  label: ReactNode;
+  name: string;
+  min: number;
+  max: number;
+  required?: boolean;
+}
+
+function FormNumberField(props: FormNumberFieldProps): JSX.Element {
+  const { id, label, name, min, max, required = false } = props;
+
+  const field = useField(name);
+
+  return (
+    <FormField>
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} {...field.input} required={required} type="number" min={min} max={max} />
+    </FormField>
+  );
+}
+
 interface FormTextAreaFieldProps {
   id: string;
   label: ReactNode;
@@ -321,7 +343,11 @@ export function EntityFormFields(): JSX.Element | null {
         </Fragment>
       );
     case 'place':
-      return <Fragment></Fragment>;
+      return (
+        <Fragment>
+          <CoordinatesFormFields />
+        </Fragment>
+      );
     default:
       return null;
   }
@@ -577,6 +603,26 @@ function OccupationComboBox(props: OccupationComboBoxProps): JSX.Element {
         </ComboBoxContent>
       </ComboBox>
     </FormField>
+  );
+}
+
+function CoordinatesFormFields(): JSX.Element {
+  const nameLongitude = 'geometry.coordinates[0]';
+  const nameLatitude = 'geometry.coordinates[1]';
+
+  // const { t } = useI18n<'common'>();
+
+  const id = useId();
+  // const label = t(['common', 'entity', 'occupation', 'other']);
+  const label = 'Coordinates';
+  return (
+    <div aria-labelledby={id} role="group" className="grid gap-3">
+      <span className="text-sm font-medium" id={id}>
+        {label}
+      </span>
+      <FormNumberField id={useId()} label={'Longitude'} name={nameLongitude} min={-180} max={180} />
+      <FormNumberField id={useId()} label={'Latitude'} name={nameLatitude} min={-85} max={85} />
+    </div>
   );
 }
 

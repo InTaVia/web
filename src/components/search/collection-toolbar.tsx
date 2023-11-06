@@ -65,6 +65,15 @@ export function CollectionToolbar(): JSX.Element {
           onSubmit={(values) => {
             // @ts-expect-error It's ok.
             const entity = { id: nanoid(), ...values, relations: [] };
+            // Adds geomtype and converts coordinates strings to number
+            if (entity.kind === 'place') {
+              if (entity.geometry != null) {
+                entity.geometry.type = 'Point';
+                entity.geometry.coordinates = entity.geometry.coordinates.map((coordinate) => {
+                  return Number(coordinate);
+                });
+              }
+            }
             dispatch(addLocalEntity(entity));
             if (currentCollection != null) {
               dispatch(addEntitiesToCollection({ id: currentCollection, entities: [entity.id] }));
