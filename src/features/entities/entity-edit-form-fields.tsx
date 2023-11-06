@@ -652,7 +652,7 @@ export function RelationsFormFields(): JSX.Element {
             onClose={entityDialog.close}
             onSubmit={(values) => {
               // @ts-expect-error It's ok.
-              const entity = { id: nanoid(), ...values };
+              const entity = { id: nanoid(), ...values, relations: [] };
               dispatch(addLocalEntity(entity));
             }}
           />
