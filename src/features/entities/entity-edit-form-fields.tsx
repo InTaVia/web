@@ -114,18 +114,27 @@ interface FormNumberFieldProps {
   name: string;
   min: number;
   max: number;
+  step: number | 'any';
   required?: boolean;
 }
 
 function FormNumberField(props: FormNumberFieldProps): JSX.Element {
-  const { id, label, name, min, max, required = false } = props;
+  const { id, label, name, min, max, step, required = false } = props;
 
   const field = useField(name);
 
   return (
     <FormField>
       <Label htmlFor={id}>{label}</Label>
-      <Input id={id} {...field.input} required={required} type="number" min={min} max={max} />
+      <Input
+        id={id}
+        {...field.input}
+        required={required}
+        type="number"
+        step={step}
+        min={min}
+        max={max}
+      />
     </FormField>
   );
 }
@@ -620,8 +629,22 @@ function CoordinatesFormFields(): JSX.Element {
       <span className="text-sm font-medium" id={id}>
         {label}
       </span>
-      <FormNumberField id={useId()} label={'Longitude'} name={nameLongitude} min={-180} max={180} />
-      <FormNumberField id={useId()} label={'Latitude'} name={nameLatitude} min={-85} max={85} />
+      <FormNumberField
+        id={useId()}
+        label={'Longitude'}
+        name={nameLongitude}
+        step={'any'}
+        min={-180}
+        max={180}
+      />
+      <FormNumberField
+        id={useId()}
+        label={'Latitude'}
+        name={nameLatitude}
+        step={'any'}
+        min={-85}
+        max={85}
+      />
     </div>
   );
 }
