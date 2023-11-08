@@ -33,7 +33,7 @@ export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref
         {...props}
         minPitch={0}
         maxPitch={85}
-        reuseMaps
+        // reuseMaps
         onZoom={(e) => {
           setZoomlevel(e.viewState.zoom);
         }}

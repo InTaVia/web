@@ -48,6 +48,12 @@ export function GeoMapSpaceTimeCubeLayer<T extends EmptyObject = EmptyObject>(
     const scale = 250000 / 2 ** mapZoom;
     setScale(scale);
     setMapRotation(map!.getBearing() || 0);
+    const pitch = map!.getPitch();
+    if (pitch === 0) {
+      map.easeTo({ pitch: 60, essential: true });
+    } else {
+      map.easeTo({ pitch: pitch, essential: true });
+    }
   }, []);
 
   useEffect(() => {
@@ -69,6 +75,7 @@ export function GeoMapSpaceTimeCubeLayer<T extends EmptyObject = EmptyObject>(
     return () => {
       map.off('zoom', updateScale);
       map.off('rotate', updateRotation);
+      map.easeTo({ pitch: 0, bearing: 0 });
     };
   }, [map]);
 
