@@ -2,9 +2,7 @@ import type { EmptyObject } from '@intavia/api-client';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
 import { scaleLinear } from 'd3-scale';
-import { schemeTableau10 as colors } from 'd3-scale-chromatic';
 import type { Feature, FeatureCollection, LineString } from 'geojson';
-import type { LinePaint } from 'mapbox-gl';
 import { type LayerProps, Layer, Source } from 'react-map-gl/maplibre';
 
 import type { SpaceTime } from '@/features/geo-map/lib/use-line-string-feature-collection';
@@ -29,17 +27,18 @@ export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
 
   return (
     <Source id={`LineSource${id}`} data={data} type="geojson" lineMetrics={true}>
-      {data.features.map((feature, index) => {
+      {data.features.map((feature) => {
         if (feature.geometry.coordinates.length <= 1) return;
+        const fid = feature.id as string;
 
         const filteredLayer: LayerProps = {
           id: `LineSource${id}LineLayer${feature.id}`,
           source: `LineSource${id}`,
           type: 'line',
-          filter: ['==', ['get', 'id', ['get', 'entity']], feature.id],
+          filter: ['==', ['get', 'id', ['get', 'entity']], fid],
         };
 
-        let paint: LinePaint = {};
+        let paint = {};
         if (colorBy === 'time') {
           const gradient = generateGradient(feature);
           paint = {
@@ -49,7 +48,7 @@ export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
           };
         } else if (colorBy === 'entity-identity') {
           paint = {
-            'line-color': entityIdentities[feature.id].color,
+            'line-color': entityIdentities[fid].color,
             'line-opacity': 0.6,
             'line-width': 4,
           };
@@ -70,7 +69,8 @@ export function GeoMapLineLayer<T extends EmptyObject = EmptyObject>(
 }
 
 function generateGradient(feature: Feature) {
-  const line = turfLineString(feature.geometry.coordinates);
+  const locations = feature.geometry as LineString;
+  const line = turfLineString(locations.coordinates);
   const length = turfLength(line, { units: 'kilometers' });
   const distanceNormalized = scaleLinear().domain([0, length]).range([0, 1]);
   const timeScaleNormalized = timeScale(...getTemporalExtent([feature.properties!.events!]));

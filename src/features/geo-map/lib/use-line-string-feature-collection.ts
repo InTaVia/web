@@ -34,6 +34,8 @@ interface UseLineStringFeatureCollectionResult {
 export interface SpaceTime {
   position: Position;
   date: Date;
+  id: Event['id'];
+  place: Place['id'];
 }
 
 export function useLineStringFeatureCollection(
@@ -94,6 +96,8 @@ export function useLineStringFeatureCollection(
           spaceTime.push({
             position: place.geometry.coordinates,
             date: new Date(date),
+            id: event.id,
+            place: place.id,
           });
         }
       });
