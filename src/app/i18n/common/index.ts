@@ -18,6 +18,7 @@ export interface Dictionary {
     'visual-analytics-studio': string;
     'story-creator': string;
     'import-export': string;
+    tutorials: string;
   };
   collections: {
     metadata: {

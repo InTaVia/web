@@ -10,6 +10,7 @@ interface Link {
   id: string;
   href: { pathname: string };
   label: JSX.Element | string;
+  target?: string;
 }
 
 export function AppBar(): JSX.Element {
@@ -40,6 +41,12 @@ export function AppBar(): JSX.Element {
       href: { pathname: '/io' },
       label: t(['common', 'app-bar', 'import-export']),
     },
+    {
+      id: 'tutorials',
+      href: { pathname: 'https://intavia.eu/category/tutorials/' },
+      label: t(['common', 'app-bar', 'tutorials']),
+      target: '_blank',
+    },
   ];
 
   return (
@@ -65,6 +72,7 @@ export function AppBar(): JSX.Element {
                       isCurrent && 'text-intavia-brand-900',
                     )}
                     aria-current={isCurrent ? 'page' : undefined}
+                    target={item.target != null ? item.target : '_self'}
                   >
                     {item.label}
                   </a>
@@ -73,7 +81,7 @@ export function AppBar(): JSX.Element {
             })}
           </div>
         </div>
-        <div className="flex h-16 flex-row items-center gap-6 pr-6 hover:text-intavia-brand-900">
+        <div className="flex h-16 flex-row items-center gap-2 pr-6">
           {linksRight.map((item) => {
             const isCurrent = currentPath.includes(item.href.pathname);
             return (
@@ -84,6 +92,7 @@ export function AppBar(): JSX.Element {
                     isCurrent && 'text-intavia-brand-900',
                   )}
                   aria-current={isCurrent ? 'page' : undefined}
+                  target={item.target != null ? item.target : '_self'}
                 >
                   {item.label}
                 </a>

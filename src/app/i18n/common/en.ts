@@ -16,6 +16,7 @@ export const dictionary: Dictionary = {
     'visual-analytics-studio': 'Visualization & Analysis',
     'story-creator': 'Storytelling & Presentation',
     'import-export': 'Import & Export Data',
+    tutorials: 'Tutorials',
   },
   collections: {
     metadata: {
