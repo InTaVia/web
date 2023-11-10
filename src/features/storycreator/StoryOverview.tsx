@@ -169,6 +169,10 @@ export function StoryOverview(): JSX.Element {
 
     storyObj.id = tmpStoryID;
 
+    for (const slideKey of Object.keys(storyObj.slides)) {
+      storyObj.slides[slideKey]['story'] = tmpStoryID;
+    }
+
     const dictionary: Record<string, string> = {};
 
     for (const vis of Object.values(visualizations) as Array<Visualization>) {
