@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@intavia/ui';
-import { toPng } from 'html-to-image';
+import { toJpeg } from 'html-to-image';
 import { useRef, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import type { StringLiteral } from 'typescript';
@@ -118,7 +118,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       return;
     }
 
-    toPng(ref.current, { cacheBust: true, canvasWidth: 200, canvasHeight: 100 })
+    toJpeg(ref.current, {
+      cacheBust: true,
+      canvasWidth: 200,
+      canvasHeight: 100,
+      quality: 0.5,
+    })
       .then((dataUrl) => {
         dispatch(setImage({ slide: selectedSlide, image: dataUrl }));
       })

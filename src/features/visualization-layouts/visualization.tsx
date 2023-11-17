@@ -180,6 +180,7 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   return (
     <div ref={setContainerElement} className={'h-full w-full overflow-auto'}>
       <div
+        className="bg-neutral-50"
         style={{
           width: `${width}px`,
           height: `${height}px`,

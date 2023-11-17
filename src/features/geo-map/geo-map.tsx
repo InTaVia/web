@@ -25,7 +25,7 @@ export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref
   );
 
   return (
-    <div ref={setElement} className="h-full w-full">
+    <div ref={setElement} className="h-full w-full bg-neutral-50">
       {/* @ts-expect-error Type mismatch between `maplibre-gl` and `mapbox-gl`. */}
       <Map
         ref={ref}
