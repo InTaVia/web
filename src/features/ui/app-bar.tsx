@@ -1,23 +1,21 @@
-import { cn, Dialog, DialogTrigger } from '@intavia/ui';
+import { cn } from '@intavia/ui';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { usePathname } from '@/app/route/use-pathname';
-import { DataImportDialog } from '@/features/data-import/data-import-dialog';
 import IntaviaLogo from '~/public/assets/images/logo.svg';
 
 interface Link {
   id: string;
   href: { pathname: string };
   label: JSX.Element | string;
+  target?: string;
 }
 
 export function AppBar(): JSX.Element {
   const { t } = useI18n<'common'>();
   const currentPath = usePathname();
-  const [isDialogOpen, setDialogOpen] = useState(false);
 
   const links: Array<Link> = [
     {
@@ -34,6 +32,20 @@ export function AppBar(): JSX.Element {
       id: 'storytelling-creator',
       href: { pathname: '/storycreator' },
       label: t(['common', 'app-bar', 'story-creator']),
+    },
+  ];
+
+  const linksRight: Array<Link> = [
+    {
+      id: 'import-export',
+      href: { pathname: '/io' },
+      label: t(['common', 'app-bar', 'import-export']),
+    },
+    {
+      id: 'tutorials',
+      href: { pathname: 'https://intavia.eu/category/tutorials/' },
+      label: t(['common', 'app-bar', 'tutorials']),
+      target: '_blank',
     },
   ];
 
@@ -60,6 +72,7 @@ export function AppBar(): JSX.Element {
                       isCurrent && 'text-intavia-brand-900',
                     )}
                     aria-current={isCurrent ? 'page' : undefined}
+                    target={item.target != null ? item.target : '_self'}
                   >
                     {item.label}
                   </a>
@@ -68,15 +81,24 @@ export function AppBar(): JSX.Element {
             })}
           </div>
         </div>
-        <div className="flex h-16 flex-row items-center gap-6 pr-6 hover:text-intavia-brand-900">
-          <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger>Import data</DialogTrigger>
-            <DataImportDialog
-              onClose={() => {
-                setDialogOpen(false);
-              }}
-            />
-          </Dialog>
+        <div className="flex h-16 flex-row items-center gap-2 pr-6">
+          {linksRight.map((item) => {
+            const isCurrent = currentPath.includes(item.href.pathname);
+            return (
+              <Link key={item.id} href={item.href.pathname}>
+                <a
+                  className={cn(
+                    'px-3 text-base transition hover:text-intavia-brand-900',
+                    isCurrent && 'text-intavia-brand-900',
+                  )}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  target={item.target != null ? item.target : '_self'}
+                >
+                  {item.label}
+                </a>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import type { SlotId } from '@/features/visualization-layouts/workspaces.slice';
 /** Using custom, application-specific media type instead of `text/plain`. */
 export const type = 'application/x-intavia';
 
-interface ContentTypeTransferData {
+export interface ContentTypeTransferData {
   type: 'contentType';
   contentType: SlideContent['type'];
 }

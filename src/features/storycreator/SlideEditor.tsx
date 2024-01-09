@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { ComponentPropertiesDialog } from '@/features/common/component-properties-dialog';
 import type { DataTransferData } from '@/features/common/data-transfer.types';
-import { ContentTypeTransferData, type as mediaType } from '@/features/common/data-transfer.types';
+import {
+  type ContentTypeTransferData,
+  type as mediaType,
+} from '@/features/common/data-transfer.types';
 import type { Visualization } from '@/features/common/visualization.slice';
 import { editVisualization } from '@/features/common/visualization.slice';
 import type { SlideContent } from '@/features/storycreator/contentPane.slice';
@@ -74,7 +77,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const currentSlide = slides.filter((currSlide) => {
     return currSlide.id === slide.id;
   })[0];
-  const highlighted = currentSlide?.highlighted ?? [];
+  const highlighted = currentSlide?.highlighted ?? {};
 
   const handleClose = () => {
     setEditElement(null);
@@ -109,7 +112,7 @@ export function SlideEditor(props: SlideEditorProps) {
 
   const onDropContentPane = (i_layout: any, i_layoutItem: any, event: any, i_targetPane: any) => {
     try {
-      const data = event.dataTransfer.getData(ContentTypeTransferData);
+      const data = event.dataTransfer.getData(mediaType);
       const payload: DataTransferData = JSON.parse(data);
       addContent(payload.contentType, i_layoutItem, i_targetPane);
     } catch {
@@ -117,7 +120,6 @@ export function SlideEditor(props: SlideEditorProps) {
         const data = event.dataTransfer.getData(mediaType);
         const payload: DataTransferData = JSON.parse(data);
         if (payload.type === 'data') {
-          console.log(payload);
           if (payload.entities.length === 1 && payload.events.length === 0) {
             addContent('entity', i_layoutItem, i_targetPane);
           }
@@ -139,7 +141,7 @@ export function SlideEditor(props: SlideEditorProps) {
   const drop = (event: DragEvent) => {
     event.preventDefault();
 
-    const data = event.dataTransfer.getData(ContentTypeTransferData);
+    const data = event.dataTransfer.getData(mediaType);
     try {
       const payload: DataTransferData = JSON.parse(data);
       if (payload.type === 'contentType') {

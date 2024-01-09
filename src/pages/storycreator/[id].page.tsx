@@ -181,7 +181,7 @@ function StoryScreen(): JSX.Element | null {
                 </div>
               </div>
             </Allotment.Pane>
-            <Allotment.Pane
+            {/* <Allotment.Pane
               key={`bottomPanel${openBottomPanel}`}
               minSize={24}
               preferredSize={openBottomPanel ? '35%' : 24}
@@ -194,7 +194,7 @@ function StoryScreen(): JSX.Element | null {
                 }}
               />
               <VisualizationDragger />
-            </Allotment.Pane>
+            </Allotment.Pane> */}
           </Allotment>
         </Allotment.Pane>
       </Allotment>

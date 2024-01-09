@@ -1,12 +1,10 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { Input } from '@intavia/ui';
-import { zoom } from 'd3';
-import maplibregl from 'maplibre-gl';
 import { forwardRef, useState } from 'react';
-import type { MapProps, MapRef } from 'react-map-gl';
-import { Map, NavigationControl, ScaleControl, useMap } from 'react-map-gl';
+import type { MapProps, MapRef } from 'react-map-gl/maplibre';
+import { Map, NavigationControl, ScaleControl, useMap } from 'react-map-gl/maplibre';
 
+import { defaultMapState } from '@/features/common/visualization.slice';
 import { useElementDimensions } from '@/lib/use-element-dimensions';
 import type { ElementRef } from '@/lib/use-element-ref';
 import { useElementRef } from '@/lib/use-element-ref';
@@ -21,23 +19,30 @@ export const GeoMap = forwardRef<MapRef, GeoMapProps>(function GeoMap(props, ref
 
   const [element, setElement] = useElementRef();
 
-  const [zoomLevel, setZoomlevel] = useState(initialViewState?.zoom ?? 2.0);
+  const [viewState, setViewState] = useState(initialViewState ?? defaultMapState);
+  const [zoomLevel, setZoomlevel] = useState(
+    initialViewState != null ? initialViewState.zoom : 2.0,
+  );
 
   return (
-    <div ref={setElement} className="h-full w-full">
+    <div ref={setElement} className="h-full w-full bg-neutral-50">
       {/* @ts-expect-error Type mismatch between `maplibre-gl` and `mapbox-gl`. */}
       <Map
         ref={ref}
+        antialias
         {...props}
-        mapLib={maplibregl}
-        reuseMaps
+        minPitch={0}
+        maxPitch={85}
+        // reuseMaps
         onZoom={(e) => {
           setZoomlevel(e.viewState.zoom);
         }}
-        /* onMoveEnd={(e) => {
-          onMoveEnd(e.viewState);
-        }} */
+        onMove={(e) => {
+          setViewState(e.viewState);
+        }}
         zoom={zoomLevel}
+        longitude={viewState.longitude}
+        latitude={viewState.latitude}
       >
         <AutoResize element={element} />
         <NavigationControl />

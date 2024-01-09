@@ -1,6 +1,6 @@
 import type { Entity, Event } from '@intavia/api-client';
 import { Fragment, useEffect, useState } from 'react';
-import { Marker, useMap } from 'react-map-gl';
+import { Marker, useMap } from 'react-map-gl/maplibre';
 
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DonutChart } from '@/features/geo-map/donut-chart';

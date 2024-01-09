@@ -2,11 +2,10 @@ import type { Entity, Event } from '@intavia/api-client';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { assert } from '@stefanprobst/assert';
-import type { ViewState } from 'react-map-gl';
+import type { ViewState } from 'react-map-gl/maplibre';
 
 import type { RootState } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
-import type { Link, Node } from '@/features/ego-network/network-component';
 import { unique } from '@/lib/unique';
 
 export interface Visualization {
@@ -19,14 +18,7 @@ export interface Visualization {
   properties?: Record<string, ComponentProperty>;
   visibilities?: Record<string, boolean>;
   mapState?: { mapStyle: string; viewState: Partial<ViewState> };
-  // networkState?: NetworkState;
 }
-
-// interface NetworkState {
-//   nodes: Array<Node>;
-//   links: Array<Link>;
-//   entities: Array<Entity['id']>;
-// }
 
 export const visualizationTypes: Array<Visualization['type']> = ['timeline', 'map', 'ego-network'];
 export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
@@ -37,12 +29,12 @@ export const visualizationTypesStoryCreator: Array<Visualization['type']> = [
 
 const initialState: Record<Visualization['id'], Visualization> = {};
 
-const defaultMapState = {
+export const defaultMapState = {
   mapStyle: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
   viewState: {
-    latitude: 37.8,
-    longitude: -122.4,
-    zoom: 14,
+    latitude: 9.902056,
+    longitude: 49.843,
+    zoom: 2,
   },
 };
 
@@ -218,7 +210,7 @@ const emptyTimelineVis = {
 };
 
 const emptyMapVis = {
-  mapState: defaultMapState,
+  mapState: { ...defaultMapState },
   zoomLevel: 2.0,
   properties: {
     mapStyle: {
@@ -292,19 +284,27 @@ const emptyMapVis = {
       ],
       editable: true,
     },
+    spaceTimeCubeMode: {
+      type: 'boolean',
+      id: 'spaceTimeCubeMode',
+      value: false,
+      editable: true,
+      sort: 4,
+      label: 'Space-Time-Cube (experimental)',
+    },
     cluster: {
       type: 'boolean',
       id: 'cluster',
       value: false,
       editable: true,
-      sort: 4,
+      sort: 5,
       label: 'Cluster',
     },
     clusterMode: {
       type: 'select',
       id: 'clusterMode',
       label: 'Cluster Style',
-      sort: 5,
+      sort: 6,
       value: {
         name: 'Donut',
         value: 'donut',
@@ -326,16 +326,8 @@ const emptyMapVis = {
       id: 'renderLines',
       value: false,
       editable: true,
-      sort: 6,
-      label: 'Connect events chronologically with lines (for each entity)',
-    },
-    zoomlevel: {
-      type: 'number',
-      id: 'zoomlevel',
-      value: 2.0,
-      editable: true,
       sort: 7,
-      label: 'Zoom level for the map',
+      label: 'Connect events chronologically with lines (for each entity)',
     },
   },
   entityIds: [],
@@ -344,7 +336,6 @@ const emptyMapVis = {
 };
 
 const emptyNetworkVis = {
-  // networkState: { nodes: [], links: [], entities: [] },
   properties: {
     name: {
       type: 'text',
@@ -361,6 +352,38 @@ const emptyNetworkVis = {
       label: 'Show all labels',
       editable: true,
       sort: 2,
+    },
+    showPersons: {
+      type: 'boolean',
+      id: 'showPersons',
+      value: true,
+      label: 'Show persons',
+      editable: true,
+      sort: 3,
+    },
+    showObjects: {
+      type: 'boolean',
+      id: 'showObjects',
+      value: true,
+      label: 'Show objects',
+      editable: true,
+      sort: 4,
+    },
+    showGroups: {
+      type: 'boolean',
+      id: 'showGroups',
+      value: true,
+      label: 'Show groups',
+      editable: true,
+      sort: 5,
+    },
+    showPlaces: {
+      type: 'boolean',
+      id: 'showPlaces',
+      value: true,
+      label: 'Show places',
+      editable: true,
+      sort: 6,
     },
   },
 };
@@ -538,6 +561,7 @@ export const visualizationSlice = createSlice({
       assert(vis != null);
       assert(vis.mapState != null);
       vis.mapState.viewState = { ...vis.mapState.viewState, ...viewState };
+      state[visId] = vis;
     },
     setMapStyle: (
       state,
@@ -577,6 +601,9 @@ export const visualizationSlice = createSlice({
         properties: { ...emptyVis.properties, ...vis.properties },
       } as Visualization;
     },
+    replaceWith: (state, action: PayloadAction<Record<Visualization['id'], Visualization>>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -598,6 +625,7 @@ export const {
   setMapStyle,
   // setNetworkState,
   importVisualization,
+  replaceWith,
 } = visualizationSlice.actions;
 
 export const selectVisualizationById = createSelector(

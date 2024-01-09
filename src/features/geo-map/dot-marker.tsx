@@ -1,7 +1,7 @@
 import type { Entity, Event } from '@intavia/api-client';
 import type { Feature, Position } from 'geojson';
 import { useMemo } from 'react';
-import { Marker } from 'react-map-gl';
+import { Marker } from 'react-map-gl/maplibre';
 
 import { useHoverState } from '@/app/context/hover.context';
 import { highlight } from '@/features/common/visualization.config';

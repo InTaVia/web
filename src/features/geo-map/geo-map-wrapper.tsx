@@ -2,19 +2,24 @@ import type { Entity, Event } from '@intavia/api-client';
 import { keyBy } from '@stefanprobst/key-by';
 import { schemePaired as identityColors } from 'd3-scale-chromatic';
 import { useCallback } from 'react';
-import type { ViewState, ViewStateChangeEvent } from 'react-map-gl';
+import type { ViewState, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import { useAppDispatch } from '@/app/store';
 import type { ComponentProperty } from '@/features/common/component-property';
 import { useDataFromVisualization } from '@/features/common/data/use-data-from-visualization';
 import { getColorsById } from '@/features/common/visualization.config';
-import { type Visualization, setMapViewState } from '@/features/common/visualization.slice';
+import {
+  type Visualization,
+  defaultMapState,
+  setMapViewState,
+} from '@/features/common/visualization.slice';
 import { VisualizationLegend } from '@/features/common/visualization-legend';
 import { GeoMap } from '@/features/geo-map/geo-map';
 import { base } from '@/features/geo-map/geo-map.config';
 import { GeoMapClusterMarkerLayer } from '@/features/geo-map/geo-map-cluster-marker-layer';
 import { GeoMapDotMarkerLayer } from '@/features/geo-map/geo-map-dot-marker-layer';
 import { GeoMapLineLayer } from '@/features/geo-map/geo-map-line-layer';
+import { GeoMapSpaceTimeCubeLayer } from '@/features/geo-map/geo-map-space-time-cube-layer';
 import { useLineStringFeatureCollection } from '@/features/geo-map/lib/use-line-string-feature-collection';
 import { useMarkerCluster } from '@/features/geo-map/lib/use-marker-cluster';
 import { usePointFeatureCollection } from '@/features/geo-map/lib/use-point-feature-collection';
@@ -81,17 +86,18 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
       return item.id;
     },
   );
-
+  const isSpaceTimeCubeMode = visualization.properties!.spaceTimeCubeMode!.value ?? false;
   const isCluster = visualization.properties!.cluster!.value ?? false;
   const clusterMode = visualization.properties!.clusterMode!.value.value ?? 'donut';
   const renderLines = visualization.properties!.renderLines!.value ?? false;
   const mapStyle = visualization.properties!.mapStyle!.value.value ?? false;
   const colorBy =
-    visualization.properties.colorBy != null
-      ? visualization.properties.colorBy!.value.value
+    visualization.properties!.colorBy != null
+      ? visualization.properties!.colorBy!.value.value
       : 'event-kind';
 
-  const viewState = visualization.mapState != null ? visualization.mapState.viewState : null;
+  const viewState =
+    visualization.mapState != null ? visualization.mapState.viewState : defaultMapState.viewState;
 
   const cluster = useMarkerCluster({
     clusterByProperty: 'event.kind',
@@ -109,24 +115,33 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
     }
   }
 
-  // const onMove = useCallback((event: ViewStateChangeEvent) => {
-  //   dispatch(setMapViewState({ visId: visualization.id, viewState: event.viewState }));
-  // }, []);
-
   return (
     <>
-      <GeoMap {...base} initialViewState={viewState} mapStyle={mapStyle} onMoveEnd={onMoveEnd}>
-        {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
-        {renderLines === true && isCluster === false && lines.features.length > 0 && (
-          <GeoMapLineLayer
-            data={lines}
-            id={visualization.id}
-            colorBy={colorBy}
-            entityIdentities={entityIdentities}
-          />
+      <GeoMap
+        key={visualization.id + 'GeoMap'}
+        {...base}
+        initialViewState={viewState}
+        mapStyle={mapStyle}
+        onMoveEnd={onMoveEnd}
+        renderWorldCopies={false}
+      >
+        {isSpaceTimeCubeMode === true && (
+          <GeoMapSpaceTimeCubeLayer id={visualization.id} data={lines} renderLines={renderLines} />
         )}
+        {/* <GeoMapMarkerLayer circleColors={circleColors} data={points} /> */}
+        {isSpaceTimeCubeMode === false &&
+          renderLines === true &&
+          isCluster === false &&
+          lines.features.length > 0 && (
+            <GeoMapLineLayer
+              data={lines}
+              id={visualization.id}
+              colorBy={colorBy}
+              entityIdentities={entityIdentities}
+            />
+          )}
 
-        {isCluster === false && points.features.length > 0 && (
+        {isSpaceTimeCubeMode === false && isCluster === false && points.features.length > 0 && (
           <GeoMapDotMarkerLayer
             autoFitBounds={autoFitBounds}
             data={points}
@@ -137,7 +152,7 @@ export function GeoMapWrapper(props: GeoMapWrapperProps): JSX.Element {
           />
         )}
 
-        {isCluster === true && points.features.length > 0 && (
+        {isSpaceTimeCubeMode === false && isCluster === true && points.features.length > 0 && (
           //NOTE: does not have to be visulization id - used to keep source id
           <GeoMapClusterMarkerLayer
             id={visualization.id}

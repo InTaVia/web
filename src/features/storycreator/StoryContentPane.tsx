@@ -186,7 +186,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                     : 'https://via.placeholder.com/300'
                 }
                 alt="card"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </div>
             {(element.properties!.title!.value !== '' ||

@@ -1,7 +1,7 @@
 import type { Entity } from '@intavia/api-client';
 import { cn } from '@intavia/ui';
 import { useRef } from 'react';
-import { Marker } from 'react-map-gl';
+import { Marker } from 'react-map-gl/maplibre';
 
 import { BiographyViewer } from '@/features/biography/biography-viewer';
 import { NetworkComponent } from '@/features/ego-network/network-component';
@@ -32,10 +32,9 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
   const hasAttributes = useEntityHasAttributes(entity);
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const hasRelations = entity.relations != null && entity.relations.length > 0;
-  const hasGeometry =
-    useEntityHasGeometry(entity) || (entity.kind === 'place' && entity.geometry !== undefined);
-  const hasBiographies =
-    entity.kind === 'person' && entity.biographies != null && entity.biographies.length > 0;
+  const hasPlaceGeometry = entity.kind === 'place' && entity.geometry !== undefined;
+  const hasEventGeometry = useEntityHasGeometry(entity);
+  const hasBiographies = entity.biographies != null && entity.biographies.length > 0;
 
   const [networkVisualization, mapVisualization, timelineVisualization] = useVisualizationSetup(
     entity.id,
@@ -55,7 +54,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
           {hasAttributes && <EntityAttributes entity={entity} />}
         </div>
       )}
-      {(hasRelations || hasGeometry) && (
+      {(hasRelations || hasEventGeometry || hasPlaceGeometry) && (
         <div className="grid gap-4">
           <div className="flex flex-row gap-4 pt-4">
             {hasRelations ? (
@@ -63,7 +62,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
                 className={cn(
                   'relative border',
                   `h-[${networkMapHeight}px]`,
-                  `${hasGeometry ? 'w-1/2' : 'w-full'}`,
+                  `${hasEventGeometry ? 'w-1/2' : 'w-full'}`,
                 )}
                 ref={networkParent}
               >
@@ -74,11 +73,11 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
                 />{' '}
               </div>
             ) : null}
-            {hasGeometry && (
+            {(hasEventGeometry || hasPlaceGeometry) && (
               <div
                 className={cn(
                   'relative border',
-                  'h-[400px]',
+                  `h-[400px]`,
                   `${hasRelations ? 'w-1/2' : 'w-full'}`,
                 )}
               >
@@ -101,7 +100,7 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
       )}
       {(hasRelations || hasBiographies) && (
         <div className="grid grid-cols-2 items-start gap-4 pt-4">
-          {hasRelations && <EntityRelations relations={entity.relations} />}
+          {hasRelations && <EntityRelations relations={entity.relations} mainEntity={entity.id} />}
           {hasBiographies && <BiographyViewer biographyIds={entity.biographies!} />}
         </div>
       )}
@@ -109,7 +108,22 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
   );
 
   function renderMap(): JSX.Element {
-    if (entity.kind === 'place') {
+    if (hasEventGeometry) {
+      return (
+        <GeoMapWrapper
+          visualization={mapVisualization}
+          highlightedByVis={{
+            entities: [],
+            events: [],
+          }}
+          width={halfWidth}
+          height={networkMapHeight}
+          autoFitBounds={true}
+        />
+      );
+    }
+
+    if (hasPlaceGeometry) {
       return (
         <GeoMap
           initialViewState={{
@@ -129,17 +143,6 @@ export function EntityDetails(props: EntityDetailsProps): JSX.Element {
       );
     }
 
-    return (
-      <GeoMapWrapper
-        visualization={mapVisualization}
-        highlightedByVis={{
-          entities: [],
-          events: [],
-        }}
-        width={halfWidth}
-        height={networkMapHeight}
-        autoFitBounds={true}
-      />
-    );
+    return <GeoMap />;
   }
 }

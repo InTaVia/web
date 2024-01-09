@@ -18,7 +18,7 @@ export interface DroppableIconProps {
 }
 
 function getIcon(type: string) {
-  const classStr = 'h-6 w-6 text-intavia-blue-800';
+  const classStr = 'h-6 w-6 shrink-0';
   switch (type) {
     case 'Timeline':
       return <ChartBarIcon className={classStr} />;
@@ -49,11 +49,11 @@ export function DroppableIcon(props: DroppableIconProps): JSX.Element {
   const { type } = props;
 
   return (
-    <div
-      key={`icon${type}`}
-      style={{ verticalAlign: 'middle', display: 'table-cell', width: '1%' }}
-    >
-      {getIcon(type)}
-    </div>
+    // <div
+    //   key={`icon${type}`}
+    //   style={{ verticalAlign: 'middle', display: 'table-cell', width: '1%' }}
+    // >
+    <>{getIcon(type)}</>
+    // {/* </div> */}
   );
 }

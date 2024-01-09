@@ -15,6 +15,8 @@ export const dictionary: Dictionary = {
     'data-curation-lab': 'Search & Curation',
     'visual-analytics-studio': 'Visualization & Analysis',
     'story-creator': 'Storytelling & Presentation',
+    'import-export': 'Import & Export Data',
+    tutorials: 'Tutorials',
   },
   collections: {
     metadata: {
@@ -48,7 +50,7 @@ export const dictionary: Dictionary = {
     metadata: {
       title: 'Data Import',
     },
-    ui: { 'load-data': 'Load Data', 'import-data': 'Import Data' },
+    ui: { 'load-data': 'Select Data', 'import-data': 'Import Data' },
   },
   entity: {
     metadata: {
@@ -76,6 +78,7 @@ export const dictionary: Dictionary = {
     location: { one: 'Location', other: 'Locations' },
     'edit-entity': 'Edit {{kind}}',
     'missing-entity': 'Missing entity',
+    'select-kind': 'Select entity kind',
     'select-gender': 'Select gender',
     'select-occupations': 'Select occupations',
     role: { one: 'Role', other: 'Roles' },
@@ -125,6 +128,11 @@ export const dictionary: Dictionary = {
     'card-stc': {
       title: 'communicate, show & tell',
       text: 'The story creator module allows you to communicate your selected culture and history data by narrative means. Connect and combine rich media elements (images, text, or A/V data) with data visualizations (maps, timelines, sets, or network diagrams, created in the visualization studio) to compelling stories. These stories or presentations can be further enriched with gamification elements, and exported to a story viewer component for the reception on different target devices.',
+    },
+  },
+  io: {
+    metadata: {
+      title: 'Import & Export',
     },
   },
   imprint: {
@@ -221,5 +229,7 @@ export const dictionary: Dictionary = {
     open: 'Open',
     new: 'New',
     turn: 'Turn into',
+    'add-relation': 'Add relation',
+    'create-entity': 'Create new entity',
   },
 };

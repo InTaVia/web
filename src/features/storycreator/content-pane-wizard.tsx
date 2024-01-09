@@ -2,6 +2,7 @@ import { Button } from '@intavia/ui';
 import { useState } from 'react';
 
 import { SlideContentTypes } from '@/features/storycreator/contentPane.slice';
+import { DroppableIcon } from '@/features/storycreator/DroppableIcon';
 
 interface ContentPaneWizardProps {
   mini?: boolean;
@@ -44,6 +45,7 @@ export default function ContentPaneWizard(props: ContentPaneWizardProps): JSX.El
                 onButtonClick(type);
               }}
             >
+              <DroppableIcon type={type} />
               {type}
             </Button>
           );

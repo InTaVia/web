@@ -1,11 +1,15 @@
 import type { Entity, Event } from '@intavia/api-client';
 
+import type { ComponentProperty } from '@/features/common/component-property';
 import type { Link, Node } from '@/features/ego-network/network-component';
 import { unique } from '@/lib/unique';
 import { useEntities } from '@/lib/use-entities';
 import { useEvents } from '@/lib/use-events';
 
-export function useNodesAndLinks(ids: Array<Entity['id']>): {
+export function useNodesAndLinks(
+  ids: Array<Entity['id']>,
+  properties: Record<string, ComponentProperty>,
+): {
   nodes: Array<Node>;
   links: Array<Link>;
   events: Record<string, Event>;
@@ -56,9 +60,32 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
       status: entitiesResponse.status,
     };
   const relatedEntities = entitiesResponse.data;
+  let filteredEntities = Array.from(relatedEntities.values());
+
+  // Apply entity type filters
+  if (!(properties['showPersons']?.value as boolean)) {
+    filteredEntities = filteredEntities.filter((entity) => {
+      return entity.kind !== 'person' || ids.includes(entity.id);
+    });
+  }
+  if (!(properties['showObjects']?.value as boolean)) {
+    filteredEntities = filteredEntities.filter((entity) => {
+      return entity.kind !== 'cultural-heritage-object' || ids.includes(entity.id);
+    });
+  }
+  if (!(properties['showGroups']?.value as boolean)) {
+    filteredEntities = filteredEntities.filter((entity) => {
+      return entity.kind !== 'group' || ids.includes(entity.id);
+    });
+  }
+  if (!(properties['showPlaces']?.value as boolean)) {
+    filteredEntities = filteredEntities.filter((entity) => {
+      return entity.kind !== 'place' || ids.includes(entity.id);
+    });
+  }
 
   // Add related entities to node array
-  relatedEntities.forEach((entity) => {
+  filteredEntities.forEach((entity) => {
     nodes.push({
       entityId: entity.id,
       x: 0,
@@ -71,7 +98,17 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
   events.data?.forEach((event) => {
     event.relations.forEach((relation) => {
       const targetEntityId = relation.entity;
-      const sourceEntityId = Array.from(relatedEntities.values()).filter((entity) => {
+
+      // Don't add links for entities that have been filtered out
+      if (
+        filteredEntities.find((entity) => {
+          return entity.id === targetEntityId;
+        }) === undefined
+      ) {
+        return;
+      }
+
+      const sourceEntityId = filteredEntities.filter((entity) => {
         // FIXME: This (unecessary) conditional only exists because some places don't have a relations attribute :(
         if (entity.relations === undefined) return false;
         return (
@@ -120,11 +157,16 @@ export function useNodesAndLinks(ids: Array<Entity['id']>): {
     status = 'error';
   }
 
+  const returnEntities: Record<Entity['id'], Entity> = {};
+  filteredEntities.forEach((entity) => {
+    returnEntities[entity.id] = entity;
+  });
+
   return {
     nodes: nodes,
     links: links,
     status: status,
     events: events.data != null ? Object.fromEntries(events.data) : {},
-    entities: Object.fromEntries(relatedEntities),
+    entities: returnEntities,
   };
 }

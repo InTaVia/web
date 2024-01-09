@@ -2,7 +2,7 @@ import type { Feature } from 'geojson';
 import get from 'lodash.get';
 import type { MouseEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import { useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { useHoverState } from '@/app/context/hover.context';
 

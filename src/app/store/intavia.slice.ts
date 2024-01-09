@@ -12,6 +12,7 @@ import { PURGE } from 'redux-persist';
 
 import { service as intaviaApiService } from '@/api/intavia.service';
 import type { RootState } from '@/app/store';
+import { importErnestAdamicData } from '@/app/store/adamic-example';
 
 interface IndexedEntities {
   byId: Record<Entity['id'], Entity>;
@@ -60,6 +61,15 @@ interface IntaviaState {
   };
 }
 
+const {
+  entitiesById,
+  entitiesByKind,
+  eventsById,
+  mediaById,
+  vocabulariesByEntryId,
+  vocabulariesById,
+} = importErnestAdamicData();
+
 const initialState: IntaviaState = {
   entities: {
     upstream: {
@@ -73,14 +83,8 @@ const initialState: IntaviaState = {
       },
     },
     local: {
-      byId: {},
-      byKind: {
-        'cultural-heritage-object': {},
-        group: {},
-        'historical-event': {},
-        person: {},
-        place: {},
-      },
+      byId: entitiesById,
+      byKind: entitiesByKind,
     },
   },
   events: {
@@ -88,7 +92,7 @@ const initialState: IntaviaState = {
       byId: {},
     },
     local: {
-      byId: {},
+      byId: eventsById,
     },
   },
   mediaResources: {
@@ -96,7 +100,7 @@ const initialState: IntaviaState = {
       byId: {},
     },
     local: {
-      byId: {},
+      byId: mediaById,
     },
   },
   biographies: {
@@ -113,8 +117,8 @@ const initialState: IntaviaState = {
       byVocabularyId: {},
     },
     local: {
-      byVocabularyEntryId: {},
-      byVocabularyId: {},
+      byVocabularyEntryId: vocabulariesByEntryId,
+      byVocabularyId: vocabulariesById,
     },
   },
 };
@@ -247,6 +251,9 @@ export const slice = createSlice({
     },
     clear() {
       return initialState;
+    },
+    replaceWith(state, action: PayloadAction<IntaviaState>) {
+      return action.payload;
     },
   },
   extraReducers(builder) {
@@ -488,6 +495,7 @@ export const {
   clearEvents,
   clearVocabularies,
   clear,
+  replaceWith,
 } = slice.actions;
 
 export function selectUpstreamEntities(state: RootState) {

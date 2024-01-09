@@ -66,13 +66,18 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
       validateOnBlur={validateOnBlur}
     >
       {({ handleSubmit }) => {
+        function _handleSubmit(event: any) {
+          event.stopPropagation();
+          return handleSubmit(event);
+        }
+
         if (typeof children === 'function') {
           return children({
             action,
             id,
             method,
             name,
-            onSubmit: handleSubmit,
+            onSubmit: _handleSubmit,
           });
         }
 
@@ -84,7 +89,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
             method={method}
             name={name}
             noValidate={validate != null}
-            onSubmit={handleSubmit}
+            onSubmit={_handleSubmit}
           >
             {children}
           </form>

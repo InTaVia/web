@@ -1,7 +1,7 @@
 import type { Entity, Event, EventEntityRelation } from '@intavia/api-client';
 import type { FeatureCollection, Point, Position } from 'geojson';
 import { Fragment, useEffect } from 'react';
-import { useMap } from 'react-map-gl';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { getEventKindPropertiesById } from '@/features/common/visualization.config';
 import { DotMarker } from '@/features/geo-map/dot-marker';
@@ -88,7 +88,8 @@ export function GeoMapDotMarkerLayer<T>(props: GeoMapMarkersLayerProps<T>): JSX.
         const tempColor =
           targetEntities.length > 1 ||
           entityIdentities[targetEntities[0]] == null ||
-          dateString == null
+          dateString == null ||
+          entityIdentities[targetEntities[0]].timeScaleNormalized == null
             ? { main: '#cccccc', dark: '#666666' }
             : {
                 main: colorScale(

@@ -11,6 +11,7 @@ import { selectLocalEntities } from '@/app/store/intavia.slice';
 import { addEntitiesToCollection, selectCollections } from '@/app/store/intavia-collections.slice';
 import { useCollection } from '@/components/search/collection.context';
 import { IntaviaIcon } from '@/features/common/icons/intavia-icon';
+import { EntityQualityIndicator } from '@/features/common/quality-indicators';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
 
 interface SearchResultProps<T extends Entity> {
@@ -78,8 +79,9 @@ export function SearchResult<T extends Entity>(props: SearchResultProps<T>): JSX
             >
               <span>{label}</span>
             </a>
-            <div className="text-xs text-neutral-500">
+            <div className="flex flex-row gap-x-2 text-xs text-neutral-500">
               {t(['common', 'entity', 'kinds', entity.kind, 'one'])}
+              <EntityQualityIndicator entity={entity} />
             </div>
           </div>
         </div>
