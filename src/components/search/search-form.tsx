@@ -69,18 +69,14 @@ function SearchPanelForm(): JSX.Element {
 
         <CollapsibleContent>
           <div className="grid gap-2">
-            <Tabs defaultValue="search-facets">
+            <Tabs defaultValue="visual-query-builder">
               <TabsList>
-                <TabsTrigger value="search-facets">
-                  {t(['common', 'search', 'adjust-search-filters'])}
-                </TabsTrigger>
-                {/* FIXME: commented out until statistics endpoints are fixed
                 <TabsTrigger value="visual-query-builder">
                   {t(['common', 'search', 'visual-query-builder'])}
                 </TabsTrigger>
-                <TabsTrigger value="search-statistics">
-                  {t(['common', 'search', 'search-statistics'])}
-                </TabsTrigger> */}
+                <TabsTrigger value="search-facets">
+                  {t(['common', 'search', 'adjust-search-filters'])}
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="search-facets">
                 <SearchFacets />
