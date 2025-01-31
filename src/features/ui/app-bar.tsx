@@ -43,7 +43,7 @@ export function AppBar(): JSX.Element {
     },
     {
       id: 'tutorials',
-      href: { pathname: 'https://intavia.eu/category/tutorials/' },
+      href: { pathname: 'https://intavia.eu/tutorials' },
       label: t(['common', 'app-bar', 'tutorials']),
       target: '_blank',
     },
