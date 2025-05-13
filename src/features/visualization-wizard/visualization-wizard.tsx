@@ -117,7 +117,7 @@ export default function VisualizationWizard(props: VisualizationWizardProps): JS
   const visTypes = isStoryCreator ? visualizationTypesStoryCreator : visualizationTypes;
 
   return (
-    <div className="flex h-full w-full flex-col place-content-center items-center gap-5 p-5">
+    <div className="flex h-full w-full flex-col place-content-center items-center gap-5 p-5 bg-white">
       <div className="flex flex-row place-content-center items-center gap-2">
         {visTypes.map((visType) => {
           return (

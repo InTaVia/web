@@ -138,15 +138,17 @@ export const selectPaneOpen = createSelector(
     return orientation;
   },
   (uiState, component, orientation) => {
-    if (Object.prototype.hasOwnProperty.call(uiState.components, component)) {
-      if (orientation === 'left') {
-        return uiState.components[component].leftPaneOpen;
+    if (uiState.components != null) {
+      if (Object.prototype.hasOwnProperty.call(uiState.components, component)) {
+        if (orientation === 'left') {
+          return uiState.components[component].leftPaneOpen;
+        } else {
+          return uiState.components[component].rightPaneOpen;
+        }
       } else {
-        return uiState.components[component].rightPaneOpen;
+        console.error('You provided a not accepted.');
+        return false;
       }
-    } else {
-      console.error('You provided a not accepted.');
-      return false;
     }
   },
 );

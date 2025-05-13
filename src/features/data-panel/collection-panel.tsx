@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import type { Collection } from '@/app/store/intavia-collections.slice';
-import { selectCollectionsCount } from '@/app/store/intavia-collections.slice';
+import { selectCollections, selectCollectionsCount } from '@/app/store/intavia-collections.slice';
 import { NothingFoundMessage } from '@/components/nothing-found-message';
 import { useCollection } from '@/components/search/collection.context';
 import { useDataFromCollection } from '@/features/common/data/use-data-from-collection';
@@ -38,6 +38,7 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
   const { t } = useI18n<'common'>();
   const dispatch = useAppDispatch();
   const { currentCollection, setCurrentCollection } = useCollection();
+  const collections = useAppSelector(selectCollections);
 
   const [settingsOpen, setSettingsOpen] = useState(true);
 
@@ -49,6 +50,10 @@ export function CollectionPanel(props: CollectionPanelProps): JSX.Element {
   const onCollectionChange = (collection: Collection['id']) => {
     setCurrentCollection(collection);
   };
+
+  if (currentCollection == null && collectionsCount > 0) {
+    setCurrentCollection(Object.keys(collections)[0] as string);
+  }
 
   const { entities, events } = useDataFromCollection({ collectionId: currentCollection });
 
