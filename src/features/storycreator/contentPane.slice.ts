@@ -24,7 +24,7 @@ export interface SlideContent {
   properties?: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
-export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio', 'HTML']; //, 'Title'];
+export const SlideContentTypes = ['Image', 'PDF', 'Quiz', 'Text', 'Video/Audio', 'HTML']; //, 'Title'];
 
 export interface ContentPane {
   id: string;
@@ -44,6 +44,11 @@ export interface StoryMap extends SlideContent {
 
 export interface StoryImage extends SlideContent {
   type: 'Image';
+  properties: Record<string, ComponentProperty>;
+}
+
+export interface StoryPDF extends SlideContent {
+  type: 'PDF';
   properties: Record<string, ComponentProperty>;
 }
 
@@ -289,6 +294,34 @@ export class StoryImageObject implements StoryImage {
   properties: Record<string, ComponentProperty>;
 }
 
+export class StoryPDFObject implements StoryPDF {
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  type: 'PDF' = 'PDF';
+
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.parentPane = parentPane;
+    this.layout = layout;
+    this.properties = {
+      link: {
+        type: 'textarea',
+        id: 'link',
+        editable: true,
+        label: 'Link',
+        value: '',
+        sort: 0,
+      } as ComponentProperty,
+    };
+  }
+  parentPane: string;
+  properties: Record<string, ComponentProperty>;
+}
+
 export class StoryVideoAudioObject implements StoryVideoAudio {
   id: string;
   layout: { x: number; y: number; w: number; h: number };
@@ -405,6 +438,9 @@ export const contentPaneSlice = createSlice({
       switch (content.type) {
         case 'Image':
           contentObject = new StoryImageObject(content.id, content.contentPane, content.layout);
+          break;
+        case 'PDF':
+          contentObject = new StoryPDFObject(content.id, content.contentPane, content.layout);
           break;
         case 'Video/Audio':
           contentObject = new StoryVideoAudioObject(

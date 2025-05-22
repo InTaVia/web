@@ -183,7 +183,7 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 src={
                   (element as StoryImage).properties.link?.value !== ''
                     ? (element as StoryImage).properties.link?.value
-                    : 'https://via.placeholder.com/300'
+                    : 'https://placehold.co/600x400'
                 }
                 alt="card"
                 className="h-full w-full object-contain"
@@ -228,6 +228,27 @@ export function StoryContentPane(props: StoryContentPaneProps) {
                 )}
               </div>
             )}
+          </div>
+        );
+      case 'PDF':
+        return (
+          <div
+            style={{
+              height: '100%',
+              maxHeight: '100%',
+              backgroundColor: 'white',
+              padding: 0,
+            }}
+          >
+            <div style={{ height: '100%' }}>
+              <embed
+                className="h-full w-full"
+                src={(element as StoryPDF).properties.link?.value}
+                width="500"
+                height="375"
+                type="application/pdf"
+              />
+            </div>
           </div>
         );
       case 'Video/Audio':

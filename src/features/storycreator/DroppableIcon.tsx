@@ -4,6 +4,7 @@ import {
   ChatIcon,
   CodeIcon,
   CubeIcon,
+  DocumentIcon,
   DocumentTextIcon,
   MapIcon,
   PhotographIcon,
@@ -32,6 +33,8 @@ function getIcon(type: string) {
       return <CubeIcon className={classStr} />;
     case 'Image':
       return <PhotographIcon className={classStr} />;
+    case 'PDF':
+      return <DocumentIcon className={classStr} />;
     case 'Video/Audio':
       return <VideoCameraIcon className={classStr} />;
     case 'Person':

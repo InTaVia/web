@@ -32,7 +32,11 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { NetworkState } from '@/features/ego-network/network.slice';
 import { selectAllNetworks } from '@/features/ego-network/network.slice';
-import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import type {
+  ContentPane,
+  ContentSlotId,
+  SlideContent,
+} from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
   createContentPane,
@@ -191,9 +195,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       targetPane = 'contentPane0';
     }
 
-    const ids = windows.map((window: UiWindow) => {
-      return window.i;
-    });
+    const ids =
+      windows != null
+        ? windows.map((window: UiWindow) => {
+            return window.i;
+          })
+        : [];
 
     let counter = 1;
     const text = type;
@@ -412,7 +419,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     Object.values(story.slides).forEach((slide) => {
       for (const visID of Object.values(slide.visualizationSlots)) {
         if (visID != null) {
-          const vis = allVisualizations[visID] as Visualization;
+          const oldVis = allVisualizations[visID] as Visualization;
+          const vis = { ...oldVis, entityIds: oldVis.entityIds.slice(0, 1) };
+
           const networkEntityIds: Array<Entity['id']> = [];
           const networkState: NetworkState = { nodes: [], links: [] };
           if (vis.type === 'ego-network' && vis.id in networkStates) {
@@ -431,7 +440,43 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       }
       for (const contID of Object.values(slide.contentPaneSlots)) {
         if (contID != null) {
-          storyContentPanes[contID] = allContentPanes[contID] as ContentPane;
+          const contents = (allContentPanes[contID] as ContentPane).contents;
+          const newContents = {};
+          for (const contKey of Object.keys(contents)) {
+            const cont = contents[contKey] as SlideContent;
+            if (cont.type === 'PDF') {
+              if (cont.properties.link.value.endsWith('.pdf')) {
+                // in case the image is a pdf
+                const windowHeight = window.innerHeight;
+                const height = windowHeight * 0.9;
+
+                const newContent = {
+                  ...cont,
+                  type: 'HTML',
+                  properties: {
+                    text: {
+                      type: 'textarea',
+                      id: 'text',
+                      editable: true,
+                      label: 'Content',
+                      value: `<embed src='${cont.properties.link.value}' style='width: 100%; height: ${height}px;'/>`,
+                      sort: 0,
+                    },
+                  },
+                };
+
+                newContents[contKey] = newContent;
+              }
+            }
+            if (newContents[contKey] == null) {
+              newContents[contKey] = cont;
+            }
+          }
+
+          storyContentPanes[contID] = {
+            ...(allContentPanes[contID] as ContentPane),
+            contents: { ...newContents },
+          };
         }
       }
     });
