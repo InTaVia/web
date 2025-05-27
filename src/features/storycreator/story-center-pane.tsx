@@ -1,7 +1,7 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import type { Entity, Event } from '@intavia/api-client/dist/models';
+import type { Biography, Entity, Event } from '@intavia/api-client/dist/models';
 import {
   Button,
   Dialog,
@@ -18,6 +18,7 @@ import type { StringLiteral } from 'typescript';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
+  selectBiographies,
   selectEntities,
   selectEvents,
   selectMediaResources,
@@ -94,6 +95,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const mediaRessources = useAppSelector(selectMediaResources);
 
   const networkStates = useAppSelector(selectAllNetworks);
+
+  const biographies = useAppSelector(selectBiographies);
 
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
@@ -187,7 +190,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   const windows = useAppSelector(selectWindows);
 
-  const addContent = (type: string, i_layoutItem: any, i_targetPane: string | undefined) => {
+  const addContent = (
+    type: string,
+    i_layoutItem: any,
+    i_targetPane: string | undefined,
+    entity: Entity | null,
+  ) => {
     const layoutItem = i_layoutItem;
 
     let targetPane = i_targetPane;
@@ -203,16 +211,33 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         : [];
 
     let counter = 1;
+    let newType = type;
     const text = type;
     let newText = text;
     while (ids.includes(newText)) {
       newText = text + ' (' + counter + ')';
       counter++;
     }
-    layoutItem['i'] = newText;
-    layoutItem['type'] = type;
 
-    switch (type) {
+    const properties = {};
+    if (type === 'entity' && entity != null) {
+      newType = 'Image';
+      const ent = allEntities[entity];
+      if (ent != null) {
+        if (ent.media != null && ent.media.length > 0) {
+          const med = allMedia[ent.media[0]];
+          if (med != null) {
+            properties['link'] = med['url'];
+            properties['title'] = med['label'].default;
+          }
+        }
+      }
+    }
+
+    layoutItem['i'] = newText;
+    layoutItem['type'] = newType;
+
+    switch (newType) {
       case 'Image':
         layoutItem['h'] = 4;
         layoutItem['w'] = 1;
@@ -227,6 +252,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         break;
       case 'Title':
         layoutItem['h'] = 8;
+        layoutItem['w'] = 1;
+        break;
+      case 'PDF':
+        layoutItem['h'] = 4;
         layoutItem['w'] = 1;
         break;
       default:
@@ -248,6 +277,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         },
         type: layoutItem['type'],
         key: newText,
+        properties: properties,
       }),
     );
   };
@@ -330,6 +360,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const allContentPanes = useAppSelector(selectAllConentPanes);
   const allEntities = useAppSelector(selectEntities);
   const allEvents = useAppSelector(selectEvents);
+  const allMedia = useAppSelector(selectMediaResources);
 
   /* const storyObject = useMemo(() => {
     const storyVisualizations: Record<string, Visualization> = {};
@@ -438,6 +469,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           storyEventIds.push(...vis.eventIds);
         }
       }
+
       for (const contID of Object.values(slide.contentPaneSlots)) {
         if (contID != null) {
           const contents = (allContentPanes[contID] as ContentPane).contents;
@@ -568,6 +600,18 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+    const storyBiographies: Record<Biography['id'], Biography> = Object.fromEntries(
+      Object.values(storyEntities)
+        .filter((e) => {
+          return e.biographies != null;
+        })
+        .flatMap((e) => {
+          return e.biographies.map((bio) => {
+            return [bio, biographies[bio]];
+          });
+        }),
+    );
+
     const storyVocabulary = {};
     const storyEventLocations = {};
 
@@ -613,6 +657,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       media: storyMedias,
       vocabulary: storyVocabulary,
       storyEventLocations: storyEventLocations,
+      biographies: storyBiographies,
     };
   };
 
@@ -725,7 +770,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 href={`data:text/json;charset=utf-8,${encodeURIComponent(
                   JSON.stringify(storyExportObject, null, 2),
                 )}`}
-                download={`${story.properties.name?.value ?? story.id}.istory.json`}
+                download={`${story.properties.name?.value ?? story.id}.json`}
               >
                 <Button
                   onClick={() => {
