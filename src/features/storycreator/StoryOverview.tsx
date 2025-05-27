@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
+  addLocalBiographies,
   addLocalEntity,
   addLocalEvent,
   addLocalMediaResource,
@@ -125,6 +126,12 @@ export function StoryOverview(): JSX.Element {
       case 'Hofburg Construction History':
         fileName = './HofburgConstruction.json';
         break;
+      case 'Bernburg – Hist. Introduction':
+        fileName = './Bernburg_Euthanasia_Center.json';
+        break;
+      case 'Bernburg – Example Slides':
+        fileName = './Bernburg_Example_Slides.json';
+        break;
       default:
         break;
     }
@@ -142,6 +149,14 @@ export function StoryOverview(): JSX.Element {
         });
       });
   };
+
+  if (!Object.keys(stories).includes('st-bbg-example')) {
+    onLoadStory('Bernburg – Example Slides');
+  }
+
+  if (!Object.keys(stories).includes('st-bbg-introduction')) {
+    onLoadStory('Bernburg – Hist. Introduction');
+  }
 
   const onStoryImport = (data: Record<string, any>) => {
     const storyObj = { ...data };
@@ -215,6 +230,10 @@ export function StoryOverview(): JSX.Element {
       } else {
         dispatch(addLocalEvent(event));
       }
+    }
+
+    if (storyObj.biographies != null) {
+      dispatch(addLocalBiographies(Object.values(storyObj.biographies)));
     }
 
     for (const media of Object.values(mediaRessources) as Array<MediaResource>) {
@@ -356,6 +375,20 @@ export function StoryOverview(): JSX.Element {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-56">
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Bernburg – Example Slides');
+              }}
+            >
+              Bernburg – Example Slides
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Bernburg – Hist. Introduction');
+              }}
+            >
+              Bernburg – Hist. Introduction
+            </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => {
                 onLoadStory('Albrecht Dürer');
