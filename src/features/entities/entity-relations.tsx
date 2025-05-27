@@ -74,9 +74,9 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
 
   if (relations == null || relations.length === 0) return null;
 
-  if (roles.status === 'error' || events.status === 'error') {
-    return <p>Failed to fetch relations.</p>;
-  }
+  // if (roles.status === 'error' || events.status === 'error') {
+  //   return <p>Failed to fetch relations.</p>;
+  // }
 
   // FIXME: Currently, this loading message is displayed forever, since the backend does not know
   // how to resolve all role ids, but returns 200 OK even if not all requested ids were resolved.
