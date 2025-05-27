@@ -1,7 +1,7 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import type { Entity, Event } from '@intavia/api-client/dist/models';
+import type { Biography, Entity, Event } from '@intavia/api-client/dist/models';
 import {
   Button,
   Dialog,
@@ -18,6 +18,7 @@ import type { StringLiteral } from 'typescript';
 import { useI18n } from '@/app/i18n/use-i18n';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
+  selectBiographies,
   selectEntities,
   selectEvents,
   selectMediaResources,
@@ -32,7 +33,11 @@ import type { Visualization } from '@/features/common/visualization.slice';
 import { selectAllVisualizations } from '@/features/common/visualization.slice';
 import type { NetworkState } from '@/features/ego-network/network.slice';
 import { selectAllNetworks } from '@/features/ego-network/network.slice';
-import type { ContentPane, ContentSlotId } from '@/features/storycreator/contentPane.slice';
+import type {
+  ContentPane,
+  ContentSlotId,
+  SlideContent,
+} from '@/features/storycreator/contentPane.slice';
 import {
   addContentToContentPane,
   createContentPane,
@@ -90,6 +95,8 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const mediaRessources = useAppSelector(selectMediaResources);
 
   const networkStates = useAppSelector(selectAllNetworks);
+
+  const biographies = useAppSelector(selectBiographies);
 
   const filteredSlides = slides.filter((slide: Slide) => {
     return slide.selected;
@@ -183,7 +190,12 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
 
   const windows = useAppSelector(selectWindows);
 
-  const addContent = (type: string, i_layoutItem: any, i_targetPane: string | undefined) => {
+  const addContent = (
+    type: string,
+    i_layoutItem: any,
+    i_targetPane: string | undefined,
+    entity: Entity | null,
+  ) => {
     const layoutItem = i_layoutItem;
 
     let targetPane = i_targetPane;
@@ -191,21 +203,41 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       targetPane = 'contentPane0';
     }
 
-    const ids = windows.map((window: UiWindow) => {
-      return window.i;
-    });
+    const ids =
+      windows != null
+        ? windows.map((window: UiWindow) => {
+            return window.i;
+          })
+        : [];
 
     let counter = 1;
+    let newType = type;
     const text = type;
     let newText = text;
     while (ids.includes(newText)) {
       newText = text + ' (' + counter + ')';
       counter++;
     }
-    layoutItem['i'] = newText;
-    layoutItem['type'] = type;
 
-    switch (type) {
+    const properties = {};
+    if (type === 'entity' && entity != null) {
+      newType = 'Image';
+      const ent = allEntities[entity];
+      if (ent != null) {
+        if (ent.media != null && ent.media.length > 0) {
+          const med = allMedia[ent.media[0]];
+          if (med != null) {
+            properties['link'] = med['url'];
+            properties['title'] = med['label'].default;
+          }
+        }
+      }
+    }
+
+    layoutItem['i'] = newText;
+    layoutItem['type'] = newType;
+
+    switch (newType) {
       case 'Image':
         layoutItem['h'] = 4;
         layoutItem['w'] = 1;
@@ -220,6 +252,10 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         break;
       case 'Title':
         layoutItem['h'] = 8;
+        layoutItem['w'] = 1;
+        break;
+      case 'PDF':
+        layoutItem['h'] = 4;
         layoutItem['w'] = 1;
         break;
       default:
@@ -241,6 +277,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         },
         type: layoutItem['type'],
         key: newText,
+        properties: properties,
       }),
     );
   };
@@ -323,6 +360,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
   const allContentPanes = useAppSelector(selectAllConentPanes);
   const allEntities = useAppSelector(selectEntities);
   const allEvents = useAppSelector(selectEvents);
+  const allMedia = useAppSelector(selectMediaResources);
 
   /* const storyObject = useMemo(() => {
     const storyVisualizations: Record<string, Visualization> = {};
@@ -412,7 +450,9 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
     Object.values(story.slides).forEach((slide) => {
       for (const visID of Object.values(slide.visualizationSlots)) {
         if (visID != null) {
-          const vis = allVisualizations[visID] as Visualization;
+          const oldVis = allVisualizations[visID] as Visualization;
+          const vis = { ...oldVis, entityIds: oldVis.entityIds.slice(0, 1) };
+
           const networkEntityIds: Array<Entity['id']> = [];
           const networkState: NetworkState = { nodes: [], links: [] };
           if (vis.type === 'ego-network' && vis.id in networkStates) {
@@ -429,9 +469,46 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
           storyEventIds.push(...vis.eventIds);
         }
       }
+
       for (const contID of Object.values(slide.contentPaneSlots)) {
         if (contID != null) {
-          storyContentPanes[contID] = allContentPanes[contID] as ContentPane;
+          const contents = (allContentPanes[contID] as ContentPane).contents;
+          const newContents = {};
+          for (const contKey of Object.keys(contents)) {
+            const cont = contents[contKey] as SlideContent;
+            if (cont.type === 'PDF') {
+              if (cont.properties.link.value.endsWith('.pdf')) {
+                // in case the image is a pdf
+                const windowHeight = window.innerHeight;
+                const height = windowHeight * 0.9;
+
+                const newContent = {
+                  ...cont,
+                  type: 'HTML',
+                  properties: {
+                    text: {
+                      type: 'textarea',
+                      id: 'text',
+                      editable: true,
+                      label: 'Content',
+                      value: `<embed src='${cont.properties.link.value}' style='width: 100%; height: ${height}px;'/>`,
+                      sort: 0,
+                    },
+                  },
+                };
+
+                newContents[contKey] = newContent;
+              }
+            }
+            if (newContents[contKey] == null) {
+              newContents[contKey] = cont;
+            }
+          }
+
+          storyContentPanes[contID] = {
+            ...(allContentPanes[contID] as ContentPane),
+            contents: { ...newContents },
+          };
         }
       }
     });
@@ -523,6 +600,18 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
         }),
     );
 
+    const storyBiographies: Record<Biography['id'], Biography> = Object.fromEntries(
+      Object.values(storyEntities)
+        .filter((e) => {
+          return e.biographies != null;
+        })
+        .flatMap((e) => {
+          return e.biographies.map((bio) => {
+            return [bio, biographies[bio]];
+          });
+        }),
+    );
+
     const storyVocabulary = {};
     const storyEventLocations = {};
 
@@ -568,6 +657,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
       media: storyMedias,
       vocabulary: storyVocabulary,
       storyEventLocations: storyEventLocations,
+      biographies: storyBiographies,
     };
   };
 
@@ -680,7 +770,7 @@ export function StoryCenterPane(props: StoryCenterPaneProps): JSX.Element {
                 href={`data:text/json;charset=utf-8,${encodeURIComponent(
                   JSON.stringify(storyExportObject, null, 2),
                 )}`}
-                download={`${story.properties.name?.value ?? story.id}.istory.json`}
+                download={`${story.properties.name?.value ?? story.id}.json`}
               >
                 <Button
                   onClick={() => {

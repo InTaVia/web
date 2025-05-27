@@ -1,5 +1,6 @@
 import type { Entity, EntityEventRelation, Event } from '@intavia/api-client';
 
+import { usePathname } from '@/app/route/use-pathname';
 import { useAppSelector } from '@/app/store';
 import { selectEntities, selectEvents } from '@/app/store/intavia.slice';
 import type { Visualization } from '@/features/common/visualization.slice';
@@ -25,8 +26,10 @@ export default function VisualisationComponent(props: VisualizationProps): JSX.E
   const allPersons = Object.values(entities);
   const allEvents = useAppSelector(selectEvents);
 
+  const isPartOfStory = usePathname().includes('storycreator');
+
   const eventIds = visualization.eventIds;
-  const personIds = visualization.entityIds;
+  const personIds = isPartOfStory ? visualization.entityIds.slice(0, 1) : visualization.entityIds;
   const targetIds = visualization.targetEntityIds;
 
   const [containerElement, setContainerElement] = useElementRef();

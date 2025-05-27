@@ -24,7 +24,7 @@ export interface SlideContent {
   properties?: Record<ComponentProperty['id'], ComponentProperty>;
 }
 
-export const SlideContentTypes = ['Image', 'Quiz', 'Text', 'Video/Audio', 'HTML']; //, 'Title'];
+export const SlideContentTypes = ['Image', 'PDF', 'Quiz', 'Text', 'Video/Audio', 'HTML']; //, 'Title'];
 
 export interface ContentPane {
   id: string;
@@ -44,6 +44,11 @@ export interface StoryMap extends SlideContent {
 
 export interface StoryImage extends SlideContent {
   type: 'Image';
+  properties: Record<string, ComponentProperty>;
+}
+
+export interface StoryPDF extends SlideContent {
+  type: 'PDF';
   properties: Record<string, ComponentProperty>;
 }
 
@@ -254,7 +259,12 @@ export class StoryImageObject implements StoryImage {
     id: string,
     parentPane: string,
     layout: { x: number; y: number; w: number; h: number },
+    title = '',
+    text = '',
+    link = '',
   ) {
+    console.log(title, text, link);
+
     this.id = id;
     this.parentPane = parentPane;
     this.layout = layout;
@@ -264,7 +274,7 @@ export class StoryImageObject implements StoryImage {
         id: 'title',
         editable: true,
         label: 'Title',
-        value: '',
+        value: title,
         sort: 1,
       } as ComponentProperty,
       text: {
@@ -272,9 +282,37 @@ export class StoryImageObject implements StoryImage {
         id: 'text',
         editable: true,
         label: 'Text',
-        value: '',
+        value: text,
         sort: 2,
       } as ComponentProperty,
+      link: {
+        type: 'textarea',
+        id: 'link',
+        editable: true,
+        label: 'Link',
+        value: link,
+        sort: 0,
+      } as ComponentProperty,
+    };
+  }
+  parentPane: string;
+  properties: Record<string, ComponentProperty>;
+}
+
+export class StoryPDFObject implements StoryPDF {
+  id: string;
+  layout: { x: number; y: number; w: number; h: number };
+  type: 'PDF' = 'PDF';
+
+  constructor(
+    id: string,
+    parentPane: string,
+    layout: { x: number; y: number; w: number; h: number },
+  ) {
+    this.id = id;
+    this.parentPane = parentPane;
+    this.layout = layout;
+    this.properties = {
       link: {
         type: 'textarea',
         id: 'link',
@@ -404,7 +442,17 @@ export const contentPaneSlice = createSlice({
       let contentObject;
       switch (content.type) {
         case 'Image':
-          contentObject = new StoryImageObject(content.id, content.contentPane, content.layout);
+          contentObject = new StoryImageObject(
+            content.id,
+            content.contentPane,
+            content.layout,
+            content.properties.title,
+            content.properties.text,
+            content.properties.link,
+          );
+          break;
+        case 'PDF':
+          contentObject = new StoryPDFObject(content.id, content.contentPane, content.layout);
           break;
         case 'Video/Audio':
           contentObject = new StoryVideoAudioObject(

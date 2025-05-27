@@ -12,6 +12,7 @@ import { extent, scaleBand, scaleTime } from 'd3';
 import { schemePaired } from 'd3-scale-chromatic';
 import { useMemo, useRef, useState } from 'react';
 
+import { usePathname } from '@/app/route/use-pathname';
 import { TimelineAxis } from '@/features/timeline/timelineAxis';
 import { TimelineEntity } from '@/features/timeline/timelineEntity';
 import { getTranslatedLabel } from '@/lib/get-translated-label';
@@ -144,6 +145,8 @@ export function Timeline(props: TimelineProps): JSX.Element {
 
   const width = vertical ? i_width : i_width + zoom * 600;
   const height = vertical ? i_height + zoom * 400 : i_height;
+
+  const isPartOfStory = usePathname().includes('storycreator');
 
   const { plotableEntities, unPlottableEntities, plotableEvents, unTimeableEvents } =
     useMemo(() => {

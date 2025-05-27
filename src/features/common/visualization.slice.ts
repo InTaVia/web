@@ -184,8 +184,8 @@ const emptyTimelineVis = {
       label: 'Cluster Style',
       sort: 4,
       value: {
-        name: 'Donut',
-        value: 'donut',
+        name: 'Bee',
+        value: 'bee',
       },
       options: [
         {
