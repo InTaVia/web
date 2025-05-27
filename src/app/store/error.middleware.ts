@@ -10,11 +10,11 @@ const middleware: Middleware = function errorMiddleware() {
         const description =
           action.payload instanceof HttpError ? action.payload.message : action.error.message;
 
-        toast({
-          title: 'Error',
-          description,
-          variant: 'destructive',
-        });
+        // toast({
+        //   title: 'Error',
+        //   description,
+        //   variant: 'destructive',
+        // });
       }
 
       return next(action);
