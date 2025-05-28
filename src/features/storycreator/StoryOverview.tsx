@@ -154,9 +154,9 @@ export function StoryOverview(): JSX.Element {
     onLoadStory('Bernburg – Example Slides');
   }
 
-  if (!Object.keys(stories).includes('st-bbg-introduction')) {
-    onLoadStory('Bernburg – Hist. Introduction');
-  }
+  // if (!Object.keys(stories).includes('st-bbg-introduction')) {
+  //   onLoadStory('Bernburg – Hist. Introduction');
+  // }
 
   const onStoryImport = (data: Record<string, any>) => {
     const storyObj = { ...data };
