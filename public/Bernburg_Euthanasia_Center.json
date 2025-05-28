@@ -543,8 +543,8 @@
           "label": "Cluster Style",
           "sort": 6,
           "value": {
-            "name": "Bee",
-            "value": "bee"
+            "name": "Dot",
+            "value": "dot"
           },
           "options": [
             {
@@ -881,8 +881,8 @@
           "label": "Cluster Style",
           "sort": 6,
           "value": {
-            "name": "Bee",
-            "value": "bee"
+            "name": "Dot",
+            "value": "dot"
           },
           "options": [
             {
@@ -1053,8 +1053,8 @@
           "label": "Cluster Style",
           "sort": 6,
           "value": {
-            "name": "Bee",
-            "value": "bee"
+            "name": "Dot",
+            "value": "dot"
           },
           "options": [
             {
@@ -1206,8 +1206,8 @@
           "label": "Cluster Style",
           "sort": 6,
           "value": {
-            "name": "Bee",
-            "value": "bee"
+            "name": "Dot",
+            "value": "dot"
           },
           "options": [
             {
@@ -1359,8 +1359,8 @@
           "label": "Cluster Style",
           "sort": 6,
           "value": {
-            "name": "Bee",
-            "value": "bee"
+            "name": "Dot",
+            "value": "dot"
           },
           "options": [
             {
@@ -5637,7 +5637,7 @@
     },
     "data-roehr-bunke-bio-002": {
       "id": "data-roehr-bunke-bio-002",
-      "text": "Else Röhr was born on August 2, 1907, in Magdeburg. As a young woman, she had a relationship with a Jewish man, but their relationship ended when he decided to leave Germany following the rise of the National Socialists and the increasing marginalization and discrimination against Jewish people.\r\n\r\nThe end of this relationship deeply affected Else, leading to a decline in her mental and physical health. She sought help at Magdeburg-Sudenburg Hospital in February 1936, where she was diagnosed with 'juvenile schizophrenia.' Following this diagnosis, she was transferred to the Neuhaldensleben State Sanatorium on February 27, 1936.\r\n\r\nHer condition led to a decision for forced sterilization, approved on June 4, 1936, and performed on November 24, 1936. Despite her physical recovery, her mental illness was confirmed on December 5, 1936. She continued to receive care at the Haldensleben State Hospital until February 18, 1937, after which she was cared for at home briefly until April 3, 1937, when she was readmitted to the state mental hospital.\r\n\r\nOn November 15, 1940, Else and other patients were transferred to the Uchtspringe State Hospital. A visit from relatives was refused on March 28, 1941. Shortly after, on April 2, 1941, Else was transferred to Bernburg, where she was murdered in the gas chambers on the same day."
+      "text": "Else Röhr was born on August 2, 1907, in Magdeburg. As a young woman, she had a relationship with a Jewish man, but their relationship ended when he decided to leave Germany following the rise of the National Socialists and the increasing marginalization and discrimination against Jewish people.\r\n\r\nThe end of this relationship deeply affected Else, leading to a decline in her mental and physical health. She sought help at Magdeburg-Sudenburg Hospital in February 1936, where she was diagnosed with 'childhood schizophrenia.' Following this diagnosis, she was transferred to the Neuhaldensleben State Sanatorium on February 27, 1936.\r\n\r\nHer condition led to a decision for forced sterilization, approved on June 4, 1936, and performed on November 24, 1936. Despite her physical recovery, her mental illness was confirmed on December 5, 1936. She continued to receive care at the Haldensleben State Hospital until February 18, 1937, after which she was cared for at home briefly until April 3, 1937, when she was readmitted to the state mental hospital.\r\n\r\nOn November 15, 1940, Else and other patients were transferred to the Uchtspringe State Hospital. A visit from relatives was refused on March 28, 1941. Shortly after, on April 2, 1941, Else was transferred to Bernburg, where she was murdered in the gas chambers on the same day."
     }
   }
 }
