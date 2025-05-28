@@ -114,16 +114,11 @@ export function SlideEditor(props: SlideEditorProps) {
     try {
       const data = event.dataTransfer.getData(mediaType);
       const payload: DataTransferData = JSON.parse(data);
-      console.log('DROP', payload);
-
       if (payload.contentType != null) {
         addContent(payload.contentType, i_layoutItem, i_targetPane);
       } else {
-        console.log('THERE', payload);
         if (payload.type === 'data') {
           if (payload.entities.length === 1 && payload.events.length === 0) {
-            console.log('HERE!', payload);
-
             addContent('entity', i_layoutItem, i_targetPane, payload.entities[0]);
           }
         }

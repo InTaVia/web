@@ -263,8 +263,6 @@ export class StoryImageObject implements StoryImage {
     text = '',
     link = '',
   ) {
-    console.log(title, text, link);
-
     this.id = id;
     this.parentPane = parentPane;
     this.layout = layout;
