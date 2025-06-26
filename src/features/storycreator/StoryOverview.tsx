@@ -150,14 +150,6 @@ export function StoryOverview(): JSX.Element {
       });
   };
 
-  if (!Object.keys(stories).includes('st-bbg-example')) {
-    onLoadStory('Bernburg – Example Slides');
-  }
-
-  // if (!Object.keys(stories).includes('st-bbg-introduction')) {
-  //   onLoadStory('Bernburg – Hist. Introduction');
-  // }
-
   const onStoryImport = (data: Record<string, any>) => {
     const storyObj = { ...data };
 
@@ -377,20 +369,6 @@ export function StoryOverview(): JSX.Element {
           <DropdownMenuContent className="w-56">
             <DropdownMenuItem
               onSelect={() => {
-                onLoadStory('Bernburg – Example Slides');
-              }}
-            >
-              Bernburg – Example Slides
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => {
-                onLoadStory('Bernburg – Hist. Introduction');
-              }}
-            >
-              Bernburg – Hist. Introduction
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => {
                 onLoadStory('Albrecht Dürer');
               }}
             >
@@ -430,6 +408,20 @@ export function StoryOverview(): JSX.Element {
               }}
             >
               Hofburg Construction History
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Bernburg – Example Slides');
+              }}
+            >
+              Bernburg – Example Slides
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                onLoadStory('Bernburg – Hist. Introduction');
+              }}
+            >
+              Bernburg – Hist. Introduction
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
