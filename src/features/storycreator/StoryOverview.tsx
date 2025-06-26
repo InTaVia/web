@@ -150,17 +150,6 @@ export function StoryOverview(): JSX.Element {
       });
   };
 
-<<<<<<< HEAD
-  if (!Object.keys(stories).includes('st-bbg-example')) {
-    onLoadStory('Bernburg – Example Slides');
-  }
-
-  // if (!Object.keys(stories).includes('st-bbg-introduction')) {
-  //   onLoadStory('Bernburg – Hist. Introduction');
-  // }
-
-=======
->>>>>>> dev
   const onStoryImport = (data: Record<string, any>) => {
     const storyObj = { ...data };
 
