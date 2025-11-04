@@ -442,17 +442,40 @@ export function Timeline(props: TimelineProps): JSX.Element {
 
 export default Timeline; */
 
+export function parseExtendedISO(dateStr) {
+  // Match extended ISO format: optional +/-, 4–6 digit year, month, day
+  const match = /^([+-]?\d{1,6})-(\d{2})-(\d{2})$/.exec(dateStr);
+  if (!match) throw new Error(`Invalid date format: ${dateStr}`);
+
+  const [, yearStr, monthStr, dayStr] = match;
+  const year = parseInt(yearStr, 10);
+  const month = parseInt(monthStr, 10) - 1; // JS months are 0–11
+  const day = parseInt(dayStr, 10);
+
+  // Construct the date in UTC to avoid timezone surprises
+  const date = new Date(Date.UTC(year, month, day));
+
+  // Optional validation — make sure JS didn’t normalize an invalid date
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month || date.getUTCDate() !== day) {
+    throw new Error(`Invalid date components: ${dateStr}`);
+  }
+
+  return date;
+}
+
 export function getTemporalExtent(data: Array<Array<Event>>): [Date, Date] {
   const dates: Array<Date> = [];
 
   data.forEach((entry) => {
     entry.forEach((event) => {
       if (event.startDate != null) {
-        dates.push(new Date(event.startDate));
+        const test = parseExtendedISO(event.startDate);
+        dates.push(test);
       }
 
       if (event.endDate != null) {
-        dates.push(new Date(event.endDate));
+        const test = parseExtendedISO(event.endDate);
+        dates.push(test);
       }
     });
   });
