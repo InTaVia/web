@@ -443,24 +443,32 @@ export function Timeline(props: TimelineProps): JSX.Element {
 export default Timeline; */
 
 export function parseExtendedISO(dateStr) {
-  // Match extended ISO format: optional +/-, 4–6 digit year, month, day
-  const match = /^([+-]?\d{1,6})-(\d{2})-(\d{2})$/.exec(dateStr);
-  if (!match) throw new Error(`Invalid date format: ${dateStr}`);
+  const matchString = /^([+-]?\d{1,6})(-(\d{2}))?(-(\d{2}))?$/;
 
-  const [, yearStr, monthStr, dayStr] = match;
+  // test start date
+  const matches = matchString.exec(dateStr);
+  if (!matches) throw new Error(`Invalid date format: ${dateStr}`);
+  const parsedDate = new Date(dateStr);
+
+  const [, yearStr, , monthStr, , dayStr] = matches;
+
   const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10) - 1; // JS months are 0–11
-  const day = parseInt(dayStr, 10);
+  const month = parseInt(monthStr ?? 1, 10) - 1; // JS months are 0–11
+  const day = parseInt(dayStr ?? 1, 10);
 
   // Construct the date in UTC to avoid timezone surprises
-  const date = new Date(Date.UTC(year, month, day));
+  // const date = new Date(Date.UTC(year, month, day));
 
   // Optional validation — make sure JS didn’t normalize an invalid date
-  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month || date.getUTCDate() !== day) {
+  if (
+    parsedDate.getUTCFullYear() !== year ||
+    parsedDate.getUTCMonth() !== month ||
+    parsedDate.getUTCDate() !== day
+  ) {
     throw new Error(`Invalid date components: ${dateStr}`);
   }
 
-  return date;
+  return parsedDate;
 }
 
 export function getTemporalExtent(data: Array<Array<Event>>): [Date, Date] {
