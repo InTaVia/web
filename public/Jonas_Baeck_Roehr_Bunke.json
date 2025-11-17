@@ -1,0 +1,4477 @@
+{
+    "entities": [
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+            "label": {
+                "default": "Nazi Germany"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+                    "role": "role-announced_chancellor"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+                    "role": "role-exclusion"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+                    "role": "role-exclusion"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+                    "role": "role-exclusion"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+                    "role": "role-exclusion"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+                    "role": "role-physical_violence"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+                    "role": "role-war"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+                    "role": "role-deportation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+                    "role": "role-war"
+                }
+            ],
+            "kind": "group"
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+            "label": {
+                "default": "Leo Baeck"
+            },
+            "media": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-m-003"
+            ],
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+                    "role": "role-president"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+                    "role": "role-traveled"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+                    "role": "role-representation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                    "role": "role-bereavement"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+                    "role": "role-representation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+                    "role": "role-family_fled"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+                    "role": "role-family_fled"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+                    "role": "role-representation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+                    "role": "role-traveled"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+                    "role": "role-deported"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+                    "role": "role-information"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+                    "role": "role-teaching"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+                    "role": "role-representation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                    "role": "role-liberation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                    "role": "role-traveled"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+                    "role": "role-representation"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+                    "role": "role-reinstated"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+                    "role": "role-lecturing"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+                    "role": "role-naturalized"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+                    "role": "role-legacy"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+                    "role": "role-person_death"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+                    "role": "role-legacy"
+                }
+            ],
+            "kind": "person",
+            "biographies": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bio-003"
+            ],
+            "gender": {
+                "id": "male",
+                "label": {
+                    "default": "male"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-rabbi,_scholar",
+                    "label": {
+                        "default": "rabbi, scholar"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+            "label": {
+                "default": "Regina Jonas"
+            },
+            "media": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-m-004"
+            ],
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+                    "role": "role-education"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+                    "role": "role-move"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+                    "role": "role-education"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+                    "role": "role-lecturing"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+                    "role": "role-testimony"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+                    "role": "role-family"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+                    "role": "role-testimony"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+                    "role": "role-forced_labou"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+                    "role": "role-deported"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+                    "role": "role-deported"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+                    "role": "role-work"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+                    "role": "role-deported"
+                }
+            ],
+            "kind": "person",
+            "biographies": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bio-004"
+            ],
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-rabbi",
+                    "label": {
+                        "default": "rabbi"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-007",
+            "label": {
+                "default": "Natalie Baeck née Hamburger"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                    "role": "role-person_death"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-wife_/_homemmaker",
+                    "label": {
+                        "default": "wife / homemmaker"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-008",
+            "label": {
+                "default": "Ruth Berlak née Baeck"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+                    "role": "role-deported"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-social_work",
+                    "label": {
+                        "default": "social work"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+            "label": {
+                "default": "Marianne Berlak"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+                    "role": "role-deported"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+                    "role": "role-deported"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-pupil",
+                    "label": {
+                        "default": "pupil"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-010",
+            "label": {
+                "default": "Hermann Berlak"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+                    "role": "role-legacy"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "male",
+                "label": {
+                    "default": "male"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-accountant",
+                    "label": {
+                        "default": "accountant"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-011",
+            "label": {
+                "default": "Abraham Jonas"
+            },
+            "relations": [],
+            "kind": "person",
+            "gender": {
+                "id": "male",
+                "label": {
+                    "default": "male"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-religious_teacher",
+                    "label": {
+                        "default": "religious teacher"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-012",
+            "label": {
+                "default": "Sara Jonas née Hess"
+            },
+            "relations": [],
+            "kind": "person",
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            },
+            "occupations": [
+                {
+                    "id": "occupation-wife_/_homemmaker",
+                    "label": {
+                        "default": "wife / homemmaker"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+            "label": {
+                "default": "Heinrich Bunke"
+            },
+            "media": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-m-001"
+            ],
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+                    "role": "role-person_born"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+                    "role": "role-graduated"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+                    "role": "role-labor_service"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+                    "role": "role-military_service"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+                    "role": "role-started_studying"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+                    "role": "role-studied"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+                    "role": "role-worked_as"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+                    "role": "role-assistant_position"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+                    "role": "role-started_practice"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+                    "role": "role-arrested"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+                    "role": "role-trial"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+                    "role": "role-acquittal"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+                    "role": "role-sentenced_to_prison"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+                    "role": "role-released"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+                    "role": "role-person_died"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+                    "role": "role-worked_as"
+                }
+            ],
+            "kind": "person",
+            "biographies": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-bio-001"
+            ],
+            "gender": {
+                "id": "male",
+                "label": {
+                    "default": "male"
+                }
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+            "label": {
+                "default": "Else Röhr"
+            },
+            "media": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-m-002"
+            ],
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                    "role": "role-person_born"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+                    "role": "role-separated"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+                    "role": "role-sought_help"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+                    "role": "role-transferred"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+                    "role": "role-decision_made"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+                    "role": "role-sterilized"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+                    "role": "role-integrity_confirmed"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+                    "role": "role-cared_for"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+                    "role": "role-cared_for"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+                    "role": "role-readmitted"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+                    "role": "role-transferred"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+                    "role": "role-visit_refused"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+                    "role": "role-transferred"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016",
+                    "role": "role-person_death"
+                }
+            ],
+            "kind": "person",
+            "biographies": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-bio-002"
+            ],
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-003",
+            "label": {
+                "default": "Georg Philipp Walther Röhr"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                    "role": "role-father"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "male",
+                "label": {
+                    "default": "male"
+                }
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-004",
+            "label": {
+                "default": "Berta Marie Röhr"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                    "role": "role-mother"
+                }
+            ],
+            "kind": "person",
+            "gender": {
+                "id": "female",
+                "label": {
+                    "default": "female"
+                }
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-001",
+            "label": {
+                "default": "Leszno"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.566667,
+                    51.866667
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+            "label": {
+                "default": "Berlin"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    13.408333,
+                    52.518611
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-003",
+            "label": {
+                "default": "Opole"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    17.933333,
+                    50.666667
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-004",
+            "label": {
+                "default": "Düsseldorf"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.782778,
+                    51.225556
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-005",
+            "label": {
+                "default": "Mandate-Palestine"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.225556,
+                    31.778889
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+            "label": {
+                "default": "London"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.1275,
+                    51.507222
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+            "label": {
+                "default": "Theresienstadt"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-concentration_camp",
+                "label": {
+                    "default": "concentration camp"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.166944,
+                    50.513333
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+            "label": {
+                "default": "Cincinnati"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.5125,
+                    39.1
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+            "label": {
+                "default": "Auschwitz"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-concentration_camp",
+                "label": {
+                    "default": "concentration camp"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.178333,
+                    50.035833
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-010",
+            "label": {
+                "default": "Lucerne"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.3,
+                    47.05
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+            "label": {
+                "default": "Germany"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-country",
+                "label": {
+                    "default": "country"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    10.447683,
+                    51.163375
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-012",
+            "label": {
+                "default": "Nuremberg"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.078611,
+                    49.455556
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+            "label": {
+                "default": "Łòdż Ghetto"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-concentration_camp",
+                "label": {
+                    "default": "concentration camp"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.46,
+                    51.786667
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-014",
+            "label": {
+                "default": "Berlin, Krausnickstrasse 6"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-region",
+                "label": {
+                    "default": "region"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    13.397091549959496,
+                    52.52505983754717
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-015",
+            "label": {
+                "default": "Berlin Lichtenberg"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-region",
+                "label": {
+                    "default": "region"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    13.486111,
+                    52.519444
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-016",
+            "label": {
+                "default": "Hamburg"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    9.993333,
+                    53.550556
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-017",
+            "label": {
+                "default": "Pommerania"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-region",
+                "label": {
+                    "default": "region"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.15,
+                    54.29
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-018",
+            "label": {
+                "default": "Wolfenbüttel"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    10.536944,
+                    52.162222
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-019",
+            "label": {
+                "default": "Frankfurt an der Oder"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.551667,
+                    52.341944
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+            "label": {
+                "default": "Göttingen"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    9.935556,
+                    51.533889
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-021",
+            "label": {
+                "default": "Braunschweig"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    10.516667,
+                    52.266667
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-022",
+            "label": {
+                "default": "Bremen"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.807222,
+                    53.075833
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-023",
+            "label": {
+                "default": "Offenbach"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.76132,
+                    50.10466
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-024",
+            "label": {
+                "default": "Jerusalem"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.225556,
+                    31.778889
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+            "label": {
+                "default": "Bernburg"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.7292,
+                    51.7873
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+            "label": {
+                "default": "Magdeburg"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.6276,
+                    52.1205
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+            "label": {
+                "default": "Haldensleben"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.4033,
+                    52.286
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004",
+            "label": {
+                "default": "Uchtspringe"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.5984,
+                    52.5397
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+            "label": {
+                "default": "Celle"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    10.080556,
+                    52.625
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-006",
+            "label": {
+                "default": "Wilhelmsburg"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    10.004167,
+                    53.517222
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-007",
+            "label": {
+                "default": "Hanover"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    9.733221,
+                    52.370516
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-009",
+            "label": {
+                "default": "Rendsburg"
+            },
+            "relations": [],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    9.663056,
+                    54.301944
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+            "label": {
+                "default": "Frankfurt am Main"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.682127,
+                    50.110924
+                ]
+            }
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-012",
+            "label": {
+                "default": "Brandenburg an der Havel"
+            },
+            "relations": [
+                {
+                    "event": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+                    "role": "role-took_place_at"
+                }
+            ],
+            "kind": "place",
+            "type": {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    12.5506,
+                    52.411
+                ]
+            }
+        }
+    ],
+    "events": [
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+            "label": {
+                "default": "Lecturer - Higher Institute for Jewish Studies"
+            },
+            "description": "Leo Baeck was a scholar and lecturer at the Higher Institute for Jewish Studies until its forced closure by the Nazis in 1942. He was among the last lectureres who worked at this renowned institute which combined the training of liberal rabbis and scholarship into Jewish history, culture and religion from 1872-1942.",
+            "kind": "event-kind-work",
+            "startDate": "1913",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+            "label": {
+                "default": "Rabbinate in Berlin"
+            },
+            "description": "Leo Baeck becomes Rabbi in Berlin; between 1914-1918 he serves as field rabbi in WWI.",
+            "kind": "event-kind-work",
+            "startDate": "1912",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+            "label": {
+                "default": "President - Reichsvertretung der Landesverbände Deutscher Juden"
+            },
+            "description": "President of the Reichsvertretung der Landesverbände Deutscher Juden",
+            "kind": "event-kind-representation",
+            "startDate": "1933-02-12",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-president"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+            "label": {
+                "default": "Journey to Mandate-Palestine"
+            },
+            "description": "Journey to Mandate-Palestine",
+            "kind": "event-kind-travel",
+            "startDate": "1935",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-traveled"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+            "label": {
+                "default": "Honorary doctorate - Hebrew Union College"
+            },
+            "description": "honorary doctorate of the Hebrew Union College (in absentia)",
+            "kind": "event-kind-career",
+            "startDate": "1935",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+            "label": {
+                "default": "Conference - Jewish Agency for Palestine"
+            },
+            "description": "participation in the Jewish Agency for Palestine conference in Lucerne",
+            "kind": "event-kind-representation",
+            "startDate": "1935",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-representation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-010",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+            "label": {
+                "default": "Natalie Baeck, Leo Baeck’s wife passes away"
+            },
+            "description": "Natalie Baeck, Leo Baeck’s wife passes away",
+            "kind": "event-kind-death",
+            "startDate": "1937",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-007",
+                    "role": "role-person_death"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-bereavement"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+            "label": {
+                "default": "President - World Union for Progressive Judaism"
+            },
+            "description": "President of the World Union for Progressive Judaism",
+            "kind": "event-kind-representation",
+            "startDate": "1938",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-representation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+            "label": {
+                "default": "Granddaughter Marianne flees to England (Kindertransport)"
+            },
+            "description": "Granddaughter Marianne comes to England on a Kindertransport followed by her parents, Ruth and Hermann Berlak ",
+            "kind": "event-kind-family",
+            "startDate": "1939",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-family_fled"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+            "label": {
+                "default": "Daughter Ruth and husband flee to England"
+            },
+            "description": "Granddaughter Marianne comes to England on a Kindertransport followed by her parents, Ruth and Hermann Berlak ",
+            "kind": "event-kind-family",
+            "startDate": "1939",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-family_fled"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+            "label": {
+                "default": "President of the World Union for Progressive Judaism"
+            },
+            "description": "President of the World Union for Progressive Judaism",
+            "kind": "event-kind-representation",
+            "startDate": "1938",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-representation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+            "label": {
+                "default": "Baeck brings refugee children to London "
+            },
+            "description": "Leo Baeck accompanies a group of children to London and returns to Germany",
+            "kind": "event-kind-travel",
+            "startDate": "1939-08",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-traveled"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+            "label": {
+                "default": "Deportation to Theresienstadt"
+            },
+            "description": "Deportation to Theresienstadt",
+            "kind": "event-kind-deportation",
+            "startDate": "1943-01-27",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+            "label": {
+                "default": " Leo Baeck informed about extermination camps"
+            },
+            "description": " Leo Baeck obtains information about the extermination camps",
+            "kind": "event-kind-event",
+            "startDate": "1943-08",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-information"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+            "label": {
+                "default": "Lecture about Historiography"
+            },
+            "description": "Lecture about Historiography in Theresienstadt",
+            "kind": "event-kind-career",
+            "startDate": "1944-06-15",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-teaching"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+            "label": {
+                "default": "Head of the Theresienstadt’s Council of Elders"
+            },
+            "description": "Head of the Theresienstadt’s Council of Elders",
+            "kind": "event-kind-career",
+            "startDate": "1944-12-13",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-representation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+            "label": {
+                "default": "Liberation of Theresienstadt"
+            },
+            "description": "Theresienstadt is liberated by the Soviets",
+            "kind": "event-kind-event",
+            "startDate": "1945-05-09",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-liberation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-traveled"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+            "label": {
+                "default": "President of the Council of Jews form Germany in London"
+            },
+            "description": "President of the Council of Jews form Germany in London",
+            "kind": "event-kind-representation",
+            "startDate": "1945",
+            "endDate": "1956",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-representation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+            "label": {
+                "default": "President of the World Union for Progressive Judaism"
+            },
+            "description": "Reinstated as President of the World Union for Progressive Judaism, thereafter honorary president",
+            "kind": "event-kind-representation",
+            "startDate": "1945",
+            "endDate": "1953",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-reinstated"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+            "label": {
+                "default": "Lecturer at Hebrew Union College Cincinnati"
+            },
+            "description": "Lecturer at Hebrew Union College Cincinnati",
+            "kind": "event-kind-career",
+            "startDate": "1948",
+            "endDate": "1953",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-lecturing"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+            "label": {
+                "default": "Leo Baeck acquires British citizenship"
+            },
+            "description": "Leo Baeck acquires British citizenship",
+            "kind": "event-kind-citizenship",
+            "startDate": "1950",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-naturalized"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+            "label": {
+                "default": "Leo Baeck Institute founded"
+            },
+            "description": "Leo Baeck Institute founded and named in honour of Leo Baeck",
+            "kind": "event-kind-legacy",
+            "startDate": "1955",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-legacy"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-024",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+            "label": {
+                "default": "Leo Baeck dies (London)"
+            },
+            "description": "Leo Baeck dies (London)",
+            "kind": "event-kind-death",
+            "startDate": "1956",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-person_death"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+            "label": {
+                "default": "Leo Baeck College founded "
+            },
+            "description": "Leo Baeck College founded and named in honour of Leo Baeck",
+            "kind": "event-kind-legacy",
+            "startDate": "1956",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                    "role": "role-legacy"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+            "label": {
+                "default": "Graduation thesis: ‘Can Women Serve as Rabbis?’ "
+            },
+            "description": "Halachic Treatise ‘Can Women Serve as Rabbis?’ (supervisor Eduard Baneth at the Hochschule für die Wissenschaft des Judentums - Higher Institute for Jewish Studies), certificate: ‘Academic Religion Teacher Exam’, grade: good. This is the same institution Leo Baeck worked at.",
+            "kind": "event-kind-education",
+            "startDate": "1930-12-12",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-education"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+            "label": {
+                "default": "Jonas’ Chanukah play The Pearls of Judaism"
+            },
+            "description": "Report about a performance of Regina Jonas’ Chanukah play The Pearls of Judaism",
+            "kind": "event-kind-work",
+            "startDate": "1931",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+            "label": {
+                "default": "Move to Krausnickstrasse"
+            },
+            "description": "Move to Krausnickstrasse 6a in Prenzlauer Berg, with her mother Sara",
+            "kind": "event-kind-move",
+            "startDate": "1932",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-move"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+            "label": {
+                "default": "Work as teacher"
+            },
+            "description": "Work as teacher in Berlin (e.g. Religionsschule der Jüdischen Gemeinde zu Berlin/ Religious School of the Jewish Congregation in Berlin)",
+            "kind": "event-kind-career",
+            "startDate": "1933",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+            "label": {
+                "default": "Rabbinical Exam "
+            },
+            "description": "Rabbinical Exam by Rabbi Dr. Max Dienemann in Offenbach.",
+            "kind": "event-kind-education",
+            "startDate": "1935-12-26",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-education"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-023",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+            "label": {
+                "default": "Work as Rabbi in Berlin"
+            },
+            "description": "Work as Rabbi in Berlin (e.g. pastoral care at Jewish hospitals, homes of the elderly) ",
+            "kind": "event-kind-career",
+            "startDate": "1935",
+            "endDate": "1944",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+            "label": {
+                "default": "Public lectures and presence in Jewish press"
+            },
+            "description": "Regina Jonas was very active as a public lecturer and speaker at many events that were often featured in the press",
+            "kind": "event-kind-career",
+            "startDate": "1935",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-lecturing"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+            "label": {
+                "default": "Work as a Rabbi in Theresienstadt"
+            },
+            "description": "Pastoral Care, lectures",
+            "kind": "event-kind-career",
+            "startDate": "1942",
+            "endDate": "1944",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+            "label": {
+                "default": "Ordination widely reported in the Jewish press"
+            },
+            "description": "Regina Jonas became subject to great public interest after her ordination as she was the first known woman to be ordained as Rabbi",
+            "kind": "event-kind-press",
+            "startDate": "1936",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-testimony"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+            "label": {
+                "default": "Relationship - Rabbi Dr. Joseph Norden"
+            },
+            "description": "Beginning of a relationship with Rabbi Dr. Joseph Norden of Hamburg; last known communication 13 July 1942 when Norden lets Jonas know he is about to be deported to Theresienstadt.",
+            "kind": "event-kind-personal_life",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-family"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-016",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+            "label": {
+                "default": "Jonas visits Jewish community in Pommerania"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-017",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+            "label": {
+                "default": "Jonas visits Jewish community in Braunschweig"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-021",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+            "label": {
+                "default": "Jonas visits Jewish community in Göttingen"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+            "label": {
+                "default": "Jonas visits Jewish community in Frankfurt an der Oder"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-019",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+            "label": {
+                "default": "Jonas visits Jewish community in Wolfenbüttel"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-018",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+            "label": {
+                "default": "Jonas visits Jewish community in Bremen"
+            },
+            "description": "Visit to local Jewish community on behalft of the Reichsvereingung der Juden in Deutschland (Nazi instituted umbrella organization for Jews in Germany) because their Rabbi had emigrated or was imprisoned",
+            "kind": "event-kind-pastoral_care",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-022",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+            "label": {
+                "default": "Jonas' documents come to Berlin's Jewish Community"
+            },
+            "description": "Regina Jonas must have given her documents to the Jewish Community Berlin for safekeeping ",
+            "kind": "event-kind-legacy",
+            "startDate": "1939",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-testimony"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+            "label": {
+                "default": "Forced labour "
+            },
+            "description": "Deployed to forced labour at the packaging factory Epeco in Berlin-Lichtenberg",
+            "kind": "event-kind-forced_labour",
+            "startDate": "1941-03",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-forced_labou"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+            "label": {
+                "default": "Regina’s brother Abraham is deported"
+            },
+            "description": "Regina’s brother Abraham arrives in Łòdż Ghetto (he did not return)",
+            "kind": "event-kind-deportation",
+            "startDate": "1941-10-24",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+            "label": {
+                "default": "Regina’s brother Abraham is deported"
+            },
+            "description": "Regina’s brother Abraham arrives in Łòdż Ghetto (he did not return)",
+            "kind": "event-kind-deportation",
+            "startDate": "1941-10-24",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-008",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+            "label": {
+                "default": "Regina and Sara Jonas are deported"
+            },
+            "description": "Regina and her mother, Sara are deported to Theresienstadt",
+            "kind": "event-kind-deportation",
+            "startDate": "1942-11-06",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+            "label": {
+                "default": "Sara Jonas is deported to Theresienstadt"
+            },
+            "description": "Regina and her mother, Sara are deported to Theresienstadt",
+            "kind": "event-kind-deportation",
+            "startDate": "1942-11-06",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+            "label": {
+                "default": "Rabbi Regina Jonas provides pastoral care at Theresienstadt"
+            },
+            "description": "Rabbi Regina Jonas looks after her fellow prisoners at the camp taking care of spiritual needs & giving academic lectures",
+            "kind": "event-kind-work",
+            "startDate": "1942",
+            "endDate": "1944",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-work"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+            "label": {
+                "default": "Regina and Sara Jonas are deported to Auschwitz"
+            },
+            "description": "Regina Jonas and her mother are deported to Auschwitz. It is likely that they were murdered upon arrival",
+            "kind": "event-kind-deportation",
+            "startDate": "1944-10-12",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+            "label": {
+                "default": "Regina and Sara Jonas are deported to Auschwitz"
+            },
+            "description": "Regina Jonas and her mother are deported to Auschwitz. It is likely that they were murdered upon arrival",
+            "kind": "event-kind-deportation",
+            "startDate": "1944-10-12",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+                    "role": "role-deported"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+            "label": {
+                "default": "Rabbi Dr Elisa Klapheck unveils memorial plaque"
+            },
+            "description": "Rabbi Dr Elisa Klapheck, who also wrote Regina Jonas biography, unveils a memorial plaque to the first woman Rabbi at her last residential address Krausnickstrasse 6, Berlin",
+            "kind": "event-kind-legacy",
+            "startDate": "2001",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-010",
+                    "role": "role-legacy"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+            "label": {
+                "default": "Hitler becomes Chancellor"
+            },
+            "description": "With Adolf Hitler’s appointment to Reich Chancellor, an antisemitic party, the NSDAP, starts to govern Germany",
+            "kind": "event-kind-politics",
+            "startDate": "1933-01-30",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-announced_chancellor"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+            "label": {
+                "default": "Boycott of Jewish Shops"
+            },
+            "description": "Nationwide, state sanctioned boycott of Jewish shops and businesses",
+            "kind": "event-kind-politics",
+            "startDate": "1933-04-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-exclusion"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+            "label": {
+                "default": "Exclusion of Jews from Civil Service"
+            },
+            "description": "Law for the Restoration of the Professional Civil Service – exclusion of Jews and other ‘politically unreliable’ persons from civil service in Nazi Germany",
+            "kind": "event-kind-politics",
+            "startDate": "1933-04-07",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-exclusion"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+            "label": {
+                "default": "Exclusion of Jews from Education"
+            },
+            "description": "Restriction of Jewish students at German schools and universities",
+            "kind": "event-kind-politics",
+            "startDate": "1933",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-exclusion"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+            "label": {
+                "default": "Nuremberg Laws"
+            },
+            "description": "Nuremberg Laws: antisemitic legislation, legal definition of ‘Jews’; Jews are stripped off their citizenship, subject to severe legal discrimination and relationships between Jews and non-Jews in Germany are criminalised by law.",
+            "kind": "event-kind-politics",
+            "startDate": "1935-09-15",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-exclusion"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-012",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+            "label": {
+                "default": "Reichspogromnacht (Kristalnacht)"
+            },
+            "description": "Reichspogromnacht (Kristallnacht) – nationwide, state sanctioned pogrom with unprecedented violence against the Jewish population of Germany",
+            "kind": "event-kind-violence",
+            "startDate": "1938-09-09",
+            "endDate": "1938-09-10",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-physical_violence"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+            "label": {
+                "default": "1939: WWII commences"
+            },
+            "description": "Nazi Germany commences the Second World War",
+            "kind": "event-kind-war",
+            "startDate": "1939-09-01",
+            "endDate": "1945-09-02",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-war"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+            "label": {
+                "default": "Deportations of the Jews in Germany "
+            },
+            "description": "Deportations of German Jews from the German Reich to concentration camps, and killing centers, ghettos, killing centres commence (the destinations of the transports were mostly located in occupied Poland or other, occupied East European destinations)",
+            "kind": "event-kind-deportation",
+            "startDate": "1941",
+            "endDate": "1942",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-deportation"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+            "label": {
+                "default": "End of WWII & Liberation of the Camps"
+            },
+            "description": "End of WWII, Liberation of the concentration camps",
+            "kind": "event-kind-liberation",
+            "startDate": "1945",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                    "role": "role-war"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+            "label": {
+                "default": "Birth of Heinrich Bunke"
+            },
+            "kind": "event-kind-birth",
+            "startDate": "1914-07-24",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-person_born"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+            "label": {
+                "default": "High school graduation"
+            },
+            "kind": "event-kind-education",
+            "startDate": "1934-06-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-graduated"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+            "label": {
+                "default": "Labor service near Wilhelmsburg"
+            },
+            "kind": "event-kind-work",
+            "startDate": "1934-07-01",
+            "endDate": "1935-01-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-labor_service"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-006",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+            "label": {
+                "default": "Military service in motor vehicle division in br-pl-"
+            },
+            "kind": "event-kind-military",
+            "startDate": "1935-01-01",
+            "endDate": "1936-01-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-military_service"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-007",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+            "label": {
+                "default": "Started medical studies at University of Göttingen"
+            },
+            "kind": "event-kind-education",
+            "startDate": "1936-01-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-started_studying"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+            "label": {
+                "default": "Studied medicine"
+            },
+            "kind": "event-kind-education",
+            "startDate": "1936-01-01",
+            "endDate": "1940-09-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-studied"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+            "label": {
+                "default": "Representative of the head of the Nazi killing center Bernburg an der Saale"
+            },
+            "kind": "event-kind-work",
+            "startDate": "1940-11-01",
+            "endDate": "1941-08-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-worked_as"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+            "label": {
+                "default": "Assistant position at State Women's Clinic in Celle"
+            },
+            "kind": "event-kind-work",
+            "startDate": "1945-07-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-assistant_position"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+            "label": {
+                "default": "Started gynecology practice"
+            },
+            "kind": "event-kind-work",
+            "startDate": "1951-01-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-started_practice"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+            "label": {
+                "default": "Arrested"
+            },
+            "kind": "event-kind-legal",
+            "startDate": "1962-04-12",
+            "endDate": "1962-04-19",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-arrested"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+            "label": {
+                "default": "Trial before Frankfurt/Main Regional Court"
+            },
+            "kind": "event-kind-legal",
+            "startDate": "1966-10-03",
+            "endDate": "1967-05-23",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-trial"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+            "label": {
+                "default": "Acquittal"
+            },
+            "kind": "event-kind-legal",
+            "startDate": "1967-05-23",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-acquittal"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+            "label": {
+                "default": "Arrested and sentenced to prison"
+            },
+            "kind": "event-kind-legal",
+            "startDate": "1987-05-18",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-sentenced_to_prison"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+            "label": {
+                "default": "Released from prison"
+            },
+            "kind": "event-kind-legal",
+            "startDate": "1989-05-18",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-released"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+            "label": {
+                "default": "Death of Heinrich Bunke"
+            },
+            "kind": "event-kind-death",
+            "startDate": "2001-09-16",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-person_died"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+            "label": {
+                "default": "Representative of the head of the Nazi killing center in Brandenburg, Irmfried Eberl"
+            },
+            "kind": "event-kind-work",
+            "startDate": "1940-08-01",
+            "endDate": "1940-11-01",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                    "role": "role-worked_as"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-012",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+            "label": {
+                "default": "Birth of Else Röhr"
+            },
+            "kind": "event-kind-birth",
+            "startDate": "1907-08-02",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-person_born"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                    "role": "role-took_place_at"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-003",
+                    "role": "role-father"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-004",
+                    "role": "role-mother"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+            "label": {
+                "default": "Else and her partner separated due to Nazi rise"
+            },
+            "kind": "event-kind-personal",
+            "startDate": "1933",
+            "endDate": "1936",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-separated"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+            "label": {
+                "default": "Sought help at Magdeburg-Sudenburg"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-02-27",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-sought_help"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+            "label": {
+                "default": "Transferred to Haldensleben psychiatric hospital"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-02-27",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-transferred"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+            "label": {
+                "default": "Decision for forced sterilization"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-06-04",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-decision_made"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+            "label": {
+                "default": "Forced sterilization"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-11-24",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-sterilized"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+            "label": {
+                "default": "Physical integrity confirmed"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-12-05",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-integrity_confirmed"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+            "label": {
+                "default": "Cared for in Haldensleben State Hospital"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1936-02-27",
+            "endDate": "1937-02-18",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-cared_for"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+            "label": {
+                "default": "Cared for at home"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1937-02-18",
+            "endDate": "1937-04-03",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-cared_for"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+            "label": {
+                "default": "Readmitted to state mental hospital"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1937-04-03",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-readmitted"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+            "label": {
+                "default": "Transferred to Uchtspringe State Hospital"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1940-11-15",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-transferred"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+            "label": {
+                "default": "Relatives' visit refused"
+            },
+            "kind": "event-kind-personal",
+            "startDate": "1941-03-28",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-visit_refused"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+            "label": {
+                "default": "Transferred to Bernburg"
+            },
+            "kind": "event-kind-medical",
+            "startDate": "1941-04-02",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-transferred"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                    "role": "role-took_place_at"
+                }
+            ]
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016",
+            "label": {
+                "default": "Murdered in gas chambers"
+            },
+            "kind": "event-kind-death",
+            "startDate": "1941-04-02",
+            "relations": [
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                    "role": "role-person_death"
+                },
+                {
+                    "entity": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                    "role": "role-took_place_at"
+                }
+            ]
+        }
+    ],
+    "media": [
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-m-001",
+            "label": {
+                "default": "Portrait of Heinrich Bunke"
+            },
+            "url": "https://memorise.sdu.dk/bernburgstudy/2_Images/Heinrich_Bunke.png",
+            "kind": "image"
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-m-002",
+            "label": {
+                "default": "Portrait of Else Röhr"
+            },
+            "url": "https://memorise.sdu.dk/bernburgstudy/2_Images/Else_Roehr_Portrait.png",
+            "kind": "image"
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-m-003",
+            "label": {
+                "default": "Photograph of Leo Baeck (aged 72)"
+            },
+            "url": "https://cdn.britannica.com/68/166368-050-25EB7973/Leo-Baeck.jpg",
+            "kind": "image"
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-m-004",
+            "label": {
+                "default": "Photograph of Regina Jonas"
+            },
+            "url": "https://www.yadvashem.org/sites/default/files/regina%20jonas.jpg",
+            "kind": "image"
+        }
+    ],
+    "biographies": [
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-bio-001",
+            "text": "Dr. Heinrich Bunke was born on July 24, 1914, in Wohlde, Celle District, Lower Saxony. He completed his A-levels and pursued medical studies, later becoming an emergency doctor. Before World War II, he was stationed in Ratzeburg with a replacement battalion.\r\n\r\nDuring the war, Bunke was conscripted and, due to his medical education, received an emergency license to practice medicine. In October 1940, he was assigned to the Bernburg Euthanasia Center, where he worked until October/November 1941. His role involved determining false causes of death for patients subjected to the euthanasia program. Bunke claimed he was unaware of any wrongdoing during his tenure.\r\n\r\nAfter leaving Bernburg, Bunke joined Organization Todt. Post-war, he secured an assistant position at the State Women's Clinic in Celle and later established his gynecological practice in 1951. Arrested in April 1962 for his wartime activities, he was released under conditions and continued practicing medicine.\r\n\r\nBunke's trial began on October 3, 1966, resulting in an acquittal in 1967 due to his alleged ignorance of the program's illegality. However, this verdict was overturned in 1970. Despite claiming health issues to avoid a retrial, Bunke continued working. Eventually, he was convicted in 1987 for aiding and abetting murder in at least 9,200 cases and sentenced to three years in prison, serving 18 months before his release.\r\n\r\nDr. Heinrich Bunke passed away on September 16, 2001, in Celle."
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-bio-002",
+            "text": "Else Röhr was born on August 2, 1907, in Magdeburg. As a young woman, she had a relationship with a Jewish man, but their relationship ended when he decided to leave Germany following the rise of the National Socialists and the increasing marginalization and discrimination against Jewish people.\r\n\r\nThe end of this relationship deeply affected Else, leading to a decline in her mental and physical health. She sought help at Magdeburg-Sudenburg Hospital in February 1936, where she was diagnosed with \"juvenile schizophrenia.\" Following this diagnosis, she was transferred to the Neuhaldensleben State Sanatorium on February 27, 1936.\r\n\r\nHer condition led to a decision for forced sterilization, approved on June 4, 1936, and performed on November 24, 1936. Despite her physical recovery, her mental illness was confirmed on December 5, 1936. She continued to receive care at the Haldensleben State Hospital until February 18, 1937, after which she was cared for at home briefly until April 3, 1937, when she was readmitted to the state mental hospital.\r\n\r\nOn November 15, 1940, Else and other patients were transferred to the Uchtspringe State Hospital. A visit from relatives was refused on March 28, 1941. Shortly after, on April 2, 1941, Else was transferred to Bernburg, where she was murdered in the gas chambers on the same day."
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bio-003",
+            "text": "Rabbi Dr Leo Baeck was born on May 24, 1873 in Leszno. Leo Baeck graduated from the Hochschule für die\r\n Wissenschaft des Judentums (Higher Institute for Jewish Studies) in 1897 and held rabbinical posts in Opole, Düsseldorf and Berlin and worked as a field Rabbi in WWI. \r\nHe was also known for his academic engagement with the history, religion and philosophy of Judaism and taught at his alma mater in Berlin from 1913 until the forced closure of the Hochschule in 1942.  \r\nHe was one of the most prominent leaders of German Jewry before, during and after the NS regime, representing his community on both a national and international level.\r\nLeo Baeck survived incarceration at the concentration camp Theresienstadt and tirelessly continued his research and his work for the Jewish community after 1945.\r\nNumerous Jewish institutions were named his honour, including the Leo Baeck Institute and the Leo Baeck College in London. "
+        },
+        {
+            "id": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bio-004",
+            "text": "Rabbi Regina Jonas was born on August 3, 1902 in Berlin's Scheunenviertel, a poor Jewish neighbourhood in the \r\nGerman capitol. In 1930, she graduated at the  Hochschule für die Wissenschaft des Judentums with a Halchic Treatise titled  ‘Can Women Serve as Rabbis?’ (supervisor Eduard Baneth). She clearly answered this question with a yes, becoming the first ordained woman Rabbi in the world.\r\n Between 1935-1944 she worked as Rabbi in Berlin (e.g. at Jewish hospitals, homes of the elderly) and later in Theresienstadt. Her work  included public lectures and articles in the Jewish press and several news outlets reported about her groundbreaking  work as woman rabbi in the 1930s. \r\nWhilst she was never married, it is known that she had a short romantic relationship with Rabbi Dr Joseph Norden of Hamburg. Rabbi Regina Jonas, her mother and her brother were murdered in the Holocaust. \r\nWith her death, the knowledge of the first woman rabbi appeared to have been lost until Rabbi Dr Elisa Klapheck rediscovered her legacy in the late 1990s. She researched and wrote her biography based upon the documents Regina must have placed at the Jewish community in Berlin for safekeeping and on conversations with Holocaust survivors who knew her as a teacher or as member of their community. In 2001, a memorial plaque for Regina Jonas was unveiled by Rabbi Dr Elisa Klapheck. And 2018, Sandy Eisenberg-Sasso wrote a children's book about Regina Jonas life. It is titled Regina - She Persisted - an untold story."
+        }
+    ],
+    "vocabularies": {
+        "occupation": [
+            {
+                "id": "occupation-rabbi,_scholar",
+                "label": {
+                    "default": "rabbi, scholar"
+                }
+            },
+            {
+                "id": "occupation-rabbi",
+                "label": {
+                    "default": "rabbi"
+                }
+            },
+            {
+                "id": "occupation-wife_/_homemmaker",
+                "label": {
+                    "default": "wife / homemmaker"
+                }
+            },
+            {
+                "id": "occupation-social_work",
+                "label": {
+                    "default": "social work"
+                }
+            },
+            {
+                "id": "occupation-pupil",
+                "label": {
+                    "default": "pupil"
+                }
+            },
+            {
+                "id": "occupation-accountant",
+                "label": {
+                    "default": "accountant"
+                }
+            },
+            {
+                "id": "occupation-religious_teacher",
+                "label": {
+                    "default": "religious teacher"
+                }
+            }
+        ],
+        "place-type": [
+            {
+                "id": "place-type-city",
+                "label": {
+                    "default": "city"
+                }
+            },
+            {
+                "id": "place-type-concentration_camp",
+                "label": {
+                    "default": "concentration camp"
+                }
+            },
+            {
+                "id": "place-type-country",
+                "label": {
+                    "default": "country"
+                }
+            },
+            {
+                "id": "place-type-region",
+                "label": {
+                    "default": "region"
+                }
+            }
+        ],
+        "event-kind": [
+            {
+                "id": "event-kind-work",
+                "label": {
+                    "default": "work"
+                }
+            },
+            {
+                "id": "event-kind-representation",
+                "label": {
+                    "default": "representation"
+                }
+            },
+            {
+                "id": "event-kind-travel",
+                "label": {
+                    "default": "travel"
+                }
+            },
+            {
+                "id": "event-kind-career",
+                "label": {
+                    "default": "career"
+                }
+            },
+            {
+                "id": "event-kind-death",
+                "label": {
+                    "default": "death"
+                }
+            },
+            {
+                "id": "event-kind-family",
+                "label": {
+                    "default": "family"
+                }
+            },
+            {
+                "id": "event-kind-deportation",
+                "label": {
+                    "default": "deportation"
+                }
+            },
+            {
+                "id": "event-kind-event",
+                "label": {
+                    "default": "event"
+                }
+            },
+            {
+                "id": "event-kind-citizenship",
+                "label": {
+                    "default": "citizenship"
+                }
+            },
+            {
+                "id": "event-kind-legacy",
+                "label": {
+                    "default": "legacy"
+                }
+            },
+            {
+                "id": "event-kind-education",
+                "label": {
+                    "default": "education"
+                }
+            },
+            {
+                "id": "event-kind-move",
+                "label": {
+                    "default": "move"
+                }
+            },
+            {
+                "id": "event-kind-press",
+                "label": {
+                    "default": "press"
+                }
+            },
+            {
+                "id": "event-kind-personal_life",
+                "label": {
+                    "default": "personal life"
+                }
+            },
+            {
+                "id": "event-kind-pastoral_care",
+                "label": {
+                    "default": "pastoral care"
+                }
+            },
+            {
+                "id": "event-kind-forced_labour",
+                "label": {
+                    "default": "forced labour"
+                }
+            },
+            {
+                "id": "event-kind-politics",
+                "label": {
+                    "default": "politics"
+                }
+            },
+            {
+                "id": "event-kind-violence",
+                "label": {
+                    "default": "violence"
+                }
+            },
+            {
+                "id": "event-kind-war",
+                "label": {
+                    "default": "war"
+                }
+            },
+            {
+                "id": "event-kind-liberation",
+                "label": {
+                    "default": "liberation"
+                }
+            },
+            {
+                "id": "event-kind-birth",
+                "label": {
+                    "default": "birth"
+                }
+            },
+            {
+                "id": "event-kind-military",
+                "label": {
+                    "default": "military"
+                }
+            },
+            {
+                "id": "event-kind-legal",
+                "label": {
+                    "default": "legal"
+                }
+            },
+            {
+                "id": "event-kind-personal",
+                "label": {
+                    "default": "personal"
+                }
+            },
+            {
+                "id": "event-kind-medical",
+                "label": {
+                    "default": "medical"
+                }
+            }
+        ],
+        "role": [
+            {
+                "id": "role-work",
+                "label": {
+                    "default": "work"
+                }
+            },
+            {
+                "id": "role-took_place_at",
+                "label": {
+                    "default": "took_place_at"
+                }
+            },
+            {
+                "id": "role-president",
+                "label": {
+                    "default": "president"
+                }
+            },
+            {
+                "id": "role-traveled",
+                "label": {
+                    "default": "traveled"
+                }
+            },
+            {
+                "id": "role-representation",
+                "label": {
+                    "default": "representation"
+                }
+            },
+            {
+                "id": "role-person_death",
+                "label": {
+                    "default": "person_death"
+                }
+            },
+            {
+                "id": "role-bereavement",
+                "label": {
+                    "default": "bereavement"
+                }
+            },
+            {
+                "id": "role-family_fled",
+                "label": {
+                    "default": "family_fled"
+                }
+            },
+            {
+                "id": "role-deported",
+                "label": {
+                    "default": "deported"
+                }
+            },
+            {
+                "id": "role-information",
+                "label": {
+                    "default": "information"
+                }
+            },
+            {
+                "id": "role-teaching",
+                "label": {
+                    "default": "teaching"
+                }
+            },
+            {
+                "id": "role-liberation",
+                "label": {
+                    "default": "liberation"
+                }
+            },
+            {
+                "id": "role-reinstated",
+                "label": {
+                    "default": "reinstated"
+                }
+            },
+            {
+                "id": "role-lecturing",
+                "label": {
+                    "default": "lecturing"
+                }
+            },
+            {
+                "id": "role-naturalized",
+                "label": {
+                    "default": "naturalized"
+                }
+            },
+            {
+                "id": "role-legacy",
+                "label": {
+                    "default": "legacy"
+                }
+            },
+            {
+                "id": "role-education",
+                "label": {
+                    "default": "education"
+                }
+            },
+            {
+                "id": "role-move",
+                "label": {
+                    "default": "move"
+                }
+            },
+            {
+                "id": "role-testimony",
+                "label": {
+                    "default": "testimony"
+                }
+            },
+            {
+                "id": "role-family",
+                "label": {
+                    "default": "family"
+                }
+            },
+            {
+                "id": "role-forced_labou",
+                "label": {
+                    "default": "forced_labou"
+                }
+            },
+            {
+                "id": "role-announced_chancellor",
+                "label": {
+                    "default": "announced_chancellor"
+                }
+            },
+            {
+                "id": "role-exclusion",
+                "label": {
+                    "default": "exclusion"
+                }
+            },
+            {
+                "id": "role-physical_violence",
+                "label": {
+                    "default": "physical violence"
+                }
+            },
+            {
+                "id": "role-war",
+                "label": {
+                    "default": "war"
+                }
+            },
+            {
+                "id": "role-deportation",
+                "label": {
+                    "default": "deportation"
+                }
+            },
+            {
+                "id": "role-person_born",
+                "label": {
+                    "default": "person_born"
+                }
+            },
+            {
+                "id": "role-graduated",
+                "label": {
+                    "default": "graduated"
+                }
+            },
+            {
+                "id": "role-labor_service",
+                "label": {
+                    "default": "labor_service"
+                }
+            },
+            {
+                "id": "role-military_service",
+                "label": {
+                    "default": "military_service"
+                }
+            },
+            {
+                "id": "role-started_studying",
+                "label": {
+                    "default": "started_studying"
+                }
+            },
+            {
+                "id": "role-studied",
+                "label": {
+                    "default": "studied"
+                }
+            },
+            {
+                "id": "role-worked_as",
+                "label": {
+                    "default": "worked_as"
+                }
+            },
+            {
+                "id": "role-assistant_position",
+                "label": {
+                    "default": "assistant_position"
+                }
+            },
+            {
+                "id": "role-started_practice",
+                "label": {
+                    "default": "started_practice"
+                }
+            },
+            {
+                "id": "role-arrested",
+                "label": {
+                    "default": "arrested"
+                }
+            },
+            {
+                "id": "role-trial",
+                "label": {
+                    "default": "trial"
+                }
+            },
+            {
+                "id": "role-acquittal",
+                "label": {
+                    "default": "acquittal"
+                }
+            },
+            {
+                "id": "role-sentenced_to_prison",
+                "label": {
+                    "default": "sentenced_to_prison"
+                }
+            },
+            {
+                "id": "role-released",
+                "label": {
+                    "default": "released"
+                }
+            },
+            {
+                "id": "role-person_died",
+                "label": {
+                    "default": "person_died"
+                }
+            },
+            {
+                "id": "role-father",
+                "label": {
+                    "default": "father"
+                }
+            },
+            {
+                "id": "role-mother",
+                "label": {
+                    "default": "mother"
+                }
+            },
+            {
+                "id": "role-separated",
+                "label": {
+                    "default": "separated"
+                }
+            },
+            {
+                "id": "role-sought_help",
+                "label": {
+                    "default": "sought_help"
+                }
+            },
+            {
+                "id": "role-transferred",
+                "label": {
+                    "default": "transferred"
+                }
+            },
+            {
+                "id": "role-decision_made",
+                "label": {
+                    "default": "decision_made"
+                }
+            },
+            {
+                "id": "role-sterilized",
+                "label": {
+                    "default": "sterilized"
+                }
+            },
+            {
+                "id": "role-integrity_confirmed",
+                "label": {
+                    "default": "integrity_confirmed"
+                }
+            },
+            {
+                "id": "role-cared_for",
+                "label": {
+                    "default": "cared_for"
+                }
+            },
+            {
+                "id": "role-readmitted",
+                "label": {
+                    "default": "readmitted"
+                }
+            },
+            {
+                "id": "role-visit_refused",
+                "label": {
+                    "default": "visit_refused"
+                }
+            }
+        ]
+    },
+    "unmappedEntries": [],
+    "collections": {
+        "all": {
+            "label": "Jonas_Baeck_Roehr_Bunke",
+            "entities": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-012"
+            ],
+            "events": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016"
+            ]
+        },
+        "event-joined": {
+            "label": "event-joined",
+            "entities": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004"
+            ],
+            "events": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016"
+            ]
+        }
+    },
+    "tags": [
+        {
+            "label": "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke",
+            "description": "The entire 2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke data set.",
+            "entities": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-gr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pr-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pr-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-pl-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-br-pl-012"
+            ],
+            "events": [
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-023",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-024",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-022",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-018",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-019",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-leobaeck-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-18",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-19",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009a",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009b",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009c",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009d",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009e",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-009f",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-020",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-021",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-reginajonas-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-germany-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-002",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-003",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-016",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-bunke-ev-017",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-001",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-004",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-005",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-006",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-007",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-008",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-009",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-010",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-011",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-012",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-013",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-014",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-015",
+                "2025_11_17_Intavia Worksheet Baeck_Jonas_Roehr_Bunke-roehr-ev-016"
+            ]
+        }
+    ],
+    "upstreamEntityIds": []
+}

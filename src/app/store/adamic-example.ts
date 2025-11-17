@@ -6,7 +6,7 @@ import type {
   VocabularyEntry,
 } from '@intavia/api-client';
 import { nanoid } from '@reduxjs/toolkit';
-import adamicData from 'public/ErnestAdamicDataset.json';
+import adamicData from 'public/Jonas_Baeck_Roehr_Bunke.json';
 
 import type { Collection } from '@/app/store/intavia-collections.slice';
 
