@@ -184,6 +184,9 @@ export function EntityRelations(props: RelationsProps): JSX.Element | null {
                           );
                         })}
                     </ul>
+                    {event.description != null && (
+                      <div className="mt-1 text-neutral-500">{event.description}</div>
+                    )}
                   </div>
                 </td>
                 {/* </span> */}

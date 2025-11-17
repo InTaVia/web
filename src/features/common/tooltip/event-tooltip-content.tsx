@@ -64,7 +64,16 @@ const EventTooltipContent = forwardRef(
       <div ref={ref as LegacyRef<HTMLDivElement>}>
         {Object.values(events).length < 6 ? (
           Object.values(events).map((event) => {
-            return <div key={`event${event!.id}`}>- {getTranslatedLabel(event!.label)}</div>;
+            return (
+              <>
+                <div key={`event${event!.id}`}>- {getTranslatedLabel(event!.label)}</div>
+                {event?.description != null && (
+                  <div className="ml-2 mb-1 max-w-xl text-sm text-neutral-500">
+                    {event.description}
+                  </div>
+                )}
+              </>
+            );
           })
         ) : (
           <b>{Object.values(events).length} Events</b>

@@ -446,9 +446,9 @@ export function parseExtendedISO(dateStr) {
   const matchString = /^([+-]?\d{1,6})(-(\d{2}))?(-(\d{2}))?$/;
 
   // test start date
-  const matches = matchString.exec(dateStr);
+  const matches = matchString.exec(dateStr.trim());
   if (!matches) throw new Error(`Invalid date format: ${dateStr}`);
-  const parsedDate = new Date(dateStr);
+  const parsedDate = new Date(dateStr.trim());
 
   const [, yearStr, , monthStr, , dayStr] = matches;
 
