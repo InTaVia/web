@@ -1,9 +1,14 @@
+import { XCircleIcon } from '@heroicons/react/outline';
+import { Button } from '@intavia/ui';
 import { PageMetadata } from '@stefanprobst/next-page-metadata';
 import { Fragment } from 'react';
 
 import { useI18n } from '@/app/i18n/use-i18n';
 import { withDictionaries } from '@/app/i18n/with-dictionaries';
 import { usePageTitleTemplate } from '@/app/metadata/use-page-title-template';
+import { useAppDispatch } from '@/app/store';
+import { clear as clearState } from '@/app/store/intavia.slice';
+import { clear as clearCollections } from '@/app/store/intavia-collections.slice';
 import { DataImport } from '@/features/data-import/data-import';
 import { ProjectExport } from '@/features/data-import/project-export';
 import { ProjectImport } from '@/features/data-import/project-import';
@@ -14,13 +19,13 @@ export default function IOPage(): JSX.Element {
   const { t } = useI18n<'common'>();
   const titleTemplate = usePageTitleTemplate();
   const metadata = { title: t(['common', 'io', 'metadata', 'title']) };
-
+  const dispatch = useAppDispatch();
   return (
     <Fragment>
       <PageMetadata title={metadata.title} titleTemplate={titleTemplate} />
       <main>
-        <section className="my-10 flex flex-wrap justify-center gap-10">
-          <div className="dark:border-neutral-700 dark:bg-neutral-800 flex w-[500px] flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md">
+        <section className="my-10 grid h-full w-full grid-cols-2 items-center justify-center gap-x-10 p-10">
+          <div className="dark:border-neutral-700 dark:bg-neutral-800 flex h-full w-full flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md">
             <div className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
               Local Data Import
             </div>
@@ -34,7 +39,7 @@ export default function IOPage(): JSX.Element {
             </div>
           </div>
 
-          <div className="dark:border-neutral-700 dark:bg-neutral-800 flex w-[500px] flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md">
+          <div className="dark:border-neutral-700 dark:bg-neutral-800 flex h-full flex-col flex-nowrap rounded-lg border border-neutral-200 bg-white shadow-md">
             <div className="flex place-content-center items-center gap-2 pt-3 text-intavia-green-900">
               InTaVia Project File Export/Import
             </div>
@@ -55,6 +60,22 @@ export default function IOPage(): JSX.Element {
               project (application state) please export the project before importing an other
               project.
             </div>
+          </div>
+
+          <div className="dark:border-neutral-700 dark:bg-neutral-800 col-span-2 flex h-fit w-full flex-col flex-nowrap rounded-lg border border-neutral-200 p-2 shadow-md">
+            <p className="font-bold text-red-800">Delete all local data.</p>
+            Delete local storage and reset the application.
+            <Button
+              className="mt-2 w-fit bg-red-100 text-red-800 hover:bg-red-800 hover:text-white"
+              type="button"
+              onClick={() => {
+                dispatch(clearState());
+                dispatch(clearCollections());
+              }}
+            >
+              <XCircleIcon className="h-5 w-5" />
+              Delete Storage
+            </Button>
           </div>
         </section>
       </main>
