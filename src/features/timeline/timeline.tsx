@@ -448,7 +448,6 @@ export function parseExtendedISO(dateStr) {
   // test start date
   const matches = matchString.exec(dateStr.trim());
   if (!matches) throw new Error(`Invalid date format: ${dateStr}`);
-  const parsedDate = new Date(dateStr.trim());
 
   const [, yearStr, , monthStr, , dayStr] = matches;
 
@@ -456,14 +455,16 @@ export function parseExtendedISO(dateStr) {
   const month = parseInt(monthStr ?? 1, 10) - 1; // JS months are 0–11
   const day = parseInt(dayStr ?? 1, 10);
 
+  const parsedDate = new Date(year, month, day);
+
   // Construct the date in UTC to avoid timezone surprises
   // const date = new Date(Date.UTC(year, month, day));
 
   // Optional validation — make sure JS didn’t normalize an invalid date
   if (
-    parsedDate.getUTCFullYear() !== year ||
-    parsedDate.getUTCMonth() !== month ||
-    parsedDate.getUTCDate() !== day
+    parsedDate.getFullYear() !== year ||
+    parsedDate.getMonth() !== month ||
+    parsedDate.getDate() !== day
   ) {
     throw new Error(`Invalid date components: ${dateStr}`);
   }
